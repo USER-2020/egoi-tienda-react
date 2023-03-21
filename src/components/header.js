@@ -27,7 +27,7 @@ const Header = (props) => {
   return (
     <Navbar color="light" light expand="md" className={styles.navbar}>
       <NavbarBrand href="/">
-        {/* <img src={logo} alt="logo" className={styles.logo} /> */}
+        <img src={logo} alt="logo" className={styles.logo} />
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
