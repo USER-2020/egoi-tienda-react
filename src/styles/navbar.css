@@ -1,0 +1,35 @@
+.custom-navbar {
+  background-color: gray;
+}
+
+.custom-navbar .navbar-brand {
+  margin-right: 50px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.custom-navbar .navbar-brand img {
+  max-height: 100%;
+  margin-right: 10px;
+}
+
+.custom-navbar .form-inline {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.custom-navbar .form-control {
+  width: 100%;
+}
+
+.custom-navbar .nav-link {
+  color: white !important;
+}
+
+.custom-navbar .navbar-text {
+  color: white !important;
+}
