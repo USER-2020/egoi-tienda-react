@@ -22,6 +22,7 @@ import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
 
 import Header from "../components/header";
+import Footer from "../components/footer";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +31,11 @@ const Home = (props) => {
   return (  
 
     // <Nav/>
-    <Header/>
+    <>
+      
+      <Header />
+      <Footer />
+    </>
     // <h1>Home</h1>
     
   );
