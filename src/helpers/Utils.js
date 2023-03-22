@@ -46,19 +46,6 @@ export const getCurrentUser = () => {
   return user;
 };
 
-export const getCurrentHabilitacion = () => {
-  let habilitacion = null;
-  try {
-    habilitacion =
-      localStorage.getItem('gogo_current_habilitacion') != null
-        ? JSON.parse(localStorage.getItem('gogo_current_habilitacion'))
-        : null;
-  } catch (error) {
-    console.log('>>>>: src/helpers/Utils.js  : getCurrentUser -> error', error);
-    habilitacion = null;
-  }
-  return habilitacion;
-};
 
 export const setCurrentUser = (user) => {
   try {

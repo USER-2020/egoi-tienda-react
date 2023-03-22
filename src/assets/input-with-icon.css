@@ -1,0 +1,21 @@
+.input-label {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .input-label input {
+    padding-left: 30px;
+  }
+  
+  .input-label span {
+    position: absolute;
+    left: 10px;
+    pointer-events: none;
+  }
+  
+  .input-label input:focus + span,
+  .input-label input:not(:placeholder-shown) + span {
+    display: none;
+  }
+  
