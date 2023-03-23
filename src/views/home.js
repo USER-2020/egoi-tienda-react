@@ -34,7 +34,7 @@ const Home = (props) => {
     <>
       
       <Header />
-      <Footer />
+      {/* <Footer /> */}
     </>
     // <h1>Home</h1>
     
