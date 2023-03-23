@@ -1,9 +1,44 @@
+:root {
+  --placeholder-icon-nombre: url('../../assets/egoi_icons/user-1.svg');
+  --placeholder-icon-apellido: url('../../assets/egoi_icons/user-1.svg');
+  --placeholder-icon-email: url('../../assets/egoi_icons/letter.svg');
+  --placeholder-icon-contraseña: url('../../assets/egoi_icons/lock.svg');
+  --placeholder-icon-confirmarContraseña: url('../../assets/egoi_icons/lock.svg');
+  /* --placeholder-icon-buscar: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"%3E%3Cpath fill="%23ccc" d="M499.8 468.2L370.3 338.7c30.8-36.3 49.6-83.4 49.6-135.2C419.9 85.3 334.6 0 218.7 0S17.4 85.3 17.4 201.2s85.3 201.2 201.2 201.2c51.9 0 99-18.8 135.2-49.6l129.5 129.5c7.9 7.9 20.8 7.9 28.7 0l22.6-22.6c7.9-7.9 7.9-20.8 0-28.7zM72.5 201.2c0-88.5 71.8-160.3 160.3-160.3s160.3 71.8 160.3 160.3-71.8 160.3-160.3 160.3-160.3-71.8-160.3-160.3z"%3E%3C/path%3E%3C/svg%3E'); */
+
+
+
+}
+
 input::placeholder {
-    padding-left: 30px;
-     /* Espacio para el icono */
-    background-image: url('../../assets/egoi_icons/user.svg');
-    background-repeat: no-repeat;
-    background-size: 23px 23px; /* Tamaño del icono */
-    background-position: 5px center; /* Posición del icono */
-  }
-  
+  padding-left: 30px;
+  /* Espacio para el icono */
+  /* background-image: var(--placeholder-icon-nombre); */
+  background-repeat: no-repeat;
+  background-size: 23px 23px; /* Tamaño del icono */
+  background-position: 5px center; /* Posición del icono */
+
+}
+
+input[placeholder="Nombre"]::placeholder {
+  background-image: var(--placeholder-icon-nombre);
+}
+
+input[placeholder="Apellido"]::placeholder {
+  background-image: var(--placeholder-icon-apellido);
+}
+input[placeholder="Email"]::placeholder {
+  background-image: var(--placeholder-icon-email);
+}
+input[placeholder="Contraseña"]::placeholder {
+  background-image: var(--placeholder-icon-contraseña);
+}
+input[placeholder="Confirmar contraseña"]::placeholder {
+  background-image: var(--placeholder-icon-confirmarContraseña);
+}
+input[placeholder="Busca productos, marcas..."]::placeholder {
+  background-image: var(--placeholder-icon-buscar);
+  background-size: 16px !important;
+  background-repeat: no-repeat !important;
+  padding-left: 20px !important;
+}
