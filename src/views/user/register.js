@@ -26,7 +26,7 @@ import PhoneInput from "react-phone-input-2";
 // import "react-phone-input-2/lib/style.css";
 import "react-phone-input-2/lib/bootstrap.css";
 import es from "react-phone-input-2/lang/es.json";
-import '../user/input-con-icono.css';
+import "../user/input-con-icono.css";
 
 // import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 
@@ -233,157 +233,150 @@ function Register() {
 
   return (
     <>
-      <Button color="primary" onClick={handleShow}>
-        Registro
-      </Button>
+      <Row>
+        <Col>
+          <div style={{ paddingLeft: "2%", paddingRight: "2%" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <h5 style={{ color: "#fc5241" }}>Registro</h5>
+            </div>
 
-      <Modal backdrop={false} isOpen={show} toggle={() => setShow(!show)}>
-        <ModalBody>
-          <Row>
-            <Col>
-              <div style={{ paddingLeft: "2%", paddingRight: "2%" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+            <Form onSubmit={handleSubmitPersona}>
+              <FormGroup controlId="formBasicName">
+                <InputGroup style={{ borderRadius: "50px" }}>
+                  <Input
+                    style={{
+                      borderRadius: "50px",
+                    }}
+                    placeholder="Nombre"
+                  />
+                </InputGroup>
+              </FormGroup>
+
+              <FormGroup controlId="formBasicLastName">
+                <InputGroup style={{ borderRadius: "50px" }}>
+                  <Input
+                    style={{
+                      borderRadius: "50px",
+                    }}
+                    placeholder="Apellido"
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup controlId="formBasicEmail">
+                <InputGroup style={{ borderRadius: "50px" }}>
+                  <Input
+                    type="email"
+                    style={{
+                      borderRadius: "50px",
+                    }}
+                    placeholder="Email"
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup controlId="formBasicCellphone">
+                <PhoneInput
+                  localization={es}
+                  country={"co"}
+                  value={phoneNumber}
+                  onChange={setPhoneNumber}
+                  inputStyle={{
+                    width: "100%",
+                    height: "10px",
+                    borderRadius: "50px",
+                    outline: "none",
+                    ":focus": {
+                      borderRadius: "50px",
+                    },
                   }}
+                />
+              </FormGroup>
+              <FormGroup controlId="formBasicPassword">
+                <InputGroup style={{ borderRadius: "50px" }}>
+                  <Input
+                    style={{
+                      borderTopLeftRadius: "50px",
+                      borderBottomLeftRadius: "50px",
+                    }}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Contraseña"
+                  />
+                  <InputGroupText
+                    style={{
+                      cursor: "pointer",
+                      borderTopRightRadius: "50px",
+                      borderBottomRightRadius: "50px",
+
+                      width: "45px",
+                      borderRight: "none !important",
+                      backgroundColor: "white",
+                    }}
+                    onClick={toggleShowPassword}
+                  >
+                    {" "}
+                    {showPassword ? <EyeSlash /> : <Eye />}
+                  </InputGroupText>
+                </InputGroup>
+              </FormGroup>
+              <FormGroup controlId="formBasicConfirmPassword">
+                <InputGroup style={{ borderRadius: "50px" }}>
+                  <Input
+                    style={{
+                      borderTopLeftRadius: "50px",
+                      borderBottomLeftRadius: "50px",
+                    }}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Confirmar contraseña"
+                  />
+                  <InputGroupText
+                    style={{
+                      cursor: "pointer",
+                      borderTopRightRadius: "50px",
+                      borderBottomRightRadius: "50px",
+
+                      width: "45px",
+                      borderRight: "none !important",
+                      backgroundColor: "white",
+                    }}
+                    onClick={toggleShowPassword}
+                  >
+                    {showPassword ? <EyeSlash /> : <Eye />}
+                  </InputGroupText>
+                </InputGroup>
+              </FormGroup>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <Button
+                  style={{
+                    backgroundColor: "#fc5241",
+                    borderColor: "#fc5241",
+                    borderRadius: "50px",
+                  }}
+                  type="submit"
                 >
-                  <h5 style={{ color: "#fc5241" }}>Registro</h5>
-                </div>
-                
-
-                <Form onSubmit={handleSubmitPersona}>
-                  <FormGroup controlId="formBasicName">
-                    <InputGroup style={{ borderRadius: "50px" }}>
-                      <Input
-                        className="input-con-icono"
-                        style={{
-                          borderRadius: "50px",
-                          
-                        }}
-                        placeholder="Nombre"
-                      />
-                    </InputGroup>
-                  </FormGroup>
-
-                  <FormGroup controlId="formBasicLastName">
-                    <InputGroup style={{ borderRadius: "50px" }}>
-                      <Input
-                        style={{
-                          borderRadius: "50px",
-                          
-                        }}
-                        placeholder="Apellido"
-                      />
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup controlId="formBasicEmail">
-                    <InputGroup style={{ borderRadius: "50px" }}>
-                      <Input
-                        style={{
-                          borderRadius: "50px",
-                          
-                        }}
-                        placeholder="Email"
-                      />
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup controlId="formBasicCellphone">
-                    <PhoneInput
-                      localization={es}
-                      country={"co"}
-                      value={phoneNumber}
-                      onChange={setPhoneNumber}
-                      inputStyle={{
-                        width: "100%",
-                        height: "10px",
-                        borderRadius: "50px",
-                        outline: "none",
-                        ":focus": {
-                          borderRadius: "50px",
-                        },
-                      }}
-                    />
-                  </FormGroup>
-                  <FormGroup controlId="formBasicPassword">
-                    <InputGroup style={{ borderRadius: "50px" }}>
-                      <Input
-
-                        style={{borderTopLeftRadius: "50px", borderBottomLeftRadius: "50px",}}
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Contraseña"
-                      />
-                      <InputGroupText
-                        style={{
-                          cursor: "pointer",
-                          borderTopRightRadius: "50px",
-                          borderBottomRightRadius: "50px",
-                          
-                          width: "45px",
-                          borderRight: "none !important",
-                          backgroundColor: "white",
-                        }}
-                        onClick={toggleShowPassword}
-                      >
-                        {" "}
-                        {showPassword ? <EyeSlash /> : <Eye />}
-                      </InputGroupText>
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup controlId="formBasicConfirmPassword">
-                    <InputGroup style={{ borderRadius: "50px" }}>
-                      <Input
-                        style={{borderTopLeftRadius: "50px", borderBottomLeftRadius: "50px",}}
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Confirmar contraseña"
-                      />
-                      <InputGroupText
-                        style={{
-                          cursor: "pointer",
-                          borderTopRightRadius: "50px",
-                          borderBottomRightRadius: "50px",
-                          
-                          width: "45px",
-                          borderRight: "none !important",
-                          backgroundColor: "white",
-                        }}
-                        onClick={toggleShowPassword}
-                      >
-                        {showPassword ? <EyeSlash /> : <Eye />}
-                      </InputGroupText>
-                    </InputGroup>
-                  </FormGroup>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <Button
-                      style={{
-                        backgroundColor: "#fc5241",
-                        borderColor: "#fc5241",
-                        borderRadius: "50px",
-                      }}
-                      type="submit"
-                    >
-                      Registrarme
-                    </Button>
-                    <br />
-                    <Button
-                      style={{
-                        backgroundColor: "white",
-                        borderColor: "#fc5241",
-                        color: "#fc5241",
-                        borderRadius: "50px",
-                      }}
-                      onClick={() => limpiarCampos()}
-                    >
-                      Ya tengo cuenta
-                    </Button>
-                  </div>
-                </Form>
+                  Registrarme
+                </Button>
+                <br />
+                <Button
+                  style={{
+                    backgroundColor: "white",
+                    borderColor: "#fc5241",
+                    color: "#fc5241",
+                    borderRadius: "50px",
+                  }}
+                  onClick={() => limpiarCampos()}
+                >
+                  Ya tengo cuenta
+                </Button>
               </div>
-            </Col>
-          </Row>
-        </ModalBody>
-      </Modal>
+            </Form>
+          </div>
+        </Col>
+      </Row>
     </>
   );
 }
