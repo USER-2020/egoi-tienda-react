@@ -243,20 +243,68 @@ nav .containerHeader a {
 footer {
   width: 100%;
   height: 472px;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   display: flex;
 }
 
-footer > .row {
-  width: 80%;
-  display: inline-block;
+footer > .containerFooter{
+  display: block;
+  width: 75%;
+  
+  
+}
+
+footer .containerFooter .row {
+  /* border: 1px solid gray;ç */
+  padding: 30px;
+  border-bottom: 1px solid rgb(219, 219, 219);
+  
+ 
+  /* width: 80%; */
+  /* display: inline-block; */
   /* text-align: center; */
   
+}
+
+.derPagos{
+  opacity: 0.5;
+}
+
+
+.izqIconsMedia{
+  padding: 10px;
+  color: #a2a1a7;
+}
+
+.izqIconsMedia svg {
+  margin-left: 10px;
 }
 
 .footerLogo{
   display: flex;
   justify-content: space-between;
   
+}
+
+.rowf{
+  display: flex;
+  padding: 20px;
+  
+  
+}
+
+.rowf > ul  {
+  list-style: none;
+  
+  
+}
+
+.rowf  ul  li {
+  color: #a2a1a7;
+  
+}
+
+.rowf ul a { 
+  text-decoration: none;
 }
