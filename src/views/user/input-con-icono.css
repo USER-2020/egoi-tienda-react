@@ -1,8 +1,9 @@
 input::placeholder {
-    padding-left: 30px; /* Espacio para el icono */
+    padding-left: 30px;
+     /* Espacio para el icono */
     background-image: url('../../assets/egoi_icons/user.svg');
     background-repeat: no-repeat;
-    background-size: 20px 20px; /* Tamaño del icono */
+    background-size: 23px 23px; /* Tamaño del icono */
     background-position: 5px center; /* Posición del icono */
   }
   
