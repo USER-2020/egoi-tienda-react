@@ -381,6 +381,31 @@ const Header = (props) => {
             </svg>
             Vender
           </a>
+          <div className="menu">
+              <a href="#" onClick={() => {
+                  setModalViewLogin(true);
+                }}>
+                <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+              </a>
+              <Modal className="modal-dialog-centered" toggle={() => setModalViewLogin(false)} isOpen={modalViewLogin}>
+                <ModalBody>
+                  <Login />
+                </ModalBody>
+              </Modal>
+              <a
+                href="#"
+                onClick={() => {
+                  setModalViewRegistro(true);
+                }}
+              >
+                <FontAwesomeIcon icon={faUserPlus} /> Registrate
+              </a>
+              <Modal className="modal-dialog-centered" toggle={() => setModalViewRegistro(false)} isOpen={modalViewRegistro}>
+                <ModalBody>
+                  <Register />
+                </ModalBody>
+              </Modal>
+            </div>
         </div>
       </div>
     </nav>
