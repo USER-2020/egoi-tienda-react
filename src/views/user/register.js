@@ -1,45 +1,73 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Col, Row, Button, FormGroup, Form, Input, InputGroupText,InputGroup } from "reactstrap";
-import { Eye, EyeSlash } from "react-bootstrap-icons";
+import { Eye, EyeSlash, X } from "react-bootstrap-icons";
 import Swal from "sweetalert2";
 import { ReactComponent as UserIcon } from "../../assets/egoi_icons/user.svg";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import es from "react-phone-input-2/lang/es.json";
 import "../user/input-con-icono.css";
+import { useForm } from 'react-hook-form';
+import Registro from '../../services/registro';
 
-// import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 
-function Register() {
+const Register = () => {
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm();
+
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [cellphone, setCellphone] = useState("");
-  const [show, setShow] = useState(false);
+  // const [cellphone, setCellphone] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState();
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [vista, setVista] = useState('formulario');
+  const [errorMostrar, setErrorMostrar] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
 
+  const onSubmit = (data) => {
+    setLoading(true);
+    Registro(data, window.location.origin.toString())
+    .then(() => {
+      Swal.fire({
+        icon: 'success',
+        title: '¡Registro exitoso!',
+        text: 'El registro ha sido completado exitosamente.',
+        confirmButtonColor: '#0d6efd',
+      });
+      setLoading(false);
+    })
+    .catch((error) => {
+      if (error.response.data === 'username already exists') {
+        setErrorMostrar('El usuario ya existe');
+      }
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+        confirmButtonColor: '#dc3545',
+      });
+      setLoading(false);
+    })
+    reset();
+  };
+
   const handleSubmitPersona = (event) => {
     console.log(event);
-    event.preventDefault();
-
-    event.preventDefault(); // Evita el envío del formulario
-
-    // Validar que los campos no estén vacíos
-    if (!name || !lastName || !email || !cellphone) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Por favor, complete todos los campos. ",
-        confirmButtonColor: "#0d6efd",
-      });
-      return;
-    }
+    event.preventDefault();  
 
     // Validar que el nombre y apellido solo contengan letras y espacios
     const nameRegex = /^[a-zA-Z ]+$/;
@@ -64,37 +92,61 @@ function Register() {
       });
       return;
     }
-
-    // Validar que el número de celular tenga un formato válido
-    const cellphoneRegex = /^[0-9]{10}$/;
-    if (!cellphoneRegex.test(cellphone)) {
+  
+    if (!name || !lastName || !email || !phoneNumber) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingrese un número de celular válido. debe contener 10 digitos.",
+        text: "Por favor, complete todos los campos. ",
         confirmButtonColor: "#0d6efd",
       });
       return;
     }
 
-    //   try{
+    // Validar que la contraseña tenga al menos 8 caracteres
+    if (password.length < 8) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor, ingrese una contraseña de al menos 8 caracteres.",
+        confirmButtonColor: "#0d6efd",
+      });
+      return; 
+    }
 
-    //  addDoc(usersRef, { name, lastName, email, cellphone, tipo });
-    //  Swal.fire({
-    //   icon: 'success',
-    //   title: 'Felicitaciones!',
-    //   text: 'Usuario registrado Correctamente!',
-    //   confirmButtonColor: '#0d6efd',
-    // })
-    //   }catch(error){
-    //     Swal.fire({
-    //       icon: 'error',
-    //       title: 'Oops...',
-    //       text: 'Algo salio mal!',
-    //       footer: 'Intenta de nuevo'
-    //     })
-    //   }
-    setShow(!show);
+    // Validar que la contraseña y la confirmación de la contraseña sean iguales
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Las contraseñas no coinciden.",
+        confirmButtonColor: "#0d6efd",
+      });
+      return;
+    }
+
+    // Validar que el número de teléfono tenga un formato válido
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor, ingrese un número de teléfono válido. Debe contener 10 dígitos.",
+        confirmButtonColor: "#0d6efd",
+      });
+      return;
+    }
+
+
+    const data = {};
+
+    data.f_name = name;
+    data.l_name = lastName;
+    data.email = email;
+    data.password = password;
+    data.phone = phoneNumber;
+
+    onSubmit(data);
     limpiarCampos();
   };
 
@@ -104,7 +156,10 @@ function Register() {
     setName("");
     setLastName("");
     setEmail("");
-    setCellphone("");
+    setPassword("");
+    setConfirmPassword("");
+    setPhoneNumber("");
+    // setCellphone("");
   };
 
   return (
@@ -121,16 +176,17 @@ function Register() {
             >
               <h5 style={{ color: "#fc5241" }}>Registro</h5>
             </div>
-
             <Form onSubmit={handleSubmitPersona}>
 
               <FormGroup controlId="formBasicName">
                   <Input  addon={true}
+                  name="name"
                    className="form-control"
                     style={{
                       borderRadius: "50px",
                     }}
                     placeholder="Nombre"
+                    value={name} onChange={(event) => setName(event.target.value)}
                   />
               
               </FormGroup>
@@ -141,6 +197,7 @@ function Register() {
                       borderRadius: "50px",
                     }}
                     placeholder="Apellido"
+                    value={lastName} onChange={(event) => setLastName(event.target.value)}
                   />
               </FormGroup>
 
@@ -152,6 +209,7 @@ function Register() {
                       borderRadius: "50px",
                     }}
                     placeholder="Email"
+                    value={email} onChange={(event) => setEmail(event.target.value)}
                   />
                 </InputGroup>
               </FormGroup>
@@ -184,6 +242,7 @@ function Register() {
                     }}
                     type={showPassword ? "text" : "password"}
                     placeholder="Contraseña"
+                    value={password} onChange={(event) => setPassword(event.target.value)}
                   />
                   <InputGroupText
                     style={{
@@ -211,6 +270,7 @@ function Register() {
                     }}
                     type={showPassword ? "text" : "password"}
                     placeholder="Confirmar contraseña"
+                    value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)}
                   />
                   <InputGroupText
                     style={{
@@ -238,7 +298,7 @@ function Register() {
                   }}
                   type="submit"
                 >
-                  Registrarme
+                 {loading ? 'Cargando...' : 'Registrarme'}
                 </Button>
                 <br />
                 <Button

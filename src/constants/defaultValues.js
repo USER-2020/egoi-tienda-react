@@ -17,4 +17,4 @@ export const currentUser = {
 export const isAuthGuardActive = true;
 
 
-// export const urlBase = 'http://localhost:3000';
+export const urlBase = 'https://egoi.xyz/api/v1';
