@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 import { Row, Card, CardTitle, CardBody, Col, Form, FormGroup, Input, Button, InputGroup, InputGroupText } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { Eye, EyeSlash } from "react-bootstrap-icons";
+import { useForm } from 'react-hook-form';
+import Swal from "sweetalert2";
+
+
 
 import { connect } from 'react-redux';
 import { registerUser } from '../../redux/actions';
@@ -12,12 +16,69 @@ import { Colxx } from '../../components/common/CustomBootstrap';
 
 import Registro from '../../components/formularios/registro';
 
+import log from '../../services/login';
+
+
 
 const Login = () => {
+
+  const {
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
   
   const limpiarCampos = () => {
-    
+
+    setEmail("");
+    setPassword("");
+  };
+
+  const onSubmit = (data) => {
+    setLoading(true);
+    log(data, window.location.origin.toString())
+    .then(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Bienvenido',
+        text: 'Has iniciado sesión correctamente',
+        confirmButtonColor: '#fc5241',
+      });
+      setLoading(false);
+    })
+    .catch(() => {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Error',
+        text: 'Usuario y/o contraseña incorrectos',
+        confirmButtonColor: '#fc5241',
+      });
+      setLoading(false);
+    })
+    reset();
+  };
+
+  const handleSubmitPersona = (event) => {
+    console.log(event);
+    event.preventDefault();  
+
+    const data = {
+      email: event.target[0].value,
+      password: event.target[1].value,
+    };
+    onSubmit(data);
+
+
+    limpiarCampos();
+
+
+
   };
   
   const toggleShowPassword = () => {
@@ -37,7 +98,7 @@ const Login = () => {
           <h5 style={{ color: "#fc5241" }}>Iniciar sesíon</h5>
         </div>
 
-        <Form >
+        <Form onSubmit={handleSubmitPersona}>
 
 
           <FormGroup controlId="formBasicEmail">
@@ -48,6 +109,7 @@ const Login = () => {
                   borderRadius: "50px",
                 }}
                 placeholder="Email"
+                value={email} onChange={(e) => setEmail(e.target.value)}
               />
             </InputGroup>
           </FormGroup>
@@ -62,6 +124,7 @@ const Login = () => {
                 }}
                 type={showPassword ? "text" : "password"}
                 placeholder="Contraseña"
+                value={password} onChange={(e) => setPassword(e.target.value)}
               />
               <InputGroupText
                 style={{
@@ -89,7 +152,7 @@ const Login = () => {
               }}
               type="submit"
             >
-              Iniciar sesión
+              {loading ? 'Cargando...' : 'Iniciar sesión'}
             </Button>
             <br />
             <Button

@@ -15,10 +15,7 @@ import Registro from '../../services/registro';
 const Register = () => {
 
   const {
-    register,
-    handleSubmit,
     reset,
-    getValues,
     formState: { errors },
   } = useForm();
 
@@ -31,7 +28,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [vista, setVista] = useState('formulario');
-  const [errorMostrar, setErrorMostrar] = useState('');
   const [loading, setLoading] = useState(false);
 
   const toggleShowPassword = () => {
@@ -52,7 +48,6 @@ const Register = () => {
     })
     .catch((error) => {
       if (error.response.data === 'username already exists') {
-        setErrorMostrar('El usuario ya existe');
       }
       Swal.fire({
         icon: 'error',
