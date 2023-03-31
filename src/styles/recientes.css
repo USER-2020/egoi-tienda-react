@@ -1,0 +1,591 @@
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 52.5px;
+    background-color: #F5F5F5;
+      
+}
+
+.containerRecents{
+    width: 100%;
+
+}
+
+.containerPromociones{
+    width: 100%;
+}
+.spanRecent{
+    display:flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 14px;
+
+}
+
+
+.refshowAll{
+    margin-left: 14px;
+    text-decoration: none;
+    color: #FC5241;
+}
+
+.containerProductos{
+    display: flex;
+    gap: 25px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+}
+
+.containerProductos::-webkit-scrollbar {
+    
+    width: 5px;
+    height: 5px;
+    border-radius: 10px;
+    margin-top: 5px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.containerProductos::-webkit-scrollbar:hover {
+    
+    width: 5px;
+    height: 10px;
+    border-radius: 10px;
+    margin-top: 5px;
+    pointer-events: all;
+    cursor: pointer;
+}
+.containerProductos::-webkit-scrollbar-thumb {
+    background-color: #7d7d7d;
+    border-radius: 10px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.containerProductos::-webkit-scrollbar-track {
+    background-color: #a0a0a0;
+    border-radius: 15px;
+}
+
+.containerProductos a {
+    text-decoration: none;
+    
+    
+}
+
+.containerCard{
+    width: 207px;
+    height: 330px;
+    margin-bottom: 20px;
+}
+
+.containerCard2{
+    width: 207px;
+    height: 360px;
+    margin-bottom: 20px;
+}
+
+.span_offer{
+ 
+    justify-content: center;
+    width: 71px;
+    height: 17px;
+    background-color: #A75BFF;
+    border-radius: 8px;
+    color: white;
+    padding: 4px 8px;
+    font-size: 10px;
+}
+
+.cardProducto1{
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+
+    overflow: hidden;
+    
+}
+
+
+.card-img-top{
+    display: flex;
+    width: 175px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.card-body{
+    padding: 0 20px;
+}
+
+.starts{
+    margin: 0px;
+}
+
+.card-title{
+    color: black;
+}
+
+.containerflyers {
+    width: 100%;
+    height: 100%;
+}
+
+.flyers {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.containerFlex {
+
+    width: 100%;
+    height: 100%;
+    padding-bottom: 50px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.celularesAccesorios {
+    position: relative;
+    width: 35%;
+    height: 260px;
+}
+
+.catContent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: #ffffff;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 24px;
+}
+
+.catText {
+    height: 90%;
+    width: 45%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.catText h2 {
+    color: #A75BFF;
+    font-size: 14px;
+
+    line-height: 12px;
+}
+
+.catText h1 {
+    color: #171523;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.catText a {
+    text-decoration: none;
+    color: #FC5241;
+    font-size: 14px;
+    width: 118px;
+    height: 34px;
+    border-radius: 34px;
+    border: 1px solid #FC5241;
+
+    display: grid;
+    place-items: center;
+}
+
+.catImage {
+    height: 100%;
+    width: 55%;
+
+    display: grid;
+    place-items: center;
+}
+
+.catImage img {
+    height: 100%;
+    width: 100%;
+}
+
+.celularesAccesorios::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 100%;
+    background: linear-gradient(to bottom, #F95738, #A75BFF);
+    transform: translateX(-5px);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.consolasVideojuegos {
+    position: relative;
+    width: 60%;
+    height: 260px;
+}
+
+.cvtContent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: #ffffff;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 24px;
+}
+.cvtText {
+    height: 90%;
+    width: 25%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cvtText h2 {
+    color: #A75BFF;
+    font-size: 14px;
+
+    line-height: 12px;
+}
+
+.cvtText h1 {
+    color: #171523;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.cvtText a {
+    text-decoration: none;
+    color: #FC5241;
+    font-size: 14px;
+    width: 118px;
+    height: 34px;
+    border-radius: 34px;
+    border: 1px solid #FC5241;
+
+    display: grid;
+    place-items: center;
+}
+
+.cvtImage {
+    height: 100%;
+    width: 70%;
+
+    display: grid;
+    place-items: center;
+}
+
+.cvtImage img {
+    height: 100%;
+    width: 100%;
+}
+
+
+.consolasVideojuegos::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 100%;
+    background: linear-gradient(to bottom, #F95738, #A75BFF);
+    transform: translateX(-5px);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.tvAudioVideo {
+    position: relative;
+    width: 60%;
+    height: 260px;
+}
+
+.tavtContent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: #ffffff;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 24px;
+}
+
+.tavtText {
+    height: 90%;
+    width: 25%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tavtText h2 {
+    color: #A75BFF;
+    font-size: 14px;
+
+    line-height: 12px;
+}
+
+.tavtText h1 {
+    color: #171523;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.tavtText a {
+    text-decoration: none;
+    color: #FC5241;
+    font-size: 14px;
+    width: 118px;
+    height: 34px;
+    border-radius: 34px;
+    border: 1px solid #FC5241;
+
+    display: grid;
+    place-items: center;
+}
+
+.tavtImage {
+    height: 100%;
+    width: 70%;
+
+    display: grid;
+    place-items: center;
+}
+
+.tavtImage img {
+    height: 100%;
+    width: 100%;
+}
+
+.tvAudioVideo::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 100%;
+    background: linear-gradient(to bottom, #F95738, #A75BFF);
+    transform: translateX(-5px);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.consolasVideojuegos2 {
+    position: relative;
+    width: 35%;
+    height: 260px;
+}
+
+.cvt2Content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: #ffffff;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 24px;
+}
+
+.cvt2Text {
+    height: 90%;
+    width: 45%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cvt2Text h2 {
+    color: #A75BFF;
+    font-size: 14px;
+
+    line-height: 12px;
+}
+
+.cvt2Text h1 {
+    color: #171523;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.cvt2Text a {
+    text-decoration: none;
+    color: #FC5241;
+    font-size: 14px;
+    width: 118px;
+    height: 34px;
+    border-radius: 34px;
+    border: 1px solid #FC5241;
+
+    display: grid;
+    place-items: center;
+}
+
+.cvt2Image {
+    height: 100%;
+    width: 55%;
+
+    display: grid;
+    place-items: center;
+}
+
+.cvt2Image img {
+    height: 100%;
+    width: 100%;
+}
+
+.consolasVideojuegos2::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 100%;
+    background: linear-gradient(to bottom, #F95738, #A75BFF);
+    transform: translateX(-5px);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.containerPostProm{
+    display: flex;
+    gap: 24px;
+}
+
+.containerPostProm .contenedor1{
+    width: 25%;
+    position:relative;
+    color: white;
+    
+    
+}
+
+.contenedor1 img {
+     width: 100%;
+     height: auto;
+     
+}
+
+
+.containerPostProm .contenedor2{
+    width: 50%;
+    position: relative;
+    color: white;
+    
+}
+
+.contenedor2 img {
+    width: 100%;
+    height: auto;
+    
+}
+
+
+.contenedor1 .header{
+    position: absolute;
+    top: 11px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor1 .footer {
+    position: absolute;
+    bottom: 0;
+    padding: 15px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.contenedor1 p ,h4 {
+    margin: 0;
+}
+
+.contenedor1 h4{
+    font-size: 40px;
+}
+
+.contenedor1 .header p{
+    font-size: 16px;
+}
+
+.contenedor1 .footer a{
+    text-decoration: none;
+    color: white;
+    width: 116px;
+    height: 32px;
+    background-color: #FC5241;
+    border-radius: 32px;
+    font-size: 12px;
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+.contenedor1 .footer p{
+    font-size: 10px;
+}
+
+.contenedor2 .left_{
+    position:absolute;
+    bottom: 0;
+    padding: 44px 20px;
+    
+    
+}
+
+.contenedor2 .left_ p{
+    font-size: 10px;
+}
+
+.contenedor2 .left_ h4{
+    font-size: 40px;
+}
+
+.contenedor2 .left_ h5{
+    font-size: 16px;
+}
+
+.contenedor2 .left_ a{
+    text-decoration: none;
+    color: white;
+    width: 116px;
+    height: 32px;
+    background-color: #FC5241;
+    border-radius: 32px;
+    font-size: 12px;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    margin-bottom: 10px;
+}
