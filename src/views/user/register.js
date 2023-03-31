@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import Registro from '../../services/registro';
 
 
-const Register = () => {
+const Register = ({ closemodal }) => {
 
   const {
     reset,
@@ -45,6 +45,7 @@ const Register = () => {
         confirmButtonColor: '#0d6efd',
       });
       setLoading(false);
+      closemodal();
     })
     .catch((error) => {
       if (error.response.data === 'username already exists') {

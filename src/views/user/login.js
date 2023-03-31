@@ -20,7 +20,34 @@ import log from '../../services/login';
 
 
 
-const Login = () => {
+const Login = ({ closeModal }) => {
+  const onSubmit = (data) => {
+    setLoading(true);
+    log(data, window.location.origin.toString())
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Bienvenido',
+          text: 'Has iniciado sesión correctamente',
+          confirmButtonColor: '#fc5241',
+        });
+        setLoading(false);
+        closeModal();
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Error',
+          text: 'Usuario y/o contraseña incorrectos',
+          confirmButtonColor: '#fc5241',
+        });
+        setLoading(false);
+      });
+    reset();
+   
+
+  };
+
 
   const {
     reset,
@@ -40,29 +67,6 @@ const Login = () => {
     setPassword("");
   };
 
-  const onSubmit = (data) => {
-    setLoading(true);
-    log(data, window.location.origin.toString())
-    .then(() => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Bienvenido',
-        text: 'Has iniciado sesión correctamente',
-        confirmButtonColor: '#fc5241',
-      });
-      setLoading(false);
-    })
-    .catch(() => {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Error',
-        text: 'Usuario y/o contraseña incorrectos',
-        confirmButtonColor: '#fc5241',
-      });
-      setLoading(false);
-    })
-    reset();
-  };
 
   const handleSubmitPersona = (event) => {
     console.log(event);
@@ -174,6 +178,5 @@ const Login = () => {
   </Row>
   );
 };
-const mapStateToProps = () => {};
 
-export default (Login);
+export default Login;

@@ -1,24 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import {
-  Navbar,
-  NavbarBrand,
-  NavbarToggler,
-  Collapse,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText,
   InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Input,
-  Button,
-  PlaceholderButton,
   Modal,
   ModalBody,
 } from "reactstrap";
@@ -26,26 +10,22 @@ import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import Register from "../views/user/register.js";
 import Login from "../views/user/login.js";
 
-const Header = (props) => {
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
 
 
-  const funcionCerrar = () => {
-    setModalViewRegistro(false);
+  const closeModal = () => {
     setModalViewLogin(false);
-
-
+    setModalViewRegistro(false);
   };
 
   return (
@@ -59,11 +39,15 @@ const Header = (props) => {
             <span className="input-icon">
               <FontAwesomeIcon icon={faSearch} />
             </span>
-            <Input style={{
-              border: "none",
-              width: "400px",
-              borderRadius: "50px",
-            }} type="text" placeholder="Busca productos, marcas..." />
+            <Input
+              style={{
+                border: "none",
+                width: "400px",
+                borderRadius: "50px",
+              }}
+              type="text"
+              placeholder="Busca productos, marcas..."
+            />
           </InputGroup>
         </div>
         <div className="userInteraction">
@@ -87,14 +71,21 @@ const Header = (props) => {
               </svg>
             </a>
             <div className="menu">
-              <a href="#" onClick={() => {
+              <a
+                href="#"
+                onClick={() => {
                   setModalViewLogin(true);
-                }}>
+                }}
+              >
                 <FontAwesomeIcon icon={faUser} /> Inicia Sesion
               </a>
-              <Modal className="modal-dialog-centered" toggle={() => setModalViewLogin(false)} isOpen={modalViewLogin}>
+              <Modal
+                className="modal-dialog-centered"
+                toggle={() => setModalViewLogin(false)}
+                isOpen={modalViewLogin}
+              >
                 <ModalBody>
-                  <Login />
+                  <Login closeModal={closeModal} />
                 </ModalBody>
               </Modal>
               <a
@@ -105,9 +96,13 @@ const Header = (props) => {
               >
                 <FontAwesomeIcon icon={faUserPlus} /> Registrate
               </a>
-              <Modal className="modal-dialog-centered" toggle={() => setModalViewRegistro(false)} isOpen={modalViewRegistro}>
+              <Modal
+                className="modal-dialog-centered"
+                toggle={() => setModalViewRegistro(false)}
+                isOpen={modalViewRegistro}
+              >
                 <ModalBody>
-                  <Register />
+                  <Register closeModal={closeModal} />
                 </ModalBody>
               </Modal>
             </div>
@@ -382,30 +377,41 @@ const Header = (props) => {
             Vender
           </a>
           <div className="menu">
-              <a href="#" onClick={() => {
-                  setModalViewLogin(true);
-                }}>
-                <FontAwesomeIcon icon={faUser} /> Inicia Sesion
-              </a>
-              <Modal className="modal-dialog-centered" toggle={() => setModalViewLogin(false)} isOpen={modalViewLogin}>
-                <ModalBody>
-                  <Login />
-                </ModalBody>
-              </Modal>
-              <a
-                href="#"
-                onClick={() => {
-                  setModalViewRegistro(true);
-                }}
-              >
-                <FontAwesomeIcon icon={faUserPlus} /> Registrate
-              </a>
-              <Modal className="modal-dialog-centered" toggle={() => setModalViewRegistro(false)} isOpen={modalViewRegistro}>
-                <ModalBody>
-                  <Register />
-                </ModalBody>
-              </Modal>
-            </div>
+            <a
+              href="#"
+              onClick={() => {
+                setModalViewLogin(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+            </a>
+            <Modal
+              className="modal-dialog-centered"
+              toggle={() => setModalViewLogin(false)}
+              isOpen={modalViewLogin}
+            >
+              <ModalBody>
+                <Login closeModal={closeModal}/>
+              </ModalBody>
+            </Modal>
+            <a
+              href="#"
+              onClick={() => {
+                setModalViewRegistro(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faUserPlus} /> Registrate
+            </a>
+            <Modal
+              className="modal-dialog-centered"
+              toggle={() => setModalViewRegistro(false)}
+              isOpen={modalViewRegistro}
+            >
+              <ModalBody>
+                <Register closeModal={closeModal} />
+              </ModalBody>
+            </Modal>
+          </div>
         </div>
       </div>
     </nav>
