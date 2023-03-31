@@ -140,8 +140,9 @@ const Recientes = () => {
                 <div className='catContent'>
                     <div className='catText'>
                         <div>
-                            cybertales
+                            CyberDays
                         </div>
+
                         <div>
                             <h2>Hasta 50% descuento en</h2>
                             <h1>Celulares y Accesorios</h1>
@@ -157,7 +158,7 @@ const Recientes = () => {
                 <div className='cvtContent'>
                 <div className='cvtText'>
                         <div>
-                            cybertales
+                            CyberDays
                         </div>
                         <div>
                             <h2>Hasta 20% descuento en</h2>
@@ -177,7 +178,7 @@ const Recientes = () => {
                 <div className='tavtContent'>
                     <div className='tavtText'>
                         <div>
-                            cybertales
+                            CyberDays
                         </div>
                         <div>
                             <h2>Hasta 40% descuento en</h2>
@@ -194,7 +195,7 @@ const Recientes = () => {
                 <div className='cvt2Content'>
                     <div className='cvt2Text'>
                         <div>
-                            cybertales
+                            CyberDays
                         </div>
                         <div>
                             <h2>Hasta 20% descuento en</h2>
