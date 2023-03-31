@@ -23,6 +23,9 @@ import logo from "../assets/logo.png";
 
 import Header from "../components/header";
 import Footer from "../components/footer";
+import Banner from "../components/home/banner";
+import Recientes from "../components/home/recientes";
+import Promociones from "../components/home/promociones";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +37,9 @@ const Home = (props) => {
     <>
       
       <Header />
+      <Banner/>
+      <Recientes/>
+      <Promociones/>
       <Footer />
     </>
     // <h1>Home</h1>
