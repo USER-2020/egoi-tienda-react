@@ -1,0 +1,63 @@
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 83px;
+    background-color: #F5F5F5;
+    margin-bottom: 134px;
+    
+      
+}
+
+
+.container .bannerDownImg{
+    width: 100%;
+    height: auto;
+    display: flex;
+    position: relative;
+    
+}
+
+
+.container .container1{
+    width: 100%;
+    position:relative;
+    color: white;
+}
+
+.container1 .bannerDownImg{
+    height: auto;
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.container1 .figures{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    bottom: 0;
+    
+}
+
+.container1 .figures > .diamond{
+    position: absolute;
+    bottom: 272px;
+    padding-left: 47px;
+    padding-top: 71px;
+}
+
+.container1 .figures > .triangle{
+    position: absolute;
+    bottom: -72.25px;
+    padding-left: 70px;
+    padding-top: 321px;
+    
+}
+
+
+.container1 .figures > .circle{
+    position: absolute;
+    bottom: 170%;
+    padding-left: 50%;
+    padding-top: 50%;
+}

@@ -1,0 +1,82 @@
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 52.5px;
+    background-color: #F5F5F5;
+      
+}
+
+.containerTiendasPopulares{
+    width: 100%;
+
+}
+
+.spanRecent{
+    display:flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 14px;
+    margin-bottom: 20.5px;
+
+}
+
+.refshowAll{
+    margin-left: 14px;
+    text-decoration: none;
+    color: #FC5241;
+}
+
+.containerTiendas{
+    display: flex;
+    gap: 24px;
+}
+
+.containerTiendas .container1{
+    width: 25%;
+    position:relative;
+    color: white;
+    
+}
+
+.containerTiendas  .imgFondo{
+    
+    height: auto;
+    width: 100%;
+    display: flex;
+    gap: 24px;
+    position: relative;
+}
+
+
+.containerTiendas .imgLogo{
+    width: 48px;
+}
+
+.container1 .div1{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    bottom: 0;
+    align-items: center;
+    gap: 9px;
+    padding: 16px 21px;
+}
+
+.container1 .div1 .div2{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    
+}
+
+.container1 .div1 .div2 .spanText{
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.container1 .div1 .div2 a {
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+}
