@@ -4,6 +4,10 @@ import bannerDown from '../../assets/banner3.png';
 import diamond from '../../assets/Diamond.png';
 import triangle from '../../assets/Triangle.png';
 import circle from '../../assets/Circle.png';
+import ball from '../../assets/Ball.png';
+import smallBall from '../../assets/Ball Small.png';
+import appStore from '../../assets/image 1.png';
+import googleStore from '../../assets/image 2.png';
 
 const Bannerdown = () => {
   return (
@@ -23,7 +27,12 @@ const Bannerdown = () => {
                     en tu primera compra
                 </span>
                 <span className='span3'>
-
+                    <a href='#'>
+                        <img src={appStore}/>
+                    </a>
+                    <a href='#'>
+                        <img src={googleStore}/>
+                    </a>
                 </span>
             </div>
             <div className='diamond'>
@@ -36,13 +45,13 @@ const Bannerdown = () => {
                 <img src={circle}/>
             </div>
             <div className='ball'>
-                <img src={diamond}/>
+                <img src={ball}/>
             </div>
             <div className='smallball1'>
-                <img src={diamond}/>
+                <img src={smallBall}/>
             </div>
             <div className='smallball2'>
-                <img src={diamond}/>
+                <img src={smallBall}/>
             </div>
         </div>
       </div>
