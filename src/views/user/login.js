@@ -20,7 +20,7 @@ import log from '../../services/login';
 
 
 
-const Login = ({ closeModal }) => {
+const Login = ({ closeModal, handleLogin }) => {
   const onSubmit = (data) => {
     setLoading(true);
     log(data, window.location.origin.toString())
@@ -33,6 +33,7 @@ const Login = ({ closeModal }) => {
         });
         setLoading(false);
         closeModal();
+        handleLogin();
       })
       .catch(() => {
         Swal.fire({

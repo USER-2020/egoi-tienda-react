@@ -9,7 +9,7 @@ import {
 import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faUser, faAngry  } from "@fortawesome/free-regular-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,11 +21,21 @@ const Header = () => {
   const toggle = () => setIsOpen(!isOpen);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const closeModal = () => {
     setModalViewLogin(false);
     setModalViewRegistro(false);
+  };
+
+  const handleLogin = () => {
+    // Code to handle user login, such as storing session storage, etc.
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    // Code to handle user logout, such as clearing session storage, etc.
+    setIsLoggedIn(false);
   };
 
   return (
@@ -71,41 +81,39 @@ const Header = () => {
               </svg>
             </a>
             <div className="menu">
-              <a
-                href="#"
-                onClick={() => {
-                  setModalViewLogin(true);
-                }}
-              >
-                <FontAwesomeIcon icon={faUser} /> Inicia Sesion
-              </a>
-              <Modal
-                className="modal-dialog-centered"
-                toggle={() => setModalViewLogin(false)}
-                isOpen={modalViewLogin}
-              >
-                <ModalBody>
-                  <Login closeModal={closeModal} />
-                </ModalBody>
-              </Modal>
-              <a
-                href="#"
-                onClick={() => {
-                  setModalViewRegistro(true);
-                }}
-              >
-                <FontAwesomeIcon icon={faUserPlus} /> Registrate
-              </a>
-              <Modal
-                className="modal-dialog-centered"
-                toggle={() => setModalViewRegistro(false)}
-                isOpen={modalViewRegistro}
-              >
-                <ModalBody>
-                  <Register closeModal={closeModal} />
-                </ModalBody>
-              </Modal>
-            </div>
+      {isLoggedIn ? (
+        <a href="#" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faAngry} /> Logout
+        </a>
+      ) : (
+        <>
+          <a href="#" onClick={() => setModalViewLogin(true)}>
+            <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+          </a>
+          <Modal
+            className="modal-dialog-centered"
+            toggle={() => setModalViewLogin(false)}
+            isOpen={modalViewLogin}
+          >
+            <ModalBody>
+              <Login closeModal={closeModal}  handleLogin={handleLogin} />
+            </ModalBody>
+          </Modal>
+          <a href="#" onClick={() => setModalViewRegistro(true)}>
+            <FontAwesomeIcon icon={faUserPlus} /> Registrate
+          </a>
+          <Modal
+            className="modal-dialog-centered"
+            toggle={() => setModalViewRegistro(false)}
+            isOpen={modalViewRegistro}
+          >
+            <ModalBody>
+              <Register closeModal={closeModal} />
+            </ModalBody>
+          </Modal>
+        </>
+      )}
+    </div>
           </div>
 
           {/* Favorito icono  */}
@@ -391,7 +399,7 @@ const Header = () => {
               isOpen={modalViewLogin}
             >
               <ModalBody>
-                <Login closeModal={closeModal}/>
+                <Login closeModal={closeModal}  handleLogin={handleLogin}/>
               </ModalBody>
             </Modal>
             <a
