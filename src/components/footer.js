@@ -62,7 +62,10 @@ const Footer = (props) => {
 
                         </div>
                         <div className="derApps">
+                            <a  href="https://play.google.com/store/apps/details?id=com.egoi_user.flutter" target="_blank">
                             <img src={playstore} alt="logo" className={styles.logo} width={'120px'} height={'36px'}/>
+
+                            </a>
                             <img src={appstore} alt="logo" className={styles.logo} width={'120px'} height={'36px'}/>
                             
                         </div>

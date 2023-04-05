@@ -9,8 +9,8 @@ import {
 import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faAngry  } from "@fortawesome/free-regular-svg-icons";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faUserPlus,faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import Register from "../views/user/register.js";
@@ -83,7 +83,7 @@ const Header = () => {
             <div className="menu">
       {isLoggedIn ? (
         <a href="#" onClick={handleLogout}>
-          <FontAwesomeIcon icon={faAngry} /> Logout
+          <FontAwesomeIcon icon={faRightFromBracket} /> Logout
         </a>
       ) : (
         <>
