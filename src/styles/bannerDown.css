@@ -1,0 +1,117 @@
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 16px;
+    background-color: #F5F5F5;
+    margin-bottom: 134px;
+    
+      
+}
+
+
+.container .bannerDownImg{
+    width: 100%;
+    height: auto;
+    display: flex;
+    position: relative;
+    
+}
+
+
+.container .container1{
+    width: 100%;
+    position:relative;
+    color: white;
+}
+
+.container1 .bannerDownImg{
+    height: auto;
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.container1 .figures{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    bottom: 0;
+    
+}
+
+.container1 .figures > .diamond{
+    position: absolute;
+    width: 40px;
+    bottom: 272px;
+    padding-left: 47px;
+    padding-top: 71px;
+}
+
+.container1 .figures > .triangle{
+    position: absolute;
+    width: 133px;
+    bottom: -72.25px;
+    padding-left: 70px;
+    padding-top: 321px;
+    
+}
+
+
+.container1 .figures > .circle{
+    position: absolute;
+    bottom: 115px;
+    padding-left: 506px;
+    padding-top: 50%;
+}
+
+.container1 .figures > .ball{
+    position: absolute;
+    bottom: 321px;
+    padding-left: 558px;
+    padding-top: -21px;
+}
+
+.container1 .figures > .smallball1{
+    position: absolute;
+    bottom: 20px;
+    padding-left: 672px;
+    padding-top: 329px;
+}
+
+.container1 .figures > .smallball2{
+    position: absolute;
+    width: 71px;
+    height: 71px;
+    bottom: 81px;
+    padding-left: 1231px;
+    padding-top: 235px;
+}
+
+.container .figures > .aplicaciones{
+    position: absolute;
+    width: 460px;
+    bottom: 214px;
+    padding-left: 115px;
+    top: -311px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.container .figures > .aplicaciones .span1{
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.container .figures > .aplicaciones .span2{
+    font-size: 14px;
+    width: 192px;
+}
+
+.container .figures > .aplicaciones .span3{
+    display: flex;
+    gap:8px;
+    z-index: 550;
+    
+    
+}
