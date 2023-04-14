@@ -133,14 +133,14 @@ const Recientes = () => {
       
 
     {/* ---------------------CAROUSEL RESPONSIVE----------------------------  */}
-    <div id="carouselExample" class="carousel slide"data-bs-ride="carousel">
+    <div id="carouselExample" class="carousel slide carousel_responsive"data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
         <div className='celularesAccesorios'>
                 <div className='catContent'>
                     <div className='catText'>
                         <div>
-                            cybertales
+                            CyberDays
                         </div>
                         <div>
                             <h2>Hasta 50% descuento en</h2>
@@ -159,7 +159,7 @@ const Recientes = () => {
                 <div className='catContent'>
                 <div className='cvtText'>
                         <div>
-                            cybertales
+                            CyberDays
                         </div>
                         <div>
                             <h2>Hasta 20% descuento en</h2>
@@ -178,7 +178,7 @@ const Recientes = () => {
                 <div className='catContent'>
                     <div className='tavtText'>
                         <div>
-                            cybertales
+                            CyberDays
                         </div>
                         <div>
                             <h2>Hasta 40% descuento en</h2>
@@ -197,7 +197,7 @@ const Recientes = () => {
                 <div className='catContent'>
                     <div className='cvt2Text'>
                         <div>
-                            cybertales
+                            CyberDays
                         </div>
                         <div>
                             <h2>Hasta 20% descuento en</h2>
