@@ -42,3 +42,8 @@ input[placeholder="Busca productos, marcas..."]::placeholder {
   background-repeat: no-repeat !important;
   padding-left: 20px !important;
 }
+
+.custom-input:checked + .custom-control-label::before {
+  background-color: rgba(252, 82, 65, 1);
+  border-color: rgba(252, 82, 65, 1);
+}

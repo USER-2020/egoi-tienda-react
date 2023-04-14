@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
@@ -15,8 +15,32 @@ import logoHaceb from '../../assets/hacebPNG.png';
 import electroHaceb from '../../assets/electrodomesticosHACEB.png';
 import logoAsus from '../../assets/asusPNG.png';
 import pcASUS from '../../assets/pcASUS.png';
+import { ProductosMasVendidos } from "../../services/productos";
+
 
 const Vendidos = () => {
+
+    const [productos, setProductos] = useState([]);
+
+    const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
+  
+    const ProductosMasVendido = () => {
+        ProductosMasVendidos()
+        .then((res) => {
+        setProductos(res.data.products);
+          console.log("mas vendidos",productos);
+        })
+        .catch((err) => console.log(err));
+  
+      // setProductos(productos);
+  
+    };
+  
+    useEffect(() => {
+      ProductosMasVendido();
+    }, []);
+
+
   return (
     <div className='container'>
       <div className='containerVendidos'>
@@ -30,106 +54,26 @@ const Vendidos = () => {
             </a>
         </div>
         <div className='containerProductos'>
-            <a href='#' className='containerCard'>
-                <Card className='cardProducto1'>
-                    <CardImg top width="80%" src={celRecent} alt="Card image cap" />
-                    <CardBody>
-                    <div className='starts'>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start_1}/>
-                        <img src={start_1}/>
-                    </div>
-                    <CardSubtitle tag="h5" className="mb-2 text-muted">Samsung Galaxy A53 5G 128gb</CardSubtitle>
-                    <CardTitle tag="h5">$1’600.000</CardTitle>
-                    </CardBody>
+        {productos.map((product, index) => (
+          <a href="#" className="containerCard2" key={index}>
+            <Card className="cardProducto1">
+              <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
+              <CardBody>
+                <div className="starts">
+                  <img src={start} />
+                  <img src={start} />
+                  <img src={start} />
+                  <img src={start_1} />
+                  <img src={start_1} />
+                </div>
+                <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {product.name}
+                </CardSubtitle>
+                <CardTitle tag="h5">${product.purchase_price.toLocaleString()}</CardTitle>
+              </CardBody>
             </Card>
-            </a>
-
-            <a href='#' className='containerCard'>
-                <Card className='cardProducto1'>
-                    <CardImg top width="80%" src={celRecent} alt="Card image cap" />
-                    <CardBody>
-                    <div className='starts'>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start_1}/>
-                        <img src={start_1}/>
-                    </div>
-                    <CardSubtitle tag="h5" className="mb-2 text-muted">Samsung Galaxy A53 5G 128gb</CardSubtitle>
-                    <CardTitle tag="h5">$1’600.000</CardTitle>
-                    </CardBody>
-            </Card>
-            </a>
-
-            <a href='#' className='containerCard'>
-                <Card className='cardProducto1'>
-                    <CardImg top width="80%" src={celRecent} alt="Card image cap" />
-                    <CardBody>
-                    <div className='starts'>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start_1}/>
-                        <img src={start_1}/>
-                    </div>
-                    <CardSubtitle tag="h5" className="mb-2 text-muted">Samsung Galaxy A53 5G 128gb</CardSubtitle>
-                    <CardTitle tag="h5">$1’600.000</CardTitle>
-                    </CardBody>
-            </Card>
-            </a>
-
-            <a href='#' className='containerCard'>
-                <Card className='cardProducto1'>
-                    <CardImg top width="80%" src={celRecent} alt="Card image cap" />
-                    <CardBody>
-                    <div className='starts'>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start_1}/>
-                        <img src={start_1}/>
-                    </div>
-                    <CardSubtitle tag="h5" className="mb-2 text-muted">Samsung Galaxy A53 5G 128gb</CardSubtitle>
-                    <CardTitle tag="h5">$1’600.000</CardTitle>
-                    </CardBody>
-            </Card>
-            </a>
-
-            <a href='#' className='containerCard'>
-                <Card className='cardProducto1'>
-                    <CardImg top width="80%" src={celRecent} alt="Card image cap" />
-                    <CardBody>
-                    <div className='starts'>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start_1}/>
-                        <img src={start_1}/>
-                    </div>
-                    <CardSubtitle tag="h5" className="mb-2 text-muted">Samsung Galaxy A53 5G 128gb</CardSubtitle>
-                    <CardTitle tag="h5">$1’600.000</CardTitle>
-                    </CardBody>
-            </Card>
-            </a>
-            <a href='#' className='containerCard'>
-                <Card className='cardProducto1'>
-                    <CardImg top width="80%" src={celRecent} alt="Card image cap" />
-                    <CardBody>
-                    <div className='starts'>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start_1}/>
-                        <img src={start_1}/>
-                    </div>
-                    <CardSubtitle tag="h5" className="mb-2 text-muted">Samsung Galaxy A53 5G 128gb</CardSubtitle>
-                    <CardTitle tag="h5">$1’600.000</CardTitle>
-                    </CardBody>
-            </Card>
-            </a>
+          </a>
+        ))}  
             
         </div>
         <div className='containerHot'>

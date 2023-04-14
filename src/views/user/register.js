@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import { Col, Row, Button, FormGroup, Form, Input, InputGroupText,InputGroup } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Button, FormGroup, Form, Input, InputGroupText, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Eye, EyeSlash, X } from "react-bootstrap-icons";
 import Swal from "sweetalert2";
 import { ReactComponent as UserIcon } from "../../assets/egoi_icons/user.svg";
@@ -10,9 +10,14 @@ import es from "react-phone-input-2/lang/es.json";
 import "../user/input-con-icono.css";
 import { useForm } from 'react-hook-form';
 import Registro from '../../services/registro';
+import TermsAndConditions from "./TermsAndConditions";
+import Login from "./login.js";
 
 
-const Register = () => {
+
+
+
+const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
 
   const {
     reset,
@@ -29,6 +34,36 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [vista, setVista] = useState('formulario');
   const [loading, setLoading] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [secondModalOpen, setSecondModalOpen] = useState(false);
+  // const [showLoginForm, setShowLoginForm] = useState(false);
+  const [modalViewLogin, setModalViewLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+  // const toggleModalViewLogin = () => {
+  //   setModalViewLogin(!modalViewLogin);
+    
+  //   console.log("Toggle modal view login");
+  // };
+
+ 
+
+
+  const handleLogin = () => {
+    // Code to handle user login, such as storing session storage, etc.
+    setIsLoggedIn(true);
+  };
+
+  const toggleSecondModal = () => {
+    console.log("Toggle second modal");
+    setSecondModalOpen(!secondModalOpen);
+  };
+
+
+  const handleCheckboxChange = () => {
+    setTermsAccepted(!termsAccepted);
+  };
 
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -37,32 +72,33 @@ const Register = () => {
   const onSubmit = (data) => {
     setLoading(true);
     Registro(data, window.location.origin.toString())
-    .then(() => {
-      Swal.fire({
-        icon: 'success',
-        title: '¡Registro exitoso!',
-        text: 'El registro ha sido completado exitosamente.',
-        confirmButtonColor: '#0d6efd',
-      });
-      setLoading(false);
-    })
-    .catch((error) => {
-      if (error.response.data === 'username already exists') {
-      }
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
-        confirmButtonColor: '#dc3545',
-      });
-      setLoading(false);
-    })
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Registro exitoso!',
+          text: 'El registro ha sido completado exitosamente.',
+          confirmButtonColor: '#0d6efd',
+        });
+        setLoading(false);
+        closeModalRegistro();
+      })
+      .catch((error) => {
+        if (error.response.data === 'username already exists') {
+        }
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+          confirmButtonColor: '#dc3545',
+        });
+        setLoading(false);
+      })
     reset();
   };
 
   const handleSubmitPersona = (event) => {
     console.log(event);
-    event.preventDefault();  
+    event.preventDefault();
 
     // Validar que el nombre y apellido solo contengan letras y espacios
     const nameRegex = /^[a-zA-Z ]+$/;
@@ -87,7 +123,7 @@ const Register = () => {
       });
       return;
     }
-  
+
     if (!name || !lastName || !email || !phoneNumber) {
       Swal.fire({
         icon: "error",
@@ -106,7 +142,7 @@ const Register = () => {
         text: "Por favor, ingrese una contraseña de al menos 8 caracteres.",
         confirmButtonColor: "#0d6efd",
       });
-      return; 
+      return;
     }
 
     // Validar que la contraseña y la confirmación de la contraseña sean iguales
@@ -145,7 +181,7 @@ const Register = () => {
     limpiarCampos();
   };
 
- 
+
 
   const limpiarCampos = () => {
     setName("");
@@ -174,26 +210,26 @@ const Register = () => {
             <Form onSubmit={handleSubmitPersona}>
 
               <FormGroup controlId="formBasicName">
-                  <Input  addon={true}
+                <Input addon={true}
                   name="name"
-                   className="form-control"
-                    style={{
-                      borderRadius: "50px",
-                    }}
-                    placeholder="Nombre"
-                    value={name} onChange={(event) => setName(event.target.value)}
-                  />
-              
+                  className="form-control"
+                  style={{
+                    borderRadius: "50px",
+                  }}
+                  placeholder="Nombre"
+                  value={name} onChange={(event) => setName(event.target.value)}
+                />
+
               </FormGroup>
 
               <FormGroup controlId="formBasicLastName">
-                  <Input
-                    style={{
-                      borderRadius: "50px",
-                    }}
-                    placeholder="Apellido"
-                    value={lastName} onChange={(event) => setLastName(event.target.value)}
-                  />
+                <Input
+                  style={{
+                    borderRadius: "50px",
+                  }}
+                  placeholder="Apellido"
+                  value={lastName} onChange={(event) => setLastName(event.target.value)}
+                />
               </FormGroup>
 
               <FormGroup controlId="formBasicEmail">
@@ -231,7 +267,7 @@ const Register = () => {
                 <InputGroup style={{ borderRadius: "50px" }}>
                   <Input
                     style={{
-                      
+
                       borderTopLeftRadius: "50px",
                       borderBottomLeftRadius: "50px",
                     }}
@@ -284,16 +320,70 @@ const Register = () => {
                 </InputGroup>
               </FormGroup>
 
+
+
               <div style={{ display: "flex", flexDirection: "column" }}>
+                <div>
+                    <Input
+                      className="custom-input"
+                      cssModule={{ color: "red" }}
+                      type="checkbox"
+                      name="terms"
+                      id="terms"
+                      value="true"
+                      checked={termsAccepted}
+                      onClick={!termsAccepted ? toggleSecondModal : null}
+                      onChange={handleCheckboxChange}
+                      style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                    />
+                    <span style={{ marginRight: "10px" }}>Aceptar términos y condiciones</span>
+                </div>
+                <Modal size='xl' isOpen={secondModalOpen} >
+                  <ModalHeader style={{ color: '#fc5241' }}>Términos y condiciones</ModalHeader>
+                  <ModalBody>
+                    <TermsAndConditions />
+                  </ModalBody>
+                  <ModalFooter style={{ display: "flex" }}>
+
+                    <Button
+
+                      style={{
+                        backgroundColor: "white",
+                        borderColor: "#fc5241",
+                        color: "#fc5241",
+                        borderRadius: "50px",
+                      }}
+                      type="submit"
+                      onClick={() => {
+                        setTermsAccepted(false);
+                        toggleSecondModal();
+                      }}> Rechazar </Button>
+                    <Button
+                      style={{
+                        backgroundColor: "#fc5241",
+                        borderColor: "#fc5241",
+                        borderRadius: "50px",
+                      }}
+                      type="submit"
+                      onClick={() => {
+                        setTermsAccepted(true);
+                        toggleSecondModal();
+                      }}> Aceptar </Button>
+
+
+                  </ModalFooter>
+                </Modal>
                 <Button
                   style={{
                     backgroundColor: "#fc5241",
                     borderColor: "#fc5241",
                     borderRadius: "50px",
+                    marginTop: "10px"
                   }}
                   type="submit"
+                  disabled={!termsAccepted || loading}
                 >
-                 {loading ? 'Cargando...' : 'Registrarme'}
+                  {loading ? 'Cargando...' : 'Registrarme'}
                 </Button>
                 <br />
                 <Button
@@ -303,11 +393,31 @@ const Register = () => {
                     color: "#fc5241",
                     borderRadius: "50px",
                   }}
-                  onClick={() => limpiarCampos()}
+                  onClick={() => {
+                    limpiarCampos();
+                    closeModalRegistro();
+                    handleChangeFormRegister();
+                  }}
+                  disabled={loading}
                 >
                   Ya tengo cuenta
                 </Button>
+
+                {/* <Modal
+                  className="modal-dialog-centered"
+                  toggle={() => setModalViewLogin(false)}
+                  isOpen={modalViewLogin}
+                >
+                  <ModalBody>
+                    <Login closeModalRegistro={closeModalRegistro} handleLogin={handleLogin} />
+                  </ModalBody>
+                </Modal> */}
+
+
               </div>
+
+
+
 
             </Form>
           </div>

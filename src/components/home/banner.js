@@ -7,7 +7,7 @@ import {
     CarouselCaption,
     Button
   } from 'reactstrap';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import "../../styles/banner.css";
 import  banner_1 from '../../assets/banner_1.png';
 import  banner_2 from '../../assets/banner_2.png';
