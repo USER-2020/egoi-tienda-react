@@ -9,6 +9,7 @@ import {
   } from 'reactstrap';
 import styled from 'styled-components';
 import "../../styles/banner.css";
+import banner_resp from '../../assets/banner_responsive_1.png';
 import  banner_1 from '../../assets/banner_1.png';
 import  banner_2 from '../../assets/banner_2.png';
 import celularCategoria from '../../assets/celularCategoria.png';
@@ -76,13 +77,14 @@ const items = [
             key={item.src}
             
             >
-            <img src={item.src} alt={item.altText} width={'100%'} />
-            <Button href={item.buttonLink} style={{ position: 'absolute', top: '65%', left: '15%', borderRadius:'32px' ,background: '#A75BFF',zIndex:'550'}}>{item.buttonLabel} </Button>
+            <img src={item.src} alt={item.altText} />
+            <Button href={item.buttonLink} className="bton_accesos"style={{ position: 'absolute', top: '65%', left: '15%', borderRadius:'32px' ,background: '#A75BFF',zIndex:'550'}}>{item.buttonLabel} </Button>
             {/* <CarouselCaption captionText={item.caption} captionHeader={item.caption} /> */}
             <CarouselCaption
                 // captionText={item.caption}
                 // style={{ position: 'absolute', top: '70%', left: '15%', zIndex:'555', width:'10%'}}
                 // captionText={item.caption}
+                className="carousel-caption-custom"
                 captionHeader={<div className="carousel-caption-header">{item.caption}</div>}
                 captionText={<div className="carousel-caption-text">{item.extraText}</div>}
                 
@@ -98,7 +100,10 @@ const items = [
             <div className='containerBanner'>
 
                 <a href='#'>
-                    <img src={banner_1} width={'100%'}/>
+                    <img src={banner_1} width={'100%'} className='banner_1'/>
+                </a>
+                <a href='#'>
+                    <img src={banner_resp} width={'100%'} className='banner_res_2'/>
                 </a>
                 <Carousel
                     activeIndex={activeIndex}

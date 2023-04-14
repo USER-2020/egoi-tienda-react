@@ -132,6 +132,98 @@ const Recientes = () => {
         </div>
       
 
+    {/* ---------------------CAROUSEL RESPONSIVE----------------------------  */}
+    <div id="carouselExample" class="carousel slide"data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+        <div className='celularesAccesorios'>
+                <div className='catContent'>
+                    <div className='catText'>
+                        <div>
+                            cybertales
+                        </div>
+                        <div>
+                            <h2>Hasta 50% descuento en</h2>
+                            <h1>Celulares y Accesorios</h1>
+                        </div>
+                        <a href="#">Ver categoría</a>
+                    </div>
+                    <div className='tavtImage'>
+                        < img src={imgCA} alt="catI" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div className='consolasVideojuegos'>
+                <div className='catContent'>
+                <div className='cvtText'>
+                        <div>
+                            cybertales
+                        </div>
+                        <div>
+                            <h2>Hasta 20% descuento en</h2>
+                            <h1>Consolas y Videojuegos</h1>
+                        </div>
+                        <a href="#">Ver categoría</a>
+                    </div>
+                    <div className='tavtImage'>
+                        < img src={ps5} alt="catI" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div className='tvAudioVideo'>
+                <div className='catContent'>
+                    <div className='tavtText'>
+                        <div>
+                            cybertales
+                        </div>
+                        <div>
+                            <h2>Hasta 40% descuento en</h2>
+                            <h1>TV, Audio y Vídeo</h1>
+                        </div>
+                        <a href="#">Ver categoría</a>
+                    </div>
+                    <div className='tavtImage'>
+                        < img src={tvAV} alt="catI" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div className='consolasVideojuegos2'>
+                <div className='catContent'>
+                    <div className='cvt2Text'>
+                        <div>
+                            cybertales
+                        </div>
+                        <div>
+                            <h2>Hasta 20% descuento en</h2>
+                            <h1>Consolas y Videojuegos</h1>
+                        </div>
+                        <a href="#">Ver categoría</a>
+                    </div>
+                    <div className='tavtImage'>
+                        < img src={xbox} alt="catI" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+    </div>
+    
+
+    {/* -------------------------------------------------- */}
     <div className='containerflyers'>
       <div className='flyers'>
         <div className='containerFlex'>

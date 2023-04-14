@@ -15,7 +15,14 @@
     margin-top: 16px;
 }
 
+.carousel-inner{
+    border-radius: 16px;
+}
 
+.carousel-item img {
+    width: 100vw;
+    height: auto;
+}
 .carousel-caption{
     position: absolute;
     bottom:50%;
@@ -24,7 +31,7 @@
     padding-bottom: 1.25rem;
     color: #ffff;
     text-align: start;
-    width: 321px;
+    max-width: 321px;
     height: 104px;
     font-style: normal;
     font-weight: 700;
@@ -48,6 +55,8 @@
     height: auto;
     margin-top: 32px;
     display: flex;
+    overflow-x: scroll;
+    
 }
 .containerCategoriasBanner > .categoriaCards{
     width: 322px;
@@ -100,5 +109,67 @@
     margin: 0;
 }
 
+.banner_res_2{
+    display: none;
+}
 
 
+@media (max-width: 768px) {
+    .banner_1{
+        display: none;
+    }
+
+    .banner_res_2{
+        display: block;
+    }
+
+    .carousel-inner{
+        border-radius: 16px;
+    }
+
+    .carousel-item img{
+        width: 100vw;
+        height: 195px;
+        z-index: 540;
+        border-radius: 16px;
+    }
+
+    
+    .carousel-caption{
+        display: block !important;
+        position: absolute;
+        /* bottom:-100px;
+        left: 100px; */
+        /* padding-top: 1.25rem;
+        padding-bottom: 1.25rem; */
+        top: 15%;
+        color: #ffff;
+        /* text-align: start; */
+        /* width: 124px;
+        height: 42px;
+        font-style: normal;
+        font-weight: 700;
+        z-index: 550; */
+        width: 125px;
+        
+        
+    }
+
+    .carousel-caption-header{
+        font-size: 16px;
+        
+        
+    }
+
+    .carousel-caption-text{
+        color: yellow;
+        font-size: 10px;
+        font-weight: 400;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next,
+    .carousel-indicators {
+    opacity: 0.1;
+    }
+}

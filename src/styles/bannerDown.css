@@ -115,3 +115,87 @@
     
     
 }
+.container .bannerDownImg2{
+    display: none;    
+}
+
+@media (max-width: 768px) {
+    .container .bannerDownImg{
+        display: none;
+    }
+    .container .bannerDownImg2{
+        
+        width: 100%;
+        height: auto;
+        display: flex;
+        position: relative;
+    }
+    .container .figures > .aplicaciones{
+        position: absolute;
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10px;
+        /* padding-left: 115px; */
+        top: -430px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .container .figures > .aplicaciones .span1{
+        text-align: center;
+        width: 300px;
+        font-size: 16px;
+        font-weight: 700;
+    }
+    
+    .container .figures > .aplicaciones .span2{
+        text-align: center;
+        font-size: 12px;
+        width: 192px;
+    }
+    
+    .container .figures > .aplicaciones .span3{
+        display: flex;
+        gap:8px;
+        z-index: 550;
+        
+        
+    }
+    .container1 .figures > .diamond img{
+        position: absolute;
+        padding: 0;
+        transform: translate(310px,-150px);
+    }
+
+    .container1 .figures > .triangle img{
+        position: absolute;
+        width: 72.86px;
+        transform: translate(-130%,-450%);
+        padding: 0;
+        
+    }
+    .container1 .figures > .circle img{
+        position: absolute;
+        width: 97px;
+        padding: 0;
+        transform: translate(-580%, -360%);
+    }
+
+    .container1 .figures > .ball img{
+        position: absolute;
+        width: 87px;
+        padding: 0;
+        transform: translate(-280%,300%);
+        overflow: hidden;
+    }
+    .container1 .figures > .smallball1{
+        display: none;
+    }
+    
+    .container1 .figures > .smallball2{
+        display: none;
+    }
+  }
