@@ -29,6 +29,7 @@ import Promociones from "../components/home/promociones";
 import Vendidos from "../components/home/vendidos";
 import Populares from "../components/home/populares";
 import Bannerdown from "../components/home/bannerdown";
+import HeaderResponsive from "../components/headerResponsive";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +41,7 @@ const Home = (props) => {
     <>
       
       <Header />
+      <HeaderResponsive/>
       <Banner/>
       <Recientes/>
       <Promociones/>

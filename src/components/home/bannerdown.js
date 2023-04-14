@@ -8,6 +8,7 @@ import ball from '../../assets/Ball.png';
 import smallBall from '../../assets/Ball Small.png';
 import appStore from '../../assets/image 1.png';
 import googleStore from '../../assets/image 2.png';
+import bannerDown2 from '../../assets/bannerdown2responsive.png';
 
 const Bannerdown = () => {
   return (
@@ -16,6 +17,7 @@ const Bannerdown = () => {
 
       
         <img src={bannerDown} className='bannerDownImg'/>
+        <img src={bannerDown2} className='bannerDownImg2'/>
         <div className='figures'>
             <div className='aplicaciones'>
                 <span className='span1'>

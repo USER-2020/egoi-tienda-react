@@ -482,11 +482,15 @@
 
 .containerPostProm{
     display: flex;
+    width: 100%;
+    height: auto;
     gap: 24px;
+    overflow-x: scroll;
 }
 
 .containerPostProm .contenedor1{
-    width: 25%;
+    width: 294px;
+    
     position:relative;
     color: white;
     
@@ -494,22 +498,22 @@
 }
 
 .contenedor1 img {
-     width: 100%;
-     height: auto;
+     width: 294px;
+     height: 254px;
      
 }
 
 
 .containerPostProm .contenedor2{
-    width: 50%;
+    width: 100%;
     position: relative;
     color: white;
     
 }
 
 .contenedor2 img {
-    width: 100%;
-    height: auto;
+    width: 650px;
+    height: 254px;
     
 }
 
@@ -594,4 +598,42 @@
     display: grid;
     place-items: center;
     margin-bottom: 10px;
+}
+
+/* .carousel{
+    display: none;
+} */
+.carousel_responsive{
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .carousel_responsive{
+        display: block;
+    }
+    .catContent{
+        width: 100vw;
+    }
+
+    .containerflyers{
+        display: none;
+    }
+
+    .tavtImage {
+        height: 100%;
+        width: 55%;
+    
+        display: grid;
+        place-items: center;
+    }
+
+    .tavtImage img {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .carousel-control-next{
+        z-index: 550;
+    }
 }

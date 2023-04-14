@@ -216,7 +216,7 @@ const Header = () => {
                   </li>
                 </a>
                 <a href="#">
-                  <li>Perfumes para mujes</li>
+                  <li>Perfumes para mujer</li>
                 </a>
                 <a href="#">
                   <li>Perfumes para hombre</li>

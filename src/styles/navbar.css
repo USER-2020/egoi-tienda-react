@@ -234,16 +234,21 @@ nav .containerHeader a {
 /* footer  */
 
 footer {
-  width: 100%;
+  width: 100vw;
   height: 472px;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   display: flex;
-}
+} 
 
 footer > .containerFooter{
+  
+  
+  width: 70%;
+  height: 472px;
+  align-items: center;
+  justify-content: center;
   display: block;
-  width: 75%;
   
   
 }
@@ -305,4 +310,80 @@ footer .containerFooter .row {
 
 .rowf ul a { 
   text-decoration: none;
+}
+
+
+@media (max-width: 768px) {
+  nav .containerNav {
+    display: none;
+    
+  }
+
+  nav .containerHeader {
+    display: none;
+  }
+
+  .offcanvas.show {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    overflow: hidden;
+    
+  }
+  .offcanvas-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
+    
+  }
+  footer {
+    width: 100vw;
+    height: 472px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  } 
+
+  footer > .containerFooter{
+  
+  
+    width: 100vw;
+    height: 472px;
+    align-items: center;
+    justify-content: center;
+    display: block;
+    
+    
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Para centrar los elementos horizontalmente */
+  }
+  
+  .footerLogo {
+    display: inline-block;
+    flex-direction: row;
+    justify-content: space-between; /* Para distribuir los logos de forma equitativa */
+    align-items: center; /* Para centrar los elementos verticalmente */
+    width: 100%;
+    padding: 30px;
+    border-bottom: 1px solid rgb(219, 219, 219);
+  }
+  
+  .izq {
+    display: flex;
+    align-items: center; /* Para centrar el logo verticalmente */
+  }
+  
+  .derPagos {
+    display: flex;
+    flex-wrap: wrap; /* Para que los logos se distribuyan en varias filas si es necesario */
+    justify-content: center; /* Para centrar los logos horizontalmente */
+  }
 }
