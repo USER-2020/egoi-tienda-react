@@ -22,10 +22,31 @@ const Header = () => {
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [changeFormLogin, setChangeFormLogin] = useState(false);
+  const [changeFormRegister, setChangeFormRegister] = useState(false);
 
-  const closeModal = () => {
-    setModalViewLogin(false);
+
+  const handleChangeFormLogin = () => {
+
+    if(modalViewLogin === true){
+      setModalViewRegistro(true);
+    }
+  };
+
+  const handleChangeFormRegister = () => {
+
+    if(modalViewRegistro === true){
+      setModalViewLogin(true);
+    }
+
+  };
+
+  const closeModalRegistro = () => {
     setModalViewRegistro(false);
+  };
+
+  const closeModalLogin = () => {
+    setModalViewLogin(false);
   };
 
   const handleLogin = () => {
@@ -93,10 +114,10 @@ const Header = () => {
           <Modal
             className="modal-dialog-centered"
             toggle={() => setModalViewLogin(false)}
-            isOpen={modalViewLogin}
+            isOpen={modalViewLogin && !changeFormLogin}
           >
             <ModalBody>
-              <Login closeModal={closeModal}  handleLogin={handleLogin} />
+              <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  closeModalRegistro={closeModalRegistro}  handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
             </ModalBody>
           </Modal>
           <a href="#" onClick={() => setModalViewRegistro(true)}>
@@ -105,10 +126,10 @@ const Header = () => {
           <Modal
             className="modal-dialog-centered"
             toggle={() => setModalViewRegistro(false)}
-            isOpen={modalViewRegistro}
+            isOpen={modalViewRegistro && !changeFormRegister}
           >
             <ModalBody>
-              <Register closeModal={closeModal} />
+              <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
             </ModalBody>
           </Modal>
         </>
@@ -399,7 +420,7 @@ const Header = () => {
               isOpen={modalViewLogin}
             >
               <ModalBody>
-                <Login closeModal={closeModal}  handleLogin={handleLogin}/>
+                <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  handleChangeFormLogin={handleChangeFormLogin} />
               </ModalBody>
             </Modal>
             <a
@@ -416,7 +437,7 @@ const Header = () => {
               isOpen={modalViewRegistro}
             >
               <ModalBody>
-                <Register closeModal={closeModal} />
+                <Register closeModalRegistro={closeModalRegistro}  handleChangeFormRegister={handleChangeFormRegister} />
               </ModalBody>
             </Modal>
           </div>
