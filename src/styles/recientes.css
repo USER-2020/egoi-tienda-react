@@ -37,6 +37,12 @@
     margin-bottom: 20px;
 }
 
+.cardProducto1 .card-img-top {
+    /* width: 100%; */
+    height: 200px;
+    object-fit: cover;
+  }
+
 .containerProductos::-webkit-scrollbar {
     
     width: 5px;
