@@ -179,13 +179,14 @@ nav .containerHeader a {
 .menuCategorias{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: flex-start;
-  padding: 40px;
-  gap: 48px;
+  padding-top: 20px;
+  /* gap: 48px; */
 
+ 
   position: absolute;
-  width: 944px;
+  width: 500px;
   height: auto;
   text-decoration: none;
   /* left: 280px;
@@ -217,10 +218,17 @@ nav .containerHeader a {
 }
 
 .menuCategorias .column {
-  width: 30%;
+  width: 50%;
 }
 
-.menuCategorias > .column ul li {
+
+
+.menuCategorias > .column2 ul{
+  padding-left: 0;
+}
+
+.menuCategorias > .column ul li,
+.menuCategorias > .column2 ul li{
   list-style: none;
 }
 
