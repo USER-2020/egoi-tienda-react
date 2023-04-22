@@ -1,0 +1,33 @@
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 48px;
+    background-color: #F5F5F5;
+      
+}
+
+.containerProductsIndex{
+    display: flex;
+    
+}
+
+.containerProductsIndex .menuBusqueda{
+    display: block;
+    width: 180%;
+    
+}
+
+.containerProductsIndex .menuBusqueda .filtros{
+    display: flex;
+    
+}
+
+.containerProductsIndex .menuBusqueda .filtros input{
+    margin-right: 5px;
+}
+
+.containerProductos a {
+    text-decoration: none;
+    padding: 0;
+}
+

@@ -16,6 +16,64 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Register from "../views/user/register.js";
 import Login from "../views/user/login.js";
 
+const data = [  
+    
+  {
+    name: "celulares",
+    subcategories: [
+      { name: "Accesorios para celular" },
+      { name: "Smartwatches" }
+    ],
+  },
+
+  {   name: "belleza",    
+      subcategories: [      
+        {  name: "Perfumes para mujer" },      
+        {  name: "Perfumes para hombre" },    
+        {  name: "Belleza y cuidado personal" },    
+        {  name: "Fajas y leggings" },    
+        {  name: "Maquillaje" },    
+      ],
+  },
+  {
+    name: "tv_audio_video",
+    subcategories: [
+      { name: "Televisores" },
+      { name: "Audio" },
+    ],
+  },
+  {
+    name: "relojes_accesorios",
+    subcategories: [
+      { name: "Relojes para hombre" },
+      { name: "Relojes para mujer" },
+      { name: "Gafas de sol" },
+      { name: "Gorras" },
+    ],
+  },
+  {
+    name: "computacion",
+    subcategories: [
+      { name: "Teclados" },
+      { name: "Mouses" },
+    ],
+  },
+  {
+    name: "moda",
+    subcategories: [
+      { name: "Calzado para dama" },
+      { name: "Calzado para hombre" },
+    ],
+  },
+  {
+    name: "consolas_videojuegos",
+    subcategories: [
+      { name: "Consolas" },
+      { name: "Videojuegos" },
+    ],
+  },
+];
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -24,8 +82,43 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
+  const [subcategorias, setSubcategorias] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState({});
 
+  // const [subcategorias, setSubcategorias] = useState([]);
+  // const [selectedCategory, setSelectedCategory] = useState(null);
+  // const [selectedCategory, setSelectedCategory] = useState([]);
 
+  
+
+  
+
+/**
+ * The function displays subcategories based on the category selected by the user.
+ * @param e - The parameter "e" is an event object that is passed as an argument to the function
+ * "mostrarSubcategorias". It represents the event that triggered the function, such as a click event
+ * on a button or a link. The event object contains information about the event, such as the target
+ * element,
+ */
+ 
+  const mostrarSubcategorias = (e) => {
+    
+    // console.log("entre");
+    // Obtenemos la categoría del data-category del enlace clickeado
+    const categoria = e.currentTarget.dataset.category;
+    // console.log(categoria);
+    // Buscamos la categoría correspondiente en el array data
+    const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
+    if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
+      setSelectedCategory(categoriaSeleccionada);
+      setSubcategorias(categoriaSeleccionada.subcategories);
+    } else {
+      setSelectedCategory({});
+      setSubcategorias([]);
+    }
+  };
+
+  
   const handleChangeFormLogin = () => {
 
     if(modalViewLogin === true){
@@ -194,120 +287,58 @@ const Header = () => {
             </svg>
             Categorias
           </a>
+          
           <div className="menuCategorias">
             <div className="column">
               <ul>
-                <a href="#">
-                  <li>
-                    <strong>Celulares y accesorios</strong>
-                  </li>
-                </a>
-                <a href="#">
-                  <li>Accesorios para celular</li>
-                </a>
-                <a href="#">
-                  <li>Smartwatches</li>
-                </a>
-              </ul>
-              <ul>
-                <a href="#">
+                
+                  <a href="#" data-category="celulares" onClick={mostrarSubcategorias}>
+                    <li>
+                      <strong>Celulares y accesorios</strong>
+                    </li>
+                  </a>
+                  <a href="#" data-category="belleza" onClick={mostrarSubcategorias}>
                   <li>
                     <strong>Belleza</strong>
                   </li>
-                </a>
-                <a href="#">
-                  <li>Perfumes para mujer</li>
-                </a>
-                <a href="#">
-                  <li>Perfumes para hombre</li>
-                </a>
-                <a href="#">
-                  <li>Belleza y cuidado personal</li>
-                </a>
-                <a href="#">
-                  <li>Fajas y leggings</li>
-                </a>
-                <a href="#">
-                  <li>Maquillaje</li>
-                </a>
-              </ul>
-            </div>
-            <div className="column">
-              <ul>
-                <a href="#">
+                  </a>
+                  <a href="#" data-category="tv_audio_video" onClick={mostrarSubcategorias}>
                   <li>
                     <strong>TV, audio y video</strong>
                   </li>
-                </a>
-                <a href="#">
-                  <li>Televisores</li>
-                </a>
-                <a href="#">
-                  <li>Audio</li>
-                </a>
-              </ul>
-              <ul>
-                <a href="#">
+                  </a>
+                  <a href="#" data-category="relojes_accesorios" onClick={mostrarSubcategorias}>
                   <li>
                     <strong>Relojes y accesorios</strong>
                   </li>
-                </a>
-                <a href="#">
-                  <li>Relojes para hombre</li>
-                </a>
-                <a href="#">
-                  <li>Relojes para mujer</li>
-                </a>
-                <a href="#">
-                  <li>Gafas de sol</li>
-                </a>
-                <a href="#">
-                  <li>Gorras</li>
-                </a>
-              </ul>
-            </div>
-            <div className="column">
-              <ul>
-                <a href="#">
+                  </a>
+                  <a href="#" data-category="computacion" onClick={mostrarSubcategorias}>
                   <li>
                     <strong>Computación</strong>
                   </li>
-                </a>
-                <a href="#">
-                  <li>Teclados</li>
-                </a>
-                <a href="#">
-                  <li>Mouses</li>
-                </a>
-              </ul>
-              <ul>
-                <a href="#">
+                  </a>
+                  <a href="#" data-category="moda" onClick={mostrarSubcategorias}>
                   <li>
                     <strong>Moda</strong>
                   </li>
-                </a>
-                <a href="#">
-                  <li>Calzado para dama</li>
-                </a>
-                <a href="#">
-                  <li>Calzado para hombre</li>
-                </a>
-              </ul>
-            </div>
-            <div className="column">
-              <ul>
-                <a href="#">
+                  </a>
+                  <a href="#" data-category="consolas_videojuegos" onClick={mostrarSubcategorias}>
                   <li>
                     <strong>Consolas y videojuegos</strong>
                   </li>
-                </a>
-                <a href="#">
-                  <li>Consolas</li>
-                </a>
-                <a href="#">
-                  <li>Videojuegos</li>
-                </a>
+                  </a>
+
               </ul>
+            </div>
+            <div className="column2">
+              <ul>
+                {subcategorias.map((subcategoria) => (
+                  <li key={subcategoria.name}>
+                    <a href="#">{subcategoria.name}</a>
+                  </li>
+                ))}
+              </ul>
+              
             </div>
           </div>
         </div>
