@@ -29,10 +29,10 @@ const Bannerdown = () => {
                     en tu primera compra
                 </span>
                 <span className='span3'>
-                    <a href='#'>
+                    <a href="https://play.google.com/store/apps/details?id=com.egoi_user.flutter" target="_blank">
                         <img src={appStore}/>
                     </a>
-                    <a href='#'>
+                    <a href="#">
                         <img src={googleStore}/>
                     </a>
                 </span>
