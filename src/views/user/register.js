@@ -157,12 +157,12 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
     }
 
     // Validar que el número de teléfono tenga un formato válido
-    const phoneRegex = /^\d{10}$/;
+    const phoneRegex = /^\d{13}$/;
     if (!phoneRegex.test(phoneNumber)) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingrese un número de teléfono válido. Debe contener 10 dígitos.",
+        text: "Por favor, ingrese un número de teléfono válido. Debe contener minimo 10 dígitos. Mas el indicativo del país.",
         confirmButtonColor: "#0d6efd",
       });
       return;

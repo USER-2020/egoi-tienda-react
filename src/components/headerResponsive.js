@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Navbar,
     NavbarBrand,
@@ -29,8 +29,50 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import Login from '../views/user/login';
+import Register from '../views/user/register';
 
 function HeaderResponsive() {
+
+  const [modalViewRegistro, setModalViewRegistro] = useState(false);
+  const [modalViewLogin, setModalViewLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [changeFormLogin, setChangeFormLogin] = useState(false);
+  const [changeFormRegister, setChangeFormRegister] = useState(false);
+
+
+  const handleChangeFormLogin = () => {
+
+    if(modalViewLogin === true){
+      setModalViewRegistro(true);
+    }
+  };
+
+  const handleChangeFormRegister = () => {
+
+    if(modalViewRegistro === true){
+      setModalViewLogin(true);
+    }
+
+  };
+
+  const closeModalRegistro = () => {
+    setModalViewRegistro(false);
+  };
+
+  const closeModalLogin = () => {
+    setModalViewLogin(false);
+  };
+
+  const handleLogin = () => {
+    // Code to handle user login, such as storing session storage, etc.
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    // Code to handle user logout, such as clearing session storage, etc.
+    setIsLoggedIn(false);
+  };
   return (
     <div className='containerResponsive'>
     <nav class="navbar bg-body-tertiary fixed-top">
@@ -294,12 +336,33 @@ function HeaderResponsive() {
               </a>
             </li>
             <li class="nav-item btnsPers">
-              <a href='#' className='btn btnPersonalizadosL'>
+              <a href='#' className='btn btnPersonalizadosL'
+              onClick={() => {
+                setModalViewLogin(true);
+              }}>
                 <FontAwesomeIcon icon={faUser} /> Inicia Sesion
               </a>
-              <a href='#' className='btn btnPersonalizadosR'>
+              <Modal
+              className="modal-dialog-centered"
+              toggle={() => setModalViewLogin(false)}
+              isOpen={modalViewLogin}
+            >
+              <ModalBody>
+                <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  handleChangeFormLogin={handleChangeFormLogin} />
+              </ModalBody>
+            </Modal>
+              <a href='#' onClick={() => setModalViewRegistro(true)} className='btn btnPersonalizadosR'>
                 <FontAwesomeIcon icon={faUserPlus} /> Registrate
               </a>
+              <Modal
+            className="modal-dialog-centered"
+            toggle={() => setModalViewRegistro(false)}
+            isOpen={modalViewRegistro && !changeFormRegister}
+          >
+            <ModalBody>
+              <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+            </ModalBody>
+          </Modal>
             </li>
             
             </ul>
