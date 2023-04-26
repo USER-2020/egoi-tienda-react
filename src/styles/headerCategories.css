@@ -51,6 +51,7 @@
     gap: 10px;
     padding:  0 16px;
     height: 64px;
+    width: 100%;
     border-radius: 6px;
     color: black;
     background-color: white;
@@ -61,7 +62,7 @@
 }
 
 .dropdown button:hover{
-    background: #74737B;
+    background:#FC5241;
 }
 
 .menu:before {
@@ -100,7 +101,7 @@
 }
 
 .dropdown.open > button {
-    background: #712ae0;
+    background:#FC5241;
 }
 
 .dropdown.open .menu{
@@ -298,3 +299,8 @@
 .containerPersonalizado2 h6{
     font-size: 16px;
 }
+
+input[type="radio"]:checked {
+    background-color:#FC5241;
+    border-color: #e1e1e1;
+  }

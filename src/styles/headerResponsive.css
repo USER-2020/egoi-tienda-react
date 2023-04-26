@@ -44,6 +44,11 @@ nav {
     color: #FC5241 !important;
     border-radius: 32px;
 }
+
+.offcanvas-body ul li{
+    list-style: none;
+}
+
 @media (max-width: 768px) {
     nav {
         width: 100vw;

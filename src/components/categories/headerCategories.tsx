@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 
 import '../../styles/headerCategories.css'
 
@@ -11,6 +12,7 @@ import {
   useRef,
   useState
 } from "react"
+import category from '../../views/category'
 
 const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
 
@@ -39,7 +41,12 @@ const HeaderCategories = () => {
   const [isOpen1, setIsOpen1] = useState<boolean>(false);
   const [isOpen2, setIsOpen2] = useState<boolean>(false);
   const [isOpen3, setIsOpen3] = useState<boolean>(false);
-  
+  // const { match } = props;
+  // const category  = props.match ? props.match.params : '';
+  // const subcategory = props.match ? props.match.params : '';
+  const { category, subcategory } = useParams();
+  console.log(category)
+  console.log(subcategory)
   // const [buttonsState, setButtonsState] = useState({
   //   brands:false,
   //   price:false,
@@ -76,7 +83,7 @@ const HeaderCategories = () => {
   return (
     <div className='container'>
       {/* Nombre de la categoria  */}
-      <h3 className='nameCategory'>Celulares y Accesorios</h3>
+      <h3 className='nameCategory'>{subcategory}</h3>
 
       <div className='card categoriesCard'>
           <ul>

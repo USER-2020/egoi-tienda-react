@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Navbar,
     NavbarBrand,
@@ -32,6 +33,64 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Login from '../views/user/login';
 import Register from '../views/user/register';
 
+const data = [  
+    
+  {
+    name: "Celulares y Accesorios",
+    subcategories: [
+      { name: "Accesorios para celular" },
+      { name: "Smartwatches" }
+    ],
+  },
+
+  {   name: "Belleza",    
+      subcategories: [      
+        {  name: "Perfumes para mujer" },      
+        {  name: "Perfumes para hombre" },    
+        {  name: "Belleza y cuidado personal" },    
+        {  name: "Fajas y leggings" },    
+        {  name: "Maquillaje" },    
+      ],
+  },
+  {
+    name: "Tv, Audio y Video",
+    subcategories: [
+      { name: "Televisores" },
+      { name: "Audio" },
+    ],
+  },
+  {
+    name: "Relojes y Accesorios",
+    subcategories: [
+      { name: "Relojes para hombre" },
+      { name: "Relojes para mujer" },
+      { name: "Gafas de sol" },
+      { name: "Gorras" },
+    ],
+  },
+  {
+    name: "Computacion",
+    subcategories: [
+      { name: "Teclados" },
+      { name: "Mouses" },
+    ],
+  },
+  {
+    name: "Moda",
+    subcategories: [
+      { name: "Calzado para dama" },
+      { name: "Calzado para hombre" },
+    ],
+  },
+  {
+    name: "Consolas y Videojuegos",
+    subcategories: [
+      { name: "Consolas" },
+      { name: "Videojuegos" },
+    ],
+  },
+];
+
 function HeaderResponsive() {
 
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
@@ -39,7 +98,26 @@ function HeaderResponsive() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
+  const [subcategorias, setSubcategorias] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState({});
 
+
+  const mostrarSubcategorias = (e) => {
+    
+    // console.log("entre");
+    // Obtenemos la categoría del data-category del enlace clickeado
+    const categoria = e.currentTarget.dataset.category;
+    // console.log(categoria);
+    // Buscamos la categoría correspondiente en el array data
+    const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
+    if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
+      setSelectedCategory(categoriaSeleccionada);
+      setSubcategorias(categoriaSeleccionada.subcategories);
+    } else {
+      setSelectedCategory({});
+      setSubcategorias([]);
+    }
+  };
 
   const handleChangeFormLogin = () => {
 
@@ -138,7 +216,7 @@ function HeaderResponsive() {
               Categorias
             </a>
             </li> */}
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" onClick={mostrarSubcategorias}>
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg
                   width="32"
@@ -157,11 +235,25 @@ function HeaderResponsive() {
                   Categorias
                 </a>
                 <ul class="dropdown-menu dropdown-menu-extended">
-                <li><a class="dropdown-item" href="#"><strong>Celulares y accesorios</strong></a></li>
-                <li><a class="dropdown-item" href="#"> Accesorios para celular</a></li>
-                <li><a class="dropdown-item" href="#"> Smartwatches</a></li>
+                  
+                {data.map((category) => (
+                <li key={category.name}>
+                  <a className="dropdown-item" href="#">
+                    <strong>{category.name}</strong>
+                  </a>
+                  <ul >
+                    {category.subcategories.map((subcategory) => (
+                      <li key={subcategory.name}>
+                        <Link to={`/categories/${category.name}/${subcategory.name}`}>
+                          <a className="dropdown-item" href="#">{subcategory.name}</a>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                ))}
 
-                <li><a class="dropdown-item" href="#"><strong>Belleza</strong></a></li>
+                {/* <li><a class="dropdown-item" href="#"><strong>Belleza</strong></a></li>
                 <li><a class="dropdown-item" href="#">Perfumes para mujer</a></li>
                 <li><a class="dropdown-item" href="#">Perfumes para hombre</a></li>
                 <li><a class="dropdown-item" href="#">Belleza y cuidado persona</a></li>
@@ -188,12 +280,13 @@ function HeaderResponsive() {
 
                 <li><a class="dropdown-item" href="#"><strong>Consolas y videojuegos</strong></a></li>
                 <li><a class="dropdown-item" href="#">Consolas</a></li>
-                <li><a class="dropdown-item" href="#">Videojuegos</a></li>
+                <li><a class="dropdown-item" href="#">Videojuegos</a></li> */}
 
                 </ul>
             </li>
             <li class="nav-item pers">
-              <a href="#">
+            
+              <a href="/">
                 <svg
                   width="32"
                   height="32"

@@ -16,15 +16,15 @@ function ProductsCategories() {
       <div className="containerProductsIndex">
         <div className="menuBusqueda">
           <div className="filtros">
-            <input type="radio" /> 
+            <input type="radio" className="form-check-input"/> 
             Productos más vendidos
           </div>
           <div className="filtros">
-            <input type="radio" /> 
+            <input type="radio" className="form-check-input"/> 
             Mejor calificados
           </div>
           <div className="filtros">
-            <input type="radio" /> 
+            <input type="radio" className="form-check-input"/> 
             Los más preferidos
           </div>
           
