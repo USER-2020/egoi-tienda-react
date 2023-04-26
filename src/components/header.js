@@ -293,37 +293,37 @@ const Header = () => {
             <div className="column">
               <ul>
                 
-                  <a href="#" data-category="celulares" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="celulares" onMouseOver ={mostrarSubcategorias}>
                     <li>
                       <strong>Celulares y accesorios</strong>
                     </li>
                   </a>
-                  <a href="#" data-category="belleza" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="belleza" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Belleza</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="tv_audio_video" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="tv_audio_video" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>TV, audio y video</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="relojes_accesorios" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="relojes_accesorios" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Relojes y accesorios</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="computacion" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="computacion" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Computación</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="moda" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="moda" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Moda</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="consolas_videojuegos" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="consolas_videojuegos" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Consolas y videojuegos</strong>
                   </li>
