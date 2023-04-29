@@ -12,6 +12,18 @@
     
 }
 
+.containerProducts{
+    padding: 10px;
+    height: 100%;
+    margin-bottom: 10px;
+    
+}
+
+.containerProductos{
+    overflow-y: hidden;
+    
+}
+
 .containerProductsIndex .menuBusqueda{
     display: block;
     width: 60%;
@@ -33,14 +45,23 @@
 
 .containerProductos a {
     text-decoration: none;
-    padding: 0;
+    
 }
 
 .containerCard2{
     width: 198px;
-    height: 300px;
+    height: 320px;
 }
+
+
+
 input[type="radio"]:checked {
     background-color:#FC5241;
     border-color: #e1e1e1;
   }
+
+@media (max-width: 768px) {
+    .containerProductCategorie{
+        display: none;
+    }
+}

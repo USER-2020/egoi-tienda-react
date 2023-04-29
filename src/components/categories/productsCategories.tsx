@@ -12,7 +12,9 @@ import iphoner from '../../assets/iphoneMuestra.png';
 
 function ProductsCategories() {
   return (
-    <div className='container'>
+
+  <div className='containerProductCategorie'>
+      <div className='container'>
       <div className="containerProductsIndex">
         <div className="menuBusqueda">
           <div className="filtros">
@@ -322,6 +324,8 @@ function ProductsCategories() {
         </div>
       </div>
     </div>
+  </div>
+    
   )
 }
 
