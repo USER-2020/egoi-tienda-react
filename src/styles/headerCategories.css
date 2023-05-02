@@ -405,6 +405,22 @@ input[type="radio"]:checked {
         height: 60px;
         border-radius: 32px;
     }
+
+    .filterSelected{
+        display: block;
+        padding-left: 24px;
+    }
+
+    .filterSelected .containerMarca,
+    .filterSelected .containerPrecio,
+    .filterSelected .containerOrdenar{
+        display: flex;
+        gap: 25px;
+    }
+
+    .filterSelected .titleFilter {
+        color: #A2A1A7;
+    }
     /* .menu2 .containerPersonalizado > .btnAplicar{
         background-color: #FC5241;
         color: white;
