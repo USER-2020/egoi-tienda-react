@@ -379,7 +379,7 @@ input[type="radio"]:checked {
     /* modalPrecio */
     .menu2 .containerPersonalizado{
         display: block;
-        padding: 20px;
+        padding: 24px;
         
     }
 
@@ -397,6 +397,14 @@ input[type="radio"]:checked {
         align-items: center;
     }
 
+    .containerModalOrdenar{
+        padding: 24px;
+    }
+
+    .containerModalOrdenar .form-select{
+        height: 60px;
+        border-radius: 32px;
+    }
     /* .menu2 .containerPersonalizado > .btnAplicar{
         background-color: #FC5241;
         color: white;

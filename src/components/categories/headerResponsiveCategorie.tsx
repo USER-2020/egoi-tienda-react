@@ -171,7 +171,26 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
                 </Modal>
               </li>
               
-              <li><a href='#'>Ordenar por</a></li>
+              <li>
+                <a onClick={toggleOrdenar}>Ordenar por</a>
+                <Modal isOpen={modalOrdenar} toggle={toggleOrdenar} className='modal-bottom'>
+                  <ModalBody>
+                    <h4>Ordenar por</h4>
+                    <div className="containerModalOrdenar">
+                      <select className="form-select" aria-label="Default select example">
+                        <option selected>Selecciona ...</option>
+                        <option value="1">Del más bajo al más alto</option>
+                        <option value="2">Del más alto al más bajo</option>
+                        <option value="3">De la A - Z</option>
+                        <option value="4">De la Z - A</option>
+                        <option value="5">El más reciente</option>
+                        
+                      </select>
+                    </div>
+                  </ModalBody>
+
+                </Modal>
+              </li>
               
             </ul>
               

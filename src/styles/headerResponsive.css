@@ -60,7 +60,7 @@ nav {
         /* justify-content: center; */
     }
     .input-group{
-        width: 196px;
+        width: 220px;
     }
     .input-icon{
         display: none;
@@ -72,5 +72,8 @@ nav {
         align-items: center;
         display:flex;
 
+    }
+    a .navbar-brand{
+        margin-right: 0px;
     }
   }
