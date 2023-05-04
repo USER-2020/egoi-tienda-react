@@ -12,7 +12,7 @@ import {
   useRef,
   useState
 } from "react"
-import category from '../../views/category'
+
 
 const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
 
@@ -44,9 +44,10 @@ const HeaderCategories = () => {
   // const { match } = props;
   // const category  = props.match ? props.match.params : '';
   // const subcategory = props.match ? props.match.params : '';
-  const { category, subcategory } = useParams();
+  const { category, subcategory, id } = useParams();
   console.log(category)
   console.log(subcategory)
+  // console.log(id)
   // const [buttonsState, setButtonsState] = useState({
   //   brands:false,
   //   price:false,

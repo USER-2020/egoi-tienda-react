@@ -8,7 +8,9 @@ import ProductsCategories from "../components/categories/productsCategories.tsx"
 import HeaderResponsiveCategorie from "../components/categories/headerResponsiveCategorie.tsx";
 
 const category = (props) => {
-
+    // const categoryId = props.match.params.category;
+    // const subcategoryId = props.match.params.subcategory;
+    // const productId = props.match.params.id;
     // const [isOpen, setIsOpen] = useState(false);
     // const toggle = () => setIsOpen(!isOpen);
 

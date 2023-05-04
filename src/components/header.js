@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from 'react-router-dom';
 import {
   InputGroup,
   Input,
@@ -16,64 +16,69 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import Register from "../views/user/register.js";
 import Login from "../views/user/login.js";
+import { allCategories } from "../services/categories";
+import { subcategorieById } from "../services/categories";
 
-const data = [  
+
+
+
+// const data = [  
     
-  {
-    name: "celulares",
-    subcategories: [
-      { name: "Accesorios para celular" },
-      { name: "Smartwatches" }
-    ],
-  },
+//   {
+//     name: "celulares",
+//     subcategories: [
+//       { name: "Accesorios para celular" },
+//       { name: "Smartwatches" }
+//     ],
+//   },
 
-  {   name: "belleza",    
-      subcategories: [      
-        {  name: "Perfumes para mujer" },      
-        {  name: "Perfumes para hombre" },    
-        {  name: "Belleza y cuidado personal" },    
-        {  name: "Fajas y leggings" },    
-        {  name: "Maquillaje" },    
-      ],
-  },
-  {
-    name: "tv_audio_video",
-    subcategories: [
-      { name: "Televisores" },
-      { name: "Audio" },
-    ],
-  },
-  {
-    name: "relojes_accesorios",
-    subcategories: [
-      { name: "Relojes para hombre" },
-      { name: "Relojes para mujer" },
-      { name: "Gafas de sol" },
-      { name: "Gorras" },
-    ],
-  },
-  {
-    name: "computacion",
-    subcategories: [
-      { name: "Teclados" },
-      { name: "Mouses" },
-    ],
-  },
-  {
-    name: "moda",
-    subcategories: [
-      { name: "Calzado para dama" },
-      { name: "Calzado para hombre" },
-    ],
-  },
-  {
-    name: "consolas_videojuegos",
-    subcategories: [
-      { name: "Consolas" },
-      { name: "Videojuegos" },
-    ],
-  },
-];
+//   {   name: "belleza",    
+//       subcategories: [      
+//         {  name: "Perfumes para mujer" },      
+//         {  name: "Perfumes para hombre" },    
+//         {  name: "Belleza y cuidado personal" },    
+//         {  name: "Fajas y leggings" },    
+//         {  name: "Maquillaje" },    
+//       ],
+//   },
+//   {
+//     name: "tv_audio_video",
+//     subcategories: [
+//       { name: "Televisores" },
+//       { name: "Audio" },
+//     ],
+//   },
+//   {
+//     name: "relojes_accesorios",
+//     subcategories: [
+//       { name: "Relojes para hombre" },
+//       { name: "Relojes para mujer" },
+//       { name: "Gafas de sol" },
+//       { name: "Gorras" },
+//     ],
+//   },
+//   {
+//     name: "computacion",
+//     subcategories: [
+//       { name: "Teclados" },
+//       { name: "Mouses" },
+//     ],
+//   },
+//   {
+//     name: "moda",
+//     subcategories: [
+//       { name: "Calzado para dama" },
+//       { name: "Calzado para hombre" },
+//     ],
+//   },
+//   {
+//     name: "consolas_videojuegos",
+//     subcategories: [
+//       { name: "Consolas" },
+//       { name: "Videojuegos" },
+//     ],
+//   },
+// ];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +89,12 @@ const Header = () => {
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [subcategorias, setSubcategorias] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts ] = useState([]);
+  const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
+
+  const {id} = useParams();
 
   // const [subcategorias, setSubcategorias] = useState([]);
   // const [selectedCategory, setSelectedCategory] = useState(null);
@@ -92,6 +102,25 @@ const Header = () => {
 
   
 
+  /**
+   * This function retrieves all categories and sets them in state using a promise and useEffect hook.
+   */
+  const allCategoriesPromise = () => {
+    allCategories()
+    .then((res) => {
+      setCategories(res.data);
+      console.log("Recibiendo todas las categorias", categories);
+      
+    })
+    .catch((err) => console.log(err));
+  };
+
+  useEffect(()=>{
+    allCategoriesPromise();
+  }, []);
+
+  
+ 
   
 
 /**
@@ -102,22 +131,45 @@ const Header = () => {
  * element,
  */
  
-  const mostrarSubcategorias = (e) => {
+  // const mostrarSubcategorias = (e) => {
     
-    // console.log("entre");
-    // Obtenemos la categoría del data-category del enlace clickeado
-    const categoria = e.currentTarget.dataset.category;
-    // console.log(categoria);
-    // Buscamos la categoría correspondiente en el array data
-    const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
-    if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
-      setSelectedCategory(categoriaSeleccionada);
-      setSubcategorias(categoriaSeleccionada.subcategories);
-    } else {
-      setSelectedCategory({});
-      setSubcategorias([]);
+  //   // console.log("entre");
+  //   // Obtenemos la categoría del data-category del enlace clickeado
+  //   const categoria = e.currentTarget.dataset.category;
+  //   // console.log(categoria);
+  //   // Buscamos la categoría correspondiente en el array data
+  //   const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
+  //   if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
+  //     setSelectedCategory(categoriaSeleccionada);
+  //     setSubcategorias(categoriaSeleccionada.subcategories);
+  //   } else {
+  //     setSelectedCategory({});
+  //     setSubcategorias([]);
+  //   }
+  // };
+
+  /**
+   * The function "mostrarSubcategorias" logs the selected category and sets the subcategories based on
+   * the category's childes property.
+   * @param e - The parameter "e" is an event object that is passed to the function when it is
+   * triggered by an event listener. It contains information about the event that triggered the
+   * function, such as the target element and any data attributes associated with it. In this case, it
+   * is used to retrieve the "categoryId
+   */
+  const mostrarSubcategorias = (e) => {
+    const categoryId = e.currentTarget.dataset.categoryId;
+    console.log("Este es el id de la categoria", categoryId);
+    // console.log("Este es el arreglo" ,categories);
+    const selectedCategory = categories.find((categoria) => categoria.id == categoryId);
+    setSelectedCategory(selectedCategory);
+    console.log("Esta es la categoría seleccionada:", selectedCategory);
+    // setSubcategorias(selectedCategory.subcategories);
+    if (selectedCategory) {
+      setSubcategorias(selectedCategory.childes);
+      // const subcategorias = selectedCategory.childes;
+      // console.log("Estas son las subcategorias ", subcategorias);
     }
-  };
+  }
 
   
   const handleChangeFormLogin = () => {
@@ -152,6 +204,10 @@ const Header = () => {
     // Code to handle user logout, such as clearing session storage, etc.
     setIsLoggedIn(false);
   };
+
+  
+
+ 
 
   return (
     <nav>
@@ -292,8 +348,15 @@ const Header = () => {
           <div className="menuCategorias">
             <div className="column">
               <ul>
-                
-                  <a href="#" data-category="celulares" onMouseOver ={mostrarSubcategorias}>
+                  {categories.map((categoria, index)=>( 
+                  <a href="#" data-category-id={categoria.id} data-category={categoria.name}  key={index} onMouseOver={mostrarSubcategorias}>
+                    <li>
+                    <strong>{categoria.name}</strong>
+                    </li>
+                  </a> 
+                  ))}                  
+                  
+                  {/* <a href="#" data-category="celulares" onMouseOver ={mostrarSubcategorias}>
                     <li>
                       <strong>Celulares y accesorios</strong>
                     </li>
@@ -327,7 +390,7 @@ const Header = () => {
                   <li>
                     <strong>Consolas y videojuegos</strong>
                   </li>
-                  </a>
+                  </a> */}
 
               </ul>
             </div>
@@ -335,14 +398,13 @@ const Header = () => {
               <ul>
                 {subcategorias.map((subcategoria) => (
                   <li key={subcategoria.name}>
-                    <Link to={`/categories/${selectedCategory.name}/${subcategoria.name}`}>
+                    <Link to={`/categories/${selectedCategory.name}/${subcategoria.name}/${subcategoria.id}`} >
                     <a href="#">
                       {subcategoria.name}
                     </a>
                     </Link>
-                    {/* <a href="#">{subcategoria.name}</a> */}
-                  </li>
-                ))}
+                  </li> 
+                ))} 
               </ul>
               
             </div>
@@ -483,41 +545,6 @@ const Header = () => {
         </div>
       </div>
     </nav>
-
-    // <Navbar color="light" light expand="md" className={styles.navbar}>
-    //   <NavbarBrand href="/" >
-    //     {/* <img src={logo} alt="logo" className={styles.logo} /> */}
-    //   </NavbarBrand>
-    //   <NavbarToggler onClick={toggle} />
-    //   <Collapse isOpen={isOpen} navbar>
-    //     <Nav className="mr-auto" navbar>
-    //       <NavItem>
-    //         <NavLink href="/components/">Components</NavLink>
-    //       </NavItem>
-    //       <NavItem>
-    //         <NavLink href="https://github.com/reactstrap/reactstrap">
-    //           GitHub
-    //         </NavLink>
-    //       </NavItem>
-    //       <UncontrolledDropdown nav inNavbar>
-    //         <DropdownToggle nav caret>
-    //           Options
-    //         </DropdownToggle>
-    //         <DropdownMenu right>
-    //           <DropdownItem>Option 1</DropdownItem>
-    //           <DropdownItem>Option 2</DropdownItem>
-    //           <DropdownItem divider />
-    //           <DropdownItem>Reset</DropdownItem>
-    //         </DropdownMenu>
-    //       </UncontrolledDropdown>
-    //     </Nav>
-    //     <InputGroup className={styles.search}>
-    //       <Input placeholder="Search..." />
-
-    //     </InputGroup>
-    //     {/* <NavbarText>Simple Text</NavbarText> */}
-    //   </Collapse>
-    // </Navbar>
   );
 };
 

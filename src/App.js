@@ -29,7 +29,7 @@ const App = (props) => {
               <Route path="/unauthorized" exact render={(props) => <ViewUnauthorized {...props} />} />
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />
               {/* <Route path="/categories" exact render={(props) => <ViewCategory {...props} />} /> */}
-              <Route path="/categories/:category/:subcategory" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
               <Redirect to="/error" />
             </Switch>
           </Router>

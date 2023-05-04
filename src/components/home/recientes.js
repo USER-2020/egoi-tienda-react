@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import "../../styles/recientes.css";
 import {
     Card, CardImg, CardText, CardBody,
@@ -11,9 +11,29 @@ import imgCA from '../../assets/celularesAccesorioscyberday.png';
 import ps5 from '../../assets/ps5categoria.png';
 import tvAV from '../../assets/tvyvideocategoria.png';
 import xbox from '../../assets/xboxcategoria.png';
+import { ProductosRecientes } from '../../services/productos';
 
 
 const Recientes = () => {
+    const [products, setProducts] = useState([]);
+
+    const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
+
+    const ProductosRecientesVistas = () => {
+        ProductosRecientes()
+        .then((res)=>{
+            setProducts(res.data.products);
+            console.log("vistos recientementes", products);
+
+        })
+        .catch((err)=> console.log(err));
+    };
+
+    useEffect(()=> {
+        ProductosRecientesVistas();
+    }, []);
+
+
   return (
     <div className="container">
       <div className="containerRecents">
@@ -28,7 +48,26 @@ const Recientes = () => {
             </a>
         </div>
         <div className='containerProductos'>
-            <a href='#' className='containerCard'>
+            {products.map((product, index) => (
+            <a href='#' className='containerCard' key={index}>
+                <Card className='cardProducto1'>
+                    <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
+                    <CardBody>
+                    <div className='starts'>
+                        <img src={start}/>
+                        <img src={start}/>
+                        <img src={start}/>
+                        <img src={start_1}/>
+                        <img src={start_1}/>
+                    </div>
+                    <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>{product.name}</CardSubtitle>
+                    <CardTitle tag="h5">${product.purchase_price.toLocaleString()}</CardTitle>
+                    </CardBody>
+            </Card>
+            </a>
+            ))}
+
+            {/* <a href='#' className='containerCard'>
                 <Card className='cardProducto1'>
                     <CardImg top width="80%" src={celRecent} alt="Card image cap" />
                     <CardBody>
@@ -95,7 +134,6 @@ const Recientes = () => {
                     </CardBody>
             </Card>
             </a>
-
             <a href='#' className='containerCard'>
                 <Card className='cardProducto1'>
                     <CardImg top width="80%" src={celRecent} alt="Card image cap" />
@@ -111,23 +149,7 @@ const Recientes = () => {
                     <CardTitle tag="h5">$1’600.000</CardTitle>
                     </CardBody>
             </Card>
-            </a>
-            <a href='#' className='containerCard'>
-                <Card className='cardProducto1'>
-                    <CardImg top width="80%" src={celRecent} alt="Card image cap" />
-                    <CardBody>
-                    <div className='starts'>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start_1}/>
-                        <img src={start_1}/>
-                    </div>
-                    <CardSubtitle tag="h5" className="mb-2 text-muted">Samsung Galaxy A53 5G 128gb</CardSubtitle>
-                    <CardTitle tag="h5">$1’600.000</CardTitle>
-                    </CardBody>
-            </Card>
-            </a>
+            </a> */}
             
         </div>
       
