@@ -158,13 +158,13 @@ function HeaderResponsive() {
         {/* <div className={styles.navbarLogo}>
           <img src={logo} alt="logo" className={styles.logo} width={"150px"} />
         </div> */}
-        <div className='d-flex'>
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-        </div>
+        
         <a class="navbar-brand" href="#"><img src={logo} alt="logo" className={styles.logo} width={""} /></a>
-        <div className={styles.searchContainer}>
+        <div className='searchContainer'>
           <InputGroup className={styles.search}>
             <span className="input-icon">
               <FontAwesomeIcon icon={faSearch} />
