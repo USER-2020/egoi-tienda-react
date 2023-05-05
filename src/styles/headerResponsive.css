@@ -8,7 +8,7 @@ nav {
     /* justify-content: center; */
 }
 
-.containerResponsive{
+.containerResponsive {
     display: none;
 }
 
@@ -55,25 +55,34 @@ nav {
         height: 80px;
         background-color: #f7f7f7;
         border: 2px solid #e3e2e2;
-        display: inline-block;
+        display: flex;
         align-items: center;
+        flex-direction: row;
+
         /* justify-content: center; */
     }
-    .input-group{
-        width: 220px;
+
+    .searchContainer{
+        width: 40%;
     }
+
+    
     .input-icon{
         display: none;
     }
 
     .containerResponsive {
         width: 100vw;
-        justify-content: space-around;
+        /* justify-content: space-between; */
         align-items: center;
         display:flex;
+        flex-direction: row;
+        
 
     }
+    
     a .navbar-brand{
         margin-right: 0px;
+        
     }
   }

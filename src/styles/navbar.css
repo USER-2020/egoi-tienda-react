@@ -43,11 +43,11 @@
   color: white !important;
 } */ 
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .modal-sm {
     max-width: 90%;
   }
-}
+} */
 
 
 nav {
