@@ -189,7 +189,8 @@ nav .containerHeader a {
   justify-content: start;
   align-items: flex-start;
   padding-top: 20px;
-  /* gap: 48px; */
+  line-height: 40px;
+  gap: 48px;
 
  
   position: absolute;
@@ -206,7 +207,7 @@ nav .containerHeader a {
   border: 1px solid #e1e1e1;
   box-shadow: 0 40px 40px rgb(0 0 0/ 6%);
   opacity: 0;
-  visibility: hidden;
+  visibility: hidden;  
   transition: 0.25s;
   z-index: 999;
 }
@@ -229,7 +230,9 @@ nav .containerHeader a {
 }
 
 
-
+.menuCategorias > .column ul{
+  padding-left: 10px;
+}
 .menuCategorias > .column2 ul{
   padding-left: 0;
 }
@@ -239,6 +242,26 @@ nav .containerHeader a {
   list-style: none;
 }
 
+.menuCategorias > .column ul li:hover{
+  background-color: #FC5241;
+  color: white;
+  width: auto;
+  padding: 5px;
+  border-radius: 16px;
+}
+
+/* .menuCategorias > .column ul li:active{
+  background-color: #FC5241;
+  color: white;
+  width: auto;
+  padding: 5px;
+  border-radius: 16px;
+} */
+.menuCategorias > .column2 ul li a:hover{
+  
+  color: #FC5241;
+  
+}
 .dropdown:hover .menuCategorias {
   opacity: 1;
   visibility: visible;

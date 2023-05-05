@@ -6,6 +6,8 @@
       
 }
 
+
+
 .nameCategory{
     font-size: 20px;
     font-weight: 700;
@@ -51,6 +53,7 @@
     gap: 10px;
     padding:  0 16px;
     height: 64px;
+    width: 100%;
     border-radius: 6px;
     color: black;
     background-color: white;
@@ -61,7 +64,7 @@
 }
 
 .dropdown button:hover{
-    background: #74737B;
+    background:#FC5241;
 }
 
 .menu:before {
@@ -100,7 +103,7 @@
 }
 
 .dropdown.open > button {
-    background: #712ae0;
+    background:#FC5241;
 }
 
 .dropdown.open .menu{
@@ -298,3 +301,131 @@
 .containerPersonalizado2 h6{
     font-size: 16px;
 }
+
+input[type="radio"]:checked {
+    background-color:#FC5241;
+    border-color: #e1e1e1;
+  }
+
+  .containerHeaderResponsiveCategorie{
+    display: none;
+  }
+
+ 
+
+@media (max-width: 768px) {
+    .containerHeaderFull{
+        display: none;
+    }
+
+    .categoriesCard ul {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .containerHeaderResponsiveCategorie{
+        display: block;
+    }
+
+    .modal-bottom {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        background-color: #e1e1e1;
+        z-index: 600;
+      }
+
+    .containerModalMarca{
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+      }
+
+    .containerModalMarca .opcion{
+        display: flex;
+        justify-content: start;
+        width: 100%;
+        text-align: start;
+    }
+    .containerModalMarca .opcion span{
+        margin-left: 8px;
+    }
+    .modal-body{
+        justify-content: center;
+    }
+
+    .modal-body h4{
+        text-align: center;
+    }
+    .modal-body .btnFilter{
+        display: flex;
+        border-radius: 32px;
+        width: 327px;
+        height: 48px;
+        padding: 16px;
+        align-self: center;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background-color: #FC5241;
+        border: none;
+        margin-top: 16px;
+
+    }
+
+    /* modalPrecio */
+    .menu2 .containerPersonalizado{
+        display: block;
+        padding: 24px;
+        
+    }
+
+    .menu2 .containerPrecios{
+        display: flex;
+        justify-content: center;
+    }
+
+    .menu2 .desde,
+    .menu2 .hasta{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .containerModalOrdenar{
+        padding: 24px;
+    }
+
+    .containerModalOrdenar .form-select{
+        height: 60px;
+        border-radius: 32px;
+    }
+
+    .filterSelected{
+        display: block;
+        padding-left: 24px;
+    }
+
+    .filterSelected .containerMarca,
+    .filterSelected .containerPrecio,
+    .filterSelected .containerOrdenar{
+        display: flex;
+        gap: 25px;
+    }
+
+    .filterSelected .titleFilter {
+        color: #A2A1A7;
+    }
+    /* .menu2 .containerPersonalizado > .btnAplicar{
+        background-color: #FC5241;
+        color: white;
+        justify-content: center;
+        align-items: center;
+    } */
+}
+

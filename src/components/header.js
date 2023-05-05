@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from 'react-router-dom';
 import {
   InputGroup,
   Input,
@@ -15,64 +16,69 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import Register from "../views/user/register.js";
 import Login from "../views/user/login.js";
+import { allCategories } from "../services/categories";
+import { subcategorieById } from "../services/categories";
 
-const data = [  
+
+
+
+// const data = [  
     
-  {
-    name: "celulares",
-    subcategories: [
-      { name: "Accesorios para celular" },
-      { name: "Smartwatches" }
-    ],
-  },
+//   {
+//     name: "celulares",
+//     subcategories: [
+//       { name: "Accesorios para celular" },
+//       { name: "Smartwatches" }
+//     ],
+//   },
 
-  {   name: "belleza",    
-      subcategories: [      
-        {  name: "Perfumes para mujer" },      
-        {  name: "Perfumes para hombre" },    
-        {  name: "Belleza y cuidado personal" },    
-        {  name: "Fajas y leggings" },    
-        {  name: "Maquillaje" },    
-      ],
-  },
-  {
-    name: "tv_audio_video",
-    subcategories: [
-      { name: "Televisores" },
-      { name: "Audio" },
-    ],
-  },
-  {
-    name: "relojes_accesorios",
-    subcategories: [
-      { name: "Relojes para hombre" },
-      { name: "Relojes para mujer" },
-      { name: "Gafas de sol" },
-      { name: "Gorras" },
-    ],
-  },
-  {
-    name: "computacion",
-    subcategories: [
-      { name: "Teclados" },
-      { name: "Mouses" },
-    ],
-  },
-  {
-    name: "moda",
-    subcategories: [
-      { name: "Calzado para dama" },
-      { name: "Calzado para hombre" },
-    ],
-  },
-  {
-    name: "consolas_videojuegos",
-    subcategories: [
-      { name: "Consolas" },
-      { name: "Videojuegos" },
-    ],
-  },
-];
+//   {   name: "belleza",    
+//       subcategories: [      
+//         {  name: "Perfumes para mujer" },      
+//         {  name: "Perfumes para hombre" },    
+//         {  name: "Belleza y cuidado personal" },    
+//         {  name: "Fajas y leggings" },    
+//         {  name: "Maquillaje" },    
+//       ],
+//   },
+//   {
+//     name: "tv_audio_video",
+//     subcategories: [
+//       { name: "Televisores" },
+//       { name: "Audio" },
+//     ],
+//   },
+//   {
+//     name: "relojes_accesorios",
+//     subcategories: [
+//       { name: "Relojes para hombre" },
+//       { name: "Relojes para mujer" },
+//       { name: "Gafas de sol" },
+//       { name: "Gorras" },
+//     ],
+//   },
+//   {
+//     name: "computacion",
+//     subcategories: [
+//       { name: "Teclados" },
+//       { name: "Mouses" },
+//     ],
+//   },
+//   {
+//     name: "moda",
+//     subcategories: [
+//       { name: "Calzado para dama" },
+//       { name: "Calzado para hombre" },
+//     ],
+//   },
+//   {
+//     name: "consolas_videojuegos",
+//     subcategories: [
+//       { name: "Consolas" },
+//       { name: "Videojuegos" },
+//     ],
+//   },
+// ];
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,7 +89,12 @@ const Header = () => {
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [subcategorias, setSubcategorias] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts ] = useState([]);
+  const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
+
+  const {id} = useParams();
 
   // const [subcategorias, setSubcategorias] = useState([]);
   // const [selectedCategory, setSelectedCategory] = useState(null);
@@ -91,6 +102,25 @@ const Header = () => {
 
   
 
+  /**
+   * This function retrieves all categories and sets them in state using a promise and useEffect hook.
+   */
+  const allCategoriesPromise = () => {
+    allCategories()
+    .then((res) => {
+      setCategories(res.data);
+      console.log("Recibiendo todas las categorias", categories);
+      
+    })
+    .catch((err) => console.log(err));
+  };
+
+  useEffect(()=>{
+    allCategoriesPromise();
+  }, []);
+
+  
+ 
   
 
 /**
@@ -101,22 +131,45 @@ const Header = () => {
  * element,
  */
  
-  const mostrarSubcategorias = (e) => {
+  // const mostrarSubcategorias = (e) => {
     
-    // console.log("entre");
-    // Obtenemos la categoría del data-category del enlace clickeado
-    const categoria = e.currentTarget.dataset.category;
-    // console.log(categoria);
-    // Buscamos la categoría correspondiente en el array data
-    const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
-    if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
-      setSelectedCategory(categoriaSeleccionada);
-      setSubcategorias(categoriaSeleccionada.subcategories);
-    } else {
-      setSelectedCategory({});
-      setSubcategorias([]);
+  //   // console.log("entre");
+  //   // Obtenemos la categoría del data-category del enlace clickeado
+  //   const categoria = e.currentTarget.dataset.category;
+  //   // console.log(categoria);
+  //   // Buscamos la categoría correspondiente en el array data
+  //   const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
+  //   if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
+  //     setSelectedCategory(categoriaSeleccionada);
+  //     setSubcategorias(categoriaSeleccionada.subcategories);
+  //   } else {
+  //     setSelectedCategory({});
+  //     setSubcategorias([]);
+  //   }
+  // };
+
+  /**
+   * The function "mostrarSubcategorias" logs the selected category and sets the subcategories based on
+   * the category's childes property.
+   * @param e - The parameter "e" is an event object that is passed to the function when it is
+   * triggered by an event listener. It contains information about the event that triggered the
+   * function, such as the target element and any data attributes associated with it. In this case, it
+   * is used to retrieve the "categoryId
+   */
+  const mostrarSubcategorias = (e) => {
+    const categoryId = e.currentTarget.dataset.categoryId;
+    console.log("Este es el id de la categoria", categoryId);
+    // console.log("Este es el arreglo" ,categories);
+    const selectedCategory = categories.find((categoria) => categoria.id == categoryId);
+    setSelectedCategory(selectedCategory);
+    console.log("Esta es la categoría seleccionada:", selectedCategory);
+    // setSubcategorias(selectedCategory.subcategories);
+    if (selectedCategory) {
+      setSubcategorias(selectedCategory.childes);
+      // const subcategorias = selectedCategory.childes;
+      // console.log("Estas son las subcategorias ", subcategorias);
     }
-  };
+  }
 
   
   const handleChangeFormLogin = () => {
@@ -151,6 +204,10 @@ const Header = () => {
     // Code to handle user logout, such as clearing session storage, etc.
     setIsLoggedIn(false);
   };
+
+  
+
+ 
 
   return (
     <nav>
@@ -291,42 +348,49 @@ const Header = () => {
           <div className="menuCategorias">
             <div className="column">
               <ul>
-                
-                  <a href="#" data-category="celulares" onClick={mostrarSubcategorias}>
+                  {categories.map((categoria, index)=>( 
+                  <a href="#" data-category-id={categoria.id} data-category={categoria.name}  key={index} onMouseOver={mostrarSubcategorias}>
+                    <li>
+                    <strong>{categoria.name}</strong>
+                    </li>
+                  </a> 
+                  ))}                  
+                  
+                  {/* <a href="#" data-category="celulares" onMouseOver ={mostrarSubcategorias}>
                     <li>
                       <strong>Celulares y accesorios</strong>
                     </li>
                   </a>
-                  <a href="#" data-category="belleza" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="belleza" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Belleza</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="tv_audio_video" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="tv_audio_video" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>TV, audio y video</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="relojes_accesorios" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="relojes_accesorios" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Relojes y accesorios</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="computacion" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="computacion" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Computación</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="moda" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="moda" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Moda</strong>
                   </li>
                   </a>
-                  <a href="#" data-category="consolas_videojuegos" onClick={mostrarSubcategorias}>
+                  <a href="#" data-category="consolas_videojuegos" onMouseOver ={mostrarSubcategorias}>
                   <li>
                     <strong>Consolas y videojuegos</strong>
                   </li>
-                  </a>
+                  </a> */}
 
               </ul>
             </div>
@@ -334,31 +398,37 @@ const Header = () => {
               <ul>
                 {subcategorias.map((subcategoria) => (
                   <li key={subcategoria.name}>
-                    <a href="#">{subcategoria.name}</a>
-                  </li>
-                ))}
+                    <Link to={`/categories/${selectedCategory.name}/${subcategoria.name}/${subcategoria.id}`} >
+                    <a href="#">
+                      {subcategoria.name}
+                    </a>
+                    </Link>
+                  </li> 
+                ))} 
               </ul>
               
             </div>
           </div>
         </div>
-        <a href="#">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M16.8722 8.13225C16.3032 7.95546 15.6968 7.95546 15.1278 8.13225C14.8494 8.21876 14.5513 8.38528 14.1231 8.72385C13.6875 9.0683 13.1692 9.54775 12.4336 10.2293L8.97759 13.4312C8.19904 14.1526 7.91535 14.4233 7.71401 14.7351C7.52397 15.0295 7.38277 15.3555 7.29692 15.6996C7.20556 16.0658 7.2 16.4684 7.2 17.5456V19.2748C7.2 20.3946 7.20059 21.1877 7.24981 21.8078C7.29834 22.4193 7.39035 22.7931 7.53552 23.0864C7.83014 23.6816 8.29804 24.1612 8.86828 24.4603C9.1454 24.6057 9.49997 24.6991 10.0889 24.7486C10.5829 24.7902 11.1912 24.7979 12 24.7993V21.6C12 21.5627 12 21.5261 12 21.4899C11.9996 20.8536 11.9994 20.3811 12.109 19.9717C12.4049 18.8675 13.2675 18.0049 14.3718 17.709C14.7811 17.5993 15.2536 17.5996 15.8899 17.5999C15.9261 17.5999 15.9628 17.6 16 17.6C16.0372 17.6 16.0739 17.5999 16.1101 17.5999C16.7464 17.5996 17.2189 17.5993 17.6282 17.709C18.7325 18.0049 19.5951 18.8675 19.891 19.9717C20.0006 20.3811 20.0004 20.8536 20 21.4899C20 21.5261 20 21.5627 20 21.6V24.7993C20.8088 24.7979 21.4171 24.7902 21.9111 24.7486C22.5 24.6991 22.8546 24.6057 23.1317 24.4603C23.702 24.1612 24.1699 23.6816 24.4645 23.0864C24.6097 22.7931 24.7017 22.4193 24.7502 21.8078C24.7994 21.1877 24.8 20.3946 24.8 19.2748V17.5456C24.8 16.4684 24.7944 16.0658 24.7031 15.6996C24.6172 15.3555 24.476 15.0295 24.286 14.7351C24.0847 14.4233 23.801 14.1526 23.0224 13.4312L19.5664 10.2293C18.8308 9.54775 18.3125 9.0683 17.8769 8.72385C17.4487 8.38528 17.1506 8.21876 16.8722 8.13225ZM18.4 24.7997V21.6C18.4 20.8045 18.3931 20.5637 18.3455 20.3859C18.1975 19.8337 17.7663 19.4024 17.2141 19.2545C17.0363 19.2068 16.7955 19.2 16 19.2C15.2045 19.2 14.9637 19.2068 14.7859 19.2545C14.2337 19.4024 13.8025 19.8337 13.6545 20.3859C13.6069 20.5637 13.6 20.8045 13.6 21.6V24.7997H18.4ZM14.6531 6.6043C15.5313 6.33144 16.4687 6.33144 17.3469 6.6043C17.8899 6.77302 18.3658 7.07061 18.8693 7.46882C19.3599 7.85672 19.9238 8.37919 20.6296 9.0331L24.1098 12.2576C24.1354 12.2812 24.1606 12.3046 24.1856 12.3277C24.862 12.9542 25.3063 13.3656 25.6302 13.8673C25.9162 14.3104 26.1274 14.7989 26.2555 15.3123C26.4003 15.8928 26.4002 16.5041 26.4 17.4425C26.4 17.4764 26.4 17.5108 26.4 17.5456V19.3089C26.4 20.3869 26.4 21.2435 26.3452 21.9344C26.2891 22.6413 26.1718 23.2438 25.8985 23.7961C25.4568 24.6885 24.7498 25.4184 23.8749 25.8773C23.3306 26.1628 22.7368 26.2848 22.0452 26.343C21.3712 26.3997 20.5368 26.3997 19.4918 26.3997H12.5082C11.4633 26.3997 10.6288 26.3997 9.95485 26.343C9.26317 26.2848 8.66938 26.1628 8.12508 25.8773C7.25023 25.4184 6.54324 24.6885 6.10155 23.7961C5.82819 23.2438 5.71093 22.6413 5.65483 21.9344C5.59999 21.2435 5.6 20.3869 5.6 19.3089L5.6 17.5456C5.6 17.5108 5.6 17.4764 5.59999 17.4425C5.5998 16.5041 5.59968 15.8928 5.7445 15.3123C5.8726 14.7989 6.08377 14.3104 6.36982 13.8673C6.69373 13.3656 7.13799 12.9542 7.81445 12.3277C7.83937 12.3046 7.86462 12.2812 7.89018 12.2576L11.3705 9.03309C12.0762 8.37919 12.6401 7.85672 13.1307 7.46882C13.6343 7.07061 14.1101 6.77302 14.6531 6.6043Z"
-              fill="#171523"
-            />
-          </svg>
-          Inicio
-        </a>
+        <Link to={`/`}>
+          <a href="#">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M16.8722 8.13225C16.3032 7.95546 15.6968 7.95546 15.1278 8.13225C14.8494 8.21876 14.5513 8.38528 14.1231 8.72385C13.6875 9.0683 13.1692 9.54775 12.4336 10.2293L8.97759 13.4312C8.19904 14.1526 7.91535 14.4233 7.71401 14.7351C7.52397 15.0295 7.38277 15.3555 7.29692 15.6996C7.20556 16.0658 7.2 16.4684 7.2 17.5456V19.2748C7.2 20.3946 7.20059 21.1877 7.24981 21.8078C7.29834 22.4193 7.39035 22.7931 7.53552 23.0864C7.83014 23.6816 8.29804 24.1612 8.86828 24.4603C9.1454 24.6057 9.49997 24.6991 10.0889 24.7486C10.5829 24.7902 11.1912 24.7979 12 24.7993V21.6C12 21.5627 12 21.5261 12 21.4899C11.9996 20.8536 11.9994 20.3811 12.109 19.9717C12.4049 18.8675 13.2675 18.0049 14.3718 17.709C14.7811 17.5993 15.2536 17.5996 15.8899 17.5999C15.9261 17.5999 15.9628 17.6 16 17.6C16.0372 17.6 16.0739 17.5999 16.1101 17.5999C16.7464 17.5996 17.2189 17.5993 17.6282 17.709C18.7325 18.0049 19.5951 18.8675 19.891 19.9717C20.0006 20.3811 20.0004 20.8536 20 21.4899C20 21.5261 20 21.5627 20 21.6V24.7993C20.8088 24.7979 21.4171 24.7902 21.9111 24.7486C22.5 24.6991 22.8546 24.6057 23.1317 24.4603C23.702 24.1612 24.1699 23.6816 24.4645 23.0864C24.6097 22.7931 24.7017 22.4193 24.7502 21.8078C24.7994 21.1877 24.8 20.3946 24.8 19.2748V17.5456C24.8 16.4684 24.7944 16.0658 24.7031 15.6996C24.6172 15.3555 24.476 15.0295 24.286 14.7351C24.0847 14.4233 23.801 14.1526 23.0224 13.4312L19.5664 10.2293C18.8308 9.54775 18.3125 9.0683 17.8769 8.72385C17.4487 8.38528 17.1506 8.21876 16.8722 8.13225ZM18.4 24.7997V21.6C18.4 20.8045 18.3931 20.5637 18.3455 20.3859C18.1975 19.8337 17.7663 19.4024 17.2141 19.2545C17.0363 19.2068 16.7955 19.2 16 19.2C15.2045 19.2 14.9637 19.2068 14.7859 19.2545C14.2337 19.4024 13.8025 19.8337 13.6545 20.3859C13.6069 20.5637 13.6 20.8045 13.6 21.6V24.7997H18.4ZM14.6531 6.6043C15.5313 6.33144 16.4687 6.33144 17.3469 6.6043C17.8899 6.77302 18.3658 7.07061 18.8693 7.46882C19.3599 7.85672 19.9238 8.37919 20.6296 9.0331L24.1098 12.2576C24.1354 12.2812 24.1606 12.3046 24.1856 12.3277C24.862 12.9542 25.3063 13.3656 25.6302 13.8673C25.9162 14.3104 26.1274 14.7989 26.2555 15.3123C26.4003 15.8928 26.4002 16.5041 26.4 17.4425C26.4 17.4764 26.4 17.5108 26.4 17.5456V19.3089C26.4 20.3869 26.4 21.2435 26.3452 21.9344C26.2891 22.6413 26.1718 23.2438 25.8985 23.7961C25.4568 24.6885 24.7498 25.4184 23.8749 25.8773C23.3306 26.1628 22.7368 26.2848 22.0452 26.343C21.3712 26.3997 20.5368 26.3997 19.4918 26.3997H12.5082C11.4633 26.3997 10.6288 26.3997 9.95485 26.343C9.26317 26.2848 8.66938 26.1628 8.12508 25.8773C7.25023 25.4184 6.54324 24.6885 6.10155 23.7961C5.82819 23.2438 5.71093 22.6413 5.65483 21.9344C5.59999 21.2435 5.6 20.3869 5.6 19.3089L5.6 17.5456C5.6 17.5108 5.6 17.4764 5.59999 17.4425C5.5998 16.5041 5.59968 15.8928 5.7445 15.3123C5.8726 14.7989 6.08377 14.3104 6.36982 13.8673C6.69373 13.3656 7.13799 12.9542 7.81445 12.3277C7.83937 12.3046 7.86462 12.2812 7.89018 12.2576L11.3705 9.03309C12.0762 8.37919 12.6401 7.85672 13.1307 7.46882C13.6343 7.07061 14.1101 6.77302 14.6531 6.6043Z"
+                fill="#171523"
+              />
+            </svg>
+            Inicio
+          </a>
+        </Link>
         <a href="#">
           <svg
             width="32"
@@ -475,41 +545,6 @@ const Header = () => {
         </div>
       </div>
     </nav>
-
-    // <Navbar color="light" light expand="md" className={styles.navbar}>
-    //   <NavbarBrand href="/" >
-    //     {/* <img src={logo} alt="logo" className={styles.logo} /> */}
-    //   </NavbarBrand>
-    //   <NavbarToggler onClick={toggle} />
-    //   <Collapse isOpen={isOpen} navbar>
-    //     <Nav className="mr-auto" navbar>
-    //       <NavItem>
-    //         <NavLink href="/components/">Components</NavLink>
-    //       </NavItem>
-    //       <NavItem>
-    //         <NavLink href="https://github.com/reactstrap/reactstrap">
-    //           GitHub
-    //         </NavLink>
-    //       </NavItem>
-    //       <UncontrolledDropdown nav inNavbar>
-    //         <DropdownToggle nav caret>
-    //           Options
-    //         </DropdownToggle>
-    //         <DropdownMenu right>
-    //           <DropdownItem>Option 1</DropdownItem>
-    //           <DropdownItem>Option 2</DropdownItem>
-    //           <DropdownItem divider />
-    //           <DropdownItem>Reset</DropdownItem>
-    //         </DropdownMenu>
-    //       </UncontrolledDropdown>
-    //     </Nav>
-    //     <InputGroup className={styles.search}>
-    //       <Input placeholder="Search..." />
-
-    //     </InputGroup>
-    //     {/* <NavbarText>Simple Text</NavbarText> */}
-    //   </Collapse>
-    // </Navbar>
   );
 };
 

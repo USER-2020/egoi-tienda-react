@@ -1,0 +1,459 @@
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 48px;
+    background-color: #F5F5F5;
+    margin-bottom: 32px;
+      
+}
+
+.containerDetalle{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.containerIzq{
+    width: 50%;
+    height: auto;
+}
+
+.cardImgProduct{
+    display: block;
+    justify-content: center;
+    text-align: center;
+    border-radius: 32px;
+}
+
+.containerImgMiniature{
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
+
+.containerImgMiniature img{
+    width: 80px;
+    height: 80px;
+    padding: 5px;
+    
+}
+
+.containerImgMiniature img:hover{
+    width: 80px;
+    height: 80px;
+    padding: 2px;
+    border: 1px solid #FC5241;
+    border-radius: 8px;
+    cursor: pointer;
+    
+}
+
+.containerDer{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 16px;
+
+}
+
+.containerCharacteristicTop{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    
+}
+
+
+.containerCharacteristicTop .characteristic{
+    width: 100px;
+    /* border-left: 1px solid gray; */
+    padding: 2px;
+    color: #74737B;
+    
+}
+
+.containerNameProduct h4{
+    font-size: 40px;
+    width: 400px;
+    color: #74737B;
+    font-weight: 700;
+    
+}
+
+.containerNameProduct h5{
+    font-size: 32px;
+    font-weight: 700;
+    
+}
+
+.containerColorsProduct{
+    display: flex;
+    background-color:rgba(162, 161, 167, 0.16);
+    width: 330px;
+    height: 50px;
+    flex-direction: row;
+    gap: 28px;
+    align-items: center;
+    padding: 16px;
+    border-radius: 32px;
+    
+}
+
+.containerColorsProduct p ,
+.cant p, .opciones a p
+{
+    margin: 0;
+}
+
+.containerColorsProduct a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+    
+}
+
+.containerColorsProduct a:hover {
+    border: 1px solid #FC5241;
+    border-radius: 32px;
+    color: #FC5241;
+    padding: 2px;
+    
+}
+
+.cant{
+    display: flex;
+    background-color:rgba(162, 161, 167, 0.16);
+    width: 150px;
+    height: 50px;
+    flex-direction: row;
+    gap: 28px;
+    align-items: center;
+    padding: 16px;
+    border-radius: 32px;
+}
+
+.cant input[type="number"]{
+    width: 40px;
+    background-color: transparent;
+    border: none;
+    border-radius: 32px;
+}
+
+.opciones{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.opciones a{
+    display: flex;
+    text-decoration: none;
+    width: 224px;
+    flex-direction: row;
+    align-items: center;
+    gap: 13.6px;
+    padding: 16px;
+}
+
+.opciones .addCart{
+    color: #FC5241;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid #FC5241;
+    border-radius: 32px;
+    justify-content: center;
+}
+
+.opciones .buyNow{
+    color: white;
+    background-color: #FC5241;
+    font-size: 14px;
+    font-weight: 700;
+    justify-content: center;
+    border-radius: 32px;
+}
+
+.opciones .fav{
+    /* padding: 16px; */
+    width: auto;
+    border: 1px solid #FC5241;
+    border-radius: 50%;
+    color: #FC5241;
+}
+
+.opciones .fav .svgFav path{
+   fill: #FC5241;
+}
+
+.containerDescription{
+    width: 768px;
+    margin-top: 77px;
+}
+
+.containerDescription h5{
+    font-size: 16px;
+    color: #FC5241;
+}
+
+.opinions{
+    display: flex;
+    flex-direction: row;
+    gap: 146px;
+    margin-top: 40px;
+}
+.raitingLeft{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.raiting{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+}
+.cardRaiting{
+    width: 75px;
+    border-radius: 16px;
+    
+}
+.cardRaiting .card-body{
+    padding: 11px;
+    justify-content: center;
+    display: flex;
+}
+
+.raitingStarts{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.raitingStarts img{
+    width: 17px;
+}
+
+.nrOpinions h6{
+    font-size: 14px;
+}
+
+.stats{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estadisticas con barra de opiniones */
+.stats_raiting{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    
+}
+
+.stats_raiting img{
+    width: 16px;
+    height: 16px;
+    
+}
+
+.stats_raiting .progress{
+    width: 140px;
+    height: 4px;
+    
+}
+.stats_raiting .progress-bar{
+    background-color: #FC5241;
+}
+.stats_raiting h5, h6{
+    margin: 0;
+}
+
+.stats_raiting h5{
+    color: #FC5241;
+    font-weight: 400;
+    font-size: 12px;
+}
+.stats_raiting h6{
+    color: black;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+
+/* Estadisiticas con barra gris */
+.stats_raiting_gray{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    
+}
+
+.stats_raiting_gray img{
+    width: 16px;
+    height: 16px;
+    
+}
+
+.stats_raiting_gray .progress{
+    width: 140px;
+    height: 4px;
+    
+}
+.stats_raiting_gray .progress-bar{
+    background-color: rgba(162, 161, 167, 0.16);
+}
+.stats_raiting_gray h5, h6{
+    margin: 0;
+}
+
+.stats_raiting_gray h5{
+    color: #FC5241;
+    font-weight: 400;
+    font-size: 12px;
+}
+.stats_raiting_gray h6{
+    color: black;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.comments{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 741px;
+}
+
+.comment{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(162, 161, 167, 0.16);
+    height: auto;
+}
+.comments .comment_index{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.comments .comment_index h6{
+    font-size: 16px;
+    color: #FC5241;
+    margin: 0;
+}
+.comments .comment_index .starts{
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+}
+.comments .comment_index .starts h5{
+    font-size: 12px;
+    color: #74737B;
+    margin: 0;
+    align-self: center;
+}
+
+.starts_comments{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+
+}
+
+.starts_comments img{
+    width: 8px;
+    height: 8px;
+}
+
+.dateComment p{
+   padding-top: 20px;
+   padding-bottom: 20px;
+   
+}
+
+.btnMoreOpinions{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    margin-top: 60PX;
+}
+
+.btnMoreOpinions a {
+    text-decoration: none;
+    color: #FC5241;
+    border: #FC5241 1px solid;
+    padding: 16px;
+    border-radius: 32px;
+}
+
+/* Productos Similares */
+.containerSimilarProduct{
+    width: 100%;
+}
+.spanRecent{
+    display:flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 14px;
+
+}
+.refshowAll{
+    margin-left: 14px;
+    text-decoration: none;
+    color: #FC5241;
+}
+
+.containerProductos{
+    display: flex;
+    gap: 25px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+}
+.containerProductos a{
+    text-decoration: none;
+}
+
+.containerCard{
+    width: 207px;
+    height: 330px;
+    margin-bottom: 20px;
+}
+.cardProducto1{
+    height: 340px;
+}
+
+.cardProducto1 .card-img-top {
+    /* width: 100%; */
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-img-top{
+    display: flex;
+    width: 175px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.card-body{
+    padding: 0 20px;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .containerIzq{
+        width: 100%;
+        height: auto;
+    }
+}

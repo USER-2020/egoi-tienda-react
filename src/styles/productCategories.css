@@ -3,6 +3,7 @@
     height: auto;
     margin-top: 48px;
     background-color: #F5F5F5;
+    margin-bottom: 32px;
       
 }
 
@@ -11,9 +12,21 @@
     
 }
 
+.containerProducts{
+    padding: 10px;
+    height: 100%;
+    margin-bottom: 10px;
+    
+}
+
+.containerProductos{
+    overflow-y: hidden;
+    
+}
+
 .containerProductsIndex .menuBusqueda{
     display: block;
-    width: 180%;
+    width: 60%;
     
 }
 
@@ -26,8 +39,29 @@
     margin-right: 5px;
 }
 
-.containerProductos a {
-    text-decoration: none;
-    padding: 0;
+.containerProductos{
+    overflow-x: hidden;
 }
 
+.containerProductos a {
+    text-decoration: none;
+    
+}
+
+.containerCard2{
+    width: 198px;
+    height: 320px;
+}
+
+
+
+input[type="radio"]:checked {
+    background-color:#FC5241;
+    border-color: #e1e1e1;
+  }
+
+@media (max-width: 768px) {
+    .containerProductCategorie{
+        display: none;
+    }
+}
