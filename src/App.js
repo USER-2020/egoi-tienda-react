@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import { isMultiColorActive, adminRoot, UserRole } from './constants/defaultValues';
 import { ProtectedRoute } from './helpers/authHelper';
 
+const ViewDetailProduct = React.lazy(() => import(/* webpackChunkName: "views" */ './views/detailsProduct'));
 const ViewCategory = React.lazy(() => import(/* webpackChunkName: "views" */ './views/category'));
 const ViewHome = React.lazy(() => import(/* webpackChunkName: "views" */ './views/home'));
 const ViewApp = React.lazy(() => import(/* webpackChunkName: "views-app" */ './views/app'));
@@ -30,6 +31,7 @@ const App = (props) => {
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />
               {/* <Route path="/categories" exact render={(props) => <ViewCategory {...props} />} /> */}
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/detailsProduct/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
               <Redirect to="/error" />
             </Switch>
           </Router>
