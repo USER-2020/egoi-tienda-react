@@ -11,6 +11,12 @@ import { useParams } from 'react-router-dom';
 function DetailProduct(props) {
     const {slug} = useParams();
     const [detailProducts, setDetailProducts ] = useState([]);
+    const [currentImg, setCurrentImage ] = useState("");
+    
+    
+
+
+    const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
 
     /**
      * This function retrieves and sets the details of a product based on its slug using useEffect hook
@@ -22,7 +28,7 @@ function DetailProduct(props) {
     const detailProductBySlug = (slug) => {
         detailProduct(slug)
         .then((res) => {
-            console.log(res);
+            // console.log(res);
             setDetailProducts(res.data);
             console.log("Detalle del producto", detailProducts);
         })
@@ -30,23 +36,36 @@ function DetailProduct(props) {
     }
 
     useEffect(()=> {
-        detailProductBySlug(slug);
-    }, []);
+        if(slug){
 
+            detailProductBySlug(slug);
+        }
+    }, [slug]);
+
+  
   return (
     <div className='container'>
         <div className="containerDetalle">
         <div className="containerIzq">
-            <Card className='cardImgProduct'>
+        {detailProducts && detailProducts.images && detailProducts.images.length > 0 && (
+
+                <Card className='cardImgProduct'>
                 <div className="containerImgTop">
-                    <img src={iphone} alt="" />
+                    <img src={currentImg || baseUrlImage + detailProducts.images[0]} alt={detailProducts.name}/>
                 </div>
                 <div className="containerImgMiniature">
-                    <img src={iphone} alt="" />
-                    <img src={iphone} alt="" />
-                    <img src={iphone} alt="" />
+                    {detailProducts.images.map((imgProduct, index) => (
+
+                        <img src={baseUrlImage + imgProduct} 
+                        alt={detailProducts.name} 
+                        key={index} 
+                        onClick={()=>setCurrentImage(baseUrlImage + imgProduct)}
+                        className={currentImg === baseUrlImage + imgProduct ? 'activeMiniature' : ''}/>
+                        
+                    ))}
                 </div>
             </Card>
+        )}
         </div>
         <div className="containerDer">
             <div className="containerCharacteristicTop">
@@ -55,23 +74,31 @@ function DetailProduct(props) {
                 <div className='characteristic'>40 Favoritos</div>
             </div>
             <div className="containerNameProduct">
-                <h4>iPhone 14 Pro Max 256 GB </h4> 
-                <h5>$ 8.000.000</h5>
+                {/* <h4>iPhone 14 Pro Max 256 GB </h4>  */}
+
+                    <h4>{detailProducts.name}</h4> 
+                    <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString()}</h5>
             </div>
             <div className="containerColorsProduct">
                 <p>Colores</p>
-                <a href="#">
-                    Medianoche
+
+                {detailProducts.colors && detailProducts.colors.map((colors, index) => (
+
+                    <a href="#" key={index}>
+                    
+                    {colors}
                     <svg width="16" height="16">
                     <circle cx="8" cy="8" r="7" fill="#45444F" />
                     </svg>
-                </a>
-                <a href="#">
+
+                    </a>
+                ))}
+                {/* <a href="#">
                     Blanco
                     <svg width="16" height="16">
                     <circle cx="8" cy="8" r="7" fill="#FFFFFF" />
                     </svg>
-                </a>
+                </a> */}
             </div>
             <div className="cant">
                 <p>Cantidad</p>
@@ -94,11 +121,12 @@ function DetailProduct(props) {
                 </a>
             </div>
         </div>
+        
         </div>
         <div className="containerDescription">
             <h5>Descripcion</h5>
-            <p>El iPhone 14 Pro Max es el iPhone más grande y poderoso de la serie 14. Potenciado por el nuevo procesador Apple A16 Bionic, 
-                el iPhone 14 Pro Max cuenta con una pantalla OLED.
+            <p>
+                {detailProducts.details}
             </p>
         </div>
         <div className="opinions">
@@ -243,6 +271,7 @@ function DetailProduct(props) {
                 </div>
             </div>
         </div>
+    
     </div>
   )
 }

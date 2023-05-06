@@ -13,6 +13,19 @@
     gap: 24px;
 }
 
+/* Estilos de activacion de 
+la imagen seleccionda */
+.activeMiniature{
+    width: 80px;
+    height: 80px;
+    padding: 2px;
+    border: 1px solid #FC5241;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0.5;
+    
+}
+
 .containerIzq{
     width: 50%;
     height: auto;
@@ -24,7 +37,12 @@
     text-align: center;
     border-radius: 32px;
 }
-
+.containerImgTop{
+    padding: 50px;    
+}
+.containerImgTop img{
+    width: 100%;
+}
 .containerImgMiniature{
     display: flex;
     justify-content: center;
@@ -35,6 +53,8 @@
     width: 80px;
     height: 80px;
     padding: 5px;
+    
+    
     
 }
 
