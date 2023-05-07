@@ -23,10 +23,7 @@ nav {
 }
 
 .btnsPers{
-    display: grid;
-    gap: 20px;
-    justify-content: center;
-    text-align: center;
+    display: none;
 }
 
 .btnPersonalizadosL {
@@ -48,6 +45,8 @@ nav {
 .offcanvas-body ul li{
     list-style: none;
 }
+
+
 
 @media (max-width: 768px) {
     nav {
@@ -84,5 +83,12 @@ nav {
     a .navbar-brand{
         margin-right: 0px;
         
+    }
+
+    .btnsPers{
+        display: grid;
+        gap: 20px;
+        justify-content: center;
+        text-align: center;
     }
   }

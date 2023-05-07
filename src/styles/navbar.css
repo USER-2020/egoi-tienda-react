@@ -84,6 +84,7 @@ nav .containerNav{
 .userInteraction {
   display: flex;
   align-items: center;
+ 
   
 }
 .userInteraction a svg {
@@ -110,10 +111,15 @@ nav .containerNav{
   
 }
 
+
+
 .menu > a {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  /* text-align: start; */
   font-size: 14px;
-  padding: 12px 20px;
-  text-align: justify;
+  padding: 10px ;
   text-decoration: none;
   color: black;
 
@@ -378,6 +384,12 @@ footer .containerFooter .row {
     padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
     
   }
+
+  .modal-xs{
+    width: 96vw;
+    
+  }
+
   footer {
     width: 100vw;
     height: 472px;
