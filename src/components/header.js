@@ -19,67 +19,6 @@ import Login from "../views/user/login.js";
 import { allCategories } from "../services/categories";
 import { subcategorieById } from "../services/categories";
 
-
-
-
-// const data = [  
-    
-//   {
-//     name: "celulares",
-//     subcategories: [
-//       { name: "Accesorios para celular" },
-//       { name: "Smartwatches" }
-//     ],
-//   },
-
-//   {   name: "belleza",    
-//       subcategories: [      
-//         {  name: "Perfumes para mujer" },      
-//         {  name: "Perfumes para hombre" },    
-//         {  name: "Belleza y cuidado personal" },    
-//         {  name: "Fajas y leggings" },    
-//         {  name: "Maquillaje" },    
-//       ],
-//   },
-//   {
-//     name: "tv_audio_video",
-//     subcategories: [
-//       { name: "Televisores" },
-//       { name: "Audio" },
-//     ],
-//   },
-//   {
-//     name: "relojes_accesorios",
-//     subcategories: [
-//       { name: "Relojes para hombre" },
-//       { name: "Relojes para mujer" },
-//       { name: "Gafas de sol" },
-//       { name: "Gorras" },
-//     ],
-//   },
-//   {
-//     name: "computacion",
-//     subcategories: [
-//       { name: "Teclados" },
-//       { name: "Mouses" },
-//     ],
-//   },
-//   {
-//     name: "moda",
-//     subcategories: [
-//       { name: "Calzado para dama" },
-//       { name: "Calzado para hombre" },
-//     ],
-//   },
-//   {
-//     name: "consolas_videojuegos",
-//     subcategories: [
-//       { name: "Consolas" },
-//       { name: "Videojuegos" },
-//     ],
-//   },
-// ];
-
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -254,15 +193,17 @@ const Header = () => {
             <div className="menu">
       {isLoggedIn ? (
         <a href="#" onClick={handleLogout}>
-          <FontAwesomeIcon icon={faRightFromBracket} /> Logout
+          <FontAwesomeIcon icon={faRightFromBracket} /> 
+          Cerrar Sesion
         </a>
       ) : (
         <>
           <a href="#" onClick={() => setModalViewLogin(true)}>
-            <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+            <FontAwesomeIcon icon={faUser} /> 
+            Inicia Sesion
           </a>
           <Modal
-            className="modal-dialog-centered modal-sm"
+            className="modal-dialog-centered modal-lg"
             toggle={() => setModalViewLogin(false)}
             isOpen={modalViewLogin && !changeFormLogin}
           >
@@ -274,7 +215,7 @@ const Header = () => {
             <FontAwesomeIcon icon={faUserPlus} /> Registrate
           </a>
           <Modal
-            className="modal-dialog-centered modal-sm"
+            className="modal-dialog-centered modal-lg"
             toggle={() => setModalViewRegistro(false)}
             isOpen={modalViewRegistro && !changeFormRegister}
           >
@@ -516,7 +457,7 @@ const Header = () => {
               <FontAwesomeIcon icon={faUser} /> Inicia Sesion
             </a>
             <Modal
-              className="modal-dialog-centered modal-sm"
+              className="modal-dialog-centered modal-lg"
               toggle={() => setModalViewLogin(false)}
               isOpen={modalViewLogin}
             >
@@ -533,7 +474,7 @@ const Header = () => {
               <FontAwesomeIcon icon={faUserPlus} /> Registrate
             </a>
             <Modal
-              className="modal-dialog-centered modal-sm"
+              className="modal-dialog-centered modal-lg"
               toggle={() => setModalViewRegistro(false)}
               isOpen={modalViewRegistro}
             >
