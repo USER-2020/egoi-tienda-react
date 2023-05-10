@@ -18,7 +18,7 @@ const category = (props) => {
     <>
     <Header />
     <HeaderResponsive/>
-    <HeaderCategories/>
+    {/* <HeaderCategories/> */}
     <HeaderResponsiveCategorie/>
     <ProductsCategories/>
     <Footer />

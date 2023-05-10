@@ -387,6 +387,9 @@ footer .containerFooter .row {
 
   .modal-xs{
     width: 96vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
     
   }
