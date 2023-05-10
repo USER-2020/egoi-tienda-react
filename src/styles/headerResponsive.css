@@ -91,4 +91,7 @@ nav {
         justify-content: center;
         text-align: center;
     }
+    .modal-content{
+        width: 96vw;
+    }
   }

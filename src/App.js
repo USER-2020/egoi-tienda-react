@@ -31,6 +31,7 @@ const App = (props) => {
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />
               {/* <Route path="/categories" exact render={(props) => <ViewCategory {...props} />} /> */}
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
+              {/* <Route path="/categories/:category/:subcategory/:id/:sort" exact render={(props) => <ViewCategory {...props} />} /> */}
               <Route path="/detailsProduct/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
               <Redirect to="/error" />
             </Switch>

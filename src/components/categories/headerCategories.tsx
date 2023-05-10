@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import '../../styles/headerCategories.css'
 
@@ -12,6 +12,10 @@ import {
   useRef,
   useState
 } from "react"
+import { subcategorieById } from '../../services/categories';
+import { filterProductsRecents } from '../../services/filtros';
+
+import { Display } from 'react-bootstrap-icons';
 
 
 const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
@@ -36,23 +40,21 @@ const useOnClickOutside= (
   }, [ref, handler]);
 }
 
-const HeaderCategories = () => {
+
+const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A, 
+  handleClickFilterA_Z, handleClickFilterHigh_Low, handleClickFilterLow_High, 
+  handleApplyRangeFilters, handlePriceStartChange,handlePriceEndChange, 
+  priceStart, priceEnd}) => {
+// const HeaderCategories = ({onFilterCLick}) => {
+
+ 
 
   const [isOpen1, setIsOpen1] = useState<boolean>(false);
   const [isOpen2, setIsOpen2] = useState<boolean>(false);
   const [isOpen3, setIsOpen3] = useState<boolean>(false);
-  // const { match } = props;
-  // const category  = props.match ? props.match.params : '';
-  // const subcategory = props.match ? props.match.params : '';
-  const { category, subcategory, id } = useParams();
-  console.log(category)
-  console.log(subcategory)
-  // console.log(id)
-  // const [buttonsState, setButtonsState] = useState({
-  //   brands:false,
-  //   price:false,
-  //   sortBy:false,
-  // })
+
+  const { category, subcategory, id, sort } = useParams();
+ 
   const ref1 = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref1, ()=> setIsOpen1(false));
   const ref2 = useRef<HTMLDivElement>(null);
@@ -60,26 +62,44 @@ const HeaderCategories = () => {
   const ref3 = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref3, ()=> setIsOpen3(false));
 
-    // type IconProps = {
-    // children:ReactNode;
-    // className?: string;
-    // iconRef?: RefObject<HTMLSpanElement>;
-    // }
+ 
 
-    // const Icon: FC<IconProps> = ({
-    // children, iconRef, className}) => (
-    //   <span>{children}</span>
-    //   );
   
-    // const buttonRef = useRef<HTMLButtonElement>(null);
-    // const chevronRef = useRef<HTMLSpanElement>(null);
-    // const [isOpen, setIsOpen] = useState<boolean>(false);
-    // const [menuTop, setMenuTop] = useState<string>();
-    // const [menuRight, setMenuRight] = useState<string>();
+  // const [selectedFiltersRecent, setSelectedFiltersRecent] = useState('');
 
-    // const handleClick = () => {
-    //   const buttonRect = buttonRef?.current?.getBound
-    // }
+
+  // setSelectedFiltersRecent('recent');
+
+  // const productsBySubcategoryWithFilter = (id, sort) => {
+  //   if(sort = 'recent'){
+  //     filterProductsRecents(id)
+  //     .then((res)=>{
+  //       console.log(res);
+  //       setProducts(res.data);
+  //       console.log("Productos filtrados por mas reciente", products);
+  
+  //     })
+  //     .catch((err)=> console.log(err));
+  //   }else{
+  //     subcategorieById(id)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setProducts(res.data);
+  //       console.log("Productos por el id", products);
+  //     })
+  //     .catch((err) => console.log(err));
+  
+  //   }
+  //   };
+    
+  //   useEffect(()=>{
+  //     if(id){
+  //       productsBySubcategoryWithFilter(id, sort);
+  //     }
+  //   }, [id, sort]);
+
+  
+ 
 
   return (
 
@@ -138,15 +158,21 @@ const HeaderCategories = () => {
                       <div className="containerPrecios">
                         <div className="desde">
                           Desde
-                          <input type="number" placeholder='Ej: 5000' className='inputPrecio'/>
+                          <input type="number" placeholder='Ej: 5000' 
+                          className='inputPrecio'
+                          value={priceStart}
+                          onChange={handlePriceStartChange}/>
                         </div>
                         <h1>-</h1>
                         <div className="hasta">
                           Hasta
-                          <input type="number" placeholder='Ej: 8000' className='inputPrecio'/>
+                          <input type="number" placeholder='Ej: 8000' 
+                          className='inputPrecio'
+                          value={priceEnd}
+                          onChange={handlePriceEndChange}/>
                         </div> 
                       </div>
-                      <button className='btnAplicar'>Aplicar</button>
+                      <button className='btnAplicar' onClick={handleApplyRangeFilters}>Aplicar</button>
                     </div>
                   </div>
                 </div>
@@ -162,16 +188,30 @@ const HeaderCategories = () => {
                   </button>
                   <div className="menu3">
                     <div className="containerPersonalizado2">
+                      
                         <h5>Precio</h5>
-                        <button><strong><h6>Del más bajo al más alto</h6></strong></button>
-                        <button><strong><h6>Del más alto al más bajo</h6></strong></button>
+                        <button onClick={handleClickFilterLow_High}><strong><h6>Del más bajo al más alto</h6></strong></button>
+                        <button onClick={handleClickFilterHigh_Low}><strong><h6>Del más alto al más bajo</h6></strong></button>
                         <h5>En orden alfabético</h5>
-                        <button><strong><h6>De la A - Z</h6></strong></button>
-                        <button><strong><h6>De la Z - A</h6></strong></button>
+                        <button onClick={handleClickFilterA_Z}><strong><h6>De la A - Z</h6></strong></button>
+                        <button onClick={handleClickFilterZ_A}><strong><h6>De la Z - A</h6></strong></button>
                         <h5>Otros</h5>
-                        <button><strong><h6>El más reciente</h6></strong></button>
+                        <button onClick={handleClickFilterRecent}><strong><h6>El más reciente</h6></strong></button>
+                        
+                         {/* <h5>Precio</h5>
+                        <button onClick={() => onFilterCLick('L-H')}><strong><h6>Del más bajo al más alto</h6></strong></button>
+                        <button onClick={() => onFilterCLick('H-L')}><strong><h6>Del más alto al más bajo</h6></strong></button>
+                        <h5>En orden alfabético</h5>
+                        <button onClick={() => onFilterCLick('A-Z')}><strong><h6>De la A - Z</h6></strong></button>
+                        <button onClick={() => onFilterCLick('Z-A')}><strong><h6>De la Z - A</h6></strong></button>
+                        <h5>Otros</h5>
+                        <button onClick={() => onFilterCLick('recent')}><strong><h6>El más reciente</h6></strong></button>
+                         */}
+                        
+                        
                     </div>
                   </div>
+                      
                 </div>
               </li>
             </ul>
