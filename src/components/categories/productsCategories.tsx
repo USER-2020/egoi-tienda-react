@@ -11,7 +11,16 @@ import start_1 from '../../assets/Star-1.png';
 import iphoner from '../../assets/iphoneMuestra.png';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { subcategorieById } from '../../services/categories';
-import { filterProductsA_Z, filterProductsHigh_Low, filterProductsLow_High, filterProductsPrice, filterProductsRecents, filterProductsZ_A } from '../../services/filtros';
+import { 
+  filterProductsA_Z, 
+  filterProductsBestRated, 
+  filterProductsFeaturePrefer, 
+  filterProductsHigh_Low, 
+  filterProductsLow_High, 
+  filterProductsMostSold, 
+  filterProductsPrice, 
+  filterProductsRecents, 
+  filterProductsZ_A } from '../../services/filtros';
 import HeaderCategories from './headerCategories.tsx';
 
 
@@ -85,6 +94,39 @@ const ProductsCategories = () => {
     
   };
 
+  
+  /**
+   * This function filters products by the most sold and sets the filtered products in the state.
+   */
+  const productsWithFilterMostSold=() => {
+    filterProductsMostSold(id)
+    .then((res)=>{
+      console.log(res);
+      setProducts(res.data);
+      console.log("Producttos filtrados por los mas vendidos", res.data.products);
+    })
+    .catch((err)=>console.log(err));
+  }
+
+  const productsWithFilterBestRated=() => {
+    filterProductsBestRated(id)
+    .then((res)=>{
+      console.log(res);
+      setProducts(res.data);
+      console.log("Producttos filtrados por los mas vendidos", res.data.products);
+    })
+    .catch((err)=>console.log(err));
+  }
+
+  const productsWithFilterFeaturePrefer=() => {
+    filterProductsFeaturePrefer(id)
+    .then((res)=>{
+      console.log(res);
+      setProducts(res.data);
+      console.log("Producttos filtrados por los mas vendidos", res.data.products);
+    })
+    .catch((err)=>console.log(err));
+  }
 
  const productsBySubcategoryWithFilter = (id) => {
   if(selectedFiltersRecent === 'recent'){
@@ -98,7 +140,7 @@ const ProductsCategories = () => {
     .catch((err)=> console.log(err));
     
   }
-  if(selectedFiltersHigh_Low === 'H-L'){
+  else if(selectedFiltersHigh_Low === 'H-L'){
       filterProductsHigh_Low(id)
       .then((res)=>{
         console.log(res);
@@ -107,7 +149,7 @@ const ProductsCategories = () => {
       })
       .catch((err)=> console.log(err));
   }
-  if(selectedFiltersLow_High == 'L-H'){
+  else if(selectedFiltersLow_High == 'L-H'){
     filterProductsLow_High(id)
     .then((res)=> {
       console.log(res);
@@ -116,7 +158,7 @@ const ProductsCategories = () => {
     })
     .catch((err) => console.log(err));
   }
-  if(selectedFiltersA_Z === 'A-Z'){
+  else if(selectedFiltersA_Z === 'A-Z'){
     filterProductsA_Z(id)
     .then((res)=>{
       console.log(res);
@@ -125,7 +167,7 @@ const ProductsCategories = () => {
     })
     .catch((err)=> console.log(err));
   }
-  if(selectedFiltersZ_A === 'Z-A'){
+  else if(selectedFiltersZ_A === 'Z-A'){
     filterProductsZ_A(id)
     .then((res)=>{
       console.log(res);
@@ -141,7 +183,7 @@ const ProductsCategories = () => {
       setProducts(res.data);
       setTotalResults(res.data.total_size);
       console.log("Productos por el id", res.data.products);
-      console.log("Este es el total de paginas", res.data.total_size);
+      console.log("Este es el total de productos", res.data.total_size);
       
     })
     .catch((err) => console.log(err));
@@ -200,11 +242,13 @@ const ProductsCategories = () => {
   }
 
   useEffect(()=>{
-    if(id || selectedFiltersRecent || selectedFiltersHigh_Low || 
-      selectedFiltersLow_High || selectedFiltersA_Z || 
-      selectedFiltersZ_A || offset){
+    if(id ){
      
       productsBySubcategoryWithFilter(id);
+      productsWithFilterMostSold();
+      productsWithFilterBestRated();
+      productsWithFilterFeaturePrefer();
+
     }
   }, [id, selectedFiltersRecent, selectedFiltersHigh_Low, 
     selectedFiltersLow_High, selectedFiltersA_Z, selectedFiltersZ_A, 
@@ -247,15 +291,15 @@ const ProductsCategories = () => {
       <div className="containerProductsIndex">
         <div className="menuBusqueda">
           <div className="filtros">
-            <input type="radio" className="form-check-input"/> 
+            <input type="radio" className="form-check-input" onClick={productsWithFilterMostSold}/> 
             Productos más vendidos
           </div>
           <div className="filtros">
-            <input type="radio" className="form-check-input"/> 
+            <input type="radio" className="form-check-input" onClick={productsWithFilterBestRated}/> 
             Mejor calificados
           </div>
           <div className="filtros">
-            <input type="radio" className="form-check-input"/> 
+            <input type="radio" className="form-check-input" onClick={productsWithFilterFeaturePrefer}/> 
             Los más preferidos
   
           </div>
