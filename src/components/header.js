@@ -152,7 +152,9 @@ const Header = () => {
     <nav>
       <div className="containerNav">
         <div className={styles.navbarLogo}>
+          <a href="/">
           <img src={logo} alt="logo" className={styles.logo} width={"150px"} />
+          </a>
         </div>
         <div className={styles.searchContainer}>
           <InputGroup className={styles.search}>

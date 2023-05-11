@@ -163,7 +163,7 @@ function HeaderResponsive() {
         <span class="navbar-toggler-icon"></span>
         </button>
         
-        <a class="navbar-brand" href="#"><img src={logo} alt="logo" className={styles.logo} width={""} /></a>
+        <a class="navbar-brand" href="/"><img src={logo} alt="logo" className={styles.logo} width={""} /></a>
         <div className='searchContainer'>
           <InputGroup className={styles.search}>
             <span className="input-icon">
