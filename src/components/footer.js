@@ -8,7 +8,8 @@ import mastercard from "../assets/mastercard-8 1.png";
 import americanexpress from "../assets/mastercard-8 5.png";
 import playstore from "../assets/image 1.png";
 import appstore from "../assets/image 2.png";
-import superintendencia from "../assets/Logo Superintendencia.png";
+import superintendencia from "../assets/LogoSuperintendencia.png";
+import { activar } from './../services/login';
 
 
 const Footer = (props) => {
@@ -111,7 +112,9 @@ const Footer = (props) => {
                         <div className="izqIconsMedia">
                         </div>
                         <div className="" style={{ float: 'right' }}>
-                            <img src={superintendencia} alt="logo" className={styles.logo} width={'120px'} height={'36px'} />
+                            <a href="https://www.sic.gov.co" target="_blanck">
+                                <img src={superintendencia} alt="logo" className={styles.logo} width={'120px'} height={'36px'} />
+                            </a>
                         </div>
                     </div>
                 </div>
