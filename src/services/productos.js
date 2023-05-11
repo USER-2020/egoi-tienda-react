@@ -27,3 +27,7 @@ export const ProductosPorCategoria = () =>
 
 export const ProductosMasVendidos = () =>
   axios.get(`${baseUrl}/products/best-sellings`);
+
+  //Similar Products
+export const ProductosSimilaresById = (id) =>
+  axios.get(`${baseUrl}/products/related-products/${id}`);
