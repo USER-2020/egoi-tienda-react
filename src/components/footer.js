@@ -22,7 +22,9 @@ const Footer = (props) => {
                 <div className="row">
                     <div className="footerLogo">
                         <div className="izq">
+                            <a href="/">
                             <img src={logo} alt="logo" className={styles.logo} width={'187px'} height={'62px'} />
+                            </a>
                         </div>
                         <div className="derPagos">
                             <img src={efecty} alt="logo" className={styles.logo} width={'100px'} height={'60px'} />
