@@ -245,9 +245,9 @@ const ProductsCategories = () => {
     if(id ){
      
       productsBySubcategoryWithFilter(id);
-      productsWithFilterMostSold();
-      productsWithFilterBestRated();
-      productsWithFilterFeaturePrefer();
+      // productsWithFilterMostSold();
+      // productsWithFilterBestRated();
+      // productsWithFilterFeaturePrefer();
 
     }
   }, [id, selectedFiltersRecent, selectedFiltersHigh_Low, 
