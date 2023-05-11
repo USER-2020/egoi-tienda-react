@@ -1,0 +1,99 @@
+/* Productos Similares */
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 52.5px;
+    background-color: #F5F5F5;
+      
+}
+
+.containerSimilarProduct{
+    width: 100%;
+}
+
+.spanRecent{
+    display:flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 14px;
+
+}
+.refshowAll{
+    margin-left: 14px;
+    text-decoration: none;
+    color: #FC5241;
+}
+
+.containerProductos{
+    display: flex;
+    gap: 25px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+}
+.cardProducto1 .card-img-top {
+    /* width: 100%; */
+    height: 200px;
+    object-fit: cover;
+  }
+
+.containerProductos::-webkit-scrollbar {
+    
+    width: 5px;
+    height: 5px;
+    border-radius: 10px;
+    margin-top: 5px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.containerProductos::-webkit-scrollbar:hover {
+    
+    width: 5px;
+    height: 10px;
+    border-radius: 10px;
+    margin-top: 5px;
+    pointer-events: all;
+    cursor: pointer;
+}
+.containerProductos::-webkit-scrollbar-thumb {
+    background-color: #7d7d7d;
+    border-radius: 10px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.containerProductos::-webkit-scrollbar-track {
+    background-color: #a0a0a0;
+    border-radius: 15px;
+}
+.containerProductos a{
+    text-decoration: none;
+    
+}
+
+.containerCard{
+    width: 207px;
+    height: 330px;
+    margin-bottom: 20px;
+}
+.cardProducto1{
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+
+.card-img-top{
+    display: flex;
+    width: 175px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.card-body{
+    padding: 0 20px;
+}
+

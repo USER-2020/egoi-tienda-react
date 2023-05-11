@@ -109,7 +109,7 @@ la imagen seleccionda */
 .containerColorsProduct{
     display: flex;
     background-color:rgba(162, 161, 167, 0.16);
-    width: 330px;
+    width: 300px;
     height: 50px;
     flex-direction: row;
     gap: 28px;
@@ -413,60 +413,6 @@ la imagen seleccionda */
     border: #FC5241 1px solid;
     padding: 16px;
     border-radius: 32px;
-}
-
-/* Productos Similares */
-.containerSimilarProduct{
-    width: 100%;
-}
-.spanRecent{
-    display:flex;
-    align-items: center;
-    justify-content: start;
-    font-size: 14px;
-
-}
-.refshowAll{
-    margin-left: 14px;
-    text-decoration: none;
-    color: #FC5241;
-}
-
-.containerProductos{
-    display: flex;
-    gap: 25px;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    margin-bottom: 20px;
-}
-.containerProductos a{
-    text-decoration: none;
-}
-
-.containerCard{
-    width: 207px;
-    height: 330px;
-    margin-bottom: 20px;
-}
-.cardProducto1{
-    height: 340px;
-}
-
-.cardProducto1 .card-img-top {
-    /* width: 100%; */
-    height: 200px;
-    object-fit: cover;
-}
-
-.card-img-top{
-    display: flex;
-    width: 175px;
-    justify-content: center;
-    margin: 0 auto;
-}
-
-.card-body{
-    padding: 0 20px;
 }
 
 

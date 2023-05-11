@@ -30,7 +30,7 @@ function DetailProduct(props) {
         .then((res) => {
             // console.log(res);
             setDetailProducts(res.data);
-            console.log("Detalle del producto", detailProducts);
+            console.log("Detalle del producto", res.data.variation);
         })
         .catch((err) => console.log(err));
     }
@@ -82,14 +82,14 @@ function DetailProduct(props) {
             <div className="containerColorsProduct">
                 <p>Colores</p>
 
-                {detailProducts.colors && detailProducts.colors.map((colors, index) => (
+                {detailProducts.variation && detailProducts.variation.map((colors, index) => (
 
                     <a href="#" key={index}>
                     
-                    {colors}
-                    <svg width="16" height="16">
-                    <circle cx="8" cy="8" r="7" fill="#45444F" />
-                    </svg>
+                    {colors.type}
+                    {/* <svg width="16" height="16">
+                    <circle cx="8" cy="8" r="7" fill="blanco" />
+                    </svg> */}
 
                     </a>
                 ))}

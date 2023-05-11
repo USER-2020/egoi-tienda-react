@@ -1,13 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Card, CardImg, CardBody, CardSubtitle, CardTitle} from 'reactstrap';
 
-import '../../styles/detailsProduct.css'
+import '../../styles/similarProducts.css';
 import start from '../../assets/Star.png';
 import start_1 from '../../assets/Star-1.png';
 import iphone from '../../assets/iphoneMuestra.png';
+import { ProductosSimilaresById } from '../../services/productos';
+import { Link, useParams, useHistory } from 'react-router-dom';
+
+
 
 function SimilarProduct() {
+
+    const [products, setProducts] = useState([]);
+    const history = useHistory();
+    const {id} = useParams();
+
+    const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
+
+    const similarProducts = (id) =>{
+        ProductosSimilaresById(id)
+        .then((res)=>{
+            console.log(res);
+            setProducts(res.data);
+            console.log("Estos son los productos similares al id seleccionado");
+        })
+        .catch((err) => console.log(err));
+    }
+
+    useEffect(()=>{
+        similarProducts(id);
+    }, []);
+
   return (
     <div className='container'>
         <div className="containerSimilarProduct">
@@ -21,22 +46,29 @@ function SimilarProduct() {
                 </a>
             </div>
             <div className="containerProductos">
-            <a href='#' className='containerCard' >
-                <Card className='cardProducto1'>
-                    <CardImg top width="80%" src={iphone} alt="" />
-                    <CardBody>
-                    <div className='starts'>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start}/>
-                        <img src={start_1}/>
-                        <img src={start_1}/>
-                    </div>
-                    <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>Samsung Galaxy A53 5G 128gb</CardSubtitle>
-                    <CardTitle tag="h5">$8.000.000</CardTitle>
-                    </CardBody>
-            </Card>
-            </a>
+                {products && products.map((product, index) => 
+                <a href='#' className='containerCard' onClick={() => {
+                    history.push(`/detailsProduct/${product.id}/${product.slug}`);
+                    window.location.reload();
+                }} key={index}>
+                    {/* <Link to={`/detailsProduct/${product.id}/${product.slug}`} > */}
+                    <Card className='cardProducto1'>
+                        <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
+                        <CardBody>
+                        <div className='starts'>
+                            <img src={start}/>
+                            <img src={start}/>
+                            <img src={start}/>
+                            <img src={start_1}/>
+                            <img src={start_1}/>
+                        </div>
+                        <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>{product.name}</CardSubtitle>
+                        <CardTitle tag="h5">${product.purchase_price.toLocaleString()}</CardTitle>
+                        </CardBody>
+                    </Card>
+                    {/* </Link> */}
+                </a>
+                )}
             </div>
         </div>
       
