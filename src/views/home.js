@@ -34,7 +34,11 @@ import HeaderResponsive from "../components/headerResponsive";
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
 
+  const toggleLogin = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
   return (  
 
     // <Nav/>

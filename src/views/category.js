@@ -7,12 +7,19 @@ import HeaderCategories from "../components/categories/headerCategories.tsx";
 import ProductsCategories from "../components/categories/productsCategories.tsx";
 import HeaderResponsiveCategorie from "../components/categories/headerResponsiveCategorie.tsx";
 
-const category = (props) => {
+const Category = (props) => {
     // const categoryId = props.match.params.category;
     // const subcategoryId = props.match.params.subcategory;
     // const productId = props.match.params.id;
     // const [isOpen, setIsOpen] = useState(false);
     // const toggle = () => setIsOpen(!isOpen);
+    // const [isOpen, setIsOpen] = useState(false);
+    // const toggle = () => setIsOpen(!isOpen);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
+
+    // const toggleLogin = () => {
+    //   setIsLoggedIn(!isLoggedIn);
+    // };
 
   return (
     <>
@@ -26,4 +33,4 @@ const category = (props) => {
   )
 }
 
-export default category;
+export default Category;

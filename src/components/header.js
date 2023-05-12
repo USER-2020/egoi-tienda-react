@@ -18,8 +18,12 @@ import Register from "../views/user/register.js";
 import Login from "../views/user/login.js";
 import { allCategories } from "../services/categories";
 import { subcategorieById } from "../services/categories";
+import { getCurrentUser, setCurrentUser } from "../helpers/Utils";
+import Swal from "sweetalert2";
 
 const Header = () => {
+  
+  
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
@@ -35,11 +39,9 @@ const Header = () => {
 
   const {id} = useParams();
 
-  // const [subcategorias, setSubcategorias] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState(null);
-  // const [selectedCategory, setSelectedCategory] = useState([]);
-
+  const currenUser = getCurrentUser();
   
+
 
   /**
    * This function retrieves all categories and sets them in state using a promise and useEffect hook.
@@ -56,36 +58,43 @@ const Header = () => {
 
   useEffect(()=>{
     allCategoriesPromise();
-  }, []);
+    handleLogin();
+    let timeout;
 
-  
- 
-  
+    const resetTimeout = () =>{
+      if(timeout){
+        clearTimeout(timeout);
+      }
 
-/**
- * The function displays subcategories based on the category selected by the user.
- * @param e - The parameter "e" is an event object that is passed as an argument to the function
- * "mostrarSubcategorias". It represents the event that triggered the function, such as a click event
- * on a button or a link. The event object contains information about the event, such as the target
- * element,
- */
- 
-  // const mostrarSubcategorias = (e) => {
+      timeout = setTimeout(()=>{
+        handleLogout();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Sesión expirada. Por favor, vuelva a logearse.',
+          confirmButtonColor: '#fc5241',
+        });
+      }, 300000);
+    };
+
+    resetTimeout();
+
+    const listenerActivity = () => {
+      resetTimeout();
+    };
+
+    window.addEventListener('mousemove', listenerActivity);
+    window.addEventListener('keypress', listenerActivity);
     
-  //   // console.log("entre");
-  //   // Obtenemos la categoría del data-category del enlace clickeado
-  //   const categoria = e.currentTarget.dataset.category;
-  //   // console.log(categoria);
-  //   // Buscamos la categoría correspondiente en el array data
-  //   const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
-  //   if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
-  //     setSelectedCategory(categoriaSeleccionada);
-  //     setSubcategorias(categoriaSeleccionada.subcategories);
-  //   } else {
-  //     setSelectedCategory({});
-  //     setSubcategorias([]);
-  //   }
-  // };
+    return () => {
+      window.removeEventListener('mousemove', listenerActivity);
+      window.removeEventListener('keypress', listenerActivity);
+      clearTimeout(timeout);
+    };  
+
+  }, [currenUser]);
+
+  
 
   /**
    * The function "mostrarSubcategorias" logs the selected category and sets the subcategories based on
@@ -134,13 +143,22 @@ const Header = () => {
     setModalViewLogin(false);
   };
 
+  
+
   const handleLogin = () => {
     // Code to handle user login, such as storing session storage, etc.
-    setIsLoggedIn(true);
+    if(currenUser){
+      setIsLoggedIn(true);
+    }else{
+      setIsLoggedIn(false);
+    }
+
   };
 
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
+    console.log("Entro al logout");
+    setCurrentUser();
     setIsLoggedIn(false);
   };
 
@@ -214,7 +232,8 @@ const Header = () => {
             </ModalBody>
           </Modal>
           <a href="#" onClick={() => setModalViewRegistro(true)}>
-            <FontAwesomeIcon icon={faUserPlus} /> Registrate
+            <FontAwesomeIcon icon={faUserPlus} /> 
+            Registrate
           </a>
           <Modal
             className="modal-dialog-centered modal-lg"
@@ -299,41 +318,7 @@ const Header = () => {
                   </a> 
                   ))}                  
                   
-                  {/* <a href="#" data-category="celulares" onMouseOver ={mostrarSubcategorias}>
-                    <li>
-                      <strong>Celulares y accesorios</strong>
-                    </li>
-                  </a>
-                  <a href="#" data-category="belleza" onMouseOver ={mostrarSubcategorias}>
-                  <li>
-                    <strong>Belleza</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="tv_audio_video" onMouseOver ={mostrarSubcategorias}>
-                  <li>
-                    <strong>TV, audio y video</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="relojes_accesorios" onMouseOver ={mostrarSubcategorias}>
-                  <li>
-                    <strong>Relojes y accesorios</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="computacion" onMouseOver ={mostrarSubcategorias}>
-                  <li>
-                    <strong>Computación</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="moda" onMouseOver ={mostrarSubcategorias}>
-                  <li>
-                    <strong>Moda</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="consolas_videojuegos" onMouseOver ={mostrarSubcategorias}>
-                  <li>
-                    <strong>Consolas y videojuegos</strong>
-                  </li>
-                  </a> */}
+                  
 
               </ul>
             </div>
@@ -450,6 +435,13 @@ const Header = () => {
             Vender
           </a>
           <div className="menu">
+          {isLoggedIn ? (
+        <a href="#" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faRightFromBracket} /> 
+          Cerrar Sesion
+        </a>
+      ) : (
+        <>
             <a
               href="#"
               onClick={() => {
@@ -484,6 +476,8 @@ const Header = () => {
                 <Register closeModalRegistro={closeModalRegistro}  handleChangeFormRegister={handleChangeFormRegister} />
               </ModalBody>
             </Modal>
+            </>
+            )}
           </div>
         </div>
       </div>
