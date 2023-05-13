@@ -21,6 +21,8 @@ import { subcategorieById } from "../services/categories";
 import { getCurrentUser, setCurrentUser } from "../helpers/Utils";
 import Swal from "sweetalert2";
 import { getAllBrands } from "../services/brands";
+import { getProductsByIdBrand } from "../services/brands";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const Header = () => {
   
@@ -71,8 +73,17 @@ const Header = () => {
   }
 
 
+  const productsByBrand = (brandId) => {
+    getProductsByIdBrand(brandId)
+    .then((res)=>{
+      console.log(res);
+      setProducts(res.data);
+      console.log("Productos por marca", res.data.products);
+      
+    })
+    .catch((err) => console.log(err));
+  }
   
-
   /**
    * The function "mostrarSubcategorias" logs the selected category and sets the subcategories based on
    * the category's childes property.
@@ -138,6 +149,7 @@ const Header = () => {
     setCurrentUser();
     setIsLoggedIn(false);
   };
+
 
  
   useEffect(()=>{
@@ -411,12 +423,16 @@ const Header = () => {
               <ul>
                   {brands.map((brand, index)=>( 
                   <Link to={`/brand/${brand.name}/${brand.id}`}>
-                  <a href="#" data-category-id={brand.id} data-category={brand.name}  key={index} >
+                  <a href="#" 
+                  data-category-id={brand.id} 
+                  data-category={brand.name}  
+                  key={index} 
+                  onClick={()=>productsByBrand(brand.id)}>
                     <li>
                     <strong>{brand.name} ({brand.brand_products_count})</strong>
                     </li>
                   </a>
-                  </Link> 
+                  </Link>
                   ))}                  
                   
                   
