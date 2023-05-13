@@ -56,43 +56,7 @@ const Header = () => {
     .catch((err) => console.log(err));
   };
 
-  useEffect(()=>{
-    allCategoriesPromise();
-    handleLogin();
-    let timeout;
 
-    const resetTimeout = () =>{
-      if(timeout){
-        clearTimeout(timeout);
-      }
-
-      timeout = setTimeout(()=>{
-        handleLogout();
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Sesión expirada. Por favor, vuelva a logearse.',
-          confirmButtonColor: '#fc5241',
-        });
-      }, 300000);
-    };
-
-    resetTimeout();
-
-    const listenerActivity = () => {
-      resetTimeout();
-    };
-
-    window.addEventListener('mousemove', listenerActivity);
-    window.addEventListener('keypress', listenerActivity);
-    
-    return () => {
-      window.removeEventListener('mousemove', listenerActivity);
-      window.removeEventListener('keypress', listenerActivity);
-      clearTimeout(timeout);
-    };  
-
-  }, [currenUser]);
 
   
 
@@ -162,8 +126,57 @@ const Header = () => {
     setIsLoggedIn(false);
   };
 
-  
+ 
+  useEffect(()=>{
 
+    if(currenUser){
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+    
+    
+    let timeout;
+
+    const resetTimeout = () =>{
+      if(timeout){
+        clearTimeout(timeout);
+      }
+
+      timeout = setTimeout(()=>{
+        handleLogout();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Sesión expirada. Por favor, vuelva a logearse.',
+          confirmButtonColor: '#fc5241',
+        });
+      }, 300000);
+    };
+
+    resetTimeout();
+
+    const listenerActivity = () => {
+      resetTimeout();
+    };
+
+    window.addEventListener('mousemove', listenerActivity);
+    window.addEventListener('keypress', listenerActivity);
+    
+    return () => {
+      window.removeEventListener('mousemove', listenerActivity);
+      window.removeEventListener('keypress', listenerActivity);
+      clearTimeout(timeout);
+    };  
+
+    
+    
+
+  }, [currenUser, isLoggedIn]);
+  
+  useEffect(() => {
+    allCategoriesPromise();
+  }, []);
  
 
   return (
