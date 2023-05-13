@@ -22,13 +22,14 @@ import {
   filterProductsRecents, 
   filterProductsZ_A } from '../../services/filtros';
 import HeaderCategories from './headerCategories.tsx';
+import { getProductsByIdBrand } from '../../services/brands';
 
 
 
 
 const ProductsCategories = () => {
 
-  const { category, subcategory, id} = useParams();
+  const { category, subcategory, id, brandId} = useParams();
   const [products, setProducts ] = useState([]);
   const [filterApplied, setFilterApplied] = useState(false);
 
@@ -214,6 +215,17 @@ const ProductsCategories = () => {
   };
   
 
+  const productsByBrand = (brandId) => {
+    getProductsByIdBrand(brandId)
+    .then((res)=>{
+      console.log(res);
+      setProducts(res.data);
+      console.log("Productos por marca", res.data.products);
+      
+    })
+    .catch((err) => console.log(err));
+  }
+  
   const pageButtons = [];
   const totalPages = Math.ceil(totalResults / 12);
   for (let i = 0; i < totalPages; i++) {
@@ -242,15 +254,20 @@ const ProductsCategories = () => {
   }
 
   useEffect(()=>{
-    if(id ){
+    if(id){
      
       productsBySubcategoryWithFilter(id);
+    }
+    if(brandId){
+
+      productsByBrand(brandId);
+    }
       // productsWithFilterMostSold();
       // productsWithFilterBestRated();
       // productsWithFilterFeaturePrefer();
 
-    }
-  }, [id, selectedFiltersRecent, selectedFiltersHigh_Low, 
+    
+  }, [id, brandId,selectedFiltersRecent, selectedFiltersHigh_Low, 
     selectedFiltersLow_High, selectedFiltersA_Z, selectedFiltersZ_A, 
     offset, currentPage]);
 
