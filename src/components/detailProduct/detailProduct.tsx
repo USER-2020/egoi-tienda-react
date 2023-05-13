@@ -43,7 +43,9 @@ function DetailProduct() {
     const addToCart = () =>{
         if(currenUser){
             setModalViewCart(true);
+            console.log("producto agregado");
         }else{
+            
             setModalViewLogin(true);
             
           }

@@ -20,6 +20,7 @@ import { allCategories } from "../services/categories";
 import { subcategorieById } from "../services/categories";
 import { getCurrentUser, setCurrentUser } from "../helpers/Utils";
 import Swal from "sweetalert2";
+import { getAllBrands } from "../services/brands";
 
 const Header = () => {
   
@@ -34,6 +35,7 @@ const Header = () => {
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [products, setProducts ] = useState([]);
   const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
 
@@ -56,6 +58,17 @@ const Header = () => {
     .catch((err) => console.log(err));
   };
 
+  /**
+   * This function retrieves all brands and sets them in the state variable "brands".
+   */
+  const allBrands = () => {
+    getAllBrands()
+    .then((res)=>{
+      setBrands(res.data);
+      console.log("Recibiendo todas las marcas", brands);
+    })
+    .catch((err) => console.log(err));
+  }
 
 
   
@@ -128,13 +141,7 @@ const Header = () => {
 
  
   useEffect(()=>{
-
-    if(currenUser){
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-    
+    if(isLoggedIn){
     
     let timeout;
 
@@ -169,13 +176,15 @@ const Header = () => {
       clearTimeout(timeout);
     };  
 
-    
+  }
+  handleLogin();
     
 
   }, [currenUser, isLoggedIn]);
   
   useEffect(() => {
     allCategoriesPromise();
+    allBrands();
   }, []);
  
 
@@ -370,7 +379,9 @@ const Header = () => {
             Inicio
           </a>
         </Link>
-        <a href="#">
+        {/* Marcas */}
+        <div className="dropdown">
+        <a href="#" className="option">
           <svg
             width="32"
             height="32"
@@ -395,6 +406,23 @@ const Header = () => {
           </svg>
           Marcas
         </a>
+        <div className="menuCategorias">
+            <div className="column">
+              <ul>
+                  {brands.map((brand, index)=>( 
+                  <a href="#" data-category-id={brand.id} data-category={brand.name}  key={index} >
+                    <li>
+                    <strong>{brand.name}</strong>
+                    </li>
+                  </a> 
+                  ))}                  
+                  
+                  
+
+              </ul>
+            </div>
+          </div>
+        </div>
         <a href="#">
           <svg
             width="32"
