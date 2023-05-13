@@ -14,7 +14,7 @@ import Register from "../../views/user/register.js";
 import Login from "../../views/user/login.js";
 
 import '../../styles/detailsProduct.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
 import Swal from 'sweetalert2';
 import AddCart from '../../views/user/addCart';
@@ -35,7 +35,7 @@ function DetailProduct() {
 
     const currenUser = getCurrentUser();
     
-    
+    const history = useHistory();
 
 
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
@@ -45,6 +45,7 @@ function DetailProduct() {
             setModalViewCart(true);
         }else{
             setModalViewLogin(true);
+            
           }
     }
 
@@ -66,6 +67,7 @@ function DetailProduct() {
             if(modalViewLogin === true){
               setModalViewRegistro(true);
             }
+            
           };
         
         const handleChangeFormRegister = () => {
@@ -117,6 +119,7 @@ function DetailProduct() {
         if(slug){
             detailProductBySlug(slug);
         }
+        history.push(history.location.pathname);
         
     }, [slug, isLoggedIn]);
 
