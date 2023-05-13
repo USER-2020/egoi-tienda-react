@@ -410,11 +410,13 @@ const Header = () => {
             <div className="column">
               <ul>
                   {brands.map((brand, index)=>( 
+                  <Link to={`/brand/${brand.name}/${brand.id}`}>
                   <a href="#" data-category-id={brand.id} data-category={brand.name}  key={index} >
                     <li>
-                    <strong>{brand.name}</strong>
+                    <strong>{brand.name} ({brand.brand_products_count})</strong>
                     </li>
-                  </a> 
+                  </a>
+                  </Link> 
                   ))}                  
                   
                   
