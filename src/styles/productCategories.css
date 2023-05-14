@@ -82,7 +82,7 @@ input[type="radio"]:checked {
         
     }
 
-    .containerCard2 {
+    .containerProductCategorie .containerCard2 {
         width: calc(50% - 10px);
         /* max-width: 300px; */
         /* width: 200px; */
