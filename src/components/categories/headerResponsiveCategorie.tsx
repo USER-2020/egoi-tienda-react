@@ -14,6 +14,8 @@ import {
   useState
 } from "react"
 import category from '../../views/category'
+import { subcategorieById } from '../../services/categories';
+import { getBrandsByCategory } from '../../services/brands';
 
 
 
@@ -84,10 +86,21 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
   //     )
   // }
 
-  const HeaderResponsiveCategorie = () => {
+  const HeaderResponsiveCategorie = ({
+    handleClickFilterRecent,
+    handleClickFilterHigh_Low,
+    handleClickFilterLow_High,
+    handleClickFilterA_Z,
+    handleClickFilterZ_A,
+    priceStart,
+    priceEnd,
+    handlePriceStartChange,
+    handlePriceEndChange,
+    handleApplyRangeFilters
+  }) => {
 
   
-    const { category, subcategory } = useParams();
+    const { category, subcategory, id, brandId } = useParams();
     // console.log(category)
     // console.log(subcategory)
   
@@ -102,7 +115,64 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
     const togglePrecio = () => setModalPrecio(!modalPrecio);
     const toggleOrdenar = () => setModalOrdenar(!modalOrdenar)
     
+    const [products, setProducts] = useState([]);
+    const [brands, setBrands] = useState([]);
+    const [orderBy, setOrderBy]= useState([]);
 
+    // const productsBySubcategory =(id) =>{
+    //   subcategorieById(id)
+    //   .then((res)=>{
+    //     console.log(res);
+    //     setProducts(res.data);
+    //     console.log("Productos por categoria desde el responsive", res.data.products);
+    //   })
+    // }
+
+    // useEffect(()=>{
+    //   if(id){
+    //     productsBySubcategory(id)
+    //   }
+    // },[id]);
+
+    const brandsBySubcategory = (id) =>{
+      getBrandsByCategory(id)
+      .then((res)=>{
+        console.log(res);
+        setBrands(res.data);
+        console.log("Carga de marcas por categoria-subcategoria responsive", brands);
+      })
+      .catch((err) => console.log(err));
+    }
+
+    const handleChangeOrder = (e) => {
+      const valueOrder = e.target.value;
+      switch(valueOrder) {
+        case "low_high":
+          handleClickFilterLow_High();
+          break;
+        case "high_low":
+          handleClickFilterHigh_Low();
+          break;
+        case "a_z":
+          handleClickFilterA_Z();
+          break;
+        case "z_a":
+          handleClickFilterZ_A();
+          break;
+        case "recent":
+          handleClickFilterRecent();
+          break;
+        default:
+          break;
+      }
+      setOrderBy(valueOrder);
+    }
+
+    useEffect(()=>{
+      if(id){
+        brandsBySubcategory(id);
+      }
+    },[id]);
 
     return (
 
@@ -119,11 +189,17 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
                   <ModalBody>
                     <h4>Filtrar por marca</h4>
                     <div className="containerModalMarca">
-                      <div className="opcion">
+                    {brands.length ? (
+                      brands.map((brand, index) => (
+                        <div className="opcion" key={index}>
                         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                        <span>IPhone</span>
+                        <span>{brand.name}</span>
                       </div>
-                      <div className="opcion">
+                        ))
+                      ): (
+                        <span>No hay marcas asociadas</span>
+                      )}
+                      {/* <div className="opcion">
                         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
                         <span>Samsung</span>
                       </div>
@@ -139,7 +215,7 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
                         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
                         <span>Nokia</span>
                       </div>
-                      
+                       */}
                       <button className='btnFilter'>Aplicar Filtro</button>
                     </div>
                   </ModalBody>
@@ -156,15 +232,21 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
                       <div className="containerPrecios">
                         <div className="desde">
                           
-                          <input type="number" placeholder='Ej: 5000' className='inputPrecio'/>
+                          <input type="number" placeholder='Ej: 5000' 
+                          className='inputPrecio'
+                          value={priceStart}
+                          onChange={handlePriceStartChange}/>
                         </div>
                         <h1>-</h1>
                         <div className="hasta">
                           
-                          <input type="number" placeholder='Ej: 8000' className='inputPrecio'/>
+                          <input type="number" placeholder='Ej: 8000' 
+                          className='inputPrecio'
+                          value={priceEnd}
+                          onChange={handlePriceEndChange}/>
                         </div> 
                       </div>
-                      <button className='btnFilter'>Aplicar Filtro</button>
+                      <button className='btnFilter'onClick={handleApplyRangeFilters} >Aplicar Filtro</button>
                     </div>
                   </div>
                   </ModalBody>
@@ -177,13 +259,13 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
                   <ModalBody>
                     <h4>Ordenar por</h4>
                     <div className="containerModalOrdenar">
-                      <select className="form-select" aria-label="Default select example">
+                      <select className="form-select" aria-label="Default select example" onChange={handleChangeOrder}>
                         <option selected>Selecciona ...</option>
-                        <option value="1">Del más bajo al más alto</option>
-                        <option value="2">Del más alto al más bajo</option>
-                        <option value="3">De la A - Z</option>
-                        <option value="4">De la Z - A</option>
-                        <option value="5">El más reciente</option>
+                        <option value="low_high" >Del más bajo al más alto</option>
+                        <option value="high_low" >Del más alto al más bajo</option>
+                        <option value="a_z" >De la A - Z</option>
+                        <option value="z_a" >De la Z - A</option>
+                        <option value="recent" >El más reciente</option>
                         
                       </select>
                     </div>
@@ -212,9 +294,9 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
               </svg>
               </a>
               <p className='titleFilter'>Desde: </p> 
-              <p><strong>$5000</strong></p>
+              <p><strong>${priceStart}</strong></p>
               <p className='titleFilter'>Hasta: </p> 
-              <p><strong>$2000000</strong></p>
+              <p><strong>${priceEnd}</strong></p>
               </div>
               <div className="containerOrdenar">
               <a>
@@ -223,7 +305,7 @@ const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
               </svg>
               </a>
               <p className='titleFilter'>Ordenar: </p> 
-              <p><strong>El mas reciente</strong></p>
+              <p><strong>{orderBy}</strong></p>
               </div>
             </div>
         </div>

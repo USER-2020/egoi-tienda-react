@@ -23,6 +23,7 @@ import {
   filterProductsZ_A } from '../../services/filtros';
 import HeaderCategories from './headerCategories.tsx';
 import { getProductsByIdBrand } from '../../services/brands';
+import HeaderResponsiveCategorie from './headerResponsiveCategorie.tsx';
 
 
 
@@ -212,6 +213,7 @@ const ProductsCategories = () => {
         console.log("Productos filtrados por rango de precio", res.data.products);
       })
       .catch((error) => console.error(error));
+      
   };
   
 
@@ -302,6 +304,18 @@ const ProductsCategories = () => {
                     handleApplyRangeFilters={handleApplyFilters}
 
   />
+  <HeaderResponsiveCategorie  handleClickFilterRecent={handleButtonClickRecent} 
+                              handleClickFilterHigh_Low={handleButtonClickHigh_Low} 
+                              handleClickFilterLow_High={handleButtonClickLow_High} 
+                              handleClickFilterA_Z={handleButtonClickA_Z}
+                              handleClickFilterZ_A={handleButtonClickZ_A}
+                              priceStart={priceStart}
+                              priceEnd={priceEnd}
+                              handlePriceStartChange={handlePriceStartChange}
+                              handlePriceEndChange={handlePriceEndChange}
+                              handleApplyRangeFilters={handleApplyFilters}
+
+                    />
   {/* <HeaderCategories onFilterCLick={handleFilterClick}/> */}
   <div className='containerProductCategorie'>
       <div className='container'>

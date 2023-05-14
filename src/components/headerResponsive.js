@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
     Navbar,
@@ -32,64 +32,66 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Login from '../views/user/login';
 import Register from '../views/user/register';
+import { getAllBrands } from "../services/brands";
+import { allCategories } from "../services/categories";
 
-const data = [  
+// const data = [  
     
-  {
-    name: "Celulares y Accesorios",
-    subcategories: [
-      { name: "Accesorios para celular" },
-      { name: "Smartwatches" }
-    ],
-  },
+//   {
+//     name: "Celulares y Accesorios",
+//     subcategories: [
+//       { name: "Accesorios para celular" },
+//       { name: "Smartwatches" }
+//     ],
+//   },
 
-  {   name: "Belleza",    
-      subcategories: [      
-        {  name: "Perfumes para mujer" },      
-        {  name: "Perfumes para hombre" },    
-        {  name: "Belleza y cuidado personal" },    
-        {  name: "Fajas y leggings" },    
-        {  name: "Maquillaje" },    
-      ],
-  },
-  {
-    name: "Tv, Audio y Video",
-    subcategories: [
-      { name: "Televisores" },
-      { name: "Audio" },
-    ],
-  },
-  {
-    name: "Relojes y Accesorios",
-    subcategories: [
-      { name: "Relojes para hombre" },
-      { name: "Relojes para mujer" },
-      { name: "Gafas de sol" },
-      { name: "Gorras" },
-    ],
-  },
-  {
-    name: "Computacion",
-    subcategories: [
-      { name: "Teclados" },
-      { name: "Mouses" },
-    ],
-  },
-  {
-    name: "Moda",
-    subcategories: [
-      { name: "Calzado para dama" },
-      { name: "Calzado para hombre" },
-    ],
-  },
-  {
-    name: "Consolas y Videojuegos",
-    subcategories: [
-      { name: "Consolas" },
-      { name: "Videojuegos" },
-    ],
-  },
-];
+//   {   name: "Belleza",    
+//       subcategories: [      
+//         {  name: "Perfumes para mujer" },      
+//         {  name: "Perfumes para hombre" },    
+//         {  name: "Belleza y cuidado personal" },    
+//         {  name: "Fajas y leggings" },    
+//         {  name: "Maquillaje" },    
+//       ],
+//   },
+//   {
+//     name: "Tv, Audio y Video",
+//     subcategories: [
+//       { name: "Televisores" },
+//       { name: "Audio" },
+//     ],
+//   },
+//   {
+//     name: "Relojes y Accesorios",
+//     subcategories: [
+//       { name: "Relojes para hombre" },
+//       { name: "Relojes para mujer" },
+//       { name: "Gafas de sol" },
+//       { name: "Gorras" },
+//     ],
+//   },
+//   {
+//     name: "Computacion",
+//     subcategories: [
+//       { name: "Teclados" },
+//       { name: "Mouses" },
+//     ],
+//   },
+//   {
+//     name: "Moda",
+//     subcategories: [
+//       { name: "Calzado para dama" },
+//       { name: "Calzado para hombre" },
+//     ],
+//   },
+//   {
+//     name: "Consolas y Videojuegos",
+//     subcategories: [
+//       { name: "Consolas" },
+//       { name: "Videojuegos" },
+//     ],
+//   },
+// ];
 
 function HeaderResponsive() {
 
@@ -100,24 +102,27 @@ function HeaderResponsive() {
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
+  
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
 
 
-  const mostrarSubcategorias = (e) => {
+  // const mostrarSubcategorias = (e) => {
     
-    // console.log("entre");
-    // Obtenemos la categoría del data-category del enlace clickeado
-    const categoria = e.currentTarget.dataset.category;
-    // console.log(categoria);
-    // Buscamos la categoría correspondiente en el array data
-    const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
-    if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
-      setSelectedCategory(categoriaSeleccionada);
-      setSubcategorias(categoriaSeleccionada.subcategories);
-    } else {
-      setSelectedCategory({});
-      setSubcategorias([]);
-    }
-  };
+  //   // console.log("entre");
+  //   // Obtenemos la categoría del data-category del enlace clickeado
+  //   const categoria = e.currentTarget.dataset.category;
+  //   // console.log(categoria);
+  //   // Buscamos la categoría correspondiente en el array data
+  //   const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
+  //   if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
+  //     setSelectedCategory(categoriaSeleccionada);
+  //     setSubcategorias(categoriaSeleccionada.subcategories);
+  //   } else {
+  //     setSelectedCategory({});
+  //     setSubcategorias([]);
+  //   }
+  // };
 
   const handleChangeFormLogin = () => {
 
@@ -151,6 +156,32 @@ function HeaderResponsive() {
     // Code to handle user logout, such as clearing session storage, etc.
     setIsLoggedIn(false);
   };
+
+  const allCategoriesPromise = () => {
+    allCategories()
+    .then((res) => {
+      setCategories(res.data);
+      console.log("Recibiendo todas las categorias desde el responsive", categories);
+      
+    })
+    .catch((err) => console.log(err));
+  };
+
+  const allBrands = () => {
+    getAllBrands()
+    .then((res)=>{
+      setBrands(res.data);
+      console.log("Recibiendo todas las marcas desde el responsive", brands);
+    })
+    .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    allCategoriesPromise();
+    allBrands();
+  }, []);
+
+
   return (
     <div className='containerResponsive'>
     <nav class="navbar bg-body-tertiary fixed-top">
@@ -219,7 +250,7 @@ function HeaderResponsive() {
               Categorias
             </a>
             </li> */}
-            <li class="nav-item dropdown" onClick={mostrarSubcategorias}>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg
                   width="32"
@@ -239,51 +270,22 @@ function HeaderResponsive() {
                 </a>
                 <ul class="dropdown-menu dropdown-menu-extended">
                   
-                {data.map((category) => (
-                <li key={category.name}>
+                {categories.map((category, index) => (
+                <li key={index}>
                   <a className="dropdown-item" href="#">
                     <strong>{category.name}</strong>
                   </a>
                   <ul >
-                    {category.subcategories.map((subcategory) => (
-                      <li key={subcategory.name}>
-                        <Link to={`/categories/${category.name}/${subcategory.name}`}>
-                          <a className="dropdown-item" href="#">{subcategory.name}</a>
-                        </Link>
+                    {category.childes.map((subcategory, index) => (
+                      <li key={index}>
+                        {/* <Link to={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}> */}
+                          <a className="dropdown-item" href={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}>{subcategory.name}</a>
+                        {/* </Link> */}
                       </li>
                     ))}
                   </ul>
                 </li>
                 ))}
-
-                {/* <li><a class="dropdown-item" href="#"><strong>Belleza</strong></a></li>
-                <li><a class="dropdown-item" href="#">Perfumes para mujer</a></li>
-                <li><a class="dropdown-item" href="#">Perfumes para hombre</a></li>
-                <li><a class="dropdown-item" href="#">Belleza y cuidado persona</a></li>
-                <li><a class="dropdown-item" href="#">Fajas y leggings</a></li>
-                <li><a class="dropdown-item" href="#">Maquillaje</a></li>
-
-                <li><a class="dropdown-item" href="#"><strong>TV, audio y video</strong></a></li>
-                <li><a class="dropdown-item" href="#">Televisores</a></li>
-                <li><a class="dropdown-item" href="#">Audio</a></li>
-                
-                <li><a class="dropdown-item" href="#"><strong>Relojes y accesorios</strong></a></li>
-                <li><a class="dropdown-item" href="#">Relojes para hombre</a></li>
-                <li><a class="dropdown-item" href="#">Relojes para mujer</a></li>
-                <li><a class="dropdown-item" href="#">Gafas de sol</a></li>
-                <li><a class="dropdown-item" href="#">Gorras</a></li>
-                
-                <li><a class="dropdown-item" href="#"><strong>Computación</strong></a></li>
-                <li><a class="dropdown-item" href="#">Teclados</a></li>
-                <li><a class="dropdown-item" href="#">Mouses</a></li>
-                
-                <li><a class="dropdown-item" href="#"><strong>Moda</strong></a></li>
-                <li><a class="dropdown-item" href="#">Calzado para dama</a></li>
-                <li><a class="dropdown-item" href="#">Calzado para hombre</a></li>
-
-                <li><a class="dropdown-item" href="#"><strong>Consolas y videojuegos</strong></a></li>
-                <li><a class="dropdown-item" href="#">Consolas</a></li>
-                <li><a class="dropdown-item" href="#">Videojuegos</a></li> */}
 
                 </ul>
             </li>
@@ -307,8 +309,11 @@ function HeaderResponsive() {
                 Inicio
               </a>
             </li>
-            <li class="nav-item pers">
-              <a href="#">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" 
+              href="#" role="button" 
+              data-bs-toggle="dropdown" 
+              aria-expanded="false">
                 <svg
                   width="32"
                   height="32"
@@ -333,6 +338,15 @@ function HeaderResponsive() {
                 </svg>
                 Marcas
               </a>
+              <ul class="dropdown-menu dropdown-menu-extended">
+                {brands.map((brand, index) => (
+                  <li key={index}>
+                    <a className='dropdown-item' href={`/brand/${brand.name}/${brand.id}`}>
+                      <strong>{brand.name}({brand.brand_products_count})</strong>
+                    </a>
+                  </li>
+                ))}
+                  </ul>
             </li>
             <li class="nav-item pers">
               <a href="#">

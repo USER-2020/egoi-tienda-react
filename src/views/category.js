@@ -6,6 +6,7 @@ import HeaderResponsive from "../components/headerResponsive";
 import HeaderCategories from "../components/categories/headerCategories.tsx";
 import ProductsCategories from "../components/categories/productsCategories.tsx";
 import HeaderResponsiveCategorie from "../components/categories/headerResponsiveCategorie.tsx";
+import ProductsResponsiveCategorie from './../components/categories/productsResponsiveCategorie.tsx';
 
 const Category = (props) => {
     // const categoryId = props.match.params.category;
@@ -26,8 +27,9 @@ const Category = (props) => {
     <Header />
     <HeaderResponsive/>
     {/* <HeaderCategories/> */}
-    <HeaderResponsiveCategorie/>
+    {/* <HeaderResponsiveCategorie/> */}
     <ProductsCategories/>
+    {/* <ProductsResponsiveCategorie/> */}
     <Footer />
     </>
   )

@@ -16,6 +16,7 @@ import { subcategorieById } from '../../services/categories';
 import { filterProductsRecents } from '../../services/filtros';
 
 import { Display } from 'react-bootstrap-icons';
+import { getBrandsByCategory } from '../../services/brands';
 
 
 const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
@@ -53,7 +54,9 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
   const [isOpen2, setIsOpen2] = useState<boolean>(false);
   const [isOpen3, setIsOpen3] = useState<boolean>(false);
 
-  const { category, subcategory, id, sort } = useParams();
+
+  const [brands, setBrands] = useState([]);
+  const { category, subcategory, id, brandId } = useParams();
  
   const ref1 = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref1, ()=> setIsOpen1(false));
@@ -63,7 +66,15 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
   useOnClickOutside(ref3, ()=> setIsOpen3(false));
 
  
-
+  const brandsBySubcategory = (id) =>{
+    getBrandsByCategory(id)
+    .then((res)=>{
+      console.log(res);
+      setBrands(res.data);
+      console.log("Carga de marcas por categoria-subcategoria", brands);
+    })
+    .catch((err) => console.log(err));
+  }
   
   // const [selectedFiltersRecent, setSelectedFiltersRecent] = useState('');
 
@@ -98,7 +109,11 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
   //     }
   //   }, [id, sort]);
 
-  
+  useEffect(()=>{
+    if(id || brandId){
+      brandsBySubcategory(id);
+    }
+  },[id, brandId]);
  
 
   return (
@@ -121,11 +136,17 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
                     </Icon> */}
                   </button>
                   <div className="menu">
-                    <button>
-                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                      <span>IPhone</span>
-                    </button>
-                    <button>
+                  {brands.length ? (
+                      brands.map((brand, index) => (
+                        <button key={index}>
+                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                            <span>{brand.name}</span>
+                        </button>
+                        ))
+                        ):(
+                          <span>No hay marcas asociadas</span>
+                        )}
+                    {/* <button>
                       <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
                       <span>Samsung</span>
                     </button>
@@ -140,7 +161,7 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
                     <button>
                       <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
                       <span>Nokia</span>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </li>
