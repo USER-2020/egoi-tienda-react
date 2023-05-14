@@ -73,7 +73,7 @@ input[type="radio"]:checked {
         display: none;
     }
 
-    .containerProductos{
+    .containerProductCategorie .containerProductos{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -83,7 +83,7 @@ input[type="radio"]:checked {
     }
 
     .containerCard2 {
-        width: calc(50% - 8px);
+        width: calc(50% - 10px);
         /* max-width: 300px; */
         /* width: 200px; */
         margin-bottom: 20px;
