@@ -61,7 +61,31 @@ input[type="radio"]:checked {
   }
 
 @media (max-width: 768px) {
-    .containerProductCategorie{
+    
+    /* .containerProductCategorie{
+        display: none;
+    } */
+    .containerProductsIndex{
+        display: flex;
+        flex-direction: column;
+    }
+    .containerProductsIndex > .menuBusqueda{
         display: none;
     }
+
+    .containerProductos{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        
+        
+    }
+
+    .containerCard2 {
+        width: calc(50% - 8px);
+        /* max-width: 300px; */
+        /* width: 200px; */
+        margin-bottom: 20px;
+      }
 }

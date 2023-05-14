@@ -427,7 +427,7 @@ const Header = () => {
                   data-category-id={brand.id} 
                   data-category={brand.name}  
                   key={index} 
-                  onClick={()=>productsByBrand(brand.id)}>
+                  >
                     <li>
                     <strong>{brand.name} ({brand.brand_products_count})</strong>
                     </li>

@@ -327,6 +327,10 @@ input[type="radio"]:checked {
         display: block;
     }
 
+    .modal-content{
+        width: 100vw;
+    }
+
     .modal-bottom {
         position: fixed;
         bottom: 0;

@@ -16,4 +16,16 @@ export const getProductsByIdBrand = (id) =>
         headers:{
             'Content-Type': 'application/json'
         }
-    })
+    });
+
+// Traer marcas por categoria o subcategoria
+export const getBrandsByCategory = (id) =>
+    axios.get(`${baseUrl}/brands/category/${id}`, {
+        params:{
+            limit:12
+        },
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    });
+
