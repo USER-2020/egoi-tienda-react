@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { urlBase } from '../constants/defaultValues';
 
+
+
+
 const baseUrl = urlBase;
 
 // Filtro de productos mas recientes 
@@ -107,3 +110,13 @@ export const filterProductsFeaturePrefer = (id) =>
             'Content-Type': 'application/json'
         }
     });
+
+export const getProductsBySearch = (searchProducts) =>
+    axios.get(`${baseUrl}/products/search`, {
+        params: {
+            name: searchProducts
+        },
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    })

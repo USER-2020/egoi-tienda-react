@@ -23,6 +23,9 @@ import Swal from "sweetalert2";
 import { getAllBrands } from "../services/brands";
 import { getProductsByIdBrand } from "../services/brands";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useContext } from 'react';
+
+import { getProductsBySearch } from "../services/filtros";
 
 const Header = () => {
   
@@ -45,7 +48,34 @@ const Header = () => {
 
   const currenUser = getCurrentUser();
   
+ 
+  const [prevSearchProducts, setPrevSearchProducts] = useState('');
+  
+  const history = useHistory();
 
+  const handleInputChange = (event) => {
+    setPrevSearchProducts(event.target.value);
+  }
+  
+  const handleEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      setPrevSearchProducts(prevSearchProducts);
+      console.log("Este es el valor guardado en el search: ",prevSearchProducts);
+      history.push(`/products/${prevSearchProducts}`);
+    }
+  }
+
+  // const handleInputChange = (event) => {
+  //   setPrevSearch(searchProducts);
+  //   setSearchProducts(event.target.value);
+  //   console.log("Este es el producto buscado", searchProducts);
+  // }
+
+  // const handleKeyDown = (event) => {
+  //   if (event.key === 'Enter') {
+  //     // Hacer algo con el valor de searchProducts
+  //   }
+  // }
 
   /**
    * This function retrieves all categories and sets them in state using a promise and useEffect hook.
@@ -84,6 +114,17 @@ const Header = () => {
     .catch((err) => console.log(err));
   }
   
+  const resultsSearch = (prevSearchProducts) => {
+    console.log("Entre al resuktado de search");
+    if(prevSearchProducts){
+      getProductsBySearch(prevSearchProducts)
+      .then((res)=>{
+        console.log(res);
+        setProducts(res.data);
+        console.log("Respuesta de los productos por busqueda", res.data.products );
+      })
+    }
+  }
   /**
    * The function "mostrarSubcategorias" logs the selected category and sets the subcategories based on
    * the category's childes property.
@@ -195,6 +236,7 @@ const Header = () => {
   }, [currenUser, isLoggedIn]);
   
   useEffect(() => {
+    
     allCategoriesPromise();
     allBrands();
   }, []);
@@ -221,6 +263,10 @@ const Header = () => {
               }}
               type="text"
               placeholder="Busca productos, marcas..."
+              value={prevSearchProducts}
+              onChange={handleInputChange}
+              onKeyPress={handleEnterPress}
+              
             />
           </InputGroup>
         </div>

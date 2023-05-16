@@ -26,6 +26,7 @@ import "../styles/headerResponsive.css";
 import styles from "../styles/navbar.css";
 import logo from "../assets/icono egoi small.png";
 
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -106,7 +107,33 @@ function HeaderResponsive() {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
 
+  const [prevSearchProducts, setPrevSearchProducts] = useState('');
+  
+  const history = useHistory();
 
+  const handleInputChange = (event) => {
+    setPrevSearchProducts(event.target.value);
+  }
+  
+  const handleEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      setPrevSearchProducts(prevSearchProducts);
+      console.log("Este es el valor guardado en el search: ",prevSearchProducts);
+      history.push(`/products/${prevSearchProducts}`);
+    }
+  }
+
+  // const resultsSearch = (prevSearchProducts) => {
+  //   console.log("Entre al resuktado de search");
+  //   if(prevSearchProducts){
+  //     getProductsBySearch(prevSearchProducts)
+  //     .then((res)=>{
+  //       console.log(res);
+  //       setProducts(res.data);
+  //       console.log("Respuesta de los productos por busqueda", res.data.products );
+  //     })
+  //   }
+  // }
   // const mostrarSubcategorias = (e) => {
     
   //   // console.log("entre");
@@ -177,6 +204,7 @@ function HeaderResponsive() {
   }
 
   useEffect(() => {
+    
     allCategoriesPromise();
     allBrands();
   }, []);
@@ -204,7 +232,9 @@ function HeaderResponsive() {
               border: "none",
               width: "400px",
               borderRadius: "50px",
-            }} type="text" placeholder="Busca productos, marcas..." />
+            }} type="text" placeholder="Busca productos, marcas..." 
+            onChange={handleInputChange}
+            onKeyPress={handleEnterPress}/>
           </InputGroup>
         </div>
         <a href="#">
