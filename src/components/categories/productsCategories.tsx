@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../../styles/productCategories.css'
 import {
   Card, CardImg, CardText, CardBody,
@@ -20,17 +20,19 @@ import {
   filterProductsMostSold, 
   filterProductsPrice, 
   filterProductsRecents, 
-  filterProductsZ_A } from '../../services/filtros';
+  filterProductsZ_A, 
+  getProductsBySearch} from '../../services/filtros';
 import HeaderCategories from './headerCategories.tsx';
 import { getProductsByIdBrand } from '../../services/brands';
 import HeaderResponsiveCategorie from './headerResponsiveCategorie.tsx';
+import {AppContext} from '../../AppContext';
 
 
 
 
 const ProductsCategories = () => {
 
-  const { category, subcategory, id, brandId} = useParams();
+  const { category, subcategory, id, brandId, name} = useParams();
   const [products, setProducts ] = useState([]);
   const [filterApplied, setFilterApplied] = useState(false);
 
@@ -47,7 +49,7 @@ const ProductsCategories = () => {
   // const [totalPages, setTotalPages] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   
-  
+  // const {searchProducts, setSearchProducts} = useContext(AppContext);
 
   // const filterRecent = (id) => {
   //   filterProductsRecents(id)
@@ -228,6 +230,17 @@ const ProductsCategories = () => {
     .catch((err) => console.log(err));
   }
   
+  const resultsSearch = (searchProducts) => {
+    if(searchProducts){
+      getProductsBySearch(searchProducts)
+      .then((res)=>{
+        console.log(res);
+        setProducts(res.data);
+        console.log("Respuesta de los productos por busqueda", res.data.products );
+      })
+    }
+  }
+
   const pageButtons = [];
   const totalPages = Math.ceil(totalResults / 12);
   for (let i = 0; i < totalPages; i++) {
@@ -267,11 +280,15 @@ const ProductsCategories = () => {
       // productsWithFilterMostSold();
       // productsWithFilterBestRated();
       // productsWithFilterFeaturePrefer();
-
+    if(name?.length){
+      resultsSearch(name);
+    }else{
+      console.log("No existe SearchProducts");
+    }
     
   }, [id, brandId,selectedFiltersRecent, selectedFiltersHigh_Low, 
     selectedFiltersLow_High, selectedFiltersA_Z, selectedFiltersZ_A, 
-    offset, currentPage]);
+    offset, currentPage, name]);
 
 
   

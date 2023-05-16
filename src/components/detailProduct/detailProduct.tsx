@@ -51,6 +51,14 @@ function DetailProduct() {
           }
     }
 
+    const buyNow = () =>{
+        if(currenUser){
+            history.push(`/detailCart/address`);
+        }
+        else{
+            setModalViewLogin(true);
+        }
+    }
 
         const closeModalRegistro = () => {
             setModalViewRegistro(false);
@@ -203,7 +211,7 @@ function DetailProduct() {
                     <p>Añadir al carrito</p>
                 </a>
                 
-                <a href="#" className='buyNow'>
+                <a href="#" className='buyNow' onClick={buyNow}>
                     <p>Comprar ahora</p>
                 </a>
                 <a href="#" className='fav'>

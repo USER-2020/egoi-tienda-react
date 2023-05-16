@@ -1,0 +1,419 @@
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 48px;
+    background-color: #F5F5F5;
+    margin-bottom: 32px;
+      
+}
+
+.containerProductsAndDetailpurchase{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.containerTableProducts{
+    
+    width: 65%;
+}
+
+.containerTableProducts .table thead{
+    font-size: 12px;
+    color: #A2A1A7;
+}
+
+/* Tabla de productos */
+.containerTableProducts .card {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    padding: 10px;
+}
+
+.containerTableProducts .card .caracteristicaDetalleProducto{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    width: 280px;
+    color: #74737B;
+}
+
+.containerTableProducts .card .caracteristicaPrecio{
+    font-size: 14px;
+    color: #FC5241;
+    font-weight: 700;
+    width: 170px;
+}
+
+.containerTableProducts .card .caracteristicaCantidad{
+    width: 100px;
+}
+
+.containerTableProducts .card .caracteristicaCantidad input{
+    width: 50px;
+    border: none;
+    border-radius: 32px;
+    background-color: #A2A1A729;
+}
+
+.containerTableProducts .card .caracteristicaPrecioTotal{
+    font-size: 14px;
+    color: #74737B;
+    font-weight: 700;
+    width: 130px;
+}
+
+.containerTableProducts .card .caracteristicaCostoEnvio{
+    width: 80px;
+}
+
+.containerTableProducts .card a{
+    text-decoration: none;
+    color: #171523;
+}
+.containerDetailpurchase{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    
+}
+
+.containerDetailpurchase .card {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+}
+
+.containerDetailpurchase .card .subtotal,
+.containerDetailpurchase .card .impuesto,
+.containerDetailpurchase .card .envio,
+.containerDetailpurchase .card .descuento{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.containerDetailpurchase .card .cupon{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.containerDetailpurchase .card .cupon a {
+    padding: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    background-color: #FC5241;
+    color: #fff;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+}
+
+
+.containerDetailpurchase .card .totalCash{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 24px;
+}
+
+.containerDetailpurchase .card .totalCash h6{
+    font-size: 14px;
+    color: #74737B;
+}
+.containerDetailpurchase .card .totalCash h5{
+    font-size: 30px;
+}
+
+.containerDetailpurchase .card .capsulas{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    gap: 8px;
+}
+.containerDetailpurchase .card .capsulas .cut{
+    text-align: center;
+}
+
+.containerDetailpurchase .card .capsulas .cut p{
+    font-size: 10px;
+    color: #089705;
+}
+
+.containerDetailpurchase .toPay,
+.containerDetailpurchase .awaitShopping,
+.containerDetailpurchase .turnCheckout
+{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 24px;
+}
+
+.containerDetailpurchase .toPay a {
+    text-decoration: none;
+    width: 300px;
+    height: 100%;
+    background-color: #FC5241;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32px;
+
+}
+
+.containerDetailpurchase .awaitShopping a {
+    text-decoration: none;
+    width: 300px;
+    height: 100%;
+    border: 1px solid #FC5241;
+    color:#FC5241;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32px;
+
+}
+
+.containerDetailpurchase .turnCheckout a {
+    text-decoration: none;
+    width: 300px;
+    height: 100%;
+    border: 1px solid #FC5241;
+    color:#FC5241;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32px;
+
+}
+
+/* Stepper */
+:root {
+    --prm-color: #FC5241;
+    --prm-gray: #b1b1b1;
+    --body-gray:#f5f5f5;
+    --placeholder-icon-nombre:url('../assets/egoi_icons/user-1.svg');
+    --placeholder-icon-cellphone: url('../assets/egoi_icons/Device.svg');
+    --placeholder-icon-map: url('../assets/egoi_icons/Map\ Point.svg');
+    
+
+}
+
+/* CSS */
+.steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.step-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--prm-gray);
+    transition: .4s;
+}
+
+.step-button[aria-expanded="true"] {
+    width: 60px;
+    height: 60px;
+    background-color: var(--prm-color);
+    color: #fff;
+}
+
+.done {
+    background-color: var(--prm-color);
+    color: #fff;
+}
+
+.step-item {
+    z-index: 10;
+    text-align: center;
+
+}
+
+#progress {
+  -webkit-appearance:none;
+    position: absolute;
+    width: 85%;
+    z-index: 5;
+    height: 10px;
+    margin-left: 55px;
+    margin-bottom: 18px;
+}
+
+/* to customize progress bar */
+#progress::-webkit-progress-value {
+    background-color: var(--prm-color);
+    transition: .5s ease;
+}
+
+#progress::-webkit-progress-bar {
+    background-color: var(--prm-gray);
+    height: 2px;
+}
+
+.step-button.active {
+    background-color: var(--prm-color); /* Color deseado para el paso activo */
+    color: #fff; /* Color del texto para el paso activo */
+    
+  }
+
+.step-item.active .step-title{
+    color: var(--prm-color);
+}
+.containerProgressBar{
+    width: 60%;
+}
+
+.containerCheckoutSteps{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+
+#collapseTwo .cards{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--body-gray);
+    border: none;
+    
+    
+}
+
+#collapseTwo .cards .card1{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #A2A1A7;
+    border-radius: 24px;
+    
+}
+
+#collapseTwo .cards .card1 .seleccion{
+    display: flex;
+    flex-direction: row;
+    color: var(--prm-color);
+    gap: 10px;
+    margin-bottom: 5px;
+    
+    
+}
+
+#collapseTwo .cards .card1 .seleccion p {
+    margin-bottom: 0;
+}
+#collapseTwo .cards .card1 .contenido{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 23px;
+    color: #45444F;
+}
+#collapseTwo .cards .card2{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--prm-color);
+    border-radius: 24px;
+    color: var(--prm-color);
+}
+
+#collapseTwo .cards .card2 .seleccion{
+    display: flex;
+    flex-direction: row;
+    color: var(--prm-color);
+    gap: 10px;
+    margin-bottom: 5px;
+    
+    
+}
+#collapseTwo .cards .card2 .seleccion p {
+    margin-bottom: 0;
+}
+
+#collapseTwo .cards .card2 .formularioCheckout{
+    margin-top: 10px;
+    margin-left: 23px;
+}
+input[placeholder="Nombre de contacto"]::placeholder{
+    background-image: var(--placeholder-icon-nombre);
+}
+input[placeholder="Celular"]::placeholder{
+    background-image: var(--placeholder-icon-cellphone);
+}
+input[placeholder="Direccion"]::placeholder{
+    background-image: var(--placeholder-icon-map);
+}
+
+input[type="checkbox"]{
+    background-color:#dbdbdb;
+    border-color: #767677;
+  }
+
+input[type="checkbox"]:checked {
+    background-color:var(--prm-color);
+    border-color: var(--prm-color);
+  }
+
+#collapseThree .paymentMethods {
+    background-color: var(--body-gray);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+#collapseThree .paymentMethods h6{
+    color: var(--prm-color);
+    font-size: 16px;
+}
+
+#collapseThree .paymentMethods .card{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--body-gray);
+    border: 1px solid #A2A1A7;
+    width: 75%;
+    padding: 25px;
+    align-items: center;
+    border-radius: 24px;
+    justify-content: space-between;
+}
+
+#collapseThree .paymentMethods .card .payment{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+#collapseThree .paymentMethods .card .payment .contentPayment h6,
+#collapseThree .paymentMethods .card .payment .contentPayment p{
+    color: black;
+    margin-bottom: 0;
+}
+
+#collapseThree .paymentMethods .card .payment .contentPayment{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+}

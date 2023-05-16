@@ -41,15 +41,16 @@
 }
 
 .details .canT{
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 400;
     color: #74737B;
 }
+
 .details .envio {
     display: flex;
     flex-direction: row;
     gap: 2px;
-    font-size: 10px;
+    font-size: 12px;
     color: #089705;
     align-items: center;
 }

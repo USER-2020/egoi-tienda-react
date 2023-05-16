@@ -8,6 +8,9 @@ import { isMultiColorActive, adminRoot, UserRole } from './constants/defaultValu
 import { ProtectedRoute } from './helpers/authHelper';
 
 
+
+
+const ViewDetailCartAddress = React.lazy(() => import(/* webpackChunkName: "views" */ './views/checkout/addressCart'));
 const ViewDetailCart = React.lazy(() => import(/* webpackChunkName: "views" */ './views/cartShopping'));
 const ViewDetailProduct = React.lazy(() => import(/* webpackChunkName: "views" */ './views/detailsProduct'));
 const ViewCategory = React.lazy(() => import(/* webpackChunkName: "views" */ './views/category'));
@@ -32,11 +35,13 @@ const App = (props) => {
               <Route path="/unauthorized" exact render={(props) => <ViewUnauthorized {...props} />} />
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />
               {/* <Route path="/categories" exact render={(props) => <ViewCategory {...props} />} /> */}
+              <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/brand/:brand/:brandId" exact render={(props) => <ViewCategory {...props} />} />
               {/* <Route path="/categories/:category/:subcategory/:id/:sort" exact render={(props) => <ViewCategory {...props} />} /> */}
               <Route path="/detailsProduct/:id/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
               <Route path="/detailCart" exact render = {(props) => <ViewDetailCart{...props}/>}/>
+              <Route path="/detailCart/address" exact render = {(props) => <ViewDetailCartAddress{...props}/>}/>
               <Redirect to="/error" />
             </Switch>
           </Router>
