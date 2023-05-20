@@ -19,6 +19,7 @@ import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
 import Swal from 'sweetalert2';
 import AddCart from '../../views/user/addCart';
 import detailsProduct from '../../views/detailsProduct';
+import { addProductsCart, allProductsCart } from '../../services/cart';
 
 function DetailProduct() {
     const {slug} = useParams();
@@ -32,18 +33,39 @@ function DetailProduct() {
     const [modalViewCart, setModalViewCart] = useState(false);
     const [changeFormLogin, setChangeFormLogin] = useState(false);
     const [changeFormRegister, setChangeFormRegister] = useState(false);
+    const [quantity, setQuantity ] = useState("1");
+    
+    const { id } = useParams();
 
     const currenUser = getCurrentUser();
     
     const history = useHistory();
 
+    
+    
 
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
 
+    
+
+    // const addProductsToCart = () =>{
+    //     addProductsCart(id, quantity)
+    //     .then((res) => {
+    //         setProductsCart(res.data);
+    //     })
+    // }
+
     const addToCart = () =>{
-        if(currenUser){
+        if(currenUser ){
             setModalViewCart(true);
-            console.log("producto agregado");
+            addProductsCart(id, quantity, currenUser.token)
+            .then((res)=>{
+                console.log("Producto enviado", res.data);
+                // console.log(token);
+            })
+            .catch((err) => console.log(err));
+            // console.log("producto agregado");
+            // console.log(token);
         }else{
             
             setModalViewLogin(true);
@@ -107,6 +129,10 @@ function DetailProduct() {
             setIsLoggedIn(false);
           };
 
+          const handleQuantity = (e) => {
+            setQuantity(e.target.value);
+            console.log("quantity: ",e.target.value);
+          }
     /**
      * This function retrieves and sets the details of a product based on its slug using useEffect hook
      * in TypeScript React.
@@ -131,15 +157,17 @@ function DetailProduct() {
         }
         history.push(history.location.pathname);
         
-    }, [slug, isLoggedIn]);
+    }, [slug]);
 
     useEffect(()=> {
         if(currenUser){
             setIsLoggedIn(true);
-          } else {
+
+        }else{
             setIsLoggedIn(false);
-          }
-        
+            
+        }
+        history.push(history.location.pathname);
     }, [currenUser])
   
   return (
@@ -201,7 +229,9 @@ function DetailProduct() {
             </div>
             <div className="cant">
                 <p>Cantidad</p>
-                <input type="number" />
+                <input type="number" 
+                value={quantity} 
+                onChange={handleQuantity}/>
             </div>
             <div className="opciones">
                 <a href="#" className='addCart' onClick={addToCart}>
@@ -226,7 +256,7 @@ function DetailProduct() {
                     isOpen={modalViewCart}
                     >
                     <ModalBody>
-                        <AddCart closeModalCart={closeModalCart} detailsProducts={detailProducts} />
+                        <AddCart closeModalCart={closeModalCart} detailsProducts={detailProducts} quantity={quantity}/>
                     </ModalBody>
                 </Modal>
                 <Modal

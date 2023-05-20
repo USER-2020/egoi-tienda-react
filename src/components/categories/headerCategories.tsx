@@ -45,7 +45,7 @@ const useOnClickOutside= (
 const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A, 
   handleClickFilterA_Z, handleClickFilterHigh_Low, handleClickFilterLow_High, 
   handleApplyRangeFilters, handlePriceStartChange,handlePriceEndChange, 
-  priceStart, priceEnd}) => {
+  priceStart, priceEnd, handleAplyFilterByBrand}) => {
 // const HeaderCategories = ({onFilterCLick}) => {
 
  
@@ -139,7 +139,7 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
                   {brands.length ? (
                       brands.map((brand, index) => (
                         <button key={index}>
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={handleAplyFilterByBrand}/>
                             <span>{brand.name}</span>
                         </button>
                         ))

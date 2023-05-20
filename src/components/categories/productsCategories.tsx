@@ -319,6 +319,7 @@ const ProductsCategories = () => {
                     handlePriceStartChange={handlePriceStartChange}
                     handlePriceEndChange={handlePriceEndChange}
                     handleApplyRangeFilters={handleApplyFilters}
+                    handleAplyFilterByBrand={productsByBrand}
 
   />
   <HeaderResponsiveCategorie  handleClickFilterRecent={handleButtonClickRecent} 

@@ -1,9 +1,140 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import '../../styles/detailsCart.css';
-import { Card, InputGroup, Table, InputGroupAddon, Input, InputGroupText } from 'reactstrap';
+import { Card, InputGroup, Table, InputGroupAddon, Input, InputGroupText, Modal, ModalBody } from 'reactstrap';
 import iphone from '../../assets/iphoneMuestra.png';
+import Login from '../../views/user/login';
+import Register from '../../views/user/register';
+import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
+import { useParams, useHistory } from 'react-router-dom';
+import { allProductsCart, deleteItemCart } from '../../services/cart';
 function DetailCart() {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const toggle = () => setIsOpen(!isOpen);
+    const [modalViewRegistro, setModalViewRegistro] = useState(false);
+    const [modalViewLogin, setModalViewLogin] = useState(false);
+    const [modalViewCart, setModalViewCart] = useState(false);
+    const [changeFormLogin, setChangeFormLogin] = useState(false);
+    const [changeFormRegister, setChangeFormRegister] = useState(false);
+    const [productsCart, setProductsCart ] = useState([]);
+
+    const currenUser = getCurrentUser();
+    const history = useHistory();
+    const token = currenUser.token;
+
+    const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
+
+    const closeModalRegistro = () => {
+            setModalViewRegistro(false);
+        };
+    
+        const closeModalLogin = () => {
+            setModalViewLogin(false);
+        };
+
+        const closeModalCart = () => {
+            setModalViewCart(false);
+        };
+
+        const handleChangeFormLogin = () => {
+
+            if(modalViewLogin === true){
+              setModalViewRegistro(true);
+            }
+            
+          };
+        
+        const handleChangeFormRegister = () => {
+        
+            if(modalViewRegistro === true){
+              setModalViewLogin(true);
+            }
+        
+        };
+
+        const handleLogin = () => {
+            // Code to handle user login, such as storing session storage, etc.
+            if(currenUser){
+                setIsLoggedIn(true);
+                console.log("Estas logueado")
+                
+              }else{
+                setIsLoggedIn(false);
+                
+              }
+        
+          };
+        
+          const handleLogout = () => {
+            // Code to handle user logout, such as clearing session storage, etc.
+            console.log("Entro al logout");
+            setCurrentUser();
+            setIsLoggedIn(false);
+          };
+
+          const toCheckout = () => {
+            if(currenUser){
+              history.push(`/detailCart/address`);
+            }
+            setModalViewLogin(true);
+            
+          }
+
+          const getAllProductsByCart = () => {
+            if(token){
+              allProductsCart(token)
+              .then((res)=>{
+                  console.log(res);
+                  setProductsCart(res.data);
+                  console.log("traer todos los producstos del carrito", productsCart);
+      
+              })
+              .catch((err) => console.log(err));
+            }
+            
+            }
+
+            const deleteOne = (key) => {
+              deleteItemCart(key, token)
+              .then((res)=> {
+                console.log(res);
+              })
+              .catch((err) => console.log(err));
+            }
+          
+
+   
+          const sumSubTotal = (productsCart) =>{
+            let total = 0;
+            productsCart.map((product) => {
+              const precioTotal = product.price * product.quantity;
+              total += precioTotal;
+            });
+            return total;
+          };
+
+          
+          const subtotal = sumSubTotal(productsCart); 
+
+          const totalPagar = () =>{
+            let totalPay = 0;
+            const precioTotalaPagar = (subtotal + 0 + 0 + 0).toLocaleString() ;
+            return precioTotalaPagar;
+          }
+
+          const totalaPagar = totalPagar();
+
+        useEffect(()=>{
+          if(token ){
+            getAllProductsByCart();
+          }else{
+
+          }
+          
+        },[token]);
+          
   return (
     <div className='container'>
         <h5 style={{color:'#74737B'}}>Carrito de compras</h5>
@@ -21,35 +152,38 @@ function DetailCart() {
                 </tr>
               </thead> 
             </Table>
-            <Card>
-              <div className="caracteristica#"><strong>1</strong></div>
-              <div className="caracteristicaDetalleProducto">
-                <div className="caracteristicaImg">
-                  <img src={iphone} alt="" style={{width:'72px', height:'72px'}}/>
-                </div>
-                <div className="caracteristicaName">
-                  iPhone 14 Pro Max 256 GB
-                </div>
-              </div>
-              <div className="caracteristicaPrecio">
-                $ 8’000.000
-              </div>
-              <div className="caracteristicaCantidad">
-                <input type="number" value={1}/>
-              </div>
-              <div className="caracteristicaPrecioTotal">
-                $ 8’000.000
-              </div>
-              <div className="caracteristicaCostoEnvio">
-                $50.000
-              </div>
-              <a href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                </svg>
-              </a>
-            </Card>
-            <Card>
+              {productsCart.map((products, index) => (
+                <Card key={index}>
+
+                    <div className="caracteristica#"><strong>{index+1}</strong></div>
+                  <div className="caracteristicaDetalleProducto">
+                    <div className="caracteristicaImg">
+                      <img src={baseUrlImage +products.thumbnail} alt={products.name} style={{width:'72px', height:'72px'}}/>
+                    </div>
+                    <div className="caracteristicaName">
+                      {products.name}
+                    </div>
+                  </div>
+                  <div className="caracteristicaPrecio">
+                    $ {products.price.toLocaleString()}
+                  </div>
+                  <div className="caracteristicaCantidad">
+                    <input type="number" value={products.quantity} disabled/>
+                  </div>
+                  <div className="caracteristicaPrecioTotal">
+                    $ {(products.price * products.quantity).toLocaleString()}
+                  </div>
+                  <div className="caracteristicaCostoEnvio">
+                    $0
+                  </div>
+                  <a onClick={()=>deleteOne(products.id)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                  </a>
+                </Card>
+              ))} 
+            {/* <Card>
               <div className="caracteristica#"><strong>2</strong></div>
               <div className="caracteristicaDetalleProducto">
                 <div className="caracteristicaImg">
@@ -76,13 +210,13 @@ function DetailCart() {
                   <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                 </svg>
               </a>
-            </Card>
+            </Card> */}
           </div>
           <div className="containerDetailpurchase">
             <Card>
               <div className="subtotal">
                 <p>Subtotal</p>
-                <p>$49.800</p>
+                <p>{subtotal.toLocaleString()}</p>
               </div>
               <div className="impuesto">
                 <p>Impuesto</p>
@@ -112,7 +246,7 @@ function DetailCart() {
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
-                <h5><strong>$8.000.0000</strong></h5>
+                <h5><strong>${totalaPagar}</strong></h5>
               </div>
               <div className="capsulas">
                 <div className="cut">
@@ -146,7 +280,7 @@ function DetailCart() {
               </div>
             </Card>
             <div className="toPay">
-              <a href="/detailCart/address">Ir a pagar</a>
+              <a href="#" onClick={toCheckout}>Ir a pagar</a>
             </div>
             <div className="awaitShopping">
               <a href="/">Seguir comprando</a>
@@ -154,6 +288,24 @@ function DetailCart() {
           </div>
         </div>
         
+        {/* <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalViewLogin(false)}
+                    isOpen={modalViewLogin && !changeFormLogin}
+                    >
+                    <ModalBody>
+                    <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  closeModalRegistro={closeModalRegistro}  handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
+                    </ModalBody>
+                </Modal>
+                <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalViewRegistro(false)}
+                    isOpen={modalViewRegistro && !changeFormRegister}
+                >
+                    <ModalBody>
+                    <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                    </ModalBody>
+        </Modal> */}
       
     </div>
   )
