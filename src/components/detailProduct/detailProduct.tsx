@@ -154,8 +154,9 @@ function DetailProduct() {
         
         if(slug){
             detailProductBySlug(slug);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        history.push(history.location.pathname);
+        // history.push(history.location.pathname);
         
     }, [slug]);
 
@@ -167,7 +168,7 @@ function DetailProduct() {
             setIsLoggedIn(false);
             
         }
-        history.push(history.location.pathname);
+        // history.push(history.location.pathname);
     }, [currenUser])
   
   return (
