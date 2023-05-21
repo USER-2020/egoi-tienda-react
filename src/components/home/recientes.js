@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import "../../styles/recientes.css";
 import {
     Card, CardImg, CardText, CardBody,
@@ -49,7 +50,9 @@ const Recientes = () => {
         </div>
         <div className='containerProductos'>
             {products.map((product, index) => (
-            <a href='#' className='containerCard' key={index}>
+                
+                <a href='#' className='containerCard' key={index}>
+                <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
                 <Card className='cardProducto1'>
                     <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
                     <CardBody>
@@ -64,6 +67,7 @@ const Recientes = () => {
                     <CardTitle tag="h5">${product.purchase_price.toLocaleString()}</CardTitle>
                     </CardBody>
             </Card>
+            </Link>
             </a>
             ))}
 

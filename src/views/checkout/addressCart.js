@@ -7,12 +7,10 @@ import Footer from '../../components/footer';
 function DressCart() {
   return (
     <div>
-      <>
       <Header/>
       <HeaderResponsive/>
       <AddressCart/>
       <Footer/>
-      </>
     </div>
   )
 }

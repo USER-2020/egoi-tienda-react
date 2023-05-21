@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
@@ -55,7 +56,9 @@ const Vendidos = () => {
         </div>
         <div className='containerProductos'>
         {productos.map((product, index) => (
-          <a href="#" className="containerCard2" key={index}>
+            
+            <a href="#" className="containerCard2" key={index}>
+            <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
             <Card className="cardProducto1">
               <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
               <CardBody>
@@ -72,6 +75,7 @@ const Vendidos = () => {
                 <CardTitle tag="h5">${product.purchase_price.toLocaleString()}</CardTitle>
               </CardBody>
             </Card>
+            </Link>
           </a>
         ))}  
             

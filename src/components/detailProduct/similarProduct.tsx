@@ -15,7 +15,7 @@ function SimilarProduct() {
 
     const [products, setProducts] = useState([]);
     const history = useHistory();
-    const {id} = useParams();
+    const {id, slug} = useParams();
 
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
 
@@ -30,8 +30,10 @@ function SimilarProduct() {
     }
 
     useEffect(()=>{
-        similarProducts(id);
-    }, []);
+        if(slug || id) {
+            similarProducts(id);
+        }
+    }, [slug]);
 
   return (
     <div className='container'>
@@ -47,10 +49,10 @@ function SimilarProduct() {
             </div>
             <div className="containerProductos">
                 {products && products.map((product, index) => 
-                <a href='#' className='containerCard' onClick={() => {
-                    history.push(`/detailsProduct/${product.id}/${product.slug}`);
-                    window.location.reload();
-                }} key={index}>
+
+                <a href='#' className='containerCard'>
+                    <Link to= {`/detailsProduct/${product.id}/${product.slug}`}>
+                   
                     {/* <Link to={`/detailsProduct/${product.id}/${product.slug}`} > */}
                     <Card className='cardProducto1'>
                         <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
@@ -67,6 +69,7 @@ function SimilarProduct() {
                         </CardBody>
                     </Card>
                     {/* </Link> */}
+                    </Link>
                 </a>
                 )}
             </div>

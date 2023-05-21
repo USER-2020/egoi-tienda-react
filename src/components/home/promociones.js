@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import "../../styles/recientes.css";
 import {
@@ -58,6 +59,7 @@ const Promociones = () => {
       <div className="containerProductos">
         {productos.map((product, index) => (
           <a href="#" className="containerCard2" key={index}>
+            <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
             <Card className="cardProducto1">
               <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
               <CardBody>
@@ -75,6 +77,7 @@ const Promociones = () => {
                 <span className="span_offer">Oferta del dia</span>
               </CardBody>
             </Card>
+          </Link>
           </a>
         ))}    
       </div>

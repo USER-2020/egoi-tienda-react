@@ -50,6 +50,8 @@ nav {
 
 
 
+
+
 @media (max-width: 768px) {
     nav {
         width: 100vw;
@@ -92,8 +94,20 @@ nav {
         gap: 20px;
         justify-content: center;
         text-align: center;
+        
     }
     .modal-content{
         width: 96vw;
+        position: absolute;
     }
+    .modal-sm {
+        z-index: 1053; /* Ajusta el valor según sea necesario */
+      }
+      
+      .offcanvas-body {
+        pointer-events: auto; /* Asegura que los eventos del puntero sean habilitados en el contenedor */
+        z-index: 9999; /* Ajusta el valor de z-index según sea necesario para que el contenedor esté en la capa superior */
+        opacity: 1; /* Asegura que el contenedor y sus elementos sean completamente visibles */
+      }
+    
   }

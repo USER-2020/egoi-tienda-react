@@ -27,77 +27,23 @@ import styles from "../styles/navbar.css";
 import logo from "../assets/icono egoi small.png";
 
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faUser} from "@fortawesome/free-regular-svg-icons";
+import { faUserPlus, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Login from '../views/user/login';
 import Register from '../views/user/register';
 import { getAllBrands } from "../services/brands";
 import { allCategories } from "../services/categories";
+import { getCurrentUser, setCurrentUser} from '../helpers/Utils';
 
-// const data = [  
-    
-//   {
-//     name: "Celulares y Accesorios",
-//     subcategories: [
-//       { name: "Accesorios para celular" },
-//       { name: "Smartwatches" }
-//     ],
-//   },
-
-//   {   name: "Belleza",    
-//       subcategories: [      
-//         {  name: "Perfumes para mujer" },      
-//         {  name: "Perfumes para hombre" },    
-//         {  name: "Belleza y cuidado personal" },    
-//         {  name: "Fajas y leggings" },    
-//         {  name: "Maquillaje" },    
-//       ],
-//   },
-//   {
-//     name: "Tv, Audio y Video",
-//     subcategories: [
-//       { name: "Televisores" },
-//       { name: "Audio" },
-//     ],
-//   },
-//   {
-//     name: "Relojes y Accesorios",
-//     subcategories: [
-//       { name: "Relojes para hombre" },
-//       { name: "Relojes para mujer" },
-//       { name: "Gafas de sol" },
-//       { name: "Gorras" },
-//     ],
-//   },
-//   {
-//     name: "Computacion",
-//     subcategories: [
-//       { name: "Teclados" },
-//       { name: "Mouses" },
-//     ],
-//   },
-//   {
-//     name: "Moda",
-//     subcategories: [
-//       { name: "Calzado para dama" },
-//       { name: "Calzado para hombre" },
-//     ],
-//   },
-//   {
-//     name: "Consolas y Videojuegos",
-//     subcategories: [
-//       { name: "Consolas" },
-//       { name: "Videojuegos" },
-//     ],
-//   },
-// ];
 
 function HeaderResponsive() {
 
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
@@ -110,6 +56,8 @@ function HeaderResponsive() {
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
   
   const history = useHistory();
+
+  const currenUser = getCurrentUser();
 
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
@@ -176,12 +124,19 @@ function HeaderResponsive() {
 
   const handleLogin = () => {
     // Code to handle user login, such as storing session storage, etc.
-    setIsLoggedIn(true);
+    if(currenUser){
+      setIsLoggedIn(true);
+    }else{
+      setIsLoggedIn(false);
+    }
   };
 
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
+    console.log("Entro al logout");
+    setCurrentUser();
     setIsLoggedIn(false);
+    history.push(`/`);
   };
 
   const allCategoriesPromise = () => {
@@ -476,19 +431,26 @@ function HeaderResponsive() {
               </a>
             </li>
             <li class="nav-item btnsPers">
+            <div>
+            {isLoggedIn ? (
+        <a href="#" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faRightFromBracket} /> 
+          Cerrar Sesion
+        </a>
+      ):(
+        <>
               <a href='#' className='btn btnPersonalizadosL'
-              onClick={() => {
-                setModalViewLogin(true);
+              onClick={() => {setModalViewLogin(true);
               }}>
                 <FontAwesomeIcon icon={faUser} /> Inicia Sesion
               </a>
               <Modal
-              className="modal-xs d-flex"
+              className="modal-sm"
               toggle={() => setModalViewLogin(false)}
-              isOpen={modalViewLogin}
-            >
+              isOpen={modalViewLogin && !changeFormLogin}
+              >
               <ModalBody>
-                <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  handleChangeFormLogin={handleChangeFormLogin} />
+                <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
               </ModalBody>
             </Modal>
               <a href='#' onClick={() => setModalViewRegistro(true)} className='btn btnPersonalizadosR'>
@@ -498,14 +460,19 @@ function HeaderResponsive() {
             className="modal-xs d-flex"
             toggle={() => setModalViewRegistro(false)}
             isOpen={modalViewRegistro && !changeFormRegister}
-          >
+            >
             <ModalBody>
               <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
             </ModalBody>
           </Modal>
+      </>
+      )}
+
+            </div>
             </li>
             
             </ul>
+            
             
         </div>
         </div>
