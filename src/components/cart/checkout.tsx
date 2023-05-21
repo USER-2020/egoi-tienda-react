@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import '../../styles/detailsCart.css';
 import { Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Row } from 'reactstrap';
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { getCurrentUser } from '../../helpers/Utils';
 
 
 
@@ -10,7 +12,13 @@ function AddressCart() {
   const [previousStep, setPreviousStep] = useState(0);
   const [activeStep, setActiveStep] = useState(2);
   const [valueProgressBar, setValueProgressBar] = useState(50);
+
+  const {subtotal, totalaPagar} = useParams();
   
+  const currenUser = getCurrentUser();
+
+  const history = useHistory();
+
   
   const handleStepClick = (step, stepProgress) => {
     setActiveStep(step);
@@ -18,10 +26,17 @@ function AddressCart() {
   };
 
   useEffect(()=>{
+    // if(currenUser){
+    //   console.log('hay usuario logueado activo');
+    // }else{
+    //   console.log('No hay usuario logueado por favor vuelve aloguearte');
+    //   history.push(`/`);
+    // }
       handleStepClick(activeStep, valueProgressBar);
   },[activeStep])
  
   return (
+    <>
     <div className='container'>
       <h5 style={{color:'#74737B', fontSize:'16px'}}>Dirección de envío y facturación</h5>
       <div className="containerCheckoutSteps">
@@ -251,7 +266,7 @@ function AddressCart() {
             <Card>
               <div className="subtotal">
                 <p>Subtotal</p>
-                <p>$49.800</p>
+                <p>${subtotal}</p>
               </div>
               <div className="impuesto">
                 <p>Impuesto</p>
@@ -281,7 +296,7 @@ function AddressCart() {
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
-                <h5><strong>$8.000.0000</strong></h5>
+                <h5><strong>${subtotal}</strong></h5>
               </div>
               <div className="capsulas">
                 <div className="cut">
@@ -340,7 +355,7 @@ function AddressCart() {
 
     </div>
     
-    
+    </> 
   )
 }
 

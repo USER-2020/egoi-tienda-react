@@ -189,6 +189,7 @@ const Header = () => {
     console.log("Entro al logout");
     setCurrentUser();
     setIsLoggedIn(false);
+    history.push(`/`);
   };
 
 
@@ -213,13 +214,12 @@ const Header = () => {
         });
       }, 300000);
     };
-
     resetTimeout();
-
+    
     const listenerActivity = () => {
       resetTimeout();
     };
-
+    
     window.addEventListener('mousemove', listenerActivity);
     window.addEventListener('keypress', listenerActivity);
     
@@ -228,7 +228,7 @@ const Header = () => {
       window.removeEventListener('keypress', listenerActivity);
       clearTimeout(timeout);
     };  
-
+    
   }
   handleLogin();
     

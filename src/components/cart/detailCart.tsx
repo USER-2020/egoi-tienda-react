@@ -6,9 +6,11 @@ import iphone from '../../assets/iphoneMuestra.png';
 import Login from '../../views/user/login';
 import Register from '../../views/user/register';
 import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { allProductsCart, deleteItemCart } from '../../services/cart';
 import  Swal  from 'sweetalert2';
+import { checkout } from '../../constants/defaultValues';
+import AddressCart from './checkout.tsx';
 function DetailCart() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -78,13 +80,13 @@ function DetailCart() {
             setIsLoggedIn(false);
           };
 
-          const toCheckout = () => {
-            if(currenUser){
-              history.push(`/detailCart/address`);
-            }
-            setModalViewLogin(true);
+          // const toCheckout = () => {
+          //   if(currenUser){
+          //     history.push({checkout});
+          //   }
+          //   setModalViewLogin(true);
             
-          }
+          // }
 
           const getAllProductsByCart = () => {
             if(token){
@@ -127,15 +129,23 @@ function DetailCart() {
           };
 
           
-          const subtotal = sumSubTotal(productsCart); 
+          const subtotal = sumSubTotal(productsCart).toLocaleString(); 
+
+          const impuesto = '0';
+
+          const envio = '0';
+
+          const descuento = '0';
 
           const totalPagar = () =>{
-            let totalPay = 0;
-            const precioTotalaPagar = (subtotal + 0 + 0 + 0).toLocaleString() ;
+            
+            const precioTotalaPagar = subtotal;
             return precioTotalaPagar;
           }
 
           const totalaPagar = totalPagar();
+
+          
 
         useEffect(()=>{
           if(token){
@@ -147,9 +157,10 @@ function DetailCart() {
           }
           
           
-        },[token, id, slug, history]);
+        },[token]);
           
   return (
+    <>
     <div className='container'>
         <h5 style={{color:'#74737B'}}>Carrito de compras</h5>
         <div className="containerProductsAndDetailpurchase">
@@ -230,7 +241,7 @@ function DetailCart() {
             <Card>
               <div className="subtotal">
                 <p>Subtotal</p>
-                <p>${subtotal.toLocaleString()}</p>
+                <p>${subtotal}</p>
               </div>
               <div className="impuesto">
                 <p>Impuesto</p>
@@ -294,7 +305,9 @@ function DetailCart() {
               </div>
             </Card>
             <div className="toPay">
-              <a href="#" onClick={toCheckout}>Ir a pagar</a>
+                <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}>
+                  <a href="#" >Ir a pagar</a>
+                </Link>
             </div>
             <div className="awaitShopping">
               <a href="/">Seguir comprando</a>
@@ -322,6 +335,7 @@ function DetailCart() {
         </Modal> */}
       
     </div>
+    </>
   )
 }
 
