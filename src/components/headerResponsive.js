@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import 'bootstrap';
 import {
     Navbar,
     NavbarBrand,
@@ -40,6 +41,8 @@ import { getCurrentUser, setCurrentUser} from '../helpers/Utils';
 
 function HeaderResponsive() {
 
+  /* global bootstrap */
+
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
@@ -50,7 +53,8 @@ function HeaderResponsive() {
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
-  const offcanvasBodyRef = useRef(null);
+  const offcanvasRef = useRef(null);
+  const backdropRef = useRef(null);
   const [isOffcanvasVisible , setIsOffcanvasVisible] = useState(false);
   const [isBackdropVisible, setIsBackdropVisible] = useState(false);
   
@@ -77,14 +81,21 @@ function HeaderResponsive() {
     }
   }
 
- 
+  const goToDetailCart =()=>{
+    if(currenUser){
+      history.push(`/detailCart`)
+    }
+    else{
+      setModalViewLogin(true);
+    }
+  }
 
    
 
-  const handleToggleOffcanvas = () => {
-    setIsOffcanvasOpen(false);
-    console.log(isOffcanvasOpen);// Alterna el estado del offcanvas
+  const closeModalLogin = () => {
+    setModalViewLogin(false);
   };
+ 
 
   const handleChangeFormLogin = () => {
 
@@ -107,11 +118,11 @@ function HeaderResponsive() {
     setModalViewRegistro(false);
   };
 
-  const closeModalLogin = () => {
-    const bodyElement = document.querySelector('body');
-    bodyElement.classList.remove('offcanvas-backdrop', 'fade', 'show');
-    setModalViewLogin(false);
-  };
+  // const closeModalLogin = () => {
+  //   const bodyElement = document.querySelector('body');
+  //   bodyElement.classList.remove('offcanvas-backdrop', 'fade', 'show');
+  //   setModalViewLogin(false);
+  // };
 
 
   const handleLogin = () => {
@@ -164,24 +175,9 @@ function HeaderResponsive() {
  
  
 
-  const handleCloseBackdrop = () => {
-    if(isOffcanvasVisible){
-
-      document.body.classList.remove('offcanvas-backdrop'); // Cerrar el backdrop
-    }
-  }; 
-
+  
   useEffect(() => {
-    // const offcanvasElement = document.getElementById('offcanvasRight');
-    // if (offcanvasElement) {
-    //   offcanvasElement.addEventListener('hidden.bs.offcanvas', handleCloseBackdrop);
-    // }
-    
-    // return () => {
-    //   if (offcanvasElement) {
-    //     offcanvasElement.removeEventListener('hidden.bs.offcanvas', handleCloseBackdrop);
-    //   }
-    // };
+   
     allCategoriesPromise();
     allBrands();
   }, []);
@@ -214,7 +210,7 @@ function HeaderResponsive() {
             onKeyPress={handleEnterPress}/>
           </InputGroup>
         </div>
-        <a href="#">
+        <a href="#" onClick={()=>{goToDetailCart()}}>
             <svg
               width="40"
               height="40"
@@ -231,10 +227,10 @@ function HeaderResponsive() {
             </svg>
           </a>
         
-        <div class={`offcanvas offcanvas-end ${isOffcanvasVisible ? 'show' : ''}`} tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div ref={offcanvasRef} class={`offcanvas offcanvas-end ${isOffcanvasVisible ? 'show' : ''}`} tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             {/* <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5> */}
-            <button  type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button  type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onClick={closeModalLogin}></button>
         </div>
         <div className={`offcanvas-body`}>
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
@@ -443,13 +439,19 @@ function HeaderResponsive() {
             ):(
 
               <>
-                    <a href='#' className='btn btnPersonalizadosL'
+                    <a href='#'  className='btn btnPersonalizadosL'
                     onClick={() => {setIsOffcanvasVisible(false);
                       setModalViewLogin(true);
-                     
                       
-                      
-                      }} 
+
+                      // const offcanvasElement = document.querySelector('.offcanvas');
+                      // const backdropElement = document.querySelector('.offcanvas-backdrop');
+
+                      // if (offcanvasElement && backdropElement) {
+                      //   offcanvasElement.classList.remove('show');
+                      //   backdropElement.classList.remove('show');
+                      //   }
+                    }}
                     >
                       <FontAwesomeIcon icon={faUser} /> Inicia Sesion
                     </a>
