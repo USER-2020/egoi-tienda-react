@@ -446,8 +446,8 @@ function HeaderResponsive() {
                     <a href='#' className='btn btnPersonalizadosL'
                     onClick={() => {setIsOffcanvasVisible(false);
                       setModalViewLogin(true);
-                      const backdropElement = document.querySelector('.offcanvas-backdrop', '.fade', '.show');
-                      backdropElement.style.display = 'none';
+                     
+                      
                       
                       }} 
                     >
