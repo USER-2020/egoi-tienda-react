@@ -172,7 +172,14 @@ const Header = () => {
     setModalViewLogin(false);
   };
 
-  
+  const goToDetailCart =()=>{
+    if(currenUser){
+      history.push(`/detailCart`)
+    }
+    else{
+      setModalViewLogin(true);
+    }
+  }
 
   const handleLogin = () => {
     // Code to handle user login, such as storing session storage, etc.
@@ -347,7 +354,7 @@ const Header = () => {
             </svg>
           </a>
           {/* Carrito de compras  */}
-          <a href="#">
+          <a href="#" onClick={()=>{goToDetailCart()}}>
             <svg
               width="40"
               height="40"
