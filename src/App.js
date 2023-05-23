@@ -12,7 +12,7 @@ import Login from "./views/user/login.js";
 
 
 
-
+// const ViewLogin = React.lazy(()=>import(/* webpackChunkName: "views" */ './views/user/userRoute'));
 const ViewDetailProduct = React.lazy(() => import(/* webpackChunkName: "views" */ './views/detailsProduct'));
 const ViewDetailCartAddress = React.lazy(() => import(/* webpackChunkName: "views" */ './views/checkout/addressCart'));
 const ViewDetailCart = React.lazy(() => import(/* webpackChunkName: "views" */ './views/cartShopping'));
@@ -27,6 +27,20 @@ const App = (props) => {
   const { locale } = props;
 
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const currenUser = getCurrentUser();
+  
+
+  const handleLogin = () => {
+    // Code to handle user login, such as storing session storage, etc.
+    if(currenUser){
+      setIsLoggedIn(true);
+    }else{
+      setIsLoggedIn(false);
+    }
+
+  };
 
  
 
@@ -36,19 +50,14 @@ const App = (props) => {
         <IntlProvider locale={locale} messages={AppLocale[locale]}>
           <Router>
             <Switch>
-              {/* <ProtectedRoute path={adminRoot} component={ViewApp} roles={[UserRole.Admin, UserRole.Editor]} /> */}
-              <Route path="/user" render={(props) => <ViewUser {...props} />} />
+              {/* <Route path="/user/login" exact render={(props)=> <ViewLogin {...props} />}/> */}
               <Route path="/error" exact render={(props) => <ViewError {...props} />} />
               <Route path="/unauthorized" exact render={(props) => <ViewUnauthorized {...props} />} />
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />
-              {/* <Route path="/categories" exact render={(props) => <ViewCategory {...props} />} /> */}
               <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/brand/:brand/:brandId" exact render={(props) => <ViewCategory {...props} />} />
-              {/* <Route path="/categories/:category/:subcategory/:id/:sort" exact render={(props) => <ViewCategory {...props} />} /> */}
               <Route path="/detailsProduct/:id/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
-              {/* <Route path={addCart} exact render = {(props) => <ViewDetailCart {...props}/> } /> */}
-              {/* <Route path={checkout} exact render={(props) => <ViewDetailCartAddress {...props} />} /> */}
               <ProtectedRoute path={checkout} viewComponent={ViewDetailCartAddress} />
               <ProtectedRoute path={addCart} viewComponent={ViewDetailCart}/>
               <Redirect to="/error" />
