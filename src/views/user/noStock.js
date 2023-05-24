@@ -1,15 +1,14 @@
 import React from 'react'
 
 import '../../styles/addCart.css';
-import { detailProduct } from '../../services/detailProduct';
 
-function AddCart({closeModalCart, detailsProducts, quantity}) {
-
-const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
-
+function NoStock(
+    {closeModalCart, detailsProducts, quantity}
+) {
+    const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
   return (
     <div className='containerProductAdd'>
-      <h2>Tu producto se agrego al carrito</h2>
+      <h2>Tu producto no esta disponible</h2>
       <div className='detailsProductAdd'>
             <div className='imageProductAdd'>
                 <img src={baseUrlImage + detailsProducts.images[0]} alt={detailsProducts.name} />
@@ -36,8 +35,8 @@ const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
         <h4>${detailsProducts.unit_price.toLocaleString()}</h4>
       </div>
       {}
-      <div className='btnsRedirect goToMyCart'>
-        <a href='/detailCart'>Ir a mi carrito</a>
+      <div className='btnsRedirect noStock'>
+        <a href='/detailCart' className='disabled-link'>Agotado</a>
       </div>
       <div className='btnsRedirect buyNow'>
         <a href='/'>Seguir comprando</a>
@@ -46,4 +45,4 @@ const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
   )
 }
 
-export default AddCart;
+export default NoStock

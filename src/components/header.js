@@ -229,10 +229,14 @@ const Header = () => {
     
     window.addEventListener('mousemove', listenerActivity);
     window.addEventListener('keypress', listenerActivity);
+    window.addEventListener('touchstart', listenerActivity);
+    window.addEventListener('touchmove', listenerActivity);
     
     return () => {
       window.removeEventListener('mousemove', listenerActivity);
       window.removeEventListener('keypress', listenerActivity);
+      window.removeEventListener('touchstart', listenerActivity);
+      window.removeEventListener('touchmove', listenerActivity);
       clearTimeout(timeout);
     };  
     

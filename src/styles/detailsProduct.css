@@ -415,6 +415,34 @@ la imagen seleccionda */
     border-radius: 32px;
 }
 
+/* Cosas del responsive */
+.containerResponsiveNameProduct{
+    display: none;
+}
+
+.containerResposniveProductosVendidos{
+    display: none;
+}
+
+.containerVariacionesResponsiveColores{
+    display: none;
+}
+
+.containerCharacteristicTopResponsive{
+    display: none;
+}
+
+.containerResponsiveDescription{
+    display: none;
+}
+#scrollModalAddToCart{
+    display: none;
+}
+
+
+.scroll-modal-content{
+    display: none;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -422,4 +450,198 @@ la imagen seleccionda */
         width: 100%;
         height: auto;
     }
+
+    .containerDetalle{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .containerCharacteristicTop{
+        display: none;
+    }
+
+    .containerNameProduct{
+        display: none;
+    }
+    .containerColorsProduct{
+        display: none;
+    }
+
+    .cant{
+        display: none;
+    }
+    .opciones{
+        display: none;
+    }
+
+    .containerDescription{
+        display: none;
+    }
+
+    .containerResponsiveNameProduct{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 98%;
+    }
+
+    .containerNameAndStarts{
+        width: 60%;
+    }
+
+    .containerNameAndStarts .starts img{
+        width: 15px;
+    }
+
+    .containerNameAndStarts .Name h2{
+        color: #74737B;
+        font-size: 16px;
+    }
+
+    .containerNameAndStarts .precio h5 {
+        font-size: 36px;
+        font-weight: 700;
+    }
+
+    .containerResponsiveNameProduct .favAndShare{
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .containerResponsiveNameProduct .favAndShare .svgFav path,
+    .containerResponsiveNameProduct .favAndShare .svgShare{
+        fill: #74737B;
+    }
+
+    .containerResposniveProductosVendidos{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 98%;
+    }
+
+    .containerResposniveProductosVendidos h6{
+        font-size: 12px;
+        color: #74737B;
+        font-weight: 400;
+    }
+
+    .containerResposniveProductosVendidos .sendMessage a{
+        display: flex;
+        flex-direction: row;
+        color: #FC5241;
+        gap: 5px;
+        text-decoration: none;
+        font-size: 16px;
+
+    }
+
+    .containerResposniveProductosVendidos .sendMessage a p {
+        margin: 0;
+    }
+
+    .containerResposniveProductosVendidos .sendMessage path{
+        fill: #FC5241;
+    }
+
+    .containerCharacteristicTopResponsive{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        color: #74737B;
+    }
+
+    .containerVariacionesResponsiveColores p{
+        margin: 0;
+    }
+
+    .containerVariacionesResponsiveColores{
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        gap: 25px;
+        background-color: #A2A1A729;
+        align-items: center;
+        padding: 15px;
+        border-radius: 32px;
+
+    }
+    .containerVariacionesResponsiveColores a {
+        text-decoration: none;
+        color: #74737B;
+    }
+
+    .containerVariacionesResponsiveColores a:active{
+        border-radius: 32px;
+        border:1px solid #FC5241;
+        padding: 5px;
+    }
+
+    .containerResponsiveDescription{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 20px;
+
+    }
+
+    .containerResponsiveDescription h6{
+        color: #FC5241;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .opinions{
+        display:none;
+    }
+
+    #scrollModalAddToCart {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+        z-index: 9999;
+        width: 100vw;
+        height: 100px;
+      }
+      
+      .scroll-modal-content {
+        /* Estilos para el contenido del modal */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 24px;
+        align-items: center;
+      }
+
+      .scroll-modal-content .svgCart path{
+        fill: #FC5241;
+      }
+      .scroll-modal-content .anadiralcarrito {
+        
+        font-size: 16px;
+        background-color: #FC5241;
+        width: 272px;
+        height: 48px;
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        border-radius: 32px;
+
+      }
+      .scroll-modal-content .anadiralcarrito a{
+        text-decoration: none;
+        color: #F5F5F5;
+      }
+
+      .modal-dialog-centered {
+        width: 96vw;
+      }
+
 }
