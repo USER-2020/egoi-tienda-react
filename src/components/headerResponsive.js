@@ -456,7 +456,7 @@ function HeaderResponsive() {
                       <FontAwesomeIcon icon={faUser} /> Inicia Sesion
                     </a>
                     <Modal
-                      className="modal d-flex"
+                      className="modal-dialog-centered modal-lg"
                       toggle={() => setModalViewLogin(false)}
                       isOpen={modalViewLogin && !changeFormLogin}
                       >
@@ -472,7 +472,7 @@ function HeaderResponsive() {
                       <FontAwesomeIcon icon={faUserPlus} /> Registrate
                     </a>
                     <Modal
-                      className="modal d-flex"
+                      className="modal-dialog-centered modal-lg"
                       toggle={() => setModalViewRegistro(false)}
                       isOpen={modalViewRegistro && !changeFormRegister}
                       >

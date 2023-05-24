@@ -417,3 +417,95 @@ input[type="checkbox"]:checked {
     align-items: start;
 
 }
+
+/* cosas del resposnive  */
+.containerProductsAndDetailpurchaseResponsive{
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .containerProductsAndDetailpurchase{
+        display: none;
+    }
+
+    .containerProductsAndDetailpurchaseResponsive{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .containerProductsAndDetailpurchaseResponsive .img{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-left: 5px;
+    }
+
+    .caracteristicasDetalleDelProductoResponsive{
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    .caracteristicasDetalleDelProductoResponsive .deleteProduct{
+        display: flex;
+        flex-direction: row;
+        width: 30%;
+        justify-content: end;
+        padding: 5px;
+    }
+
+    .caracteristicasDetalleDelProductoResponsive a {
+        text-decoration: none;
+        color: #171523;
+        right: 0;
+    }
+
+    .caracteristicasDetalleDelProductoResponsive .info{
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .caracteristicasDetalleDelProductoResponsive .info .productInfo{
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+    .caracteristicasDetalleDelProductoResponsive .info .productInfo h6{
+        font-size: 12px;
+        font-weight: 400;
+        color: #74737B;
+    }
+    .caracteristicasDetalleDelProductoResponsive .info .productInfo h5{
+        font-size: 16px;
+        font-weight: 700;
+
+    }
+    .caracteristicasDetalleDelProductoResponsive .info .productInfo .cutEnvio{
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+        color: #089705;
+        font-size: 10px;
+        height: 20px;
+    }
+
+    .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant{
+        display: flex;
+        flex-direction: row;
+        width: 120px;
+        background-color: #A2A1A729;
+        padding: 5px;
+        border-radius: 32px;
+        margin-bottom: 10px;
+    }
+    .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant p{
+        margin: 0;
+    }
+
+    .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant input{
+        width: 20px;
+        border: none;
+        margin-left: 8px;
+    }
+}
