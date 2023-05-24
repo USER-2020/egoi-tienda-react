@@ -506,6 +506,6 @@ input[type="checkbox"]:checked {
     .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant input{
         width: 20px;
         border: none;
-        margin-left: 8px;
+        margin-left: 5px;
     }
 }
