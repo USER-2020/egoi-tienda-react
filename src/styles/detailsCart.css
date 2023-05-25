@@ -537,6 +537,12 @@ input[type="checkbox"]:checked {
         height: auto;
         
       }
+
+      /* .scroll-modal{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      } */
       
       .scroll-modal-content {
         /* Estilos para el contenido del modal */
@@ -724,13 +730,13 @@ input[type="checkbox"]:checked {
         width: 100vw;
         height: auto;
       }
-      .scroll-modal-content .containerInfoPedido{
+      #scrollModalCheckout .scroll-modal-content .containerInfoPedido{
         width: 100%;
         display: flex;
         justify-content: center;
       }
 
-      .scroll-modal-content .containerInfoPedido p{
+      #scrollModalCheckout .scroll-modal-content .containerInfoPedido p{
         font-size: 10px;
         color: #A75BFF;
 
