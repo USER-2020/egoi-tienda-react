@@ -544,24 +544,59 @@ input[type="checkbox"]:checked {
         align-items: center;
       }  
 
-      .scroll-modal-content .containerCaracteristicaPrecio{
+      #scrollModalToPay .scroll-modal-content .containerCaracteristicaPrecio{
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
       }
 
-      .scroll-modal-content .containerCaracteristicaEnvio{
+      #scrollModalToPay .scroll-modal-content .containerCaracteristicaEnvio{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
       }
 
-      .scroll-modal-content .containerCaracteristicaEnvio .envio{
+      #scrollModalToPay .scroll-modal-content .containerCaracteristicaEnvio .envio{
         color: #089705;
       }
+
+      #scrollModalToPay .scroll-modal-content .toPay {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 48px;
+        align-items: center;
+        border: 1px solid var(--prm-color);
+        color: var(--prm-color);
+        border-radius: 32px;
+        margin-bottom: 10px;
+      }
+
+      #scrollModalToPay .scroll-modal-content .toPay a{
+        text-decoration: none;
+        color: var(--prm-color);
+      }
+
+      #scrollModalToPay .scroll-modal-content .awaitShopping{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 48px;
+        align-items: center;
+        background-color: var(--prm-color);
+        color: white;
+        border-radius: 32px;
+        margin-bottom: 10px;
+      }
       
+      #scrollModalToPay .scroll-modal-content .awaitShopping a {
+        text-decoration: none;
+        color: white;
+      }
       /* chekout */
 
 
