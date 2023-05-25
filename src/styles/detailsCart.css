@@ -534,13 +534,14 @@ input[type="checkbox"]:checked {
         z-index: 9999;
         width: 100vw;
         height: auto;
-        
-        
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
       }
 
      
       
-      .scroll-modal-content {
+      .containerProductsAndDetailpurchaseResponsive .scroll-modal-content {
         /* Estilos para el contenido del modal */
         display: flex;
         flex-direction: column;
@@ -726,6 +727,9 @@ input[type="checkbox"]:checked {
         z-index: 9999;
         width: 100vw;
         height: auto;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
       }
       .containerCheckoutResponsive #scrollModalCheckout .scroll-modal-content .containerInfoPedido{
         width: 100%;
