@@ -432,10 +432,6 @@ input[type="checkbox"]:checked {
     display: none;
 }
 
-#scrollModalCheckout{
-    display: none;
-}
-
 @media (max-width: 768px) {
     .containerProductsAndDetailpurchase{
         display: none;
@@ -531,17 +527,14 @@ input[type="checkbox"]:checked {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         padding: 10px;
         border-radius: 4px;
+        display: none;
         z-index: 9999;
         width: 100vw;
         height: auto;
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
+        
       }
-
-     
       
-      .containerProductsAndDetailpurchaseResponsive .scroll-modal-content {
+      .scroll-modal-content {
         /* Estilos para el contenido del modal */
         display: flex;
         flex-direction: column;
@@ -568,7 +561,8 @@ input[type="checkbox"]:checked {
         color: #089705;
       }
       
-      
+      /* chekout */
+
 
       .scroll-modal-content .containerToPayResponsive {
         width: 100%;
@@ -619,127 +613,5 @@ input[type="checkbox"]:checked {
 
       .modal-dialog-centered {
         width: 96vw;
-      }
-
-      /* chekkout */
-      .containerCheckoutSteps{
-        display: none;
-      }
-
-      .containerCheckoutResponsive .containerCupon{
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-between;
-        margin-top: 20px;
-        margin-bottom: 20px;
-      }
-
-      .containerCheckoutResponsive .containerCupon input{
-        width: 70%;
-        border: none;
-        border-radius: 32px;
-        height: 35px;
-      }
-
-      .containerCheckoutResponsive .containerCupon a{
-        width: 100%;
-        background-color: #FC5241;
-        color: white;
-        text-align: center;
-        padding: 5px;
-        display: flex;
-        align-self: center;
-        text-decoration: none;
-        border-radius: 32px;
-      }
-
-      .containerCheckoutResponsive .factura{
-        display: flex;
-        flex-direction: column;
-      }
-
-      .containerCheckoutResponsive .factura .title{
-        font-size: 17px;
-        color: #FC5241;
-      }
-
-      .containerCheckoutResponsive .factura span{
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .containerCheckoutResponsive .containertotalAPagarResponsive{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        background-color: #A2A1A729;
-        padding: 8px;
-        font-size: 700;
-        align-items: center;
-        border-radius: 32px;
-      }
-
-      .containerCheckoutResponsive .containertotalAPagarResponsive p{
-        margin: 0;
-        font-size: 16px;
-        font-weight: 700;
-      }
-
-      .containerCheckoutResponsive .contentPayment{
-        width: 200px;
-      }
-
-      .containerCheckoutResponsive .paymentMethods .card{
-        padding: 10px;
-      }
-
-      .containerCheckoutResponsive .paymentMethods{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .containerCheckoutResponsive .payment{
-        display: flex;
-        flex-direction: row;
-      }
-
-      .containerCheckoutResponsive .payment .imgPayment{
-        margin-right: 5px;
-      }
-      .containerCheckoutResponsive .checkPayment{
-        width: 30%;
-        display: flex;
-        justify-content: end;
-      }
-
-      #scrollModalCheckout{
-        position: fixed;
-        bottom: 0px;
-        left: 0px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        padding: 10px;
-        border-radius: 4px;
-        z-index: 9999;
-        width: 100vw;
-        height: auto;
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-      }
-      .containerCheckoutResponsive .scroll-modal-content .containerInfoPedido{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
-
-      .containerCheckoutResponsive .scroll-modal-content .containerInfoPedido p{
-        font-size: 10px;
-        color: #A75BFF;
-
       }
 }
