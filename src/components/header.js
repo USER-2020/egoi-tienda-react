@@ -202,45 +202,45 @@ const Header = () => {
 
  
   useEffect(()=>{
-  //   if(isLoggedIn){
+    if(isLoggedIn){
     
-  //   let timeout;
+    let timeout;
 
-  //   const resetTimeout = () =>{
-  //     if(timeout){
-  //       clearTimeout(timeout);
-  //     }
+    const resetTimeout = () =>{
+      if(timeout){
+        clearTimeout(timeout);
+      }
 
-  //     timeout = setTimeout(()=>{
-  //       handleLogout();
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Oops...',
-  //         text: 'Sesión expirada. Por favor, vuelva a logearse.',
-  //         confirmButtonColor: '#fc5241',
-  //       });
-  //     }, 300000);
-  //   };
-  //   resetTimeout();
+      timeout = setTimeout(()=>{
+        handleLogout();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Sesión expirada. Por favor, vuelva a logearse.',
+          confirmButtonColor: '#fc5241',
+        });
+      }, 300000);
+    };
+    resetTimeout();
     
-  //   const listenerActivity = () => {
-  //     resetTimeout();
-  //   };
+    const listenerActivity = () => {
+      resetTimeout();
+    };
     
-  //   window.addEventListener('mousemove', listenerActivity);
-  //   window.addEventListener('keypress', listenerActivity);
-  //   window.addEventListener('touchstart', listenerActivity);
-  //   window.addEventListener('touchmove', listenerActivity);
+    window.addEventListener('mousemove', listenerActivity);
+    window.addEventListener('keypress', listenerActivity);
+    window.addEventListener('touchstart', listenerActivity);
+    window.addEventListener('touchmove', listenerActivity);
     
-  //   return () => {
-  //     window.removeEventListener('mousemove', listenerActivity);
-  //     window.removeEventListener('keypress', listenerActivity);
-  //     window.removeEventListener('touchstart', listenerActivity);
-  //     window.removeEventListener('touchmove', listenerActivity);
-  //     clearTimeout(timeout);
-  //   };  
+    return () => {
+      window.removeEventListener('mousemove', listenerActivity);
+      window.removeEventListener('keypress', listenerActivity);
+      window.removeEventListener('touchstart', listenerActivity);
+      window.removeEventListener('touchmove', listenerActivity);
+      clearTimeout(timeout);
+    };  
     
-  // }
+  }
   handleLogin();
     
 
