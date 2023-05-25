@@ -355,14 +355,14 @@ function DetailCart() {
                                 <p>Precio Total</p>
                                 <h6>${totalaPagar}</h6>
                     </div>
-                    <div className="containerToPayResponsive">
-                        <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}>
-                          <a href="#" >Ir a pagar</a>
-                        </Link>
-                    </div>
-                    <div className="containerAwaitShoppingResposnive">
-                        <a href="/">Seguir comprando</a>
-                    </div>
+                            <div className="toPay">
+                                <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}>
+                                  <a href="#" >Ir a pagar</a>
+                                </Link>
+                            </div>
+                            <div className="awaitShopping">
+                              <a href="/">Seguir comprando</a>
+                            </div>
               </div>
           </div>
     </div>
