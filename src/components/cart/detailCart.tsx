@@ -118,6 +118,22 @@ function DetailCart() {
               .catch((err) => console.log(err));
             }
           
+            window.addEventListener("scroll", function() {
+              var scrollModal = document.getElementById("scrollModalToPay");
+              var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            
+              if (scrollModal !== null) {
+                  if (scrollPosition > 200) {
+                    if (scrollModal.style) {
+                      scrollModal.style.display = "block";
+                    }
+                  } else {
+                    if (scrollModal.style) {
+                      scrollModal.style.display = "none";
+                    }
+                  }
+                }
+            });
 
    
           const sumSubTotal = (productsCart) =>{
@@ -328,25 +344,27 @@ function DetailCart() {
           </div>
         </div>
         
-        {/* <Modal
-                    className="modal-dialog-centered modal-lg"
-                    toggle={() => setModalViewLogin(false)}
-                    isOpen={modalViewLogin && !changeFormLogin}
-                    >
-                    <ModalBody>
-                    <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  closeModalRegistro={closeModalRegistro}  handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
-                    </ModalBody>
-                </Modal>
-                <Modal
-                    className="modal-dialog-centered modal-lg"
-                    toggle={() => setModalViewRegistro(false)}
-                    isOpen={modalViewRegistro && !changeFormRegister}
-                >
-                    <ModalBody>
-                    <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
-                    </ModalBody>
-        </Modal> */}
-      
+          <div id="scrollModalToPay" className="scroll-modal">
+                <div className="scroll-modal-content">
+                    {/* <!-- Contenido del modal --> */}
+                    <div className="containerCaracteristicaEnvio">
+                        <p className="caract">Envio Medellin</p>
+                        <p className="envio">Gratis</p>
+                    </div>
+                    <div className="containerCaracteristicaPrecio">
+                                <p>Precio Total</p>
+                                <h6>${totalaPagar}</h6>
+                    </div>
+                    <div className="containerToPayResponsive">
+                        <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}>
+                          <a href="#" >Ir a pagar</a>
+                        </Link>
+                    </div>
+                    <div className="containerAwaitShoppingResposnive">
+                        <a href="/">Seguir comprando</a>
+                    </div>
+              </div>
+          </div>
     </div>
     </>
   )
