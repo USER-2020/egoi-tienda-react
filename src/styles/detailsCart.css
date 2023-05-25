@@ -625,21 +625,23 @@ input[type="checkbox"]:checked {
         display: none;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .containerCupon{
+      .containerCheckoutResponsive .containerCupon{
         display: flex;
         flex-direction: row;
         width: 100%;
         justify-content: space-between;
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .containerCupon input{
+      .containerCheckoutResponsive .containerCupon input{
         width: 70%;
         border: none;
         border-radius: 32px;
         height: 35px;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .containerCupon a{
+      .containerCheckoutResponsive .containerCupon a{
         width: 100%;
         background-color: #FC5241;
         color: white;
@@ -651,24 +653,24 @@ input[type="checkbox"]:checked {
         border-radius: 32px;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .factura{
+      .containerCheckoutResponsive .factura{
         display: flex;
         flex-direction: column;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .factura .title{
+      .containerCheckoutResponsive .factura .title{
         font-size: 17px;
         color: #FC5241;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .factura span{
+      .containerCheckoutResponsive .factura span{
         display: flex;
         flex-direction: row;
         width: 100%;
         justify-content: space-between;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .containertotalAPagarResponsive{
+      .containerCheckoutResponsive .containertotalAPagarResponsive{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -679,35 +681,35 @@ input[type="checkbox"]:checked {
         border-radius: 32px;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .containertotalAPagarResponsive p{
+      .containerCheckoutResponsive .containertotalAPagarResponsive p{
         margin: 0;
         font-size: 16px;
         font-weight: 700;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .contentPayment{
+      .containerCheckoutResponsive .contentPayment{
         width: 200px;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .paymentMethods .card{
+      .containerCheckoutResponsive .paymentMethods .card{
         padding: 10px;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .paymentMethods{
+      .containerCheckoutResponsive .paymentMethods{
         display: flex;
         flex-direction: column;
         gap: 20px;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .payment{
+      .containerCheckoutResponsive .payment{
         display: flex;
         flex-direction: row;
       }
 
-      .containerProductsAndDetailpurchaseResponsive .payment .imgPayment{
+      .containerCheckoutResponsive .payment .imgPayment{
         margin-right: 5px;
       }
-      .containerProductsAndDetailpurchaseResponsive .checkPayment{
+      .containerCheckoutResponsive .checkPayment{
         width: 30%;
         display: flex;
         justify-content: end;
