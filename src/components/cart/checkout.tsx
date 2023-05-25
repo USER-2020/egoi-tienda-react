@@ -587,7 +587,7 @@ function AddressCart() {
                     </div>
                     
                     <div className="containerToPayResponsive">
-                        <a href="/">Finalizar compra</a>
+                        <a href="#">Finalizar compra</a>
                     </div>
               </div>
           </div>
