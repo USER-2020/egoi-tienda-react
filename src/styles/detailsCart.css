@@ -428,8 +428,8 @@ input[type="checkbox"]:checked {
     display: none;
 }
 
-#scrollModalToPay {
-    display: none !important;
+#scrollModalToPay .scroll-modal-content{
+    display: none;
 }
 
 @media (max-width: 768px) {
@@ -527,7 +527,7 @@ input[type="checkbox"]:checked {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         padding: 10px;
         border-radius: 4px;
-        display: flex !important;
+        display: none;
         flex-direction: column; 
         z-index: 9999;
         width: 100vw;
@@ -537,7 +537,7 @@ input[type="checkbox"]:checked {
       
       #scrollModalToPay .scroll-modal-content {
         /* Estilos para el contenido del modal */
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         padding: 24px;
         gap: 5px;
