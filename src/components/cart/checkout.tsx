@@ -445,7 +445,7 @@ function AddressCart() {
             <p className='title'>Factura</p>
             <span className="subtotal">
               <p className="def">En productos</p>
-              <p className="precio">$ 8’000.000</p>
+              <p className="precio">$ {subtotal}</p>
             </span>
             <span className="costoEnvio">
               <p className="def">Costo de envío</p>
@@ -483,7 +483,7 @@ function AddressCart() {
                           <p>Paga con tarjetas débito</p>
                         </div>
                       <div className="checkPayment">
-                        <Input type='checkbox' />
+                        <Input type='radio' />
                       </div>
                      </div>
                    </Card>
@@ -499,7 +499,7 @@ function AddressCart() {
                             <p>VISA, MasterCard, American Express</p>
                           </div>
                         <div className="checkPayment">
-                          <Input type='checkbox' />
+                          <Input type='radio' />
                         </div>
                       </div>
                    </Card>
@@ -522,7 +522,7 @@ function AddressCart() {
                             <p>Pago por transferencia</p>
                           </div>
                         <div className="checkPayment">
-                          <Input type='checkbox' />
+                          <Input type='radio' />
                         </div>
                       </div>
                    </Card>
@@ -547,7 +547,7 @@ function AddressCart() {
                             <p>Pago realizado por consignación</p>
                           </div>
                         <div className="checkPayment">
-                          <Input type='checkbox' />
+                          <Input type='radio' />
                         </div>
                       </div>
                    </Card>
@@ -564,13 +564,19 @@ function AddressCart() {
                             <p>Realizarás el pago al recibir tu pedido</p>
                           </div>
                         <div className="checkPayment">
-                          <Input type='checkbox' />
+                          <Input type='radio' />
                         </div>
                     </div>
                    </Card>
                 </div>
 
+            <p className="title" style={{marginTop:'30px'}}>Dirección de Entrega
+            </p>
           </div>
+
+
+            
+        </div>
           <div id="scrollModalCheckout" className="scroll-modal">
                 <div className="scroll-modal-content">
                     {/* <!-- Contenido del modal --> */}
@@ -583,8 +589,6 @@ function AddressCart() {
                     </div>
               </div>
           </div>
-            
-        </div>
 
     </div>
     
