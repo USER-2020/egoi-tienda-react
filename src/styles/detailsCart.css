@@ -731,13 +731,13 @@ input[type="checkbox"]:checked {
         display: flex;
         flex-direction: column;
       }
-      .containerCheckoutResponsive #scrollModalCheckout .scroll-modal-content .containerInfoPedido{
+      .containerCheckoutResponsive .scroll-modal-content .containerInfoPedido{
         width: 100%;
         display: flex;
         justify-content: center;
       }
 
-      .containerCheckoutResponsive #scrollModalCheckout .scroll-modal-content .containerInfoPedido p{
+      .containerCheckoutResponsive .scroll-modal-content .containerInfoPedido p{
         font-size: 10px;
         color: #A75BFF;
 
