@@ -501,12 +501,47 @@ la imagen seleccionda */
     .containerNameAndStarts .precio h5 {
         font-size: 36px;
         font-weight: 700;
+        margin: 0;
     }
 
-    .containerResponsiveNameProduct .favAndShare{
+    .containerResponsiveNameProduct .favAndShareAndQuantity{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .containerResponsiveNameProduct .favAndShareAndQuantity .favAndShare{
         display: flex;
         flex-direction: row;
         gap: 15px;
+    }
+
+    .containerResponsiveNameProduct .favAndShareAndQuantity .quantity{
+        width: 120px;
+        height: 50px;
+        background-color: #A2A1A729;
+        border-radius: 32px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-self: center;
+        padding: 10px;
+        align-items: center;
+    }
+
+    .containerResponsiveNameProduct .favAndShareAndQuantity .quantity button{
+        border: none;
+        background-color: transparent;
+    }
+    .containerResponsiveNameProduct .favAndShareAndQuantity .quantity button svg path{
+        fill: #FC5241;
+    }
+
+    .containerResponsiveNameProduct .favAndShareAndQuantity .quantity input{
+        width: 35px;
+        border: none;
+        text-align: center;
+        background-color: transparent;
     }
 
     .containerResponsiveNameProduct .favAndShare .svgFav path,
@@ -521,6 +556,11 @@ la imagen seleccionda */
         width: 98%;
     }
 
+    .containerResposniveProductosVendidos .productosVendidos{
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+    }
     .containerResposniveProductosVendidos h6{
         font-size: 12px;
         color: #74737B;

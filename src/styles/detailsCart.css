@@ -50,13 +50,18 @@
 
 .containerTableProducts .card .caracteristicaCantidad{
     width: 100px;
+    
 }
 
 .containerTableProducts .card .caracteristicaCantidad input{
-    width: 50px;
+    width: 40px;
     border: none;
     border-radius: 32px;
     background-color: #A2A1A729;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .containerTableProducts .card .caracteristicaPrecioTotal{
@@ -423,6 +428,14 @@ input[type="checkbox"]:checked {
     display: none;
 }
 
+#scrollModalToPay{
+    display: none;
+}
+
+#scrollModalCheckout{
+    display: none;
+}
+
 @media (max-width: 768px) {
     .containerProductsAndDetailpurchase{
         display: none;
@@ -508,4 +521,218 @@ input[type="checkbox"]:checked {
         border: none;
         margin-left: 5px;
     }
+
+    /* modal de compra */
+    #scrollModalToPay {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+        z-index: 9999;
+        width: 100vw;
+        height: auto;
+        
+      }
+      
+      .scroll-modal-content {
+        /* Estilos para el contenido del modal */
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        gap: 5px;
+        align-items: center;
+      }  
+
+      .scroll-modal-content .containerCaracteristicaPrecio{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .scroll-modal-content .containerCaracteristicaEnvio{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .scroll-modal-content .containerCaracteristicaEnvio .envio{
+        color: #089705;
+      }
+      
+      
+
+      .scroll-modal-content .containerToPayResponsive {
+        width: 100%;
+        height: 48px;
+        border-radius: 32px;
+        background-color: #FC5241;
+        color: white;
+        display: flex;
+        
+      }
+
+      .scroll-modal-content .containerToPayResponsive{
+        width: 100%;
+        height: 48px;
+        border-radius: 32px;
+        color: #FC5241;
+        display:flex;
+      }
+
+      .scroll-modal-content .containerToPayResponsive a {
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        flex-direction:row;
+        width: 100%;
+        color: white;
+      }
+      .scroll-modal-content .containerAwaitShoppingResposnive a {
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction:column;
+        width: 100%;
+        color:#FC5241;
+      }
+
+      .scroll-modal-content .containerAwaitShoppingResposnive{
+        width: 100%;
+        height: 48px;
+        border: 1px solid #FC5241;
+        border-radius: 32px;
+        display: flex;
+
+      }
+
+      .modal-dialog-centered {
+        width: 96vw;
+      }
+
+      /* chekkout */
+      .containerCheckoutSteps{
+        display: none;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .containerCupon{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .containerCupon input{
+        width: 70%;
+        border: none;
+        border-radius: 32px;
+        height: 35px;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .containerCupon a{
+        width: 100%;
+        background-color: #FC5241;
+        color: white;
+        text-align: center;
+        padding: 5px;
+        display: flex;
+        align-self: center;
+        text-decoration: none;
+        border-radius: 32px;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .factura{
+        display: flex;
+        flex-direction: column;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .factura .title{
+        font-size: 17px;
+        color: #FC5241;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .factura span{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .containertotalAPagarResponsive{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #A2A1A729;
+        padding: 8px;
+        font-size: 700;
+        align-items: center;
+        border-radius: 32px;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .containertotalAPagarResponsive p{
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .contentPayment{
+        width: 200px;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .paymentMethods .card{
+        padding: 10px;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .paymentMethods{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .payment{
+        display: flex;
+        flex-direction: row;
+      }
+
+      .containerProductsAndDetailpurchaseResponsive .payment .imgPayment{
+        margin-right: 5px;
+      }
+      .containerProductsAndDetailpurchaseResponsive .checkPayment{
+        width: 30%;
+        display: flex;
+        justify-content: end;
+      }
+
+      #scrollModalCheckout{
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+        z-index: 9999;
+        width: 100vw;
+        height: auto;
+      }
+      .scroll-modal-content .containerInfoPedido{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .scroll-modal-content .containerInfoPedido p{
+        font-size: 10px;
+        color: #A75BFF;
+
+      }
 }
