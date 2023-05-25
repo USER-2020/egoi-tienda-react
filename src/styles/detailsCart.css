@@ -535,7 +535,7 @@ input[type="checkbox"]:checked {
         
       }
       
-      #scrollModalToPay > .scroll-modal-content {
+      #scrollModalToPay .scroll-modal-content {
         /* Estilos para el contenido del modal */
         display: flex;
         flex-direction: column;
