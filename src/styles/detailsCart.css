@@ -531,18 +531,14 @@ input[type="checkbox"]:checked {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         padding: 10px;
         border-radius: 4px;
-        display: none;
         z-index: 9999;
         width: 100vw;
         height: auto;
         
+        
       }
 
-      /* .scroll-modal{
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-      } */
+     
       
       .scroll-modal-content {
         /* Estilos para el contenido del modal */
@@ -725,18 +721,17 @@ input[type="checkbox"]:checked {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         padding: 10px;
         border-radius: 4px;
-        display: none;
         z-index: 9999;
         width: 100vw;
         height: auto;
       }
-      #scrollModalCheckout .scroll-modal-content .containerInfoPedido{
+      .containerCheckoutResponsive #scrollModalCheckout .scroll-modal-content .containerInfoPedido{
         width: 100%;
         display: flex;
         justify-content: center;
       }
 
-      #scrollModalCheckout .scroll-modal-content .containerInfoPedido p{
+      .containerCheckoutResponsive #scrollModalCheckout .scroll-modal-content .containerInfoPedido p{
         font-size: 10px;
         color: #A75BFF;
 

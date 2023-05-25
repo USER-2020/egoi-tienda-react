@@ -400,7 +400,7 @@ function AddressCart() {
             )}
         </div>
       </div>
-      <div className="containerProductsAndDetailpurchaseResponsive">
+      <div className="containerCheckoutResponsive">
           {productsCart.map((products, index)=> (
             <Card key={index}>
               <div className="caracteristicasDetalleDelProductoResponsive">
@@ -574,14 +574,6 @@ function AddressCart() {
           <div id="scrollModalCheckout" className="scroll-modal">
                 <div className="scroll-modal-content">
                     {/* <!-- Contenido del modal --> */}
-                    {/* <div className="containerCaracteristicaEnvio">
-                        <p className="caract">Envio Medellin</p>
-                        <p className="envio">Gratis</p>
-                    </div>
-                    <div className="containerCaracteristicaPrecio">
-                                <p>Precio Total</p>
-                                <h6>${totalaPagar}</h6>
-                    </div> */}
                     <div className="containerInfoPedido">
                       <p>Tu pedido tardará de 3 a 4 días hábiles en llegar a tu domicilio</p>
                     </div>
