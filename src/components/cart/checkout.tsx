@@ -24,6 +24,11 @@ function AddressCart() {
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
   const [modalAddressCheckout, setModalAddressCheckout]= useState(false);
+  const [selectedLink, setSelectedLink] = useState('hogar');
+
+  const handleLinkClick = (link) => {
+    setSelectedLink(link);
+  };
 
   const {subtotal, totalaPagar} = useParams();
   
@@ -173,6 +178,46 @@ function AddressCart() {
                       </div>
                       <div className="formularioCheckout">
                         <Form>
+                          <Row>
+                            <div className='tipoDireccion' style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:'100%', height:'48px'}}>
+                            <a href='#' style={{width:'100px',
+                              backgroundColor: selectedLink === 'hogar' ? '#FC5241' : 'white', 
+                              textDecoration:'none', color: selectedLink === 'hogar' ? 'white' : 'black', 
+                              height:'30px', 
+                              alignSelf:'center', 
+                              textAlign:'center', 
+                              borderRadius:'12px',
+                            }}
+                            onClick={()=>handleLinkClick('hogar')}
+                            >
+                                Hogar
+                            </a>
+                            <a href='#' style={{width:'100px',
+                              backgroundColor: selectedLink === 'trabajo' ? '#FC5241' : 'white', 
+                              textDecoration:'none', color: selectedLink === 'trabajo' ? 'white' : 'black', 
+                              height:'30px', 
+                              alignSelf:'center', 
+                              textAlign:'center', 
+                              borderRadius:'12px',
+                            }}
+                            onClick={()=>handleLinkClick('trabajo')}
+                            >
+                                Trabajo
+                            </a>
+                            <a href='#' style={{width:'100px',
+                              backgroundColor: selectedLink === 'otro' ? '#FC5241' : 'white', 
+                              textDecoration:'none', color: selectedLink === 'otro' ? 'white' : 'black', 
+                              height:'30px', 
+                              alignSelf:'center', 
+                              textAlign:'center', 
+                              borderRadius:'12px',
+                            }}
+                            onClick={()=>handleLinkClick('otro')}
+                            >
+                                Otro
+                            </a>
+                      </div>
+                    </Row>
                             <FormGroup>
                               
                               <Input style={{ borderRadius: "50px" }}

@@ -13,6 +13,7 @@ function AdressCheckout({closeModalAddress}) {
         formState: { errors },
       } = useForm();
 
+    const [selectedLink, setSelectedLink] = useState('hogar');
     const [contactPersonName, setContactPersonName ] = useState("");
     const [addressType, setAddressType ] = useState("");
     const [address, setAddress] = useState("");
@@ -37,6 +38,9 @@ function AdressCheckout({closeModalAddress}) {
         closeModalAddress();
     }
 
+    const handleLinkClick = (link) => {
+        setSelectedLink(link);
+      };
 
 
 
@@ -70,9 +74,45 @@ function AdressCheckout({closeModalAddress}) {
                         />
 
                     </FormGroup> */}
-                    <div className='tipoDireccion'>
-
+                    <div className='tipoDireccion' style={{display:'flex', flexDirection:'row', justifyContent:'space-around', width:'100%', height:'48px'}}>
+                        <a href='#' style={{width:'100px',
+                          backgroundColor: selectedLink === 'hogar' ? '#FC5241' : 'white', 
+                          textDecoration:'none', color: selectedLink === 'hogar' ? 'white' : 'black', 
+                          height:'30px', 
+                          alignSelf:'center', 
+                          textAlign:'center', 
+                          borderRadius:'12px',
+                         }}
+                         onClick={()=>handleLinkClick('hogar')}
+                         >
+                            Hogar
+                        </a>
+                        <a href='#' style={{width:'100px',
+                          backgroundColor: selectedLink === 'trabajo' ? '#FC5241' : 'white', 
+                          textDecoration:'none', color: selectedLink === 'trabajo' ? 'white' : 'black', 
+                          height:'30px', 
+                          alignSelf:'center', 
+                          textAlign:'center', 
+                          borderRadius:'12px',
+                         }}
+                         onClick={()=>handleLinkClick('trabajo')}
+                         >
+                            Trabajo
+                        </a>
+                        <a href='#' style={{width:'100px',
+                          backgroundColor: selectedLink === 'otro' ? '#FC5241' : 'white', 
+                          textDecoration:'none', color: selectedLink === 'otro' ? 'white' : 'black', 
+                          height:'30px', 
+                          alignSelf:'center', 
+                          textAlign:'center', 
+                          borderRadius:'12px',
+                         }}
+                         onClick={()=>handleLinkClick('otro')}
+                         >
+                            Otro
+                        </a>
                     </div>
+        
                     
                     {/* Nombre  */}
                     <FormGroup controlId = "formBasicName">
