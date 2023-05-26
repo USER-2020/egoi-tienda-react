@@ -849,6 +849,8 @@ input[type="checkbox"]:checked {
       }
       .containerCheckoutResponsive .direcciones ul li .opciones input[type="radio"]{
         background-color: #E9E9E9;
+        width: 30px;
+        height: 30px;
       }
       .containerCheckoutResponsive .direcciones ul li .opciones input[type="radio"]:checked{
         background-color: var(--prm-color);
