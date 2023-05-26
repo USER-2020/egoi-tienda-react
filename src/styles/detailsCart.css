@@ -904,4 +904,9 @@ input[type="checkbox"]:checked {
       input[placeholder="Pais"]::placeholder, input[placeholder="Ciudad"]::placeholder, input[placeholder="Departamento"]::placeholder{
         background-image: var(--placeholder-icon-map);
     }
+
+    /* estilos modal agregar direccion  */
+    /* .row .col .card .tipoDireccion a:active{
+        background-color: var(--prm-color);
+    } */
 }
