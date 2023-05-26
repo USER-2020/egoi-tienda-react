@@ -853,13 +853,18 @@ input[type="checkbox"]:checked {
         display: flex;
         flex-direction: row;
         align-self: center;
+        padding: 0;
       }
       .containerCheckoutResponsive .direcciones ul li .opciones .checkPaymentResponsive{
-        width: 50%;
+        width: 40%;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-self: center;
+      }
+
+      .containerCheckoutResponsive .direcciones ul li .opciones .checkPaymentResponsive input{
+        background-color: #a2a1a729;
       }
       .containerCheckoutResponsive .direcciones ul li .opciones input[type="radio"]:checked{
         background-color: var(--prm-color);
