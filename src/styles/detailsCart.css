@@ -765,6 +765,9 @@ input[type="checkbox"]:checked {
 
       .containerCheckoutResponsive .paymentMethods .card .payment .checkPayment input[type="radio"]{
         background-color: #A2A1A729;
+        width: 30px;
+        height: 30px;
+        align-self: center;
       }
 
       .containerCheckoutResponsive .paymentMethods .card .payment .checkPayment input[type="radio"]:checked{
