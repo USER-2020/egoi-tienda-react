@@ -844,13 +844,14 @@ input[type="checkbox"]:checked {
         display: flex;
         flex-direction: row;
         width: 30%;
-        gap: 20px;
+        gap: 5px;
         align-self: center;
       }
-      .containerCheckoutResponsive .direcciones ul li .opciones .form-check-input {
-        background-color: #E9E9E9;
-        width: 30px;
-        height: 30px;
+      .containerCheckoutResponsive .direcciones ul li .opciones .updateDireccion {
+        width: 50%;
+      }
+      .containerCheckoutResponsive .direcciones ul li .opciones .checkPaymentResponsive{
+        width: 50%;
       }
       .containerCheckoutResponsive .direcciones ul li .opciones input[type="radio"]:checked{
         background-color: var(--prm-color);
