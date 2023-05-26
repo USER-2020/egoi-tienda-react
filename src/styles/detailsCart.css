@@ -847,10 +847,10 @@ input[type="checkbox"]:checked {
         justify-content: space-around;
         align-self: center;
       }
-      .containerCheckoutResponsive .direcciones ul li .opciones input[type="radio"]{
+      .containerCheckoutResponsive .direcciones ul li .opciones .form-check-input {
         background-color: #E9E9E9;
-        width: 30px !important;
-        height: 30px !important;
+        width: 30px;
+        height: 30px;
       }
       .containerCheckoutResponsive .direcciones ul li .opciones input[type="radio"]:checked{
         background-color: var(--prm-color);
