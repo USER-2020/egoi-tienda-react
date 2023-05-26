@@ -413,12 +413,7 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                   </ModalBody>
                 </Modal> */}
 
-
               </div>
-
-
-
-
             </Form>
           </div>
         </Col>

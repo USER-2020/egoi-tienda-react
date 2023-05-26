@@ -369,6 +369,10 @@ input[placeholder="Direccion"]::placeholder{
     background-image: var(--placeholder-icon-map);
 }
 
+input[placeholder="Pais"]::placeholder, input[placeholder="Ciudad"]::placeholder, input[placeholder="Departamento"]::placeholder{
+    background-image: var(--placeholder-icon-map);
+}
+
 input[type="checkbox"]{
     background-color:#dbdbdb;
     border-color: #767677;
@@ -802,4 +806,83 @@ input[type="checkbox"]:checked {
         color: #A75BFF;
         font-size: 14px;
       }
+      .containerCheckoutResponsive .direcciones .card{
+        border-radius: 16px;
+      }
+      .containerCheckoutResponsive .direcciones ul{
+        padding: 0;
+        margin: 0;
+      }
+
+      .containerCheckoutResponsive .direcciones ul li{
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        width: 100%;
+        padding: 10px;
+      }
+
+      .containerCheckoutResponsive .direcciones ul li .img{
+        width: 20%;
+        display: flex;
+        align-self: center;
+        justify-content: center;
+      }
+
+      .containerCheckoutResponsive .direcciones ul li .descripcion{
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+      }
+
+      .containerCheckoutResponsive .direcciones ul li .descripcion p {
+        margin: 0;
+      }
+
+      .containerCheckoutResponsive .direcciones ul li .opciones{
+        display: flex;
+        flex-direction: row;
+        width: 30%;
+        justify-content: space-around;
+        align-self: center;
+      }
+      .containerCheckoutResponsive .direcciones ul li .opciones input[type="radio"]{
+        background-color: #E9E9E9;
+      }
+      .containerCheckoutResponsive .direcciones ul li .opciones input[type="radio"]:checked{
+        background-color: var(--prm-color);
+        border-color: var(--prm-color);
+      }
+
+      .containerCheckoutResponsive .direcciones ul li .opciones svg path{
+        fill: var(--prm-color);
+      }
+
+      .containerCheckoutResponsive .direcciones .btnAdd{
+        width: 80%;
+        height: 48px;
+        border: 1px solid var(--prm-color);
+        display: flex;
+        flex-direction: row;
+        border-radius: 32px;
+        justify-content: center;
+        text-align: center;
+        align-self: center;
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+
+      .containerCheckoutResponsive .direcciones .btnAdd a {
+        text-decoration: none;
+        align-self: center;
+        color: var(--prm-color);
+        width: 100%;
+        text-align: center;
+      }
+
+
+      input[placeholder="Pais"]::placeholder, input[placeholder="Ciudad"]::placeholder, input[placeholder="Departamento"]::placeholder{
+        background-image: var(--placeholder-icon-map);
+    }
 }
