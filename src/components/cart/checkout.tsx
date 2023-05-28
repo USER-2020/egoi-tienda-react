@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom';
 import AdressCheckout from '../../views/user/adress';
 import es from "react-phone-input-2/lang/es.json";
 import PhoneInput from 'react-phone-input-2';
+import { allAddress, allDeptos } from '../../services/address';
+import UpdateAddress from '../../views/user/updateAddress';
+
 
 
 
@@ -24,7 +27,12 @@ function AddressCart() {
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
   const [modalAddressCheckout, setModalAddressCheckout]= useState(false);
+  const [modalAddressUpdate, setModalAddressUpdate]= useState(false);
   const [selectedLink, setSelectedLink] = useState('hogar');
+  const [address, setAddress] = useState([]);
+  const [selectedAddressIndex, setSelectedAddressIndex] = useState(null);
+
+  const [deptos, setDeptos] = useState([]);
 
   const handleLinkClick = (link) => {
     setSelectedLink(link);
@@ -61,6 +69,33 @@ function AddressCart() {
     
     }
 
+    const getAllAddress = () => {
+      if(token){
+        allAddress(token)
+        .then((res)=>{
+          console.log(res.data);
+          setAddress(res.data);
+          console.log("Estas son las direcciones", address);
+
+        })
+      }
+    }
+
+    const getAllDeptos = () =>{
+      if(token){
+        allDeptos(token)
+        .then((res)=>{
+          console.log(res.data);
+          setDeptos(res.data);
+          console.log("Deptos");
+        })
+      }
+    }
+
+    function checkboxChanged(index) {
+      setSelectedAddressIndex(index);
+    }
+
     const closeModalAddress = () =>{
       setModalAddressCheckout(false);
     }
@@ -82,6 +117,12 @@ function AddressCart() {
         }
     });
 
+    const refreshAddress = () =>{
+      if(token){
+        getAllAddress();
+      }
+    }
+
   useEffect(()=>{
     // if(currenUser){
     //   console.log('hay usuario logueado activo');
@@ -91,6 +132,8 @@ function AddressCart() {
     // }
       if(token){
         getAllProductsByCart();
+        getAllAddress();
+        getAllDeptos();
       }else{
         // history.push(`/detailsProduct/${id}/${slug}`);
         history.goBack();
@@ -154,169 +197,40 @@ function AddressCart() {
             </div>
             <div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                 <div className="cards">
-                  <div className="card-body card1">
+                  {address && address.map((addr, index)=>(
+
+                    <div className="card-body card1" key={index}>
+                      <div className="contenedorP">
                       <div className="seleccion">
-                        <Input type="checkbox" name="" id="" />
-                          <p>Hogar</p>
+                        <Input type="checkbox" name="" id={addr.id}
+                        checked={selectedAddressIndex === index} 
+                        onChange={()=>checkboxChanged(index)}/>
+                          <p>{addr.address_type === "home" ? "Hogar" : addr.address_type && addr.address_type ==="permanent" ? "Trabajo" : addr.address_type && addr.address_type ==="others" ? "Otro" : addr.address_type}</p>
                       </div>
                       <div className="contenido">
-                        <p>Nombre Contacto: Juan Perez</p>
-                        <p>Dirección: Calle 10 # 10 - 20, Medellín - Antioquia</p>
+                        <p>Nombre Contacto: {addr.contact_person_name}</p>
+                        <p>Dirección: {addr.address}</p>
                         <p>
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M7.46399 3.79261C7.03626 3.23986 6.28321 3.05281 5.63801 3.32126C5.54774 3.35882 5.45344 3.41223 5.32375 3.48569L5.31028 3.49332L5.30288 3.49751L5.29566 3.50201C5.00861 3.68109 4.82023 3.95405 4.69556 4.2289C4.57038 4.50491 4.49755 4.8085 4.45538 5.08768C4.37743 5.60368 4.39469 6.107 4.42814 6.31578C4.42878 6.32507 4.42964 6.33573 4.4308 6.34777C4.43434 6.38486 4.44065 6.43506 4.45185 6.49892C4.47423 6.62664 4.51613 6.809 4.59449 7.05051C4.75112 7.53321 5.05395 8.25386 5.64003 9.24952C6.2264 10.2457 6.74008 10.912 7.11324 11.3338C7.29979 11.5446 7.45108 11.6942 7.55859 11.7932C7.61234 11.8427 7.65512 11.8795 7.68586 11.905C7.70123 11.9177 7.71358 11.9276 7.72279 11.9349L7.73265 11.9425C8.00181 12.1592 8.45179 12.4476 8.9564 12.6281C9.4537 12.806 10.0856 12.9072 10.6471 12.62L10.6547 12.6161L10.6621 12.6119L10.6814 12.601C10.8074 12.5297 10.901 12.4767 10.9784 12.4195C11.5423 12.0025 11.7563 11.2599 11.4798 10.6149C11.442 10.5267 11.3879 10.4347 11.3165 10.3136L11.3051 10.2941L11.1821 10.0852L11.1723 10.0685C11.0482 9.85764 10.949 9.68917 10.8532 9.56178C10.7271 9.39402 10.5591 9.29629 10.4304 9.23454C10.2527 9.14925 10.0549 9.11514 9.87898 9.0991C9.70021 9.08282 9.51069 9.08282 9.34048 9.08362L9.29644 9.08384C9.13673 9.08467 8.99414 9.0854 8.86305 9.07739C8.71793 9.06852 8.61986 9.05025 8.5575 9.02624C8.52407 9.01336 8.49098 8.99816 8.45836 8.98064C8.42394 8.96216 8.40425 8.94866 8.39188 8.93821C8.28826 8.85067 8.0171 8.59839 7.76503 8.17016C7.47008 7.66907 7.42997 7.31682 7.42685 7.28477C7.42182 7.1909 7.43098 7.09725 7.45341 7.0059C7.4707 6.93552 7.51126 6.83979 7.57954 6.71111C7.62692 6.6218 7.67846 6.53305 7.73473 6.43616C7.75991 6.39279 7.78605 6.34779 7.81317 6.30038C7.8961 6.15546 7.98481 5.99375 8.05212 5.83081C8.1183 5.67061 8.17652 5.47988 8.1735 5.28005C8.17216 5.19117 8.16407 5.06448 8.11427 4.9331C8.05058 4.76509 7.94017 4.57761 7.80031 4.34009L7.78253 4.3099L7.65944 4.10109L7.64614 4.07848C7.57599 3.95922 7.52232 3.86798 7.46399 3.79261Z" fill="#171523"/>
                           </svg>
-                          +57 302 200 9292
+                          {addr.phone}
                         </p>
                         
                       </div>
+                      </div>
+                      <div className="opcionesUpdateOrDelete">
+                        <a href="#" onClick={()=> updateBtn()}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FC5241" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                        </a>
+                      </div>
                   </div>
-                  <div className="card-body card2">
-                      <div className="seleccion">
-                        <Input type="checkbox" name="" id="" />
-                          <p>Otra direccion</p>
-                      </div>
-                      <div className="formularioCheckout">
-                        <Form>
-                          <Row>
-                            <div className='tipoDireccion' style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:'100%', height:'48px'}}>
-                            <a href='#' style={{width:'100px',
-                              backgroundColor: selectedLink === 'hogar' ? '#FC5241' : 'white', 
-                              textDecoration:'none', color: selectedLink === 'hogar' ? 'white' : 'black', 
-                              height:'30px', 
-                              alignSelf:'center', 
-                              textAlign:'center', 
-                              borderRadius:'12px',
-                            }}
-                            onClick={()=>handleLinkClick('hogar')}
-                            >
-                                Hogar
-                            </a>
-                            <a href='#' style={{width:'100px',
-                              backgroundColor: selectedLink === 'trabajo' ? '#FC5241' : 'white', 
-                              textDecoration:'none', color: selectedLink === 'trabajo' ? 'white' : 'black', 
-                              height:'30px', 
-                              alignSelf:'center', 
-                              textAlign:'center', 
-                              borderRadius:'12px',
-                            }}
-                            onClick={()=>handleLinkClick('trabajo')}
-                            >
-                                Trabajo
-                            </a>
-                            <a href='#' style={{width:'100px',
-                              backgroundColor: selectedLink === 'otro' ? '#FC5241' : 'white', 
-                              textDecoration:'none', color: selectedLink === 'otro' ? 'white' : 'black', 
-                              height:'30px', 
-                              alignSelf:'center', 
-                              textAlign:'center', 
-                              borderRadius:'12px',
-                            }}
-                            onClick={()=>handleLinkClick('otro')}
-                            >
-                                Otro
-                            </a>
-                      </div>
-                    </Row>
-                            <FormGroup>
-                              
-                              <Input style={{ borderRadius: "50px" }}
-                                id="exampleEmail"
-                                name="name"
-                                placeholder="Nombre de contacto"
-                                type="text"
-                              />
-                            </FormGroup>
-                          
-                         
-                        <FormGroup>
-                          
-                          <Input style={{ borderRadius: "50px" }}
-                            id="exampleAddress"
-                            name="address"
-                            placeholder="Direccion"
-                          />
-                        </FormGroup>
-                        <Row>
-                          <Col md={4}>
-                            <FormGroup>
-                              
-                              <Input style={{ borderRadius: "50px" }}
-                                id="examplePassword"
-                                name="country"
-                                placeholder="Pais"
-                                type="text"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md={4}>
-                            <FormGroup>
-                              
-                              <Input style={{ borderRadius: "50px" }}
-                                id="examplePassword"
-                                name="city"
-                                placeholder="Ciudad"
-                                type="text"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md={4}>
-                            <FormGroup>
-                              
-                              <Input style={{ borderRadius: "50px" }}
-                                id="examplePassword"
-                                name="zip"
-                                placeholder="Departamento"
-                                type="text"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={6}>
-                            <FormGroup>
-                              <PhoneInput inputStyle ={{ 
-                                borderRadius: "50px" }}
-                                localization={es}
-                                country={"co"}
-                                
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md={6}>
-                            <FormGroup>
-                              <PhoneInput inputStyle ={{ 
-                                  borderRadius: "50px" }}
-                                  localization={es}
-                                  country={"co"} 
-                                />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col md={6}>
-                            <FormGroup>
-                              <Input style={{ borderRadius: "50px" }}
-                                id="examplePassword"
-                                name="latitude"
-                                placeholder="Latitud"
-                                type="text"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md={6}>
-                            <FormGroup>
-                                <Input style={{ borderRadius: "50px" }}
-                                  id="examplePassword"
-                                  name="longitude"
-                                  placeholder="Longitud"
-                                  type="text"
-                                />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        </Form>
-                      </div>
+                    ))}
+                  <div className="addNewAddress" >
+                    <a href="#" onClick={()=>setModalAddressCheckout(true)}>Agregar Direccion</a>
                   </div>
                 </div>
             </div>
@@ -785,7 +699,8 @@ function AddressCart() {
                     </div>
               </div>
           </div>
-
+                
+                
     </div>
                 <Modal
                     className="modal-dialog-centered modal-lg"
@@ -793,7 +708,18 @@ function AddressCart() {
                     isOpen={modalAddressCheckout}
                     >
                     <ModalBody>
-                    <AdressCheckout  closeModalAddress={closeModalAddress}/>
+                    <AdressCheckout  closeModalAddress={closeModalAddress} deptos={deptos} 
+                    refreshAddress={refreshAddress}/>
+                    </ModalBody>
+                </Modal>
+
+                <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalAddressCheckout(false)}
+                    isOpen={modalAddressCheckout}
+                    >
+                    <ModalBody>
+                    <UpdateAddress  />
                     </ModalBody>
                 </Modal>
     </> 

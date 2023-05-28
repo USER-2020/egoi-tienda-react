@@ -308,9 +308,10 @@
 
 #collapseTwo .cards .card1{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     border: 1px solid #A2A1A7;
     border-radius: 24px;
+    justify-content: space-between;
     
 }
 
@@ -326,6 +327,10 @@
 
 #collapseTwo .cards .card1 .seleccion p {
     margin-bottom: 0;
+}
+#collapseTwo .cards .card1 .contenedorP{
+  display: flex;
+  flex-direction: column;
 }
 #collapseTwo .cards .card1 .contenido{
     display: flex;
@@ -383,6 +388,22 @@ input[type="checkbox"]:checked {
     border-color: var(--prm-color);
   }
 
+#collapseTwo .cards .addNewAddress {
+  margin-top: 10px;
+  width: 100%;
+  display:flex;
+  flex-direction: row;
+  padding-left: 5px;
+  margin-bottom: 10px;
+}
+#collapseTwo .cards .addNewAddress a {
+  text-decoration: none;
+  color: white;
+  background-color: var(--prm-color);
+  padding: 10px;
+  border-radius: 32px;
+}
+
 #collapseThree .paymentMethods {
     background-color: var(--body-gray);
     display: flex;
@@ -426,6 +447,8 @@ input[type="checkbox"]:checked {
     align-items: start;
 
 }
+
+
 
 /* cosas del resposnive  */
 .containerProductsAndDetailpurchaseResponsive{
