@@ -715,8 +715,8 @@ function AddressCart() {
 
                 <Modal
                     className="modal-dialog-centered modal-lg"
-                    toggle={() => setModalAddressCheckout(false)}
-                    isOpen={modalAddressCheckout}
+                    toggle={() => setModalAddressUpdate(false)}
+                    isOpen={modalAddressUpdate}
                     >
                     <ModalBody>
                     <UpdateAddress  />
