@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PhoneInput from 'react-phone-input-2';
 import { Card, Col, Row, Button, FormGroup, Form, Input, InputGroupText, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import es from "react-phone-input-2/lang/es.json";
 import '../../styles/detailsCart.css';
+import { allCitysByIdDepto, saveAddress } from '../../services/address';
+import { getCurrentUser } from '../../helpers/Utils';
 
-function AdressCheckout({closeModalAddress}) {
+function AdressCheckout({closeModalAddress, deptos ,refreshAddress}) {
 
     const {
         reset,
         formState: { errors },
       } = useForm();
 
-    const [selectedLink, setSelectedLink] = useState('hogar');
+    const [selectedLink, setSelectedLink] = useState('home');
     const [contactPersonName, setContactPersonName ] = useState("");
     const [addressType, setAddressType ] = useState("");
     const [address, setAddress] = useState("");
@@ -22,27 +24,93 @@ function AdressCheckout({closeModalAddress}) {
     const [phone, setphone] = useState("");
     const [phone2, setphone2] = useState("");
     const [country, setCountry] = useState("");
-    const [latitude, setLatitude ] = useState("");
-    const [longitude, setLongitude]= useState("");
+    const [latitude, setLatitude ] = useState("1234");
+    const [longitude, setLongitude]= useState("4321");
     const [loading, setLoading] = useState(false);
+    const [selectedZip, setSelectedZip] = useState();
+    const [selectedCity, setSelectedCity] = useState();
+    const [deptoId , setDeptoId]= useState();
 
-    const onSubmmit = (data)=>{
-        setLoading(true);
-        Swal.fire({
-            icon: 'success',
-            title: 'Registro Exitoso!',
-            text: 'El registro ha sido completado exitosamente',
-            confirmButtonColor:'#0d6efd',
-        });
-        setLoading(false);
-        closeModalAddress();
-    }
+    
+
+    const currenUser = getCurrentUser();
+
+    const token = currenUser.token;
+
+   
 
     const handleLinkClick = (link) => {
         setSelectedLink(link);
       };
 
+      const handleSelectChangeZip = (e) => {
+        const valorSeleccionadoZip = (e.target.value);
+        setSelectedZip(valorSeleccionadoZip);
+        console.log(valorSeleccionadoZip);
+        // return valorSeleccionado;
+        // Realizar otras acciones con el valor seleccionado
+      };
 
+      const handleSelectChangeCity = (e) => {
+        const valorSeleccionadoCity = parseInt(e.target.value);
+        setSelectedCity(valorSeleccionadoCity);
+        console.log(valorSeleccionadoCity);
+        // return valorSeleccionadoTalla;
+        // Realizar otras acciones con el valor seleccionado
+      };
+
+      const onSubmit = (data) => {
+        setLoading(true);
+        saveAddress(data, token)
+        .then(()=>{
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro exitoso!',
+                text: 'La direccion ha sido registrada exitosamente.',
+                confirmButtonColor: '#0d6efd',
+              });
+              closeModalAddress();
+              refreshAddress();
+        })
+        .catch((err) => {
+            console.log(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+                confirmButtonColor: '#dc3545',
+              });
+        })
+      }
+
+      const handleSubmitAddress = (e)=>{
+        e.preventDefault();
+
+        const data ={
+            address_type: selectedLink,
+            contact_person_name: contactPersonName,
+            address: address,
+            country: country,
+            zip: selectedZip,
+            city: selectedCity,
+            phone: phone,
+            phone_2:phone2,
+            latitude: latitude,
+            longitude: longitude,
+            local_description: "subiedno una bajadita",
+            is_billing: 'ppp'
+        };
+        onSubmit(data);
+      }
+
+      useEffect(()=>{
+        if(selectedZip){
+            allCitysByIdDepto(selectedZip, token)
+            .then((res)=>{
+            console.log(res.data);
+            setCity(res.data);
+        })}
+      },[selectedZip, token])
 
   return (
     <>
@@ -59,55 +127,42 @@ function AdressCheckout({closeModalAddress}) {
               <h5 style={{ color: "#fc5241", marginBottom:"20px" }}>Direccion de entrega</h5>
             </div>
             <Card style={{border:'none'}}>
-                <Form>
+                <Form onSubmit={handleSubmitAddress}>
 
-                    {/* Tipo de direccion  */}
-                    {/* <FormGroup controlId = "formAddressType">
-                        <Input addon={true}
-                        name="addressType"
-                        classNanme="form-control"
-                        style={{
-                            borderRadius: "50px",
-                        }}
-                        placeholder="Tipo de direcccion"
-                        value={contactPersonName}
-                        />
-
-                    </FormGroup> */}
                     <div className='tipoDireccion' style={{display:'flex', flexDirection:'row', justifyContent:'space-around', width:'100%', height:'48px'}}>
                         <a href='#' style={{width:'100px',
-                          backgroundColor: selectedLink === 'hogar' ? '#FC5241' : 'white', 
-                          textDecoration:'none', color: selectedLink === 'hogar' ? 'white' : 'black', 
+                          backgroundColor: selectedLink === 'home' ? '#FC5241' : 'white', 
+                          textDecoration:'none', color: selectedLink === 'home' ? 'white' : 'black', 
                           height:'30px', 
                           alignSelf:'center', 
                           textAlign:'center', 
                           borderRadius:'12px',
                          }}
-                         onClick={()=>handleLinkClick('hogar')}
+                         onClick={()=>handleLinkClick('home')}
                          >
                             Hogar
                         </a>
                         <a href='#' style={{width:'100px',
-                          backgroundColor: selectedLink === 'trabajo' ? '#FC5241' : 'white', 
-                          textDecoration:'none', color: selectedLink === 'trabajo' ? 'white' : 'black', 
+                          backgroundColor: selectedLink === 'permanent' ? '#FC5241' : 'white', 
+                          textDecoration:'none', color: selectedLink === 'permanent' ? 'white' : 'black', 
                           height:'30px', 
                           alignSelf:'center', 
                           textAlign:'center', 
                           borderRadius:'12px',
                          }}
-                         onClick={()=>handleLinkClick('trabajo')}
+                         onClick={()=>handleLinkClick('permanent')}
                          >
                             Trabajo
                         </a>
                         <a href='#' style={{width:'100px',
-                          backgroundColor: selectedLink === 'otro' ? '#FC5241' : 'white', 
-                          textDecoration:'none', color: selectedLink === 'otro' ? 'white' : 'black', 
+                          backgroundColor: selectedLink === 'others' ? '#FC5241' : 'white', 
+                          textDecoration:'none', color: selectedLink === 'others' ? 'white' : 'black', 
                           height:'30px', 
                           alignSelf:'center', 
                           textAlign:'center', 
                           borderRadius:'12px',
                          }}
-                         onClick={()=>handleLinkClick('otro')}
+                         onClick={()=>handleLinkClick('others')}
                          >
                             Otro
                         </a>
@@ -124,10 +179,12 @@ function AdressCheckout({closeModalAddress}) {
                         }}
                         placeholder="Nombre de contacto"
                         value={contactPersonName}
+                        onChange={(event) => setContactPersonName(event.target.value)}
                         />
 
                     </FormGroup>
-
+                    
+                    {/*Direccion*/}
                     <FormGroup controlId = "formBasicDireccion">
                         <Input addon={true}
                         name="address"
@@ -137,6 +194,7 @@ function AdressCheckout({closeModalAddress}) {
                         }}
                         placeholder="Direccion"
                         value={address}
+                        onChange={(event) => setAddress(event.target.value)}
                         />
 
                     </FormGroup>
@@ -150,6 +208,7 @@ function AdressCheckout({closeModalAddress}) {
                         }}
                         placeholder="Pais"
                         value={country}
+                        onChange={(event) => setCountry(event.target.value)}
                         />
 
                     </FormGroup>
@@ -157,24 +216,39 @@ function AdressCheckout({closeModalAddress}) {
                     <FormGroup controlId = "countryAndZip" style={{display:'flex', flexDirection:'row', gap:'10px'}}>
                         
                         <Input addon={true}
+                        name="zip"
+                        classNanme="form-control"
+                        style={{
+                            borderRadius: "50px",
+                        }}
+                        value={selectedZip}
+                        type='select'
+                        onChange={handleSelectChangeZip}
+
+                        >
+                            <option value="">Departamento</option>
+                            {deptos && deptos.map((depto, index)=>(
+                                <option value={depto.id_departamento} key={index}>{depto.departamento}</option>
+                            ))}
+                        </Input>
+
+                        <Input addon={true}
                         name="city"
                         classNanme="form-control"
                         style={{
                             borderRadius: "50px",
                         }}
                         placeholder="Ciudad"
-                        value={city}
-                        />
+                        value={selectedCity}
+                        type='select'
+                        onChange={handleSelectChangeCity}
+                        >
+                            <option value="">Ciudad</option>
+                                {city && city.map((city, index)=>(
+                                    <option value={city.id} key={index}>{city.nombre}</option>
+                                ))}    
+                        </Input>
 
-                        <Input addon={true}
-                        name="zip"
-                        classNanme="form-control"
-                        style={{
-                            borderRadius: "50px",
-                        }}
-                        placeholder="Departamento"
-                        value={zip}
-                        />
 
                     </FormGroup>
 
@@ -183,6 +257,7 @@ function AdressCheckout({closeModalAddress}) {
                         localization={es}
                         country={"co"}
                         value={phone}
+                        onChange={setphone}
                         inputStyle={{
                             width: "100%",
                             height: "10px",
@@ -200,6 +275,7 @@ function AdressCheckout({closeModalAddress}) {
                         localization={es}
                         country={"co"}
                         value={phone2}
+                        onChange={setphone2}
                         inputStyle={{
                             width: "100%",
                             height: "10px",
@@ -220,7 +296,8 @@ function AdressCheckout({closeModalAddress}) {
                             borderRadius: "50px",
                         }}
                         placeholder="Latitud"
-                        value={latitude}/>
+                        value={latitude}
+                        hidden/>
 
                         <Input addon={true}
                         name='longitude'
@@ -229,7 +306,8 @@ function AdressCheckout({closeModalAddress}) {
                             borderRadius: "50px",
                         }}
                         placeholder="Longitud"
-                        value={longitude}/>
+                        value={longitude}
+                        hidden/>
 
                     </FormGroup>
 
