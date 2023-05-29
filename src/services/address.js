@@ -51,9 +51,12 @@ export const updateAddress = (id, data, token) =>
 
 //Eliminar direccion
 export const deleteAddress = (id, token) =>
-    axios.delete(`${baseUrl}/customer/address/remove/${id}`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`   
-        }
-    })
+  axios.delete(`${baseUrl}/customer/address/remove`, {
+    params: {
+      address_id: id
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
