@@ -39,3 +39,21 @@ export const saveAddress = (data, token) =>
             'Authorization': `Bearer ${token}`   
         }
     });
+
+//Actualizar direccion 
+export const updateAddress = (id, data, token) =>
+    axios.put(`${baseUrl}/customer/address/update/${id}`, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`   
+        }
+    })
+
+//Eliminar direccion
+export const deleteAddress = (id, token) =>
+    axios.delete(`${baseUrl}/customer/address/remove/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`   
+        }
+    })

@@ -10,8 +10,10 @@ import { Link } from 'react-router-dom';
 import AdressCheckout from '../../views/user/adress';
 import es from "react-phone-input-2/lang/es.json";
 import PhoneInput from 'react-phone-input-2';
-import { allAddress, allDeptos } from '../../services/address';
+import { allAddress, allDeptos, deleteAddress } from '../../services/address';
 import UpdateAddress from '../../views/user/updateAddress';
+import { set } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
 
 
@@ -31,6 +33,7 @@ function AddressCart() {
   const [selectedLink, setSelectedLink] = useState('hogar');
   const [address, setAddress] = useState([]);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(null);
+  const [idAddress, setIdAddress] = useState();
 
   const [deptos, setDeptos] = useState([]);
 
@@ -100,6 +103,18 @@ function AddressCart() {
       setModalAddressCheckout(false);
     }
 
+    const closeModalUpdate = () =>{
+      setModalAddressUpdate(false);
+    }
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
     window.addEventListener("scroll", function() {
       var scrollModal = document.getElementById("scrollModalCheckout");
       var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
@@ -117,23 +132,66 @@ function AddressCart() {
         }
     });
 
-    const updateBtn = () => {
-      if(token){}
+
+   
+
+    const updateBtn = (addrId) => {
+      if(token){
+        swalWithBootstrapButtons.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Actualizar',
+          cancelButtonText: 'Eliminar',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setIdAddress(addrId);
+            setModalAddressUpdate(true);
+
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            setIdAddress(addrId);
+            eliminarDireccion(idAddress);
+            swalWithBootstrapButtons.fire(
+              'Eliminado',
+              'Tu direccion fue eliminada',
+              'error'
+            );
+            
+            
+
+          }
+        })
+        
+
+      }
     }
 
+    const eliminarDireccion = (idAddress) => {
+      deleteAddress(idAddress, token)
+      .then(()=>{
+        console.log("Direccion ELiminada");
+        getAllAddress();
+      })
+      .catch((err)=>{
+        console.log(err)
+      });
+     }
+     
     const refreshAddress = () =>{
       if(token){
         getAllAddress();
       }
     }
 
+    
+
   useEffect(()=>{
-    // if(currenUser){
-    //   console.log('hay usuario logueado activo');
-    // }else{
-    //   console.log('No hay usuario logueado por favor vuelve aloguearte');
-    //   history.push(`/`);
-    // }
+    
       if(token){
         getAllProductsByCart();
         getAllAddress();
@@ -224,7 +282,7 @@ function AddressCart() {
                       </div>
                       </div>
                       <div className="opcionesUpdateOrDelete">
-                        <a href="#" onClick={()=> updateBtn()}>
+                        <a href="#" onClick={()=> updateBtn(addr.id)}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FC5241" className="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -723,7 +781,8 @@ function AddressCart() {
                     isOpen={modalAddressUpdate}
                     >
                     <ModalBody>
-                    <UpdateAddress  />
+                    <UpdateAddress  closeModalUpdate={closeModalUpdate} deptos={deptos} refreshAddress={refreshAddress}
+                    idAddress={idAddress}/>
                     </ModalBody>
                 </Modal>
     </> 
