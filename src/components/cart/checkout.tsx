@@ -14,6 +14,7 @@ import { allAddress, allDeptos, deleteAddress } from '../../services/address';
 import UpdateAddress from '../../views/user/updateAddress';
 import { set } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import TarjetaDebito from '../../views/user/metodosDePago/tarjetaDebito';
 
 
 
@@ -33,7 +34,11 @@ function AddressCart() {
   const [selectedLink, setSelectedLink] = useState('hogar');
   const [address, setAddress] = useState([]);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(null);
+  const [selectedCheckbox, setSelectedCheckbox] = useState(null);
   const [idAddress, setIdAddress] = useState();
+
+  // Modales de metodos de pagos 
+  const [modalTarjetaDebito, setModalTarjetaDebito] = useState(false);
 
   const [deptos, setDeptos] = useState([]);
 
@@ -94,6 +99,20 @@ function AddressCart() {
         })
       }
     }
+
+    const handleCheckboxChange = (index) => {
+      if (selectedCheckbox === index) {
+        // Deseleccionar el checkbox actual si se hace clic nuevamente en él
+        setSelectedCheckbox(null);
+      } else {
+        // Seleccionar el checkbox correspondiente al índice dado
+        setSelectedCheckbox(index);
+        if(index === 0){
+          console.log(selectedCheckbox);
+          setModalTarjetaDebito(true);
+        }
+      }
+    };
 
     function checkboxChanged(index) {
       setSelectedAddressIndex(index);
@@ -319,7 +338,9 @@ function AddressCart() {
                         </div>
                      </div>
                      <div className="checkPayment">
-                      <Input type='checkbox' />
+                      <Input type='checkbox' 
+                      checked={selectedCheckbox === 0} 
+                      onChange={() => handleCheckboxChange(0)}/>
                      </div>
                    </Card>
                    <Card>
@@ -335,7 +356,9 @@ function AddressCart() {
                           </div>
                       </div>
                       <div className="checkPayment">
-                        <Input type='checkbox' />
+                        <Input type='checkbox' 
+                        checked={selectedCheckbox === 1} 
+                        onChange={() => handleCheckboxChange(1)}/>
                       </div>
                    </Card>
                    <Card>
@@ -358,7 +381,9 @@ function AddressCart() {
                           </div>
                       </div>
                       <div className="checkPayment">
-                        <Input type='checkbox' />
+                        <Input type='checkbox' 
+                        checked={selectedCheckbox === 2} 
+                        onChange={() => handleCheckboxChange(2)}/>
                       </div>
                    </Card>
                    <Card>
@@ -383,7 +408,9 @@ function AddressCart() {
                           </div>
                       </div>
                       <div className="checkPayment">
-                        <Input type='checkbox' />
+                        <Input type='checkbox' 
+                        checked={selectedCheckbox === 3} 
+                        onChange={() => handleCheckboxChange(3)}/>
                       </div>
                    </Card>
                    <Card>
@@ -400,7 +427,9 @@ function AddressCart() {
                           </div>
                       </div>
                       <div className="checkPayment">
-                        <Input type='checkbox' />
+                        <Input type='checkbox' 
+                        checked={selectedCheckbox === 4} 
+                        onChange={() => handleCheckboxChange(4)}/>
                       </div>
                    </Card>
                 </div>
@@ -580,7 +609,9 @@ function AddressCart() {
                           <p>Paga con tarjetas débito</p>
                         </div>
                       <div className="checkPayment">
-                        <Input type='radio' />
+                        <Input type='radio' 
+                        checked={selectedCheckbox === 0} 
+                        onChange={() => handleCheckboxChange(0)}/>
                       </div>
                      </div>
                    </Card>
@@ -596,7 +627,9 @@ function AddressCart() {
                             <p>VISA, MasterCard, American Express</p>
                           </div>
                         <div className="checkPayment">
-                          <Input type='radio' />
+                          <Input type='radio' 
+                          checked={selectedCheckbox === 1} 
+                          onChange={() => handleCheckboxChange(1)}/>
                         </div>
                       </div>
                    </Card>
@@ -619,7 +652,9 @@ function AddressCart() {
                             <p>Pago por transferencia</p>
                           </div>
                         <div className="checkPayment">
-                          <Input type='radio' />
+                          <Input type='radio' 
+                          checked={selectedCheckbox === 2} 
+                          onChange={() => handleCheckboxChange(2)}/>
                         </div>
                       </div>
                    </Card>
@@ -644,7 +679,9 @@ function AddressCart() {
                             <p>Pago realizado por consignación</p>
                           </div>
                         <div className="checkPayment">
-                          <Input type='radio' />
+                          <Input type='radio' 
+                          checked={selectedCheckbox === 3} 
+                          onChange={() => handleCheckboxChange(3)}/>
                         </div>
                       </div>
                    </Card>
@@ -661,7 +698,9 @@ function AddressCart() {
                             <p>Realizarás el pago al recibir tu pedido</p>
                           </div>
                         <div className="checkPayment">
-                          <Input type='radio' />
+                          <Input type='radio' 
+                          checked={selectedCheckbox === 4} 
+                          onChange={() => handleCheckboxChange(4)}/>
                         </div>
                     </div>
                    </Card>
@@ -752,6 +791,17 @@ function AddressCart() {
                     <ModalBody>
                     <UpdateAddress  closeModalUpdate={closeModalUpdate} deptos={deptos} refreshAddress={refreshAddress}
                     idAddress={idAddress}/>
+                    </ModalBody>
+                </Modal>
+
+                {/* Modal checkout tarjeta de debito */}
+                <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalTarjetaDebito(false)}
+                    isOpen={modalTarjetaDebito}
+                    >
+                    <ModalBody>
+                    <TarjetaDebito  />
                     </ModalBody>
                 </Modal>
     </> 
