@@ -24,6 +24,8 @@ function UpdateAddress({closeModalUpdate, deptos ,refreshAddress, idAddress}) {
   const [phone, setphone] = useState("");
   const [phone2, setphone2] = useState("");
   const [country, setCountry] = useState("");
+  const [localDescription, setLocalDescription] = useState("");
+  const [barrio, setBarrio] = useState("");
   const [latitude, setLatitude] = useState("1234");
   const [longitude, setLongitude] = useState("4321");
   const [loading, setLoading] = useState(false);
@@ -96,7 +98,8 @@ const handleSubmitAddress = (e) => {
       phone_2: phone2,
       latitude: latitude,
       longitude: longitude,
-      local_description: "subiedno una bajadita",
+      barrio:barrio,
+      local_description: localDescription,
       is_billing: 'ppp'
   };
   onSubmit(data);
@@ -253,6 +256,32 @@ useEffect(() => {
 
                     </FormGroup>
 
+                    {/* Como llegar o descripcion  y barrio */}
+                    <FormGroup controlId="formBasicDescripcionandBarrio" style={{display:'flex', flexDirection:'row', gap:'10px'}}>
+                                    <Input addon={true}
+                                        name="barrio"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="Barrio"
+                                        value={barrio}
+                                        onChange={(event) => setBarrio(event.target.value)}
+                                    />
+
+                                    <Input addon={true}
+                                        name="local_description"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="Como llegar"
+                                        value={localDescription}
+                                        onChange={(event) => setLocalDescription(event.target.value)}
+                                    />
+
+                                </FormGroup>
+
                     <FormGroup controlId="formBasicCellphone1">
                         <PhoneInput
                         localization={es}
@@ -324,7 +353,7 @@ useEffect(() => {
                         type="submit"
                         disabled={loading}
                         >
-                        {loading ? 'Cargando...' : 'Registrar'}
+                        {loading ? 'Cargando...' : 'Actualizar'}
                         </Button>
                     
                 </div>

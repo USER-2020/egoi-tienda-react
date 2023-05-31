@@ -6,8 +6,6 @@
   --placeholder-icon-confirmarContraseña: url('../../assets/egoi_icons/lock.svg');
   /* --placeholder-icon-buscar: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"%3E%3Cpath fill="%23ccc" d="M499.8 468.2L370.3 338.7c30.8-36.3 49.6-83.4 49.6-135.2C419.9 85.3 334.6 0 218.7 0S17.4 85.3 17.4 201.2s85.3 201.2 201.2 201.2c51.9 0 99-18.8 135.2-49.6l129.5 129.5c7.9 7.9 20.8 7.9 28.7 0l22.6-22.6c7.9-7.9 7.9-20.8 0-28.7zM72.5 201.2c0-88.5 71.8-160.3 160.3-160.3s160.3 71.8 160.3 160.3-71.8 160.3-160.3 160.3-160.3-71.8-160.3-160.3z"%3E%3C/path%3E%3C/svg%3E'); */
 
-
-
 }
 
 input::placeholder {
