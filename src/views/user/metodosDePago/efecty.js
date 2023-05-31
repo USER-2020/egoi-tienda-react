@@ -23,7 +23,7 @@ function EfectyModal({ totalAmount, closeEfectyModal }) {
                 alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "column",
-                gap: "15px"
+                gap: "16px"
               }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#089705" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
