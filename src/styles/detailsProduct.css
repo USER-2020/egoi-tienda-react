@@ -596,12 +596,7 @@ la imagen seleccionda */
         background-color: transparent;
     }
    
-    .containerResponsiveNameProduct .favAndShareAndQuantity .quantity input{
-        width: 35px;
-        border: none;
-        text-align: center;
-        background-color: transparent;
-    }
+    
 
     .containerResponsiveNameProduct .favAndShare .svgFav path,
     .containerResponsiveNameProduct .favAndShare .svgShare{
