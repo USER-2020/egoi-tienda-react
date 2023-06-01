@@ -559,7 +559,9 @@ la imagen seleccionda */
     }
 
     .containerResponsiveStockAndQuantity{
-        display: block;
+        display:flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
     .containerResponsiveStockAndQuantity .quantity{
