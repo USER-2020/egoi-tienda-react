@@ -453,7 +453,7 @@ la imagen seleccionda */
     .containerIzq{
         width: 100%;
         height: auto;
-        margin-top: -40px;
+        margin-top: 0px;
     }
 
     .cardImgProduct .containerImgTop img{
