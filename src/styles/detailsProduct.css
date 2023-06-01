@@ -444,11 +444,28 @@ la imagen seleccionda */
     display: none;
 }
 
+.containerResponsiveStockAndQuantity{
+    display: none;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .containerIzq{
         width: 100%;
         height: auto;
+        margin-top: -40px;
+    }
+
+    .cardImgProduct .containerImgTop img{
+        width: 200px;
+        height: 200px;
+    }
+    .cardImgProduct .containerImgMiniature{
+        height: 80px;
+    }
+    .cardImgProduct .containerImgMiniature img {
+        width: 40px;
+        height: 40px;
     }
 
     .containerDetalle{
@@ -485,6 +502,12 @@ la imagen seleccionda */
         width: 98%;
     }
 
+    .containerResponsiveNameProduct .containerNameAndStarts {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+
     .containerNameAndStarts{
         width: 60%;
     }
@@ -504,39 +527,75 @@ la imagen seleccionda */
         margin: 0;
     }
 
+    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+
+    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts .Name{
+        width: 70%;
+    }
+
+    
+
     .containerResponsiveNameProduct .favAndShareAndQuantity{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        margin-bottom: 0;
+        padding: 10px;
     }
 
     .containerResponsiveNameProduct .favAndShareAndQuantity .favAndShare{
         display: flex;
         flex-direction: row;
         gap: 15px;
+        align-items: center;
+        justify-content: center;
+        
     }
 
-    .containerResponsiveNameProduct .favAndShareAndQuantity .quantity{
-        width: 120px;
+    .containerResponsiveStockAndQuantity{
+        display: block;
+    }
+
+    .containerResponsiveStockAndQuantity .quantity{
+        width: 100%;
         height: 50px;
         background-color: #A2A1A729;
         border-radius: 32px;
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         align-self: center;
-        padding: 10px;
+        padding: 20px;
         align-items: center;
     }
 
-    .containerResponsiveNameProduct .favAndShareAndQuantity .quantity button{
+    .containerResponsiveStockAndQuantity .quantity h4{
+        margin: 0;
+        font-size: 20px;
+    }
+    
+    .containerResponsiveStockAndQuantity .quantity button{
         border: none;
         background-color: transparent;
     }
-    .containerResponsiveNameProduct .favAndShareAndQuantity .quantity button svg path{
+
+    .containerResponsiveStockAndQuantity .quantity button svg path{
         fill: #FC5241;
     }
-
+    
+    .containerResponsiveStockAndQuantity .quantity input {
+        width: 35px;
+        border: none;
+        text-align: center;
+        background-color: transparent;
+    }
+   
     .containerResponsiveNameProduct .favAndShareAndQuantity .quantity input{
         width: 35px;
         border: none;
