@@ -28,7 +28,9 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
     const [localDescription, setLocalDescription] = useState("");
     const [loading, setLoading] = useState(false);
     const [selectedZip, setSelectedZip] = useState();
+    const [selectedDepto, setSelectedDepto] = useState();
     const [selectedCity, setSelectedCity] = useState();
+    const [selectedCiudad, setSelectedCiudad] = useState();
     const [deptoId, setDeptoId] = useState();
 
 
@@ -44,17 +46,33 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
     };
 
     const handleSelectChangeZip = (e) => {
-        const valorSeleccionadoZip = (e.target.value);
+        const valorSeleccionadoZip = e.target.value;
         setSelectedZip(valorSeleccionadoZip);
         console.log(valorSeleccionadoZip);
+
+        const deptoSeleccionado = deptos.find((depto)=> depto.id_departamento === parseInt(valorSeleccionadoZip));
+        
+        console.log(deptoSeleccionado);
+        if(deptoSeleccionado){
+            setSelectedDepto(deptoSeleccionado.departamento);
+            
+        }
         // return valorSeleccionado;
         // Realizar otras acciones con el valor seleccionado
     };
 
     const handleSelectChangeCity = (e) => {
-        const valorSeleccionadoCity = parseInt(e.target.value);
+        const valorSeleccionadoCity = e.target.value;
         setSelectedCity(valorSeleccionadoCity);
         console.log(valorSeleccionadoCity);
+
+        const citySeleccionada = city.find((ciudad)=> ciudad.id === parseInt(valorSeleccionadoCity));
+        
+        console.log(citySeleccionada);
+        if(citySeleccionada){
+            setSelectedCiudad(citySeleccionada.nombre);
+            
+        }
         // return valorSeleccionadoTalla;
         // Realizar otras acciones con el valor seleccionado
     };
@@ -91,8 +109,8 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
             contact_person_name: contactPersonName,
             address: address,
             country: country,
-            zip: selectedZip,
-            city: selectedCity,
+            zip: selectedDepto,
+            city: selectedCiudad,
             phone: phone,
             phone_2: phone2,
             latitude: latitude,
@@ -105,14 +123,18 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
     }
 
     useEffect(() => {
-        if (selectedZip) {
+        if (selectedZip ) {
             allCitysByIdDepto(selectedZip, token)
                 .then((res) => {
                     console.log(res.data);
                     setCity(res.data);
                 })
         }
-    }, [selectedZip, token])
+        if(selectedDepto || selectedCiudad){
+            console.log(selectedDepto);
+            console.log(selectedCiudad);
+        }
+    }, [selectedZip, token, selectedDepto])
 
     return (
         <>
