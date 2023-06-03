@@ -6,7 +6,7 @@ import { css } from 'styled-components';
 import { getCurrentUser } from '../../../helpers/Utils';
 import { allBanks } from '../../../services/bank';
 
-function TarjetaCreditoModal() {
+function TarjetaDebitoModal() {
 
     const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -20,7 +20,7 @@ function TarjetaCreditoModal() {
     const [identificationNumber, setIdentificationNumber] = useState("");
     const [selectedBank, setSelectedBank] = useState();
     const [valueBank, setValueBank] = useState();
-    const [banks, setBanks] = useState([]);
+    const [banks, setBanks]=useState([]);
     const {
         wrapperProps,
         getCardImageProps,
@@ -43,13 +43,6 @@ function TarjetaCreditoModal() {
         // Realizar otras acciones con el valor seleccionado
     };
 
-    const handleChangeExpiryDate = (e) => {
-        const value = e.target.value;
-        const [month, year] = value.split('/').map((part) => part.trim());
-        setCardMont(month);
-        setCardAno(year);
-    };
-
     const handleSelectChangeBank = (e) => {
         const valorSeleccionadoBanco = e.target.value;
         setValueBank(valorSeleccionadoBanco);
@@ -63,6 +56,13 @@ function TarjetaCreditoModal() {
         }
     }
 
+    const handleChangeExpiryDate = (e) => {
+        const value = e.target.value;
+        const [month, year] = value.split('/').map((part) => part.trim());
+        setCardMont(month);
+        setCardAno(year);
+    };
+
     const getAllBanks = () =>{
         if(token){
             allBanks(token)
@@ -75,14 +75,15 @@ function TarjetaCreditoModal() {
                 console.error("Error al obtener los bancos:", error);
             });
         }
-    };
-
+    }
+  
 
     const typeCards = {
         "1": "Tarjeta debito",
         "2": "Tarjeta credito"
     }
 
+   
     useEffect(()=>{
         if(token || selectedBank){
             getAllBanks();
@@ -102,11 +103,11 @@ function TarjetaCreditoModal() {
                                 justifyContent: "center",
                             }}
                         >
-                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Paga con tarjeta de credito</h5>
+                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Paga con tarjeta debito</h5>
                         </div>
                         <Card style={{ border: 'none' }}>
                             <Form>
-
+                               
                                 <FormGroup >
 
 
@@ -136,21 +137,6 @@ function TarjetaCreditoModal() {
                                 </FormGroup>
 
                                 <FormGroup style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-
-                                    <Input addon={true}
-                                        name="Cuotas"
-                                        classNanme="form-control"
-                                        style={{
-                                            borderRadius: "50px",
-                                            width: "20%"
-
-                                        }}
-                                        type="number"
-                                        placeholder="Cuotas"
-                                        value={cardCuotes}
-                                        onChange={(event) => setCardCuotes(event.target.value)}
-                                    />
-
                                     <Input addon={true}
                                         name="contactPersonName"
                                         classNanme="form-control"
@@ -162,12 +148,10 @@ function TarjetaCreditoModal() {
                                         value={cardName}
                                         onChange={(event) => setCardName(event.target.value.toUpperCase())}
                                     />
-
-
                                 </FormGroup>
 
                                 <FormGroup>
-                                <Input addon={true}
+                                    <Input addon={true}
                                         name="bank"
                                         classNanme="form-control"
                                         style={{
@@ -228,4 +212,5 @@ function TarjetaCreditoModal() {
     )
 }
 
-export default TarjetaCreditoModal;
+export default TarjetaDebitoModal;
+

@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 import TarjetaCreditoModal from '../../views/user/metodosDePago/tarjetaCredito';
 import EfectyModal from '../../views/user/metodosDePago/efecty';
 import PseModal from '../../views/user/metodosDePago/pse';
+import TarjetaDebitoModal from '../../views/user/metodosDePago/tarjetaDebito';
+import { allBanks } from '../../services/bank';
 
 
 
@@ -46,6 +48,7 @@ function AddressCart() {
   const [modalTarjetaDebito, setModalTarjetaDebito] = useState(false);
 
   const [deptos, setDeptos] = useState([]);
+  const [banks, setBanks] = useState([]);
 
   const handleLinkClick = (link) => {
     setSelectedLink(link);
@@ -100,10 +103,11 @@ function AddressCart() {
         .then((res)=>{
           console.log(res.data);
           setDeptos(res.data);
-          console.log("Deptos");
         })
       }
     }
+
+  
 
     const handleCheckboxChange = (index) => {
       if (selectedCheckbox === index) {
@@ -114,7 +118,7 @@ function AddressCart() {
         setSelectedCheckbox(index);
         if(index === 0){
           console.log(index);
-          setModalTarjetaCredito(true);
+          setModalTarjetaDebito(true);
         }
         if(index === 1){
           console.log(index);
@@ -823,6 +827,18 @@ function AddressCart() {
                     >
                     <ModalBody>
                     <TarjetaCreditoModal  />
+                    </ModalBody>
+                </Modal>
+
+                
+                {/* Modal checkout tarjeta de credito */}
+                <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalTarjetaDebito(false)}
+                    isOpen={modalTarjetaDebito}
+                    >
+                    <ModalBody>
+                    <TarjetaDebitoModal />
                     </ModalBody>
                 </Modal>
 
