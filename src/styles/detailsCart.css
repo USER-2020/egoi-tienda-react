@@ -365,7 +365,7 @@
     margin-top: 10px;
     margin-left: 23px;
 }
-input[placeholder="Nombre de contacto"]::placeholder{
+input[placeholder="Nombre de contacto"]::placeholder, input[placeholder="Apellido del contacto"]::placeholder{
     background-image: var(--placeholder-icon-nombre);
 }
 input[placeholder="Celular"]::placeholder{
@@ -375,9 +375,11 @@ input[placeholder="Direccion"]::placeholder{
     background-image: var(--placeholder-icon-map);
 }
 
-input[placeholder="Pais"]::placeholder, input[placeholder="Ciudad"]::placeholder, input[placeholder="Departamento"]::placeholder{
+input[placeholder="Pais"]::placeholder, input[placeholder="Ciudad"]::placeholder, input[placeholder="Departamento"]::placeholder, input[placeholder="Barrio"]::placeholder{
     background-image: var(--placeholder-icon-map);
 }
+
+
 
 input[type="checkbox"]{
     background-color:#dbdbdb;
