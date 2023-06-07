@@ -220,7 +220,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
                                     />
 
                                 </FormGroup>
-
+                                {/* Apelelido */}
                                 <FormGroup controlId="formBasicName">
                                     <Input addon={true}
                                         name="contactPersonApellido"
