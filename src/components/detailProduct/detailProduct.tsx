@@ -69,7 +69,7 @@ function DetailProduct() {
     //     })
     // }
 
-  
+
 
     const addToCart = () => {
         if (currenUser) {
@@ -167,21 +167,36 @@ function DetailProduct() {
             .catch((err) => console.log(err));
     }
 
+    // window.addEventListener("scroll", function () {
+    //     var scrollModal = document.getElementById("scrollModalAddToCart");
+    //     var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+    //     if (scrollModal !== null) {
+    //         if (scrollPosition > 200) {
+    //             if (scrollModal.style) {
+    //                 scrollModal.style.display = "block";
+    //             }
+    //         } else {
+    //             if (scrollModal.style) {
+    //                 scrollModal.style.display = "none";
+    //             }
+    //         }
+    //     }
+    // });
+    var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
     window.addEventListener("scroll", function () {
+        var currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
         var scrollModal = document.getElementById("scrollModalAddToCart");
-        var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
         if (scrollModal !== null) {
-            if (scrollPosition > 200) {
-                if (scrollModal.style) {
-                    scrollModal.style.display = "block";
-                }
+            if (currentScrollPos > prevScrollPos) {
+                scrollModal.style.display = "block";
             } else {
-                if (scrollModal.style) {
-                    scrollModal.style.display = "none";
-                }
+                scrollModal.style.display = "none";
             }
         }
+
+        prevScrollPos = currentScrollPos;
     });
 
     const handleIncrement = () => {
@@ -232,10 +247,10 @@ function DetailProduct() {
                                 <img src={start} alt="" />
                                 <img src={start} alt="" />
                             </div>
-                       
+
                         </div>
                     </div>
-                    
+
 
                     {detailProducts && detailProducts.images && detailProducts.images.length > 0 && (
 
@@ -261,8 +276,8 @@ function DetailProduct() {
                 <div className="containerDer">
                     <div className="containerResponsiveNameProduct">
                         <div className="containerNameAndStarts">
-                            
-                            
+
+
                             <div className="precio">
                                 <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString()}</h5>
 
@@ -316,7 +331,7 @@ function DetailProduct() {
                                 <a href="#" key={index}>
 
                                     {colors.type}
-                                    
+
 
                                 </a>
                             ))}
@@ -329,24 +344,24 @@ function DetailProduct() {
                     <div className="containerResponsiveStockAndQuantity">
                         <h4>Stock Disponible</h4>
                         <div className="quantity">
-                                <h4>Cantidad: </h4>
-                                {quantity >= 2 && (
+                            <h4>Cantidad: </h4>
+                            {quantity >= 2 && (
 
-                                    <button className='btnIzq' onClick={handleDecrement}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
-                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                                        </svg>
-                                    </button>
-                                )}
-                                <input type="number"
-                                    value={quantity}
-                                    onChange={handleQuantity} />
-                                <button className='btnDer' onClick={handleIncrement}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                <button className='btnIzq' onClick={handleDecrement}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                     </svg>
                                 </button>
-                            </div>
+                            )}
+                            <input type="number"
+                                value={quantity}
+                                onChange={handleQuantity} />
+                            <button className='btnDer' onClick={handleIncrement}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <div className="containerCharacteristicTop">
                         <div className='characteristic'>10 Reseñas</div>
@@ -367,11 +382,11 @@ function DetailProduct() {
                             <a href="#" key={index}>
 
                                 {colors.type}
-                               
+
 
                             </a>
                         ))}
-                        
+
                     </div>
                     <div className="cant">
                         <p>Cantidad</p>
