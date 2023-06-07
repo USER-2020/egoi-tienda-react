@@ -46,9 +46,11 @@ function AddressCart() {
 
   // Modales de metodos de pagos 
   const [modalTarjetaDebito, setModalTarjetaDebito] = useState(false);
+  const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
 
   const [deptos, setDeptos] = useState([]);
   const [banks, setBanks] = useState([]);
+
 
   const handleLinkClick = (link) => {
     setSelectedLink(link);
@@ -70,6 +72,8 @@ function AddressCart() {
     setActiveStep(step);
     setValueProgressBar(stepProgress);
   };
+
+
 
   const getAllProductsByCart = () => {
     if (token) {
@@ -159,22 +163,7 @@ function AddressCart() {
     buttonsStyling: false
   })
 
-  // window.addEventListener("scroll", function() {
-  //   var scrollModal = document.getElementById("scrollModalCheckout");
-  //   var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-  //   if (scrollModal !== null) {
-  //       if (scrollPosition > 200) {
-  //         if (scrollModal.style) {
-  //           scrollModal.style.display = "block";
-  //         }
-  //       } else {
-  //         if (scrollModal.style) {
-  //           scrollModal.style.display = "none";
-  //         }
-  //       }
-  //     }
-  // });
 
   var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
   window.addEventListener("scroll", function () {
@@ -192,8 +181,31 @@ function AddressCart() {
     prevScrollPos = currentScrollPos;
   });
 
+  const openAddressCheckoutModal = () => {
+    setModalAddressCheckout(true);
+    setIsScrollModalEnabled(false);
+  };
 
+  const closeAddressCheckoutModal = () => {
+    setModalAddressCheckout(false);
+    setIsScrollModalEnabled(true);
+  };
 
+  // const openOtherModal = () => {
+  //   const scrollModalCheckout = document.getElementById("scrollModalCheckout");
+  //   if (scrollModalCheckout !== null) {
+  //     scrollModalCheckout.style.display = "none";
+  //   }
+  //   setModalAddressCheckout(true);
+  // };
+
+  // const closeOtherModal = () => {
+  //   const scrollModalCheckout = document.getElementById("scrollModalCheckout");
+  //   if (scrollModalCheckout !== null) {
+  //     scrollModalCheckout.style.display = "block";
+  //   }
+  //   setModalAddressCheckout(false);
+  // };
 
   const updateBtn = (addrId) => {
     if (token) {
@@ -798,25 +810,29 @@ function AddressCart() {
 
 
         </div>
-        <div id="scrollModalCheckout" className="scroll-modal">
-          <div className="scroll-modal-content">
-            {/* <!-- Contenido del modal --> */}
-            <div className="containerInfoPedido">
-              <p>Tu pedido tardará de 3 a 4 días hábiles en llegar a tu domicilio</p>
-            </div>
+        {isScrollModalEnabled && (
+          <div id="scrollModalCheckout" className="scroll-modal">
+            <div className="scroll-modal-content">
+              {/* Contenido del modal */}
+              <div className="containerInfoPedido">
+                <p>Tu pedido tardará de 3 a 4 días hábiles en llegar a tu domicilio</p>
+              </div>
 
-            <div className="containerToPayResponsive">
-              <a href="#">Finalizar compra</a>
+              <div className="containerToPayResponsive">
+                <a href="#">Finalizar compra</a>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
 
       </div>
       <Modal
         className="modal-dialog-centered modal-lg"
-        toggle={() => setModalAddressCheckout(false)}
+        toggle={() => closeAddressCheckoutModal()}
         isOpen={modalAddressCheckout}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <AdressCheckout closeModalAddress={closeModalAddress} deptos={deptos}
