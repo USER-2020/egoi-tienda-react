@@ -539,20 +539,22 @@ input[type="checkbox"]:checked {
     .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant{
         display: flex;
         flex-direction: row;
-        width: 120px;
+        width: 150px;
         background-color: #A2A1A729;
-        padding: 5px;
         border-radius: 32px;
         margin-bottom: 10px;
+        padding: 10px;
+        justify-content: space-around;
     }
     .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant p{
         margin: 0;
+        margin-right: 0;
     }
 
     .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant input{
-        width: 20px;
+        
         border: none;
-        margin-left: 5px;
+        margin-left: 0px;
     }
 
     /* modal de compra */
