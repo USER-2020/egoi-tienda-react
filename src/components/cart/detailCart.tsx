@@ -23,6 +23,8 @@ function DetailCart() {
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [productsCart, setProductsCart] = useState([]);
+  const [costoEnvio, setCostoEnvio]= useState(0);
+  const [totalAPagar , setTotalAPagar] = useState("");
 
   const { id, slug } = useParams();
 
@@ -160,8 +162,9 @@ function DetailCart() {
     return total;
   };
 
+  
 
-  const subtotal = sumSubTotal(productsCart).toLocaleString();
+  const subtotal = sumSubTotal(productsCart);
 
   const impuesto = '0';
 
@@ -169,10 +172,22 @@ function DetailCart() {
 
   const descuento = '0';
 
+  const costoDeENvio = () => {
+    // console.log(subtotal);
+    if (subtotal && subtotal<= 79900) {
+      console.log(subtotal);
+      const costodelEnvio = 9900;
+      setCostoEnvio(costodelEnvio);
+      console.log(costoEnvio);
+      
+    }
+  }
+
   const totalPagar = () => {
 
-    const precioTotalaPagar = subtotal;
+    const precioTotalaPagar = subtotal + costoEnvio;
     return precioTotalaPagar;
+
   }
 
   const totalaPagar = totalPagar();
@@ -188,8 +203,11 @@ function DetailCart() {
       setModalViewLogin(true);
     }
 
+    costoDeENvio();
+    console.log(costoEnvio);
+    
 
-  }, [token]);
+  }, [token, subtotal]);
 
   return (
     <>
@@ -286,7 +304,7 @@ function DetailCart() {
             <Card>
               <div className="subtotal">
                 <p>Subtotal</p>
-                <p>${subtotal}</p>
+                <p>${subtotal.toLocaleString()}</p>
               </div>
               <div className="impuesto">
                 <p>Impuesto</p>
@@ -294,7 +312,7 @@ function DetailCart() {
               </div>
               <div className="envio">
                 <p>Envio</p>
-                <p>$0</p>
+                <p>${costoEnvio.toLocaleString()}</p>
               </div>
               <div className="descuento">
                 <p>Descuento del producto</p>
@@ -349,7 +367,7 @@ function DetailCart() {
               </div>
             </Card>
             <div className="toPay">
-              <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}>
+              <Link to={`/detailCart/address/${subtotal}/${costoEnvio}/${totalaPagar}`}>
                 <a href="#" >Ir a pagar</a>
               </Link>
             </div>
@@ -376,7 +394,7 @@ function DetailCart() {
               {/* </Link> */}
             </div>
             <div className="awaitShopping">
-              <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}>
+              <Link to={`/detailCart/address/${subtotal}/${costoEnvio}/${totalaPagar}`}>
                 <a href="#">Continuar compra</a>
               </Link>
             </div>

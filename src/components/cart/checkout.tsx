@@ -49,14 +49,15 @@ function AddressCart() {
   const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
 
   const [deptos, setDeptos] = useState([]);
-  const [banks, setBanks] = useState([]);
 
+  
+  
 
   const handleLinkClick = (link) => {
     setSelectedLink(link);
   };
 
-  const { subtotal, totalaPagar } = useParams();
+  const { subtotal, total, costoEnvio } = useParams();
 
   const currenUser = getCurrentUser();
 
@@ -261,6 +262,8 @@ function AddressCart() {
     }
   }
 
+  
+
 
 
   useEffect(() => {
@@ -269,13 +272,16 @@ function AddressCart() {
       getAllProductsByCart();
       getAllAddress();
       getAllDeptos();
+      
     } else {
       // history.push(`/detailsProduct/${id}/${slug}`);
       history.goBack();
       setModalViewLogin(true);
     }
+     ;
+    console.log(total);
     handleStepClick(activeStep, valueProgressBar);
-  }, [activeStep, token])
+  }, [activeStep, token]);
 
   return (
     <>
@@ -494,7 +500,7 @@ function AddressCart() {
             <Card>
               <div className="subtotal">
                 <p>Subtotal</p>
-                <p>${subtotal}</p>
+                <p>${subtotal.toLocaleString()}</p>
               </div>
               <div className="impuesto">
                 <p>Impuesto</p>
@@ -502,7 +508,7 @@ function AddressCart() {
               </div>
               <div className="envio">
                 <p>Envio</p>
-                <p>$0</p>
+                <p>${costoEnvio.toLocaleString()}</p>
               </div>
               <div className="descuento">
                 <p>Descuento del producto</p>
@@ -524,7 +530,7 @@ function AddressCart() {
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
-                <h5><strong>${subtotal}</strong></h5>
+                <h5><strong>${total.toLocaleString()}</strong></h5>
               </div>
               <div className="capsulas">
                 <div className="cut">
@@ -628,7 +634,7 @@ function AddressCart() {
             </span>
             <span className="costoEnvio">
               <p className="def">Costo de envío</p>
-              <p className="precio">$ 0</p>
+              <p className="precio">$ {costoEnvio}</p>
             </span>
             <span className="descuento">
               <p className="def">Descuento</p>
@@ -644,7 +650,7 @@ function AddressCart() {
             </span>
             <div className="containertotalAPagarResponsive">
               <p>Total a pagar</p>
-              <p>$ {subtotal}</p>
+              <p>$ {total.toLocaleString()}</p>
             </div>
             <p className='title' style={{ marginTop: '30px' }}>Método de Pago
             </p>

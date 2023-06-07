@@ -557,6 +557,7 @@ input[type="checkbox"]:checked {
         
         border: none;
         margin-left: 0px;
+        width: 20px;
     }
 
     /* modal de compra */
