@@ -17,12 +17,15 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
 
     const [selectedLink, setSelectedLink] = useState('home');
     const [contactPersonName, setContactPersonName] = useState("");
+    const [contactPersonLastName, setContactPersonLastName] = useState("");
+    const [contactPersonFullName, setContactPersonFullName] = useState("");
+
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
     const [barrio, setBarrio] = useState("");
     const [phone, setphone] = useState("");
     const [phone2, setphone2] = useState("");
-    const [country, setCountry] = useState("");
+    const [country, setCountry] = useState("Colombia");
     const [latitude, setLatitude] = useState("1234");
     const [longitude, setLongitude] = useState("4321");
     const [localDescription, setLocalDescription] = useState("");
@@ -50,12 +53,12 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
         setSelectedZip(valorSeleccionadoZip);
         console.log(valorSeleccionadoZip);
 
-        const deptoSeleccionado = deptos.find((depto)=> depto.id_departamento === parseInt(valorSeleccionadoZip));
-        
+        const deptoSeleccionado = deptos.find((depto) => depto.id_departamento === parseInt(valorSeleccionadoZip));
+
         console.log(deptoSeleccionado);
-        if(deptoSeleccionado){
+        if (deptoSeleccionado) {
             setSelectedDepto(deptoSeleccionado.departamento);
-            
+
         }
         // return valorSeleccionado;
         // Realizar otras acciones con el valor seleccionado
@@ -66,12 +69,12 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
         setSelectedCity(valorSeleccionadoCity);
         console.log(valorSeleccionadoCity);
 
-        const citySeleccionada = city.find((ciudad)=> ciudad.id === parseInt(valorSeleccionadoCity));
-        
+        const citySeleccionada = city.find((ciudad) => ciudad.id === parseInt(valorSeleccionadoCity));
+
         console.log(citySeleccionada);
-        if(citySeleccionada){
+        if (citySeleccionada) {
             setSelectedCiudad(citySeleccionada.nombre);
-            
+
         }
         // return valorSeleccionadoTalla;
         // Realizar otras acciones con el valor seleccionado
@@ -106,7 +109,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
 
         const data = {
             address_type: selectedLink,
-            contact_person_name: contactPersonName,
+            contact_person_name: contactPersonFullName,
             address: address,
             country: country,
             zip: selectedDepto,
@@ -115,7 +118,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
             phone_2: phone2,
             latitude: latitude,
             longitude: longitude,
-            barrio:barrio,
+            barrio: barrio,
             local_description: localDescription,
             is_billing: 'ppp'
         };
@@ -123,18 +126,25 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
     }
 
     useEffect(() => {
-        if (selectedZip ) {
+        if (selectedZip) {
             allCitysByIdDepto(selectedZip, token)
                 .then((res) => {
                     console.log(res.data);
                     setCity(res.data);
                 })
         }
-        if(selectedDepto || selectedCiudad){
+        if (selectedDepto || selectedCiudad) {
             console.log(selectedDepto);
             console.log(selectedCiudad);
         }
-    }, [selectedZip, token, selectedDepto])
+
+        const fullName = contactPersonName + " " + contactPersonLastName;
+        setContactPersonFullName(fullName);
+        
+        if(contactPersonFullName){
+            console.log(contactPersonFullName);
+        }
+    }, [selectedZip, token, selectedDepto,contactPersonName, contactPersonLastName, contactPersonFullName])
 
     return (
         <>
@@ -211,6 +221,20 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
 
                                 </FormGroup>
 
+                                <FormGroup controlId="formBasicName">
+                                    <Input addon={true}
+                                        name="contactPersonApellido"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="Apellido del contacto"
+                                        value={contactPersonLastName}
+                                        onChange={(event) => setContactPersonLastName(event.target.value)}
+                                    />
+
+                                </FormGroup>
+
                                 {/*Direccion*/}
                                 <FormGroup controlId="formBasicDireccion">
                                     <Input addon={true}
@@ -278,9 +302,9 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
 
 
                                 </FormGroup>
-                                
+
                                 {/* Como llegar o descripcion  y barrio */}
-                                <FormGroup controlId="formBasicDescripcionandBarrio" style={{display:'flex', flexDirection:'row', gap:'10px'}}>
+                                <FormGroup controlId="formBasicDescripcionandBarrio" >
                                     <Input addon={true}
                                         name="barrio"
                                         classNanme="form-control"
@@ -292,17 +316,22 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
                                         onChange={(event) => setBarrio(event.target.value)}
                                     />
 
+
+
+                                </FormGroup>
+
+                                <FormGroup>
                                     <Input addon={true}
+                                        type="textarea"
                                         name="local_description"
                                         classNanme="form-control"
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        placeholder="Como llegar"
+                                        placeholder="¿Cómo llegar?"
                                         value={localDescription}
                                         onChange={(event) => setLocalDescription(event.target.value)}
                                     />
-
                                 </FormGroup>
 
                                 <FormGroup controlId="formBasicCellphone1">
