@@ -4,7 +4,8 @@ import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
 import images from 'react-payment-inputs/images';
 import { css } from 'styled-components';
 import { getCurrentUser } from '../../../helpers/Utils';
-import { allBanks } from '../../../services/bank';
+import { typePayment, allBanksById } from '../../../services/metodosDePago';
+
 
 function TarjetaDebitoModal() {
 
@@ -18,9 +19,9 @@ function TarjetaDebitoModal() {
     const [cardCuotes, setCardCuotes] = useState("1");
     const [identificationType, setIdentificationType] = useState("");
     const [identificationNumber, setIdentificationNumber] = useState("");
-    const [selectedBank, setSelectedBank] = useState();
     const [valueBank, setValueBank] = useState();
-    const [banks, setBanks]=useState([]);
+    const [banks, setBanks] = useState([]);
+    const [banksById, setBanksById] = useState([]);
     const {
         wrapperProps,
         getCardImageProps,
@@ -36,9 +37,7 @@ function TarjetaDebitoModal() {
         const valorSeleccionadoTypeCard = e.target.value;
         console.log(valorSeleccionadoTypeCard);
         setSelectTypeCard(valorSeleccionadoTypeCard);
-        const nombreTipoTarjeta = typeCards[valorSeleccionadoTypeCard];
-        setTypeCard(nombreTipoTarjeta);
-        console.log(nombreTipoTarjeta);
+
         // return valorSeleccionadoTalla;
         // Realizar otras acciones con el valor seleccionado
     };
@@ -47,13 +46,12 @@ function TarjetaDebitoModal() {
         const valorSeleccionadoBanco = e.target.value;
         setValueBank(valorSeleccionadoBanco);
         //Obtener el objeto del banco seleccionado utilizando el valor seleccionado
-        const bancoSeleccionado = banks.find((banco) => banco.financial_institution_code === valorSeleccionadoBanco);
-        // console.log(bancoSeleccionado);
-        if (bancoSeleccionado) {
-            setSelectedBank(bancoSeleccionado.financial_institution_name);
-            // Realizar acciones con el nombre del banco seleccionado
-            // console.log(bancoSeleccionado.financial_institution_name);
-        }
+
+    }
+
+    const handleSelectChangeDI = (e) => {
+        const valorSeleccionadoDI = e.target.value;
+        
     }
 
     const handleChangeExpiryDate = (e) => {
@@ -63,33 +61,43 @@ function TarjetaDebitoModal() {
         setCardAno(year);
     };
 
-    const getAllBanks = () =>{
-        if(token){
-            allBanks(token)
-            .then((res)=>{
-                // console.log(res.data.data);
-                setBanks(res.data.data);
-                
+    const banksByIdTypePayments = () => {
+        if(selectTypeCard){
+            allBanksById(selectTypeCard, token)
+            .then((res) => {
+                console.log(res.data);
+                setBanksById(res.data);
             })
-            .catch((error) => {
-                console.error("Error al obtener los bancos:", error);
-            });
+            .catch((err)=>console.log(err));
         }
     }
-  
+
+    const allPayments = () => {
+        typePayment(token)
+            .then((res) => {
+                console.log("estos son los tipos de pago con tarjeta", res.data);
+                setBanks(res.data);
+            })
+            .catch((err) => console.log("Error al obtener los tipos de tarjeta", err));
+    }
+
 
     const typeCards = {
-        "1": "Tarjeta debito",
-        "2": "Tarjeta credito"
+        "1": "C.C",
+        "2": "NIT"
     }
 
-   
-    useEffect(()=>{
-        if(token || selectedBank){
-            getAllBanks();
-            console.log(selectedBank);
+
+    useEffect(() => {
+        if (token || selectTypeCard || valueBank) {
+
+            banksByIdTypePayments();
+            allPayments();
+            console.log(selectTypeCard);
+            console.log(valueBank);
+            
         }
-    },[selectedBank]);
+    }, [selectTypeCard, valueBank]);
 
     return (
         <>
@@ -107,7 +115,29 @@ function TarjetaDebitoModal() {
                         </div>
                         <Card style={{ border: 'none' }}>
                             <Form>
-                               
+
+                                <FormGroup>
+                                    <Input addon={true}
+                                        name="typeIdentification"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        value={selectTypeCard}
+                                        type='select'
+                                        onChange={handleSelectChangeTypeCard}
+                                    >
+                                        <option value="">Tipo de tarjeta</option>
+                                        {banks.map((banco, index) => {
+                                            if (banco.name !== "Efecty" && banco.name !== "PSE") {
+                                                return <option value={banco.id}>{banco.name}</option>;
+                                            }
+                                            return null
+                                        })}
+
+                                    </Input>
+                                </FormGroup>
+
                                 <FormGroup >
 
 
@@ -162,8 +192,8 @@ function TarjetaDebitoModal() {
                                         onChange={handleSelectChangeBank}
                                     >
                                         <option value="">Bancos</option>
-                                        {banks && banks.map((banco)=>(
-                                            <option value={banco.financial_institution_code} key={banco.id}>{banco.financial_institution_name}</option>
+                                        {banksById && banksById.map((banco) => (
+                                            <option value={banco.id} key={banco.id}>{banco.name}</option>
                                         ))}
 
                                     </Input>

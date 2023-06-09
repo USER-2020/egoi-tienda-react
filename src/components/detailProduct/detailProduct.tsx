@@ -42,6 +42,11 @@ function DetailProduct() {
     const [changeFormRegister, setChangeFormRegister] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
+    const [productsCart, setProductsCart] = useState([]);
+    // const [costoEnvio, setCostoEnvio] = useState(0);
+    const [totalAPagar, setTotalAPagar] = useState(0);
+    const [precioProduct, setPrecioProduct] = useState(0);
+
 
     /* CArousel */
     const [activeIndex, setActiveIndex] = useState(0);
@@ -55,21 +60,26 @@ function DetailProduct() {
 
     const history = useHistory();
 
+    const token = currenUser.token;
 
 
 
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
 
 
+    const getAllProductsByCart = () => {
+        if (token) {
+            allProductsCart(token)
+                .then((res) => {
+                    console.log(res);
+                    setProductsCart(res.data);
+                    console.log("traer todos los producstos del carrito", productsCart);
 
-    // const addProductsToCart = () =>{
-    //     addProductsCart(id, quantity)
-    //     .then((res) => {
-    //         setProductsCart(res.data);
-    //     })
-    // }
+                })
+                .catch((err) => console.log(err));
+        }
 
-
+    }
 
     const addToCart = () => {
         if (currenUser) {
@@ -87,16 +97,53 @@ function DetailProduct() {
             setModalViewLogin(true);
 
         }
+
     }
+
+
+    const descuento = "$0";
+
+
+
+
 
     const buyNow = () => {
         if (currenUser) {
-            history.push(`/detailCart/address`);
+            addProductsCart(id, quantity, currenUser.token)
+                .then((res) => {
+                    console.log("Producto agregado", res.data);
+
+                })
+                .catch((err) => console.log(err));
+            const buyNowProduct = detailProducts.unit_price * quantity;
+            setPrecioProduct(buyNowProduct);
+            let costoEnvio = 0;
+            const costoDeEnvio = ()=>{
+                if(buyNowProduct <= 79900){
+                    costoEnvio = 9900;
+                    
+                }else{
+                    costoEnvio = 0;
+                }
+            }
+            costoDeEnvio();
+            const totalAPagar = buyNowProduct + costoEnvio;
+            setTotalAPagar(totalAPagar);
+            console.log("Este es el costo de envio", costoEnvio);
+            if (totalAPagar) {
+                console.log("total a pagar ahora", totalAPagar);
+            } else {
+
+            }
+            history.push(`/detailCart/address/${buyNowProduct}/${costoEnvio}/$${totalAPagar}/${descuento}`);
+
         }
         else {
             setModalViewLogin(true);
         }
     }
+
+    
 
     const closeModalRegistro = () => {
         setModalViewRegistro(false);
@@ -167,22 +214,7 @@ function DetailProduct() {
             .catch((err) => console.log(err));
     }
 
-    // window.addEventListener("scroll", function () {
-    //     var scrollModal = document.getElementById("scrollModalAddToCart");
-    //     var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-    //     if (scrollModal !== null) {
-    //         if (scrollPosition > 200) {
-    //             if (scrollModal.style) {
-    //                 scrollModal.style.display = "block";
-    //             }
-    //         } else {
-    //             if (scrollModal.style) {
-    //                 scrollModal.style.display = "none";
-    //             }
-    //         }
-    //     }
-    // });
     var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
     window.addEventListener("scroll", function () {
         var currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
@@ -224,10 +256,17 @@ function DetailProduct() {
         if (currenUser) {
             setIsLoggedIn(true);
 
+
         } else {
             setIsLoggedIn(false);
 
         }
+
+        console.log(precioProduct);
+
+
+
+
         // history.push(history.location.pathname);
     }, [currenUser])
 
@@ -599,13 +638,22 @@ function DetailProduct() {
             <div id="scrollModalAddToCart" className="scroll-modal">
                 <div className="scroll-modal-content">
                     {/* <!-- Contenido del modal --> */}
-                    <div className="carrito">
+                    {/* <div className="carrito">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" className="bi bi-cart3 svgCart" viewBox="0 0 16 16">
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                         </svg>
-                    </div>
+                    </div> */}
                     <div className="anadiralcarrito">
-                        <a href="#" onClick={addToCart}>Añadir al carrito</a>
+
+                        <a href="#" onClick={addToCart}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" className="bi bi-cart3 svgCart" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </svg>
+                            Añadir al carrito
+                        </a>
+                    </div>
+                    <div className="buyNowResponsive">
+                        <a href="#" onClick={buyNow}>Comprar ahora</a>
                     </div>
 
                 </div>
