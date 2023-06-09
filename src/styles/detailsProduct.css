@@ -703,28 +703,31 @@ la imagen seleccionda */
         display: none;
         z-index: 9999;
         width: 100vw;
-        height: 100px;
+        height: 200px;
       }
       
       .scroll-modal-content {
         /* Estilos para el contenido del modal */
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
+        gap: 24px;
         padding: 24px;
         align-items: center;
       }
 
       .scroll-modal-content .svgCart path{
-        fill: #FC5241;
+        fill: white;
       }
+
       .scroll-modal-content .anadiralcarrito {
         
         font-size: 16px;
         background-color: #FC5241;
-        width: 272px;
+        width: 100%;
         height: 48px;
         display: flex;
+        flex-direction: row;
         align-self: center;
         justify-content: center;
         align-items: center;
@@ -734,6 +737,34 @@ la imagen seleccionda */
       .scroll-modal-content .anadiralcarrito a{
         text-decoration: none;
         color: #F5F5F5;
+        width: 100%;
+        height: 48px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+
+      .scroll-modal-content .buyNowResponsive{
+        width: 100%;
+        font-size: 16px;
+        height: 48px;
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #FC5241;
+        border-radius: 32px;
+      }
+
+      .scroll-modal-content .buyNowResponsive a{
+        width: 100%;
+        height: 48px;
+        text-decoration: none;
+        color: #FC5241;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
       }
 
       .modal-dialog-centered {

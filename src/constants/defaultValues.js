@@ -6,7 +6,7 @@ export const UserRole = {
 export const adminRoot = '/app';
 export const searchPath = `${adminRoot}/#`;
 export const addCart = '/detailCart';
-export const checkout = '/detailCart/address/:subtotal/:costoEnvio/:total';
+export const checkout = '/detailCart/address/:subtotal/:costoEnvio/:total/:cuponDescuento';
 
 // export const currentUser = {
 //     id: 1,
@@ -19,3 +19,4 @@ export const isAuthGuardActive = true;
 
 
 export const urlBase = 'https://egoi.xyz/api/v1';
+export const urlBase2= 'https://egoi.xyz/api/v2';

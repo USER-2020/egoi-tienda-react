@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { checkout } from '../../constants/defaultValues';
 import AddressCart from './checkout.tsx';
 import start from '../../assets/Star.png';
+import { aplyCupon } from '../../services/cupon';
 function DetailCart() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,8 +24,12 @@ function DetailCart() {
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [productsCart, setProductsCart] = useState([]);
-  const [costoEnvio, setCostoEnvio]= useState(0);
-  const [totalAPagar , setTotalAPagar] = useState("");
+  const [costoEnvio, setCostoEnvio] = useState(0);
+  const [totalAPagar, setTotalAPagar] = useState("");
+
+  const [cupon, setCupon] = useState("");
+  const [discountCoupon, setDiscountCoupon] = useState("");
+  
 
   const { id, slug } = useParams();
 
@@ -120,22 +125,7 @@ function DetailCart() {
       .catch((err) => console.log(err));
   }
 
-  // window.addEventListener("scroll", function() {
-  //   var scrollModal = document.getElementById("scrollModalToPay");
-  //   var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-  //   if (scrollModal !== null) {
-  //       if (scrollPosition > 200) {
-  //         if (scrollModal.style) {
-  //           scrollModal.style.display = "block";
-  //         }
-  //       } else {
-  //         if (scrollModal.style) {
-  //           scrollModal.style.display = "none";
-  //         }
-  //       }
-  //     }
-  // });
   var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
   window.addEventListener("scroll", function () {
     var currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
@@ -162,7 +152,7 @@ function DetailCart() {
     return total;
   };
 
-  
+
 
   const subtotal = sumSubTotal(productsCart);
 
@@ -170,30 +160,49 @@ function DetailCart() {
 
   const envio = '0';
 
-  const descuento = '0';
+  const descuento = '$0';
 
   const costoDeENvio = () => {
     // console.log(subtotal);
-    if (subtotal && subtotal<= 79900) {
+    if (subtotal && subtotal <= 79900) {
       console.log(subtotal);
       const costodelEnvio = 9900;
       setCostoEnvio(costodelEnvio);
       console.log(costoEnvio);
-      
+
+    } else {
+      setCostoEnvio(0);
     }
   }
 
   const totalPagar = () => {
 
     const precioTotalaPagar = subtotal + costoEnvio;
-    return precioTotalaPagar;
+    return `$${precioTotalaPagar}`;
 
   }
 
   const totalaPagar = totalPagar();
 
+  const aplicarCupon = () => {
+    if (cupon && token) {
+      console.log(cupon);
+      aplyCupon(cupon, token)
+        .then((res) => {
+          console.log("Cupon aplicado ==>", res.data);
+          console.log("Total", res.data.total);
+          setDiscountCoupon(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    } else {
+      console.log("No se aplica el cupon ");
+    }
+  }
 
 
+  
   useEffect(() => {
     if (token) {
       getAllProductsByCart();
@@ -205,7 +214,7 @@ function DetailCart() {
 
     costoDeENvio();
     console.log(costoEnvio);
-    
+
 
   }, [token, subtotal]);
 
@@ -290,7 +299,7 @@ function DetailCart() {
                   $ {(products.price * products.quantity).toLocaleString()}
                 </div>
                 <div className="caracteristicaCostoEnvio">
-                  $0
+                  ${costoEnvio.toLocaleString()}
                 </div>
                 <a href="#" onClick={() => deleteOne(products.id)}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -315,8 +324,13 @@ function DetailCart() {
                 <p>${costoEnvio.toLocaleString()}</p>
               </div>
               <div className="descuento">
-                <p>Descuento del producto</p>
-                <p>$0</p>
+                <p>Descuento</p>
+                {discountCoupon ? (
+                  <p>{discountCoupon.discount}</p>
+
+                ) : (
+                  <p>$0</p>
+                )}
               </div>
               <div className="cupon">
 
@@ -327,20 +341,36 @@ function DetailCart() {
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M10.2378 5.38368C11.2254 4.47237 12.7741 4.47237 13.7617 5.38368C14.0598 5.65873 14.4774 5.79182 14.896 5.73689C16.2331 5.56147 17.5076 6.43085 17.7563 7.75667C17.8274 8.13581 18.0759 8.472 18.4433 8.6623C19.648 9.28626 20.1493 10.7333 19.5414 11.9481C19.3665 12.2976 19.3665 12.7028 19.5414 13.0523C20.1493 14.2671 19.648 15.7141 18.4433 16.3381C18.0759 16.5284 17.8274 16.8646 17.7563 17.2437C17.5076 18.5695 16.2331 19.4389 14.896 19.2635C14.4774 19.2086 14.0598 19.3417 13.7617 19.6167C12.7741 20.528 11.2254 20.528 10.2378 19.6167C9.93975 19.3417 9.52215 19.2086 9.10348 19.2635C7.76641 19.4389 6.49193 18.5695 6.24323 17.2437C6.17211 16.8646 5.92364 16.5284 5.55622 16.3381C4.3515 15.7141 3.85025 14.2671 4.45814 13.0523C4.63302 12.7028 4.63302 12.2976 4.45814 11.9481C3.85025 10.7333 4.3515 9.28626 5.55622 8.6623C5.92364 8.472 6.17211 8.13581 6.24323 7.75667C6.49193 6.43085 7.76641 5.56147 9.10348 5.73689C9.52215 5.79182 9.93976 5.65873 10.2378 5.38368ZM12.9479 6.26557C12.42 5.77841 11.5795 5.77841 11.0516 6.26557C10.4869 6.78668 9.71219 7.02704 8.94738 6.92669C8.20567 6.82938 7.54725 7.3137 7.42266 7.97791C7.28126 8.73173 6.79282 9.37323 6.10811 9.72786C5.46475 10.0611 5.2277 10.8044 5.53128 11.4111C5.87531 12.0986 5.87531 12.9018 5.53128 13.5893C5.2277 14.196 5.46475 14.9393 6.10811 15.2725C6.79282 15.6272 7.28126 16.2687 7.42266 17.0225C7.54725 17.6867 8.20567 18.171 8.94738 18.0737C9.71219 17.9734 10.4869 18.2137 11.0516 18.7348C11.5795 19.222 12.42 19.222 12.9479 18.7348C13.5126 18.2137 14.2873 17.9734 15.0521 18.0737C15.7938 18.171 16.4523 17.6867 16.5769 17.0225C16.7183 16.2687 17.2067 15.6272 17.8914 15.2725C18.5348 14.9393 18.7718 14.196 18.4682 13.5893C18.1242 12.9018 18.1242 12.0986 18.4682 11.4111C18.7718 10.8044 18.5348 10.0611 17.8914 9.72786C17.2067 9.37323 16.7183 8.73173 16.5769 7.97791L17.1666 7.86729L16.5769 7.97791C16.4523 7.3137 15.7938 6.82938 15.0521 6.92669C14.2873 7.02704 13.5126 6.78668 12.9479 6.26557ZM8.39976 10.1002C8.39976 9.43745 8.93701 8.9002 9.59976 8.9002C10.2625 8.9002 10.7998 9.43745 10.7998 10.1002C10.7998 10.7629 10.2625 11.3002 9.59976 11.3002C8.93701 11.3002 8.39976 10.7629 8.39976 10.1002ZM15.3983 9.07593C15.6327 9.31025 15.6327 9.69015 15.3983 9.92446L9.42402 15.8988C9.18971 16.1331 8.80981 16.1331 8.57549 15.8988C8.34118 15.6645 8.34118 15.2846 8.57549 15.0503L14.5498 9.07593C14.7841 8.84162 15.164 8.84162 15.3983 9.07593ZM13.1998 14.9002C13.1998 14.2375 13.737 13.7002 14.3998 13.7002C15.0625 13.7002 15.5998 14.2375 15.5998 14.9002C15.5998 15.5629 15.0625 16.1002 14.3998 16.1002C13.737 16.1002 13.1998 15.5629 13.1998 14.9002Z" fill="#171523" />
                     </svg>
                   </InputGroupText>
-                  <Input placeholder='Cupon Promocional' style={{ borderLeft: 'none', textAlign: 'left', paddingLeft: '0' }} />
+                  <Input placeholder='Cupon Promocional'
+                    style={{
+                      borderLeft: 'none',
+                      textAlign: 'left',
+                      paddingLeft: '0'
+                    }}
+                    value={cupon}
+                    onChange={(e) => setCupon(e.target.value)} />
                 </InputGroup>
-                <a href="#">Aplicar cupon</a>
+                <a href="#" onClick={() => aplicarCupon()}>Aplicar cupon</a>
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
-                <h5><strong>${totalaPagar}</strong></h5>
+                {discountCoupon ? (
+                  <h5><strong>{discountCoupon.total}</strong></h5>
+                ):(
+                  <h5><strong>{totalaPagar}</strong></h5>
+                )}
               </div>
               <div className="capsulas">
                 <div className="cut">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5738 6.63403C13.1555 6.60036 12.6195 6.5999 11.8575 6.5999H5.53365C5.20228 6.5999 4.93365 6.33126 4.93366 5.99989C4.93367 5.66852 5.2023 5.3999 5.53367 5.3999L11.8831 5.3999C12.6136 5.3999 13.1979 5.39989 13.6701 5.4379C14.1544 5.4769 14.5729 5.5588 14.9581 5.7522C15.5758 6.0623 16.0796 6.55796 16.3959 7.16963C16.5937 7.5522 16.6774 7.96782 16.7171 8.44703C16.7394 8.71606 16.7488 9.02184 16.7528 9.37049H17.3906C18.2149 9.37049 18.8697 9.37048 19.3978 9.413C19.9382 9.4565 20.3981 9.54742 20.8192 9.75885C21.5001 10.1007 22.0553 10.647 22.4038 11.3209C22.6199 11.7388 22.7127 12.1953 22.757 12.7297C22.8002 13.2511 22.8002 13.8972 22.8002 14.7086V15.6375C22.8002 15.8056 22.8002 15.9662 22.789 16.1018C22.7767 16.2499 22.748 16.4204 22.66 16.5906C22.5368 16.8288 22.3412 17.0207 22.1027 17.1405C21.933 17.2257 21.7633 17.2535 21.6149 17.2654C21.4785 17.2764 21.3164 17.2764 21.1453 17.2764L21.0251 17.2764C20.7695 18.0488 20.034 18.5999 19.178 18.5999C18.322 18.5999 17.5865 18.0487 17.3309 17.2764H9.94356C9.68799 18.0488 8.95248 18.5999 8.09648 18.5999C7.22063 18.5999 6.47092 18.0229 6.2324 17.2223C5.98721 17.21 5.79037 17.2042 5.53366 17.2042C5.20229 17.2042 4.93366 16.9356 4.93366 16.6042C4.93366 16.2729 5.20229 16.0042 5.53366 16.0042C5.80655 16.0042 6.02013 16.0104 6.26817 16.0226C6.53951 15.2784 7.26044 14.7528 8.09648 14.7528C8.95248 14.7528 9.68799 15.304 9.94356 16.0764H15.5557V10.2352C15.5557 9.4839 15.5553 8.95705 15.5212 8.54619C15.4877 8.1426 15.425 7.90448 15.33 7.72082C15.1312 7.33633 14.813 7.0221 14.4197 6.82463C14.2303 6.72952 13.9853 6.66716 13.5738 6.63403ZM16.7557 10.5705V16.0764H17.3309C17.5865 15.304 18.322 14.7528 19.178 14.7528C20.034 14.7528 20.7695 15.304 21.0251 16.0764H21.1256C21.3235 16.0764 21.4363 16.0759 21.5186 16.0693C21.547 16.067 21.5642 16.0644 21.5732 16.0628C21.5789 16.0588 21.5838 16.0542 21.5876 16.0493C21.5891 16.0404 21.5912 16.0255 21.5931 16.0026C21.5997 15.9228 21.6002 15.8129 21.6002 15.6175V14.7352C21.6002 13.8912 21.5997 13.2949 21.5611 12.8289C21.523 12.3701 21.4511 12.0911 21.3378 11.8721C21.1068 11.4253 20.7373 11.0605 20.2808 10.8313C20.0555 10.7181 19.769 10.6468 19.3015 10.6091C18.8272 10.5709 18.2207 10.5705 17.3646 10.5705H16.7557ZM2.71131 9.7499C2.71131 9.41853 2.97994 9.1499 3.31131 9.1499H7.08909C7.42046 9.1499 7.68909 9.41853 7.68909 9.7499C7.68909 10.0813 7.42046 10.3499 7.08909 10.3499H3.31131C2.97994 10.3499 2.71131 10.0813 2.71131 9.7499ZM1.2002 12.7499C1.2002 12.4185 1.46882 12.1499 1.8002 12.1499H7.84465C8.17602 12.1499 8.44465 12.4185 8.44465 12.7499C8.44465 13.0813 8.17602 13.3499 7.84465 13.3499H1.8002C1.46882 13.3499 1.2002 13.0813 1.2002 12.7499ZM8.09648 15.9528C7.68264 15.9528 7.36075 16.2775 7.3534 16.6624L7.35327 16.6764C7.35327 17.0676 7.67764 17.3999 8.09648 17.3999C8.51533 17.3999 8.83969 17.0676 8.83969 16.6764C8.83969 16.2851 8.51533 15.9528 8.09648 15.9528ZM19.178 15.9528C18.7591 15.9528 18.4348 16.2851 18.4348 16.6764C18.4348 17.0676 18.7591 17.3999 19.178 17.3999C19.5968 17.3999 19.9212 17.0676 19.9212 16.6764C19.9212 16.2851 19.5968 15.9528 19.178 15.9528Z" fill="#089705" />
                   </svg>
-                  <p>3 dias envio gratis</p>
+                  {subtotal >= 79900 ? (
+                    <p>3 días envío gratis</p>
+                  ) : (
+                    <p>3 dias envio</p>
+                  )}
+
                 </div>
                 <div className="cut">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -367,7 +397,7 @@ function DetailCart() {
               </div>
             </Card>
             <div className="toPay">
-              <Link to={`/detailCart/address/${subtotal}/${costoEnvio}/${totalaPagar}`}>
+            <Link to={`/detailCart/address/${subtotal}/${costoEnvio}/${discountCoupon ? discountCoupon.total : totalaPagar}/${discountCoupon ? discountCoupon.discount : descuento}`}>
                 <a href="#" >Ir a pagar</a>
               </Link>
             </div>
@@ -394,7 +424,7 @@ function DetailCart() {
               {/* </Link> */}
             </div>
             <div className="awaitShopping">
-              <Link to={`/detailCart/address/${subtotal}/${costoEnvio}/${totalaPagar}`}>
+              <Link to={`/detailCart/address/${subtotal}/${costoEnvio}/${discountCoupon ? discountCoupon.total : totalaPagar}/${discountCoupon ? discountCoupon.discount : descuento}`}>
                 <a href="#">Continuar compra</a>
               </Link>
             </div>
