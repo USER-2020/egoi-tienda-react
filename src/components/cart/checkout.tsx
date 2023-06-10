@@ -203,13 +203,17 @@ function AddressCart() {
   const updateBtn = (addrId) => {
     if (token) {
       swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: '¿Quieres eliminar o actualizar esta direccion?',
+        text: "Esto no es reversible",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Actualizar',
         cancelButtonText: 'Eliminar',
-        reverseButtons: true
+        reverseButtons: true,
+        didOpen: () => {
+          const confirmButton = document.querySelector('.swal2-confirm');
+          confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+        }
       }).then((result) => {
         if (result.isConfirmed) {
           setIdAddress(addrId);
@@ -299,7 +303,7 @@ function AddressCart() {
       getAllDeptos();
 
     } else {
-      // history.push(`/detailsProduct/${id}/${slug}`);
+      
       history.goBack();
       setModalViewLogin(true);
     }
