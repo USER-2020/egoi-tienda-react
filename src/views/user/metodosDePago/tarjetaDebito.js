@@ -9,7 +9,7 @@ import { typePayment, allBanksById } from '../../../services/metodosDePago';
 
 function TarjetaDebitoModal() {
 
-    const [typeCard, setTypeCard] = useState("");
+    // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [cardCvc, setCardCvc] = useState("");
@@ -51,6 +51,7 @@ function TarjetaDebitoModal() {
 
     const handleSelectChangeDI = (e) => {
         const valorSeleccionadoDI = e.target.value;
+        setIdentificationType(valorSeleccionadoDI);
         
     }
 
@@ -82,22 +83,22 @@ function TarjetaDebitoModal() {
     }
 
 
-    const typeCards = {
-        "1": "C.C",
-        "2": "NIT"
+    const typeDis = {
+        "C.C": "C.C",
+        "NIT": "NIT"
     }
 
 
     useEffect(() => {
-        if (token || selectTypeCard || valueBank) {
+        if (token || selectTypeCard || valueBank || identificationType) {
 
             banksByIdTypePayments();
             allPayments();
             console.log(selectTypeCard);
             console.log(valueBank);
-            
+            console.log(identificationType);
         }
-    }, [selectTypeCard, valueBank]);
+    }, [selectTypeCard, valueBank, identificationType]);
 
     return (
         <>
@@ -206,12 +207,12 @@ function TarjetaDebitoModal() {
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        value={selectTypeCard}
+                                        value={identificationType}
                                         type='select'
-                                        onChange={handleSelectChangeTypeCard}
+                                        onChange={handleSelectChangeDI}
                                     >
                                         <option value="">Tipo de documento</option>
-                                        {Object.entries(typeCards).map(([id, nombre]) => (
+                                        {Object.entries(typeDis).map(([id, nombre]) => (
                                             <option value={id}>{nombre}</option>
                                         ))}
 
