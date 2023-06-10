@@ -43,6 +43,7 @@ function AddressCart() {
   const [address, setAddress] = useState([]);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(null);
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [idAddress, setIdAddress] = useState();
 
   // Modales de metodos de pagos 
@@ -50,6 +51,7 @@ function AddressCart() {
   const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
 
   const [deptos, setDeptos] = useState([]);
+
 
   const [cupon, setCupon] = useState("");
   const [discountCoupon, setDiscountCoupon] = useState("");
@@ -144,9 +146,10 @@ function AddressCart() {
     }
   };
 
-  function checkboxChanged(index) {
+  const checkboxChange = (index, id) => {
     setSelectedAddressIndex(index);
-  }
+    setSelectedAddressId(id);
+  };
 
   const closeModalAddress = () => {
     setModalAddressCheckout(false);
@@ -259,10 +262,29 @@ function AddressCart() {
           console.log("Cupon aplicado ==>", res.data);
           console.log("Total", res.data.total);
           setDiscountCoupon(res.data);
+
+          // Validar si el cupón es inválido
+          if (res.data.messages && res.data.messages.includes('Invalid Coupon')) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Cupón inválido',
+              confirmButtonColor: '#dc3545',
+            });
+          } else {
+            // El cupón se aplicó correctamente
+            // Continuar con el flujo de la aplicación
+          }
         })
         .catch((err) => {
           console.log(err);
-        })
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error al aplicar el cupón. Por favor, inténtelo de nuevo.',
+            confirmButtonColor: '#dc3545',
+          });
+        });
     }
   }
 
@@ -288,7 +310,10 @@ function AddressCart() {
       console.log("Este es el cupon", cupon);
 
     }
-  }, [activeStep, token]);
+    if (selectedAddressId) {
+      console.log("Este es el id de la direccion", selectedAddressId);
+    }
+  }, [activeStep, token, selectedAddressId]);
 
   return (
     <>
@@ -352,7 +377,7 @@ function AddressCart() {
                           <div className="seleccion">
                             <Input type="checkbox" name="" id={addr.id}
                               checked={selectedAddressIndex === index}
-                              onChange={() => checkboxChanged(index)} />
+                              onChange={() => checkboxChange(index, addr.id)} />
                             <p>{addr.address_type === "home" ? "Hogar" : addr.address_type && addr.address_type === "permanent" ? "Trabajo" : addr.address_type && addr.address_type === "others" ? "Otro" : addr.address_type}</p>
                           </div>
                           <div className="contenido">
@@ -522,7 +547,7 @@ function AddressCart() {
               </div>
               <div className="descuento">
                 <p>Descuento</p>
-                {discountCoupon ? (
+                {discountCoupon && discountCoupon.total !== undefined ? (
                   <p>{discountCoupon.discount}</p>
 
                 ) : (
@@ -544,8 +569,8 @@ function AddressCart() {
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
-                {discountCoupon ? (
-                  <h5><strong>{discountCoupon.total.toLocaleString()}</strong></h5>
+                {discountCoupon && discountCoupon.total !== undefined ? (
+                  <h5><strong>{discountCoupon.total}</strong></h5>
                 ) : (
                   <h5><strong>{total}</strong></h5>
 
@@ -670,7 +695,7 @@ function AddressCart() {
               <p className="def">Cupón</p>
               {discountCoupon ? (
                 <p className="precio">
-                  {discountCoupon.discount.toLocaleString()}
+                  {discountCoupon.discount}
                 </p>
               ) : (<p className="precio">$ {cuponDescuento}</p>)}
             </span>
@@ -680,11 +705,11 @@ function AddressCart() {
             </span>
             <div className="containertotalAPagarResponsive">
               <p>Total a pagar</p>
-              {discountCoupon ? (
+              {discountCoupon && discountCoupon.total !== undefined ? (
                 <p>{discountCoupon.total}</p>
               ) : (
 
-                <p>{total.toLocaleString()}</p>
+                <p>{total}</p>
               )}
             </div>
             <p className='title' style={{ marginTop: '30px' }}>Método de Pago
@@ -839,7 +864,7 @@ function AddressCart() {
                         <div className="checkPaymentResponsive" >
                           <Input type='radio' style={{ width: '30px', height: '30px', margin: '0' }}
                             checked={selectedAddressIndex === index}
-                            onChange={() => checkboxChanged(index)} />
+                            onChange={() => checkboxChange(index, addr.id)} />
                         </div>
                       </div>
                     </li>
@@ -880,8 +905,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <AdressCheckout closeModalAddress={closeModalAddress} deptos={deptos}
-            refreshAddress={refreshAddress} />
+          <AdressCheckout closeModalAddress={closeModalAddress} deptos={deptos} refreshAddress={refreshAddress} />
         </ModalBody>
       </Modal>
 
@@ -889,6 +913,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-lg"
         toggle={() => setModalAddressUpdate(false)}
         isOpen={modalAddressUpdate}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <UpdateAddress closeModalUpdate={closeModalUpdate} deptos={deptos} refreshAddress={refreshAddress}
@@ -901,6 +927,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-lg"
         toggle={() => setModalTarjetaCredito(false)}
         isOpen={modalTarjetaCredito}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <TarjetaCreditoModal />
@@ -913,6 +941,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-lg"
         toggle={() => setModalTarjetaDebito(false)}
         isOpen={modalTarjetaDebito}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <TarjetaDebitoModal />
@@ -924,6 +954,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-lg"
         toggle={() => setModalEfecty(false)}
         isOpen={modalEfecty}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <EfectyModal totalAmount={subtotal} closeEfectyModal={closeModalEfecty} />
@@ -935,6 +967,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-lg"
         toggle={() => setModalPse(false)}
         isOpen={modalPse}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <PseModal />

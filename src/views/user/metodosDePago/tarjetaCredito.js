@@ -4,11 +4,11 @@ import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
 import images from 'react-payment-inputs/images';
 import { css } from 'styled-components';
 import { getCurrentUser } from '../../../helpers/Utils';
-import { allBanks } from '../../../services/bank';
+import { typePayment, allBanksById } from '../../../services/metodosDePago';
 
 function TarjetaCreditoModal() {
 
-    const [typeCard, setTypeCard] = useState("");
+    // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [cardCvc, setCardCvc] = useState("");
@@ -21,6 +21,7 @@ function TarjetaCreditoModal() {
     const [selectedBank, setSelectedBank] = useState();
     const [valueBank, setValueBank] = useState();
     const [banks, setBanks] = useState([]);
+    const [banksById, setBanksById] = useState([]);
     const {
         wrapperProps,
         getCardImageProps,
@@ -36,12 +37,23 @@ function TarjetaCreditoModal() {
         const valorSeleccionadoTypeCard = e.target.value;
         console.log(valorSeleccionadoTypeCard);
         setSelectTypeCard(valorSeleccionadoTypeCard);
-        const nombreTipoTarjeta = typeCards[valorSeleccionadoTypeCard];
-        setTypeCard(nombreTipoTarjeta);
-        console.log(nombreTipoTarjeta);
+
         // return valorSeleccionadoTalla;
         // Realizar otras acciones con el valor seleccionado
     };
+
+    const handleSelectChangeBank = (e) => {
+        const valorSeleccionadoBanco = e.target.value;
+        setValueBank(valorSeleccionadoBanco);
+        //Obtener el objeto del banco seleccionado utilizando el valor seleccionado
+
+    }
+
+    const handleSelectChangeDI = (e) => {
+        const valorSeleccionadoDI = e.target.value;
+        setIdentificationType(valorSeleccionadoDI);
+
+    }
 
     const handleChangeExpiryDate = (e) => {
         const value = e.target.value;
@@ -50,45 +62,44 @@ function TarjetaCreditoModal() {
         setCardAno(year);
     };
 
-    const handleSelectChangeBank = (e) => {
-        const valorSeleccionadoBanco = e.target.value;
-        setValueBank(valorSeleccionadoBanco);
-        //Obtener el objeto del banco seleccionado utilizando el valor seleccionado
-        const bancoSeleccionado = banks.find((banco) => banco.financial_institution_code === valorSeleccionadoBanco);
-        // console.log(bancoSeleccionado);
-        if (bancoSeleccionado) {
-            setSelectedBank(bancoSeleccionado.financial_institution_name);
-            // Realizar acciones con el nombre del banco seleccionado
-            // console.log(bancoSeleccionado.financial_institution_name);
+
+
+    const banksByIdTypePayments = () => {
+        if (selectTypeCard) {
+            allBanksById(selectTypeCard, token)
+                .then((res) => {
+                    console.log(res.data);
+                    setBanksById(res.data);
+                })
+                .catch((err) => console.log(err));
         }
     }
 
-    const getAllBanks = () =>{
-        if(token){
-            allBanks(token)
-            .then((res)=>{
-                // console.log(res.data.data);
-                setBanks(res.data.data);
-                
+    const allPayments = () => {
+        typePayment(token)
+            .then((res) => {
+                console.log("estos son los tipos de pago con tarjeta", res.data);
+                setBanks(res.data);
             })
-            .catch((error) => {
-                console.error("Error al obtener los bancos:", error);
-            });
-        }
-    };
-
-
-    const typeCards = {
-        "1": "Tarjeta debito",
-        "2": "Tarjeta credito"
+            .catch((err) => console.log("Error al obtener los tipos de tarjeta", err));
     }
 
-    useEffect(()=>{
-        if(token || selectedBank){
-            getAllBanks();
-            console.log(selectedBank);
+
+    const typeDis = {
+        "C.C": "C.C",
+        "NIT": "NIT"
+    }
+
+    useEffect(() => {
+        if (token || selectTypeCard || valueBank || identificationType) {
+
+            banksByIdTypePayments();
+            allPayments();
+            console.log(selectTypeCard);
+            console.log(valueBank);
+            console.log(identificationType);
         }
-    },[selectedBank]);
+    }, [selectTypeCard, valueBank, identificationType]);
 
     return (
         <>
@@ -106,6 +117,28 @@ function TarjetaCreditoModal() {
                         </div>
                         <Card style={{ border: 'none' }}>
                             <Form>
+
+                                <FormGroup>
+                                    <Input addon={true}
+                                        name="typeIdentification"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        value={selectTypeCard}
+                                        type='select'
+                                        onChange={handleSelectChangeTypeCard}
+                                    >
+                                        <option value="">Tipo de tarjeta</option>
+                                        {banks.map((banco, index) => {
+                                            if (banco.name !== "Efecty" && banco.name !== "PSE") {
+                                                return <option value={banco.id}>{banco.name}</option>;
+                                            }
+                                            return null
+                                        })}
+
+                                    </Input>
+                                </FormGroup>
 
                                 <FormGroup >
 
@@ -167,7 +200,7 @@ function TarjetaCreditoModal() {
                                 </FormGroup>
 
                                 <FormGroup>
-                                <Input addon={true}
+                                    <Input addon={true}
                                         name="bank"
                                         classNanme="form-control"
                                         style={{
@@ -178,8 +211,8 @@ function TarjetaCreditoModal() {
                                         onChange={handleSelectChangeBank}
                                     >
                                         <option value="">Bancos</option>
-                                        {banks && banks.map((banco)=>(
-                                            <option value={banco.financial_institution_code} key={banco.id}>{banco.financial_institution_name}</option>
+                                        {banksById && banksById.map((banco) => (
+                                            <option value={banco.id} key={banco.id}>{banco.name}</option>
                                         ))}
 
                                     </Input>
@@ -192,12 +225,12 @@ function TarjetaCreditoModal() {
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        value={selectTypeCard}
+                                        value={identificationType}
                                         type='select'
-                                        onChange={handleSelectChangeTypeCard}
+                                        onChange={handleSelectChangeDI}
                                     >
                                         <option value="">Tipo de documento</option>
-                                        {Object.entries(typeCards).map(([id, nombre]) => (
+                                        {Object.entries(typeDis).map(([id, nombre]) => (
                                             <option value={id}>{nombre}</option>
                                         ))}
 

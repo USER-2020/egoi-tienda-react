@@ -29,7 +29,7 @@ function DetailCart() {
 
   const [cupon, setCupon] = useState("");
   const [discountCoupon, setDiscountCoupon] = useState("");
-  
+
 
   const { id, slug } = useParams();
 
@@ -192,17 +192,35 @@ function DetailCart() {
           console.log("Cupon aplicado ==>", res.data);
           console.log("Total", res.data.total);
           setDiscountCoupon(res.data);
+
+          // Validar si el cupón es inválido
+          if (res.data.messages && res.data.messages.includes('Invalid Coupon')) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Cupón inválido',
+              confirmButtonColor: '#dc3545',
+            });
+          } else {
+            // El cupón se aplicó correctamente
+            // Continuar con el flujo de la aplicación
+          }
         })
         .catch((err) => {
           console.log(err);
-        })
-    } else {
-      console.log("No se aplica el cupon ");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un error al aplicar el cupón. Por favor, inténtelo de nuevo.',
+            confirmButtonColor: '#dc3545',
+          });
+        });
     }
   }
 
 
-  
+
+
   useEffect(() => {
     if (token) {
       getAllProductsByCart();
@@ -214,9 +232,11 @@ function DetailCart() {
 
     costoDeENvio();
     console.log(costoEnvio);
+    console.log(discountCoupon.total);
+    console.log(discountCoupon.discount);
 
 
-  }, [token, subtotal]);
+  }, [token, subtotal, discountCoupon]);
 
   return (
     <>
@@ -325,7 +345,7 @@ function DetailCart() {
               </div>
               <div className="descuento">
                 <p>Descuento</p>
-                {discountCoupon ? (
+                {discountCoupon && discountCoupon.total !== undefined ? (
                   <p>{discountCoupon.discount}</p>
 
                 ) : (
@@ -354,9 +374,9 @@ function DetailCart() {
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
-                {discountCoupon ? (
+                {discountCoupon && discountCoupon.total !== undefined ? (
                   <h5><strong>{discountCoupon.total}</strong></h5>
-                ):(
+                ) : (
                   <h5><strong>{totalaPagar}</strong></h5>
                 )}
               </div>
@@ -397,7 +417,7 @@ function DetailCart() {
               </div>
             </Card>
             <div className="toPay">
-            <Link to={`/detailCart/address/${subtotal}/${costoEnvio}/${discountCoupon ? discountCoupon.total : totalaPagar}/${discountCoupon ? discountCoupon.discount : descuento}`}>
+              <Link to={`/detailCart/address/${subtotal}/${costoEnvio}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}>
                 <a href="#" >Ir a pagar</a>
               </Link>
             </div>
@@ -416,7 +436,7 @@ function DetailCart() {
             </div>
             <div className="containerCaracteristicaPrecio">
               <p>Precio Total</p>
-              <h6>${totalaPagar}</h6>
+              <h6>{totalaPagar}</h6>
             </div>
             <div className="toPay">
               {/* <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}> */}

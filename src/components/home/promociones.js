@@ -73,7 +73,7 @@ const Promociones = () => {
                 <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>
                   {product.name}
                 </CardSubtitle>
-                <CardTitle tag="h5">${product.purchase_price.toLocaleString()}</CardTitle>
+                <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>
                 <span className="span_offer">Oferta del dia</span>
               </CardBody>
             </Card>
