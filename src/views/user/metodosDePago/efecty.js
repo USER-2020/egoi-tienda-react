@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, FormGroup, Form, Input, InputGroupText, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-function EfectyModal({ totalAmount, closeEfectyModal }) {
+function EfectyModal({ totalAmount, closeEfectyModal, dataRef}) {
 
   // const [transactionAmount, setTransactionAmount] = useState("");
   const [paymentMethodId, setPaymentMethodId] = useState("");
@@ -39,15 +39,15 @@ function EfectyModal({ totalAmount, closeEfectyModal }) {
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
                   <div>
                     <h2 style={{fontSize:"14px"}}>Referencia de Pago</h2>
-                    <h4>54526365010</h4>
+                    <h5>{dataRef.id}</h5>
                   </div>
                   <div >
                     <h2 style={{fontSize:"14px"}}>Total a pagar</h2>
-                    <h4>${totalAmount}</h4>
+                    <h5>${totalAmount}</h5>
                   </div>
                 </div>
                   <div style={{width:"100%", height:"48px", display:"flex", justifyContent:"center", backgroundColor:"#FC5241", borderRadius:"32px", marginTop:"20px"}}>
-                    <a href='#' style={{display:"flex", alignSelf:"center", textDecoration:"none", color:"white", width:"100%", justifyContent:"center"}} onClick={closeEfectyModal}>Aceptar</a>
+                    <a href='#' style={{display:"flex", alignSelf:"center", textDecoration:"none", color:"white", width:"100%", justifyContent:"center"}} onClick={closeEfectyModal}>Enviar copia</a>
                   </div>
               
             </Card>
