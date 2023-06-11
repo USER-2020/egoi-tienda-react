@@ -31,7 +31,7 @@ function EfectyModal({ totalAmount, closeEfectyModal }) {
               </svg>
               <div style={{ gap: "0px", display: "flex", flexDirection: "column", justifyContent: "center", width: "100%", marginBottom:"30px" }}>
                 <h5 style={{ color: "#fc5241", fontSize: "20px", fontWeight: "400", display: "flex", justifyContent: 'center' }}>Pedido realizado con éxito</h5>
-                <p style={{ margin: "0", display: "flex", justifyContent: 'center', color: "#74737B", fontWeight: "400" }}>Haz tu pago en cualquier punto Efecty</p>
+                <p style={{ margin: "0", display: "flex", justifyContent: 'center', color: "#74737B", fontWeight: "400", textAlign:'center'}}>Haz tu pago en cualquier punto Efecty</p>
               </div>
             </div>
             <Card style={{ border: 'none' }}>

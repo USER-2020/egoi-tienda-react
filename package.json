@@ -28,6 +28,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.0",
     "react-scroll": "^1.8.9",
+    "react-verification-input": "^3.3.0",
     "reactstrap": "^9.1.6",
     "styled-components": "^5.3.11",
     "sweetalert2": "^11.7.3",
