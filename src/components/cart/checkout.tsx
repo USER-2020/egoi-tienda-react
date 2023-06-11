@@ -54,6 +54,7 @@ function AddressCart() {
   // Modales de metodos de pagos 
   const [modalTarjetaDebito, setModalTarjetaDebito] = useState(false);
   const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
+  const [dataRef, setDataRef ] = useState([]);
 
   const [deptos, setDeptos] = useState([]);
 
@@ -374,7 +375,9 @@ function AddressCart() {
   /* Generar referencia de pago de efecty */
   const generateEfectyREF = (data) => {
     referenciaPago(data, token)
-      .then(() => {
+      .then((res) => {
+        console.log(res.data);
+        setDataRef(res.data);
         let timerInterval
         Swal.fire({
           title: 'Generando ticket!',
@@ -388,8 +391,10 @@ function AddressCart() {
               b.textContent = Swal.getTimerLeft()
             }, 100)
           },
-          willClose: () => {
+          
+          didClose: () => {
             clearInterval(timerInterval)
+            setModalEfecty(true);
           }
 
         }).then((result) => {
@@ -398,9 +403,9 @@ function AddressCart() {
             console.log('I was closed by the timer')
           }
         })
-        setModalEfecty(true);
+        
       })
-      .catch((err)=> console.log(err));
+      .catch((err) => console.log(err));
   }
 
   const handleSubmitOrderEfecty = () => {
@@ -416,11 +421,15 @@ function AddressCart() {
       if (discountCoupon && discountCoupon.total !== undefined) {
         amountValue = discountCoupon.total; // Si hay un cupón aplicado, asigna el valor del total con descuento
       }
+
+      // Eliminar el símbolo "$" y convertir a número
+      const numericValue = Number(amountValue.replace("$", ""));
+      
       const dataOrder = {
-        transaction_amount: amountValue,//Monto total validado si es con cupon o no
+        transaction_amount: numericValue,//Monto total validado si es con cupon o no
         description: descriptionOrder,//Descripcion concatenada de los productos del carrito de compras
         payment_method_id: "efecty",//Id del metodo de pago seleccionado
-        email: userEmail//Email del usuario 
+        email: "juanfernandozuluaga2014310@gmail.com"//Email del usuario //userEmail
       }
 
 
@@ -1114,7 +1123,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <EfectyModal totalAmount={subtotal} closeEfectyModal={closeModalEfecty} />
+          <EfectyModal totalAmount={subtotal} closeEfectyModal={closeModalEfecty} dataRef={dataRef}/>
         </ModalBody>
       </Modal>
 
