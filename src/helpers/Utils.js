@@ -46,6 +46,21 @@ export const getCurrentUser = () => {
   return user;
 };
 
+// export const getCurrentUser = () => {
+//   let user = null;
+//   try {
+//     const userString = localStorage.getItem('token');
+//     if (userString) {
+//       user = JSON.parse(userString);
+//     }
+//   } catch (error) {
+//     console.log('>>>>: src/helpers/Utils.js : getCurrentUser -> error', error);
+//     user = null;
+//   }
+//   return user;
+// };
+
+
 
 export const setCurrentUser = (user) => {
   try {
@@ -58,6 +73,7 @@ export const setCurrentUser = (user) => {
     console.log('>>>>: src/helpers/Utils.js : setCurrentUser -> error', error);
   }
 };
+
 
 export const setCurrentHabilitacion = (habilitacion) => {
   try {

@@ -20,3 +20,14 @@ export const allBanksById = (id,token) =>
             'Authorization': `Bearer ${token}`   
         }
     })
+
+
+//Efecty 
+export const referenciaPago = (data,token) =>
+    axios.post(`${urlBase2}/mercadopago/ticket`, data , {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`   
+        }
+    })
+    

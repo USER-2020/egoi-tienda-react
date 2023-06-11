@@ -23,11 +23,12 @@ import { setCurrentUser } from "../../helpers/Utils";
 
 
 
-const Login = ({ closeModalLogin, handleLogin, closeModalRegistro,  handleChangeFormLogin}) => {
-const setUserActivacion = (data) => {
+const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeFormLogin }) => {
+  const setUserActivacion = (data) => {
     const item = {
       token: data.token,
-      
+      email: email,
+
     };
     setCurrentUser(item);
     // put(loginUserSuccess(item));
@@ -40,14 +41,14 @@ const setUserActivacion = (data) => {
         setUserActivacion(res.data);
         Swal.fire({
           icon: 'success',
-          title: 'Bienvenido' ,
+          title: 'Bienvenido',
           text: 'Has iniciado sesión correctamente',
           confirmButtonColor: '#fc5241',
         });
         setLoading(false);
         closeModalLogin();
         handleLogin();
-        
+
       })
       .catch(() => {
         Swal.fire({
@@ -104,6 +105,8 @@ const setUserActivacion = (data) => {
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+
   return (
     <Row>
       <Col>
@@ -176,19 +179,19 @@ const setUserActivacion = (data) => {
               </Button>
               <br />
               <Button
-        style={{
-          backgroundColor: "white",
-          borderColor: "#fc5241",
-          color: "#fc5241",
-          borderRadius: "50px",
-        }}
-        onClick={() => {
-          closeModalLogin();
-          handleChangeFormLogin();
-        }}
-      >
-        No tengo cuenta, deseo registrarme
-      </Button>
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "#fc5241",
+                  color: "#fc5241",
+                  borderRadius: "50px",
+                }}
+                onClick={() => {
+                  closeModalLogin();
+                  handleChangeFormLogin();
+                }}
+              >
+                No tengo cuenta, deseo registrarme
+              </Button>
 
             </div>
 
