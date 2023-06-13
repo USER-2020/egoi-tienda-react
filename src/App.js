@@ -13,6 +13,7 @@ import Login from "./views/user/login.js";
 
 
 // const ViewLogin = React.lazy(()=>import(/* webpackChunkName: "views" */ './views/user/userRoute'));
+
 const ViewDetailProduct = React.lazy(() => import(/* webpackChunkName: "views" */ './views/detailsProduct'));
 const ViewDetailCartAddress = React.lazy(() => import(/* webpackChunkName: "views" */ './views/checkout/addressCart'));
 const ViewDetailCart = React.lazy(() => import(/* webpackChunkName: "views" */ './views/cartShopping'));
@@ -22,6 +23,7 @@ const ViewApp = React.lazy(() => import(/* webpackChunkName: "views-app" */ './v
 const ViewUser = React.lazy(() => import(/* webpackChunkName: "views-user" */ './views/user'));
 const ViewError = React.lazy(() => import(/* webpackChunkName: "views-error" */ './views/error'));
 const ViewUnauthorized = React.lazy(() => import(/* webpackChunkName: "views-error" */ './views/unauthorized'));
+
 
 const App = (props) => {
   const { locale } = props;
