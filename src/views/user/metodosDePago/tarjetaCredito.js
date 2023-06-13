@@ -6,7 +6,7 @@ import { css } from 'styled-components';
 import { getCurrentUser } from '../../../helpers/Utils';
 import { typePayment, allBanksById } from '../../../services/metodosDePago';
 
-function TarjetaCreditoModal() {
+function TarjetaCreditoModal({handleModalData}) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -22,6 +22,8 @@ function TarjetaCreditoModal() {
     const [valueBank, setValueBank] = useState();
     const [banks, setBanks] = useState([]);
     const [banksById, setBanksById] = useState([]);
+    const [modalData, setModalData] = useState(null);
+    
     const {
         wrapperProps,
         getCardImageProps,
@@ -29,6 +31,22 @@ function TarjetaCreditoModal() {
         getExpiryDateProps,
         getCVCProps
     } = usePaymentInputs();
+
+
+
+    const closeModalAndSendData = () => {
+        const dataPaymentCredit = {
+            typeCard: selectTypeCard,
+            identificationNumber: identificationNumber, //cedula del usuario traido del modal de pago
+            cardNumber:cardNumber, //Numero de cuenta
+            nameCard: cardName, //Nombre de la cuenta
+            cardMonth: cardMonth, //Mes de de expiracion
+            cardYear: cardAno, //Año de expiracion
+            securityCode: cardCvc, //Codigo se seguridad
+        }
+        handleModalData(dataPaymentCredit);
+        
+    }
 
     const currenUser = getCurrentUser();
     const token = currenUser.token;
@@ -250,6 +268,12 @@ function TarjetaCreditoModal() {
                                         value={identificationNumber}
                                         onChange={(event) => setIdentificationNumber(event.target.value)}
                                     />
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={closeModalAndSendData}>Registrar Pago</a>
+                                    </div>
                                 </FormGroup>
 
                             </Form>

@@ -4,7 +4,7 @@ import './input-con-icono.css';
 import { allBanks } from '../../../services/bank';
 import { getCurrentUser } from '../../../helpers/Utils';
 
-function PseModal() {
+function PseModal({handleModalData}) {
 
     const [pseDocument, setPseDocument] = useState("");
     const [pseTypeDocument, setPseTypeDocument] = useState("");
@@ -20,6 +20,15 @@ function PseModal() {
     const typeDis = {
         "C.C": "C.C",
         "NIT": "NIT"
+    }
+
+    const closeModalAndSendData = () => {
+        const data = {
+            bank: valueBank,
+            identificationNumber: pseDocument, //cedula del usuario traido del modal de pago
+        }
+        handleModalData(data);
+        
     }
 
     const handleSelectChangeTypeCard = (e) => {
@@ -139,6 +148,11 @@ function PseModal() {
                                         ))}
 
                                     </Input>
+                                </FormGroup>
+                                <FormGroup>
+                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={closeModalAndSendData}>Registrar Pago</a>
+                                    </div>
                                 </FormGroup>
 
                             </Form>

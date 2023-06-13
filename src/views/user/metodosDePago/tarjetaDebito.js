@@ -7,7 +7,7 @@ import { getCurrentUser } from '../../../helpers/Utils';
 import { typePayment, allBanksById } from '../../../services/metodosDePago';
 
 
-function TarjetaDebitoModal() {
+function TarjetaDebitoModal({ handleModalData }) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -52,7 +52,7 @@ function TarjetaDebitoModal() {
     const handleSelectChangeDI = (e) => {
         const valorSeleccionadoDI = e.target.value;
         setIdentificationType(valorSeleccionadoDI);
-        
+
     }
 
     const handleChangeExpiryDate = (e) => {
@@ -63,13 +63,13 @@ function TarjetaDebitoModal() {
     };
 
     const banksByIdTypePayments = () => {
-        if(selectTypeCard){
+        if (selectTypeCard) {
             allBanksById(selectTypeCard, token)
-            .then((res) => {
-                console.log(res.data);
-                setBanksById(res.data);
-            })
-            .catch((err)=>console.log(err));
+                .then((res) => {
+                    console.log(res.data);
+                    setBanksById(res.data);
+                })
+                .catch((err) => console.log(err));
         }
     }
 
@@ -88,6 +88,19 @@ function TarjetaDebitoModal() {
         "NIT": "NIT"
     }
 
+    const closeModalAndSendData = () => {
+        const data = {
+            typeCard: selectTypeCard,
+            identificationNumber: identificationNumber, //cedula del usuario traido del modal de pago
+            cardNumber:cardNumber, //Numero de cuenta
+            nameCard: cardName, //Nombre de la cuenta
+            cardMonth: cardMonth, //Mes de de expiracion
+            cardYear: cardAno, //Año de expiracion
+            securityCode: cardCvc, //Codigo se seguridad
+        }
+        handleModalData(data);
+
+    }
 
     useEffect(() => {
         if (token || selectTypeCard || valueBank || identificationType) {
@@ -169,6 +182,21 @@ function TarjetaDebitoModal() {
 
                                 <FormGroup style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
                                     <Input addon={true}
+                                        name="Cuotas"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                            width: "20%"
+
+                                        }}
+                                        type="number"
+                                        placeholder="Cuotas"
+                                        value={cardCuotes}
+                                        onChange={(event) => setCardCuotes(event.target.value)}
+                                        hidden
+                                    />
+
+                                    <Input addon={true}
                                         name="contactPersonName"
                                         classNanme="form-control"
                                         style={{
@@ -232,6 +260,12 @@ function TarjetaDebitoModal() {
                                         value={identificationNumber}
                                         onChange={(event) => setIdentificationNumber(event.target.value)}
                                     />
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={closeModalAndSendData}>Registrar Pago</a>
+                                    </div>
                                 </FormGroup>
 
                             </Form>

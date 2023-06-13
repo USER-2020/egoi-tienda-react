@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom';
 
 import '../../styles/detailsCart.css';
 import { Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, Row } from 'reactstrap';
@@ -10,7 +11,7 @@ import { Link } from 'react-router-dom';
 import AdressCheckout from '../../views/user/adress';
 import es from "react-phone-input-2/lang/es.json";
 import PhoneInput from 'react-phone-input-2';
-import { allAddress, allDeptos, deleteAddress } from '../../services/address';
+import { addressById, allAddress, allDeptos, deleteAddress } from '../../services/address';
 import UpdateAddress from '../../views/user/updateAddress';
 import { set } from 'react-hook-form';
 import Swal from 'sweetalert2';
@@ -23,6 +24,8 @@ import { aplyCupon } from '../../services/cupon';
 import CashDeliveryOTP from '../../views/user/metodosDePago/cashDeliveryOTP';
 import axios from 'axios';
 import { referenciaPago } from '../../services/metodosDePago';
+import { PDFViewer } from '@react-pdf/renderer';
+import PDFContent from '../PDF/PDFContent';
 
 
 
@@ -46,15 +49,17 @@ function AddressCart() {
   const [selectedLink, setSelectedLink] = useState('hogar');
   const [address, setAddress] = useState([]);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(null);
+  const [dataAddress, setDataAddress] = useState("");
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
-  const [idAddress, setIdAddress] = useState();
+  const [idAddress, setIdAddress] = useState([]);
   const [descriptionOrder, setDescriptionOrder] = useState("");
+  const [modalData, setModalData] = useState("");
 
   // Modales de metodos de pagos 
   const [modalTarjetaDebito, setModalTarjetaDebito] = useState(false);
   const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
-  const [dataRef, setDataRef ] = useState([]);
+  const [dataRef, setDataRef] = useState([]);
 
   const [deptos, setDeptos] = useState([]);
 
@@ -64,6 +69,9 @@ function AddressCart() {
 
   /* Estado para la IP */
   const [ipAddress, setIpAddress] = useState('');
+
+  /* Generacion de pdf */
+  const [showPDF, setShowPDF] = useState(false);
 
 
 
@@ -226,6 +234,11 @@ function AddressCart() {
     setIsScrollModalEnabled(true);
   };
 
+  const closeModalPDF = () => {
+    setShowPDF(false);
+    setIsScrollModalEnabled(true);
+  }
+
 
   const updateBtn = (addrId) => {
     if (token) {
@@ -267,6 +280,27 @@ function AddressCart() {
 
     }
   }
+  /* traer datos de los modales para efectuar el pago */
+  const handleModalData = (data) => {
+    console.log("Datos del modal:", data);
+    setModalData(data);
+    setModalTarjetaCredito(false);
+    setModalPse(false);
+    setModalTarjetaDebito(false);
+  };
+
+  const getAddressById = () => {
+    addressById(selectedAddressId, token)
+      .then((res) => {
+        console.log("Datos traidos de la direcicon ID", res.data);
+        console.log("Nombre", res.data[0].contact_person_name);
+        console.log("Celular", res.data[0].phone);
+        console.log("Como llegar", res.data[0].local_description);
+        setDataAddress(res.data);
+
+      })
+  }
+
 
   const eliminarDireccion = (addrId) => {
     deleteAddress(addrId, token)
@@ -341,34 +375,67 @@ function AddressCart() {
         cuponCode = cupon; // Si hay un cupón aplicado, asigna el valor del
       }
 
+
+
       /* The above code is checking if there is a discount coupon available and if it has a defined
       discount value. If there is a discount coupon with a defined discount value, the value of the
       discount is assigned to the variable `cuponOffSale`. If there is no discount coupon or the
       discount value is undefined, the value of `cuponOffSale` remains "0". */
-      let cuponOffSale = "0";
+      let cuponOffSale = "$0";
       if (discountCoupon && discountCoupon.discount !== undefined) {
         cuponOffSale = discountCoupon.discount;
       }
+      // Eliminar el símbolo "$" y convertir a número
+      const numericValue = Number(amountValue.replace("$", ""));
 
+      //Cupon code limpio
+      const cuponCodeLimpio = Number(cuponCode.replace("$", ""));
+
+      //Descuento limpio
+      const cuponDescuentoLimpio = Number(cuponOffSale.replace("$", ""));
 
       const dataOrder = {
-        firstname: "Miguel Ospina", //nombre del usuario traido odesde el id de la direccion seleccionada
-        lastname: "", //apellido del usuario traido desde el id de la direccion seleccionada
+        // firstname: dataAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
+        // lastname: dataAddress[0].contact_person_name, //apellido del usuario traido desde el id de la direccion seleccionada
+        // email: userEmail, // correo del usuario
+        // numberPhone: dataAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
+        // type: modalData.typeCard, //medio de pago traido del id del metodo de pago selesccionado
+        // identificationNumber: modalData.identificationNumber, //cedula del usuario traido del modal de pago
+        // issuer_id: "1037",  // id de banco traido del modal de pago seleccionado solo para pse !!
+        // amount: numericValue, //valor de la compra
+        // ipAddress: ipAddress, //ip del cliente
+        // description: descriptionOrder, //Descripción del producto adquirido, el motivo del pago. Ej. - "Celular Xiaomi Redmi Note 11S 128gb 6gb Ram Original Global Blue Version" (descripción de un producto en el marketplace).
+        // financial_institution: "1040", //id del tipo de banco que se obtiene del modal de pago
+        // callback_url: "https://cvsc.co/", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
+        // address_id: selectedAddressId, // id de la direccion
+        // billing_address_id: selectedAddressId, // id de la direccion
+        // coupon_code: cuponCodeLimpio, //codigo del cupon
+        // coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
+        // order_note: dataAddress[0].local_description// como llegar infor traida de la direccion seleccionada por Id
+
+        firstname: dataAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
+        lastname: dataAddress[0].contact_person_name, //apellido del usuario traido desde el id de la direccion seleccionada
         email: userEmail, // correo del usuario
-        numberPhone: "", //numero de celular del usuario traido desde el id de la direccion seleccionada
-        type: "pse", //medio de pago traido del id del metodo de pago selesccionado
-        identificationNumber: "2345676", //cedula del usuario traido del modal de pago
-        issuer_id: "1037",  // id de banco traido del modal de pago seleccionado
-        amount: amountValue, //valor de la compra
+        numberPhone: dataAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
+        type: modalData.typeCard, //medio de pago traido del id del metodo de pago selesccionado
+        issuer_id: "1037",  // id de banco traido del modal de pago seleccionado solo para pse !!
+        installments: 1,//cuotas de tarjeta
+        financial_institution: "1040", //id del tipo de banco que se obtiene del modal de pago
+        identificationNumber: modalData.identificationNumber, //cedula del usuario traido del modal de pago
+        amount: numericValue, //valor de la compra
         ipAddress: ipAddress, //ip del cliente
         description: descriptionOrder, //Descripción del producto adquirido, el motivo del pago. Ej. - "Celular Xiaomi Redmi Note 11S 128gb 6gb Ram Original Global Blue Version" (descripción de un producto en el marketplace).
-        financial_institution: "1040", //id del tipo de banco que se obtiene del modal de pago
-        callback_url: "https://cvsc.co/", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
+        callback_url: "https://egoi.xyz/admin/auth/login", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
+        cardNumber: modalData.cardNumber,//numero de la tarjeta traido de los modales de tarejta
+        nameInCard: modalData.cardName, //nombre del propietatio de la tarjeta traido de los modales de tarjeta
+        expirationMonth: modalData.cardMonth,//mes de vencimiento tarjeta traido de los modales de tarjeta
+        expirationYear: modalData.cardYear,// año de vencimiento, tarjeta traido de los mdoales de tarjeta
+        securityCode: modalData.securityCode,//codigo de seguridad tarjeta traido de los modales de tarjeta 
         address_id: selectedAddressId, // id de la direccion
         billing_address_id: selectedAddressId, // id de la direccion
-        coupon_code: cuponCode, //codigo del cupon
-        coupon_discount: cuponOffSale, //el decuento que te da el cupon 
-        order_note: ""// como llegar infor traida de la direccion seleccionada por Id
+        coupon_code: cuponCodeLimpio, //codigo del cupon
+        coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
+        order_note: dataAddress[0].local_description// como llegar infor traida de la direccion seleccionada por Id
       }
     }
   }
@@ -391,10 +458,40 @@ function AddressCart() {
               b.textContent = Swal.getTimerLeft()
             }, 100)
           },
-          
+
           didClose: () => {
             clearInterval(timerInterval)
             setModalEfecty(true);
+            // Actualizar el estado para mostrar el PDF
+            // setShowPDF(true);
+            const newWindow = window.open('', '_blank', 'width=600,height=400');
+
+            // Establece los estilos CSS para el contenedor
+            const containerStyles = {
+              width: '100vw',
+              height: '100hw',
+              margin: 0,
+              padding: 0,
+              overflow: 'hidden',
+            };
+
+            // Establece los estilos CSS para el PDFViewer
+            const viewerStyles = {
+              width: '100%',
+              height: '100%',
+            };
+
+            // Renderiza el componente PDFViewer en la nueva ventana
+            ReactDOM.render(
+              <div style={containerStyles}>
+                <PDFViewer style={viewerStyles}>
+                  <PDFContent closeModalPDF={newWindow.close} />
+                </PDFViewer>
+              </div>,
+              newWindow.document.body
+            );
+
+
           }
 
         }).then((result) => {
@@ -403,7 +500,7 @@ function AddressCart() {
             console.log('I was closed by the timer')
           }
         })
-        
+
       })
       .catch((err) => console.log(err));
   }
@@ -424,7 +521,7 @@ function AddressCart() {
 
       // Eliminar el símbolo "$" y convertir a número
       const numericValue = Number(amountValue.replace("$", ""));
-      
+
       const dataOrder = {
         transaction_amount: numericValue,//Monto total validado si es con cupon o no
         description: descriptionOrder,//Descripcion concatenada de los productos del carrito de compras
@@ -453,12 +550,16 @@ function AddressCart() {
   }, []);
 
 
+
+
+
   useEffect(() => {
 
     if (token) {
       getAllProductsByCart();
       getAllAddress();
       getAllDeptos();
+
       console.log(ipAddress);
 
     } else {
@@ -477,8 +578,20 @@ function AddressCart() {
       console.log("Este es el id de la direccion", selectedAddressId);
     }
 
+    if (selectedAddressId) {
+      getAddressById();
+    }
 
-  }, [activeStep, token, selectedAddressId]);
+    if (modalData) {
+      console.log(modalData);
+    }
+
+    if (showPDF) {
+      console.log("se muestra el pdf", showPDF);
+    }
+
+
+  }, [activeStep, token, selectedAddressId, showPDF]);
 
   return (
     <>
@@ -1061,7 +1174,25 @@ function AddressCart() {
         )}
 
 
+
       </div>
+
+      {/* Modal PDF */}
+      {/* <Modal
+        className="modal-dialog-centered modal-mx"
+        toggle={() => closeModalPDF()}
+        isOpen={showPDF}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
+      >
+        <ModalBody>
+          <PDFViewer>
+            <PDFContent closeModalPDF={closeModalPDF} />
+          </PDFViewer>
+        </ModalBody>
+      </Modal> */}
+
+      {/* Modales */}
       <Modal
         className="modal-dialog-centered modal-lg"
         toggle={() => closeAddressCheckoutModal()}
@@ -1096,7 +1227,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <TarjetaCreditoModal />
+          <TarjetaCreditoModal handleModalData={handleModalData} />
         </ModalBody>
       </Modal>
 
@@ -1110,7 +1241,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <TarjetaDebitoModal />
+          <TarjetaDebitoModal handleModalData={handleModalData} />
         </ModalBody>
       </Modal>
 
@@ -1123,7 +1254,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <EfectyModal totalAmount={subtotal} closeEfectyModal={closeModalEfecty} dataRef={dataRef}/>
+          <EfectyModal totalAmount={subtotal} closeEfectyModal={closeModalEfecty} dataRef={dataRef} />
         </ModalBody>
       </Modal>
 
@@ -1136,7 +1267,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <PseModal />
+          <PseModal handleModalData={handleModalData} />
         </ModalBody>
       </Modal>
 
@@ -1152,6 +1283,8 @@ function AddressCart() {
           <CashDeliveryOTP />
         </ModalBody>
       </Modal>
+
+
     </>
   )
 }
