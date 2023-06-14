@@ -6,13 +6,13 @@ import { toast, Toaster } from 'react-hot-toast';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAbwpKgyvjcxQYXXe7teMoAS0BC4TbDngs",
-    authDomain: "egoi-react-web.firebaseapp.com",
-    projectId: "egoi-react-web",
-    storageBucket: "egoi-react-web.appspot.com",
-    messagingSenderId: "334873732349",
-    appId: "1:334873732349:web:74c562c5caa0ddd5feca94",
-    measurementId: "G-GX58RJGFPP"
+    apiKey: "AIzaSyAzXYMEJXG7s8DtArQjf0GPh48HOYOmYSo",
+    authDomain: "egoi-user-app.firebaseapp.com",
+    projectId: "egoi-user-app",
+    storageBucket: "egoi-user-app.appspot.com",
+    messagingSenderId: "1058580689959",
+    appId: "1:1058580689959:web:9239ca21ad067de63a0a02",
+    measurementId: "G-5TL8PV3QG3"
 };
 
 // Initialize Firebase

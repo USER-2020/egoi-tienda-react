@@ -400,24 +400,7 @@ function AddressCart() {
       const cuponDescuentoLimpio = Number(cuponOffSale.replace("$", ""));
 
       const dataOrder = {
-        // firstname: dataAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
-        // lastname: dataAddress[0].contact_person_name, //apellido del usuario traido desde el id de la direccion seleccionada
-        // email: userEmail, // correo del usuario
-        // numberPhone: dataAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
-        // type: modalData.typeCard, //medio de pago traido del id del metodo de pago selesccionado
-        // identificationNumber: modalData.identificationNumber, //cedula del usuario traido del modal de pago
-        // issuer_id: "1037",  // id de banco traido del modal de pago seleccionado solo para pse !!
-        // amount: numericValue, //valor de la compra
-        // ipAddress: ipAddress, //ip del cliente
-        // description: descriptionOrder, //Descripción del producto adquirido, el motivo del pago. Ej. - "Celular Xiaomi Redmi Note 11S 128gb 6gb Ram Original Global Blue Version" (descripción de un producto en el marketplace).
-        // financial_institution: "1040", //id del tipo de banco que se obtiene del modal de pago
-        // callback_url: "https://cvsc.co/", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
-        // address_id: selectedAddressId, // id de la direccion
-        // billing_address_id: selectedAddressId, // id de la direccion
-        // coupon_code: cuponCodeLimpio, //codigo del cupon
-        // coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
-        // order_note: dataAddress[0].local_description// como llegar infor traida de la direccion seleccionada por Id
-
+        
         firstname: dataAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
         lastname: dataAddress[0].contact_person_name, //apellido del usuario traido desde el id de la direccion seleccionada
         email: userEmail, // correo del usuario
@@ -445,70 +428,71 @@ function AddressCart() {
     }
   }
   /* Generar referencia de pago de efecty */
-  const generateEfectyREF = (data) => {
+  const generateEfectyREF = (data ,descriptionOrder) => {
     referenciaPago(data, token)
       .then((res) => {
         console.log(res.data);
-        setDataRef(res.data);
-        let timerInterval
+        const newDataRef = res.data;
+        setDataRef(newDataRef);
+        let timerInterval;
         Swal.fire({
           title: 'Generando ticket!',
           html: 'Generando<b></b>',
           timer: 2000,
           timerProgressBar: true,
           didOpen: () => {
-            Swal.showLoading()
-            const b = Swal.getHtmlContainer().querySelector('b')
+            Swal.showLoading();
+            const b = Swal.getHtmlContainer().querySelector('b');
             timerInterval = setInterval(() => {
-              b.textContent = Swal.getTimerLeft()
-            }, 100)
+              b.textContent = Swal.getTimerLeft();
+            }, 100);
           },
-
           didClose: () => {
-            clearInterval(timerInterval)
+            clearInterval(timerInterval);
             setModalEfecty(true);
             // Actualizar el estado para mostrar el PDF
             // setShowPDF(true);
-            const newWindow = window.open('', '_blank', 'width=600,height=400');
 
-            // Establece los estilos CSS para el contenedor
-            const containerStyles = {
-              width: '100vw',
-              height: '100hw',
-              margin: 0,
-              padding: 0,
-              overflow: 'hidden',
-            };
+            // Abre la ventana emergente y renderiza el PDF después de cerrar el Swal
+            setTimeout(() => {
+              const newWindow = window.open('', '_blank', 'width=600,height=400');
 
-            // Establece los estilos CSS para el PDFViewer
-            const viewerStyles = {
-              width: '100%',
-              height: '100%',
-            };
+              // Establece los estilos CSS para el contenedor
+              const containerStyles = {
+                width: '100vw',
+                height: '100vh',
+                margin: 0,
+                padding: 0,
+                overflow: 'hidden',
+              };
 
-            // Renderiza el componente PDFViewer en la nueva ventana
-            ReactDOM.render(
-              <div style={containerStyles}>
-                <PDFViewer style={viewerStyles}>
-                  <PDFContent closeModalPDF={newWindow.close} />
-                </PDFViewer>
-              </div>,
-              newWindow.document.body
-            );
+              // Establece los estilos CSS para el PDFViewer
+              const viewerStyles = {
+                width: '100%',
+                height: '100%',
+              };
 
-
-          }
-
+              // Renderiza el componente PDFViewer en la nueva ventana
+              ReactDOM.render(
+                <div style={containerStyles}>
+                  <PDFViewer style={viewerStyles}>
+                    <PDFContent closeModalPDF={newWindow.close} dataRefEfecty={newDataRef} totalAmount={subtotal} description={descriptionOrder}/>
+                  </PDFViewer>
+                </div>,
+                newWindow.document.body
+              );
+            }, 1000); // Ajusta el tiempo de espera según tus necesidades
+          },
         }).then((result) => {
           /* Read more about handling dismissals below */
           if (result.dismiss === Swal.DismissReason.timer) {
-            console.log('I was closed by the timer')
+            console.log('I was closed by the timer');
           }
-        })
-
+        });
       })
       .catch((err) => console.log(err));
   }
+
 
   const handleSubmitOrderEfecty = () => {
     if (token) {
@@ -535,7 +519,7 @@ function AddressCart() {
       }
 
 
-      generateEfectyREF(dataOrder);
+      generateEfectyREF(dataOrder, descriptionOrder);
     }
   }
 
@@ -1285,7 +1269,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <CashDeliveryOTP phone={dataAddress[0]?.phone} closeModalOTP={closeModalOTP}/>
+          <CashDeliveryOTP phone={dataAddress[0]?.phone} closeModalOTP={closeModalOTP} />
         </ModalBody>
       </Modal>
 
