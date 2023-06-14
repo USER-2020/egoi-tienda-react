@@ -239,6 +239,11 @@ function AddressCart() {
     setIsScrollModalEnabled(true);
   }
 
+  const closeModalOTP = () => {
+    setModalOTP(false);
+    setIsScrollModalEnabled(true);
+  }
+
 
   const updateBtn = (addrId) => {
     if (token) {
@@ -1280,7 +1285,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <CashDeliveryOTP />
+          <CashDeliveryOTP phone={dataAddress[0]?.phone} closeModalOTP={closeModalOTP}/>
         </ModalBody>
       </Modal>
 
