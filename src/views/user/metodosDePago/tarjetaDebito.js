@@ -90,13 +90,14 @@ function TarjetaDebitoModal({ handleModalData }) {
 
     const closeModalAndSendData = () => {
         const data = {
-            typeCard: selectTypeCard,
             identificationNumber: identificationNumber, //cedula del usuario traido del modal de pago
-            cardNumber:cardNumber, //Numero de cuenta
+            cardNumber: cardNumber, //Numero de cuenta
             nameCard: cardName, //Nombre de la cuenta
             cardMonth: cardMonth, //Mes de de expiracion
             cardYear: cardAno, //Año de expiracion
             securityCode: cardCvc, //Codigo se seguridad
+            cuotes: cardCuotes,//Cuotas por default es 1 para tarjeta debito
+
         }
         handleModalData(data);
 
@@ -130,7 +131,7 @@ function TarjetaDebitoModal({ handleModalData }) {
                         <Card style={{ border: 'none' }}>
                             <Form>
 
-                                <FormGroup>
+                                {/* <FormGroup>
                                     <Input addon={true}
                                         name="typeIdentification"
                                         classNanme="form-control"
@@ -150,7 +151,7 @@ function TarjetaDebitoModal({ handleModalData }) {
                                         })}
 
                                     </Input>
-                                </FormGroup>
+                                </FormGroup> */}
 
                                 <FormGroup >
 
@@ -180,13 +181,13 @@ function TarjetaDebitoModal({ handleModalData }) {
 
                                 </FormGroup>
 
-                                <FormGroup style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                                <FormGroup>
                                     <Input addon={true}
                                         name="Cuotas"
                                         classNanme="form-control"
                                         style={{
                                             borderRadius: "50px",
-                                            width: "20%"
+                                            width: "100%"
 
                                         }}
                                         type="number"
@@ -194,14 +195,20 @@ function TarjetaDebitoModal({ handleModalData }) {
                                         value={cardCuotes}
                                         onChange={(event) => setCardCuotes(event.target.value)}
                                         hidden
+                                        
                                     />
+
+                                </FormGroup>
+                                
+
+                                <FormGroup style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
 
                                     <Input addon={true}
                                         name="contactPersonName"
                                         classNanme="form-control"
                                         style={{
                                             borderRadius: "50px",
-                                            width: "80%"
+                                            width: "100%"
                                         }}
                                         placeholder="Nombre en la tarjeta"
                                         value={cardName}
@@ -209,7 +216,7 @@ function TarjetaDebitoModal({ handleModalData }) {
                                     />
                                 </FormGroup>
 
-                                <FormGroup>
+                                {/* <FormGroup>
                                     <Input addon={true}
                                         name="bank"
                                         classNanme="form-control"
@@ -226,7 +233,7 @@ function TarjetaDebitoModal({ handleModalData }) {
                                         ))}
 
                                     </Input>
-                                </FormGroup>
+                                </FormGroup> */}
 
                                 <FormGroup>
                                     <Input addon={true}

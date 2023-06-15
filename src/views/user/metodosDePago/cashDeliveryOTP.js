@@ -9,9 +9,10 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
 import { auth } from '../../../services/firebase.config';
 import Swal from 'sweetalert2';
+import { placeOrder } from '../../../services/metodosDePago';
 
 
-function CashDeliveryOTP({ phone, closeModalOTP }) {
+function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon , descriptionOrder }) {
   const [otp, setOTP] = useState('');
   const [loading, setLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
@@ -68,11 +69,23 @@ function CashDeliveryOTP({ phone, closeModalOTP }) {
 
   }
 
+  const makePlaceOrder = () => {
+    placeOrder(addressId, cuponLimpio, descriptionOrder)
+    .then((res)=>{
+      console.log("Orden enviada por OTP");
+      console.log(res);
+
+    })
+    .catch((err)=> console.log(err));
+  }
+  
+
   const onOTPVerify = () => {
     setLoading(true);
     window.confirmationResult.confirm(otp).then(async(res)=>{
       console.log(res);
       setLoading(false);
+      makePlaceOrder();
       closeModalOTP();
       Swal.fire(
         '¡Tu compra fue verificada!',
@@ -100,6 +113,16 @@ function CashDeliveryOTP({ phone, closeModalOTP }) {
 
       console.log(phone);
       setPhoneUser(phone);
+    }
+
+    let cuponLimpio = 0;
+    if(cupon && cupon !== ""){
+      cuponLimpio = cupon;
+    }
+    if(addressId || cupon ||descriptionOrder){
+      console.log("Direccion id",addressId);
+      console.log("Cupon",cuponLimpio);
+      console.log("Descripcion",descriptionOrder);
     }
     
   })

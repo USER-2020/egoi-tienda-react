@@ -1,6 +1,8 @@
 import React  from 'react';
 import { urlBase2 } from '../constants/defaultValues';
+import { urlBase } from '../constants/defaultValues';
 import axios from 'axios';
+
 
 
 //Traeer todos los tipos de tarjeta
@@ -30,4 +32,26 @@ export const referenciaPago = (data,token) =>
             'Authorization': `Bearer ${token}`   
         }
     })
-    
+
+
+//Realizar Pago 
+export const makePay = (data, token) => 
+    axios.post(`${urlBase2}/mercadopago/paymentMp`, data,{
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`   
+    }});
+
+//Registar compra despues del OTP
+export const placeOrder = (addressId, cuponLimpio, descriptionOrder) =>
+    axios.get(`${urlBase}/customer/order/place` , {
+        params:{
+            address_id:addressId,
+            coupon_code:cuponLimpio,
+            order_note:descriptionOrder
+
+        },
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    })

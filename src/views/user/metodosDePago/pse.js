@@ -24,8 +24,10 @@ function PseModal({handleModalData}) {
 
     const closeModalAndSendData = () => {
         const data = {
-            bank: valueBank,
+            valueBank: valueBank,
             identificationNumber: pseDocument, //cedula del usuario traido del modal de pago
+            issuer: "pse",
+            cuotes: "1"
         }
         handleModalData(data);
         
