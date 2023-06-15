@@ -23,7 +23,7 @@ import { allBanks } from '../../services/bank';
 import { aplyCupon } from '../../services/cupon';
 import CashDeliveryOTP from '../../views/user/metodosDePago/cashDeliveryOTP';
 import axios from 'axios';
-import { referenciaPago } from '../../services/metodosDePago';
+import { makePay, referenciaPago } from '../../services/metodosDePago';
 import { PDFViewer } from '@react-pdf/renderer';
 import PDFContent from '../PDF/PDFContent';
 
@@ -54,7 +54,11 @@ function AddressCart() {
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [idAddress, setIdAddress] = useState([]);
   const [descriptionOrder, setDescriptionOrder] = useState("");
-  const [modalData, setModalData] = useState("");
+
+  const [modalDataPSE, setModalDataPSE] = useState("");
+  const [modalDataTarjetas, setModalDataTarjetas] = useState("");
+
+
 
   // Modales de metodos de pagos 
   const [modalTarjetaDebito, setModalTarjetaDebito] = useState(false);
@@ -288,10 +292,12 @@ function AddressCart() {
   /* traer datos de los modales para efectuar el pago */
   const handleModalData = (data) => {
     console.log("Datos del modal:", data);
-    setModalData(data);
+    setModalDataTarjetas(data);
+    setModalDataPSE(data);
     setModalTarjetaCredito(false);
     setModalPse(false);
     setModalTarjetaDebito(false);
+
   };
 
   const getAddressById = () => {
@@ -358,10 +364,11 @@ function AddressCart() {
     }
   }
 
-  const handleSubmitOrderPaymentCard = (event) => {
+  const handleSubmitOrderPaymentCard = () => {
     if (token) {
       console.log("Envio de orden por tarjeta");
-      event.preventDefault();
+      
+
       /* The code is assigning a default value to the variable `amountValue` which is equal to the
       value of `total`. Then, it checks if there is a `discountCoupon` object and if the `total`
       property of that object is defined. If it is defined, the code assigns the value of
@@ -399,36 +406,113 @@ function AddressCart() {
       //Descuento limpio
       const cuponDescuentoLimpio = Number(cuponOffSale.replace("$", ""));
 
+      //Anio de vencimiento 
+      let year = "";
+      if (modalDataTarjetas && modalDataTarjetas.cardYear) {
+        year = "20" + modalDataTarjetas.cardYear;
+      }
+
+      //issuer_Id para pse
+      let issuerID = "";
+      if (modalDataPSE && modalDataPSE.issuer === "pse") {
+        issuerID = "1037";
+      }
+
+      //Id del banco asociado para pse
+      let valueIdBank = "";
+      if (modalDataPSE && modalDataPSE.valueBank) {
+        valueIdBank = modalDataPSE.valueBank;
+      }
+
+      //Tipo de tarjeta
+      let tipo = "visa";
+      if (modalDataPSE && modalDataPSE.issuer === "pse") {
+        tipo = modalDataPSE.issuer;
+      }
+
+      //Documento
+      let DI = "";
+      if (modalDataPSE) {
+        DI = modalDataPSE.identificationNumber;
+      }
+      if (modalDataTarjetas) {
+        DI = modalDataTarjetas.identificationNumber;
+      }
+
+      //Concatenacion de los datos del numero de tarjeta
+      let CardNumber = "";
+      if (modalDataTarjetas && modalDataTarjetas.cardNumber) {
+        const cardNumber = modalDataTarjetas.cardNumber.replace(/\s/g, '');
+        CardNumber = cardNumber;
+        // Resto del código para utilizar el cardNumber sin espacios
+      }
+
+
+
       const dataOrder = {
-        
+
         firstname: dataAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
         lastname: dataAddress[0].contact_person_name, //apellido del usuario traido desde el id de la direccion seleccionada
-        email: userEmail, // correo del usuario
+        email: "juanfernandozuluaga2014310@gmail.com", // correo del usuario userEmail
         numberPhone: dataAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
-        type: modalData.typeCard, //medio de pago traido del id del metodo de pago selesccionado
-        issuer_id: "1037",  // id de banco traido del modal de pago seleccionado solo para pse !!
-        installments: 1,//cuotas de tarjeta
-        financial_institution: "1040", //id del tipo de banco que se obtiene del modal de pago
-        identificationNumber: modalData.identificationNumber, //cedula del usuario traido del modal de pago
+        type: tipo, //medio de pago traido del id del metodo de pago selesccionado
+        issuer_id: issuerID,  // id de banco traido del modal de pago seleccionado solo para pse !!
+        installments: modalDataTarjetas.cuotes,//cuotas de tarjeta
+        financial_institution: valueIdBank, //id del tipo de banco que se obtiene del modal de pago
+        identificationNumber: DI, //cedula del usuario traido del modal de pago
         amount: numericValue, //valor de la compra
         ipAddress: ipAddress, //ip del cliente
         description: descriptionOrder, //Descripción del producto adquirido, el motivo del pago. Ej. - "Celular Xiaomi Redmi Note 11S 128gb 6gb Ram Original Global Blue Version" (descripción de un producto en el marketplace).
         callback_url: "https://egoi.xyz/admin/auth/login", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
-        cardNumber: modalData.cardNumber,//numero de la tarjeta traido de los modales de tarejta
-        nameInCard: modalData.cardName, //nombre del propietatio de la tarjeta traido de los modales de tarjeta
-        expirationMonth: modalData.cardMonth,//mes de vencimiento tarjeta traido de los modales de tarjeta
-        expirationYear: modalData.cardYear,// año de vencimiento, tarjeta traido de los mdoales de tarjeta
-        securityCode: modalData.securityCode,//codigo de seguridad tarjeta traido de los modales de tarjeta 
+        cardNumber: CardNumber,//numero de la tarjeta traido de los modales de tarejta
+        nameInCard: modalDataTarjetas.nameCard, //nombre del propietatio de la tarjeta traido de los modales de tarjeta
+        expirationMonth: modalDataTarjetas.cardMonth,//mes de vencimiento tarjeta traido de los modales de tarjeta
+        expirationYear: year,// año de vencimiento, tarjeta traido de los mdoales de tarjeta
+        securityCode: modalDataTarjetas.securityCode,//codigo de seguridad tarjeta traido de los modales de tarjeta 
         address_id: selectedAddressId, // id de la direccion
         billing_address_id: selectedAddressId, // id de la direccion
         coupon_code: cuponCodeLimpio, //codigo del cupon
         coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
         order_note: dataAddress[0].local_description// como llegar infor traida de la direccion seleccionada por Id
       }
+
+
+      verifyPurchase(dataOrder);
     }
   }
+
+  const openWindowPSExternal = (direccion_url_pse) =>{
+    window.open(direccion_url_pse, "_blank");
+  }
+
+  /* Verificar compra */
+  const verifyPurchase = (dataOrder) => {
+    console.log("Estos son los datos de las ordenes", dataOrder);
+    makePay(dataOrder, token)
+      .then((res) => {
+        console.log(res.data);
+        console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
+        let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
+        openWindowPSExternal(direccion_url_pse);
+        console.log("El pago se registro");
+        Swal.fire({
+          icon: 'success',
+          title: '¡Tu compra ha sido registrada!',
+          text: 'La compra se ha realizado exitosamente.',
+        });
+      }).catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Ha ocurrido un error procesando el pago!',
+          
+        })
+      });
+      
+  }
   /* Generar referencia de pago de efecty */
-  const generateEfectyREF = (data ,descriptionOrder) => {
+  const generateEfectyREF = (data, descriptionOrder) => {
     referenciaPago(data, token)
       .then((res) => {
         console.log(res.data);
@@ -476,7 +560,7 @@ function AddressCart() {
               ReactDOM.render(
                 <div style={containerStyles}>
                   <PDFViewer style={viewerStyles}>
-                    <PDFContent closeModalPDF={newWindow.close} dataRefEfecty={newDataRef} totalAmount={subtotal} description={descriptionOrder}/>
+                    <PDFContent closeModalPDF={newWindow.close} dataRefEfecty={newDataRef} totalAmount={subtotal} description={descriptionOrder} />
                   </PDFViewer>
                 </div>,
                 newWindow.document.body
@@ -528,7 +612,8 @@ function AddressCart() {
     const fetchIp = async () => {
       try {
         const response = await axios.get('https://api.ipify.org?format=json');
-        const data = response.data;
+        const data = response.data.ip;
+        console.log(data);
         setIpAddress(data);
       } catch (error) {
         console.error(error);
@@ -571,8 +656,10 @@ function AddressCart() {
       getAddressById();
     }
 
-    if (modalData) {
-      console.log(modalData);
+    if (modalDataTarjetas || modalDataPSE) {
+      console.log("Hola", modalDataTarjetas);
+      console.log("Hola", modalDataPSE);
+      handleSubmitOrderPaymentCard();
     }
 
     if (showPDF) {
@@ -580,7 +667,7 @@ function AddressCart() {
     }
 
 
-  }, [activeStep, token, selectedAddressId, showPDF]);
+  }, [activeStep, token, selectedAddressId, showPDF, modalDataPSE, modalDataTarjetas]);
 
   return (
     <>
@@ -1269,7 +1356,11 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <CashDeliveryOTP phone={dataAddress[0]?.phone} closeModalOTP={closeModalOTP} />
+          <CashDeliveryOTP phone={dataAddress[0]?.phone} 
+          closeModalOTP={closeModalOTP} 
+          addressId={selectedAddressId} 
+          descriptionOrder={descriptionOrder} 
+          cupon={cupon}/>
         </ModalBody>
       </Modal>
 
