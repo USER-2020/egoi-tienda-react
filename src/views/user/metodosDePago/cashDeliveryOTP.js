@@ -7,6 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { auth } from '../../../services/firebase.config';
 import Swal from 'sweetalert2';
 import { placeOrder } from '../../../services/metodosDePago';
+import {TailSpin} from 'react-loader-spinner';
 
 function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder }) {
   const [otp, setOTP] = useState('');
