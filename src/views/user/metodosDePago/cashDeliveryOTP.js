@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'reactstrap';
-import OtpInput from 'react-otp-input';
+import { Card, Col, Row, Button, FormGroup, Form, Input, InputGroupText, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import VerificationInput from "react-verification-input";
+import './cash_delivery.css';
+import OtpInput from 'react-otp-input'; // Cambio de nombre aquí
+import { Loader, TailSpin } from 'react-loader-spinner';
 import PhoneInput from 'react-phone-input-2';
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
 import { auth } from '../../../services/firebase.config';
 import Swal from 'sweetalert2';
 import { placeOrder } from '../../../services/metodosDePago';
-import {TailSpin} from 'react-loader-spinner';
 
-function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder }) {
+
+function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon , descriptionOrder }) {
   const [otp, setOTP] = useState('');
   const [loading, setLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
-  const [phoneUser, setPhoneUser] = useState('');
+  const [phoneUser, setPhoneUser] = useState("");
 
   const handleOTPChange = (value) => {
     setOTP(value);
   };
+
+  /* Funcion de recatcahp */
+
 
   const onCaptchaVerify = () => {
     if (!window.RecaptchaVerifier) {
@@ -25,6 +31,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
         'size': 'invisible',
         'callback': (response) => {
           onSignUp();
+
         },
         'expired-callback': () => {
           // Response expired. Ask user to solve reCAPTCHA again.
@@ -32,7 +39,8 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
         }
       }, auth);
     }
-  };
+
+  }
 
   const onSignUp = () => {
     setLoading(true);
@@ -40,70 +48,84 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
 
     const appVerifier = window.recaptchaVerifier;
 
-    const formattedPhone = '+' + phoneUser;
-    signInWithPhoneNumber(auth, formattedPhone, appVerifier)
+    const formathPhone = "+" + phoneUser;
+    signInWithPhoneNumber(auth, formathPhone, appVerifier)
       .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
         setLoading(false);
         setShowOtp(true);
-        toast.success('Código enviado con éxito!');
-      })
-      .catch((error) => {
+        console.log(formathPhone);
+        toast.success('Codigo enviado con exito!');
+
+        // ...
+      }).catch((error) => {
         console.log(error);
         setLoading(false);
         // Error; SMS not sent
         // ...
       });
-  };
+
+  }
 
   const makePlaceOrder = () => {
     placeOrder(addressId, cupon, descriptionOrder)
-      .then((res) => {
-        console.log('Orden enviada por OTP');
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-  };
+    .then((res)=>{
+      console.log("Orden enviada por OTP");
+      console.log(res);
+
+    })
+    .catch((err)=> console.log(err));
+  }
+  
 
   const onOTPVerify = () => {
     setLoading(true);
-    window.confirmationResult
-      .confirm(otp)
-      .then(async (res) => {
-        console.log(res);
-        setLoading(false);
-        makePlaceOrder();
-        closeModalOTP();
-        Swal.fire('¡Tu compra fue verificada!', '¡Gracias por comprar con nosotros!', 'success');
+    window.confirmationResult.confirm(otp).then(async(res)=>{
+      console.log(res);
+      setLoading(false);
+      makePlaceOrder();
+      closeModalOTP();
+      Swal.fire(
+        '¡Tu compra fue verificada!',
+        '¡Gracias por comprar con nosotros!',
+        'success'
+      )
+    }).catch((error) => {
+      console.log(error);
+      setLoading(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡El codigo parece incorrecto!'
+        
       })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: '¡El código parece incorrecto!',
-        });
-      });
-  };
+      
+    })
 
-  useEffect(() => {
-    if (phone) {
+    
+  }
+
+
+  useEffect(()=>{
+    if(phone){
+
       console.log(phone);
       setPhoneUser(phone);
     }
 
-    let cleanedCoupon = 0;
-    if (cupon && cupon !== '') {
-      cleanedCoupon = cupon;
+    let cuponLimpio = 0;
+    if(cupon && cupon !== ""){
+      cuponLimpio = cupon;
     }
-
-    if (addressId || cupon || descriptionOrder) {
-      console.log('Direccion id', addressId);
-      console.log('Cupon', cleanedCoupon);
-      console.log('Descripcion', descriptionOrder);
+    if(addressId || cupon ||descriptionOrder){
+      console.log("Direccion id",addressId);
+      console.log("Cupon",cuponLimpio);
+      console.log("Descripcion",descriptionOrder);
     }
-  }, [phone, cupon, addressId, descriptionOrder]);
+    
+  })
 
   return (
     <>
