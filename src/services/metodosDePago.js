@@ -43,7 +43,7 @@ export const makePay = (data, token) =>
     }});
 
 //Registar compra despues del OTP
-export const placeOrder = (addressId, cuponLimpio, descriptionOrder) =>
+export const placeOrder = (addressId, cuponLimpio, descriptionOrder, token) =>
     axios.get(`${urlBase}/customer/order/place` , {
         params:{
             address_id:addressId,
@@ -51,7 +51,8 @@ export const placeOrder = (addressId, cuponLimpio, descriptionOrder) =>
             order_note:descriptionOrder
 
         },
-        headers:{
-            'Content-Type': 'application/json'
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`   
         }
     })

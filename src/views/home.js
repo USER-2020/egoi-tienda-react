@@ -17,6 +17,7 @@ import {
   InputGroupAddon,
   Input,
   Button,
+  Modal, ModalBody
 } from "reactstrap";
 import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
@@ -31,14 +32,21 @@ import Populares from "../components/home/populares";
 import Bannerdown from "../components/home/bannerdown";
 import HeaderResponsive from "../components/headerResponsive";
 
+import Popup from "./user/popup";
+
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
+  const [modalPopup, setModalPopup] = useState(true);
 
   const toggleLogin = () => {
     setIsLoggedIn(!isLoggedIn);
   };
+
+  const handleModalData = () =>{
+    setModalPopup(false);
+  }
   return (  
 
     // <Nav/>
@@ -53,6 +61,17 @@ const Home = (props) => {
       <Populares/>
       <Bannerdown/>
       <Footer />
+      {/* Modal popup */}
+      <Modal
+        className="modal-dialog-centered modal-lg"
+        toggle={() => setModalPopup(false)}
+        isOpen={modalPopup}
+        
+      >
+        <ModalBody>
+          <Popup handleModalData={handleModalData} />
+        </ModalBody>
+      </Modal>
     </>
     // <h1>Home</h1>
     

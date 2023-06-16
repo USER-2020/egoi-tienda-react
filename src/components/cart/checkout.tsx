@@ -493,7 +493,9 @@ function AddressCart() {
         console.log(res.data);
         console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
         let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
-        openWindowPSExternal(direccion_url_pse);
+        if(direccion_url_pse !== null){
+          openWindowPSExternal(direccion_url_pse);
+        }
         console.log("El pago se registro");
         Swal.fire({
           icon: 'success',
@@ -1330,7 +1332,12 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <EfectyModal totalAmount={subtotal} closeEfectyModal={closeModalEfecty} dataRef={dataRef} />
+          <EfectyModal totalAmount={subtotal} 
+          closeEfectyModal={closeModalEfecty} 
+          dataRef={dataRef} 
+          addressId={selectedAddressId} 
+          descriptionOrder={descriptionOrder} 
+          cupon={cupon}/>
         </ModalBody>
       </Modal>
 
