@@ -10,6 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { auth } from '../../../services/firebase.config';
 import Swal from 'sweetalert2';
 import { placeOrder } from '../../../services/metodosDePago';
+import { getCurrentUser } from './../../../helpers/Utils';
 
 
 function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon , descriptionOrder }) {
@@ -24,6 +25,9 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon , descriptionO
 
   /* Funcion de recatcahp */
 
+
+  const currenUser = getCurrentUser();
+  const token = currenUser.token;
 
   const onCaptchaVerify = () => {
     if (!window.RecaptchaVerifier) {
@@ -70,7 +74,12 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon , descriptionO
   }
 
   const makePlaceOrder = () => {
-    placeOrder(addressId, cupon, descriptionOrder)
+    let cuponLimpio = 0;
+    if(cupon && cupon !== ""){
+      cuponLimpio = cupon;
+    }
+    console.log(cuponLimpio);
+    placeOrder(addressId, cuponLimpio, descriptionOrder, token)
     .then((res)=>{
       console.log("Orden enviada por OTP");
       console.log(res);
