@@ -67,6 +67,8 @@ function AddressCart() {
 
   const [deptos, setDeptos] = useState([]);
 
+  const [dataOrderDetail, setDataOrderDetail]= useState([]);
+
 
   const [cupon, setCupon] = useState("");
   const [discountCoupon, setDiscountCoupon] = useState("");
@@ -297,6 +299,7 @@ function AddressCart() {
     setModalTarjetaCredito(false);
     setModalPse(false);
     setModalTarjetaDebito(false);
+   
 
   };
 
@@ -378,6 +381,7 @@ function AddressCart() {
 
       if (discountCoupon && discountCoupon.total !== undefined) {
         amountValue = discountCoupon.total; // Si hay un cupón aplicado, asigna el valor del total con descuento
+        console.log("precio con descuento", amountValue);
       }
       /* The code is checking if there is a variable called "cupon" and if it is not undefined. If it
       exists, it assigns its value to the variable "cuponCode". If it doesn't exist or is undefined,
@@ -476,7 +480,7 @@ function AddressCart() {
         order_note: dataAddress[0].local_description// como llegar infor traida de la direccion seleccionada por Id
       }
 
-
+      
       verifyPurchase(dataOrder);
     }
   }
@@ -488,6 +492,12 @@ function AddressCart() {
   /* Verificar compra */
   const verifyPurchase = (dataOrder) => {
     console.log("Estos son los datos de las ordenes", dataOrder);
+    if (modalDataTarjetas || modalDataPSE) {
+      console.log("Hola", modalDataTarjetas);
+      console.log("Hola", modalDataPSE);
+      
+      handleSubmitOrderPaymentCard();
+    }
     makePay(dataOrder, token)
       .then((res) => {
         console.log(res.data);
@@ -562,7 +572,9 @@ function AddressCart() {
               ReactDOM.render(
                 <div style={containerStyles}>
                   <PDFViewer style={viewerStyles}>
-                    <PDFContent closeModalPDF={newWindow.close} dataRefEfecty={newDataRef} totalAmount={subtotal} description={descriptionOrder} />
+                    <PDFContent closeModalPDF={newWindow.close} dataRefEfecty={newDataRef} 
+                    totalAmount={total} 
+                    description={descriptionOrder} />
                   </PDFViewer>
                 </div>,
                 newWindow.document.body
@@ -658,11 +670,7 @@ function AddressCart() {
       getAddressById();
     }
 
-    if (modalDataTarjetas || modalDataPSE) {
-      console.log("Hola", modalDataTarjetas);
-      console.log("Hola", modalDataPSE);
-      handleSubmitOrderPaymentCard();
-    }
+    
 
     if (showPDF) {
       console.log("se muestra el pdf", showPDF);
@@ -1305,7 +1313,11 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <TarjetaCreditoModal handleModalData={handleModalData} />
+          <TarjetaCreditoModal 
+          // handleModalData={handleModalData} 
+          dataOrder={dataAddress}
+          total={total} 
+          discountCoupon={discountCoupon}/>
         </ModalBody>
       </Modal>
 
@@ -1332,7 +1344,7 @@ function AddressCart() {
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
-          <EfectyModal totalAmount={subtotal} 
+          <EfectyModal totalAmount={total} 
           closeEfectyModal={closeModalEfecty} 
           dataRef={dataRef} 
           addressId={selectedAddressId} 
