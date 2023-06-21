@@ -1,0 +1,17 @@
+.custom-tooltip {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+@media (max-width: 768px) {
+    /* Estilos para pantallas con un ancho máximo de 768px */
+   
+  }
+  

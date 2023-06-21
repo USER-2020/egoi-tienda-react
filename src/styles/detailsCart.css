@@ -119,6 +119,7 @@
     border-radius: 32px;
     display: flex;
     align-items: center;
+    text-align: center;
 }
 
 
@@ -216,6 +217,7 @@
     --placeholder-icon-nombre:url('../assets/egoi_icons/user-1.svg');
     --placeholder-icon-cellphone: url('../assets/egoi_icons/Device.svg');
     --placeholder-icon-map: url('../assets/egoi_icons/Map\ Point.svg');
+    --placeholder-icon-promocion: url('../assets/egoi_icons/Sale.svg');
     
 
 }
@@ -379,6 +381,9 @@ input[placeholder="Pais"]::placeholder, input[placeholder="Ciudad"]::placeholder
     background-image: var(--placeholder-icon-map);
 }
 
+input[placeholder="Cupón promocional"]::placeholder{
+  background-image: var(--placeholder-icon-promocion);
+}
 
 
 input[type="checkbox"]{
@@ -734,6 +739,7 @@ input[type="checkbox"]:checked {
         text-decoration: none;
         color: white;
         font-size: 14px;
+        text-align: center;
       }
 
       .containerCheckoutResponsive .factura .title{

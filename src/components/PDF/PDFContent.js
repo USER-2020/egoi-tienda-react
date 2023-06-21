@@ -84,7 +84,7 @@ const PDFContent = ({ closeModalPDF, dataRefEfecty, totalAmount , description}) 
                     </View>
                     <View style={styles.infoContainer}>
                         <Text style={styles.infoLabel}>Total a pagar:</Text>
-                        <Text style={styles.infoValue}>${totalAmount}</Text>
+                        <Text style={styles.infoValue}>{totalAmount}</Text>
                     </View>
                     <View style={styles.description}>
                         <Text>Descripción del producto:</Text>
