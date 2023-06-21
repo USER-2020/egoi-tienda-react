@@ -135,7 +135,7 @@ function DetailProduct() {
             } else {
 
             }
-            history.push(`/detailCart/address/${buyNowProduct}/${costoEnvio}/$${totalAPagar}/${descuento}`);
+            history.push(`/detailCart/address/${buyNowProduct.toLocaleString()}/${costoEnvio.toLocaleString()}/$${totalAPagar.toLocaleString()}/${descuento}`);
 
         }
         else {
