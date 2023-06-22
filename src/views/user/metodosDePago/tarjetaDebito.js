@@ -7,6 +7,8 @@ import './styles-tarjetas.css';
 import { getCurrentUser } from '../../../helpers/Utils';
 import Swal from 'sweetalert2';
 import { typePayment, allBanksById, makePay } from '../../../services/metodosDePago';
+import { ThreeDots } from 'react-loader-spinner';
+import ReactDOM from 'react-dom';
 
 
 
@@ -271,13 +273,32 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
         // Mostrar SweetAlert de carga
         Swal.fire({
             title: 'Procesando pago',
-            html: 'Por favor, espera...',
+            html: `
+              <div style="display: flex; justify-content: center; align-items: center;">
+                <div id="loaderContainer"></div>
+              </div>
+            `,
             allowOutsideClick: false,
             showConfirmButton: false,
-            onBeforeOpen: () => {
-                Swal.showLoading();
+            didOpen: () => {
+              const loaderContainer = document.getElementById('loaderContainer');
+              if (loaderContainer) {
+                ReactDOM.render(
+                  <ThreeDots height={80} width={80} color="#FC5241" />,
+                  loaderContainer
+                );
+              }
             },
-        });
+            willClose: () => {
+              // Realizar acciones después de cerrar el cuadro de diálogo
+            },
+            onClose: () => {
+              const loaderContainer = document.getElementById('loaderContainer');
+              if (loaderContainer) {
+                ReactDOM.unmountComponentAtNode(loaderContainer);
+              }
+            },
+          });
         makePay(dataOrder, token)
             .then((res) => {
 

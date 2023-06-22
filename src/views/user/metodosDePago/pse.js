@@ -5,6 +5,8 @@ import { allBanks } from '../../../services/bank';
 import { getCurrentUser } from '../../../helpers/Utils';
 import Swal from 'sweetalert2';
 import { makePay } from '../../../services/metodosDePago';
+import { ThreeDots } from 'react-loader-spinner';
+import ReactDOM from 'react-dom';
 
 function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder }) {
 
@@ -183,11 +185,30 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
         // Mostrar SweetAlert de carga
         Swal.fire({
             title: 'Procesando pago',
-            html: 'Por favor, espera...',
+            html: `
+              <div style="display: flex; justify-content: center; align-items: center;">
+                <div id="loaderContainer"></div>
+              </div>
+            `,
             allowOutsideClick: false,
             showConfirmButton: false,
-            onBeforeOpen: () => {
-                Swal.showLoading();
+            didOpen: () => {
+                const loaderContainer = document.getElementById('loaderContainer');
+                if (loaderContainer) {
+                    ReactDOM.render(
+                        <ThreeDots height={80} width={80} color="#FC5241" />,
+                        loaderContainer
+                    );
+                }
+            },
+            willClose: () => {
+                // Realizar acciones después de cerrar el cuadro de diálogo
+            },
+            onClose: () => {
+                const loaderContainer = document.getElementById('loaderContainer');
+                if (loaderContainer) {
+                    ReactDOM.unmountComponentAtNode(loaderContainer);
+                }
             },
         });
         makePay(dataOrder, token)
@@ -228,8 +249,8 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
         if (valueBank || identificationType) {
             console.log(valueBank);
             console.log(identificationType);
-            
-            
+
+
         }
     }, [valueBank, identificationType]);
 
