@@ -20,7 +20,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
     const [cardAno, setCardAno] = useState("");
     const [cardMonth, setCardMont] = useState("");
     const [cardName, setCardName] = useState("");
-    const [cardCuotes, setCardCuotes] = useState("1");
+    const [cardCuotes, setCardCuotes] = useState("");
     const [identificationType, setIdentificationType] = useState("");
     const [identificationNumber, setIdentificationNumber] = useState("");
     const [selectedBank, setSelectedBank] = useState();
@@ -367,28 +367,6 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                         <Card style={{ border: 'none' }}>
                             <Form>
 
-                                {/* <FormGroup>
-                                    <Input addon={true}
-                                        name="typeIdentification"
-                                        classNanme="form-control"
-                                        style={{
-                                            borderRadius: "50px",
-                                        }}
-                                        value={selectTypeCard}
-                                        type='select'
-                                        onChange={handleSelectChangeTypeCard}
-                                    >
-                                        <option value="">Tipo de tarjeta</option>
-                                        {banks.map((banco, index) => {
-                                            if (banco.name !== "Efecty" && banco.name !== "PSE") {
-                                                return <option value={banco.id}>{banco.name}</option>;
-                                            }
-                                            return null
-                                        })}
-
-                                    </Input>
-                                </FormGroup> */}
-
                                 <FormGroup >
 
 
@@ -420,18 +398,6 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
                                         />
 
-                                        {/* <input {...getExpiryDateProps({ onChange: handleChangeExpiryDate })}
-
-                                            style={{ width: '30%', marginRight: '' }}
-                                        />
-
-
-                                        <input
-                                            {...getCVCProps({ onChange: (e) => setCardCvc(e.target.value) })}
-                                            value={cardCvc}
-                                            style={{ width: '10%'}}
-                                        /> */}
-
                                     </PaymentInputsWrapper>
 
 
@@ -450,7 +416,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 borderColor: showTooltipMonth ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="YY"
+                                            placeholder="MM:01"
                                             value={cardMonth}
                                             onChange={handleMonthChangue}
                                             onBlur={handleMonthBlur}
@@ -474,7 +440,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 borderColor: showTooltipAnio ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="YY"
+                                            placeholder="YY:26"
                                             value={cardAno}
                                             onChange={handleAnioChangue}
                                             onBlur={handleAnioBlur}
@@ -514,53 +480,39 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
                                 <FormGroup style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
 
-                                    <Input addon={true}
-                                        name="Cuotes"
-                                        classNanme="form-control"
-                                        style={{
-                                            borderRadius: "50px",
-                                            width: "20%"
+                                    <InputGroup style={{width:'40%'}}>
+                                        <Input
+                                            name="Cuotes"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                                width: "20%"
 
-                                        }}
-                                        type="number"
-                                        placeholder="Cuotes"
-                                        value={cardCuotes}
-                                        onChange={(event) => setCardCuotes(event.target.value)}
-                                    />
+                                            }}
+                                            type="number"
+                                            placeholder="Cuotas"
+                                            value={cardCuotes}
+                                            onChange={(event) => setCardCuotes(event.target.value)}
+                                        />
 
-                                    <Input addon={true}
-                                        name="contactPersonName"
-                                        classNanme="form-control"
-                                        style={{
-                                            borderRadius: "50px",
-                                            width: "80%"
-                                        }}
-                                        placeholder="Nombre en la tarjeta"
-                                        value={cardName}
-                                        onChange={(event) => setCardName(event.target.value.toUpperCase())}
-                                    />
+                                    </InputGroup>
+
+                                    <InputGroup style={{width:'60%'}}>
+                                        <Input addon={true}
+                                            name="contactPersonName"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                                width: "80%"
+                                            }}
+                                            placeholder="Nombre en la tarjeta"
+                                            value={cardName}
+                                            onChange={(event) => setCardName(event.target.value.toUpperCase())}
+                                        />
+                                    </InputGroup>
 
 
                                 </FormGroup>
-
-                                {/* <FormGroup>
-                                    <Input addon={true}
-                                        name="bank"
-                                        classNanme="form-control"
-                                        style={{
-                                            borderRadius: "50px",
-                                        }}
-                                        value={valueBank}
-                                        type='select'
-                                        onChange={handleSelectChangeBank}
-                                    >
-                                        <option value="">Bancos</option>
-                                        {banksById && banksById.map((banco) => (
-                                            <option value={banco.id} key={banco.id}>{banco.name}</option>
-                                        ))}
-
-                                    </Input>
-                                </FormGroup> */}
 
                                 <FormGroup>
                                     <Input addon={true}
@@ -597,8 +549,8 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={handleSubmitOrderPaymentCard}>Registrar Pago</a>
+                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center" ,backgroundColor: "#FC5241", alignItems:"center", borderRadius: "32px"}} onClick={handleSubmitOrderPaymentCard}>Registrar Pago</a>
                                     </div>
                                 </FormGroup>
 

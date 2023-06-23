@@ -281,24 +281,24 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
             allowOutsideClick: false,
             showConfirmButton: false,
             didOpen: () => {
-              const loaderContainer = document.getElementById('loaderContainer');
-              if (loaderContainer) {
-                ReactDOM.render(
-                  <ThreeDots height={80} width={80} color="#FC5241" />,
-                  loaderContainer
-                );
-              }
+                const loaderContainer = document.getElementById('loaderContainer');
+                if (loaderContainer) {
+                    ReactDOM.render(
+                        <ThreeDots height={80} width={80} color="#FC5241" />,
+                        loaderContainer
+                    );
+                }
             },
             willClose: () => {
-              // Realizar acciones después de cerrar el cuadro de diálogo
+                // Realizar acciones después de cerrar el cuadro de diálogo
             },
             onClose: () => {
-              const loaderContainer = document.getElementById('loaderContainer');
-              if (loaderContainer) {
-                ReactDOM.unmountComponentAtNode(loaderContainer);
-              }
+                const loaderContainer = document.getElementById('loaderContainer');
+                if (loaderContainer) {
+                    ReactDOM.unmountComponentAtNode(loaderContainer);
+                }
             },
-          });
+        });
         makePay(dataOrder, token)
             .then((res) => {
 
@@ -371,27 +371,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                         <Card style={{ border: 'none' }}>
                             <Form>
 
-                                {/* <FormGroup>
-                                    <Input addon={true}
-                                        name="typeIdentification"
-                                        classNanme="form-control"
-                                        style={{
-                                            borderRadius: "50px",
-                                        }}
-                                        value={selectTypeCard}
-                                        type='select'
-                                        onChange={handleSelectChangeTypeCard}
-                                    >
-                                        <option value="">Tipo de tarjeta</option>
-                                        {banks.map((banco, index) => {
-                                            if (banco.name !== "Efecty" && banco.name !== "PSE") {
-                                                return <option value={banco.id}>{banco.name}</option>;
-                                            }
-                                            return null
-                                        })}
 
-                                    </Input>
-                                </FormGroup> */}
 
                                 <FormGroup >
 
@@ -424,18 +404,6 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
 
                                         />
 
-                                        {/* <input {...getExpiryDateProps({ onChange: handleChangeExpiryDate })}
-
-                                            style={{ width: '30%', marginRight: '' }}
-                                        />
-
-
-                                        <input
-                                            {...getCVCProps({ onChange: (e) => setCardCvc(e.target.value) })}
-                                            value={cardCvc}
-                                            style={{ width: '10%'}}
-                                        /> */}
-
                                     </PaymentInputsWrapper>
 
 
@@ -454,7 +422,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                                                 borderColor: showTooltipMonth ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="YY"
+                                            placeholder="MM:01"
                                             value={cardMonth}
                                             onChange={handleMonthChangue}
                                             onBlur={handleMonthBlur}
@@ -478,7 +446,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                                                 borderColor: showTooltipAnio ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="YY"
+                                            placeholder="YY:28"
                                             value={cardAno}
                                             onChange={handleAnioChangue}
                                             onBlur={handleAnioBlur}
@@ -550,25 +518,6 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                                     />
                                 </FormGroup>
 
-                                {/* <FormGroup>
-                                    <Input addon={true}
-                                        name="bank"
-                                        classNanme="form-control"
-                                        style={{
-                                            borderRadius: "50px",
-                                        }}
-                                        value={valueBank}
-                                        type='select'
-                                        onChange={handleSelectChangeBank}
-                                    >
-                                        <option value="">Bancos</option>
-                                        {banksById && banksById.map((banco) => (
-                                            <option value={banco.id} key={banco.id}>{banco.name}</option>
-                                        ))}
-
-                                    </Input>
-                                </FormGroup> */}
-
                                 <FormGroup>
                                     <Input addon={true}
                                         name="typeIdentification"
@@ -604,8 +553,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={handleSubmitOrderPaymentCard}>Registrar Pago</a>
+                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={handleSubmitOrderPaymentCard}>Registrar Pago</a>
                                     </div>
                                 </FormGroup>
 
