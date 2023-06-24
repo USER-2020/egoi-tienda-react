@@ -17,7 +17,7 @@ function DetailPedido() {
                             <p>09 Feb, 2023</p>
                         </div>
                     </div>
-                    <div className="direcciones">
+                    <div className="direccionesPedido">
                         <div className="direccionEnv">
                             <h6>Direccion  de envio</h6>
                             <p>Calle 10 # 10 - 20,

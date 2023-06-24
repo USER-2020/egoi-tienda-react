@@ -114,7 +114,7 @@
     gap: 12px;
     width:70%;
 }
-.datosPrincipales, .direcciones{
+.datosPrincipales, .direccionesPedido{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -124,8 +124,8 @@
 
 .datosPrincipales .fechaPedido h6,
 .datosPrincipales .nroPedido h6,
-.direcciones .direccionEnv h6,
-.direcciones .direccionCompra h6{
+.direccionesPedido .direccionEnv h6,
+.direccionesPedido .direccionCompra h6{
     font-size: 12px;
     color: #A2A1A7;
 }
@@ -137,7 +137,7 @@
     text-align: end;
 }
 
-.containerPedidoIzq .direcciones .direccionCompra{
+.containerPedidoIzq .direccionesPedido .direccionCompra{
     display: flex;
     flex-direction: column;
     justify-content: end;
