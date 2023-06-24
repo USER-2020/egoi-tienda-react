@@ -1,0 +1,45 @@
+.containerSuccessPurchase{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    gap: 20px;
+}
+
+.containerSuccessHeader{
+    display:flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    text-align: center;
+}
+
+.containerSuccessHeader h5 {
+    color: #089705;
+    font-size: 22px;
+}
+
+.containerSuccessHeader p {
+    font-size: 15px;
+}
+
+/* Botones */
+.containerSuccessOptions{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+}
+
+.containerSuccessOptions .btnIrhome{
+    background-color: #FC5241;
+    color: white;
+    border-radius: 32px;
+    
+}
+
+.containerSuccessOptions .btnIrpedidos{
+    border-color: #FC5241;
+    color: #FC5241;
+    border-radius: 32px;
+}

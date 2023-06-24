@@ -26,6 +26,7 @@ import axios from 'axios';
 import { makePay, referenciaPago } from '../../services/metodosDePago';
 import { PDFViewer } from '@react-pdf/renderer';
 import PDFContent from '../PDF/PDFContent';
+import SuccessPurchase from '../../views/user/success_purchase';
 
 
 
@@ -58,6 +59,9 @@ function AddressCart() {
   const [modalDataPSE, setModalDataPSE] = useState("");
   const [modalDataTarjetas, setModalDataTarjetas] = useState("");
 
+
+  //Modal de pedido exitoso
+  const [modalSuccessPurchase, setModalSuccessPurchase] = useState(false);
 
 
   // Modales de metodos de pagos 
@@ -1009,6 +1013,10 @@ function AddressCart() {
                   <a href="#" onClick={() => handleStepClick(2, 50)} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Regresar al checkout</a>
                 </div>
+                <div className="toPay">
+                  <a href="#" onClick={()=>setModalSuccessPurchase(true)}>Finalizar compra</a>
+                </div>
+                
               </>
             )}
           </div>
@@ -1270,7 +1278,7 @@ function AddressCart() {
               </div>
 
               <div className="containerToPayResponsive">
-                <a href="#">Finalizar compra</a>
+                <a href="#" onClick={()=>setModalSuccessPurchase(true)}>Finalizar compra</a>
               </div>
             </div>
           </div>
@@ -1279,21 +1287,6 @@ function AddressCart() {
 
 
       </div>
-
-      {/* Modal PDF */}
-      {/* <Modal
-        className="modal-dialog-centered modal-mx"
-        toggle={() => closeModalPDF()}
-        isOpen={showPDF}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
-      >
-        <ModalBody>
-          <PDFViewer>
-            <PDFContent closeModalPDF={closeModalPDF} />
-          </PDFViewer>
-        </ModalBody>
-      </Modal> */}
 
       {/* Modales */}
       <Modal
@@ -1386,7 +1379,7 @@ function AddressCart() {
 
       {/* Modal checkout pse */}
       <Modal
-        className="modal-dialog-centered modal-md"
+        className="modal-dialog-centered modal-sm"
         toggle={() => setModalPse(false)}
         isOpen={modalPse}
         onOpened={() => setIsScrollModalEnabled(false)}
@@ -1421,6 +1414,20 @@ function AddressCart() {
             descriptionOrder={descriptionOrder}
             cupon={cupon} />
         </ModalBody>
+      </Modal>
+
+      {/* Modal compra exitosa */}
+      <Modal
+        className="modal-dialog-centered modal-md"
+        toggle={() => setModalSuccessPurchase(false)}
+        isOpen={modalSuccessPurchase}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
+      >
+        <ModalBody>
+          <SuccessPurchase/>
+        </ModalBody>
+
       </Modal>
 
 

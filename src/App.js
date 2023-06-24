@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import AppLocale from '../src/lang';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { isMultiColorActive, adminRoot, UserRole, checkout, addCart } from './constants/defaultValues.js';
+import { isMultiColorActive, adminRoot, UserRole, checkout, addCart, myorders } from './constants/defaultValues.js';
 import  ProtectedRoute  from './helpers/authHelper';
 import { getCurrentUser } from './helpers/Utils';
 import { ModalBody, Modal } from 'reactstrap';
@@ -13,7 +13,7 @@ import Login from "./views/user/login.js";
 
 
 // const ViewLogin = React.lazy(()=>import(/* webpackChunkName: "views" */ './views/user/userRoute'));
-
+const ViewMyOrders = React.lazy(() => import(/* webpackChunkName: "views" */ './views/myOrders'));
 const ViewDetailProduct = React.lazy(() => import(/* webpackChunkName: "views" */ './views/detailsProduct'));
 const ViewDetailCartAddress = React.lazy(() => import(/* webpackChunkName: "views" */ './views/checkout/addressCart'));
 const ViewDetailCart = React.lazy(() => import(/* webpackChunkName: "views" */ './views/cartShopping'));
@@ -60,6 +60,7 @@ const App = (props) => {
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/brand/:brand/:brandId" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/detailsProduct/:id/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
+              <ProtectedRoute path={myorders} viewComponent={ViewMyOrders} />
               <ProtectedRoute path={checkout} viewComponent={ViewDetailCartAddress} />
               <ProtectedRoute path={addCart} viewComponent={ViewDetailCart}/>
               <Redirect to="/error" />

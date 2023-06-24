@@ -1,0 +1,242 @@
+.containerMenuAndContenidoMisOrdenes{
+    display: flex;
+    flex-direction: row;
+    gap: 90px;
+    margin-top: 30px;
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes{
+    width: 24%;
+    
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes ul{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion{
+    list-style: none;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: start;
+    align-items: center;
+    align-self: center;
+    border: 1px solid #A2A1A729;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+
+}
+
+/* .containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion:active, */
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion.active {
+  color: white;
+  background-color: #FC5241;
+  border: none;
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion.active .img_opcion  path{
+    fill: white;
+    
+    
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.containerMenuAndContenidoMisOrdenes .contenidoMisOrdenes{
+    width: 76%;
+}
+
+
+
+/* Mis pedidos */
+.contenidoMisOrdenes .mispedidos .table thead tr th{
+    color: #A2A1A7;
+    font-size: 12px;
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr td {
+    font-size: 14px;
+    
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr td .opcionesDetallePedido{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr .opcionesDetallePedido .btnVerDetallesPedido{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 70px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background-color: #FC5241;
+    color: white;
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr .opcionesDetallePedido .btnCancelarPedido{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid #FC5241;
+    color: #FC5241;
+
+}
+
+/* Detail Pedido */
+.containerDetalleAndCard{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+.containerPedidoIzq{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width:70%;
+}
+.datosPrincipales, .direcciones{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.datosPrincipales .fechaPedido h6,
+.datosPrincipales .nroPedido h6,
+.direcciones .direccionEnv h6,
+.direcciones .direccionCompra h6{
+    font-size: 12px;
+    color: #A2A1A7;
+}
+
+.datosPrincipales .fechaPedido{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    text-align: end;
+}
+
+.direcciones .direccionCompra{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    text-align: end;
+}
+
+.containerCardDatos{
+    width: 30%;
+}
+
+.productoDetail{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    border: 1px solid #A2A1A729;
+    align-items: center;
+    padding: 16px;
+    border-radius: 24px;
+}
+
+.productoDetail .description{
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+.productoDetail .description h6{
+    font-size: 24px;
+    color:#A2A1A7 ;
+}
+
+.containerCardDatos{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    
+}
+
+.containerCardDatos .card {
+    padding: 16px;
+}
+
+.containerCardDatos .articulosPedidos,
+.containerCardDatos .subtotal,
+.containerCardDatos .impuesto,
+.containerCardDatos .Envio,
+.containerCardDatos .descuentoProducto,
+.containerCardDatos .cuponDescuento{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.containerCardDatos .totalAPagar{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerCardDatos .totalAPagar h6{
+    font-size: 14px;
+    color: #74737B;
+}
+.containerCardDatos .totalAPagar h5{
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.opcionesRastreoOrFacturar{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 15px;
+
+}
+
+.opcionesRastreoOrFacturar .rastrear{
+    color: white;
+    background-color: #FC5241;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-self: center;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.opcionesRastreoOrFacturar .facturar{
+    color: #FC5241;
+    border: 1px solid #FC5241;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-self: center;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+}
