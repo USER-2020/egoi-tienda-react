@@ -137,7 +137,7 @@
     text-align: end;
 }
 
-.direcciones .direccionCompra{
+.containerPedidoIzq .direcciones .direccionCompra{
     display: flex;
     flex-direction: column;
     justify-content: end;
