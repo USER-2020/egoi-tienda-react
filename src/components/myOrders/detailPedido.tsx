@@ -1,7 +1,11 @@
 import React from 'react'
 import '../../styles/myOrders.css';
 import { Card } from 'reactstrap';
-function DetailPedido() {
+function DetailPedido({closeDetailOpenTrack}) {
+
+    const handleChangueTrack =() =>{
+        closeDetailOpenTrack();
+    }
     return (
         <div className='containerDetalleAndCard'>
             <>
@@ -86,7 +90,7 @@ function DetailPedido() {
                         </div>
                     </Card>
                     <div className="opcionesRastreoOrFacturar">
-                        <a href="#" className='btn rastrear'>
+                        <a href="#" className='btn rastrear' onClick={()=> handleChangueTrack()}>
                             <svg width="24" height="24" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16.5 13C16.5 14.6569 15.1569 16 13.5 16C11.8431 16 10.5 14.6569 10.5 13C10.5 11.3431 11.8431 10 13.5 10C15.1569 10 16.5 11.3431 16.5 13Z" fill="white" />
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 2C7.42487 2 2.5 6.92487 2.5 13C2.5 19.0751 7.42487 24 13.5 24C19.5751 24 24.5 19.0751 24.5 13C24.5 6.92487 19.5751 2 13.5 2ZM0.5 13C0.5 5.8203 6.3203 0 13.5 0C20.6797 0 26.5 5.8203 26.5 13C26.5 20.1797 20.6797 26 13.5 26C6.3203 26 0.5 20.1797 0.5 13Z" fill="white" />

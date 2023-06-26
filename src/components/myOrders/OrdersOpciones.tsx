@@ -11,25 +11,193 @@ import warning from '../../assets/egoi_icons/Warning.svg';
 import ModalCancelarPedido from './modalesOrdenes/modalCancelarPedido';
 import TableOrders from './tableOrders.tsx';
 import DetailPedido from './detailPedido.tsx';
+import TrackOrder from '../tracking/trackOrder.tsx';
+import TrackSearch from '../tracking/trackSearch.tsx';
+import Lista from '../favList/lista.tsx';
+import ChatWithSeller from '../chat/chatWithSeller.tsx';
+import InfoProfile from '../profile/infoProfile.tsx';
+import DireccionesPerfil from '../direccionesProfile/direcciones.tsx';
+import TicketSuport from '../ticketSuport/ticketSuport.tsx';
 function Orders() {
-    
 
-    const [activeOption, setActiveOption] = useState(null);
-    const [modalCancelOrder, setModalCancelOrder] = useState(false);
+
+    const [activeOption, setActiveOption] = useState('MisPedidos');
+    const [selectedOption, setSelectedOption] = useState('Mis Pedidos');
+
+    /* Flujo de componetnes mis pedidos */
+    const [misPedidos, setMisPedidos] = useState(true);
+    const [showTableOrder, setShowTableOrder] = useState(true);
+    const [showDetailOrder, setShowDetailOrder] = useState(false);
+    const [showTrackOrder, setShowTrackOrder] = useState(false);
+
+    /* Flujo de componetnes sigue tu pedido */
+    const [sigueTuPedido, setSigueTuPedido] = useState(false);
+    const [showTrackSearch, setShowTrackSearch] = useState(true);
+
+    /* Flujo de componetnes lista de deseos */
+    const [listaDeseos, setListaDeseos] = useState(false);
+    const [showFavList, setShowFavList] = useState(true);
+
+    /* Flujo de componetnes chatear con vendedores */
+    const [chatear, setChatear] = useState(false);
+    const [showChatVend, setShowChatVend] = useState(true);
+
+    /* Flujo de componentes informacion de perfil */
+    const [infoPerfil, setInfoPerfil] = useState(false);
+    const [showInfoPerfil, setShowInfoPerfil] = useState(true);
+
+    /* Flujo de componentes de direccion */
+    const [direcciones, setDirecciones] = useState(false);
+    const [showDirecciones, setShowDirecciones] = useState(true);
+
+    /* Flujo de componentes de ticekt de soporte */
+    const [ticket, setTicket] = useState(false);
+    const [showTicketSuport, setShowTicketSuport] = useState(true);
 
     const handleMenuOptionClick = (option) => {
         setActiveOption(option);
+        if (option === 'MisPedidos') {
+            closeDetailAndShowTable();
+            setSelectedOption('Mis Pedidos');
+        }
+        if (option === 'SigueTuPedido') {
+            closeMisPedidosAndShowTrack();
+            setSelectedOption('Sigue tu pedido');
+
+        }
+
+        if (option === 'ListaDeseos') {
+            closeSigueTuPedidoAndShowFavList();
+            setSelectedOption("Lista Deseos");
+        }
+
+        if (option === 'Chatear') {
+            closeListaDeseosAndShowChat();
+            setSelectedOption("Chatear con los vendedores");
+        }
+
+        if (option === 'InfoPerfil') {
+            closeChatearAndShowPerfil();
+            setSelectedOption("Información del perfil");
+        }
+
+        if (option === 'Direccion') {
+            closeInfoPerfilAndShowDirecciones();
+            setSelectedOption("Información de las direcciones");
+        }
+
+        if(option === 'Ticket'){
+            closeDireccionesAndShowTicket();
+            setSelectedOption("Crear un ticket");
+        }
     };
 
     const closeModalCancelOrder = () => {
-        setModalCancelOrder(false);
+        // setModalCancelOrder(false);
     }
+
+    const closeDireccionesAndShowTicket = ()=>{
+        setTicket(true);
+        setDirecciones(false);
+        setInfoPerfil(false);
+        setMisPedidos(false);
+        setSigueTuPedido(false);
+        setListaDeseos(false);
+        setChatear(false);
+
+    }
+
+    const closeInfoPerfilAndShowDirecciones = () => {
+        setDirecciones(true);
+        setInfoPerfil(false);
+        setMisPedidos(false);
+        setSigueTuPedido(false);
+        setListaDeseos(false);
+        setChatear(false);
+        setTicket(false);
+    }
+
+    const closeChatearAndShowPerfil = () => {
+        setInfoPerfil(true);
+        setMisPedidos(false);
+        setSigueTuPedido(false);
+        setListaDeseos(false);
+        setChatear(false);
+        setDirecciones(false);
+        setTicket(false);
+
+    }
+
+    const closeListaDeseosAndShowChat = () => {
+        setChatear(true);
+        setMisPedidos(false);
+        setSigueTuPedido(false);
+        setListaDeseos(false);
+        setInfoPerfil(false);
+        setDirecciones(false);
+        setTicket(false);
+
+    }
+
+    const closeSigueTuPedidoAndShowFavList = () => {
+        setListaDeseos(true);
+        setMisPedidos(false);
+        setSigueTuPedido(false);
+        setChatear(false);
+        setInfoPerfil(false);
+        setDirecciones(false);
+        setTicket(false);
+    }
+
+    const handleChangueTrackOrder = () => {
+        setShowTrackOrder(true);
+        setShowTrackSearch(false);
+    }
+
+    const closeMisPedidosAndShowTrack = () => {
+        setMisPedidos(false);
+        setSigueTuPedido(true);
+        setShowTrackSearch(true);
+        setShowTrackOrder(false);
+        setListaDeseos(false);
+        setChatear(false);
+        setInfoPerfil(false);
+        setDirecciones(false);
+        setTicket(false);
+    }
+
+    const closemodalAndOpenOtherModal = () => {
+        setShowTableOrder(false);
+        setShowDetailOrder(true);
+    }
+
+    const closeDetailAndShowTable = () => {
+        setShowTableOrder(true);
+        setShowDetailOrder(false);
+        setShowTrackOrder(false);
+        setMisPedidos(true);
+        setSigueTuPedido(false);
+        setListaDeseos(false);
+        setChatear(false);
+        setInfoPerfil(false);
+        setDirecciones(false);
+        setTicket(false);
+    }
+
+    const closeDetailShowTrack = () => {
+        setShowDetailOrder(false);
+        setShowTableOrder(false);
+        setShowTrackOrder(true);
+        setListaDeseos(false);
+    }
+
+
 
     return (
         <>
 
             <div className='container'>
-                <h6 style={{ color: '#74737B' }}>Mis Pedidos</h6>
+                <h6 style={{ color: '#74737B' }}>{selectedOption}</h6>
                 <div className="containerMenuAndContenidoMisOrdenes">
                     <div className="menuMisOrdenes">
                         <ul>
@@ -37,7 +205,7 @@ function Orders() {
                                 <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="img_opcion">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M16.3462 10.2956C16.7352 10.6877 16.7328 11.3208 16.3407 11.7098L13.7003 14.3299H26.2997L23.6593 11.7098C23.2672 11.3208 23.2648 10.6877 23.6538 10.2956C24.0428 9.90361 24.676 9.90115 25.068 10.2902L29.1392 14.3299H32C32.5523 14.3299 33 14.7776 33 15.3299C33 15.8822 32.5523 16.3299 32 16.3299H8C7.44772 16.3299 7 15.8822 7 15.3299C7 14.7776 7.44772 14.3299 8 14.3299H10.8608L14.932 10.2902C15.324 9.90115 15.9572 9.90361 16.3462 10.2956ZM12.3313 17.0103H27.6686C28.1494 17.0103 28.5593 17.0103 28.8977 17.0332C29.2524 17.0572 29.6004 17.1096 29.9423 17.2502C30.7207 17.5701 31.3416 18.1848 31.6658 18.9615C31.8085 19.3034 31.8616 19.6512 31.8859 20.0046C31.9091 20.3411 31.9091 20.7486 31.909 21.2251V21.295C31.9091 22.7765 31.9091 23.9399 31.8444 24.88C31.7786 25.8372 31.6424 26.6362 31.3336 27.3758C30.5665 29.2135 29.0962 30.6711 27.2486 31.4305C26.5057 31.7359 25.703 31.8707 24.7398 31.9359C23.7932 32 22.6214 32 21.1277 32H18.8722C17.3785 32 16.2068 32 15.2601 31.9359C14.2969 31.8707 13.4942 31.7359 12.7513 31.4305C10.9037 30.6711 9.43341 29.2135 8.66629 27.3758C8.35751 26.6362 8.22132 25.8372 8.1555 24.88C8.09086 23.9399 8.09086 22.7766 8.09087 21.295L8.09087 21.225C8.09085 20.7485 8.09084 20.3411 8.11398 20.0046C8.13828 19.6512 8.19143 19.3034 8.33412 18.9615C8.65836 18.1848 9.2792 17.5701 10.0576 17.2502C10.3995 17.1096 10.7475 17.0572 11.1023 17.0332C11.4406 17.0103 11.8505 17.0103 12.3313 17.0103ZM11.2373 19.0286C10.9835 19.0458 10.877 19.0757 10.8179 19.1C10.5271 19.2195 10.2984 19.4478 10.1798 19.732C10.1564 19.788 10.1265 19.8912 10.1093 20.1418C10.0914 20.4014 10.0909 20.7396 10.0909 21.2577C10.0909 22.7846 10.0914 23.8793 10.1508 24.7428C10.2095 25.5972 10.3225 26.1515 10.5119 26.6054C11.0735 27.9506 12.1516 29.0217 13.5116 29.5807C13.9717 29.7698 14.5328 29.8821 15.3952 29.9405C16.2664 29.9995 17.3706 30 18.909 30H21.0909C22.6293 30 23.7335 29.9995 24.6047 29.9405C25.4671 29.8821 26.0283 29.7698 26.4883 29.5807C27.8483 29.0217 28.9265 27.9506 29.488 26.6054C29.6775 26.1515 29.7904 25.5972 29.8491 24.7428C29.9085 23.8793 29.909 22.7846 29.909 21.2577C29.909 20.7396 29.9085 20.4014 29.8906 20.1418C29.8734 19.8912 29.8435 19.788 29.8201 19.732C29.7015 19.4478 29.4728 19.2195 29.182 19.1C29.123 19.0757 29.0164 19.0458 28.7626 19.0286C28.4999 19.0108 28.1582 19.0103 27.6363 19.0103H12.3636C11.8417 19.0103 11.5 19.0108 11.2373 19.0286ZM17.2727 21.3402C17.825 21.3402 18.2727 21.7879 18.2727 22.3402V26.6701C18.2727 27.2224 17.825 27.6701 17.2727 27.6701C16.7204 27.6701 16.2727 27.2224 16.2727 26.6701V22.3402C16.2727 21.7879 16.7204 21.3402 17.2727 21.3402ZM22.7272 21.3402C23.2795 21.3402 23.7272 21.7879 23.7272 22.3402V26.6701C23.7272 27.2224 23.2795 27.6701 22.7272 27.6701C22.1749 27.6701 21.7272 27.2224 21.7272 26.6701V22.3402C21.7272 21.7879 22.1749 21.3402 22.7272 21.3402Z" fill="#171523" />
                                 </svg>
-                                <a href='#'>Mis Pedidos</a>
+                                <a href='#' >Mis Pedidos</a>
                             </li>
                             <li className={`opcion ${activeOption === 'SigueTuPedido' ? 'active' : ''}`} onClick={() => handleMenuOptionClick('SigueTuPedido')}>
                                 <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className='img_opcion'>
@@ -76,16 +244,74 @@ function Orders() {
                         </ul>
                     </div>
                     <div className="contenidoMisOrdenes">
-                        <div className="mispedidos">
-                            <TableOrders/>
-                            <DetailPedido/>
-                        </div>
-                        </div >
-                    </div>
-                </div>
 
-                {/* Modales */}
-                <Modal
+                        {misPedidos && (
+
+                            <div className="mispedidos">
+                                {/* modales de mims pedidos */}
+                                {showTableOrder && (
+                                    <TableOrders closemodalAndOpenOtherModal={closemodalAndOpenOtherModal} />
+                                )}
+                                {showDetailOrder && (
+                                    <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} />
+                                )}
+                                {showTrackOrder && (
+                                    <TrackOrder />
+                                )}
+                            </div>
+                        )}
+                        {sigueTuPedido && (
+
+                            <div className="sigueTuPedido">
+                                {showTrackSearch && (
+                                    <TrackSearch handleChangueTrackOrder={handleChangueTrackOrder} />
+                                )}
+                                {showTrackOrder && (
+                                    <TrackOrder />
+                                )}
+                            </div>
+                        )}
+                        {listaDeseos && (
+                            <div className="listaDeDeseos">
+                                {showFavList && (
+                                    <Lista />
+                                )}
+                            </div>
+                        )}
+                        {chatear && (
+                            <div className="chatearVendedor">
+                                {showChatVend && (
+                                    <ChatWithSeller />
+                                )}
+                            </div>
+                        )}
+                        {infoPerfil && (
+                            <div className="infoPerfil">
+                                {showInfoPerfil && (
+                                    <InfoProfile />
+                                )}
+                            </div>
+                        )}
+                        {direcciones && (
+                            <div className="direccionPerfil">
+                                {showDirecciones && (
+                                    <DireccionesPerfil />
+                                )}
+                            </div>
+                        )}
+                        {ticket && (
+                            <div className="ticketSoporte">
+                                {showTicketSuport && (
+                                    <TicketSuport />
+                                )}
+                            </div>
+                        )}
+                    </div >
+                </div>
+            </div>
+
+            {/* Modales */}
+            {/* <Modal
                     className="modal-dialog-centered modal-sm"
                     toggle={() => closeModalCancelOrder()}
                     isOpen={modalCancelOrder}
@@ -93,9 +319,9 @@ function Orders() {
                     <ModalBody>
                         <ModalCancelarPedido />
                     </ModalBody>
-                </Modal>
-            </>
-            )
+                </Modal> */}
+        </>
+    )
 }
 
-            export default Orders
+export default Orders
