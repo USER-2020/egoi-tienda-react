@@ -1,0 +1,66 @@
+.listaDeseos {
+    
+    
+}
+
+.imgListaDeseosAndDescription{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.noProductosListaDeseo{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.noProductosListaDeseo img{
+    width: 70px;
+    height: 70px;
+}
+
+.noProductosListaDeseo p {
+    color: #FC5241;
+}
+
+.noProductosListaDeseo .noProductosListaDeseoContexto{
+    width: 200px;
+}
+
+.listaDeseosDescripcion {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-self: center;
+}
+
+.listaDeseosDescripcion h6{
+    font-size: 16px;
+    color: #74737B;
+}
+
+.listaDeseosDescripcion p{
+    font-size: 16px;
+    color:#FC5241;
+    font-weight: 700;
+}
+
+.listaDeseosBtn {
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    align-self: center;
+    color: #FC5241;
+}
+
+.listaDeseosBtn a{
+    text-decoration: none;
+    color: #FC5241;
+}

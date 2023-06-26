@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/header'
 import HeaderResponsive from '../components/headerResponsive'
-import Orders from '../components/myOrders/orders.tsx'
+import Orders from '../components/myOrders/OrdersOpciones.tsx'
 import Footer from '../components/footer'
 
 function MyOrders(props) {
