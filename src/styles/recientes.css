@@ -227,6 +227,7 @@
 .catImage img {
     height: 100%;
     width: 100%;
+    border-radius: 16px;
 }
 
 .celularesAccesorios::before {
@@ -306,6 +307,7 @@
 .cvtImage img {
     height: 100%;
     width: 100%;
+    border-radius: 16px;
 }
 
 
@@ -387,6 +389,7 @@
 .tavtImage img {
     height: 100%;
     width: 100%;
+    border-radius: 16px;
 }
 
 .tvAudioVideo::before {
@@ -467,6 +470,7 @@
 .cvt2Image img {
     height: 100%;
     width: 100%;
+    border-radius: 16px;
 }
 
 .consolasVideojuegos2::before {
@@ -631,6 +635,7 @@
     .tavtImage img {
         height: 100%;
         width: 100%;
+        border-radius: 16px;
     }
     
     .carousel-control-next{

@@ -18,6 +18,7 @@ import ChatWithSeller from '../chat/chatWithSeller.tsx';
 import InfoProfile from '../profile/infoProfile.tsx';
 import DireccionesPerfil from '../direccionesProfile/direcciones.tsx';
 import TicketSuport from '../ticketSuport/ticketSuport.tsx';
+import DetailTicketSupport from '../ticketSuport/detailTicketSupport.tsx';
 function Orders() {
 
 
@@ -53,6 +54,7 @@ function Orders() {
     /* Flujo de componentes de ticekt de soporte */
     const [ticket, setTicket] = useState(false);
     const [showTicketSuport, setShowTicketSuport] = useState(true);
+    const [showDetailTicketSupport, setShowDetailTicketSupport] = useState(false);
 
     const handleMenuOptionClick = (option) => {
         setActiveOption(option);
@@ -86,7 +88,7 @@ function Orders() {
             setSelectedOption("Información de las direcciones");
         }
 
-        if(option === 'Ticket'){
+        if (option === 'Ticket') {
             closeDireccionesAndShowTicket();
             setSelectedOption("Crear un ticket");
         }
@@ -96,7 +98,7 @@ function Orders() {
         // setModalCancelOrder(false);
     }
 
-    const closeDireccionesAndShowTicket = ()=>{
+    const closeDireccionesAndShowTicket = () => {
         setTicket(true);
         setDirecciones(false);
         setInfoPerfil(false);
@@ -104,6 +106,8 @@ function Orders() {
         setSigueTuPedido(false);
         setListaDeseos(false);
         setChatear(false);
+        setShowTicketSuport(true);
+        setShowDetailTicketSupport(false);
 
     }
 
@@ -189,6 +193,11 @@ function Orders() {
         setShowTableOrder(false);
         setShowTrackOrder(true);
         setListaDeseos(false);
+    }
+
+    const closeTicketTableShowDetailTicket = () => {
+        setShowTicketSuport(false);
+        setShowDetailTicketSupport(true);
     }
 
 
@@ -302,7 +311,10 @@ function Orders() {
                         {ticket && (
                             <div className="ticketSoporte">
                                 {showTicketSuport && (
-                                    <TicketSuport />
+                                    <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket}/>
+                                )}
+                                {showDetailTicketSupport && (
+                                    <DetailTicketSupport />
                                 )}
                             </div>
                         )}

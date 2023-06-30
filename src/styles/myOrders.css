@@ -1,23 +1,23 @@
-.containerMenuAndContenidoMisOrdenes{
+.containerMenuAndContenidoMisOrdenes {
     display: flex;
     flex-direction: row;
     gap: 90px;
     margin-top: 30px;
 }
 
-.containerMenuAndContenidoMisOrdenes .menuMisOrdenes{
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes {
     width: 24%;
-    
+
 }
 
-.containerMenuAndContenidoMisOrdenes .menuMisOrdenes ul{
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes ul {
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 0;
 }
 
-.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion{
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion {
     list-style: none;
     width: 100%;
     height: 50px;
@@ -36,15 +36,15 @@
 
 /* .containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion:active, */
 .containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion.active {
-  color: white;
-  background-color: #FC5241;
-  border: none;
+    color: white;
+    background-color: #FC5241;
+    border: none;
 }
 
-.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion.active .img_opcion  path{
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion.active .img_opcion path {
     fill: white;
-    
-    
+
+
 }
 
 .containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion a {
@@ -52,30 +52,30 @@
     color: inherit;
 }
 
-.containerMenuAndContenidoMisOrdenes .contenidoMisOrdenes{
+.containerMenuAndContenidoMisOrdenes .contenidoMisOrdenes {
     width: 76%;
 }
 
 
 
 /* Mis pedidos */
-.contenidoMisOrdenes .mispedidos .table thead tr th{
+.contenidoMisOrdenes .mispedidos .table thead tr th {
     color: #A2A1A7;
     font-size: 12px;
 }
 
 .contenidoMisOrdenes .mispedidos .table tbody tr td {
     font-size: 14px;
-    
+
 }
 
-.contenidoMisOrdenes .mispedidos .table tbody tr td .opcionesDetallePedido{
+.contenidoMisOrdenes .mispedidos .table tbody tr td .opcionesDetallePedido {
     display: flex;
     flex-direction: row;
     gap: 5px;
 }
 
-.contenidoMisOrdenes .mispedidos .table tbody tr .opcionesDetallePedido .btnVerDetallesPedido{
+.contenidoMisOrdenes .mispedidos .table tbody tr .opcionesDetallePedido .btnVerDetallesPedido {
     display: flex;
     flex-direction: row;
     gap: 5px;
@@ -88,7 +88,7 @@
     color: white;
 }
 
-.contenidoMisOrdenes .mispedidos .table tbody tr .opcionesDetallePedido .btnCancelarPedido{
+.contenidoMisOrdenes .mispedidos .table tbody tr .opcionesDetallePedido .btnCancelarPedido {
     display: flex;
     flex-direction: row;
     gap: 5px;
@@ -103,18 +103,21 @@
 }
 
 /* Detail Pedido */
-.containerDetalleAndCard{
+.containerDetalleAndCard {
     display: flex;
     flex-direction: row;
     gap: 25px;
 }
-.containerPedidoIzq{
+
+.containerPedidoIzq {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    width:70%;
+    width: 70%;
 }
-.datosPrincipales, .direccionesPedido{
+
+.datosPrincipales,
+.direccionesPedido {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -125,30 +128,30 @@
 .datosPrincipales .fechaPedido h6,
 .datosPrincipales .nroPedido h6,
 .direccionesPedido .direccionEnv h6,
-.direccionesPedido .direccionCompra h6{
+.direccionesPedido .direccionCompra h6 {
     font-size: 12px;
     color: #A2A1A7;
 }
 
-.datosPrincipales .fechaPedido{
+.datosPrincipales .fechaPedido {
     display: flex;
     flex-direction: column;
     justify-content: end;
     text-align: end;
 }
 
-.containerPedidoIzq .direccionesPedido .direccionCompra{
+.containerPedidoIzq .direccionesPedido .direccionCompra {
     display: flex;
     flex-direction: column;
     justify-content: end;
     text-align: end;
 }
 
-.containerCardDatos{
+.containerCardDatos {
     width: 30%;
 }
 
-.productoDetail{
+.productoDetail {
     display: flex;
     flex-direction: row;
     gap: 15px;
@@ -158,23 +161,23 @@
     border-radius: 24px;
 }
 
-.productoDetail .description{
+.productoDetail .description {
     display: flex;
     flex-direction: column;
-    
-    
+
+
 }
 
-.productoDetail .description h6{
+.productoDetail .description h6 {
     font-size: 24px;
-    color:#A2A1A7 ;
+    color: #A2A1A7;
 }
 
-.containerCardDatos{
+.containerCardDatos {
     display: flex;
     flex-direction: column;
     width: 50%;
-    
+
 }
 
 .containerCardDatos .card {
@@ -186,28 +189,29 @@
 .containerCardDatos .impuesto,
 .containerCardDatos .Envio,
 .containerCardDatos .descuentoProducto,
-.containerCardDatos .cuponDescuento{
+.containerCardDatos .cuponDescuento {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.containerCardDatos .totalAPagar{
+.containerCardDatos .totalAPagar {
     text-align: center;
     display: flex;
     flex-direction: column;
 }
 
-.containerCardDatos .totalAPagar h6{
+.containerCardDatos .totalAPagar h6 {
     font-size: 14px;
     color: #74737B;
 }
-.containerCardDatos .totalAPagar h5{
+
+.containerCardDatos .totalAPagar h5 {
     font-size: 32px;
     font-weight: 700;
 }
 
-.opcionesRastreoOrFacturar{
+.opcionesRastreoOrFacturar {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
@@ -215,7 +219,7 @@
 
 }
 
-.opcionesRastreoOrFacturar .rastrear{
+.opcionesRastreoOrFacturar .rastrear {
     color: white;
     background-color: #FC5241;
     border-radius: 32px;
@@ -228,7 +232,7 @@
     justify-content: center;
 }
 
-.opcionesRastreoOrFacturar .facturar{
+.opcionesRastreoOrFacturar .facturar {
     color: #FC5241;
     border: 1px solid #FC5241;
     border-radius: 32px;
@@ -242,8 +246,172 @@
 }
 
 /* Lista de deseos */
-.listaDeDeseos{
+.listaDeDeseos {
     width: 100%;
     height: 100%;
-    
+
+}
+
+/* Informacion de perfil */
+.infoPerfil {
+    width: 100%;
+    height: 100%;
+}
+
+.infoPerfil .card {
+    width: 350px;
+    padding: 24px;
+    border-radius: 32px;
+}
+
+.infoPerfil .card .headerInfoProfile {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+
+/* Direcciones de perfil */
+.direccionPerfil {
+    width: 100%;
+    height: 100%;
+}
+
+.direccionPerfil .containerDireccionesPerfil {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+
+}
+
+.direccionPerfil .containerDireccionesPerfil .card {
+    width: 45%;
+    height: 254px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 24px;
+
+}
+
+.direccionPerfil .containerDireccionesPerfil .containerAddNewDireccion {
+    width: 45%;
+    background-color: #A2A1A729;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+}
+
+.direccionPerfil .containerDireccionesPerfil .containerAddNewDireccion a {
+    text-decoration: none;
+    color: white;
+    background-color: #FC5241;
+    padding: 12px;
+    border-radius: 32px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .headerTipoDireccion {
+    font-size: 12px;
+    color: #FC5241;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .infoDireccionPerfil .info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    gap: 50px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .infoDireccionPerfil .info .fragmento {
+    text-align: start;
+    width: 50%;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .infoDireccionPerfil .info .fragmento h5 {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .infoDireccionPerfil .info .fragmento p {
+    font-size: 14px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .opcionesDireccionesPerfil {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .opcionesDireccionesPerfil a {
+    text-decoration: none;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .opcionesDireccionesPerfil .btn1 {
+    color: #45444F;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .opcionesDireccionesPerfil .btn2 {
+    color: white;
+    background-color: #FC5241;
+    border-radius: 32px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ticket support */
+.contenidoMisOrdenes .ticketSoporte .table thead tr th {
+    color: #A2A1A7;
+    font-size: 12px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .table tbody tr td {
+    font-size: 14px;
+
+}
+
+.contenidoMisOrdenes .ticketSoporte .table tbody tr td .opcionesDetallePedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .table tbody tr .opcionesDetallePedido .btnVerDetallesPedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 70px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background-color: #FC5241;
+    color: white;
+}
+
+.contenidoMisOrdenes .ticketSoporte .table tbody tr .opcionesDetallePedido .btnCancelarPedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid #FC5241;
+    color: #FC5241;
+
 }
