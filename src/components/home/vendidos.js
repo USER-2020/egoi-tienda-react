@@ -19,11 +19,12 @@ import pcASUS from '../../assets/pcASUS.png';
 import { ProductosMasVendidos } from "../../services/productos";
 
 
-const Vendidos = () => {
+const Vendidos = ({bannersInfo}) => {
 
     const [productos, setProductos] = useState([]);
 
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
+    const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
   
     const ProductosMasVendido = () => {
         ProductosMasVendidos()
@@ -80,13 +81,16 @@ const Vendidos = () => {
         ))}  
             
         </div>
+        {bannersInfo && bannersInfo
+        .filter((banner) => banner.banner_type === "banner_5")
+        .map((itemBanner, index)=> (
         <div className='containerHot'>
-            <div className='masVendidosCards'>
+            <div className='masVendidosCards' key={index === 0}>
                 <div className='headerImg'>
                     <img src={logoSamsung} width={'200px'}/>
                 </div>
                 <div className='centerImg'>
-                    <img src={celSamsung} width={'134px'}/>
+                    <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} width={'134px'} alt={itemBanner.banner_data[0].imagen}/>
                 </div>
                 <a href='#' className='btnVendidos'>
                     Ver Tienda
@@ -100,12 +104,12 @@ const Vendidos = () => {
                     </span>
                 </div>
             </div>
-            <div className='masVendidosCards'>
+            <div className='masVendidosCards' key={index === 1}>
                 <div className='headerImg'>
                     <img src={logoSony} width={'200px'}/>
                 </div>
                 <div className='centerImg'>
-                    <img src={cascoSony} width={'216px'}/>
+                    <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} width={'216px'} alt={itemBanner.banner_data[1].imagen}/>
                 </div>
                 <a href='#' className='btnVendidos'>
                     Ver Tienda
@@ -119,12 +123,12 @@ const Vendidos = () => {
                     </span>
                 </div>
             </div>
-            <div className='masVendidosCards'>
+            <div className='masVendidosCards' key={index === 2}>
                 <div className='headerImg'>
                     <img src={logoHaceb} width={'200px'}/>
                 </div>
                 <div className='centerImg'>
-                    <img src={electroHaceb} width={'216px'}/>
+                    <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} width={'216px'} alt={itemBanner.banner_data[2].imagen}/>
                 </div>
                 <a href='#' className='btnVendidos'>
                     Ver Tienda
@@ -138,12 +142,12 @@ const Vendidos = () => {
                     </span>
                 </div>
             </div>
-            <div className='masVendidosCards'>
+            <div className='masVendidosCards' key={index === 3}>
                 <div className='headerImg'>
                     <img src={logoAsus} width={'200px'}/>
                 </div>
                 <div className='centerImg'>
-                    <img src={pcASUS} width={'216px'}/>
+                    <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} width={'216px'} alt={itemBanner.banner_data[3].imagen}/>
                 </div>
                 <a href='#' className='btnVendidos'>
                     Ver Tienda
@@ -158,6 +162,7 @@ const Vendidos = () => {
                 </div>
             </div>
         </div>
+        ))}
       </div>
     </div>
   )
