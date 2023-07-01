@@ -22,6 +22,7 @@ import { useEffect } from 'react';
 import { allCategories, subcategorieById } from '../../services/categories';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { detailProductById } from '../../services/detailProduct';
+import { getProductsByIdBrand } from '../../services/brands';
 
 const Banner = (args) => {
 
@@ -96,6 +97,23 @@ const Banner = (args) => {
                                 console.log(err);
                             })
                     }
+
+                    if(bannerData.tipo_filtro === "brand"){
+                        setTipoFiltro(bannerData.tipo_filtro);
+                        setBannerFiltro1(bannerData.id_filtro);
+                        getProductsByIdBrand(bannerData.id_filtro)
+                        .then((res)=>{
+                            console.log('Detalle del producto por marca desde el banner', res.data);
+                        })
+                        .catch((err)=>console.log(err));
+                    }
+
+
+                    if(bannerData.tipo_filtro === "shop"){
+                        setTipoFiltro(bannerData.tipo_filtro);
+                        setBannerFiltro1(bannerData.id_filtro);
+                        
+                    }
                     
                 });
             });
@@ -109,6 +127,9 @@ const Banner = (args) => {
         }
         if(tipoFiltro === 'product'){
             history.push(`/detailsProduct/${bannerFiltro1}/slug`);
+        }
+        if(tipoFiltro === 'brand'){
+            history.push(`/brand/filterBrandBanner/${bannerFiltro1}`);
         }
     }
 
