@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Modal, ModalBody, Table } from 'reactstrap'
 import ModalCancelarTicketSupport from './modalTicketSupport/modalCancelarTicketSupport';
+import ModalAddNewTicket from './modalTicketSupport/modalAddNewTicket';
 
 function TicketSuport({ closemodalAndOpenOtherModal }) {
 
   const [modalCancelTicketSupport, setModalCancelarTicket] = useState(false);
+  const [modalAddNewTicket, setModalAddNewTicket] = useState(false);
 
   const data = [
     {
@@ -18,6 +20,10 @@ function TicketSuport({ closemodalAndOpenOtherModal }) {
 
   const closeModalCancelTicketSupport = () => {
     setModalCancelarTicket(false);
+  }
+
+  const closeModalAddTicketSupport = () =>{
+    setModalAddNewTicket(false);
   }
   return (
     <>
@@ -64,6 +70,9 @@ function TicketSuport({ closemodalAndOpenOtherModal }) {
           </tbody>
         </Table>
       </div>
+      <div className="opcionTicketSupportAddNew">
+        <a href="#" onClick={()=> setModalAddNewTicket(true)}>Añadir nuevo ticket</a>
+      </div>
       {/* Modal de cancelar ticket de soporte */}
       <Modal
         className="modal-dialog-centered modal-sm"
@@ -72,6 +81,16 @@ function TicketSuport({ closemodalAndOpenOtherModal }) {
       >
         <ModalBody>
           <ModalCancelarTicketSupport />
+        </ModalBody>
+      </Modal>
+      {/* Modal add nuevo ticket */}
+      <Modal
+        className="modal-dialog-centered modal-sm"
+        toggle={() => closeModalAddTicketSupport()}
+        isOpen={modalAddNewTicket}
+      >
+        <ModalBody>
+          <ModalAddNewTicket />
         </ModalBody>
       </Modal>
     </>

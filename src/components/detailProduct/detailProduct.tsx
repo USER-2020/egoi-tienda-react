@@ -15,7 +15,7 @@ import {
 import iphone from '../../assets/iphoneMuestra.png';
 import start from '../../assets/egoi_icons/star-fill.svg';
 
-import { detailProduct } from '../../services/detailProduct';
+import { detailProduct, detailProductById } from '../../services/detailProduct';
 import Register from "../../views/user/register.js";
 import Login from "../../views/user/login.js";
 
@@ -118,11 +118,11 @@ function DetailProduct() {
             const buyNowProduct = detailProducts.unit_price * quantity;
             setPrecioProduct(buyNowProduct);
             let costoEnvio = 0;
-            const costoDeEnvio = ()=>{
-                if(buyNowProduct <= 79900){
+            const costoDeEnvio = () => {
+                if (buyNowProduct <= 79900) {
                     costoEnvio = 9900;
-                    
-                }else{
+
+                } else {
                     costoEnvio = 0;
                 }
             }
@@ -143,7 +143,7 @@ function DetailProduct() {
         }
     }
 
-    
+
 
     const closeModalRegistro = () => {
         setModalViewRegistro(false);
@@ -214,6 +214,15 @@ function DetailProduct() {
             .catch((err) => console.log(err));
     }
 
+    const detailProductByIdProduct = (id) => {
+        detailProductById(id)
+            .then((res) => {
+                setDetailProducts(res.data);
+                console.log("Detalle del producto traido por id desde un banner", res.data);
+            })
+            .catch((err) => console.log(err));
+    }
+
 
     var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
     window.addEventListener("scroll", function () {
@@ -243,14 +252,20 @@ function DetailProduct() {
 
     useEffect(() => {
 
-        if (slug) {
+        if (slug !== 'slug') {
             detailProductBySlug(slug);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setCurrentImage(0);
+        }
+
+        if (id) {
+            detailProductByIdProduct(id);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setCurrentImage(0);
         }
         // history.push(history.location.pathname);
 
-    }, [slug]);
+    }, [slug, id]);
 
     useEffect(() => {
         if (currenUser) {

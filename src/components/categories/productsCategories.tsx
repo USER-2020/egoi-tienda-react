@@ -115,7 +115,7 @@ const ProductsCategories = () => {
   const productsWithFilterBestRated=() => {
     filterProductsBestRated(id)
     .then((res)=>{
-      console.log(res);
+    console.log(res);
       setProducts(res.data);
       console.log("Producttos filtrados por los mas vendidos", res.data.products);
     })
