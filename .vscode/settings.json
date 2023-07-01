@@ -1,6 +1,7 @@
 {
     "editor.fontLigatures": true,
     "conventionalCommits.scopes": [
-        "Convenciones de coomits y se agregaron vistas listas para la interaccion con el usuario desde un panel control para el usuario, vistas quemada flata enlazar con las apis"
+        "Convenciones de coomits y se agregaron vistas listas para la interaccion con el usuario desde un panel control para el usuario, vistas quemada flata enlazar con las apis",
+        "Enrutamiento de banner con filtros de categoria y producto"
     ]
 }

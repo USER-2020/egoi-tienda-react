@@ -1,3 +1,11 @@
+:root{
+    --placeholder-icon-asunto:url('../assets/egoi_icons/Rectangle\ 1317\ \(Stroke\).svg');
+    --placeholder-icon-tipo-problema:url('../assets/egoi_icons/Vector\ \(Stroke\).svg');
+    --placeholder-icon-prioridad:url('../assets/egoi_icons/Menu.svg');
+    --placeholder-icon-enviar-mensage:url('../assets/egoi_icons/Chat\ Alt.svg');
+
+}
+
 .containerMenuAndContenidoMisOrdenes {
     display: flex;
     flex-direction: row;
@@ -414,4 +422,80 @@
     border: 1px solid #FC5241;
     color: #FC5241;
 
+}
+
+.contenidoMisOrdenes .ticketSoporte .opcionTicketSupportAddNew{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.contenidoMisOrdenes .ticketSoporte .opcionTicketSupportAddNew a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    background-color: #FC5241;
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 32px;
+    font-size: 14px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer{
+   width: 100%;
+   height: 100%; 
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card{
+    padding: 24px;
+    border-radius: 24px;
+    
+}
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .detailTicketSupportHeader{
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos h6{
+    font-size: 12px;
+    color: #A2A1A7;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos p{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .enviarMenssageContainer{
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .enviarMenssageContainer a {
+    padding: 12px;
+    color: white;
+    font-weight: 600;
+    background-color: #FC5241;
+    border-radius: 32px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+input[placeholder="Asunto  "]::placeholder{
+    background-image: var(--placeholder-icon-asunto);
+}
+
+input[placeholder="Tipo de problema  "]::placeholder{
+    background-image: var(--placeholder-icon-tipo-problema);
+}
+
+input[placeholder="Prioridad  "]::placeholder{
+    background-image: var(--placeholder-icon-prioridad);
+}
+
+input[placeholder="Describe tu problema...  "]::placeholder{
+    background-image: var(--placeholder-icon-enviar-mensage);
 }

@@ -19,13 +19,22 @@ import mac from '../../assets/Macbook-No-Background-Clip-Art.png';
 import ps5 from '../../assets/ps5.png';
 import { getBanners } from '../../services/banners';
 import { useEffect } from 'react';
+import { allCategories, subcategorieById } from '../../services/categories';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { detailProductById } from '../../services/detailProduct';
 
 const Banner = (args) => {
+
+    const history = useHistory();
+
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
 
     /* Flujo de trabajo */
     const [bannersInfo, setBannersInfo] = useState([]);
+    const [offset, setOffset] = useState([]);
+    const [bannerFiltro1, setBannerFiltro1] = useState('');
+    const [tipoFiltro, setTipoFiltro] = useState('');
 
 
     const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
@@ -50,74 +59,57 @@ const Banner = (args) => {
         setActiveIndex(newIndex);
     }
 
-
-    // const slides = bannersInfo && bannersInfo
-    //     .filter((item) => item.banner_type === "banner_2")
-    //     .map((item, index) => {
-    //         return (
-
-    //             <CarouselItem
-    //                 onExiting={() => setAnimating(true)}
-    //                 onExited={() => setAnimating(false)}
-    //                 key={index}
-
-    //             >
-    //                 <img src={baseUrlImageBanners + item.banner_data[0].imagen} alt={item.banner_data[0].imagen} />
-    //                 <Button href='#' className="bton_accesos" style={{ position: 'absolute', top: '65%', left: '15%', borderRadius: '32px', background: '#A75BFF', zIndex: '550' }}>Comprar ahora </Button>
-    //                 {/* <CarouselCaption captionText={item.caption} captionHeader={item.caption} /> */}
-    //                 {/* <CarouselCaption
-    //                     // captionText={item.caption}
-    //                     // style={{ position: 'absolute', top: '70%', left: '15%', zIndex:'555', width:'10%'}}
-    //                     // captionText={item.caption}
-    //                     className="carousel-caption-custom"
-    //                 // captionHeader={<div className="carousel-caption-header">{item.caption}</div>}
-    //                 // captionText={<div className="carousel-caption-text">{item.extraText}</div>}
-    //                 /> */}
-    //             </CarouselItem>
-
-    //         );
-    //     });
-
-    // const filteredBanners = bannersInfo.filter((item) => item.banner_type === "banner_2");
-    // const slides = filteredBanners.map((item) => (
-    //     item.banner_data.map((banner) => (
-    //         <div id="carouselExampleIndicators" className="carousel slide" key={banner.id}>
-    //             <div className="carousel-indicators">
-    //                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-    //                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    //                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    //             </div>
-    //             <div className="carousel-inner">
-    //                 <div className="carousel-item active">
-    //                     <img src="..." className="d-block w-100" alt="..." />
-    //                 </div>
-    //                 <div className="carousel-item">
-    //                     <img src="..." className="d-block w-100" alt="..." />
-    //                 </div>
-    //                 <div className="carousel-item">
-    //                     <img src="..." className="d-block w-100" alt="..." />
-    //                 </div>
-    //             </div>
-    //             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    //                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-    //                 <span className="visually-hidden">Previous</span>
-    //             </button>
-    //             <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    //                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
-    //                 <span className="visually-hidden">Next</span>
-    //             </button>
-    //         </div>
-    //     ))
-    // ));
-
-
     const getAllBanners = () => {
         getBanners()
             .then((res) => {
                 console.log(res.data);
                 console.log(res.data[0]);
                 setBannersInfo(res.data);
+                getAllCategoriesByBanner(res.data);
             }).catch((err) => console.log(err));
+    }
+
+    const getAllCategoriesByBanner = (bannersInfo) => {
+        if (bannersInfo) {
+            const filteredBanners = bannersInfo.filter((banner) => banner.banner_type === "banner_1");
+            filteredBanners.map((banner) => {
+                banner.banner_data.map((bannerData) => {
+                    if (bannerData.tipo_filtro === "category") {
+                        setTipoFiltro(bannerData.tipo_filtro);
+                        setBannerFiltro1(bannerData.id_filtro);
+                        subcategorieById(bannerData.id_filtro, offset)
+                            .then((res) => {
+                                console.log("Informacion de banner category", res.data);
+                                // setSubcategory(res.data.products);
+                                // history.push(`/categories/products/filter/${bannerData.id_filtro}`);
+                            })
+                            .catch((err) => console.log(err));
+                    }
+                    if (bannerData.tipo_filtro === "product") {
+                        setTipoFiltro(bannerData.tipo_filtro);
+                        setBannerFiltro1(bannerData.id_filtro);
+                        detailProductById(bannerData.id_filtro)
+                            .then((res) => {
+                                console.log('Detalle del producto del banner product', res.data);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                    }
+                    
+                });
+            });
+        }
+    };
+
+
+    const showProductsByCategoryBanner = () => {
+        if (tipoFiltro === 'category') {
+            history.push(`/categories/products/filter/${bannerFiltro1}`);
+        }
+        if(tipoFiltro === 'product'){
+            history.push(`/detailsProduct/${bannerFiltro1}/slug`);
+        }
     }
 
     useEffect(() => {
@@ -125,9 +117,13 @@ const Banner = (args) => {
 
         if (bannersInfo) {
             console.log(bannersInfo);
+
+        }
+        if (bannerFiltro1) {
+            console.log(bannerFiltro1);
         }
 
-    }, []);
+    }, [bannerFiltro1]);
 
     return (
         <>
@@ -139,10 +135,10 @@ const Banner = (args) => {
                             .filter((banner) => banner.banner_type === "banner_1")
                             .map((banner, index) => (
                                 <div key={index}>
-                                    <a href='#'>
+                                    <a href='#' onClick={() => showProductsByCategoryBanner()}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen} width={'100%'} height={'124px'} className='banner_1' />
                                     </a>
-                                    <a href='#'>
+                                    <a href='#' onClick={() => showProductsByCategoryBanner()}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen} width={'100%'} height={'124px'} className='banner_res_2' />
                                     </a>
                                 </div>

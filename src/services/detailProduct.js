@@ -11,3 +11,7 @@ const baseUrl = urlBase;
 // Detalle de un producto a partir del slug 
 export const detailProduct = (slug) =>
     axios.get(`${baseUrl}/products/details/${slug}`);
+
+//Detalle de un producto a partir del id
+export const detailProductById = (id)=>
+    axios.get(`${baseUrl}/products/details_id/${id}`);
