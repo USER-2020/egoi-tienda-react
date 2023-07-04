@@ -19,6 +19,7 @@ import secador from "../../assets/Imagen6SecadorPromocion.png";
 import airFrier from "../../assets/Imagen7AirFrierPromociones.png";
 import pc from "../../assets/Imagen8PCPromocion.png";
 import { ProductosDescuento } from "../../services/productos";
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
@@ -27,6 +28,8 @@ const Promociones = ({ bannersInfo }) => {
 
   const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
   const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
+
+  const history = useHistory();
 
   const ProductosDescuentos = () => {
     ProductosDescuento()
@@ -39,6 +42,20 @@ const Promociones = ({ bannersInfo }) => {
     // setProductos(productos);
 
   };
+
+  const showRoutes = (itemId, filtro) => {
+    console.log("este el id elegido para pasar por las rutas en el banner 4", itemId);
+
+    if (filtro === 'category') {
+      history.push(`/categories/products/filter/${itemId}`);
+    }
+    if (filtro === 'product') {
+      history.push(`/detailsProduct/${itemId}/slug`);
+    }
+    if (filtro === 'brand') {
+      history.push(`/brand/filterBrandBanner/${itemId}`);
+    }
+  }
 
   useEffect(() => {
     ProductosDescuentos();
@@ -87,37 +104,43 @@ const Promociones = ({ bannersInfo }) => {
         .filter((banner) => banner.banner_type === "banner_4")
         .map((itemBanner, index) => (
           <div className="containerPostProm">
-            <div className="contenedor1" key={index === 0}>
-              <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
-              <div className="header">
-                <p>Electrobelleza</p>
-                <h4>40% dcto*</h4>
+            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
+              <div className="contenedor1" key={index === 0}>
+                <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
+                <div className="header">
+                  <p>Electrobelleza</p>
+                  <h4>40% dcto*</h4>
+                </div>
+                <div className="footer">
+                  <a href="#">Comprar ahora</a>
+                  <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
+                </div>
               </div>
-              <div className="footer">
-                <a href="#">Comprar ahora</a>
-                <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
+            </a>
+            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
+              <div className="contenedor1" key={index === 1}>
+                <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
+                <div className="header">
+                  <p>Electrodomésticos</p>
+                  <h4>70% dcto*</h4>
+                </div>
+                <div className="footer">
+                  <a href="#">Comprar ahora</a>
+                  <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
+                </div>
               </div>
-            </div>
-            <div className="contenedor1" key={index === 1}>
-              <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
-              <div className="header">
-                <p>Electrodomésticos</p>
-                <h4>70% dcto*</h4>
+            </a>
+            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
+              <div className="contenedor2" key={index === 2}>
+                <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
+                <div className="left_">
+                  <h5>Portatiles y accesorios</h5>
+                  <h4>50% dcto*</h4>
+                  <a href="#">Comprar ahora</a>
+                  <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
+                </div>
               </div>
-              <div className="footer">
-                <a href="#">Comprar ahora</a>
-                <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
-              </div>
-            </div>
-            <div className="contenedor2" key={index === 2}>
-              <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
-              <div className="left_">
-                <h5>Portatiles y accesorios</h5>
-                <h4>50% dcto*</h4>
-                <a href="#">Comprar ahora</a>
-                <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
-              </div>
-            </div>
+            </a>
           </div>
         ))}
     </div>

@@ -13,10 +13,13 @@ import ps5 from '../../assets/ps5categoria.png';
 import tvAV from '../../assets/tvyvideocategoria.png';
 import xbox from '../../assets/xboxcategoria.png';
 import { ProductosRecientes } from '../../services/productos';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const Recientes = ({ bannersInfo }) => {
     const [products, setProducts] = useState([]);
+
+    const history = useHistory();
 
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
     const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
@@ -31,10 +34,24 @@ const Recientes = ({ bannersInfo }) => {
             .catch((err) => console.log(err));
     };
 
+    const showRoutes = (itemId, filtro) => {
+        console.log("este el id elegido para pasar por las rutas en el banner 3", itemId);
+
+        if (filtro === 'category') {
+            history.push(`/categories/products/filter/${itemId}`);
+        }
+        if (filtro === 'product') {
+            history.push(`/detailsProduct/${itemId}/slug`);
+        }
+        if (filtro === 'brand') {
+            history.push(`/brand/filterBrandBanner/${itemId}`);
+        }
+    }
+
     useEffect(() => {
         ProductosRecientesVistas();
 
-        console.log("Desde el modal de recientes ", bannersInfo);
+        console.log("Desde el modal del banner de recientes ", bannersInfo);
     }, [bannersInfo]);
 
 
@@ -90,7 +107,7 @@ const Recientes = ({ bannersInfo }) => {
                                     <div class="carousel-item active">
                                         <div className='celularesAccesorios' key={index === 0}>
                                             <div className='catContent'>
-                                                <div className='catText'>
+                                                {/* <div className='catText'>
                                                     <div>
                                                         CyberDays
                                                     </div>
@@ -99,9 +116,11 @@ const Recientes = ({ bannersInfo }) => {
                                                         <h1>Celulares y Accesorios</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
-                                                </div>
+                                                </div> */}
                                                 <div className='tavtImage'>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
+                                                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
+                                                        < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,7 +128,7 @@ const Recientes = ({ bannersInfo }) => {
                                     <div class="carousel-item">
                                         <div className='consolasVideojuegos' key={index === 1}>
                                             <div className='catContent'>
-                                                <div className='cvtText'>
+                                                {/* <div className='cvtText'>
                                                     <div>
                                                         CyberDays
                                                     </div>
@@ -118,9 +137,11 @@ const Recientes = ({ bannersInfo }) => {
                                                         <h1>Consolas y Videojuegos</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
-                                                </div>
+                                                </div> */}
                                                 <div className='tavtImage'>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
+                                                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
+                                                        < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -128,7 +149,7 @@ const Recientes = ({ bannersInfo }) => {
                                     <div class="carousel-item">
                                         <div className='tvAudioVideo' key={index === 2}>
                                             <div className='catContent'>
-                                                <div className='tavtText'>
+                                                {/* <div className='tavtText'>
                                                     <div>
                                                         CyberDays
                                                     </div>
@@ -137,9 +158,11 @@ const Recientes = ({ bannersInfo }) => {
                                                         <h1>TV, Audio y Vídeo</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
-                                                </div>
+                                                </div> */}
                                                 <div className='tavtImage'>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
+                                                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
+                                                        < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,7 +170,7 @@ const Recientes = ({ bannersInfo }) => {
                                     <div class="carousel-item">
                                         <div className='consolasVideojuegos2' key={index === 3}>
                                             <div className='catContent'>
-                                                <div className='cvt2Text'>
+                                                {/* <div className='cvt2Text'>
                                                     <div>
                                                         CyberDays
                                                     </div>
@@ -156,9 +179,11 @@ const Recientes = ({ bannersInfo }) => {
                                                         <h1>Consolas y Videojuegos</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
-                                                </div>
+                                                </div> */}
                                                 <div className='tavtImage'>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
+                                                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro)}>
+                                                        < img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +211,7 @@ const Recientes = ({ bannersInfo }) => {
 
                                         <div className='celularesAccesorios' key={index === 0}>
                                             <div className='catContent'>
-                                                <div className='catText'>
+                                                {/* <div className='catText'>
                                                     <div>
                                                         CyberDays
                                                     </div>
@@ -196,15 +221,17 @@ const Recientes = ({ bannersInfo }) => {
                                                         <h1>Celulares y Accesorios</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
-                                                </div>
+                                                </div> */}
                                                 <div className='catImage'>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
+                                                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
+                                                        < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className='consolasVideojuegos' key={index === 1}>
                                             <div className='cvtContent'>
-                                                <div className='cvtText'>
+                                                {/* <div className='cvtText'>
                                                     <div>
                                                         CyberDays
                                                     </div>
@@ -213,9 +240,11 @@ const Recientes = ({ bannersInfo }) => {
                                                         <h1>Consolas y Videojuegos</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
-                                                </div>
+                                                </div> */}
                                                 <div className='cvtImage'>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
+                                                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
+                                                        < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,7 +253,7 @@ const Recientes = ({ bannersInfo }) => {
                                     <div className='containerFlex'>
                                         <div className='tvAudioVideo' key={index === 2}>
                                             <div className='tavtContent'>
-                                                <div className='tavtText'>
+                                                {/* <div className='tavtText'>
                                                     <div>
                                                         CyberDays
                                                     </div>
@@ -233,15 +262,17 @@ const Recientes = ({ bannersInfo }) => {
                                                         <h1>TV, Audio y Vídeo</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
-                                                </div>
+                                                </div> */}
                                                 <div className='tavtImage'>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
+                                                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
+                                                        < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className='consolasVideojuegos2' key={index === 3}>
                                             <div className='cvt2Content'>
-                                                <div className='cvt2Text'>
+                                                {/* <div className='cvt2Text'>
                                                     <div>
                                                         CyberDays
                                                     </div>
@@ -250,9 +281,11 @@ const Recientes = ({ bannersInfo }) => {
                                                         <h1>Consolas y Videojuegos</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
-                                                </div>
+                                                </div> */}
                                                 <div className='cvt2Image'>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
+                                                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro)}>
+                                                        <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
