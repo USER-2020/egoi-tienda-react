@@ -17,7 +17,7 @@ const Bannerdown = ({ bannersInfo }) => {
     const history = useHistory();
 
     const showRoutes = (itemId, filtro) => {
-        console.log("este el id elegido para pasar por las rutas en el banner 4", itemId);
+        console.log("este el id elegido para pasar por las rutas en el banner 6", itemId);
 
         if (filtro === 'category') {
             history.push(`/categories/products/filter/${itemId}`);
