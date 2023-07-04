@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import "../../styles/recientes.css";
 import {
@@ -18,6 +18,8 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Recientes = ({ bannersInfo }) => {
     const [products, setProducts] = useState([]);
+
+    const containerRef = useRef(null);
 
     const history = useHistory();
 
@@ -48,6 +50,28 @@ const Recientes = ({ bannersInfo }) => {
         }
     }
 
+    const handleScrollLeft = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollLeft -= 500; // Ajusta el valor según tus necesidades
+        }
+        const leftButton = document.querySelector('.scroll-button.left');
+        leftButton.classList.add('animate-left');
+        setTimeout(() => {
+            leftButton.classList.remove('animate-left');
+        }, 300);
+    };
+
+    const handleScrollRight = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollLeft += 500; // Ajusta el valor según tus necesidades
+        }
+        const rightButton = document.querySelector('.scroll-button.right');
+        rightButton.classList.add('animate-right');
+        setTimeout(() => {
+            rightButton.classList.remove('animate-right');
+        }, 300);
+    };
+
     useEffect(() => {
         ProductosRecientesVistas();
 
@@ -69,28 +93,38 @@ const Recientes = ({ bannersInfo }) => {
                             Ver todos
                         </a>
                     </div>
-                    <div className='containerProductos'>
-                        {products.map((product, index) => (
+                    <div className='containerProductos' ref={containerRef}>
 
-                            <a href='#' className='containerCard' key={index}>
-                                <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
-                                    <Card className='cardProducto1'>
-                                        <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
-                                        <CardBody>
-                                            <div className='starts'>
-                                                <img src={start} />
-                                                <img src={start} />
-                                                <img src={start} />
-                                                <img src={start_1} />
-                                                <img src={start_1} />
-                                            </div>
-                                            <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>{product.name}</CardSubtitle>
-                                            <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>
-                                        </CardBody>
-                                    </Card>
-                                </Link>
-                            </a>
-                        ))}
+                        <button className="scroll-button left" onClick={handleScrollLeft} onMouseOver={handleScrollLeft}>
+                            &#8249;
+                        </button>
+                        <div className="cardContainer">
+                            {products.map((product, index) => (
+
+                                <a href='#' className='containerCard' key={index}>
+                                    <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
+                                        <Card className='cardProducto1'>
+                                            <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
+                                            <CardBody>
+                                                <div className='starts'>
+                                                    <img src={start} />
+                                                    <img src={start} />
+                                                    <img src={start} />
+                                                    <img src={start_1} />
+                                                    <img src={start_1} />
+                                                </div>
+                                                <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>{product.name}</CardSubtitle>
+                                                <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>
+                                            </CardBody>
+                                        </Card>
+                                    </Link>
+                                </a>
+                            ))}
+                        </div>
+
+                        <button className="scroll-button right" onClick={handleScrollRight} onMouseOver={handleScrollRight}>
+                            &#8250;
+                        </button>
 
                     </div>
 
