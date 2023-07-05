@@ -73,7 +73,7 @@ const Home = (props) => {
       <Recientes bannersInfo={bannersInfo}/>
       <Promociones bannersInfo={bannersInfo}/>
       <Vendidos bannersInfo={bannersInfo}/>
-      <Populares />
+      {/* <Populares /> */}
       <Bannerdown bannersInfo={bannersInfo}/>
       <Footer />
       {/* Modal popup */}

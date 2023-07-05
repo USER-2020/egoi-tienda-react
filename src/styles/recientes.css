@@ -92,6 +92,63 @@
     outline: none;
 }
 
+.cardContainer2{
+    display: flex;
+    gap: 25px;
+    overflow-x: scroll;
+    white-space: nowrap;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    /* scroll-behavior: smooth; */
+}
+
+.cardContainer2 .containerPostProm {
+    scroll-behavior: smooth;
+}
+
+.cardContainer2 .scroll-button {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 70px;
+    background-color: #fff;
+    border: none;
+    color: #333;
+    font-size: 50px;
+    cursor: pointer;
+    z-index: 1;
+    transition: 0.3s ease;
+    border-radius: 50px;
+    margin: -20px;
+}
+
+.cardContainer2 .scroll-button.left {
+    left: 0;
+    position: sticky;
+    width: 50px;
+    height: 100px;
+    
+}
+
+.cardContainer2 .scroll-button.right {
+    right: 0;
+    position: sticky;
+    width: 50px;
+    height: 100px;
+    
+}
+
+.cardContainer2 .scroll-button:focus {
+    outline: none;
+}
+
+.cardContainer2 .containerPostProm::-webkit-scrollbar{
+    display: none;
+}
+
 /* .scroll-button.animate-left {
     animation: scrollAnimationLeft 0.3s ease;
 }

@@ -1,31 +1,65 @@
-.container{
+.container {
     width: 100%;
     height: auto;
     margin-top: 52.5px;
     background-color: #F5F5F5;
-      
+
 }
 
-.containerVendidos{
+.containerVendidos {
     width: 100%;
 
 }
 
-.spanRecent{
-    display:flex;
+.spanRecent {
+    display: flex;
     align-items: center;
     justify-content: start;
     font-size: 14px;
 
 }
 
-.refshowAll{
+.containerProductos {
+    display: flex;
+    gap: 25px;
+    overflow-x: scroll;
+    white-space: nowrap;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    scroll-behavior: smooth;
+    /* padding-left: 30px; */
+    /* Ajustar el espacio a la izquierda para el botón de "left" */
+}
+
+.containerProductos .scroll-button.left {
+    left: 0;
+    position: sticky;
+    width: 100px;
+    height: 100px;
+
+}
+
+.containerProductos .scroll-button.right {
+    right: 0;
+    position: sticky;
+    width: 100px;
+    height: 100px;
+
+}
+
+.containerProductos .scroll-button:focus {
+    outline: none;
+}
+
+.refshowAll {
     margin-left: 14px;
     text-decoration: none;
     color: #FC5241;
 }
 
-.containerHot{
+.containerHot {
     width: 100%;
     height: auto;
     margin-top: 32px;
@@ -34,12 +68,72 @@
     overflow-x: scroll;
 }
 
-.masVendidosCards{
+.containerHot::-webkit-scrollbar{
+    display: none;
+}
+
+.containerHot{
+    scroll-behavior: smooth;
+}
+
+.cardContainerHot {
+    display: flex;
+    gap: 25px;
+    overflow-x: scroll;
+    white-space: nowrap;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    scroll-behavior: smooth;
+    /* padding-left: 30px; */
+    /* Ajustar el espacio a la izquierda para el botón de "left" */
+}
+
+.cardContainerHot .scroll-button {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 20px;
+    background-color: #fff;
+    border: none;
+    color: #333;
+    font-size: 50px;
+    cursor: pointer;
+    z-index: 1;
+    transition: 0.3s ease;
+    border-radius: 50px;
+    margin: -20px;
+    display: hidden;
+}
+
+.cardContainerHot .scroll-button.left {
+    left: 0;
+    position: sticky;
+    width: 50px;
+    height: 120px;
+    
+}
+
+.cardContainerHot .scroll-button.right {
+    right: 0;
+    position: sticky;
+    width: 50px;
+    height: 120px;
+    
+}
+
+.cardContainerHot .scroll-button:focus {
+    outline: none;
+}
+
+.masVendidosCards {
     width: 322px;
     height: 413px;
     background-color: #ffff;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     border-radius: 16px;
     text-align: center;
     justify-content: center;
@@ -48,8 +142,8 @@
 
 }
 
-.btnVendidos{
-    
+.btnVendidos {
+
     text-decoration: none;
     font-size: 14px;
     width: 90px;
@@ -59,19 +153,19 @@
     color: #FC5241;
     display: grid;
     place-items: center;
-    
+
 }
 
-.footerSpanText{
+.footerSpanText {
     display: flex;
     flex-direction: column;
 }
 
-.footerSpanText > .spanText1{
+.footerSpanText>.spanText1 {
     font-size: 16px;
-} 
+}
 
-.footerSpanText > .spanText2{
+.footerSpanText>.spanText2 {
     font-size: 24px;
     font-weight: 700;
 }
