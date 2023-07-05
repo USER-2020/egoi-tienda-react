@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import "../../styles/recientes.css";
@@ -25,6 +25,8 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Promociones = ({ bannersInfo }) => {
   const [productos, setProductos] = useState([]);
+
+  const containerRef = useRef(null);
 
   const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
   const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
@@ -56,6 +58,28 @@ const Promociones = ({ bannersInfo }) => {
       history.push(`/brand/filterBrandBanner/${itemId}`);
     }
   }
+
+  const handleScrollLeft = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollLeft -= 200; // Ajusta el valor según tus necesidades
+    }
+    const leftButton = document.querySelector('.scroll-button.left');
+    leftButton.classList.add('animate-left');
+    setTimeout(() => {
+      leftButton.classList.remove('animate-left');
+    }, 300);
+  };
+
+  const handleScrollRight = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollLeft += 200; // Ajusta el valor según tus necesidades
+    }
+    const rightButton = document.querySelector('.scroll-button.right');
+    rightButton.classList.add('animate-right');
+    setTimeout(() => {
+      rightButton.classList.remove('animate-right');
+    }, 300);
+  };
 
   useEffect(() => {
     ProductosDescuentos();
@@ -99,50 +123,57 @@ const Promociones = ({ bannersInfo }) => {
           </a>
         ))}
       </div>
-
-      {bannersInfo && bannersInfo
-        .filter((banner) => banner.banner_type === "banner_4")
-        .map((itemBanner, index) => (
-          <div className="containerPostProm">
-            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
-              <div className="contenedor1" key={index === 0}>
-                <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
-                <div className="header">
-                  <p>Electrobelleza</p>
-                  <h4>40% dcto*</h4>
+      <div className="cardContainer2">
+        <button className="scroll-button left" onClick={handleScrollLeft} onMouseOver={handleScrollLeft}>
+          &#8249;
+        </button>
+        {bannersInfo && bannersInfo
+          .filter((banner) => banner.banner_type === "banner_4")
+          .map((itemBanner, index) => (
+            <div className="containerPostProm" ref={containerRef}>
+              <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
+                <div className="contenedor1" key={index === 0}>
+                  <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
+                  <div className="header">
+                    <p>Electrobelleza</p>
+                    <h4>40% dcto*</h4>
+                  </div>
+                  <div className="footer">
+                    <a href="#">Comprar ahora</a>
+                    <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
+                  </div>
                 </div>
-                <div className="footer">
-                  <a href="#">Comprar ahora</a>
-                  <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
+              </a>
+              <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
+                <div className="contenedor1" key={index === 1}>
+                  <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
+                  <div className="header">
+                    <p>Electrodomésticos</p>
+                    <h4>70% dcto*</h4>
+                  </div>
+                  <div className="footer">
+                    <a href="#">Comprar ahora</a>
+                    <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
+                  </div>
                 </div>
-              </div>
-            </a>
-            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
-              <div className="contenedor1" key={index === 1}>
-                <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
-                <div className="header">
-                  <p>Electrodomésticos</p>
-                  <h4>70% dcto*</h4>
+              </a>
+              <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
+                <div className="contenedor2" key={index === 2}>
+                  <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
+                  <div className="left_">
+                    <h5>Portatiles y accesorios</h5>
+                    <h4>50% dcto*</h4>
+                    <a href="#">Comprar ahora</a>
+                    <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
+                  </div>
                 </div>
-                <div className="footer">
-                  <a href="#">Comprar ahora</a>
-                  <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
-                </div>
-              </div>
-            </a>
-            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
-              <div className="contenedor2" key={index === 2}>
-                <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
-                <div className="left_">
-                  <h5>Portatiles y accesorios</h5>
-                  <h4>50% dcto*</h4>
-                  <a href="#">Comprar ahora</a>
-                  <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
-                </div>
-              </div>
-            </a>
-          </div>
-        ))}
+              </a>
+            </div>
+          ))}
+        <button className="scroll-button right" onClick={handleScrollRight} onMouseOver={handleScrollRight}>
+          &#8250;
+        </button>
+      </div>
     </div>
   );
 };

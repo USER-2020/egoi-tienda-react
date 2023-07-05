@@ -11,8 +11,9 @@ import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faUserPlus,faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus, faRightFromBracket, faUserGear} from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import adminUser from '../assets/egoi_icons/userAdmin.svg';
 
 import Register from "../views/user/register.js";
 import Login from "../views/user/login.js";
@@ -26,10 +27,11 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useContext } from 'react';
 
 import { getProductsBySearch } from "../services/filtros";
+import { myorders } from "../constants/defaultValues";
 
 const Header = () => {
-  
-  
+
+
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
@@ -41,26 +43,26 @@ const Header = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
-  const [products, setProducts ] = useState([]);
+  const [products, setProducts] = useState([]);
   const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
 
-  const {id} = useParams();
+  const { id } = useParams();
 
   const currenUser = getCurrentUser();
-  
- 
+
+
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
-  
+
   const history = useHistory();
 
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
   }
-  
+
   const handleEnterPress = (event) => {
     if (event.key === 'Enter') {
       setPrevSearchProducts(prevSearchProducts);
-      console.log("Este es el valor guardado en el search: ",prevSearchProducts);
+      console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       history.push(`/products/${prevSearchProducts}`);
     }
   }
@@ -82,12 +84,12 @@ const Header = () => {
    */
   const allCategoriesPromise = () => {
     allCategories()
-    .then((res) => {
-      setCategories(res.data);
-      console.log("Recibiendo todas las categorias", categories);
-      
-    })
-    .catch((err) => console.log(err));
+      .then((res) => {
+        setCategories(res.data);
+        console.log("Recibiendo todas las categorias", categories);
+
+      })
+      .catch((err) => console.log(err));
   };
 
   /**
@@ -95,34 +97,34 @@ const Header = () => {
    */
   const allBrands = () => {
     getAllBrands()
-    .then((res)=>{
-      setBrands(res.data);
-      console.log("Recibiendo todas las marcas", brands);
-    })
-    .catch((err) => console.log(err));
+      .then((res) => {
+        setBrands(res.data);
+        console.log("Recibiendo todas las marcas", brands);
+      })
+      .catch((err) => console.log(err));
   }
 
 
   const productsByBrand = (brandId) => {
     getProductsByIdBrand(brandId)
-    .then((res)=>{
-      console.log(res);
-      setProducts(res.data);
-      console.log("Productos por marca", res.data.products);
-      
-    })
-    .catch((err) => console.log(err));
-  }
-  
-  const resultsSearch = (prevSearchProducts) => {
-    console.log("Entre al resuktado de search");
-    if(prevSearchProducts){
-      getProductsBySearch(prevSearchProducts)
-      .then((res)=>{
+      .then((res) => {
         console.log(res);
         setProducts(res.data);
-        console.log("Respuesta de los productos por busqueda", res.data.products );
+        console.log("Productos por marca", res.data.products);
+
       })
+      .catch((err) => console.log(err));
+  }
+
+  const resultsSearch = (prevSearchProducts) => {
+    console.log("Entre al resuktado de search");
+    if (prevSearchProducts) {
+      getProductsBySearch(prevSearchProducts)
+        .then((res) => {
+          console.log(res);
+          setProducts(res.data);
+          console.log("Respuesta de los productos por busqueda", res.data.products);
+        })
     }
   }
   /**
@@ -148,17 +150,17 @@ const Header = () => {
     }
   }
 
-  
+
   const handleChangeFormLogin = () => {
 
-    if(modalViewLogin === true){
+    if (modalViewLogin === true) {
       setModalViewRegistro(true);
     }
   };
 
   const handleChangeFormRegister = () => {
 
-    if(modalViewRegistro === true){
+    if (modalViewRegistro === true) {
       setModalViewLogin(true);
     }
 
@@ -172,24 +174,28 @@ const Header = () => {
     setModalViewLogin(false);
   };
 
-  const goToDetailCart =()=>{
-    if(currenUser){
+  const goToDetailCart = () => {
+    if (currenUser) {
       history.push(`/detailCart`)
     }
-    else{
+    else {
       setModalViewLogin(true);
     }
   }
 
   const handleLogin = () => {
     // Code to handle user login, such as storing session storage, etc.
-    if(currenUser){
+    if (currenUser) {
       setIsLoggedIn(true);
-    }else{
+    } else {
       setIsLoggedIn(false);
     }
 
   };
+
+  const handleAdminUser = () =>{
+    history.push(`${myorders}`);
+  }
 
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
@@ -200,65 +206,65 @@ const Header = () => {
   };
 
 
- 
-  useEffect(()=>{
-  //   if(isLoggedIn){
-    
-  //   let timeout;
 
-  //   const resetTimeout = () =>{
-  //     if(timeout){
-  //       clearTimeout(timeout);
-  //     }
+  useEffect(() => {
+    //   if(isLoggedIn){
 
-  //     timeout = setTimeout(()=>{
-  //       handleLogout();
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Oops...',
-  //         text: 'Sesión expirada. Por favor, vuelva a logearse.',
-  //         confirmButtonColor: '#fc5241',
-  //       });
-  //     }, 300000);
-  //   };
-  //   resetTimeout();
-    
-  //   const listenerActivity = () => {
-  //     resetTimeout();
-  //   };
-    
-  //   window.addEventListener('mousemove', listenerActivity);
-  //   window.addEventListener('keypress', listenerActivity);
-  //   window.addEventListener('touchstart', listenerActivity);
-  //   window.addEventListener('touchmove', listenerActivity);
-    
-  //   return () => {
-  //     window.removeEventListener('mousemove', listenerActivity);
-  //     window.removeEventListener('keypress', listenerActivity);
-  //     window.removeEventListener('touchstart', listenerActivity);
-  //     window.removeEventListener('touchmove', listenerActivity);
-  //     clearTimeout(timeout);
-  //   };  
-    
-  // }
-  handleLogin();
-    
+    //   let timeout;
+
+    //   const resetTimeout = () =>{
+    //     if(timeout){
+    //       clearTimeout(timeout);
+    //     }
+
+    //     timeout = setTimeout(()=>{
+    //       handleLogout();
+    //       Swal.fire({
+    //         icon: 'error',
+    //         title: 'Oops...',
+    //         text: 'Sesión expirada. Por favor, vuelva a logearse.',
+    //         confirmButtonColor: '#fc5241',
+    //       });
+    //     }, 300000);
+    //   };
+    //   resetTimeout();
+
+    //   const listenerActivity = () => {
+    //     resetTimeout();
+    //   };
+
+    //   window.addEventListener('mousemove', listenerActivity);
+    //   window.addEventListener('keypress', listenerActivity);
+    //   window.addEventListener('touchstart', listenerActivity);
+    //   window.addEventListener('touchmove', listenerActivity);
+
+    //   return () => {
+    //     window.removeEventListener('mousemove', listenerActivity);
+    //     window.removeEventListener('keypress', listenerActivity);
+    //     window.removeEventListener('touchstart', listenerActivity);
+    //     window.removeEventListener('touchmove', listenerActivity);
+    //     clearTimeout(timeout);
+    //   };  
+
+    // }
+    handleLogin();
+
 
   }, [currenUser, isLoggedIn]);
-  
+
   useEffect(() => {
-    
+
     allCategoriesPromise();
     allBrands();
   }, []);
- 
+
 
   return (
     <nav>
       <div className="containerNav">
         <div className={styles.navbarLogo}>
           <a href="/">
-          <img src={logo} alt="logo" className={styles.logo} width={"150px"} />
+            <img src={logo} alt="logo" className={styles.logo} width={"150px"} />
           </a>
         </div>
         <div className={styles.searchContainer}>
@@ -277,7 +283,7 @@ const Header = () => {
               value={prevSearchProducts}
               onChange={handleInputChange}
               onKeyPress={handleEnterPress}
-              
+
             />
           </InputGroup>
         </div>
@@ -302,42 +308,49 @@ const Header = () => {
               </svg>
             </a>
             <div className="menu">
-      {isLoggedIn ? (
-        <a href="#" onClick={handleLogout}>
-          <FontAwesomeIcon icon={faRightFromBracket} /> 
-          Cerrar Sesion
-        </a>
-      ) : (
-        <>
-          <a href="#" onClick={() => setModalViewLogin(true)}>
-            <FontAwesomeIcon icon={faUser} /> 
-            Inicia Sesion
-          </a>
-          <Modal
-            className="modal-dialog-centered modal-lg"
-            toggle={() => setModalViewLogin(false)}
-            isOpen={modalViewLogin && !changeFormLogin}
-          >
-            <ModalBody>
-              <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  closeModalRegistro={closeModalRegistro}  handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
-            </ModalBody>
-          </Modal>
-          <a href="#" onClick={() => setModalViewRegistro(true)}>
-            <FontAwesomeIcon icon={faUserPlus} /> 
-            Registrate
-          </a>
-          <Modal
-            className="modal-dialog-centered modal-lg"
-            toggle={() => setModalViewRegistro(false)}
-            isOpen={modalViewRegistro && !changeFormRegister}
-          >
-            <ModalBody>
-              <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
-            </ModalBody>
-          </Modal>
-        </>
-      )}
-    </div>
+              {isLoggedIn ? (
+                <>
+                  <a href="#" onClick={handleAdminUser}>
+                    <FontAwesomeIcon icon={faUserGear} style={{alignSelf:'center'}}/>
+                    Administra tu cuenta
+                  </a>
+                  <a href="#" onClick={handleLogout}>
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                    Cerrar Sesion
+                  </a>
+                </>
+
+              ) : (
+                <>
+                  <a href="#" onClick={() => setModalViewLogin(true)}>
+                    <FontAwesomeIcon icon={faUser} />
+                    Inicia Sesion
+                  </a>
+                  <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalViewLogin(false)}
+                    isOpen={modalViewLogin && !changeFormLogin}
+                  >
+                    <ModalBody>
+                      <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
+                    </ModalBody>
+                  </Modal>
+                  <a href="#" onClick={() => setModalViewRegistro(true)}>
+                    <FontAwesomeIcon icon={faUserPlus} />
+                    Registrate
+                  </a>
+                  <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalViewRegistro(false)}
+                    isOpen={modalViewRegistro && !changeFormRegister}
+                  >
+                    <ModalBody>
+                      <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                    </ModalBody>
+                  </Modal>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Favorito icono  */}
@@ -358,7 +371,7 @@ const Header = () => {
             </svg>
           </a>
           {/* Carrito de compras  */}
-          <a href="#" onClick={()=>{goToDetailCart()}}>
+          <a href="#" onClick={() => { goToDetailCart() }}>
             <svg
               width="40"
               height="40"
@@ -397,19 +410,19 @@ const Header = () => {
             </svg>
             Categorias
           </a>
-          
+
           <div className="menuCategorias">
             <div className="column">
               <ul>
-                  {categories.map((categoria, index)=>( 
-                  <a href="#" data-category-id={categoria.id} data-category={categoria.name}  key={index} onMouseOver={mostrarSubcategorias}>
+                {categories.map((categoria, index) => (
+                  <a href="#" data-category-id={categoria.id} data-category={categoria.name} key={index} onMouseOver={mostrarSubcategorias}>
                     <li>
-                    <strong>{categoria.name}</strong>
+                      <strong>{categoria.name}</strong>
                     </li>
-                  </a> 
-                  ))}                  
-                  
-                  
+                  </a>
+                ))}
+
+
 
               </ul>
             </div>
@@ -418,14 +431,14 @@ const Header = () => {
                 {subcategorias.map((subcategoria) => (
                   <li key={subcategoria.name}>
                     <Link to={`/categories/${selectedCategory.name}/${subcategoria.name}/${subcategoria.id}`} >
-                    <a href="#">
-                      {subcategoria.name}
-                    </a>
+                      <a href="#">
+                        {subcategoria.name}
+                      </a>
                     </Link>
-                  </li> 
-                ))} 
+                  </li>
+                ))}
               </ul>
-              
+
             </div>
           </div>
         </div>
@@ -450,49 +463,49 @@ const Header = () => {
         </Link>
         {/* Marcas */}
         <div className="dropdown">
-        <a href="#" className="option">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M12 9.5999C12 7.83259 13.4327 6.3999 15.2 6.3999H16.8C18.5673 6.3999 20 7.83259 20 9.5999V10.4028C21.1216 10.4137 21.9149 10.4645 22.6001 10.6971C24.2486 11.2567 25.5432 12.5513 26.1028 14.1998C26.4006 15.077 26.4004 16.1313 26.4 17.8248C26.4 17.8824 26.4 17.9408 26.4 17.9999C26.4 18.059 26.4 18.1174 26.4 18.175C26.4004 19.8685 26.4006 20.9228 26.1028 21.8C25.5432 23.4486 24.2486 24.7431 22.6001 25.3027C21.7229 25.6005 20.6686 25.6003 18.9751 25.5999C18.9175 25.5999 18.8591 25.5999 18.8 25.5999H13.2C13.1409 25.5999 13.0825 25.5999 13.0249 25.5999C11.3314 25.6003 10.2771 25.6005 9.39994 25.3027C7.75135 24.7431 6.45681 23.4486 5.89719 21.8C5.59943 20.9228 5.59964 19.8685 5.59997 18.175C5.59999 18.1174 5.6 18.059 5.6 17.9999C5.6 17.9408 5.59999 17.8824 5.59997 17.8248C5.59964 16.1313 5.59943 15.077 5.89719 14.1998C6.45681 12.5513 7.75135 11.2567 9.39994 10.6971C10.0851 10.4645 10.8784 10.4137 12 10.4028V9.5999ZM13.6 10.3999H18.4V9.5999C18.4 8.71625 17.6837 7.9999 16.8 7.9999H15.2C14.3163 7.9999 13.6 8.71625 13.6 9.5999V10.3999ZM13.2 11.9999C11.2733 11.9999 10.5081 12.0106 9.91424 12.2122C8.73668 12.6119 7.81201 13.5366 7.41228 14.7141C7.2107 15.308 7.2 16.0733 7.2 17.9999C7.2 19.9266 7.2107 20.6918 7.41228 21.2857C7.81201 22.4632 8.73668 23.3879 9.91424 23.7876C10.5081 23.9892 11.2733 23.9999 13.2 23.9999H18.8C20.7266 23.9999 21.4919 23.9892 22.0858 23.7876C23.2633 23.3879 24.188 22.4632 24.5877 21.2857C24.7893 20.6918 24.8 19.9266 24.8 17.9999C24.8 16.0733 24.7893 15.308 24.5877 14.7141C24.188 13.5366 23.2633 12.6119 22.0858 12.2122C21.4919 12.0106 20.7266 11.9999 18.8 11.9999H13.2Z"
-              fill="#171523"
-            />
-            <path
-              d="M12 14.3999C12 14.2512 12 14.1768 12.0123 14.115C12.0628 13.8611 12.2613 13.6627 12.5151 13.6122C12.577 13.5999 12.6513 13.5999 12.8 13.5999C12.9487 13.5999 13.023 13.5999 13.0849 13.6122C13.3387 13.6627 13.5372 13.8611 13.5877 14.115C13.6 14.1768 13.6 14.2512 13.6 14.3999C13.6 14.5485 13.6 14.6229 13.5877 14.6847C13.5372 14.9386 13.3387 15.1371 13.0849 15.1876C13.023 15.1999 12.9487 15.1999 12.8 15.1999C12.6513 15.1999 12.577 15.1999 12.5151 15.1876C12.2613 15.1371 12.0628 14.9386 12.0123 14.6847C12 14.6229 12 14.5485 12 14.3999Z"
-              fill="black"
-            />
-            <path
-              d="M18.4 14.3999C18.4 14.2512 18.4 14.1768 18.4123 14.115C18.4628 13.8611 18.6613 13.6627 18.9151 13.6122C18.977 13.5999 19.0513 13.5999 19.2 13.5999C19.3487 13.5999 19.423 13.5999 19.4849 13.6122C19.7387 13.6627 19.9372 13.8611 19.9877 14.115C20 14.1768 20 14.2512 20 14.3999C20 14.5485 20 14.6229 19.9877 14.6847C19.9372 14.9386 19.7387 15.1371 19.4849 15.1876C19.423 15.1999 19.3487 15.1999 19.2 15.1999C19.0513 15.1999 18.977 15.1999 18.9151 15.1876C18.6613 15.1371 18.4628 14.9386 18.4123 14.6847C18.4 14.6229 18.4 14.5485 18.4 14.3999Z"
-              fill="black"
-            />
-          </svg>
-          Marcas
-        </a>
-        <div className="menuCategorias">
+          <a href="#" className="option">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 9.5999C12 7.83259 13.4327 6.3999 15.2 6.3999H16.8C18.5673 6.3999 20 7.83259 20 9.5999V10.4028C21.1216 10.4137 21.9149 10.4645 22.6001 10.6971C24.2486 11.2567 25.5432 12.5513 26.1028 14.1998C26.4006 15.077 26.4004 16.1313 26.4 17.8248C26.4 17.8824 26.4 17.9408 26.4 17.9999C26.4 18.059 26.4 18.1174 26.4 18.175C26.4004 19.8685 26.4006 20.9228 26.1028 21.8C25.5432 23.4486 24.2486 24.7431 22.6001 25.3027C21.7229 25.6005 20.6686 25.6003 18.9751 25.5999C18.9175 25.5999 18.8591 25.5999 18.8 25.5999H13.2C13.1409 25.5999 13.0825 25.5999 13.0249 25.5999C11.3314 25.6003 10.2771 25.6005 9.39994 25.3027C7.75135 24.7431 6.45681 23.4486 5.89719 21.8C5.59943 20.9228 5.59964 19.8685 5.59997 18.175C5.59999 18.1174 5.6 18.059 5.6 17.9999C5.6 17.9408 5.59999 17.8824 5.59997 17.8248C5.59964 16.1313 5.59943 15.077 5.89719 14.1998C6.45681 12.5513 7.75135 11.2567 9.39994 10.6971C10.0851 10.4645 10.8784 10.4137 12 10.4028V9.5999ZM13.6 10.3999H18.4V9.5999C18.4 8.71625 17.6837 7.9999 16.8 7.9999H15.2C14.3163 7.9999 13.6 8.71625 13.6 9.5999V10.3999ZM13.2 11.9999C11.2733 11.9999 10.5081 12.0106 9.91424 12.2122C8.73668 12.6119 7.81201 13.5366 7.41228 14.7141C7.2107 15.308 7.2 16.0733 7.2 17.9999C7.2 19.9266 7.2107 20.6918 7.41228 21.2857C7.81201 22.4632 8.73668 23.3879 9.91424 23.7876C10.5081 23.9892 11.2733 23.9999 13.2 23.9999H18.8C20.7266 23.9999 21.4919 23.9892 22.0858 23.7876C23.2633 23.3879 24.188 22.4632 24.5877 21.2857C24.7893 20.6918 24.8 19.9266 24.8 17.9999C24.8 16.0733 24.7893 15.308 24.5877 14.7141C24.188 13.5366 23.2633 12.6119 22.0858 12.2122C21.4919 12.0106 20.7266 11.9999 18.8 11.9999H13.2Z"
+                fill="#171523"
+              />
+              <path
+                d="M12 14.3999C12 14.2512 12 14.1768 12.0123 14.115C12.0628 13.8611 12.2613 13.6627 12.5151 13.6122C12.577 13.5999 12.6513 13.5999 12.8 13.5999C12.9487 13.5999 13.023 13.5999 13.0849 13.6122C13.3387 13.6627 13.5372 13.8611 13.5877 14.115C13.6 14.1768 13.6 14.2512 13.6 14.3999C13.6 14.5485 13.6 14.6229 13.5877 14.6847C13.5372 14.9386 13.3387 15.1371 13.0849 15.1876C13.023 15.1999 12.9487 15.1999 12.8 15.1999C12.6513 15.1999 12.577 15.1999 12.5151 15.1876C12.2613 15.1371 12.0628 14.9386 12.0123 14.6847C12 14.6229 12 14.5485 12 14.3999Z"
+                fill="black"
+              />
+              <path
+                d="M18.4 14.3999C18.4 14.2512 18.4 14.1768 18.4123 14.115C18.4628 13.8611 18.6613 13.6627 18.9151 13.6122C18.977 13.5999 19.0513 13.5999 19.2 13.5999C19.3487 13.5999 19.423 13.5999 19.4849 13.6122C19.7387 13.6627 19.9372 13.8611 19.9877 14.115C20 14.1768 20 14.2512 20 14.3999C20 14.5485 20 14.6229 19.9877 14.6847C19.9372 14.9386 19.7387 15.1371 19.4849 15.1876C19.423 15.1999 19.3487 15.1999 19.2 15.1999C19.0513 15.1999 18.977 15.1999 18.9151 15.1876C18.6613 15.1371 18.4628 14.9386 18.4123 14.6847C18.4 14.6229 18.4 14.5485 18.4 14.3999Z"
+                fill="black"
+              />
+            </svg>
+            Marcas
+          </a>
+          <div className="menuCategorias">
             <div className="column">
               <ul>
-                  {brands.map((brand, index)=>( 
+                {brands.map((brand, index) => (
                   <Link to={`/brand/${brand.name}/${brand.id}`}>
-                  <a href="#" 
-                  data-category-id={brand.id} 
-                  data-category={brand.name}  
-                  key={index} 
-                  >
-                    <li>
-                    <strong>{brand.name} ({brand.brand_products_count})</strong>
-                    </li>
-                  </a>
+                    <a href="#"
+                      data-category-id={brand.id}
+                      data-category={brand.name}
+                      key={index}
+                    >
+                      <li>
+                        <strong>{brand.name} ({brand.brand_products_count})</strong>
+                      </li>
+                    </a>
                   </Link>
-                  ))}                  
-                  
-                  
+                ))}
+
+
 
               </ul>
             </div>
@@ -515,7 +528,7 @@ const Header = () => {
           </svg>
           Descuentos
         </a>
-        <a href="#">
+        {/* <a href="#">
           <svg
             width="32"
             height="32"
@@ -531,7 +544,7 @@ const Header = () => {
             />
           </svg>
           Tiendas
-        </a>
+        </a> */}
         <div className="dropdown">
           <a href="#" className="option">
             <svg
@@ -551,48 +564,48 @@ const Header = () => {
             Vender
           </a>
           <div className="menu">
-          {isLoggedIn ? (
-        <a href="#" onClick={handleLogout}>
-          <FontAwesomeIcon icon={faRightFromBracket} /> 
-          Cerrar Sesion
-        </a>
-      ) : (
-        <>
-            <a
-              href="#"
-              onClick={() => {
-                setModalViewLogin(true);
-              }}
-            >
-              <FontAwesomeIcon icon={faUser} /> Inicia Sesion
-            </a>
-            <Modal
-              className="modal-dialog-centered modal-lg"
-              toggle={() => setModalViewLogin(false)}
-              isOpen={modalViewLogin}
-            >
-              <ModalBody>
-                <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  handleChangeFormLogin={handleChangeFormLogin} />
-              </ModalBody>
-            </Modal>
-            <a
-              href="#"
-              onClick={() => {
-                setModalViewRegistro(true);
-              }}
-            >
-              <FontAwesomeIcon icon={faUserPlus} /> Registrate
-            </a>
-            <Modal
-              className="modal-dialog-centered modal-lg"
-              toggle={() => setModalViewRegistro(false)}
-              isOpen={modalViewRegistro}
-            >
-              <ModalBody>
-                <Register closeModalRegistro={closeModalRegistro}  handleChangeFormRegister={handleChangeFormRegister} />
-              </ModalBody>
-            </Modal>
-            </>
+            {isLoggedIn ? (
+              <a href="#" onClick={handleLogout}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                Cerrar Sesion
+              </a>
+            ) : (
+              <>
+                <a
+                  href="#"
+                  onClick={() => {
+                    setModalViewLogin(true);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+                </a>
+                <Modal
+                  className="modal-dialog-centered modal-lg"
+                  toggle={() => setModalViewLogin(false)}
+                  isOpen={modalViewLogin}
+                >
+                  <ModalBody>
+                    <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} handleChangeFormLogin={handleChangeFormLogin} />
+                  </ModalBody>
+                </Modal>
+                <a
+                  href="#"
+                  onClick={() => {
+                    setModalViewRegistro(true);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faUserPlus} /> Registrate
+                </a>
+                <Modal
+                  className="modal-dialog-centered modal-lg"
+                  toggle={() => setModalViewRegistro(false)}
+                  isOpen={modalViewRegistro}
+                >
+                  <ModalBody>
+                    <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                  </ModalBody>
+                </Modal>
+              </>
             )}
           </div>
         </div>

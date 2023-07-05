@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
     Card, CardImg, CardText, CardBody,
@@ -26,6 +26,9 @@ const Vendidos = ({ bannersInfo }) => {
 
     const history = useHistory();
 
+    const containerRef = useRef(null);
+    const containerRef2 = useRef(null);
+
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
     const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
 
@@ -39,6 +42,50 @@ const Vendidos = ({ bannersInfo }) => {
 
         // setProductos(productos);
 
+    };
+
+    const handleScrollLeft = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollLeft -= 500; // Ajusta el valor según tus necesidades
+        }
+        const leftButton = document.querySelector('.scroll-button.left');
+        leftButton.classList.add('animate-left');
+        setTimeout(() => {
+            leftButton.classList.remove('animate-left');
+        }, 300);
+    };
+
+    const handleScrollRight = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollLeft += 500; // Ajusta el valor según tus necesidades
+        }
+        const rightButton = document.querySelector('.scroll-button.right');
+        rightButton.classList.add('animate-right');
+        setTimeout(() => {
+            rightButton.classList.remove('animate-right');
+        }, 300);
+    };
+
+    const handleScrollLeft2 = () => {
+        if (containerRef2.current) {
+            containerRef2.current.scrollLeft -= 322; // Ajusta el valor según tus necesidades
+        }
+        const leftButton = document.querySelector('.scroll-button.left');
+        leftButton.classList.add('animate-left');
+        setTimeout(() => {
+            leftButton.classList.remove('animate-left');
+        }, 300);
+    };
+
+    const handleScrollRight2 = () => {
+        if (containerRef2.current) {
+            containerRef2.current.scrollLeft += 322; // Ajusta el valor según tus necesidades
+        }
+        const rightButton = document.querySelector('.scroll-button.right');
+        rightButton.classList.add('animate-right');
+        setTimeout(() => {
+            rightButton.classList.remove('animate-right');
+        }, 300);
     };
 
     const showRoutes = (itemId, filtro) => {
@@ -72,122 +119,138 @@ const Vendidos = ({ bannersInfo }) => {
                         Ver todos
                     </a>
                 </div>
-                <div className='containerProductos'>
-                    {productos.map((product, index) => (
+                <div className='containerProductos' ref={containerRef}>
+                    <button className="scroll-button left" onClick={handleScrollLeft} onMouseOver={handleScrollLeft}>
+                        &#8249;
+                    </button>
+                    <div className="cardContainer">
+                        {productos.map((product, index) => (
 
-                        <a href="#" className="containerCard2" key={index}>
-                            <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
-                                <Card className="cardProducto1">
-                                    <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
-                                    <CardBody>
-                                        <div className="starts">
-                                            <img src={start} />
-                                            <img src={start} />
-                                            <img src={start} />
-                                            <img src={start_1} />
-                                            <img src={start_1} />
-                                        </div>
-                                        <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>
-                                            {product.name}
-                                        </CardSubtitle>
-                                        <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>
-                                    </CardBody>
-                                </Card>
-                            </Link>
-                        </a>
-                    ))}
+                            <a href="#" className="containerCard2" key={index}>
+                                <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
+                                    <Card className="cardProducto1">
+                                        <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
+                                        <CardBody>
+                                            <div className="starts">
+                                                <img src={start} />
+                                                <img src={start} />
+                                                <img src={start} />
+                                                <img src={start_1} />
+                                                <img src={start_1} />
+                                            </div>
+                                            <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                                {product.name}
+                                            </CardSubtitle>
+                                            <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>
+                                        </CardBody>
+                                    </Card>
+                                </Link>
+                            </a>
+                        ))}
+                    </div>
+                    <button className="scroll-button right" onClick={handleScrollRight} onMouseOver={handleScrollRight}>
+                        &#8250;
+                    </button>
 
                 </div>
-                {bannersInfo && bannersInfo
-                    .filter((banner) => banner.banner_type === "banner_5")
-                    .map((itemBanner, index) => (
-                        <div className='containerHot'>
-                            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
-                                <div className='masVendidosCards' key={index === 0}>
-                                    <div className='headerImg'>
-                                        <img src={logoSamsung} width={'200px'} />
+                <div className="cardContainerHot" >
+                    <button className="scroll-button left" onClick={handleScrollLeft2} onMouseOver={handleScrollLeft2}>
+                        &#8249;
+                    </button>
+                    {bannersInfo && bannersInfo
+                        .filter((banner) => banner.banner_type === "banner_5")
+                        .map((itemBanner, index) => (
+                            <div className='containerHot' ref={containerRef2}>
+                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
+                                    <div className='masVendidosCards' key={index === 0}>
+                                        <div className='headerImg'>
+                                            <img src={logoSamsung} width={'200px'} />
+                                        </div>
+                                        <div className='centerImg'>
+                                            <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} width={'134px'} alt={itemBanner.banner_data[0].imagen} />
+                                        </div>
+                                        <a href='#' className='btnVendidos'>
+                                            Ver Tienda
+                                        </a>
+                                        <div className='footerSpanText'>
+                                            <span className='spanText1'>
+                                                Hasta
+                                            </span>
+                                            <span className='spanText2'>
+                                                50% Descuento
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div className='centerImg'>
-                                        <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} width={'134px'} alt={itemBanner.banner_data[0].imagen} />
+                                </a>
+                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
+                                    <div className='masVendidosCards' key={index === 1}>
+                                        <div className='headerImg'>
+                                            <img src={logoSony} width={'200px'} />
+                                        </div>
+                                        <div className='centerImg'>
+                                            <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} width={'216px'} alt={itemBanner.banner_data[1].imagen} />
+                                        </div>
+                                        <a href='#' className='btnVendidos'>
+                                            Ver Tienda
+                                        </a>
+                                        <div className='footerSpanText'>
+                                            <span className='spanText1'>
+                                                Hasta
+                                            </span>
+                                            <span className='spanText2'>
+                                                50% Descuento
+                                            </span>
+                                        </div>
                                     </div>
-                                    <a href='#' className='btnVendidos'>
-                                        Ver Tienda
-                                    </a>
-                                    <div className='footerSpanText'>
-                                        <span className='spanText1'>
-                                            Hasta
-                                        </span>
-                                        <span className='spanText2'>
-                                            50% Descuento
-                                        </span>
+                                </a>
+                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
+                                    <div className='masVendidosCards' key={index === 2}>
+                                        <div className='headerImg'>
+                                            <img src={logoHaceb} width={'200px'} />
+                                        </div>
+                                        <div className='centerImg'>
+                                            <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} width={'216px'} alt={itemBanner.banner_data[2].imagen} />
+                                        </div>
+                                        <a href='#' className='btnVendidos'>
+                                            Ver Tienda
+                                        </a>
+                                        <div className='footerSpanText'>
+                                            <span className='spanText1'>
+                                                Hasta
+                                            </span>
+                                            <span className='spanText2'>
+                                                50% Descuento
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
-                                <div className='masVendidosCards' key={index === 1}>
-                                    <div className='headerImg'>
-                                        <img src={logoSony} width={'200px'} />
+                                </a>
+                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro)}>
+                                    <div className='masVendidosCards' key={index === 3}>
+                                        <div className='headerImg'>
+                                            <img src={logoAsus} width={'200px'} />
+                                        </div>
+                                        <div className='centerImg'>
+                                            <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} width={'216px'} alt={itemBanner.banner_data[3].imagen} />
+                                        </div>
+                                        <a href='#' className='btnVendidos'>
+                                            Ver Tienda
+                                        </a>
+                                        <div className='footerSpanText'>
+                                            <span className='spanText1'>
+                                                Hasta
+                                            </span>
+                                            <span className='spanText2'>
+                                                50% Descuento
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div className='centerImg'>
-                                        <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} width={'216px'} alt={itemBanner.banner_data[1].imagen} />
-                                    </div>
-                                    <a href='#' className='btnVendidos'>
-                                        Ver Tienda
-                                    </a>
-                                    <div className='footerSpanText'>
-                                        <span className='spanText1'>
-                                            Hasta
-                                        </span>
-                                        <span className='spanText2'>
-                                            50% Descuento
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
-                                <div className='masVendidosCards' key={index === 2}>
-                                    <div className='headerImg'>
-                                        <img src={logoHaceb} width={'200px'} />
-                                    </div>
-                                    <div className='centerImg'>
-                                        <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} width={'216px'} alt={itemBanner.banner_data[2].imagen} />
-                                    </div>
-                                    <a href='#' className='btnVendidos'>
-                                        Ver Tienda
-                                    </a>
-                                    <div className='footerSpanText'>
-                                        <span className='spanText1'>
-                                            Hasta
-                                        </span>
-                                        <span className='spanText2'>
-                                            50% Descuento
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro)}>
-                                <div className='masVendidosCards' key={index === 3}>
-                                    <div className='headerImg'>
-                                        <img src={logoAsus} width={'200px'} />
-                                    </div>
-                                    <div className='centerImg'>
-                                        <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} width={'216px'} alt={itemBanner.banner_data[3].imagen} />
-                                    </div>
-                                    <a href='#' className='btnVendidos'>
-                                        Ver Tienda
-                                    </a>
-                                    <div className='footerSpanText'>
-                                        <span className='spanText1'>
-                                            Hasta
-                                        </span>
-                                        <span className='spanText2'>
-                                            50% Descuento
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    ))}
+                                </a>
+                            </div>
+                        ))}
+                    <button className="scroll-button right" onClick={handleScrollRight2} onMouseOver={handleScrollRight2}>
+                        &#8250;
+                    </button>
+                </div>
             </div>
         </div>
     )
