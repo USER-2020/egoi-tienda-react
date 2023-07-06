@@ -1,8 +1,8 @@
-:root{
-    --placeholder-icon-asunto:url('../assets/egoi_icons/Rectangle\ 1317\ \(Stroke\).svg');
-    --placeholder-icon-tipo-problema:url('../assets/egoi_icons/Vector\ \(Stroke\).svg');
-    --placeholder-icon-prioridad:url('../assets/egoi_icons/Menu.svg');
-    --placeholder-icon-enviar-mensage:url('../assets/egoi_icons/Chat\ Alt.svg');
+:root {
+    --placeholder-icon-asunto: url('../assets/egoi_icons/Rectangle\ 1317\ \(Stroke\).svg');
+    --placeholder-icon-tipo-problema: url('../assets/egoi_icons/Vector\ \(Stroke\).svg');
+    --placeholder-icon-prioridad: url('../assets/egoi_icons/Menu.svg');
+    --placeholder-icon-enviar-mensage: url('../assets/egoi_icons/Chat\ Alt.svg');
 
 }
 
@@ -108,6 +108,10 @@
     border: 1px solid #FC5241;
     color: #FC5241;
 
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr td .opcionesDetallePedidoResponsive {
+    display: none;
 }
 
 /* Detail Pedido */
@@ -253,6 +257,12 @@
     width: 100%;
 }
 
+/* Sigue tu pedido */
+.contenidoMisOrdenes .sigueTuPedido .searchContainerCard .searchCardInputs {
+    width: 700px;
+    padding: 32px;
+}
+
 /* Lista de deseos */
 .listaDeDeseos {
     width: 100%;
@@ -381,6 +391,10 @@
 }
 
 /* Ticket support */
+.contenidoMisOrdenes .ticketSoporte .table tbody tr td .opcionesDetallePedidoResponsive {
+    display: none;
+}
+
 .contenidoMisOrdenes .ticketSoporte .table thead tr th {
     color: #A2A1A7;
     font-size: 12px;
@@ -424,13 +438,13 @@
 
 }
 
-.contenidoMisOrdenes .ticketSoporte .opcionTicketSupportAddNew{
+.contenidoMisOrdenes .ticketSoporte .opcionTicketSupportAddNew {
     display: flex;
     flex-direction: row;
     justify-content: end;
 }
 
-.contenidoMisOrdenes .ticketSoporte .opcionTicketSupportAddNew a{
+.contenidoMisOrdenes .ticketSoporte .opcionTicketSupportAddNew a {
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -442,33 +456,34 @@
     font-size: 14px;
 }
 
-.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer{
-   width: 100%;
-   height: 100%; 
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer {
+    width: 100%;
+    height: 100%;
 }
 
-.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card{
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card {
     padding: 24px;
     border-radius: 24px;
-    
+
 }
-.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .detailTicketSupportHeader{
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .detailTicketSupportHeader {
     display: flex;
     flex-direction: row;
     gap: 70px;
 }
 
-.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos h6{
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos h6 {
     font-size: 12px;
     color: #A2A1A7;
 }
 
-.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos p{
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos p {
     font-size: 14px;
     font-weight: 400;
 }
 
-.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .enviarMenssageContainer{
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .enviarMenssageContainer {
     display: flex;
     justify-content: end;
     flex-direction: row;
@@ -484,18 +499,279 @@
     font-size: 14px;
 }
 
-input[placeholder="Asunto  "]::placeholder{
+input[placeholder="Asunto  "]::placeholder {
     background-image: var(--placeholder-icon-asunto);
 }
 
-input[placeholder="Tipo de problema  "]::placeholder{
+input[placeholder="Tipo de problema  "]::placeholder {
     background-image: var(--placeholder-icon-tipo-problema);
 }
 
-input[placeholder="Prioridad  "]::placeholder{
+input[placeholder="Prioridad  "]::placeholder {
     background-image: var(--placeholder-icon-prioridad);
 }
 
-input[placeholder="Describe tu problema...  "]::placeholder{
+input[placeholder="Describe tu problema...  "]::placeholder {
     background-image: var(--placeholder-icon-enviar-mensage);
+}
+
+.contenedorOrdersOpcionesResponsive {
+    display: none;
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contenedorOrdersOpciones {
+        display: none
+    }
+
+    .contenedorOrdersOpcionesResponsive {
+        display: block;
+    }
+
+    /* Mis Pedidos */
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedido {
+        display: none;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedidoResponsive {
+        display: flex;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        /* width: 70px; */
+        /* height: 24px; */
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        background-color: #FC5241;
+        color: white;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnCancelarPedido {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        /* width: 100px;
+        height: 24px; */
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        /* border: 1px solid #FC5241; */
+        color: #FC5241;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .table thead tr th {
+        color: #A2A1A7;
+        font-size: 12px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .table tbody tr td {
+        font-size: 12px;
+    }
+
+    /* Detallle de pedido */
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .containerDetalleAndCard {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .containerDetalleAndCard .containerPedidoIzq {
+        width: 100%;
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .containerDetalleAndCard .containerCardDatos {
+        width: 100%;
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .trackOrderView .cardOrderTrack {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .contenidoMisOrdenesResponsive .btnOpcionesMenuResponsive {
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .contenidoMisOrdenesResponsive .btnOpcionesMenuResponsive a {
+        width: 20%;
+        height: 48px;
+        background-color: #FC5241;
+        padding: 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: 700;
+        border-radius: 32px;
+    }
+
+    /* Sigue tu pedido */
+    .contenedorOrdersOpcionesResponsive .sigueTuPedidoResponsive .searchContainerCard .card {
+        width: 100%;
+        padding: 12px;
+    }
+
+    /* Informacion Perfil */
+    .contenedorOrdersOpcionesResponsive .infoPerfilResponsive .card {
+        padding: 24px;
+        border-radius: 32px;
+    }
+
+    /* Direcciones */
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card {
+        padding: 24px;
+        border-radius: 32px;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card .infoDireccionPerfil {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card .opcionesDireccionesPerfil {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card .opcionesDireccionesPerfil .btn1 {
+        text-decoration: none;
+        color: black;
+        gap: 5px;
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card .opcionesDireccionesPerfil .btn2 {
+        text-decoration: none;
+        color: white;
+        background-color: #FC5241;
+        padding: 5px;
+        border-radius: 32px;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        width: 50%;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .containerAddNewDireccion {
+        padding: 0;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .containerAddNewDireccion div {
+        background-color: #FC5241;
+        color: white;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        height: 48px;
+        align-items: center;
+        align-self: center;
+        border-radius: 32px;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerAddNewDireccion a {
+        color: white;
+        text-decoration: none;
+        width: 100%;
+        height: 100%;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+    /* Ticket Soporte  */
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedido {
+        display: none;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .opcionTicketSupportAddNew{
+        width: 200px;
+        height: 48px;
+        padding: 16px;
+        background-color: #FC5241;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border-radius: 32px;
+        text-align: center;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .opcionTicketSupportAddNew a{
+        width: 200px;
+       align-self: center;
+        background-color: #FC5241;
+        color: white;
+        text-decoration: none;
+        border-radius: 32px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .table thead tr th {
+        color: #A2A1A7;
+        font-size: 12px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .table tbody tr td {
+        font-size: 13px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedidoResponsive {
+        display: flex;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
+        background-color: #FC5241;
+        color: white;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedidoResponsive .btnCancelarPedido {
+
+        color: #FC5241;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .card .enviarMenssageContainer {
+        width: 100%;
+        height: 48px;
+        background-color: #FC5241;
+        border-radius: 32px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .card .enviarMenssageContainer a {
+        width: 100%;
+        height: 48px;
+        background-color: #FC5241;
+        color: white;
+        text-decoration: none;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 32px;
+    }
+
 }

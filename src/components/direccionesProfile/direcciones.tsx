@@ -2,6 +2,10 @@ import React from 'react'
 import { Card } from 'reactstrap'
 
 function DireccionesPerfil() {
+  
+  const showAlertPrueba = () =>{
+    alert("funcionando boton agregar direccion");
+  }
   return (
     <div>
       <div className="containerDireccionesPerfil">
@@ -48,6 +52,7 @@ function DireccionesPerfil() {
               Editar información
             </a>
           </div>
+
         </Card>
 
         <Card>
@@ -99,7 +104,7 @@ function DireccionesPerfil() {
 
         <Card className='containerAddNewDireccion'>
           <div>
-            <a href="#">Añadir nueva dirección</a>
+            <a href="#" onClick={()=>showAlertPrueba()}>Añadir nueva dirección</a>
           </div>
         </Card>
 
