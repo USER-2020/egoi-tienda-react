@@ -58,7 +58,7 @@ function Orders() {
     const [showDetailTicketSupport, setShowDetailTicketSupport] = useState(false);
 
     /* Cosas del responsive */
-    const [modalMenuOrders, setModalMenuOrders] = useState(true);
+    const [modalMenuOrders, setModalMenuOrders] = useState(false);
 
     const handleMenuOptionClick = (option) => {
         setActiveOption(option);
@@ -215,27 +215,7 @@ function Orders() {
         setShowDetailTicketSupport(true);
     }
 
-    const handleResize = () => {
-        if (window.innerWidth < 768) {
-            setModalMenuOrders(true);
-        } else {
-            setModalMenuOrders(false);
-        }
-    };
-
-
-    /* The above code is using the useEffect hook in a React component to add an event listener for the
-    'resize' event on the window object. When the window is resized, the handleResize function is
-    called. If the window width is greater than 768 pixels, the state variable modalMenuOrders is set
-    to false. Otherwise, it is set to true. The code also includes a cleanup function that removes
-    the event listener when the component is unmounted. */
-    useEffect(() => {
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-
+    
     return (
         <>
 
@@ -445,17 +425,19 @@ function Orders() {
                                 </div>
                             </div>
                         )}
+
+                        {/* Modales */}
+                        <Modal
+                            className="modal-dialog-centered modal-sm"
+                            toggle={() => closeModalMenuOrders()}
+                            isOpen={modalMenuOrders}
+                        >
+                            <ModalBody>
+                                <ModalMenuOrdersResponsive handleMenuOptionClick={handleMenuOptionClick} activeOption={activeOption} />
+                            </ModalBody>
+                        </Modal>
                     </div >
-                    {/* Modales */}
-                    <Modal
-                        className="modal-dialog-centered modal-sm"
-                        toggle={() => closeModalMenuOrders()}
-                        isOpen={modalMenuOrders}
-                    >
-                        <ModalBody>
-                            <ModalMenuOrdersResponsive handleMenuOptionClick={handleMenuOptionClick} activeOption={activeOption} />
-                        </ModalBody>
-                    </Modal>
+
                 </div>
             </div>
 
