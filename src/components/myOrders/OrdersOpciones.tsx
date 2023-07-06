@@ -354,7 +354,7 @@ function Orders() {
                                     <TrackOrder />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
-                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menu</a>
+                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
                                 </div>
                             </div>
                         )}
@@ -368,7 +368,7 @@ function Orders() {
                                     <TrackOrder />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
-                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menu</a>
+                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
                                 </div>
                             </div>
                         )}
@@ -378,7 +378,7 @@ function Orders() {
                                     <Lista />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
-                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menu</a>
+                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
                                 </div>
                             </div>
                         )}
@@ -388,7 +388,7 @@ function Orders() {
                                     <ChatWithSeller />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
-                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menu</a>
+                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
                                 </div>
                             </div>
                         )}
@@ -398,7 +398,7 @@ function Orders() {
                                     <InfoProfile />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
-                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menu</a>
+                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
                                 </div>
                             </div>
                         )}
@@ -408,7 +408,7 @@ function Orders() {
                                     <DireccionesPerfil />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
-                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menu</a>
+                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
                                 </div>
                             </div>
                         )}
@@ -421,7 +421,7 @@ function Orders() {
                                     <DetailTicketSupport />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
-                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menu</a>
+                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
                                 </div>
                             </div>
                         )}
