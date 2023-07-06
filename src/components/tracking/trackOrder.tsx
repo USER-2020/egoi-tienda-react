@@ -11,7 +11,7 @@ function TrackOrder() {
     }
     return (
         <>
-            <div>
+            <div className='trackOrderView'>
                 <Card style={{ width: '120px', padding: '5px', color: '#FC5241' }}>
                     <h6 style={{ fontSize: '12px', marginBottom: 0 }}>Número de pedido</h6>
                     <h5 style={{ fontWeight: '400', fontSize: '16px', marginBottom: 0 }}>100361</h5>
@@ -42,7 +42,7 @@ function TrackOrder() {
                     width: '100%', marginTop: '20px',
                     display: 'flex', flexDirection: 'row',
                     justifyContent: 'space-between'
-                }}>
+                }} className='cardOrderTrack'>
                     <div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', padding: '14px', justifyContent: 'center', textAlign: 'center', alignItems: 'center' }}>
                             <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">

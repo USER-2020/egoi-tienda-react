@@ -79,7 +79,7 @@
 .cardContainerHot {
     display: flex;
     gap: 25px;
-    overflow-x: scroll;
+    overflow-x: hidden;
     white-space: nowrap;
     overflow-y: hidden;
     margin-bottom: 20px;
