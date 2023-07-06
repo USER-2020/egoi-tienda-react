@@ -519,10 +519,16 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     display: none;
 }
 
+.contenedorOrdersOpciones .modal-dialog-centered{
+    display: none;
+}
 
 
 /* Responsive */
 @media (max-width: 768px) {
+    .contenedorOrdersOpcionesResponsive .modal-dialog-centered{
+        display: block;
+    }
     .contenedorOrdersOpciones {
         display: none
     }
