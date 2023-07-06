@@ -58,7 +58,7 @@ function Orders() {
     const [showDetailTicketSupport, setShowDetailTicketSupport] = useState(false);
 
     /* Cosas del responsive */
-    const [modalMenuOrders, setModalMenuOrders] = useState(false);
+    const [modalMenuOrders, setModalMenuOrders] = useState(true);
 
     const handleMenuOptionClick = (option) => {
         setActiveOption(option);
@@ -216,10 +216,10 @@ function Orders() {
     }
 
     const handleResize = () => {
-        if (window.innerWidth > 768) {
-            setModalMenuOrders(false);
-        } else {
+        if (window.innerWidth < 768) {
             setModalMenuOrders(true);
+        } else {
+            setModalMenuOrders(false);
         }
     };
 
@@ -230,10 +230,7 @@ function Orders() {
     to false. Otherwise, it is set to true. The code also includes a cleanup function that removes
     the event listener when the component is unmounted. */
     useEffect(() => {
-        
-
         handleResize();
-
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
@@ -449,19 +446,20 @@ function Orders() {
                             </div>
                         )}
                     </div >
+                    {/* Modales */}
+                    <Modal
+                        className="modal-dialog-centered modal-sm"
+                        toggle={() => closeModalMenuOrders()}
+                        isOpen={modalMenuOrders}
+                    >
+                        <ModalBody>
+                            <ModalMenuOrdersResponsive handleMenuOptionClick={handleMenuOptionClick} activeOption={activeOption} />
+                        </ModalBody>
+                    </Modal>
                 </div>
             </div>
 
-            {/* Modales */}
-            <Modal
-                className="modal-dialog-centered modal-sm"
-                toggle={() => closeModalMenuOrders()}
-                isOpen={modalMenuOrders}
-            >
-                <ModalBody>
-                    <ModalMenuOrdersResponsive handleMenuOptionClick={handleMenuOptionClick} activeOption={activeOption}/>
-                </ModalBody>
-            </Modal>
+
             {/* Modales */}
             {/* <Modal
                     className="modal-dialog-centered modal-sm"
