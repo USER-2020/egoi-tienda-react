@@ -215,6 +215,14 @@ function Orders() {
         setShowDetailTicketSupport(true);
     }
 
+    const handleResize = () => {
+        if (window.innerWidth > 768) {
+            setModalMenuOrders(false);
+        } else {
+            setModalMenuOrders(true);
+        }
+    };
+
 
     /* The above code is using the useEffect hook in a React component to add an event listener for the
     'resize' event on the window object. When the window is resized, the handleResize function is
@@ -222,13 +230,7 @@ function Orders() {
     to false. Otherwise, it is set to true. The code also includes a cleanup function that removes
     the event listener when the component is unmounted. */
     useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth > 768) {
-                setModalMenuOrders(false);
-            } else {
-                setModalMenuOrders(true);
-            }
-        };
+        
 
         handleResize();
 
