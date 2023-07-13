@@ -500,26 +500,165 @@
 }
 
 /* Cahtear con los clientes */
-.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor{
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor {
     display: flex;
     flex-direction: row;
     gap: 15px;
 }
 
-.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores{
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores {
     width: 40%;
     height: 520px;
 }
 
-.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card{
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card {
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
     padding: 16px;
     border-radius: 16px;
 }
 
-.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card h2{
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card ul {
+    padding-left: 0;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card ul li{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    height: 48px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 24px;
+    justify-content: space-evenly;
+    
+}
+
+.listContactsProveedores .card ul li:hover {
+    background-color:#FC5241; /* Color de fondo para el elemento activo */
+  }
+
+.listContactsProveedores .card ul li.active {
+    background-color:#FC5241; /* Color de fondo para el elemento activo */
+  }
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card ul li a{
+    text-decoration: none;
+    font-size: larger;
+    align-self: center;
+    color: black;
+    font-weight: 700;
+    width: 100%;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat {
+    width: 40%;
+    height: 520px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
+    border-radius: 16px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .headerChat {
+    width: 100%;
+    height: 48px;
+    background-color: #FC5241;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes .message {
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes .message p {
+    width: 230px;
+    background-color: #FC5241;
+    padding: 10px;
+    color: white;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+
+
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes .marcaTiempo {
+    width: 100%;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes .marcaTiempo p {
+    width: 230px;
+    text-align: end;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+    padding: 5px;
+    font-size: 14px;
+    color: #74737B;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .sendMessage {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px;
+}
+
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes {
+    overflow-y: scroll;
+    height: 80%;
+}
+
+/* Estilos de la barra de desplazamiento */
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes:hover {
+    overflow-y: scroll;
+    /* Mostrar la barra de desplazamiento al interactuar */
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card h2 {
+    justify-content: center;
+    text-align: center;
+    color: #FC5241;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card h2 {
     justify-content: center;
     text-align: center;
     color: #FC5241;
@@ -545,16 +684,17 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     display: none;
 }
 
-.contenedorOrdersOpciones .modal-dialog-centered{
+.contenedorOrdersOpciones .modal-dialog-centered {
     display: none;
 }
 
 
 /* Responsive */
 @media (max-width: 768px) {
-    .contenedorOrdersOpcionesResponsive .modal-dialog-centered{
+    .contenedorOrdersOpcionesResponsive .modal-dialog-centered {
         display: block;
     }
+
     .contenedorOrdersOpciones {
         display: none
     }
@@ -566,6 +706,10 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     /* Mis Pedidos */
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedido {
         display: none;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table{
+        width: 100vw;
     }
 
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedidoResponsive {
@@ -612,6 +756,7 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     .contenedorOrdersOpcionesResponsive .mispedidosResponsive .containerDetalleAndCard {
         display: flex;
         flex-direction: column;
+        width: 100vw;
     }
 
     .contenedorOrdersOpcionesResponsive .mispedidosResponsive .containerDetalleAndCard .containerPedidoIzq {
@@ -749,6 +894,10 @@ input[placeholder="Describe tu problema...  "]::placeholder {
         color: white;
     }
 
+    .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table{
+        width: 100vw;
+    }
+
     .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnCancelarPedido {
         display: flex;
         flex-direction: row;
@@ -771,11 +920,12 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .table tbody tr td {
         font-size: 12px;
     }
+
     .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedido {
         display: none;
     }
 
-    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .opcionTicketSupportAddNew{
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .opcionTicketSupportAddNew {
         width: 200px;
         height: 48px;
         padding: 16px;
@@ -788,9 +938,9 @@ input[placeholder="Describe tu problema...  "]::placeholder {
         text-align: center;
     }
 
-    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .opcionTicketSupportAddNew a{
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .opcionTicketSupportAddNew a {
         width: 200px;
-       align-self: center;
+        align-self: center;
         background-color: #FC5241;
         color: white;
         text-decoration: none;
@@ -845,6 +995,172 @@ input[placeholder="Describe tu problema...  "]::placeholder {
         border-radius: 32px;
     }
 
+
+    /* Chatear con el cliente */
+    /* Cahtear con los clientes */
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores {
+    width: 100%;
+    height: 520px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
+    padding: 16px;
+    border-radius: 16px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card ul {
+    padding-left: 0;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card ul li{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    height: 48px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 24px;
+    justify-content: space-evenly;
+    
+}
+
+.listContactsProveedores .card ul li:hover {
+    background-color:#FC5241; /* Color de fondo para el elemento activo */
+  }
+
+.listContactsProveedores .card ul li.active {
+    background-color:#FC5241; /* Color de fondo para el elemento activo */
+  }
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card ul li a{
+    text-decoration: none;
+    font-size: larger;
+    align-self: center;
+    color: black;
+    font-weight: 700;
+    width: 100%;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat {
+    width: 100%;
+    height: 520px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
+    border-radius: 16px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .headerChat {
+    width: 100%;
+    height: 48px;
+    background-color: #FC5241;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes .message {
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes .message p {
+    width: 230px;
+    background-color: #FC5241;
+    padding: 10px;
+    color: white;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+
+
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes .marcaTiempo {
+    width: 100%;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes .marcaTiempo p {
+    width: 230px;
+    text-align: end;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+    padding: 5px;
+    font-size: 14px;
+    color: #74737B;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .sendMessage {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px;
+}
+
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes {
+    overflow-y: scroll;
+    height: 80%;
+}
+
+/* Estilos de la barra de desplazamiento */
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes:hover {
+    overflow-y: scroll;
+    /* Mostrar la barra de desplazamiento al interactuar */
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card h2 {
+    justify-content: center;
+    text-align: center;
+    color: #FC5241;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card h2 {
+    justify-content: center;
+    text-align: center;
+    color: #FC5241;
+}
 
 
 }
