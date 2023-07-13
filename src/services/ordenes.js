@@ -128,12 +128,45 @@ export const createTicketSupport = (token, data) =>
 //Favoritos
 //Add Favoritos 
 export const addFavoriteProduct = (token, idProduct) =>
-  axios.post(`${urlBase}/customer/wish-list/add?product_id=${idProduct}`,
-    {},
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+    axios.post(`${urlBase}/customer/wish-list/add?product_id=${idProduct}`,
+        {},
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+//Chatera con los vendedores
+//Obtener todos los chats
+export const allChatsSellers = (token) =>
+    axios.get(`${urlBase}/customer/chat`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+//Obtener chat por id de tienda
+export const getSellerChatByStoreId = (token, idShop) =>
+    axios.get(`${urlBase}/customer/chat/messages?shop_id=${idShop}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    })
+
+//Enviar mensage al vendedor
+export const addMessage = (token, idSeller, idShop, message) =>
+    axios.post(`${urlBase}/customer/chat/send-message`, {
+        seller_id: idSeller,
+        shop_id: idShop,
+        message: message,
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
