@@ -37,6 +37,7 @@ import Register from '../views/user/register';
 import { getAllBrands } from "../services/brands";
 import { allCategories } from "../services/categories";
 import { getCurrentUser, setCurrentUser } from '../helpers/Utils';
+import { myorders } from "../constants/defaultValues";
 
 
 function HeaderResponsive() {
@@ -173,7 +174,9 @@ function HeaderResponsive() {
   //   }
   // }, [isOffcanvasOpen]);
 
-
+  const handleAdminUser = () =>{
+    history.push(`${myorders}`);
+  }
 
 
   useEffect(() => {
@@ -392,7 +395,7 @@ function HeaderResponsive() {
                 </li>
                 {currenUser ? (
                   <li class='nav-item pers'>
-                    <a href="#">
+                    <a href="#" onClick={handleAdminUser}>
                       <svg xmlns="http://www.w3.org/2000/svg" 
                       width="40" 
                       height="40" 

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import { Card, Form, FormGroup, Input, InputGroup, InputGroupText } from 'reactstrap'
 import es from "react-phone-input-2/lang/es.json";
 import { Eye, EyeSlash, X } from "react-bootstrap-icons";
+import { getUserProfileInfo } from '../../services/ordenes';
+import { getCurrentUser } from '../../helpers/Utils';
 
 function InfoProfile() {
 
@@ -12,9 +14,28 @@ function InfoProfile() {
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [detailInfoProfile, setDetailInfoProfile] = useState('');
+
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  const currenUser = getCurrentUser();
+  const token = currenUser.token;
+
+  const getAllInfoPerfil = () => {
+    getUserProfileInfo(token)
+      .then((res) => {
+        console.log(res.data);
+        setDetailInfoProfile(res.data);
+      }).catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    if (token) {
+      getAllInfoPerfil();
+    }
+  }, [])
 
   return (
     <div>
@@ -25,18 +46,18 @@ function InfoProfile() {
             <path fill-rule="evenodd" clip-rule="evenodd" d="M28 21.9998C26.107 21.9998 24.55 23.5722 24.55 25.5398C24.55 27.5074 26.107 29.0798 28 29.0798C29.893 29.0798 31.45 27.5074 31.45 25.5398C31.45 23.5722 29.893 21.9998 28 21.9998ZM25.2585 29.3692C24.0994 28.5049 23.35 27.1076 23.35 25.5398C23.35 22.9345 25.4195 20.7998 28 20.7998C30.5805 20.7998 32.65 22.9345 32.65 25.5398C32.65 27.128 31.881 28.5413 30.6959 29.4027C31.8876 29.7123 32.699 30.243 33.2198 31.0022C33.6309 31.6014 33.8196 32.2883 33.9106 32.9909C34 33.6805 34 34.4316 34 35.1764V35.1998C34 35.5312 33.7314 35.7998 33.4 35.7998C33.0686 35.7998 32.8 35.5312 32.8 35.1998C32.8 34.428 32.799 33.7504 32.7206 33.1452C32.6429 32.5457 32.4941 32.0657 32.2302 31.681C31.725 30.9445 30.6345 30.3395 27.9933 30.2798C25.3591 30.2808 24.2753 30.8879 23.7721 31.6325C23.5071 32.0248 23.3575 32.5168 23.2795 33.1272C23.2009 33.7425 23.2 34.4283 23.2 35.1998C23.2 35.5312 22.9314 35.7998 22.6 35.7998C22.2686 35.7998 22 35.5312 22 35.1998L22 35.1771C22 34.4316 22 33.6735 22.0892 32.9751C22.18 32.2647 22.3679 31.5673 22.7779 30.9606C23.2925 30.1991 24.0911 29.6683 25.2585 29.3692Z" fill="white" />
             <rect x="0.5" y="0.5" width="55" height="55" rx="27.5" stroke="#FC5241" stroke-opacity="0.16" />
           </svg>
-          <h5>Juan Velasquez</h5>
+          <h5></h5>
         </div>
         <p>Información sobre tu cuenta</p>
         <div className="containerFormInfoProfile">
           <div className="nombreInfoPerfil">
             Nombre
-            <h6>Juan Velasquez</h6>
+            <h6>{detailInfoProfile.f_name + ' ' + detailInfoProfile.l_name}</h6>
 
           </div>
           <div className="correoInfoPerfil">
             Correo Electrónico
-            <h6>prueba@prueba.com</h6>
+            <h6>{detailInfoProfile.email}</h6>
           </div>
           <Form style={{ marginTop: '20px' }}>
             <FormGroup>
@@ -113,8 +134,26 @@ function InfoProfile() {
               </InputGroup>
             </FormGroup>
           </Form>
-        </div>
-
+          <div className="btnUpdateInfoProfile" style={{
+            width: '100%',
+            justifyContent: 'center',
+            textAlign: 'center',
+            height: '48px',
+            marginTop:'40px'
+          }}>
+            <a href="#" style={{
+              textDecoration: 'none',
+              color: 'white',
+              alignSelf: 'center',
+              backgroundColor: '#FC5241',
+              width: '100%',
+              height: '48px', 
+              padding:'16px',
+              cursor: 'pointer',
+              borderRadius:'32px'
+            }}>Actualizar</a>
+          </div>
+        </div >
       </Card>
     </div>
   )
