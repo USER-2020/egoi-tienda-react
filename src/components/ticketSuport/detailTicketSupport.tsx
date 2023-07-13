@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card, Form, FormGroup, Input, Label } from 'reactstrap'
+import { getCurrentUser } from '../../helpers/Utils';
+import { getTicketById } from '../../services/ordenes';
 
-function DetailTicketSupport() {
+function DetailTicketSupport({idTicket}) {
+
+  const currenUser = getCurrentUser();
+  const token = currenUser.token;
+
+  const getInfoTicketById = ()=>{
+    getTicketById(token, idTicket)
+    .then((res)=>{
+      console.log(res.data);
+    }).catch((err)=>console.log(err));
+  }
+
+  useEffect(()=>{
+    if(token){
+      getInfoTicketById();
+      console.log(idTicket);
+    }
+  },[])
   return (
     <div className='detailTicketSupportContainer'>
       <Card>

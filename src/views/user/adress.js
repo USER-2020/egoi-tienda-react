@@ -110,6 +110,8 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
         const data = {
             address_type: selectedLink,
             contact_person_name: contactPersonFullName,
+            f_name: contactPersonName,
+            l_name:contactPersonLastName,
             address: address,
             country: country,
             zip: selectedDepto,

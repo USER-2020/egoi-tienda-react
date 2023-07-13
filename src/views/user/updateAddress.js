@@ -33,6 +33,8 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
     const [loading, setLoading] = useState(false);
     const [selectedZip, setSelectedZip] = useState();
     const [selectedCity, setSelectedCity] = useState();
+    const [selectedCiudad, setSelectedCiudad] = useState();
+    const [selectedDepto, setSelectedDepto] = useState();
     const [deptoId, setDeptoId] = useState();
 
 
@@ -50,6 +52,14 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
         const valorSeleccionadoZip = (e.target.value);
         setSelectedZip(valorSeleccionadoZip);
         console.log(valorSeleccionadoZip);
+
+        const deptoSeleccionado = deptos.find((depto) => depto.id_departamento === parseInt(valorSeleccionadoZip));
+
+        console.log(deptoSeleccionado);
+        if (deptoSeleccionado) {
+            setSelectedDepto(deptoSeleccionado.departamento);
+
+        }
         // return valorSeleccionado;
         // Realizar otras acciones con el valor seleccionado
     };
@@ -58,6 +68,14 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
         const valorSeleccionadoCity = parseInt(e.target.value);
         setSelectedCity(valorSeleccionadoCity);
         console.log(valorSeleccionadoCity);
+
+        const citySeleccionada = city.find((ciudad) => ciudad.id === parseInt(valorSeleccionadoCity));
+
+        console.log(citySeleccionada);
+        if (citySeleccionada) {
+            setSelectedCiudad(citySeleccionada.nombre);
+
+        }
         // return valorSeleccionadoTalla;
         // Realizar otras acciones con el valor seleccionado
     };
@@ -92,10 +110,12 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
         const data = {
             address_type: selectedLink,
             contact_person_name: contactPersonFullName,
+            f_name: contactPersonName,
+            l_name: contactPersonLastName,
             address: address,
             country: country,
-            zip: selectedZip,
-            city: selectedCity,
+            zip: selectedDepto,
+            city: selectedCiudad,
             phone: phone,
             phone_2: phone2,
             latitude: latitude,

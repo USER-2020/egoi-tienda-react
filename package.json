@@ -36,10 +36,11 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.0",
     "react-scroll": "^1.8.9",
+    "react-simple-chatbot": "^0.6.1",
     "react-tooltip": "^5.14.0",
     "react-verification-input": "^3.3.0",
     "reactstrap": "^9.1.6",
-    "styled-components": "^5.3.11",
+    "styled-components": "^4.0.0",
     "sweetalert2": "^11.7.3",
     "web-vitals": "^2.1.4"
   },

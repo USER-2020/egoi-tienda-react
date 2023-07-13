@@ -11,7 +11,7 @@ import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faUserPlus, faRightFromBracket, faUserGear} from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus, faRightFromBracket, faUserGear } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import adminUser from '../assets/egoi_icons/userAdmin.svg';
 
@@ -54,6 +54,8 @@ const Header = () => {
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
 
   const history = useHistory();
+
+
 
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
@@ -193,7 +195,7 @@ const Header = () => {
 
   };
 
-  const handleAdminUser = () =>{
+  const handleAdminUser = () => {
     history.push(`${myorders}`);
   }
 
@@ -204,6 +206,26 @@ const Header = () => {
     setIsLoggedIn(false);
     history.push(`/`);
   };
+
+  // const handleFavList = () => {
+  //   if (currenUser) {
+  //       history.push({
+  //       pathname: `${myorders}`,
+  //       state: {activeOption: 'ListaDeseos', selectedOption: 'Lista Deseos'}
+  //     });
+  //   } else {
+  //     setModalViewLogin(true);
+  //   }
+  // }
+
+  const handleFavList = () => {
+    if (currenUser) {
+      const url = `/myorders?activeOption=ListaDeseos&selectedOption=Lista%20Deseos`;
+      window.location.href = url;
+    } else {
+      setModalViewLogin(true);
+    }
+  }
 
 
 
@@ -311,7 +333,7 @@ const Header = () => {
               {isLoggedIn ? (
                 <>
                   <a href="#" onClick={handleAdminUser}>
-                    <FontAwesomeIcon icon={faUserGear} style={{alignSelf:'center'}}/>
+                    <FontAwesomeIcon icon={faUserGear} style={{ alignSelf: 'center' }} />
                     Administra tu cuenta
                   </a>
                   <a href="#" onClick={handleLogout}>
@@ -354,7 +376,10 @@ const Header = () => {
           </div>
 
           {/* Favorito icono  */}
-          <a href="#">
+
+
+
+          <a href="#" onClick={handleFavList}>
             <svg
               width="40"
               height="40"
@@ -370,6 +395,7 @@ const Header = () => {
               />
             </svg>
           </a>
+
           {/* Carrito de compras  */}
           <a href="#" onClick={() => { goToDetailCart() }}>
             <svg

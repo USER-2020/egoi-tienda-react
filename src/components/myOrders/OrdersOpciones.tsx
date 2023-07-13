@@ -20,11 +20,25 @@ import DireccionesPerfil from '../direccionesProfile/direcciones.tsx';
 import TicketSuport from '../ticketSuport/ticketSuport.tsx';
 import DetailTicketSupport from '../ticketSuport/detailTicketSupport.tsx';
 import ModalMenuOrdersResponsive from './modalesOrdenes/modalMenuOrdersResponsive';
-function Orders() {
+import { getCurrentUser } from '../../helpers/Utils';
+import { getOrdenDetalleById, getOrdenes } from '../../services/ordenes';
+import { useLocation } from 'react-router-dom';
+function Orders(props) {
 
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const urlActiveOption = searchParams.get('activeOption');
+    const urlSelectedOption = searchParams.get('selectedOption');
 
-    const [activeOption, setActiveOption] = useState('MisPedidos');
-    const [selectedOption, setSelectedOption] = useState('Mis Pedidos');
+    
+
+    const [activeOption, setActiveOption] = useState(urlActiveOption || 'MisPedidos');
+    const [selectedOption, setSelectedOption] = useState(urlSelectedOption || 'Mis Pedidos');
+
+    
+
+    // const [activeOption, setActiveOption] = useState('MisPedidos');
+    // const [selectedOption, setSelectedOption] = useState('Mis Pedidos');
 
     /* Flujo de componetnes mis pedidos */
     const [misPedidos, setMisPedidos] = useState(true);
@@ -59,6 +73,12 @@ function Orders() {
 
     /* Cosas del responsive */
     const [modalMenuOrders, setModalMenuOrders] = useState(false);
+
+    /* Detalle id de la orden */
+    const [orderDetalleId, setOrderDetalleId] = useState('');
+
+    /* Id del ticket */
+    const [idTicket, setIdTicket] = useState('');
 
     const handleMenuOptionClick = (option) => {
         setActiveOption(option);
@@ -185,9 +205,12 @@ function Orders() {
         setTicket(false);
     }
 
+
+
     const closemodalAndOpenOtherModal = () => {
         setShowTableOrder(false);
         setShowDetailOrder(true);
+
     }
 
     const closeDetailAndShowTable = () => {
@@ -215,7 +238,33 @@ function Orders() {
         setShowDetailTicketSupport(true);
     }
 
-    
+    /* Funciones de conexiones de api manejando el id del detalle de la order*/
+    const handleOrderClick = (orderId) => {
+        setOrderDetalleId(orderId);
+        console.log("desde la principal", orderDetalleId);
+        closemodalAndOpenOtherModal();
+        // Realizar otras acciones necesarias con el ID de la orden
+    };
+
+    /* funmcion de manejo de datos entre los componetnes de tickets */
+    const handleTicketClick = (idTicket) => {
+        setIdTicket(idTicket);
+    }
+
+    useEffect(() => {
+        console.log("desde la principal", orderDetalleId);
+        
+    }, []);
+
+    useEffect(() => {
+        if (urlActiveOption && urlSelectedOption) {
+            handleMenuOptionClick(urlActiveOption);
+            setActiveOption(urlActiveOption);
+            setSelectedOption(urlSelectedOption);
+        }
+    }, [urlActiveOption, urlSelectedOption]);
+
+
     return (
         <>
 
@@ -274,10 +323,10 @@ function Orders() {
                                 <div className="mispedidos">
                                     {/* modales de mims pedidos */}
                                     {showTableOrder && (
-                                        <TableOrders closemodalAndOpenOtherModal={closemodalAndOpenOtherModal} />
+                                        <TableOrders setOrderDetalleId={handleOrderClick} />
                                     )}
                                     {showDetailOrder && (
-                                        <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} />
+                                        <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} />
                                     )}
                                     {showTrackOrder && (
                                         <TrackOrder />
@@ -326,10 +375,10 @@ function Orders() {
                             {ticket && (
                                 <div className="ticketSoporte">
                                     {showTicketSuport && (
-                                        <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket} />
+                                        <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket} setIdTicket={handleTicketClick} />
                                     )}
                                     {showDetailTicketSupport && (
-                                        <DetailTicketSupport />
+                                        <DetailTicketSupport idTicket={idTicket} />
                                     )}
                                 </div>
                             )}
@@ -345,10 +394,10 @@ function Orders() {
                             <div className="mispedidosResponsive">
                                 {/* modales de mims pedidos */}
                                 {showTableOrder && (
-                                    <TableOrders closemodalAndOpenOtherModal={closemodalAndOpenOtherModal} />
+                                    <TableOrders setOrderDetalleId={handleOrderClick} />
                                 )}
                                 {showDetailOrder && (
-                                    <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} />
+                                    <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} />
                                 )}
                                 {showTrackOrder && (
                                     <TrackOrder />
@@ -415,10 +464,10 @@ function Orders() {
                         {ticket && (
                             <div className="ticketSoporteResponsive">
                                 {showTicketSuport && (
-                                    <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket} />
+                                    <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket} setIdTicket={handleTicketClick} />
                                 )}
                                 {showDetailTicketSupport && (
-                                    <DetailTicketSupport />
+                                    <DetailTicketSupport idTicket={idTicket} />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
