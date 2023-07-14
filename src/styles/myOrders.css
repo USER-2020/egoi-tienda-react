@@ -886,7 +886,7 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     }
 
     .contenidoMisOrdenesResponsive .ticketSoporteResponsive .supportTicket .tablaDeSoporte{
-        width: 100vw;
+        width: 100%;
     }
 
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
