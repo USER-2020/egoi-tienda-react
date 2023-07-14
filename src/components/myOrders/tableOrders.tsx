@@ -43,7 +43,7 @@ function TableOrders({ setOrderDetalleId}) {
     return (
         <>
 
-            <div>
+            <div className='tablaContenedor'>
                 <Table>
                     <thead>
                         <tr>
