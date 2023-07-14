@@ -391,6 +391,7 @@
 }
 
 /* Ticket support */
+
 .contenidoMisOrdenes .ticketSoporte .table tbody tr td .opcionesDetallePedidoResponsive {
     display: none;
 }
@@ -704,6 +705,9 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     }
 
     /* Mis Pedidos */
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .tablaContenedor{
+        width: 100%;
+    }
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedido {
         display: none;
     }
@@ -877,16 +881,18 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     }
 
     /* Ticket Soporte  */
-    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedidoResponsive {
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedidoResponsive {
         display: flex;
+    }
+
+    .contenidoMisOrdenesResponsive .ticketSoporteResponsive .supportTicket .tablaDeSoporte{
+        width: 100vw;
     }
 
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
         display: flex;
         flex-direction: row;
         gap: 5px;
-        /* width: 70px; */
-        /* height: 24px; */
         align-items: center;
         justify-content: center;
         font-size: 14px;
@@ -894,27 +900,26 @@ input[placeholder="Describe tu problema...  "]::placeholder {
         color: white;
     }
 
-    .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table{
-        width: 100vw;
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive {
+        width:100%;
+        overflow-y: scroll;
     }
 
     .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnCancelarPedido {
         display: flex;
         flex-direction: row;
         gap: 5px;
-        /* width: 100px;
-        height: 24px; */
         align-items: center;
         justify-content: center;
         font-size: 14px;
-        /* border: 1px solid #FC5241; */
         color: #FC5241;
 
     }
 
-    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .table thead tr th {
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table thead tr th {
         color: #A2A1A7;
         font-size: 12px;
+        width: 80vw;
     }
 
     .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .table tbody tr td {

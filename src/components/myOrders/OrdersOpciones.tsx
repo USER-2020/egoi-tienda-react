@@ -491,16 +491,7 @@ function Orders(props) {
             </div>
 
 
-            {/* Modales */}
-            {/* <Modal
-                    className="modal-dialog-centered modal-sm"
-                    toggle={() => closeModalCancelOrder()}
-                    isOpen={modalCancelOrder}
-                >
-                    <ModalBody>
-                        <ModalCancelarPedido />
-                    </ModalBody>
-                </Modal> */}
+            
         </>
     )
 }
