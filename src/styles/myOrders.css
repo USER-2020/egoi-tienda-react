@@ -391,7 +391,6 @@
 }
 
 /* Ticket support */
-
 .contenidoMisOrdenes .ticketSoporte .table tbody tr td .opcionesDetallePedidoResponsive {
     display: none;
 }
@@ -886,7 +885,7 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     }
 
     .contenidoMisOrdenesResponsive .ticketSoporteResponsive .supportTicket .tablaDeSoporte{
-        width: 100%;
+        width: 80%;
     }
 
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
@@ -899,6 +898,8 @@ input[placeholder="Describe tu problema...  "]::placeholder {
         background-color: #FC5241;
         color: white;
     }
+
+   
 
     .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnCancelarPedido {
         display: flex;
@@ -914,7 +915,7 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table thead tr th {
         color: #A2A1A7;
         font-size: 12px;
-        width: 80vw;
+        
     }
 
     .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .table tbody tr td {
