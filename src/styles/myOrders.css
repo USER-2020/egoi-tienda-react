@@ -900,11 +900,6 @@ input[placeholder="Describe tu problema...  "]::placeholder {
         color: white;
     }
 
-    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive {
-        width:100%;
-        overflow-y: scroll;
-    }
-
     .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnCancelarPedido {
         display: flex;
         flex-direction: row;
