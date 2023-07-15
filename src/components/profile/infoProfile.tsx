@@ -42,6 +42,9 @@ function InfoProfile() {
           text: 'Has actualizado correctamenter el perfil',
           confirmButtonColor: '#fc5241',
         });
+        setPhone("");
+        setPassword("");
+        setConfirmPassword("");
       }).catch((err) => {
         Swal.fire({
           icon: 'warning',
@@ -146,7 +149,7 @@ function InfoProfile() {
               </InputGroup>
             </FormGroup>
 
-            {/* <FormGroup controlId="formBasicConfirmPassword">
+            <FormGroup controlId="formBasicConfirmPassword">
               <InputGroup style={{ borderRadius: "50px" }}>
                 <Input
                   style={{
@@ -172,7 +175,7 @@ function InfoProfile() {
                   {showPassword ? <EyeSlash style={{ cursor: 'pointer' }} /> : <Eye style={{ cursor: 'pointer' }} />}
                 </InputGroupText>
               </InputGroup>
-            </FormGroup> */}
+            </FormGroup>
             <div className="btnUpdateInfoProfile" style={{
               width: '100%',
               justifyContent: 'center',

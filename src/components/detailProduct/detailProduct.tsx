@@ -294,7 +294,17 @@ function DetailProduct() {
 
         console.log(precioProduct);
 
+        // Crea una instancia de DOMParser
+const parser = new DOMParser();
 
+// Utiliza el método parseFromString para analizar el contenido HTML y obtener un objeto Document
+const doc = parser.parseFromString(detailProducts.details, 'text/html');
+
+// Accede al contenido sin las etiquetas HTML
+const contenidoSinEtiquetas = doc.documentElement.textContent;
+
+// Imprime el contenido sin las etiquetas HTML
+console.log(contenidoSinEtiquetas);
 
 
         // history.push(history.location.pathname);
