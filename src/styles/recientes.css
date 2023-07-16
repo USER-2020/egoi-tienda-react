@@ -769,6 +769,11 @@ h4 {
 
 @media (max-width: 768px) {
 
+
+    .cardContainerHot .scroll-button {
+        display: none;
+    }
+
     .carousel_responsive {
         display: block;
     }
@@ -797,5 +802,41 @@ h4 {
 
     .carousel-control-next {
         z-index: 550;
+    }
+
+    .cardContainer2 .scroll-button.left {
+        display:none;
+    }
+
+    .cardContainer2 .scroll-button.right{
+        display: none;
+    }
+
+    .containerProductos .scroll-button.left{
+        display: none;
+    }
+
+    .containerProductos .scroll-button{
+        display: none;
+    }
+
+    .scroll-button .right{
+        display: none;
+    }
+
+    .containerHot .scroll-button .right{
+        display: none;
+    }
+
+    .cardContainerHot .scroll-button .left{
+        display: none;
+    }
+
+    .containerProductos .scroll-button.right{
+        display: none;
+    }
+
+    .cardContainerHot .scroll-button.left{
+        display: none;
     }
 }
