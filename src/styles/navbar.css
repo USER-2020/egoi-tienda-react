@@ -395,7 +395,7 @@ footer .containerFooter .row {
   }
 
   footer {
-    width: 100vw;
+    width: 90%;
     height: 472px;
     align-items: center;
     justify-content: center;
@@ -405,7 +405,7 @@ footer .containerFooter .row {
   footer > .containerFooter{
   
   
-    width: 100vw;
+    width: 90%;
     height: 472px;
     align-items: center;
     justify-content: center;

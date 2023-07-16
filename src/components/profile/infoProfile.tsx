@@ -3,8 +3,9 @@ import PhoneInput from 'react-phone-input-2'
 import { Card, Form, FormGroup, Input, InputGroup, InputGroupText } from 'reactstrap'
 import es from "react-phone-input-2/lang/es.json";
 import { Eye, EyeSlash, X } from "react-bootstrap-icons";
-import { getUserProfileInfo } from '../../services/ordenes';
+import { getUserProfileInfo, updateInfoProfile } from '../../services/ordenes';
 import { getCurrentUser } from '../../helpers/Utils';
+import Swal from 'sweetalert2';
 
 function InfoProfile() {
 
@@ -31,6 +32,43 @@ function InfoProfile() {
       }).catch((err) => console.log(err));
   }
 
+  const onSubmit = (data) => {
+    updateInfoProfile(token, data)
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Actualización exitosa',
+          text: 'Has actualizado correctamenter el perfil',
+          confirmButtonColor: '#fc5241',
+        });
+        setPhone("");
+        setPassword("");
+        setConfirmPassword("");
+      }).catch((err) => {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Error',
+          text: 'Error actualizando el perfil, intente de nuevo',
+          confirmButtonColor: '#fc5241',
+        });
+        console.log(err);
+      });
+  }
+
+  const handleSubmitInfoProfile = (e) => {
+    e.preventDefault();
+
+    const data = {
+      f_name: detailInfoProfile.f_name,
+      l_name: detailInfoProfile.l_name,
+      phone: phone,
+      password: password,
+    }
+
+    onSubmit(data);
+  }
+
   useEffect(() => {
     if (token) {
       getAllInfoPerfil();
@@ -52,14 +90,19 @@ function InfoProfile() {
         <div className="containerFormInfoProfile">
           <div className="nombreInfoPerfil">
             Nombre
-            <h6>{detailInfoProfile.f_name + ' ' + detailInfoProfile.l_name}</h6>
+            <h6>{detailInfoProfile.f_name}</h6>
+
+          </div>
+          <div className="nombreInfoPerfil">
+            Apellido
+            <h6>{detailInfoProfile.l_name}</h6>
 
           </div>
           <div className="correoInfoPerfil">
             Correo Electrónico
             <h6>{detailInfoProfile.email}</h6>
           </div>
-          <Form style={{ marginTop: '20px' }}>
+          <Form style={{ marginTop: '20px' }} onSubmit={handleSubmitInfoProfile}>
             <FormGroup>
               <PhoneInput
                 localization={es}
@@ -133,26 +176,28 @@ function InfoProfile() {
                 </InputGroupText>
               </InputGroup>
             </FormGroup>
-          </Form>
-          <div className="btnUpdateInfoProfile" style={{
-            width: '100%',
-            justifyContent: 'center',
-            textAlign: 'center',
-            height: '48px',
-            marginTop:'40px'
-          }}>
-            <a href="#" style={{
-              textDecoration: 'none',
-              color: 'white',
-              alignSelf: 'center',
-              backgroundColor: '#FC5241',
+            <div className="btnUpdateInfoProfile" style={{
               width: '100%',
-              height: '48px', 
-              padding:'16px',
-              cursor: 'pointer',
-              borderRadius:'32px'
-            }}>Actualizar</a>
-          </div>
+              justifyContent: 'center',
+              textAlign: 'center',
+              height: '48px',
+              marginTop: '40px'
+            }}>
+              <button type='submit' style={{
+                textDecoration: 'none',
+                color: 'white',
+                alignSelf: 'center',
+                backgroundColor: '#FC5241',
+                width: '100%',
+                height: '48px',
+                padding: '16px',
+                cursor: 'pointer',
+                borderRadius: '32px',
+                border: 'none'
+              }}>Actualizar</button>
+            </div>
+          </Form>
+
         </div >
       </Card>
     </div>
