@@ -16,8 +16,9 @@ const Bannerdown = ({ bannersInfo }) => {
 
     const history = useHistory();
 
-    const showRoutes = (itemId, filtro) => {
+    const showRoutes = (itemId, filtro, tag) => {
         console.log("este el id elegido para pasar por las rutas en el banner 6", itemId);
+        console.log("este el id elegido para pasar por las rutas en el banner 6", tag);
 
         if (filtro === 'category') {
             history.push(`/categories/products/filter/${itemId}`);
@@ -35,7 +36,7 @@ const Bannerdown = ({ bannersInfo }) => {
             {bannersInfo && bannersInfo
                 .filter((banner) => banner.banner_type === "banner_6")
                 .map((itemBanner, index) => (
-                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
+                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag)}>
                         <div className='container1'>
                             <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} className='bannerDownImg' />
                             <img src={bannerDown2} className='bannerDownImg2' />

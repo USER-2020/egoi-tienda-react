@@ -13,5 +13,14 @@ export const detailProduct = (slug) =>
     axios.get(`${baseUrl}/products/details/${slug}`);
 
 //Detalle de un producto a partir del id
-export const detailProductById = (id)=>
-    axios.get(`${baseUrl}/products/details_id/${id}`);
+export const detailProductById = (id, tag)=>
+    axios.get(`${baseUrl}/products/details_id/${id}`, {
+        params:{
+            limit:12,
+            tag:tag
+            
+        },
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    });

@@ -10,3 +10,6 @@ export const getBanners = () =>
             'Content-Type': 'application/json'
         }
     });
+
+
+

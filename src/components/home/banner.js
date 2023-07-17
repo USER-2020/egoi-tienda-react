@@ -142,9 +142,10 @@ const Banner = (args) => {
                     if (bannerData.tipo_filtro === "category") {
                         setTipoFiltro(bannerData.tipo_filtro);
                         setBannerFiltro1(bannerData.id_filtro);
-                        subcategorieById(bannerData.id_filtro, offset)
+                        subcategorieById(bannerData.id_filtro, offset, bannerData.id_tag)
                             .then((res) => {
                                 console.log("Informacion de banner 1 category", res.data);
+                                console.log("Datos de etiquedtado", res.data);
                                 // setSubcategory(res.data.products);
                                 // history.push(`/categories/products/filter/${bannerData.id_filtro}`);
                             })
@@ -153,7 +154,7 @@ const Banner = (args) => {
                     if (bannerData.tipo_filtro === "product") {
                         setTipoFiltro(bannerData.tipo_filtro);
                         setBannerFiltro1(bannerData.id_filtro);
-                        detailProductById(bannerData.id_filtro)
+                        detailProductById(bannerData.id_filtro, bannerData.id_tag)
                             .then((res) => {
                                 console.log('Detalle del producto del banner 1 product ', res.data);
                             })
@@ -165,7 +166,7 @@ const Banner = (args) => {
                     if (bannerData.tipo_filtro === "brand") {
                         setTipoFiltro(bannerData.tipo_filtro);
                         setBannerFiltro1(bannerData.id_filtro);
-                        getProductsByIdBrand(bannerData.id_filtro)
+                        getProductsByIdBrand(bannerData.id_filtro, bannerData.id_tag)
                             .then((res) => {
                                 console.log('Detalle del producto por marca desde el banner 1', res.data);
                             })
