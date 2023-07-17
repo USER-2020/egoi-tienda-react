@@ -395,23 +395,34 @@ footer .containerFooter .row {
   }
 
   footer {
-    width: 90%;
+    width: 70%;
     height: 472px;
     align-items: center;
     justify-content: center;
     display: flex;
   } 
 
+  
+
   footer > .containerFooter{
   
   
-    width: 90%;
+    width: 70%;
     height: 472px;
     align-items: center;
     justify-content: center;
     display: block;
     
     
+  }
+
+  footer > .containerFooter .rowf ul{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: 15px;
   }
 
   .row {

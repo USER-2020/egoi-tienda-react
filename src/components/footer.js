@@ -35,7 +35,7 @@ const Footer = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row" style={{justifyContent:'space-around-evenly'}}>
                     <div className="footerLogo">
                         <div className="izqIconsMedia">
                             {/* Facebook */}
@@ -65,7 +65,7 @@ const Footer = (props) => {
 
 
                         </div>
-                        <div className="derApps">
+                        <div className="derApps" style={{justifyContent:'center', textAlign:'center'}}>
                             <a href="https://play.google.com/store/apps/details?id=com.egoi_user.flutter" target="_blank">
                                 <img src={playstore} alt="logo" className={styles.logo} width={'120px'} height={'36px'} />
 
