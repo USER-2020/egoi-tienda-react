@@ -19,10 +19,11 @@ export const getProductsByIdBrand = (id) =>
     });
 
 // Traer marcas por categoria o subcategoria
-export const getBrandsByCategory = (id) =>
+export const getBrandsByCategory = (id, tag) =>
     axios.get(`${baseUrl}/brands/category/${id}`, {
         params:{
-            limit:12
+            limit:12,
+            tag:tag
         },
         headers:{
             'Content-Type': 'application/json'

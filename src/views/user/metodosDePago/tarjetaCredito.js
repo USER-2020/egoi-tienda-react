@@ -416,7 +416,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 borderColor: showTooltipMonth ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="MM:01"
+                                            placeholder="MES"
                                             value={cardMonth}
                                             onChange={handleMonthChangue}
                                             onBlur={handleMonthBlur}
@@ -440,7 +440,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 borderColor: showTooltipAnio ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="YY:26"
+                                            placeholder="AÑO"
                                             value={cardAno}
                                             onChange={handleAnioChangue}
                                             onBlur={handleAnioBlur}

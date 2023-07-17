@@ -422,7 +422,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                                                 borderColor: showTooltipMonth ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="MM:01"
+                                            placeholder="MES"
                                             value={cardMonth}
                                             onChange={handleMonthChangue}
                                             onBlur={handleMonthBlur}
@@ -446,7 +446,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                                                 borderColor: showTooltipAnio ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="YY:28"
+                                            placeholder="AÑO"
                                             value={cardAno}
                                             onChange={handleAnioChangue}
                                             onBlur={handleAnioBlur}

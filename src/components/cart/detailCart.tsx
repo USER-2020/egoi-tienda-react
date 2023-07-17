@@ -389,7 +389,7 @@ function DetailCart() {
                   value={cupon}
                   onChange={(event) => setCupon(event.target.value)}
                 />
-                <a href="#" onClick={() => aplicarCupon()}>Aplicar cupon</a>
+                <a href="#" onClick={() => aplicarCupon()}>Aplicar cupón</a>
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
