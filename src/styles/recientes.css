@@ -371,7 +371,7 @@
 
 .catImage {
     height: 100%;
-    width: 55%;
+    width: 100%;
 
     display: grid;
     place-items: center;

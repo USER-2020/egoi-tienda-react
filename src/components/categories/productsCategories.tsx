@@ -362,7 +362,7 @@ const ProductsCategories = () => {
               <a href="#" className='containerCard2 col-12 col-md-2' >
                   <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
                   <Card className="cardProducto1">
-                    <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name}/>
+                    <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"10px"}}/>
                     <CardBody>
                       <div className="starts">
                         <img src={start} />

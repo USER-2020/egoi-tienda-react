@@ -202,7 +202,7 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
               <li>
               <div ref = {ref3} className={`dropdown ${isOpen3 ? "open" : ""}`}>
                   <button onClick={() => setIsOpen3(!isOpen3)}>
-                    <span>Ordenar Por</span>
+                    <span>Ordenar por</span>
                     {/* <Icon>
                       {isOpen ? "close" : "expand_more"}
                     </Icon> */}

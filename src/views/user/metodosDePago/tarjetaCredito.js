@@ -362,7 +362,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                 justifyContent: "center",
                             }}
                         >
-                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Paga con tarjeta de credito</h5>
+                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Paga con tarjeta de crédito</h5>
                         </div>
                         <Card style={{ border: 'none' }}>
                             <Form>
@@ -416,7 +416,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 borderColor: showTooltipMonth ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="MES"
+                                            placeholder="Mes"
                                             value={cardMonth}
                                             onChange={handleMonthChangue}
                                             onBlur={handleMonthBlur}
@@ -440,7 +440,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 borderColor: showTooltipAnio ? 'red' : '',
                                             }}
                                             type="text"
-                                            placeholder="AÑO"
+                                            placeholder="Año"
                                             value={cardAno}
                                             onChange={handleAnioChangue}
                                             onBlur={handleAnioBlur}
@@ -542,7 +542,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
                                         }}
                                         type="number"
-                                        placeholder="Numero de documento"
+                                        placeholder="Número de documento"
                                         value={identificationNumber}
                                         onChange={(event) => setIdentificationNumber(event.target.value)}
                                     />
@@ -550,7 +550,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
                                 <FormGroup>
                                     <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center" ,backgroundColor: "#FC5241", alignItems:"center", borderRadius: "32px"}} onClick={handleSubmitOrderPaymentCard}>Registrar Pago</a>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center" ,backgroundColor: "#FC5241", alignItems:"center", borderRadius: "32px"}} onClick={handleSubmitOrderPaymentCard}>Registrar pago</a>
                                     </div>
                                 </FormGroup>
 

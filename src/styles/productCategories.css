@@ -5,6 +5,7 @@
     background-color: #F5F5F5;
     margin-bottom: 32px;
       
+    
 }
 
 .containerProductsIndex{
@@ -21,6 +22,9 @@
 
 .containerProductos{
     overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     
 }
 
