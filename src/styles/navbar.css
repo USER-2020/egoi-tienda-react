@@ -444,11 +444,17 @@ div.filaMedia{
     height: 40px;
   }
   
- div .row .filaMedia {
+ div .filaMedia {
     /* Estilos generales de la fila de contenido de redes sociales y aplicaciones */
     display: flex;
     flex-direction: row;
-    padding: 0px;
+    padding: 10px;
+  }
+
+  div .filaMedia .izqIconsMedia{
+    width: 100%;
+    display: flex;
+    padding: 10px;
   }
   
   .izqIconsMedia {
@@ -456,18 +462,23 @@ div.filaMedia{
     display: flex;
     width: 100%;
     justify-content: space-between;
+    padding: 0;
+    flex-direction: row;
+
   }
 
   .izqIconsMedia .iconsRedes{
     display: flex;
     flex-direction: row;
     gap: 2px;
+    
   }
   .derApps{
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-bottom: 20px;
+    gap:10px;
     
   }
   .derApps img {
