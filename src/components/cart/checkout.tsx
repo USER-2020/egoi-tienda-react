@@ -85,6 +85,9 @@ function AddressCart() {
   /* Generacion de pdf */
   const [showPDF, setShowPDF] = useState(false);
 
+  /* Boton deshabilitado */
+  const [botonDeshabilitado, setBotonDeshabilitado]= useState(false);
+
 
 
 
@@ -172,23 +175,28 @@ function AddressCart() {
       if (index === 0) {
         console.log(index);
         setModalTarjetaDebito(true);
+        setBotonDeshabilitado(true);
       }
       if (index === 1) {
         console.log(index);
         setModalTarjetaCredito(true);
+        setBotonDeshabilitado(true);
       }
       if (index === 2) {
         console.log(index);
         setModalPse(true);
+        setBotonDeshabilitado(true);
       }
       if (index === 3) {
         console.log(index);
         handleSubmitOrderEfecty();
+        setBotonDeshabilitado(true);
 
       }
       if (index === 4) {
         console.log(index);
         setModalOTP(true);
+        setBotonDeshabilitado(true);
       }
     }
   };
@@ -1287,9 +1295,15 @@ function AddressCart() {
                 <p>Tu pedido tardará de 3 a 4 días hábiles en llegar a tu domicilio</p>
               </div>
 
-              <div className="containerToPayResponsive">
-                <a href="#" onClick={() => setModalSuccessPurchase(true)}>Finalizar compra</a>
+              {botonDeshabilitado ? (
+                <div className="containerToPayResponsive">
+                <a href="#" onClick={() => setModalSuccessPurchase(true)} >Finalizar compra</a>
               </div>
+              ):(
+                <div className="containerToPayResponsive">
+                <a href="#" style={{pointerEvents:'none', backgroundColor:'gray', height:'100%', borderRadius:'32px', border:'none'}} >Finalizar compra</a>
+              </div>
+              )}
             </div>
           </div>
         )}
