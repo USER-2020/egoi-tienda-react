@@ -35,11 +35,11 @@ const Footer = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="row" style={{justifyContent:'space-around-evenly'}}>
+                <div className="row">
                     <div className="footerLogo">
                         <div className="izqIconsMedia">
                             {/* Facebook */}
-                            Siguenos <a href="https://Facebook.com/egoicolombia" target="_blank"><svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            Síguenos <a href="https://Facebook.com/egoicolombia" target="_blank"><svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_1144_723)">
                                     <path d="M19.5 0.245117C20.7396 0.245117 21.7995 0.685221 22.6797 1.56543C23.5599 2.44564 24 3.50553 24 4.74512V19.7451C24 20.9847 23.5599 22.0446 22.6797 22.9248C21.7995 23.805 20.7396 24.2451 19.5 24.2451H16.5625V14.9482H19.6719L20.1406 11.3232H16.5625V9.01074C16.5625 8.42741 16.6849 7.98991 16.9297 7.69824C17.1745 7.40658 17.651 7.26074 18.3594 7.26074L20.2656 7.24512V4.01074C19.6094 3.91699 18.6823 3.87012 17.4844 3.87012C16.0677 3.87012 14.9349 4.28678 14.0859 5.12012C13.237 5.95345 12.8125 7.13053 12.8125 8.65137V11.3232H9.6875V14.9482H12.8125V24.2451H4.5C3.26042 24.2451 2.20052 23.805 1.32031 22.9248C0.440104 22.0446 0 20.9847 0 19.7451V4.74512C0 3.50553 0.440104 2.44564 1.32031 1.56543C2.20052 0.685221 3.26042 0.245117 4.5 0.245117H19.5Z" fill="#A2A1A7" />
                                 </g>

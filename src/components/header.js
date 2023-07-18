@@ -434,7 +434,7 @@ const Header = () => {
                 fill="#171523"
               />
             </svg>
-            Categorias
+            Categorías
           </a>
 
           <div className="menuCategorias">

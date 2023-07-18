@@ -17,7 +17,7 @@ function SuccessPurchase() {
 
             <div className='containerSuccessHeader'>
                 <h5>¡Tu pedido ha sido realizado con éxito!</h5>
-                <p>Hola, tu orden ha sido confirmada y será enviada de acuerdo a el método escogido</p>
+                <p>Hola, tu orden ha sido confirmada y será enviada de acuerdo al método escogido</p>
             </div>
             <div className='containerSuccessOptions'>
                 <a href='/' className='btn btnIrhome'>Ir a comprar</a>

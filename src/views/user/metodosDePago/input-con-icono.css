@@ -19,6 +19,6 @@
     background-image: var(--placeholder-icon-doc);
   }
 
-  input[placeholder="Numero de documento"]::placeholder {
+  input[placeholder="Número de documento"]::placeholder {
     background-image: var(--placeholder-icon-user);
   }
