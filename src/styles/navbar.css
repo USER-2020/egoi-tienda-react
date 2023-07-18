@@ -317,6 +317,7 @@ footer .containerFooter .row {
 .izqIconsMedia{
   padding: 10px;
   color: #a2a1a7;
+  display: flex;
 }
 
 .derApps img{
@@ -394,8 +395,81 @@ footer .containerFooter .row {
     
   }
 
-  footer {
-    width: 70%;
+  .containerFooterResponsive {
+    /* Estilos generales del contenedor */
+    width: 100%;
+  }
+  
+  .row {
+    /* Estilos generales de las filas */
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .footerLogo {
+    /* Estilos generales del bloque de contenido del footerLogo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .izq {
+    /* Estilos generales del contenido izquierdo */
+  }
+  
+  .derPagos {
+    /* Estilos generales del contenido de los logos de pago */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-self: center
+  }
+
+  .derPagos img{
+    width: 60px;
+    height: 40px;
+  }
+  
+  .filaMedia {
+    /* Estilos generales de la fila de contenido de redes sociales y aplicaciones */
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .izqIconsMedia {
+    /* Estilos generales del contenido izquierdo de redes sociales */
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .izqIconsMedia .iconsRedes{
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+  }
+  
+  .derApps img {
+    /* Estilos generales del contenido de las aplicaciones */
+    width: 130px;
+  }
+  
+  .rowf {
+    /* Estilos generales de la fila de enlaces */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+  .rowf  ul{
+    padding: 0;
+  }
+  
+  /* Puedes agregar estilos adicionales según tus necesidades */
+
+  /* footer {
+    width: 100%;
     height: 472px;
     align-items: center;
     justify-content: center;
@@ -429,49 +503,41 @@ footer .containerFooter .row {
     display: flex;
     flex-direction: column;
     align-items: center; /* Para centrar los elementos horizontalmente */
-  }
+  /* } */
   
-  .footerLogo {
+  /* .footerLogo {
     display: inline-block;
     flex-direction: row;
     justify-content: center; /* Para distribuir los logos de forma equitativa */
-    align-items: center; /* Para centrar los elementos verticalmente */
-    width: 100%;
+    /* align-items: center; /* Para centrar los elementos verticalmente */
+    /* width: 100%;
     padding: 30px;
     border-bottom: 1px solid rgb(219, 219, 219);
-  }
+  } */
   
-  .izq {
+  /* .footerLogo .izq {
     display: flex;
     align-items: center; /* Para centrar el logo verticalmente */
-  }
+  /* }
   
-  .derPagos {
+  .footerLogo .derPagos {
     display: flex;
     gap: 5px;
-    flex-wrap: nowrap; /* Para que los logos se distribuyan en varias filas si es necesario */
-    justify-content:center; /* Para centrar los logos horizontalmente */
-  }
+    flex-direction: row; /* Para que los logos se distribuyan en varias filas si es necesario */
+    /* justify-content:center; Para centrar los logos horizontalmente */
+  /* }
+  .derPagos img{
+    width: 70px;
+    height: 50px;
+  } */
 
-  .bottom-right {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 20px;
-  }
-
-  .footerLogo .izqIconsMedia{
+  /* .containerFooter .filaMedia .footerLogo .izqIconsMedia{
     display: flex;
-    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
     
-    align-self: center;
-  }
+  }  */ 
 
-  .footerLogo .derApps{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    justify-items: center;
-  }
+ 
   
 }
