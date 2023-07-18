@@ -138,9 +138,9 @@ const Recientes = ({ bannersInfo }) => {
                             <div id="carouselExample" class="carousel slide carousel_responsive" data-bs-ride="carousel">
 
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <div className='celularesAccesorios' key={index === 0}>
-                                            <div className='catContent'>
+                                    <div class="carousel-item active"  key={index === 0}>
+                                       
+                                            
                                                 {/* <div className='catText'>
                                                     <div>
                                                         CyberDays
@@ -156,12 +156,12 @@ const Recientes = ({ bannersInfo }) => {
                                                         < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
                                                     </a>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            
+                                        
                                     </div>
-                                    <div class="carousel-item">
-                                        <div className='consolasVideojuegos' key={index === 1}>
-                                            <div className='catContent'>
+                                    <div class="carousel-item" key={index === 1}>
+                                        
+                                            
                                                 {/* <div className='cvtText'>
                                                     <div>
                                                         CyberDays
@@ -177,12 +177,12 @@ const Recientes = ({ bannersInfo }) => {
                                                         < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
                                                     </a>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            
+                                        
                                     </div>
-                                    <div class="carousel-item">
-                                        <div className='tvAudioVideo' key={index === 2}>
-                                            <div className='catContent'>
+                                    <div class="carousel-item" key={index === 2}>
+                                        
+                                            
                                                 {/* <div className='tavtText'>
                                                     <div>
                                                         CyberDays
@@ -198,12 +198,12 @@ const Recientes = ({ bannersInfo }) => {
                                                         < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
                                                     </a>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            
+                                        
                                     </div>
-                                    <div class="carousel-item">
-                                        <div className='consolasVideojuegos2' key={index === 3}>
-                                            <div className='catContent'>
+                                    <div class="carousel-item" key={index === 3}>
+                                        
+                                            
                                                 {/* <div className='cvt2Text'>
                                                     <div>
                                                         CyberDays
@@ -219,8 +219,8 @@ const Recientes = ({ bannersInfo }) => {
                                                         < img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
                                                     </a>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            
+                                        
                                     </div>
                                 </div>
 
@@ -244,7 +244,7 @@ const Recientes = ({ bannersInfo }) => {
                                     <div className='containerFlex'>
 
                                         <div className='celularesAccesorios' key={index === 0}>
-                                            <div className='catContent'>
+                                            
                                                 {/* <div className='catText'>
                                                     <div>
                                                         CyberDays
@@ -261,10 +261,10 @@ const Recientes = ({ bannersInfo }) => {
                                                         < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
                                                     </a>
                                                 </div>
-                                            </div>
+                                            
                                         </div>
                                         <div className='consolasVideojuegos' key={index === 1}>
-                                            <div className='cvtContent'>
+                                            
                                                 {/* <div className='cvtText'>
                                                     <div>
                                                         CyberDays
@@ -280,13 +280,13 @@ const Recientes = ({ bannersInfo }) => {
                                                         < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
                                                     </a>
                                                 </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
 
                                     <div className='containerFlex'>
                                         <div className='tvAudioVideo' key={index === 2}>
-                                            <div className='tavtContent'>
+                                            
                                                 {/* <div className='tavtText'>
                                                     <div>
                                                         CyberDays
@@ -302,10 +302,10 @@ const Recientes = ({ bannersInfo }) => {
                                                         < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
                                                     </a>
                                                 </div>
-                                            </div>
+                                            
                                         </div>
                                         <div className='consolasVideojuegos2' key={index === 3}>
-                                            <div className='cvt2Content'>
+                                            
                                                 {/* <div className='cvt2Text'>
                                                     <div>
                                                         CyberDays
@@ -321,7 +321,7 @@ const Recientes = ({ bannersInfo }) => {
                                                         <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
                                                     </a>
                                                 </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>

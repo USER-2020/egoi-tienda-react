@@ -55,6 +55,9 @@ function DetailProduct() {
     const [animating, setAnimating] = useState(false);
     /* CArousel */
 
+    const [infoDescription, setInfoDescription] = useState('');
+    const [formattedDescription, setFormattedDescription] = useState('')
+
 
     const { id } = useParams();
 
@@ -294,17 +297,12 @@ function DetailProduct() {
 
         console.log(precioProduct);
 
-        // Crea una instancia de DOMParser
-const parser = new DOMParser();
+        const elementoTemporal = document.createElement('div');
+        elementoTemporal.innerHTML = detailProducts.details;
+        const descripcionSinEtiquetas = elementoTemporal.textContent;
 
-// Utiliza el método parseFromString para analizar el contenido HTML y obtener un objeto Document
-const doc = parser.parseFromString(detailProducts.details, 'text/html');
-
-// Accede al contenido sin las etiquetas HTML
-const contenidoSinEtiquetas = doc.documentElement.textContent;
-
-// Imprime el contenido sin las etiquetas HTML
-console.log(contenidoSinEtiquetas);
+        setFormattedDescription(descripcionSinEtiquetas);
+        console.log("Esta es la descripcion sin etiquetas", formattedDescription);
 
 
         // history.push(history.location.pathname);
@@ -420,7 +418,7 @@ console.log(contenidoSinEtiquetas);
                     )}
                     <div className="containerResponsiveDescription">
                         <h6>Descripcion</h6>
-                        <p>{detailProducts.details}</p>
+                        <p>{formattedDescription}</p>
                     </div>
                     <div className="containerResponsiveStockAndQuantity">
                         <h4>Stock Disponible</h4>
@@ -532,7 +530,7 @@ console.log(contenidoSinEtiquetas);
             <div className="containerDescription">
                 <h5>Descripcion</h5>
                 <p>
-                    {detailProducts.details}
+                    {formattedDescription}
                 </p>
             </div>
             <div className="opinions">
