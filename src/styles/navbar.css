@@ -231,6 +231,11 @@ nav .containerHeader a {
   rotate: -45deg;
 }
 
+.navbar-brand img{
+  margin-left: 0;
+  
+}
+
 .menuCategorias .column {
   width: 50%;
 }
@@ -311,6 +316,10 @@ footer .containerFooter .row {
 
 .derPagos{
   opacity: 0.5;
+}
+
+div.filaMedia{
+  padding: 30px;
 }
 
 
@@ -416,6 +425,8 @@ footer .containerFooter .row {
   
   .izq {
     /* Estilos generales del contenido izquierdo */
+    margin-bottom: 20px;
+    text-align: center;
   }
   
   .derPagos {
@@ -423,7 +434,9 @@ footer .containerFooter .row {
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-self: center
+    align-self: center;
+    gap: 15px;
+    justify-content: center;
   }
 
   .derPagos img{
@@ -431,10 +444,11 @@ footer .containerFooter .row {
     height: 40px;
   }
   
-  .filaMedia {
+ div .row .filaMedia {
     /* Estilos generales de la fila de contenido de redes sociales y aplicaciones */
     display: flex;
     flex-direction: row;
+    padding: 0px;
   }
   
   .izqIconsMedia {
@@ -449,10 +463,18 @@ footer .containerFooter .row {
     flex-direction: row;
     gap: 2px;
   }
-  
+  .derApps{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    
+  }
   .derApps img {
     /* Estilos generales del contenido de las aplicaciones */
-    width: 130px;
+    width: 161px;
+    height: 48px;
+
   }
   
   .rowf {
@@ -464,6 +486,10 @@ footer .containerFooter .row {
   }
   .rowf  ul{
     padding: 0;
+  }
+
+  .iconICS img{
+    float: left;
   }
   
   /* Puedes agregar estilos adicionales según tus necesidades */

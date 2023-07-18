@@ -35,7 +35,7 @@ const Footer = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="row filaMedia">
+                <div className="filaMedia">
                     <div className="footerLogo">
                         <div className="izqIconsMedia">
                             {/* Facebook */}
@@ -119,7 +119,7 @@ const Footer = (props) => {
                     <div className="footerLogo">
                         <div className="izqIconsMedia">
                         </div>
-                        <div className="" style={{ float: 'right' }}>
+                        <div className="iconICS" style={{ float: 'right' }}>
                             <a href="https://www.sic.gov.co" target="_blanck">
                                 <img src={superintendencia} alt="logo" className={styles.logo} width={'120px'} height={'36px'} />
                             </a>
