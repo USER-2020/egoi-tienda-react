@@ -434,7 +434,7 @@ footer .containerFooter .row {
   .footerLogo {
     display: inline-block;
     flex-direction: row;
-    justify-content: space-between; /* Para distribuir los logos de forma equitativa */
+    justify-content: center; /* Para distribuir los logos de forma equitativa */
     align-items: center; /* Para centrar los elementos verticalmente */
     width: 100%;
     padding: 30px;
@@ -448,8 +448,9 @@ footer .containerFooter .row {
   
   .derPagos {
     display: flex;
-    flex-wrap: wrap; /* Para que los logos se distribuyan en varias filas si es necesario */
-    justify-content: center; /* Para centrar los logos horizontalmente */
+    gap: 5px;
+    flex-wrap: nowrap; /* Para que los logos se distribuyan en varias filas si es necesario */
+    justify-content:center; /* Para centrar los logos horizontalmente */
   }
 
   .bottom-right {
@@ -457,6 +458,20 @@ footer .containerFooter .row {
     bottom: 0;
     right: 0;
     padding: 20px;
+  }
+
+  .footerLogo .izqIconsMedia{
+    display: flex;
+    flex-direction: row;
+    
+    align-self: center;
+  }
+
+  .footerLogo .derApps{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    justify-items: center;
   }
   
 }
