@@ -3,7 +3,7 @@ import './TermsAndConditions.css';
 
 const TermsAndConditions = () => {
   return (
-    <div>
+    <div className='terms-container'>
       <header>
         <h1>EGOI COLOMBIA Tienda Virtual</h1>
       </header>

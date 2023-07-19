@@ -19,16 +19,26 @@ import Registro from '../../components/formularios/registro';
 
 import log from '../../services/login';
 import Register from './register';
+import { setCurrentUser } from "../../helpers/Utils";
 
 
 
-const Login = ({ closeModalLogin, handleLogin, closeModalRegistro,  handleChangeFormLogin }) => {
+const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeFormLogin }) => {
+  const setUserActivacion = (data) => {
+    const item = {
+      token: data.token,
+      email: email,
 
+    };
+    setCurrentUser(item);
+    // put(loginUserSuccess(item));
+  };
 
   const onSubmit = (data) => {
     setLoading(true);
     log(data, window.location.origin.toString())
-      .then(() => {
+      .then((res) => {
+        setUserActivacion(res.data);
         Swal.fire({
           icon: 'success',
           title: 'Bienvenido',
@@ -38,6 +48,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro,  handleChange
         setLoading(false);
         closeModalLogin();
         handleLogin();
+
       })
       .catch(() => {
         Swal.fire({
@@ -94,6 +105,8 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro,  handleChange
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+
   return (
     <Row>
       <Col>
@@ -166,19 +179,19 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro,  handleChange
               </Button>
               <br />
               <Button
-        style={{
-          backgroundColor: "white",
-          borderColor: "#fc5241",
-          color: "#fc5241",
-          borderRadius: "50px",
-        }}
-        onClick={() => {
-          closeModalLogin();
-          handleChangeFormLogin();
-        }}
-      >
-        No tengo cuenta, deseo registrarme
-      </Button>
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "#fc5241",
+                  color: "#fc5241",
+                  borderRadius: "50px",
+                }}
+                onClick={() => {
+                  closeModalLogin();
+                  handleChangeFormLogin();
+                }}
+              >
+                No tengo cuenta, deseo registrarme
+              </Button>
 
             </div>
 

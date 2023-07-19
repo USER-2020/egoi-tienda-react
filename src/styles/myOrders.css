@@ -1,0 +1,1167 @@
+:root {
+    --placeholder-icon-asunto: url('../assets/egoi_icons/Rectangle\ 1317\ \(Stroke\).svg');
+    --placeholder-icon-tipo-problema: url('../assets/egoi_icons/Vector\ \(Stroke\).svg');
+    --placeholder-icon-prioridad: url('../assets/egoi_icons/Menu.svg');
+    --placeholder-icon-enviar-mensage: url('../assets/egoi_icons/Chat\ Alt.svg');
+
+}
+
+.containerMenuAndContenidoMisOrdenes {
+    display: flex;
+    flex-direction: row;
+    gap: 90px;
+    margin-top: 30px;
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes {
+    width: 24%;
+
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion {
+    list-style: none;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: start;
+    align-items: center;
+    align-self: center;
+    border: 1px solid #A2A1A729;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+
+}
+
+/* .containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion:active, */
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion.active {
+    color: white;
+    background-color: #FC5241;
+    border: none;
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion.active .img_opcion path {
+    fill: white;
+
+
+}
+
+.containerMenuAndContenidoMisOrdenes .menuMisOrdenes .opcion a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.containerMenuAndContenidoMisOrdenes .contenidoMisOrdenes {
+    width: 76%;
+}
+
+
+
+/* Mis pedidos */
+.contenidoMisOrdenes .mispedidos .table thead tr th {
+    color: #A2A1A7;
+    font-size: 12px;
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr td {
+    font-size: 14px;
+
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr td .opcionesDetallePedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr .opcionesDetallePedido .btnVerDetallesPedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 70px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background-color: #FC5241;
+    color: white;
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr .opcionesDetallePedido .btnCancelarPedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid #FC5241;
+    color: #FC5241;
+
+}
+
+.contenidoMisOrdenes .mispedidos .table tbody tr td .opcionesDetallePedidoResponsive {
+    display: none;
+}
+
+/* Detail Pedido */
+.containerDetalleAndCard {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+
+.containerPedidoIzq {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 70%;
+}
+
+.datosPrincipales,
+.direccionesPedido {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.datosPrincipales .fechaPedido h6,
+.datosPrincipales .nroPedido h6,
+.direccionesPedido .direccionEnv h6,
+.direccionesPedido .direccionCompra h6 {
+    font-size: 12px;
+    color: #A2A1A7;
+}
+
+.datosPrincipales .fechaPedido {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    text-align: end;
+}
+
+.containerPedidoIzq .direccionesPedido .direccionCompra {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    text-align: end;
+}
+
+.containerCardDatos {
+    width: 30%;
+}
+
+.productoDetail {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    border: 1px solid #A2A1A729;
+    align-items: center;
+    padding: 16px;
+    border-radius: 24px;
+}
+
+.productoDetail .description {
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.productoDetail .description h6 {
+    font-size: 24px;
+    color: #A2A1A7;
+}
+
+.containerCardDatos {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+
+}
+
+.containerCardDatos .card {
+    padding: 16px;
+}
+
+.containerCardDatos .articulosPedidos,
+.containerCardDatos .subtotal,
+.containerCardDatos .impuesto,
+.containerCardDatos .Envio,
+.containerCardDatos .descuentoProducto,
+.containerCardDatos .cuponDescuento {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.containerCardDatos .totalAPagar {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerCardDatos .totalAPagar h6 {
+    font-size: 14px;
+    color: #74737B;
+}
+
+.containerCardDatos .totalAPagar h5 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.opcionesRastreoOrFacturar {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 15px;
+
+}
+
+.opcionesRastreoOrFacturar .rastrear {
+    color: white;
+    background-color: #FC5241;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-self: center;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.opcionesRastreoOrFacturar .facturar {
+    color: #FC5241;
+    border: 1px solid #FC5241;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-self: center;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Sigue tu pedido */
+.contenidoMisOrdenes .sigueTuPedido .searchContainerCard .searchCardInputs {
+    width: 700px;
+    padding: 32px;
+}
+
+/* Lista de deseos */
+.listaDeDeseos {
+    width: 100%;
+    height: 100%;
+
+}
+
+/* Informacion de perfil */
+.infoPerfil {
+    width: 100%;
+    height: 100%;
+}
+
+.infoPerfil .card {
+    width: 350px;
+    padding: 24px;
+    border-radius: 32px;
+}
+
+.infoPerfil .card .headerInfoProfile {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+
+/* Direcciones de perfil */
+.direccionPerfil {
+    width: 100%;
+    height: 100%;
+}
+
+.direccionPerfil .containerDireccionesPerfil {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+
+}
+
+.direccionPerfil .containerDireccionesPerfil .card {
+    width: 45%;
+    height: 254px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 24px;
+
+}
+
+.direccionPerfil .containerDireccionesPerfil .containerAddNewDireccion {
+    width: 45%;
+    background-color: #A2A1A729;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+}
+
+.direccionPerfil .containerDireccionesPerfil .containerAddNewDireccion a {
+    text-decoration: none;
+    color: white;
+    background-color: #FC5241;
+    padding: 12px;
+    border-radius: 32px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .headerTipoDireccion {
+    font-size: 12px;
+    color: #FC5241;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .infoDireccionPerfil .info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    gap: 50px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .infoDireccionPerfil .info .fragmento {
+    text-align: start;
+    width: 50%;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .infoDireccionPerfil .info .fragmento h5 {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .infoDireccionPerfil .info .fragmento p {
+    font-size: 14px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .opcionesDireccionesPerfil {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .opcionesDireccionesPerfil a {
+    text-decoration: none;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .opcionesDireccionesPerfil .btn1 {
+    color: #45444F;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.direccionPerfil .containerDireccionesPerfil .card .opcionesDireccionesPerfil .btn2 {
+    color: white;
+    background-color: #FC5241;
+    border-radius: 32px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ticket support */
+.contenidoMisOrdenes .ticketSoporte .table tbody tr td .opcionesDetallePedidoResponsive {
+    display: none;
+}
+
+.contenidoMisOrdenes .ticketSoporte .table thead tr th {
+    color: #A2A1A7;
+    font-size: 12px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .table tbody tr td {
+    font-size: 14px;
+
+}
+
+.contenidoMisOrdenes .ticketSoporte .table tbody tr td .opcionesDetallePedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .table tbody tr .opcionesDetallePedido .btnVerDetallesPedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 70px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background-color: #FC5241;
+    color: white;
+}
+
+.contenidoMisOrdenes .ticketSoporte .table tbody tr .opcionesDetallePedido .btnCancelarPedido {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid #FC5241;
+    color: #FC5241;
+
+}
+
+.contenidoMisOrdenes .ticketSoporte .opcionTicketSupportAddNew {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.contenidoMisOrdenes .ticketSoporte .opcionTicketSupportAddNew a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    background-color: #FC5241;
+    color: white;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 32px;
+    font-size: 14px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer {
+    width: 100%;
+    height: 100%;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card {
+    padding: 24px;
+    border-radius: 24px;
+
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .detailTicketSupportHeader {
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos h6 {
+    font-size: 12px;
+    color: #A2A1A7;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .enviarMenssageContainer {
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .enviarMenssageContainer a {
+    padding: 12px;
+    color: white;
+    font-weight: 600;
+    background-color: #FC5241;
+    border-radius: 32px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* Cahtear con los clientes */
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores {
+    width: 40%;
+    height: 520px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
+    padding: 16px;
+    border-radius: 16px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card ul {
+    padding-left: 0;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card ul li{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    height: 48px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 24px;
+    justify-content: space-evenly;
+    
+}
+
+.listContactsProveedores .card ul li:hover {
+    background-color:#FC5241; /* Color de fondo para el elemento activo */
+  }
+
+.listContactsProveedores .card ul li.active {
+    background-color:#FC5241; /* Color de fondo para el elemento activo */
+  }
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card ul li a{
+    text-decoration: none;
+    font-size: larger;
+    align-self: center;
+    color: black;
+    font-weight: 700;
+    width: 100%;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat {
+    width: 40%;
+    height: 520px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
+    border-radius: 16px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .headerChat {
+    width: 100%;
+    height: 48px;
+    background-color: #FC5241;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes .message {
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes .message p {
+    width: 230px;
+    background-color: #FC5241;
+    padding: 10px;
+    color: white;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+
+
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes .marcaTiempo {
+    width: 100%;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes .marcaTiempo p {
+    width: 230px;
+    text-align: end;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+    padding: 5px;
+    font-size: 14px;
+    color: #74737B;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .sendMessage {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px;
+}
+
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes {
+    overflow-y: scroll;
+    height: 80%;
+}
+
+/* Estilos de la barra de desplazamiento */
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes:hover {
+    overflow-y: scroll;
+    /* Mostrar la barra de desplazamiento al interactuar */
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card .contenedorMensajes::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .listContactsProveedores .card h2 {
+    justify-content: center;
+    text-align: center;
+    color: #FC5241;
+}
+
+.contenedorOrdersOpciones .contenidoMisOrdenes .chatearVendedor .chat .card h2 {
+    justify-content: center;
+    text-align: center;
+    color: #FC5241;
+}
+
+input[placeholder="Asunto  "]::placeholder {
+    background-image: var(--placeholder-icon-asunto);
+}
+
+input[placeholder="Tipo de problema  "]::placeholder {
+    background-image: var(--placeholder-icon-tipo-problema);
+}
+
+input[placeholder="Prioridad  "]::placeholder {
+    background-image: var(--placeholder-icon-prioridad);
+}
+
+input[placeholder="Describe tu problema...  "]::placeholder {
+    background-image: var(--placeholder-icon-enviar-mensage);
+}
+
+.contenedorOrdersOpcionesResponsive {
+    display: none;
+}
+
+.contenedorOrdersOpciones .modal-dialog-centered {
+    display: none;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contenedorOrdersOpcionesResponsive .modal-dialog-centered {
+        display: block;
+    }
+
+    .contenedorOrdersOpciones {
+        display: none
+    }
+
+    .contenedorOrdersOpcionesResponsive {
+        display: block;
+    }
+
+    /* Mis Pedidos */
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .tablaContenedor{
+        width: 100%;
+    }
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedido {
+        display: none;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table{
+        width: 100vw;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedidoResponsive {
+        display: flex;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        /* width: 70px; */
+        /* height: 24px; */
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        background-color: #FC5241;
+        color: white;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnCancelarPedido {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        /* width: 100px;
+        height: 24px; */
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        /* border: 1px solid #FC5241; */
+        color: #FC5241;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .table thead tr th {
+        color: #A2A1A7;
+        font-size: 12px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .table tbody tr td {
+        font-size: 12px;
+    }
+
+    /* Detallle de pedido */
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .containerDetalleAndCard {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .containerDetalleAndCard .containerPedidoIzq {
+        width: 100%;
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .containerDetalleAndCard .containerCardDatos {
+        width: 100%;
+    }
+
+    .contenedorOrdersOpcionesResponsive .mispedidosResponsive .trackOrderView .cardOrderTrack {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .contenidoMisOrdenesResponsive .btnOpcionesMenuResponsive {
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .contenidoMisOrdenesResponsive .btnOpcionesMenuResponsive a {
+        width: 20%;
+        height: 48px;
+        background-color: #FC5241;
+        padding: 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: 700;
+        border-radius: 32px;
+    }
+
+    /* Sigue tu pedido */
+    .contenedorOrdersOpcionesResponsive .sigueTuPedidoResponsive .searchContainerCard .card {
+        width: 100%;
+        padding: 12px;
+    }
+
+    /* Informacion Perfil */
+    .contenedorOrdersOpcionesResponsive .infoPerfilResponsive .card {
+        padding: 24px;
+        border-radius: 32px;
+    }
+
+    /* Direcciones */
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card {
+        padding: 24px;
+        border-radius: 32px;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card .infoDireccionPerfil {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card .opcionesDireccionesPerfil {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card .opcionesDireccionesPerfil .btn1 {
+        text-decoration: none;
+        color: black;
+        gap: 5px;
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .card .opcionesDireccionesPerfil .btn2 {
+        text-decoration: none;
+        color: white;
+        background-color: #FC5241;
+        padding: 5px;
+        border-radius: 32px;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        width: 50%;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .containerAddNewDireccion {
+        padding: 0;
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerDireccionesPerfil .containerAddNewDireccion div {
+        background-color: #FC5241;
+        color: white;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        height: 48px;
+        align-items: center;
+        align-self: center;
+        border-radius: 32px;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .direccionPerfilResponsive .containerAddNewDireccion a {
+        color: white;
+        text-decoration: none;
+        width: 100%;
+        height: 100%;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+    /* Ticket Soporte  */
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedidoResponsive {
+        display: flex;
+    }
+
+    .contenidoMisOrdenesResponsive .ticketSoporteResponsive .supportTicket .tablaDeSoporte{
+        width: 80%;
+    }
+
+    .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        background-color: #FC5241;
+        color: white;
+    }
+
+   
+
+    .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnCancelarPedido {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #FC5241;
+
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .table thead tr th {
+        color: #A2A1A7;
+        font-size: 12px;
+        
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .table tbody tr td {
+        font-size: 12px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedido {
+        display: none;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .opcionTicketSupportAddNew {
+        width: 200px;
+        height: 48px;
+        padding: 16px;
+        background-color: #FC5241;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border-radius: 32px;
+        text-align: center;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .opcionTicketSupportAddNew a {
+        width: 200px;
+        align-self: center;
+        background-color: #FC5241;
+        color: white;
+        text-decoration: none;
+        border-radius: 32px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .table thead tr th {
+        color: #A2A1A7;
+        font-size: 12px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .table tbody tr td {
+        font-size: 13px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedidoResponsive {
+        display: flex;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
+        background-color: #FC5241;
+        color: white;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .supportTicket .opcionesDetallePedidoResponsive .btnCancelarPedido {
+
+        color: #FC5241;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .card .enviarMenssageContainer {
+        width: 100%;
+        height: 48px;
+        background-color: #FC5241;
+        border-radius: 32px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .card .enviarMenssageContainer a {
+        width: 100%;
+        height: 48px;
+        background-color: #FC5241;
+        color: white;
+        text-decoration: none;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 32px;
+    }
+
+
+    /* Chatear con el cliente */
+    /* Cahtear con los clientes */
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores {
+    width: 100%;
+    height: 520px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
+    padding: 16px;
+    border-radius: 16px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card ul {
+    padding-left: 0;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card ul li{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    height: 48px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 24px;
+    justify-content: space-evenly;
+    
+}
+
+.listContactsProveedores .card ul li:hover {
+    background-color:#FC5241; /* Color de fondo para el elemento activo */
+  }
+
+.listContactsProveedores .card ul li.active {
+    background-color:#FC5241; /* Color de fondo para el elemento activo */
+  }
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card ul li a{
+    text-decoration: none;
+    font-size: larger;
+    align-self: center;
+    color: black;
+    font-weight: 700;
+    width: 100%;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat {
+    width: 100%;
+    height: 520px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aquí puedes ajustar los valores de la sombra según tus necesidades */
+    border-radius: 16px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .headerChat {
+    width: 100%;
+    height: 48px;
+    background-color: #FC5241;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes .message {
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes .message p {
+    width: 230px;
+    background-color: #FC5241;
+    padding: 10px;
+    color: white;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+
+
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes .marcaTiempo {
+    width: 100%;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes .marcaTiempo p {
+    width: 230px;
+    text-align: end;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+    padding: 5px;
+    font-size: 14px;
+    color: #74737B;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .sendMessage {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px;
+}
+
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes {
+    overflow-y: scroll;
+    height: 80%;
+}
+
+/* Estilos de la barra de desplazamiento */
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes:hover {
+    overflow-y: scroll;
+    /* Mostrar la barra de desplazamiento al interactuar */
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card .contenedorMensajes::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .listContactsProveedores .card h2 {
+    justify-content: center;
+    text-align: center;
+    color: #FC5241;
+}
+
+.contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .chatearVendedorResponsive .chat .card h2 {
+    justify-content: center;
+    text-align: center;
+    color: #FC5241;
+}
+
+
+}

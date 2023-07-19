@@ -1,11 +1,9 @@
-.container{
+.container {
     width: 100%;
     height: auto;
-    margin-top: 16px;
+    margin-top: 12px;
     background-color: #F5F5F5;
-    margin-bottom: 134px;
-    
-      
+    margin-bottom: 40px;
 }
 
 
@@ -14,6 +12,7 @@
     height: auto;
     display: flex;
     position: relative;
+    border-radius: 32px;
     
 }
 
@@ -123,12 +122,14 @@
     .container .bannerDownImg{
         display: none;
     }
+    
     .container .bannerDownImg2{
         
         width: 100%;
-        height: auto;
+        height: 100%;
         display: flex;
         position: relative;
+        border-radius: 32px;
     }
     .container .figures > .aplicaciones{
         position: absolute;

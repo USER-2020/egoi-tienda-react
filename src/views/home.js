@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -17,6 +17,7 @@ import {
   InputGroupAddon,
   Input,
   Button,
+  Modal, ModalBody
 } from "reactstrap";
 import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
@@ -31,27 +32,64 @@ import Populares from "../components/home/populares";
 import Bannerdown from "../components/home/bannerdown";
 import HeaderResponsive from "../components/headerResponsive";
 
+import Popup from "./user/popup";
+import { getBanners } from "../services/banners";
+
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
+  const [modalPopup, setModalPopup] = useState(true);
+  const [bannersInfo, setBannersInfo] = useState([]);
 
-  return (  
+  const toggleLogin = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
+
+  const handleModalData = () => {
+    setModalPopup(false);
+  }
+
+  const getAllBanners = () => {
+    getBanners()
+      .then((res) => {
+        console.log(res.data);
+        setBannersInfo(res.data);
+      }).catch((err)=> console.log(err));
+  }
+
+  useEffect(()=>{
+    getAllBanners();
+  },[]);
+
+  return (
 
     // <Nav/>
     <>
-      
+
       <Header />
-      <HeaderResponsive/>
-      <Banner/>
-      <Recientes/>
-      <Promociones/>
-      <Vendidos/>
-      <Populares/>
-      <Bannerdown/>
+      <HeaderResponsive />
+      <Banner />
+      <Recientes bannersInfo={bannersInfo}/>
+      <Promociones bannersInfo={bannersInfo}/>
+      <Vendidos bannersInfo={bannersInfo}/>
+      {/* <Populares /> */}
+      <Bannerdown bannersInfo={bannersInfo}/>
       <Footer />
+      {/* Modal popup */}
+      <Modal
+        className="modal-dialog-centered modal-lg"
+        toggle={() => setModalPopup(false)}
+        isOpen={modalPopup}
+
+      >
+        <ModalBody>
+          <Popup handleModalData={handleModalData} />
+        </ModalBody>
+      </Modal>
     </>
     // <h1>Home</h1>
-    
+
   );
 };
 

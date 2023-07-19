@@ -1,0 +1,774 @@
+.container{
+    width: 100%;
+    height: auto;
+    margin-top: 48px;
+    background-color: #F5F5F5;
+    margin-bottom: 32px;
+      
+}
+
+.containerDetalle{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+/* Estilos de activacion de 
+la imagen seleccionda */
+.activeMiniature{
+    width: 80px;
+    height: 80px;
+    padding: 2px;
+    border: 1px solid #FC5241;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0.5;
+    
+}
+
+.containerIzq{
+    width: 50%;
+    height: auto;
+}
+
+.cardImgProduct{
+    display: block;
+    justify-content: center;
+    text-align: center;
+    border-radius: 32px;
+}
+.containerImgTop{
+    padding: 50px;    
+}
+.containerImgTop img{
+    width: 100%;
+}
+.containerImgMiniature{
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
+
+.containerImgMiniature img{
+    width: 80px;
+    height: 80px;
+    padding: 5px;
+    
+    
+    
+}
+
+.containerImgMiniature img:hover{
+    width: 80px;
+    height: 80px;
+    padding: 2px;
+    border: 1px solid #FC5241;
+    border-radius: 8px;
+    cursor: pointer;
+    
+}
+
+.containerDer{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 16px;
+
+}
+
+.containerCharacteristicTop{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    
+}
+
+
+.containerCharacteristicTop .characteristic{
+    width: 100px;
+    /* border-left: 1px solid gray; */
+    padding: 2px;
+    color: #74737B;
+    
+}
+
+.containerNameProduct h4{
+    font-size: 40px;
+    width: 400px;
+    color: #74737B;
+    font-weight: 700;
+    
+}
+
+.containerNameProduct h5{
+    font-size: 32px;
+    font-weight: 700;
+    
+}
+
+.containerColorsProduct{
+    display: flex;
+    background-color:rgba(162, 161, 167, 0.16);
+    width: 300px;
+    height: 50px;
+    flex-direction: row;
+    gap: 28px;
+    align-items: center;
+    padding: 16px;
+    border-radius: 32px;
+    
+}
+
+.containerColorsProduct p ,
+.cant p, .opciones a p
+{
+    margin: 0;
+}
+
+.containerColorsProduct a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+    
+}
+
+.containerColorsProduct a:hover {
+    border: 1px solid #FC5241;
+    border-radius: 32px;
+    color: #FC5241;
+    padding: 2px;
+    
+}
+
+.cant{
+    display: flex;
+    background-color:rgba(162, 161, 167, 0.16);
+    width: 150px;
+    height: 50px;
+    flex-direction: row;
+    gap: 28px;
+    align-items: center;
+    padding: 16px;
+    border-radius: 32px;
+}
+
+.cant input[type="number"]{
+    width: 40px;
+    background-color: transparent;
+    border: none;
+    border-radius: 32px;
+}
+
+.opciones{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.opciones a{
+    display: flex;
+    text-decoration: none;
+    width: 224px;
+    flex-direction: row;
+    align-items: center;
+    gap: 13.6px;
+    padding: 16px;
+}
+
+.opciones .addCart{
+    color: #FC5241;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid #FC5241;
+    border-radius: 32px;
+    justify-content: center;
+}
+
+.opciones .buyNow{
+    color: white;
+    background-color: #FC5241;
+    font-size: 14px;
+    font-weight: 700;
+    justify-content: center;
+    border-radius: 32px;
+}
+
+.opciones .fav{
+    /* padding: 16px; */
+    width: auto;
+    border: 1px solid #FC5241;
+    border-radius: 50%;
+    color: #FC5241;
+}
+
+.opciones .fav .svgFav path{
+   fill: #FC5241;
+}
+
+.containerDescription{
+    width: 768px;
+    margin-top: 77px;
+}
+
+.containerDescription h5{
+    font-size: 16px;
+    color: #FC5241;
+}
+
+.opinions{
+    display: flex;
+    flex-direction: row;
+    gap: 146px;
+    margin-top: 40px;
+}
+.raitingLeft{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.raiting{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+}
+.cardRaiting{
+    width: 75px;
+    border-radius: 16px;
+    
+}
+.cardRaiting .card-body{
+    padding: 11px;
+    justify-content: center;
+    display: flex;
+}
+
+.raitingStarts{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.raitingStarts img{
+    width: 17px;
+}
+
+.nrOpinions h6{
+    font-size: 14px;
+}
+
+.stats{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estadisticas con barra de opiniones */
+.stats_raiting{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    
+}
+
+.stats_raiting img{
+    width: 16px;
+    height: 16px;
+    
+}
+
+.stats_raiting .progress{
+    width: 140px;
+    height: 4px;
+    
+}
+.stats_raiting .progress-bar{
+    background-color: #FC5241;
+}
+.stats_raiting h5, h6{
+    margin: 0;
+}
+
+.stats_raiting h5{
+    color: #FC5241;
+    font-weight: 400;
+    font-size: 12px;
+}
+.stats_raiting h6{
+    color: black;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+
+/* Estadisiticas con barra gris */
+.stats_raiting_gray{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    
+}
+
+.stats_raiting_gray img{
+    width: 16px;
+    height: 16px;
+    
+}
+
+.stats_raiting_gray .progress{
+    width: 140px;
+    height: 4px;
+    
+}
+.stats_raiting_gray .progress-bar{
+    background-color: rgba(162, 161, 167, 0.16);
+}
+.stats_raiting_gray h5, h6{
+    margin: 0;
+}
+
+.stats_raiting_gray h5{
+    color: #FC5241;
+    font-weight: 400;
+    font-size: 12px;
+}
+.stats_raiting_gray h6{
+    color: black;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.comments{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 741px;
+}
+
+.comment{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(162, 161, 167, 0.16);
+    height: auto;
+}
+.comments .comment_index{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.comments .comment_index h6{
+    font-size: 16px;
+    color: #FC5241;
+    margin: 0;
+}
+.comments .comment_index .starts{
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+}
+.comments .comment_index .starts h5{
+    font-size: 12px;
+    color: #74737B;
+    margin: 0;
+    align-self: center;
+}
+
+.starts_comments{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+
+}
+
+.starts_comments img{
+    width: 8px;
+    height: 8px;
+}
+
+.dateComment p{
+   padding-top: 20px;
+   padding-bottom: 20px;
+   
+}
+
+.btnMoreOpinions{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    margin-top: 60PX;
+}
+
+.btnMoreOpinions a {
+    text-decoration: none;
+    color: #FC5241;
+    border: #FC5241 1px solid;
+    padding: 16px;
+    border-radius: 32px;
+}
+
+/* Cosas del responsive */
+.containerResponsiveNameProduct{
+    display: none;
+}
+
+.containerResposniveProductosVendidos{
+    display: none;
+}
+
+.containerVariacionesResponsiveColores{
+    display: none;
+}
+
+.containerCharacteristicTopResponsive{
+    display: none;
+}
+
+.containerResponsiveDescription{
+    display: none;
+}
+#scrollModalAddToCart{
+    display: none;
+}
+
+
+.scroll-modal-content{
+    display: none;
+}
+
+.containerResponsiveStockAndQuantity{
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .containerIzq{
+        width: 100%;
+        height: auto;
+        margin-top: 0px;
+    }
+
+    .cardImgProduct .containerImgTop img{
+        width: 200px;
+        height: 200px;
+    }
+    .cardImgProduct .containerImgMiniature{
+        height: 80px;
+    }
+    .cardImgProduct .containerImgMiniature img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .containerDetalle{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .containerCharacteristicTop{
+        display: none;
+    }
+
+    .containerNameProduct{
+        display: none;
+    }
+    .containerColorsProduct{
+        display: none;
+    }
+
+    .cant{
+        display: none;
+    }
+    .opciones{
+        display: none;
+    }
+
+    .containerDescription{
+        display: none;
+    }
+
+    .containerResponsiveNameProduct{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 98%;
+    }
+
+    .containerResponsiveNameProduct .containerNameAndStarts {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .containerNameAndStarts{
+        width: 60%;
+    }
+
+    .containerNameAndStarts .starts img{
+        width: 15px;
+    }
+
+    .containerNameAndStarts .Name h2{
+        color: #74737B;
+        font-size: 24px;
+    }
+
+    .containerNameAndStarts .precio h5 {
+        font-size: 36px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+
+    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts .Name{
+        width: 70%;
+    }
+
+    
+
+    .containerResponsiveNameProduct .favAndShareAndQuantity{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 0;
+        padding: 10px;
+    }
+
+    .containerResponsiveNameProduct .favAndShareAndQuantity .favAndShare{
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+    .containerResponsiveStockAndQuantity{
+        display:flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .containerResponsiveStockAndQuantity .quantity{
+        width: 100%;
+        height: 50px;
+        background-color: #A2A1A729;
+        border-radius: 32px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-self: center;
+        padding: 20px;
+        align-items: center;
+    }
+
+    .containerResponsiveStockAndQuantity .quantity h4{
+        margin: 0;
+        font-size: 20px;
+    }
+    
+    .containerResponsiveStockAndQuantity .quantity button{
+        border: none;
+        background-color: transparent;
+    }
+
+    .containerResponsiveStockAndQuantity .quantity button svg path{
+        fill: #FC5241;
+    }
+    
+    .containerResponsiveStockAndQuantity .quantity input {
+        width: 35px;
+        border: none;
+        text-align: center;
+        background-color: transparent;
+    }
+   
+    
+
+    .containerResponsiveNameProduct .favAndShare .svgFav path,
+    .containerResponsiveNameProduct .favAndShare .svgShare{
+        fill: #74737B;
+    }
+
+    .containerResposniveProductosVendidos{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 98%;
+    }
+
+    .containerResposniveProductosVendidos .productosVendidos{
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+    }
+    .containerResposniveProductosVendidos h6{
+        font-size: 12px;
+        color: #74737B;
+        font-weight: 400;
+    }
+
+    .containerResposniveProductosVendidos .sendMessage a{
+        display: flex;
+        flex-direction: row;
+        color: #FC5241;
+        gap: 5px;
+        text-decoration: none;
+        font-size: 16px;
+
+    }
+
+    .containerResposniveProductosVendidos .sendMessage a p {
+        margin: 0;
+    }
+
+    .containerResposniveProductosVendidos .sendMessage path{
+        fill: #FC5241;
+    }
+
+    .containerCharacteristicTopResponsive{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        color: #74737B;
+    }
+
+    .containerVariacionesResponsiveColores p{
+        margin: 0;
+    }
+
+    .containerVariacionesResponsiveColores{
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        gap: 25px;
+        background-color: #A2A1A729;
+        align-items: center;
+        padding: 15px;
+        border-radius: 32px;
+
+    }
+    .containerVariacionesResponsiveColores a {
+        text-decoration: none;
+        color: #74737B;
+    }
+
+    .containerVariacionesResponsiveColores a:active{
+        border-radius: 32px;
+        border:1px solid #FC5241;
+        padding: 5px;
+    }
+
+    .containerResponsiveDescription{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 20px;
+
+    }
+
+    .containerResponsiveDescription h6{
+        color: #FC5241;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .opinions{
+        display:none;
+    }
+
+    #scrollModalAddToCart {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+        z-index: 9999;
+        width: 100vw;
+        height: 200px;
+      }
+      
+      .scroll-modal-content {
+        /* Estilos para el contenido del modal */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 24px;
+        align-items: center;
+      }
+
+      .scroll-modal-content .svgCart path{
+        fill: white;
+      }
+
+      .scroll-modal-content .anadiralcarrito {
+        
+        font-size: 16px;
+        background-color: #FC5241;
+        width: 100%;
+        height: 48px;
+        display: flex;
+        flex-direction: row;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        border-radius: 32px;
+
+      }
+      .scroll-modal-content .anadiralcarrito a{
+        text-decoration: none;
+        color: #F5F5F5;
+        width: 100%;
+        height: 48px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+
+      .scroll-modal-content .buyNowResponsive{
+        width: 100%;
+        font-size: 16px;
+        height: 48px;
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #FC5241;
+        border-radius: 32px;
+      }
+
+      .scroll-modal-content .buyNowResponsive a{
+        width: 100%;
+        height: 48px;
+        text-decoration: none;
+        color: #FC5241;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+      }
+
+      .modal-dialog-centered {
+        width: 96vw;
+      }
+
+}

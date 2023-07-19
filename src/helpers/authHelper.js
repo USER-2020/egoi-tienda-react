@@ -1,46 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { isAuthGuardActive } from '../constants/defaultValues';
+import { checkout, isAuthGuardActive, addCart } from '../constants/defaultValues';
 import { getCurrentUser } from './Utils';
+import DetailCart from '../components/cart/detailCart.tsx';
 
-const ProtectedRoute = ({
-  component: Component,
-  roles = undefined,
-  ...rest
-}) => {
-  const setComponent = (props) => {
-    if (isAuthGuardActive) {
-      const currentUser = getCurrentUser();
-      if (currentUser) {
-        if (roles) {
-          if (roles.includes(currentUser.role)) {
-            return <Component {...props} />;
-          }
-          return (
-            <Redirect
-              to={{
-                pathname: '/unauthorized',
-                state: { from: props.location },
-              }}
-            />
-          );
-        }
-        return <Component {...props} />;
-      }
-      return (
-        <Redirect
-          to={{
-            pathname: '/user/login',
-            state: { from: props.location },
-          }}
-        />
-      );
-    }
-    return <Component {...props} />;
-  };
+const ProtectedRoute = ({ path, viewComponent: ViewComponent }) => {
+  const currentUser = getCurrentUser();
+  console.log(getCurrentUser());
+  
 
-  return <Route {...rest} render={setComponent} />;
+  return currentUser ? (
+    <Route exact path={path} render={(props) => <ViewComponent {...props} />}/>
+
+  ) : (
+    <Redirect to= "/" />
+  );
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { ProtectedRoute };
+export default ProtectedRoute; 
+

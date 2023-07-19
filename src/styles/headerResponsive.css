@@ -8,13 +8,15 @@ nav {
     /* justify-content: center; */
 }
 
-.containerResponsive{
+.containerResponsive {
     display: none;
 }
 
 .offcanvas-body .pers{
     width: 196px;
     height: 72px;
+    display: flex;
+    align-items: center;
 }
 
 .offcanvas-body li a {
@@ -23,10 +25,7 @@ nav {
 }
 
 .btnsPers{
-    display: grid;
-    gap: 20px;
-    justify-content: center;
-    text-align: center;
+    display: none;
 }
 
 .btnPersonalizadosL {
@@ -44,28 +43,65 @@ nav {
     color: #FC5241 !important;
     border-radius: 32px;
 }
+
+.offcanvas-body ul li{
+    list-style: none;
+}
+
+
+
+
+
 @media (max-width: 768px) {
     nav {
         width: 100vw;
         height: 80px;
         background-color: #f7f7f7;
         border: 2px solid #e3e2e2;
-        display: inline-block;
+        display: flex;
         align-items: center;
+        flex-direction: row;
+
         /* justify-content: center; */
     }
-    .input-group{
-        width: 196px;
+
+    .searchContainer{
+        width: 55%;
     }
+
+    
     .input-icon{
         display: none;
     }
 
     .containerResponsive {
         width: 100vw;
-        justify-content: space-around;
+        /* justify-content: space-between; */
         align-items: center;
         display:flex;
+        flex-direction: row;
+        
 
     }
+    
+    a .navbar-brand{
+        margin-right: 0px;
+        
+    }
+
+    .btnsPers{
+        display: grid;
+        gap: 20px;
+        justify-content: center;
+        text-align: center;
+        
+    }
+    .modal-content{
+        width: 96vw;
+        
+    }
+    
+
+      
+    
   }

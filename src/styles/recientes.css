@@ -1,21 +1,22 @@
-.container{
+.container {
     width: 100%;
     height: auto;
     margin-top: 52.5px;
     background-color: #F5F5F5;
-      
+
 }
 
-.containerRecents{
+.containerRecents {
     width: 100%;
 
 }
 
-.containerPromociones{
+.containerPromociones {
     width: 100%;
 }
-.spanRecent{
-    display:flex;
+
+.spanRecent {
+    display: flex;
     align-items: center;
     justify-content: start;
     font-size: 14px;
@@ -23,38 +24,181 @@
 }
 
 
-.refshowAll{
+.refshowAll {
     margin-left: 14px;
     text-decoration: none;
     color: #FC5241;
 }
 
-.containerProductos{
+/* .containerProductos {
     display: flex;
     gap: 25px;
     overflow-x: scroll;
+    white-space: nowrap;
     overflow-y: hidden;
     margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+
+} */
+.containerProductos {
+    display: flex;
+    gap: 25px;
+    overflow-x: scroll;
+    white-space: nowrap;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    scroll-behavior: smooth;
+    /* padding-left: 30px; */
+    /* Ajustar el espacio a la izquierda para el botón de "left" */
 }
+
+.containerProductos .scroll-button {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 70px;
+    background-color: #fff;
+    border: none;
+    color: #333;
+    font-size: 50px;
+    cursor: pointer;
+    z-index: 1;
+    transition: 0.3s ease;
+    border-radius: 50px;
+    margin: -20px;
+}
+
+.containerProductos .scroll-button.left {
+    left: 0;
+    position: sticky;
+    width: 100px;
+    height: 100px;
+
+}
+
+.containerProductos .scroll-button.right {
+    right: 0;
+    position: sticky;
+    width: 100px;
+    height: 100px;
+
+}
+
+.containerProductos .scroll-button:focus {
+    outline: none;
+}
+
+.cardContainer2 {
+    display: flex;
+    gap: 25px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    /* scroll-behavior: smooth; */
+}
+
+.cardContainer2 .containerPostProm {
+    scroll-behavior: smooth;
+}
+
+.cardContainer2 .scroll-button {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 70px;
+    background-color: #fff;
+    border: none;
+    color: #333;
+    font-size: 50px;
+    cursor: pointer;
+    z-index: 1;
+    transition: 0.3s ease;
+    border-radius: 50px;
+    margin: -20px;
+}
+
+.cardContainer2 .scroll-button.left {
+    left: 0;
+    position: sticky;
+    width: 50px;
+    height: 100px;
+
+}
+
+.cardContainer2 .scroll-button.right {
+    right: 0;
+    position: sticky;
+    width: 50px;
+    height: 100px;
+
+}
+
+.cardContainer2 .scroll-button:focus {
+    outline: none;
+}
+
+.cardContainer2 .containerPostProm::-webkit-scrollbar {
+    display: none;
+}
+
+/* .scroll-button.animate-left {
+    animation: scrollAnimationLeft 0.3s ease;
+}
+
+.scroll-button.animate-right {
+    animation: scrollAnimationRight 0.3s ease;
+}
+
+@keyframes scrollAnimationLeft {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes scrollAnimationRight {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+} */
 
 .cardProducto1 .card-img-top {
     /* width: 100%; */
     height: 200px;
     object-fit: cover;
-  }
+}
 
 .containerProductos::-webkit-scrollbar {
-    
-    width: 5px;
+
+    /* width: 5px;
     height: 5px;
     border-radius: 10px;
     margin-top: 5px;
     pointer-events: all;
-    cursor: pointer;
+    cursor: pointer; */
+    display: none;
 }
 
+
+
+
 .containerProductos::-webkit-scrollbar:hover {
-    
+
     width: 5px;
     height: 10px;
     border-radius: 10px;
@@ -62,6 +206,7 @@
     pointer-events: all;
     cursor: pointer;
 }
+
 .containerProductos::-webkit-scrollbar-thumb {
     background-color: #7d7d7d;
     border-radius: 10px;
@@ -76,24 +221,32 @@
 
 .containerProductos a {
     text-decoration: none;
-    
-    
+
+
 }
 
-.containerCard{
+.cardContainer {
+    display: flex;
+    gap: 25px;
+    padding: 10px;
+}
+
+
+.containerCard {
     width: 207px;
     height: 330px;
     margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
-.containerCard2{
+.containerCard2 {
     width: 207px;
     height: 360px;
     margin-bottom: 20px;
 }
 
-.span_offer{
- 
+.span_offer {
+
     justify-content: center;
     width: 71px;
     height: 17px;
@@ -104,32 +257,32 @@
     font-size: 10px;
 }
 
-.cardProducto1{
+.cardProducto1 {
     width: 100%;
     height: 100%;
     border-radius: 16px;
 
     overflow: hidden;
-    
+
 }
 
 
-.card-img-top{
+.card-img-top {
     display: flex;
     width: 175px;
     justify-content: center;
     margin: 0 auto;
 }
 
-.card-body{
+.card-body {
     padding: 0 20px;
 }
 
-.starts{
+.starts {
     margin: 0px;
 }
 
-.card-title{
+.card-title {
     color: black;
 }
 
@@ -218,15 +371,16 @@
 
 .catImage {
     height: 100%;
-    width: 55%;
+    width: 100%;
 
     display: grid;
-    place-items: center;
+
 }
 
 .catImage img {
-    height: 100%;
+    height: 260px;
     width: 100%;
+    border-radius: 16px;
 }
 
 .celularesAccesorios::before {
@@ -260,6 +414,7 @@
 
     padding: 24px;
 }
+
 .cvtText {
     height: 90%;
     width: 25%;
@@ -297,15 +452,16 @@
 
 .cvtImage {
     height: 100%;
-    width: 70%;
+    width: 100%;
 
     display: grid;
-    place-items: center;
+
 }
 
 .cvtImage img {
     height: 100%;
     width: 100%;
+    border-radius: 16px;
 }
 
 
@@ -378,15 +534,16 @@
 
 .tavtImage {
     height: 100%;
-    width: 70%;
+    width: 100%;
 
     display: grid;
-    place-items: center;
+
 }
 
 .tavtImage img {
     height: 100%;
     width: 100%;
+    border-radius: 16px;
 }
 
 .tvAudioVideo::before {
@@ -458,15 +615,16 @@
 
 .cvt2Image {
     height: 100%;
-    width: 55%;
+    width: 100%;
 
     display: grid;
-    place-items: center;
+
 }
 
 .cvt2Image img {
-    height: 100%;
+    height: 260px;
     width: 100%;
+    border-radius: 16px;
 }
 
 .consolasVideojuegos2::before {
@@ -480,7 +638,7 @@
     border-bottom-left-radius: 16px;
 }
 
-.containerPostProm{
+.containerPostProm {
     display: flex;
     width: 100%;
     height: auto;
@@ -488,37 +646,37 @@
     overflow-x: scroll;
 }
 
-.containerPostProm .contenedor1{
+.containerPostProm .contenedor1 {
     width: 294px;
-    
-    position:relative;
+
+    position: relative;
     color: white;
-    
-    
+
+
 }
 
 .contenedor1 img {
-     width: 294px;
-     height: 254px;
-     
+    width: 294px;
+    height: 254px;
+
 }
 
 
-.containerPostProm .contenedor2{
+.containerPostProm .contenedor2 {
     width: 100%;
     position: relative;
     color: white;
-    
+
 }
 
 .contenedor2 img {
     width: 650px;
     height: 254px;
-    
+
 }
 
 
-.contenedor1 .header{
+.contenedor1 .header {
     position: absolute;
     top: 11px;
     width: 100%;
@@ -538,19 +696,20 @@
     justify-content: space-between;
 }
 
-.contenedor1 p ,h4 {
+.contenedor1 p,
+h4 {
     margin: 0;
 }
 
-.contenedor1 h4{
+.contenedor1 h4 {
     font-size: 40px;
 }
 
-.contenedor1 .header p{
+.contenedor1 .header p {
     font-size: 16px;
 }
 
-.contenedor1 .footer a{
+.contenedor1 .footer a {
     text-decoration: none;
     color: white;
     width: 116px;
@@ -562,31 +721,32 @@
     display: grid;
     place-items: center;
 }
-.contenedor1 .footer p{
+
+.contenedor1 .footer p {
     font-size: 10px;
 }
 
-.contenedor2 .left_{
-    position:absolute;
+.contenedor2 .left_ {
+    position: absolute;
     bottom: 0;
     padding: 44px 20px;
-    
-    
+
+
 }
 
-.contenedor2 .left_ p{
+.contenedor2 .left_ p {
     font-size: 10px;
 }
 
-.contenedor2 .left_ h4{
+.contenedor2 .left_ h4 {
     font-size: 40px;
 }
 
-.contenedor2 .left_ h5{
+.contenedor2 .left_ h5 {
     font-size: 16px;
 }
 
-.contenedor2 .left_ a{
+.contenedor2 .left_ a {
     text-decoration: none;
     color: white;
     width: 116px;
@@ -603,37 +763,103 @@
 /* .carousel{
     display: none;
 } */
-.carousel_responsive{
+.carousel_responsive {
     display: none;
 }
 
 @media (max-width: 768px) {
 
-    .carousel_responsive{
+
+    .cardContainerHot .scroll-button {
+        display: none;
+    }
+
+    .carousel_responsive {
         display: block;
     }
-    .catContent{
+
+    .catContent {
         width: 100vw;
     }
 
-    .containerflyers{
+    .containerflyers {
         display: none;
+    }
+
+    .carousel-indicators {
+        top: 260px;
+        opacity: 1;
+
+    }
+
+    .carousel-indicators .indicator {
+        width: 20px;
+        height: 15px;
+        background-color: gray;
+        border-radius: 50%;
+        margin: 5px;
+        transition: all 0.3s ease;
+        
+    }
+
+    .carousel-indicators .indicator.active {
+        width: 45px;
+        height: 15px;
+        border-radius: 14px;
+        background-color:#F95738;
     }
 
     .tavtImage {
         height: 100%;
-        width: 55%;
-    
+        width: 100%;
+
         display: grid;
-        place-items: center;
+
     }
 
     .tavtImage img {
-        height: 100%;
+        height: 260px;
         width: 100%;
+        border-radius: 16px;
     }
-    
-    .carousel-control-next{
+
+    .carousel-control-next {
         z-index: 550;
+    }
+
+    .cardContainer2 .scroll-button.left {
+        display: none;
+    }
+
+    .cardContainer2 .scroll-button.right {
+        display: none;
+    }
+
+    .containerProductos .scroll-button.left {
+        display: none;
+    }
+
+    .containerProductos .scroll-button {
+        display: none;
+    }
+
+    .scroll-button .right {
+        display: none;
+    }
+
+    .containerHot .scroll-button .right {
+        display: none;
+    }
+
+    .cardContainerHot .scroll-button .left {
+        display: none;
+    }
+
+    .containerProductos .scroll-button.right {
+        display: none;
+    }
+
+    .cardContainerHot .scroll-button.left {
+        display: none;
     }
 }

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from 'react-router-dom';
 import {
   InputGroup,
   Input,
@@ -10,71 +11,27 @@ import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faUserPlus,faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus, faRightFromBracket, faUserGear } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import adminUser from '../assets/egoi_icons/userAdmin.svg';
 
 import Register from "../views/user/register.js";
 import Login from "../views/user/login.js";
+import { allCategories } from "../services/categories";
+import { subcategorieById } from "../services/categories";
+import { getCurrentUser, setCurrentUser } from "../helpers/Utils";
+import Swal from "sweetalert2";
+import { getAllBrands } from "../services/brands";
+import { getProductsByIdBrand } from "../services/brands";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useContext } from 'react';
 
-const data = [  
-    
-  {
-    name: "celulares",
-    subcategories: [
-      { name: "Accesorios para celular" },
-      { name: "Smartwatches" }
-    ],
-  },
-
-  {   name: "belleza",    
-      subcategories: [      
-        {  name: "Perfumes para mujer" },      
-        {  name: "Perfumes para hombre" },    
-        {  name: "Belleza y cuidado personal" },    
-        {  name: "Fajas y leggings" },    
-        {  name: "Maquillaje" },    
-      ],
-  },
-  {
-    name: "tv_audio_video",
-    subcategories: [
-      { name: "Televisores" },
-      { name: "Audio" },
-    ],
-  },
-  {
-    name: "relojes_accesorios",
-    subcategories: [
-      { name: "Relojes para hombre" },
-      { name: "Relojes para mujer" },
-      { name: "Gafas de sol" },
-      { name: "Gorras" },
-    ],
-  },
-  {
-    name: "computacion",
-    subcategories: [
-      { name: "Teclados" },
-      { name: "Mouses" },
-    ],
-  },
-  {
-    name: "moda",
-    subcategories: [
-      { name: "Calzado para dama" },
-      { name: "Calzado para hombre" },
-    ],
-  },
-  {
-    name: "consolas_videojuegos",
-    subcategories: [
-      { name: "Consolas" },
-      { name: "Videojuegos" },
-    ],
-  },
-];
+import { getProductsBySearch } from "../services/filtros";
+import { myorders } from "../constants/defaultValues";
 
 const Header = () => {
+
+
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
@@ -83,52 +40,129 @@ const Header = () => {
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [subcategorias, setSubcategorias] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
 
-  // const [subcategorias, setSubcategorias] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState(null);
-  // const [selectedCategory, setSelectedCategory] = useState([]);
+  const { id } = useParams();
 
-  
+  const currenUser = getCurrentUser();
 
-  
 
-/**
- * The function displays subcategories based on the category selected by the user.
- * @param e - The parameter "e" is an event object that is passed as an argument to the function
- * "mostrarSubcategorias". It represents the event that triggered the function, such as a click event
- * on a button or a link. The event object contains information about the event, such as the target
- * element,
- */
- 
-  const mostrarSubcategorias = (e) => {
-    
-    // console.log("entre");
-    // Obtenemos la categoría del data-category del enlace clickeado
-    const categoria = e.currentTarget.dataset.category;
-    // console.log(categoria);
-    // Buscamos la categoría correspondiente en el array data
-    const categoriaSeleccionada = data.find((cat) => cat.name === categoria);
-    if (categoriaSeleccionada && categoriaSeleccionada.subcategories) {
-      setSelectedCategory(categoriaSeleccionada);
-      setSubcategorias(categoriaSeleccionada.subcategories);
-    } else {
-      setSelectedCategory({});
-      setSubcategorias([]);
+  const [prevSearchProducts, setPrevSearchProducts] = useState('');
+
+  const history = useHistory();
+
+
+
+  const handleInputChange = (event) => {
+    setPrevSearchProducts(event.target.value);
+  }
+
+  const handleEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      setPrevSearchProducts(prevSearchProducts);
+      console.log("Este es el valor guardado en el search: ", prevSearchProducts);
+      history.push(`/products/${prevSearchProducts}`);
     }
+  }
+
+  // const handleInputChange = (event) => {
+  //   setPrevSearch(searchProducts);
+  //   setSearchProducts(event.target.value);
+  //   console.log("Este es el producto buscado", searchProducts);
+  // }
+
+  // const handleKeyDown = (event) => {
+  //   if (event.key === 'Enter') {
+  //     // Hacer algo con el valor de searchProducts
+  //   }
+  // }
+
+  /**
+   * This function retrieves all categories and sets them in state using a promise and useEffect hook.
+   */
+  const allCategoriesPromise = () => {
+    allCategories()
+      .then((res) => {
+        setCategories(res.data);
+        console.log("Recibiendo todas las categorias", categories);
+
+      })
+      .catch((err) => console.log(err));
   };
 
-  
+  /**
+   * This function retrieves all brands and sets them in the state variable "brands".
+   */
+  const allBrands = () => {
+    getAllBrands()
+      .then((res) => {
+        setBrands(res.data);
+        console.log("Recibiendo todas las marcas", brands);
+      })
+      .catch((err) => console.log(err));
+  }
+
+
+  const productsByBrand = (brandId) => {
+    getProductsByIdBrand(brandId)
+      .then((res) => {
+        console.log(res);
+        setProducts(res.data);
+        console.log("Productos por marca", res.data.products);
+
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const resultsSearch = (prevSearchProducts) => {
+    console.log("Entre al resuktado de search");
+    if (prevSearchProducts) {
+      getProductsBySearch(prevSearchProducts)
+        .then((res) => {
+          console.log(res);
+          setProducts(res.data);
+          console.log("Respuesta de los productos por busqueda", res.data.products);
+        })
+    }
+  }
+  /**
+   * The function "mostrarSubcategorias" logs the selected category and sets the subcategories based on
+   * the category's childes property.
+   * @param e - The parameter "e" is an event object that is passed to the function when it is
+   * triggered by an event listener. It contains information about the event that triggered the
+   * function, such as the target element and any data attributes associated with it. In this case, it
+   * is used to retrieve the "categoryId
+   */
+  const mostrarSubcategorias = (e) => {
+    const categoryId = e.currentTarget.dataset.categoryId;
+    console.log("Este es el id de la categoria", categoryId);
+    // console.log("Este es el arreglo" ,categories);
+    const selectedCategory = categories.find((categoria) => categoria.id == categoryId);
+    setSelectedCategory(selectedCategory);
+    console.log("Esta es la categoría seleccionada:", selectedCategory);
+    // setSubcategorias(selectedCategory.subcategories);
+    if (selectedCategory) {
+      setSubcategorias(selectedCategory.childes);
+      // const subcategorias = selectedCategory.childes;
+      // console.log("Estas son las subcategorias ", subcategorias);
+    }
+  }
+
+
   const handleChangeFormLogin = () => {
 
-    if(modalViewLogin === true){
+    if (modalViewLogin === true) {
       setModalViewRegistro(true);
     }
   };
 
   const handleChangeFormRegister = () => {
 
-    if(modalViewRegistro === true){
+    if (modalViewRegistro === true) {
       setModalViewLogin(true);
     }
 
@@ -142,21 +176,118 @@ const Header = () => {
     setModalViewLogin(false);
   };
 
+  const goToDetailCart = () => {
+    if (currenUser) {
+      history.push(`/detailCart`)
+    }
+    else {
+      setModalViewLogin(true);
+    }
+  }
+
   const handleLogin = () => {
     // Code to handle user login, such as storing session storage, etc.
-    setIsLoggedIn(true);
+    if (currenUser) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+
   };
+
+  const handleAdminUser = () => {
+    history.push(`${myorders}`);
+  }
 
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
+    console.log("Entro al logout");
+    setCurrentUser();
     setIsLoggedIn(false);
+    history.push(`/`);
   };
+
+  // const handleFavList = () => {
+  //   if (currenUser) {
+  //       history.push({
+  //       pathname: `${myorders}`,
+  //       state: {activeOption: 'ListaDeseos', selectedOption: 'Lista Deseos'}
+  //     });
+  //   } else {
+  //     setModalViewLogin(true);
+  //   }
+  // }
+
+  const handleFavList = () => {
+    if (currenUser) {
+      const url = `/myorders?activeOption=ListaDeseos&selectedOption=Lista%20Deseos`;
+      window.location.href = url;
+    } else {
+      setModalViewLogin(true);
+    }
+  }
+
+
+
+  useEffect(() => {
+    //   if(isLoggedIn){
+
+    //   let timeout;
+
+    //   const resetTimeout = () =>{
+    //     if(timeout){
+    //       clearTimeout(timeout);
+    //     }
+
+    //     timeout = setTimeout(()=>{
+    //       handleLogout();
+    //       Swal.fire({
+    //         icon: 'error',
+    //         title: 'Oops...',
+    //         text: 'Sesión expirada. Por favor, vuelva a logearse.',
+    //         confirmButtonColor: '#fc5241',
+    //       });
+    //     }, 300000);
+    //   };
+    //   resetTimeout();
+
+    //   const listenerActivity = () => {
+    //     resetTimeout();
+    //   };
+
+    //   window.addEventListener('mousemove', listenerActivity);
+    //   window.addEventListener('keypress', listenerActivity);
+    //   window.addEventListener('touchstart', listenerActivity);
+    //   window.addEventListener('touchmove', listenerActivity);
+
+    //   return () => {
+    //     window.removeEventListener('mousemove', listenerActivity);
+    //     window.removeEventListener('keypress', listenerActivity);
+    //     window.removeEventListener('touchstart', listenerActivity);
+    //     window.removeEventListener('touchmove', listenerActivity);
+    //     clearTimeout(timeout);
+    //   };  
+
+    // }
+    handleLogin();
+
+
+  }, [currenUser, isLoggedIn]);
+
+  useEffect(() => {
+
+    allCategoriesPromise();
+    allBrands();
+  }, []);
+
 
   return (
     <nav>
       <div className="containerNav">
         <div className={styles.navbarLogo}>
-          <img src={logo} alt="logo" className={styles.logo} width={"150px"} />
+          <a href="/">
+            <img src={logo} alt="logo" className={styles.logo} width={"150px"} />
+          </a>
         </div>
         <div className={styles.searchContainer}>
           <InputGroup className={styles.search}>
@@ -171,6 +302,10 @@ const Header = () => {
               }}
               type="text"
               placeholder="Busca productos, marcas..."
+              value={prevSearchProducts}
+              onChange={handleInputChange}
+              onKeyPress={handleEnterPress}
+
             />
           </InputGroup>
         </div>
@@ -195,43 +330,56 @@ const Header = () => {
               </svg>
             </a>
             <div className="menu">
-      {isLoggedIn ? (
-        <a href="#" onClick={handleLogout}>
-          <FontAwesomeIcon icon={faRightFromBracket} /> Logout
-        </a>
-      ) : (
-        <>
-          <a href="#" onClick={() => setModalViewLogin(true)}>
-            <FontAwesomeIcon icon={faUser} /> Inicia Sesion
-          </a>
-          <Modal
-            className="modal-dialog-centered modal-sm"
-            toggle={() => setModalViewLogin(false)}
-            isOpen={modalViewLogin && !changeFormLogin}
-          >
-            <ModalBody>
-              <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  closeModalRegistro={closeModalRegistro}  handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
-            </ModalBody>
-          </Modal>
-          <a href="#" onClick={() => setModalViewRegistro(true)}>
-            <FontAwesomeIcon icon={faUserPlus} /> Registrate
-          </a>
-          <Modal
-            className="modal-dialog-centered modal-sm"
-            toggle={() => setModalViewRegistro(false)}
-            isOpen={modalViewRegistro && !changeFormRegister}
-          >
-            <ModalBody>
-              <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
-            </ModalBody>
-          </Modal>
-        </>
-      )}
-    </div>
+              {isLoggedIn ? (
+                <>
+                  <a href="#" onClick={handleAdminUser}>
+                    <FontAwesomeIcon icon={faUserGear} style={{ alignSelf: 'center' }} />
+                    Administra tu cuenta
+                  </a>
+                  <a href="#" onClick={handleLogout}>
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                    Cerrar Sesion
+                  </a>
+                </>
+
+              ) : (
+                <>
+                  <a href="#" onClick={() => setModalViewLogin(true)}>
+                    <FontAwesomeIcon icon={faUser} />
+                    Inicia Sesion
+                  </a>
+                  <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalViewLogin(false)}
+                    isOpen={modalViewLogin && !changeFormLogin}
+                  >
+                    <ModalBody>
+                      <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
+                    </ModalBody>
+                  </Modal>
+                  <a href="#" onClick={() => setModalViewRegistro(true)}>
+                    <FontAwesomeIcon icon={faUserPlus} />
+                    Registrate
+                  </a>
+                  <Modal
+                    className="modal-dialog-centered modal-lg"
+                    toggle={() => setModalViewRegistro(false)}
+                    isOpen={modalViewRegistro && !changeFormRegister}
+                  >
+                    <ModalBody>
+                      <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                    </ModalBody>
+                  </Modal>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Favorito icono  */}
-          <a href="#">
+
+
+
+          <a href="#" onClick={handleFavList}>
             <svg
               width="40"
               height="40"
@@ -247,8 +395,9 @@ const Header = () => {
               />
             </svg>
           </a>
+
           {/* Carrito de compras  */}
-          <a href="#">
+          <a href="#" onClick={() => { goToDetailCart() }}>
             <svg
               width="40"
               height="40"
@@ -285,48 +434,21 @@ const Header = () => {
                 fill="#171523"
               />
             </svg>
-            Categorias
+            Categorías
           </a>
-          
+
           <div className="menuCategorias">
             <div className="column">
               <ul>
-                
-                  <a href="#" data-category="celulares" onClick={mostrarSubcategorias}>
+                {categories.map((categoria, index) => (
+                  <a href="#" data-category-id={categoria.id} data-category={categoria.name} key={index} onMouseOver={mostrarSubcategorias}>
                     <li>
-                      <strong>Celulares y accesorios</strong>
+                      <strong>{categoria.name}</strong>
                     </li>
                   </a>
-                  <a href="#" data-category="belleza" onClick={mostrarSubcategorias}>
-                  <li>
-                    <strong>Belleza</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="tv_audio_video" onClick={mostrarSubcategorias}>
-                  <li>
-                    <strong>TV, audio y video</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="relojes_accesorios" onClick={mostrarSubcategorias}>
-                  <li>
-                    <strong>Relojes y accesorios</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="computacion" onClick={mostrarSubcategorias}>
-                  <li>
-                    <strong>Computación</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="moda" onClick={mostrarSubcategorias}>
-                  <li>
-                    <strong>Moda</strong>
-                  </li>
-                  </a>
-                  <a href="#" data-category="consolas_videojuegos" onClick={mostrarSubcategorias}>
-                  <li>
-                    <strong>Consolas y videojuegos</strong>
-                  </li>
-                  </a>
+                ))}
+
+
 
               </ul>
             </div>
@@ -334,56 +456,87 @@ const Header = () => {
               <ul>
                 {subcategorias.map((subcategoria) => (
                   <li key={subcategoria.name}>
-                    <a href="#">{subcategoria.name}</a>
+                    <Link to={`/categories/${selectedCategory.name}/${subcategoria.name}/${subcategoria.id}`} >
+                      <a href="#">
+                        {subcategoria.name}
+                      </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
-              
+
             </div>
           </div>
         </div>
-        <a href="#">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M16.8722 8.13225C16.3032 7.95546 15.6968 7.95546 15.1278 8.13225C14.8494 8.21876 14.5513 8.38528 14.1231 8.72385C13.6875 9.0683 13.1692 9.54775 12.4336 10.2293L8.97759 13.4312C8.19904 14.1526 7.91535 14.4233 7.71401 14.7351C7.52397 15.0295 7.38277 15.3555 7.29692 15.6996C7.20556 16.0658 7.2 16.4684 7.2 17.5456V19.2748C7.2 20.3946 7.20059 21.1877 7.24981 21.8078C7.29834 22.4193 7.39035 22.7931 7.53552 23.0864C7.83014 23.6816 8.29804 24.1612 8.86828 24.4603C9.1454 24.6057 9.49997 24.6991 10.0889 24.7486C10.5829 24.7902 11.1912 24.7979 12 24.7993V21.6C12 21.5627 12 21.5261 12 21.4899C11.9996 20.8536 11.9994 20.3811 12.109 19.9717C12.4049 18.8675 13.2675 18.0049 14.3718 17.709C14.7811 17.5993 15.2536 17.5996 15.8899 17.5999C15.9261 17.5999 15.9628 17.6 16 17.6C16.0372 17.6 16.0739 17.5999 16.1101 17.5999C16.7464 17.5996 17.2189 17.5993 17.6282 17.709C18.7325 18.0049 19.5951 18.8675 19.891 19.9717C20.0006 20.3811 20.0004 20.8536 20 21.4899C20 21.5261 20 21.5627 20 21.6V24.7993C20.8088 24.7979 21.4171 24.7902 21.9111 24.7486C22.5 24.6991 22.8546 24.6057 23.1317 24.4603C23.702 24.1612 24.1699 23.6816 24.4645 23.0864C24.6097 22.7931 24.7017 22.4193 24.7502 21.8078C24.7994 21.1877 24.8 20.3946 24.8 19.2748V17.5456C24.8 16.4684 24.7944 16.0658 24.7031 15.6996C24.6172 15.3555 24.476 15.0295 24.286 14.7351C24.0847 14.4233 23.801 14.1526 23.0224 13.4312L19.5664 10.2293C18.8308 9.54775 18.3125 9.0683 17.8769 8.72385C17.4487 8.38528 17.1506 8.21876 16.8722 8.13225ZM18.4 24.7997V21.6C18.4 20.8045 18.3931 20.5637 18.3455 20.3859C18.1975 19.8337 17.7663 19.4024 17.2141 19.2545C17.0363 19.2068 16.7955 19.2 16 19.2C15.2045 19.2 14.9637 19.2068 14.7859 19.2545C14.2337 19.4024 13.8025 19.8337 13.6545 20.3859C13.6069 20.5637 13.6 20.8045 13.6 21.6V24.7997H18.4ZM14.6531 6.6043C15.5313 6.33144 16.4687 6.33144 17.3469 6.6043C17.8899 6.77302 18.3658 7.07061 18.8693 7.46882C19.3599 7.85672 19.9238 8.37919 20.6296 9.0331L24.1098 12.2576C24.1354 12.2812 24.1606 12.3046 24.1856 12.3277C24.862 12.9542 25.3063 13.3656 25.6302 13.8673C25.9162 14.3104 26.1274 14.7989 26.2555 15.3123C26.4003 15.8928 26.4002 16.5041 26.4 17.4425C26.4 17.4764 26.4 17.5108 26.4 17.5456V19.3089C26.4 20.3869 26.4 21.2435 26.3452 21.9344C26.2891 22.6413 26.1718 23.2438 25.8985 23.7961C25.4568 24.6885 24.7498 25.4184 23.8749 25.8773C23.3306 26.1628 22.7368 26.2848 22.0452 26.343C21.3712 26.3997 20.5368 26.3997 19.4918 26.3997H12.5082C11.4633 26.3997 10.6288 26.3997 9.95485 26.343C9.26317 26.2848 8.66938 26.1628 8.12508 25.8773C7.25023 25.4184 6.54324 24.6885 6.10155 23.7961C5.82819 23.2438 5.71093 22.6413 5.65483 21.9344C5.59999 21.2435 5.6 20.3869 5.6 19.3089L5.6 17.5456C5.6 17.5108 5.6 17.4764 5.59999 17.4425C5.5998 16.5041 5.59968 15.8928 5.7445 15.3123C5.8726 14.7989 6.08377 14.3104 6.36982 13.8673C6.69373 13.3656 7.13799 12.9542 7.81445 12.3277C7.83937 12.3046 7.86462 12.2812 7.89018 12.2576L11.3705 9.03309C12.0762 8.37919 12.6401 7.85672 13.1307 7.46882C13.6343 7.07061 14.1101 6.77302 14.6531 6.6043Z"
-              fill="#171523"
-            />
-          </svg>
-          Inicio
-        </a>
-        <a href="#">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M12 9.5999C12 7.83259 13.4327 6.3999 15.2 6.3999H16.8C18.5673 6.3999 20 7.83259 20 9.5999V10.4028C21.1216 10.4137 21.9149 10.4645 22.6001 10.6971C24.2486 11.2567 25.5432 12.5513 26.1028 14.1998C26.4006 15.077 26.4004 16.1313 26.4 17.8248C26.4 17.8824 26.4 17.9408 26.4 17.9999C26.4 18.059 26.4 18.1174 26.4 18.175C26.4004 19.8685 26.4006 20.9228 26.1028 21.8C25.5432 23.4486 24.2486 24.7431 22.6001 25.3027C21.7229 25.6005 20.6686 25.6003 18.9751 25.5999C18.9175 25.5999 18.8591 25.5999 18.8 25.5999H13.2C13.1409 25.5999 13.0825 25.5999 13.0249 25.5999C11.3314 25.6003 10.2771 25.6005 9.39994 25.3027C7.75135 24.7431 6.45681 23.4486 5.89719 21.8C5.59943 20.9228 5.59964 19.8685 5.59997 18.175C5.59999 18.1174 5.6 18.059 5.6 17.9999C5.6 17.9408 5.59999 17.8824 5.59997 17.8248C5.59964 16.1313 5.59943 15.077 5.89719 14.1998C6.45681 12.5513 7.75135 11.2567 9.39994 10.6971C10.0851 10.4645 10.8784 10.4137 12 10.4028V9.5999ZM13.6 10.3999H18.4V9.5999C18.4 8.71625 17.6837 7.9999 16.8 7.9999H15.2C14.3163 7.9999 13.6 8.71625 13.6 9.5999V10.3999ZM13.2 11.9999C11.2733 11.9999 10.5081 12.0106 9.91424 12.2122C8.73668 12.6119 7.81201 13.5366 7.41228 14.7141C7.2107 15.308 7.2 16.0733 7.2 17.9999C7.2 19.9266 7.2107 20.6918 7.41228 21.2857C7.81201 22.4632 8.73668 23.3879 9.91424 23.7876C10.5081 23.9892 11.2733 23.9999 13.2 23.9999H18.8C20.7266 23.9999 21.4919 23.9892 22.0858 23.7876C23.2633 23.3879 24.188 22.4632 24.5877 21.2857C24.7893 20.6918 24.8 19.9266 24.8 17.9999C24.8 16.0733 24.7893 15.308 24.5877 14.7141C24.188 13.5366 23.2633 12.6119 22.0858 12.2122C21.4919 12.0106 20.7266 11.9999 18.8 11.9999H13.2Z"
-              fill="#171523"
-            />
-            <path
-              d="M12 14.3999C12 14.2512 12 14.1768 12.0123 14.115C12.0628 13.8611 12.2613 13.6627 12.5151 13.6122C12.577 13.5999 12.6513 13.5999 12.8 13.5999C12.9487 13.5999 13.023 13.5999 13.0849 13.6122C13.3387 13.6627 13.5372 13.8611 13.5877 14.115C13.6 14.1768 13.6 14.2512 13.6 14.3999C13.6 14.5485 13.6 14.6229 13.5877 14.6847C13.5372 14.9386 13.3387 15.1371 13.0849 15.1876C13.023 15.1999 12.9487 15.1999 12.8 15.1999C12.6513 15.1999 12.577 15.1999 12.5151 15.1876C12.2613 15.1371 12.0628 14.9386 12.0123 14.6847C12 14.6229 12 14.5485 12 14.3999Z"
-              fill="black"
-            />
-            <path
-              d="M18.4 14.3999C18.4 14.2512 18.4 14.1768 18.4123 14.115C18.4628 13.8611 18.6613 13.6627 18.9151 13.6122C18.977 13.5999 19.0513 13.5999 19.2 13.5999C19.3487 13.5999 19.423 13.5999 19.4849 13.6122C19.7387 13.6627 19.9372 13.8611 19.9877 14.115C20 14.1768 20 14.2512 20 14.3999C20 14.5485 20 14.6229 19.9877 14.6847C19.9372 14.9386 19.7387 15.1371 19.4849 15.1876C19.423 15.1999 19.3487 15.1999 19.2 15.1999C19.0513 15.1999 18.977 15.1999 18.9151 15.1876C18.6613 15.1371 18.4628 14.9386 18.4123 14.6847C18.4 14.6229 18.4 14.5485 18.4 14.3999Z"
-              fill="black"
-            />
-          </svg>
-          Marcas
-        </a>
+        <Link to={`/`}>
+          <a href="#">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M16.8722 8.13225C16.3032 7.95546 15.6968 7.95546 15.1278 8.13225C14.8494 8.21876 14.5513 8.38528 14.1231 8.72385C13.6875 9.0683 13.1692 9.54775 12.4336 10.2293L8.97759 13.4312C8.19904 14.1526 7.91535 14.4233 7.71401 14.7351C7.52397 15.0295 7.38277 15.3555 7.29692 15.6996C7.20556 16.0658 7.2 16.4684 7.2 17.5456V19.2748C7.2 20.3946 7.20059 21.1877 7.24981 21.8078C7.29834 22.4193 7.39035 22.7931 7.53552 23.0864C7.83014 23.6816 8.29804 24.1612 8.86828 24.4603C9.1454 24.6057 9.49997 24.6991 10.0889 24.7486C10.5829 24.7902 11.1912 24.7979 12 24.7993V21.6C12 21.5627 12 21.5261 12 21.4899C11.9996 20.8536 11.9994 20.3811 12.109 19.9717C12.4049 18.8675 13.2675 18.0049 14.3718 17.709C14.7811 17.5993 15.2536 17.5996 15.8899 17.5999C15.9261 17.5999 15.9628 17.6 16 17.6C16.0372 17.6 16.0739 17.5999 16.1101 17.5999C16.7464 17.5996 17.2189 17.5993 17.6282 17.709C18.7325 18.0049 19.5951 18.8675 19.891 19.9717C20.0006 20.3811 20.0004 20.8536 20 21.4899C20 21.5261 20 21.5627 20 21.6V24.7993C20.8088 24.7979 21.4171 24.7902 21.9111 24.7486C22.5 24.6991 22.8546 24.6057 23.1317 24.4603C23.702 24.1612 24.1699 23.6816 24.4645 23.0864C24.6097 22.7931 24.7017 22.4193 24.7502 21.8078C24.7994 21.1877 24.8 20.3946 24.8 19.2748V17.5456C24.8 16.4684 24.7944 16.0658 24.7031 15.6996C24.6172 15.3555 24.476 15.0295 24.286 14.7351C24.0847 14.4233 23.801 14.1526 23.0224 13.4312L19.5664 10.2293C18.8308 9.54775 18.3125 9.0683 17.8769 8.72385C17.4487 8.38528 17.1506 8.21876 16.8722 8.13225ZM18.4 24.7997V21.6C18.4 20.8045 18.3931 20.5637 18.3455 20.3859C18.1975 19.8337 17.7663 19.4024 17.2141 19.2545C17.0363 19.2068 16.7955 19.2 16 19.2C15.2045 19.2 14.9637 19.2068 14.7859 19.2545C14.2337 19.4024 13.8025 19.8337 13.6545 20.3859C13.6069 20.5637 13.6 20.8045 13.6 21.6V24.7997H18.4ZM14.6531 6.6043C15.5313 6.33144 16.4687 6.33144 17.3469 6.6043C17.8899 6.77302 18.3658 7.07061 18.8693 7.46882C19.3599 7.85672 19.9238 8.37919 20.6296 9.0331L24.1098 12.2576C24.1354 12.2812 24.1606 12.3046 24.1856 12.3277C24.862 12.9542 25.3063 13.3656 25.6302 13.8673C25.9162 14.3104 26.1274 14.7989 26.2555 15.3123C26.4003 15.8928 26.4002 16.5041 26.4 17.4425C26.4 17.4764 26.4 17.5108 26.4 17.5456V19.3089C26.4 20.3869 26.4 21.2435 26.3452 21.9344C26.2891 22.6413 26.1718 23.2438 25.8985 23.7961C25.4568 24.6885 24.7498 25.4184 23.8749 25.8773C23.3306 26.1628 22.7368 26.2848 22.0452 26.343C21.3712 26.3997 20.5368 26.3997 19.4918 26.3997H12.5082C11.4633 26.3997 10.6288 26.3997 9.95485 26.343C9.26317 26.2848 8.66938 26.1628 8.12508 25.8773C7.25023 25.4184 6.54324 24.6885 6.10155 23.7961C5.82819 23.2438 5.71093 22.6413 5.65483 21.9344C5.59999 21.2435 5.6 20.3869 5.6 19.3089L5.6 17.5456C5.6 17.5108 5.6 17.4764 5.59999 17.4425C5.5998 16.5041 5.59968 15.8928 5.7445 15.3123C5.8726 14.7989 6.08377 14.3104 6.36982 13.8673C6.69373 13.3656 7.13799 12.9542 7.81445 12.3277C7.83937 12.3046 7.86462 12.2812 7.89018 12.2576L11.3705 9.03309C12.0762 8.37919 12.6401 7.85672 13.1307 7.46882C13.6343 7.07061 14.1101 6.77302 14.6531 6.6043Z"
+                fill="#171523"
+              />
+            </svg>
+            Inicio
+          </a>
+        </Link>
+        {/* Marcas */}
+        <div className="dropdown">
+          <a href="#" className="option">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 9.5999C12 7.83259 13.4327 6.3999 15.2 6.3999H16.8C18.5673 6.3999 20 7.83259 20 9.5999V10.4028C21.1216 10.4137 21.9149 10.4645 22.6001 10.6971C24.2486 11.2567 25.5432 12.5513 26.1028 14.1998C26.4006 15.077 26.4004 16.1313 26.4 17.8248C26.4 17.8824 26.4 17.9408 26.4 17.9999C26.4 18.059 26.4 18.1174 26.4 18.175C26.4004 19.8685 26.4006 20.9228 26.1028 21.8C25.5432 23.4486 24.2486 24.7431 22.6001 25.3027C21.7229 25.6005 20.6686 25.6003 18.9751 25.5999C18.9175 25.5999 18.8591 25.5999 18.8 25.5999H13.2C13.1409 25.5999 13.0825 25.5999 13.0249 25.5999C11.3314 25.6003 10.2771 25.6005 9.39994 25.3027C7.75135 24.7431 6.45681 23.4486 5.89719 21.8C5.59943 20.9228 5.59964 19.8685 5.59997 18.175C5.59999 18.1174 5.6 18.059 5.6 17.9999C5.6 17.9408 5.59999 17.8824 5.59997 17.8248C5.59964 16.1313 5.59943 15.077 5.89719 14.1998C6.45681 12.5513 7.75135 11.2567 9.39994 10.6971C10.0851 10.4645 10.8784 10.4137 12 10.4028V9.5999ZM13.6 10.3999H18.4V9.5999C18.4 8.71625 17.6837 7.9999 16.8 7.9999H15.2C14.3163 7.9999 13.6 8.71625 13.6 9.5999V10.3999ZM13.2 11.9999C11.2733 11.9999 10.5081 12.0106 9.91424 12.2122C8.73668 12.6119 7.81201 13.5366 7.41228 14.7141C7.2107 15.308 7.2 16.0733 7.2 17.9999C7.2 19.9266 7.2107 20.6918 7.41228 21.2857C7.81201 22.4632 8.73668 23.3879 9.91424 23.7876C10.5081 23.9892 11.2733 23.9999 13.2 23.9999H18.8C20.7266 23.9999 21.4919 23.9892 22.0858 23.7876C23.2633 23.3879 24.188 22.4632 24.5877 21.2857C24.7893 20.6918 24.8 19.9266 24.8 17.9999C24.8 16.0733 24.7893 15.308 24.5877 14.7141C24.188 13.5366 23.2633 12.6119 22.0858 12.2122C21.4919 12.0106 20.7266 11.9999 18.8 11.9999H13.2Z"
+                fill="#171523"
+              />
+              <path
+                d="M12 14.3999C12 14.2512 12 14.1768 12.0123 14.115C12.0628 13.8611 12.2613 13.6627 12.5151 13.6122C12.577 13.5999 12.6513 13.5999 12.8 13.5999C12.9487 13.5999 13.023 13.5999 13.0849 13.6122C13.3387 13.6627 13.5372 13.8611 13.5877 14.115C13.6 14.1768 13.6 14.2512 13.6 14.3999C13.6 14.5485 13.6 14.6229 13.5877 14.6847C13.5372 14.9386 13.3387 15.1371 13.0849 15.1876C13.023 15.1999 12.9487 15.1999 12.8 15.1999C12.6513 15.1999 12.577 15.1999 12.5151 15.1876C12.2613 15.1371 12.0628 14.9386 12.0123 14.6847C12 14.6229 12 14.5485 12 14.3999Z"
+                fill="black"
+              />
+              <path
+                d="M18.4 14.3999C18.4 14.2512 18.4 14.1768 18.4123 14.115C18.4628 13.8611 18.6613 13.6627 18.9151 13.6122C18.977 13.5999 19.0513 13.5999 19.2 13.5999C19.3487 13.5999 19.423 13.5999 19.4849 13.6122C19.7387 13.6627 19.9372 13.8611 19.9877 14.115C20 14.1768 20 14.2512 20 14.3999C20 14.5485 20 14.6229 19.9877 14.6847C19.9372 14.9386 19.7387 15.1371 19.4849 15.1876C19.423 15.1999 19.3487 15.1999 19.2 15.1999C19.0513 15.1999 18.977 15.1999 18.9151 15.1876C18.6613 15.1371 18.4628 14.9386 18.4123 14.6847C18.4 14.6229 18.4 14.5485 18.4 14.3999Z"
+                fill="black"
+              />
+            </svg>
+            Marcas
+          </a>
+          <div className="menuCategorias">
+            <div className="column">
+              <ul>
+                {brands.map((brand, index) => (
+                  <Link to={`/brand/${brand.name}/${brand.id}`}>
+                    <a href="#"
+                      data-category-id={brand.id}
+                      data-category={brand.name}
+                      key={index}
+                    >
+                      <li>
+                        <strong>{brand.name} ({brand.brand_products_count})</strong>
+                      </li>
+                    </a>
+                  </Link>
+                ))}
+
+
+
+              </ul>
+            </div>
+          </div>
+        </div>
         <a href="#">
           <svg
             width="32"
@@ -401,7 +554,7 @@ const Header = () => {
           </svg>
           Descuentos
         </a>
-        <a href="#">
+        {/* <a href="#">
           <svg
             width="32"
             height="32"
@@ -417,7 +570,7 @@ const Header = () => {
             />
           </svg>
           Tiendas
-        </a>
+        </a> */}
         <div className="dropdown">
           <a href="#" className="option">
             <svg
@@ -437,79 +590,53 @@ const Header = () => {
             Vender
           </a>
           <div className="menu">
-            <a
-              href="#"
-              onClick={() => {
-                setModalViewLogin(true);
-              }}
-            >
-              <FontAwesomeIcon icon={faUser} /> Inicia Sesion
-            </a>
-            <Modal
-              className="modal-dialog-centered modal-sm"
-              toggle={() => setModalViewLogin(false)}
-              isOpen={modalViewLogin}
-            >
-              <ModalBody>
-                <Login closeModalLogin={closeModalLogin}  handleLogin={handleLogin}  handleChangeFormLogin={handleChangeFormLogin} />
-              </ModalBody>
-            </Modal>
-            <a
-              href="#"
-              onClick={() => {
-                setModalViewRegistro(true);
-              }}
-            >
-              <FontAwesomeIcon icon={faUserPlus} /> Registrate
-            </a>
-            <Modal
-              className="modal-dialog-centered modal-sm"
-              toggle={() => setModalViewRegistro(false)}
-              isOpen={modalViewRegistro}
-            >
-              <ModalBody>
-                <Register closeModalRegistro={closeModalRegistro}  handleChangeFormRegister={handleChangeFormRegister} />
-              </ModalBody>
-            </Modal>
+            {isLoggedIn ? (
+              <a href="#" onClick={handleLogout}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                Cerrar Sesion
+              </a>
+            ) : (
+              <>
+                <a
+                  href="#"
+                  onClick={() => {
+                    setModalViewLogin(true);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+                </a>
+                <Modal
+                  className="modal-dialog-centered modal-lg"
+                  toggle={() => setModalViewLogin(false)}
+                  isOpen={modalViewLogin}
+                >
+                  <ModalBody>
+                    <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} handleChangeFormLogin={handleChangeFormLogin} />
+                  </ModalBody>
+                </Modal>
+                <a
+                  href="#"
+                  onClick={() => {
+                    setModalViewRegistro(true);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faUserPlus} /> Registrate
+                </a>
+                <Modal
+                  className="modal-dialog-centered modal-lg"
+                  toggle={() => setModalViewRegistro(false)}
+                  isOpen={modalViewRegistro}
+                >
+                  <ModalBody>
+                    <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                  </ModalBody>
+                </Modal>
+              </>
+            )}
           </div>
         </div>
       </div>
     </nav>
-
-    // <Navbar color="light" light expand="md" className={styles.navbar}>
-    //   <NavbarBrand href="/" >
-    //     {/* <img src={logo} alt="logo" className={styles.logo} /> */}
-    //   </NavbarBrand>
-    //   <NavbarToggler onClick={toggle} />
-    //   <Collapse isOpen={isOpen} navbar>
-    //     <Nav className="mr-auto" navbar>
-    //       <NavItem>
-    //         <NavLink href="/components/">Components</NavLink>
-    //       </NavItem>
-    //       <NavItem>
-    //         <NavLink href="https://github.com/reactstrap/reactstrap">
-    //           GitHub
-    //         </NavLink>
-    //       </NavItem>
-    //       <UncontrolledDropdown nav inNavbar>
-    //         <DropdownToggle nav caret>
-    //           Options
-    //         </DropdownToggle>
-    //         <DropdownMenu right>
-    //           <DropdownItem>Option 1</DropdownItem>
-    //           <DropdownItem>Option 2</DropdownItem>
-    //           <DropdownItem divider />
-    //           <DropdownItem>Reset</DropdownItem>
-    //         </DropdownMenu>
-    //       </UncontrolledDropdown>
-    //     </Nav>
-    //     <InputGroup className={styles.search}>
-    //       <Input placeholder="Search..." />
-
-    //     </InputGroup>
-    //     {/* <NavbarText>Simple Text</NavbarText> */}
-    //   </Collapse>
-    // </Navbar>
   );
 };
 

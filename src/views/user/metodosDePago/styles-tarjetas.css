@@ -1,0 +1,38 @@
+:root {
+  --prm-color: #FC5241;
+  --prm-gray: #b1b1b1;
+  --body-gray:#f5f5f5;
+  --placeholder-icon-nombre:url('../../../assets/egoi_icons/user-1.svg');
+  --placeholder-icon-cellphone: url('../../../assets/egoi_icons/Device.svg');
+  --placeholder-icon-map: url('../../../assets/egoi_icons/Map\ Point.svg');
+  --placeholder-icon-promocion: url('../../../assets/egoi_icons/Sale.svg');
+  
+
+}
+
+.custom-tooltip {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  
+
+  
+
+  input[placeholder="Nombre en la tarjeta"]::placeholder{
+    background-image: var(--placeholder-icon-nombre);
+    
+}
+
+@media (max-width: 768px) {
+    /* Estilos para pantallas con un ancho máximo de 768px */
+   
+  }
+  

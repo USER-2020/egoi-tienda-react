@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom';
 
 import '../../styles/headerCategories.css'
 
@@ -11,6 +12,12 @@ import {
   useRef,
   useState
 } from "react"
+import { subcategorieById } from '../../services/categories';
+import { filterProductsRecents } from '../../services/filtros';
+
+import { Display } from 'react-bootstrap-icons';
+import { getBrandsByCategory } from '../../services/brands';
+
 
 const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
 
@@ -34,17 +41,23 @@ const useOnClickOutside= (
   }, [ref, handler]);
 }
 
-const HeaderCategories = () => {
+
+const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A, 
+  handleClickFilterA_Z, handleClickFilterHigh_Low, handleClickFilterLow_High, 
+  handleApplyRangeFilters, handlePriceStartChange,handlePriceEndChange, 
+  priceStart, priceEnd, handleAplyFilterByBrand}) => {
+// const HeaderCategories = ({onFilterCLick}) => {
+
+ 
 
   const [isOpen1, setIsOpen1] = useState<boolean>(false);
   const [isOpen2, setIsOpen2] = useState<boolean>(false);
   const [isOpen3, setIsOpen3] = useState<boolean>(false);
-  
-  // const [buttonsState, setButtonsState] = useState({
-  //   brands:false,
-  //   price:false,
-  //   sortBy:false,
-  // })
+
+
+  const [brands, setBrands] = useState([]);
+  const { category, subcategory, id, brandId } = useParams();
+ 
   const ref1 = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref1, ()=> setIsOpen1(false));
   const ref2 = useRef<HTMLDivElement>(null);
@@ -52,121 +65,183 @@ const HeaderCategories = () => {
   const ref3 = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref3, ()=> setIsOpen3(false));
 
-    // type IconProps = {
-    // children:ReactNode;
-    // className?: string;
-    // iconRef?: RefObject<HTMLSpanElement>;
-    // }
-
-    // const Icon: FC<IconProps> = ({
-    // children, iconRef, className}) => (
-    //   <span>{children}</span>
-    //   );
+ 
+  const brandsBySubcategory = (id) =>{
+    getBrandsByCategory(id)
+    .then((res)=>{
+      console.log(res);
+      setBrands(res.data);
+      console.log("Carga de marcas por categoria-subcategoria", brands);
+    })
+    .catch((err) => console.log(err));
+  }
   
-    // const buttonRef = useRef<HTMLButtonElement>(null);
-    // const chevronRef = useRef<HTMLSpanElement>(null);
-    // const [isOpen, setIsOpen] = useState<boolean>(false);
-    // const [menuTop, setMenuTop] = useState<string>();
-    // const [menuRight, setMenuRight] = useState<string>();
+  // const [selectedFiltersRecent, setSelectedFiltersRecent] = useState('');
 
-    // const handleClick = () => {
-    //   const buttonRect = buttonRef?.current?.getBound
-    // }
+
+  // setSelectedFiltersRecent('recent');
+
+  // const productsBySubcategoryWithFilter = (id, sort) => {
+  //   if(sort = 'recent'){
+  //     filterProductsRecents(id)
+  //     .then((res)=>{
+  //       console.log(res);
+  //       setProducts(res.data);
+  //       console.log("Productos filtrados por mas reciente", products);
+  
+  //     })
+  //     .catch((err)=> console.log(err));
+  //   }else{
+  //     subcategorieById(id)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setProducts(res.data);
+  //       console.log("Productos por el id", products);
+  //     })
+  //     .catch((err) => console.log(err));
+  
+  //   }
+  //   };
+    
+  //   useEffect(()=>{
+  //     if(id){
+  //       productsBySubcategoryWithFilter(id, sort);
+  //     }
+  //   }, [id, sort]);
+
+  useEffect(()=>{
+    if(id || brandId){
+      brandsBySubcategory(id);
+    }
+  },[id, brandId]);
+ 
 
   return (
-    <div className='container'>
-      {/* Nombre de la categoria  */}
-      <h3 className='nameCategory'>Celulares y Accesorios</h3>
 
-      <div className='card categoriesCard'>
-          <ul>
-            {/* <li><a href='#'>Marcas</a></li> */}
-            <li>
-              <div ref = {ref1} className={`dropdown ${isOpen1 ? "open" : ""}`}>
-                <button onClick={() => setIsOpen1(!isOpen1)}>
-                  <span>Marcas</span>
-                  {/* <Icon>
-                    {isOpen ? "close" : "expand_more"}
-                  </Icon> */}
-                </button>
-                <div className="menu">
-                  <button>
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                    <span>IPhone</span>
+  <div className='containerHeaderCategorie'>
+    <div className='containerHeaderFull'>
+      <div className='container'>
+        {/* Nombre de la categoria  */}
+        <h3 className='nameCategory'>{subcategory}</h3>
+
+        <div className='card categoriesCard'>
+            <ul>
+              {/* <li><a href='#'>Marcas</a></li> */}
+              <li>
+                <div ref = {ref1} className={`dropdown ${isOpen1 ? "open" : ""}`}>
+                  <button onClick={() => setIsOpen1(!isOpen1)}>
+                    <span>Marcas</span>
+                    {/* <Icon>
+                      {isOpen ? "close" : "expand_more"}
+                    </Icon> */}
                   </button>
-                  <button>
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                    <span>Samsung</span>
-                  </button>
-                  <button>
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                    <span>Huawei</span>
-                  </button>
-                  <button>
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                    <span>Motorola</span>
-                  </button>
-                  <button>
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                    <span>Nokia</span>
-                  </button>
+                  <div className="menu">
+                  {brands.length ? (
+                      brands.map((brand, index) => (
+                        <button key={index}>
+                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={handleAplyFilterByBrand}/>
+                            <span>{brand.name}</span>
+                        </button>
+                        ))
+                        ):(
+                          <span>No hay marcas asociadas</span>
+                        )}
+                    {/* <button>
+                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                      <span>Samsung</span>
+                    </button>
+                    <button>
+                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                      <span>Huawei</span>
+                    </button>
+                    <button>
+                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                      <span>Motorola</span>
+                    </button>
+                    <button>
+                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                      <span>Nokia</span>
+                    </button> */}
+                  </div>
                 </div>
-              </div>
-            </li>
-            {/* <li><a href='#'>Precio</a></li> */}
-            <li>
-            <div ref = {ref2} className={`dropdown ${isOpen2 ? "open" : ""}`}>
-                <button onClick={() => setIsOpen2(!isOpen2)}>
-                  <span>Precio</span>
-                  {/* <Icon>
-                    {isOpen ? "close" : "expand_more"}
-                  </Icon> */}
-                </button>
-                <div className="menu2">
-                  <div className='containerPersonalizado'>
-                    <div className="containerPrecios">
-                      <div className="desde">
-                        Desde
-                        <input type="number" placeholder='Ej: 5000' className='inputPrecio'/>
+              </li>
+              {/* <li><a href='#'>Precio</a></li> */}
+              <li>
+              <div ref = {ref2} className={`dropdown ${isOpen2 ? "open" : ""}`}>
+                  <button onClick={() => setIsOpen2(!isOpen2)}>
+                    <span>Precio</span>
+                    {/* <Icon>
+                      {isOpen ? "close" : "expand_more"}
+                    </Icon> */}
+                  </button>
+                  <div className="menu2">
+                    <div className='containerPersonalizado'>
+                      <div className="containerPrecios">
+                        <div className="desde">
+                          Desde
+                          <input type="number" placeholder='Ej: 5000' 
+                          className='inputPrecio'
+                          value={priceStart}
+                          onChange={handlePriceStartChange}/>
+                        </div>
+                        <h1>-</h1>
+                        <div className="hasta">
+                          Hasta
+                          <input type="number" placeholder='Ej: 8000' 
+                          className='inputPrecio'
+                          value={priceEnd}
+                          onChange={handlePriceEndChange}/>
+                        </div> 
                       </div>
-                      <h1>-</h1>
-                      <div className="hasta">
-                        Hasta
-                        <input type="number" placeholder='Ej: 8000' className='inputPrecio'/>
-                      </div> 
+                      <button className='btnAplicar' onClick={handleApplyRangeFilters}>Aplicar</button>
                     </div>
-                    <button className='btnAplicar'>Aplicar</button>
                   </div>
                 </div>
-              </div>
-            </li>
-            {/* <li><a href='#'>Ordenar por</a></li> */}
-            <li>
-            <div ref = {ref3} className={`dropdown ${isOpen3 ? "open" : ""}`}>
-                <button onClick={() => setIsOpen3(!isOpen3)}>
-                  <span>Ordenar Por</span>
-                  {/* <Icon>
-                    {isOpen ? "close" : "expand_more"}
-                  </Icon> */}
-                </button>
-                <div className="menu3">
-                  <div className="containerPersonalizado2">
-                      <h5>Precio</h5>
-                      <button><strong><h6>Del más bajo al más alto</h6></strong></button>
-                      <button><strong><h6>Del más alto al más bajo</h6></strong></button>
-                      <h5>En orden alfabético</h5>
-                      <button><strong><h6>De la A - Z</h6></strong></button>
-                      <button><strong><h6>De la Z - A</h6></strong></button>
-                      <h5>Otros</h5>
-                      <button><strong><h6>El más reciente</h6></strong></button>
+              </li>
+              {/* <li><a href='#'>Ordenar por</a></li> */}
+              <li>
+              <div ref = {ref3} className={`dropdown ${isOpen3 ? "open" : ""}`}>
+                  <button onClick={() => setIsOpen3(!isOpen3)}>
+                    <span>Ordenar por</span>
+                    {/* <Icon>
+                      {isOpen ? "close" : "expand_more"}
+                    </Icon> */}
+                  </button>
+                  <div className="menu3">
+                    <div className="containerPersonalizado2">
+                      
+                        <h5>Precio</h5>
+                        <button onClick={handleClickFilterLow_High}><strong><h6>Del más bajo al más alto</h6></strong></button>
+                        <button onClick={handleClickFilterHigh_Low}><strong><h6>Del más alto al más bajo</h6></strong></button>
+                        <h5>En orden alfabético</h5>
+                        <button onClick={handleClickFilterA_Z}><strong><h6>De la A - Z</h6></strong></button>
+                        <button onClick={handleClickFilterZ_A}><strong><h6>De la Z - A</h6></strong></button>
+                        <h5>Otros</h5>
+                        <button onClick={handleClickFilterRecent}><strong><h6>El más reciente</h6></strong></button>
+                        
+                         {/* <h5>Precio</h5>
+                        <button onClick={() => onFilterCLick('L-H')}><strong><h6>Del más bajo al más alto</h6></strong></button>
+                        <button onClick={() => onFilterCLick('H-L')}><strong><h6>Del más alto al más bajo</h6></strong></button>
+                        <h5>En orden alfabético</h5>
+                        <button onClick={() => onFilterCLick('A-Z')}><strong><h6>De la A - Z</h6></strong></button>
+                        <button onClick={() => onFilterCLick('Z-A')}><strong><h6>De la Z - A</h6></strong></button>
+                        <h5>Otros</h5>
+                        <button onClick={() => onFilterCLick('recent')}><strong><h6>El más reciente</h6></strong></button>
+                         */}
+                        
+                        
+                    </div>
                   </div>
+                      
                 </div>
-              </div>
-            </li>
-          </ul>
-            
+              </li>
+            </ul>
+              
+        </div>
       </div>
     </div>
+  </div>
+    
   )
 } 
 

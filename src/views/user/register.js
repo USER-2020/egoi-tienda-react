@@ -157,16 +157,16 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
     }
 
     // Validar que el número de teléfono tenga un formato válido
-    const phoneRegex = /^\d{13}$/;
-    if (!phoneRegex.test(phoneNumber)) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Por favor, ingrese un número de teléfono válido. Debe contener minimo 10 dígitos. Mas el indicativo del país.",
-        confirmButtonColor: "#0d6efd",
-      });
-      return;
-    }
+    // const phoneRegex = /^\d{13}$/;
+    // if (!phoneRegex.test(phoneNumber)) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Por favor, ingrese un número de teléfono válido. Debe contener minimo 10 dígitos. Mas el indicativo del país.",
+    //     confirmButtonColor: "#0d6efd",
+    //   });
+    //   return;
+    // }
 
 
     const data = {};
@@ -413,12 +413,7 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                   </ModalBody>
                 </Modal> */}
 
-
               </div>
-
-
-
-
             </Form>
           </div>
         </Col>
