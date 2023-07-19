@@ -455,7 +455,7 @@ function DetailCart() {
           <div className="scroll-modal-content">
             {/* <!-- Contenido del modal --> */}
             <div className="containerCaracteristicaEnvio">
-              <p className="caract">Envio Medellin</p>
+              <p className="caract">Envío Medellín</p>
               <p className="envio">Gratis</p>
             </div>
             <div className="containerCaracteristicaPrecio">
