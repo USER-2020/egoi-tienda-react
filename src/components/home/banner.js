@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Carousel,
     CarouselItem,
@@ -42,6 +43,8 @@ const Banner = (args) => {
     const [tipoFiltro2, setTipoFiltro2] = useState('');
     const [bannerFiltro2, setBannerFiltro2] = useState('');
 
+    const [tag, setTag] = useState("");
+
 
     const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
 
@@ -78,61 +81,12 @@ const Banner = (args) => {
             }).catch((err) => console.log(err));
     }
 
-    // const getInfoByBanner2 = (bannersInfo) => {
-    //     const filteredBanners2 = bannersInfo.filter((banner) => banner.banner_type === "banner_2");
-    //     console.log("filtro 2 aplicado antes de mapeo para bnner 2", filteredBanners2);
-    //     filteredBanners2.map((banner) => {
-    //         banner.banner_data.map((bannerData) => {
-    //             if (bannerData.tipo_filtro === 'category') {
-    //                 console.log("filtro banner 2 categoria");
-    //                 console.log(bannerData.id_filtro);
-    //                 // console.log(bannerData.tipo_filtro);
-    //                 setTipoFiltro2(bannerData.tipo_filtro);
-    //                 setBannerFiltro2(bannerData.id_filtro);
-    //                 subcategorieById(bannerData.id_filtro, offset)
-    //                     .then((res) => {
-    //                         console.log("Informacion de banner 2 category", res.data);
-    //                     })
-    //                     .catch((err) => console.log(err));
-    //             }
+    const getSubcategoriesById = (id, offset, tag) =>
+        subcategorieById(id, offset, tag)
+            .then((res) => {
+                console.log(res.data);
+            }).catch((err) => console.log(err));
 
-    //             if (bannerData.tipo_filtro === 'product') {
-    //                 console.log("filtro banner 2 producto");
-    //                 console.log(bannerData.id_filtro);
-    //                 // console.log(bannerData.tipo_filtro);
-    //                 setTipoFiltro2(bannerData.tipo_filtro);
-    //                 setBannerFiltro2(bannerData.id_filtro);
-    //                 detailProductById(bannerData.id_filtro)
-    //                     .then((res) => {
-    //                         console.log("Detalle del producto del banner 2 product", res.data);
-    //                     })
-    //                     .catch((err) => console.log(err));
-    //             }
-
-    //             if (bannerData.tipo_filtro === 'brand') {
-    //                 console.log("filtro banner 2 brand");
-    //                 console.log(bannerData.id_filtro);
-    //                 // console.log(bannerData.tipo_filtro);
-    //                 setTipoFiltro2(bannerData.tipo_filtro);
-    //                 setBannerFiltro2(bannerData.id_filtro);
-    //                 getProductsByIdBrand(bannerData.id_filtro)
-    //                     .then((res) => {
-    //                         console.log('Detalle del producto por marca desde el banner 2', res.data);
-    //                     })
-    //                     .catch((err) => console.log(err));
-    //             }
-
-    //             if (bannerData.tipo_filtro === "shop") {
-    //                 console.log("filtro banner 2 shop");
-    //                 console.log(bannerData.id_filtro);
-    //                 console.log(bannerData.tipo_filtro);
-    //                 setTipoFiltro2(bannerData.tipo_filtro);
-    //                 setBannerFiltro2(bannerData.id_filtro);
-
-    //             }
-    //         })
-    //     })
-    // }
 
     const getAllCategoriesByBanner = (bannersInfo) => {
         if (bannersInfo) {
@@ -186,19 +140,6 @@ const Banner = (args) => {
 
     };
 
-    // const handleCarouselImageClick = (tipoFiltro2, bannerFiltro2) => {
-    //     if (tipoFiltro === 'category') {
-    //         history.push(`/categories/products/filter/${bannerFiltro1}`);
-    //     } else if (tipoFiltro === 'product') {
-    //         history.push(`/detailsProduct/${bannerFiltro1}/slug`);
-    //     } else if (tipoFiltro === 'brand') {
-    //         history.push(`/brand/filterBrandBanner/${bannerFiltro1}`);
-    //     } else if (tipoFiltro === 'shop') {
-    //         // Acción para el filtro de "shop"
-    //     }
-    // };
-
-
     const showProductsByCategoryBanner = () => {
         if (tipoFiltro === 'category') {
             history.push(`/categories/products/filter/${bannerFiltro1}`);
@@ -224,7 +165,7 @@ const Banner = (args) => {
 
     const showRutes = (itemId, filtro) => {
         console.log("este el id elegido para pasar por rutas", itemId);
-        
+
 
         if (filtro === 'category') {
             history.push(`/categories/products/filter/${itemId}`);
@@ -237,6 +178,29 @@ const Banner = (args) => {
         }
 
     }
+
+    const handleChangueCategoryCelulares = (id, offset, tag)=>{
+    
+        history.push(`/categories/Celulares%20y%20Accesorios/Celulares%20y%20Smartphones/2`)
+    }
+
+    const handleChangueCategoryTV = (id, offset, tag)=>{
+    
+        history.push(`/categories/Tv.%20Audio%20y%20Video/tv%20y%20audio/3`)
+    }
+
+    
+    const handleChangueCategoryComputacion = (id, offset, tag)=>{
+    
+        history.push(`/categories/Computacion/Computación/4`)
+    }
+
+
+    const handleChangueCategoryConsolas = (id, offset, tag) =>{
+        history.push(`/categories/Consolas%20y%20videos%20juegos/Consolas%20y%20videojuegos/5`)
+    }
+
+    
 
     useEffect(() => {
         getAllBanners();
@@ -314,23 +278,25 @@ const Banner = (args) => {
                             ))}
                 </div >
                 <div className='containerCategoriasBanner'>
-                    <a href='#' className='categoriaCards1'>
-                        <div className='Categoriaimg'>
-                            <img
-                                src={celularCategoria}
-                                width={'80px'}
-                            />
+                    
+                        <a href='#' className='categoriaCards1' onClick={()=>handleChangueCategoryCelulares(2, offset, tag==="")}>
+                            <div className='Categoriaimg'>
+                                <img
+                                    src={celularCategoria}
+                                    width={'80px'}
+                                />
 
-                        </div>
-                        <div className='span_flecha'>
-                            <p className='textCategoria'>
-                                Celulares y Accesorios
-                            </p>
-                            <i><img src={arrow} width={'4px'} /></i>
-                        </div>
-                    </a>
+                            </div>
+                            <div className='span_flecha'>
+                                <p className='textCategoria'>
+                                    Celulares y Accesorios
+                                </p>
+                                <i><img src={arrow} width={'4px'} /></i>
+                            </div>
+                        </a>
+                    
 
-                    <a href='#' className='categoriaCards'>
+                    <a href='#' className='categoriaCards' onClick={()=>handleChangueCategoryTV(3,offset, tag==="")}>
                         <div className='Categoriaimg'>
                             <img
                                 src={TV}
@@ -346,7 +312,7 @@ const Banner = (args) => {
                         </div>
                     </a>
 
-                    <a href='#' className='categoriaCards'>
+                    <a href='#' className='categoriaCards' onClick={()=>handleChangueCategoryComputacion(4, offset, tag==="")}>
                         <div className='Categoriaimg'>
                             <img
                                 src={mac}
@@ -362,7 +328,7 @@ const Banner = (args) => {
                         </div>
                     </a>
 
-                    <a href='#' className='categoriaCards'>
+                    <a href='#' className='categoriaCards' onClick={()=>handleChangueCategoryConsolas(5, offset, tag==="")}>
                         <div className='Categoriaimg'>
                             <img
                                 src={ps5}

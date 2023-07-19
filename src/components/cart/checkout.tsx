@@ -1099,7 +1099,7 @@ function AddressCart() {
                   {formattedDiscount}
                 </p>
 
-              ) : (<p className="precio">$ {cuponDescuento}</p>)}
+              ) : (<p className="precio"> {cuponDescuento}</p>)}
             </span>
             <span className="impuesto">
               <p className="def">Impuesto</p>
