@@ -40,7 +40,9 @@ const Header = () => {
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [subcategorias, setSubcategorias] = useState([]);
+  const [subSubCategory, setSubSubCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedSubcategory, setSelectedSubcategory] = useState([]);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [products, setProducts] = useState([]);
@@ -152,6 +154,18 @@ const Header = () => {
     }
   }
 
+  const showSubSubCategory = (e) => {
+    const subcategoryId = e.currentTarget.dataset.subcategoryId;
+    console.log("Este es el id de la sub-subcategoria", subcategoryId);
+    const selectedSubcategory = subcategorias.find((subcategoria) => subcategoria.id == subcategoryId);
+    setSelectedSubcategory(selectedSubcategory);
+    console.log("Esta es la subcategoria seleccionada:", selectedSubcategory);
+
+    if (selectedSubcategory) {
+      setSubSubCategory(selectedSubcategory.childes);
+    }
+  }
+
 
   const handleChangeFormLogin = () => {
 
@@ -227,6 +241,12 @@ const Header = () => {
     }
   }
 
+
+  useEffect(() => {
+    if (subSubCategory.length > 0) {
+      console.log("Datos en subSubCategory:", subSubCategory);
+    }
+  }, [subSubCategory]);
 
 
   useEffect(() => {
@@ -454,11 +474,25 @@ const Header = () => {
             </div>
             <div className="column2">
               <ul>
-                {subcategorias.map((subcategoria) => (
+                {subcategorias.map((subcategoria, index) => (
                   <li key={subcategoria.name}>
                     <Link to={`/categories/${selectedCategory.name}/${subcategoria.name}/${subcategoria.id}`} >
-                      <a href="#">
+                      <a href="#" data-subcategory-id={subcategoria.id} data-subcategory={subcategoria.name} key={index} onMouseOver={showSubSubCategory}>
                         {subcategoria.name}
+                      </a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+            </div>
+            <div className="column3">
+              <ul>
+                {subSubCategory.map((subsubcategoria, index) => (
+                  <li key={subsubcategoria.name}>
+                    <Link to={`/categories/${selectedSubcategory.name}/${subsubcategoria.name}/${subsubcategoria.id}`} >
+                      <a href="#" key={index} >
+                        {subsubcategoria.name}
                       </a>
                     </Link>
                   </li>

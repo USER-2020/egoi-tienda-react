@@ -200,7 +200,7 @@ nav .containerHeader a {
 
  
   position: absolute;
-  width: 500px;
+  width: 550px;
   height: auto;
   text-decoration: none;
   /* left: 280px;
@@ -248,8 +248,13 @@ nav .containerHeader a {
   padding-left: 0;
 }
 
+.menuCategorias > .column3 ul{
+  padding-right: 50px;
+}
+
 .menuCategorias > .column ul li,
-.menuCategorias > .column2 ul li{
+.menuCategorias > .column2 ul li,
+.menuCategorias > .column3 ul li{
   list-style: none;
 }
 
@@ -268,7 +273,8 @@ nav .containerHeader a {
   padding: 5px;
   border-radius: 16px;
 } */
-.menuCategorias > .column2 ul li a:hover{
+.menuCategorias > .column2 ul li a:hover,
+.menuCategorias > .column3 ul li a:hover{
   
   color: #FC5241;
   
