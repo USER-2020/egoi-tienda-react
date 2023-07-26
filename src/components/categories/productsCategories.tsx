@@ -355,14 +355,13 @@ const ProductsCategories = () => {
           
           
         </div>
-        <div className="containerProducts">
-          <div className="containerProductos row gap-3">
+        <div className="containerProducts  d-flex flex-column align-items-center px-0">
+          <div className="containerProductos row gap-4 d-flex justify-content-between ">
             {products && products.products && products.products.map((product, index)=> (
-              
               <a href="#" className='containerCard2 col-12 col-md-2' >
                   <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
                   <Card className="cardProducto1">
-                    <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"10px"}}/>
+                    <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"1rem", objectFit: "cover" }} height="200px"/>
                     <CardBody>
                       <div className="starts">
                         <img src={start} />
@@ -371,7 +370,7 @@ const ProductsCategories = () => {
                         <img src={start_1} />
                         <img src={start_1} />
                       </div>
-                      <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      <CardSubtitle tag="h5" className="text-muted" style={{ lineHeight: "1.2", maxHeight: "2.5em", overflow: "hidden", textOverflow: "ellipsis" }}>
                         {product.name}
                       </CardSubtitle>
                       <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>
@@ -388,7 +387,7 @@ const ProductsCategories = () => {
             Prev Page
           </button>
           <button onClick={handleNextPage}>Next Page</button> */}
-          <div className="pagination">
+          <div className="pagination mt-4">
             {pageButtons}
           </div>
         </div>
