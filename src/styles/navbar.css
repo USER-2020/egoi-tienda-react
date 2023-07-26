@@ -200,7 +200,7 @@ nav .containerHeader a {
 
  
   position: absolute;
-  width: 550px;
+  width: 700px;
   height: auto;
   text-decoration: none;
   /* left: 280px;
@@ -237,20 +237,29 @@ nav .containerHeader a {
 }
 
 .menuCategorias .column {
-  width: 50%;
+  width: 30%;
 }
 
 
 .menuCategorias > .column ul{
   padding-left: 10px;
 }
-.menuCategorias > .column2 ul{
-  padding-left: 0;
+
+.menuCategorias > .column2{
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 50%;
+  width: 70%;
 }
 
-.menuCategorias > .column3 ul{
-  padding-right: 50px;
+.menuCategorias > .column2 ul{
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
 }
+
+
 
 .menuCategorias > .column ul li,
 .menuCategorias > .column2 ul li,
@@ -258,7 +267,8 @@ nav .containerHeader a {
   list-style: none;
 }
 
-.menuCategorias > .column ul li:hover{
+.menuCategorias > .column ul li:hover,
+.menuCategorias > .column ul li.active{
   background-color: #FC5241;
   color: white;
   width: auto;
@@ -279,6 +289,9 @@ nav .containerHeader a {
   color: #FC5241;
   
 }
+
+
+
 .dropdown:hover .menuCategorias {
   opacity: 1;
   visibility: visible;
