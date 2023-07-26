@@ -14,7 +14,6 @@
 }
 
 .containerProducts{
-    padding: 10px;
     height: 100%;
     margin-bottom: 10px;
     
@@ -24,8 +23,7 @@
     overflow-y: hidden;
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    
+    flex-wrap: wrap;
 }
 
 .containerProductsIndex .menuBusqueda{
@@ -53,7 +51,7 @@
 }
 
 .containerCard2{
-    width: 198px;
+    width: 25%;
     height: 320px;
 }
 
@@ -87,7 +85,7 @@ input[type="radio"]:checked {
     }
 
     .containerProductCategorie .containerCard2 {
-        width: calc(50% - 10px);
+        width: calc(80% - 10px);
         /* max-width: 300px; */
         /* width: 200px; */
         margin-bottom: 20px;
