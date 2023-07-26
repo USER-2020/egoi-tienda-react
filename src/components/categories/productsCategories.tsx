@@ -335,11 +335,11 @@ const ProductsCategories = () => {
 
                     />
   {/* <HeaderCategories onFilterCLick={handleFilterClick}/> */}
-  <div className='containerProductCategorie'>
+  <div className='containerProductCategorie '>
       <div className='container'>
-      <div className="containerProductsIndex">
+      <div className="containerProductsIndex ">
         <div className="menuBusqueda">
-          <div className="filtros">
+          <div className="filtros me-2">
             <input type="radio" className="form-check-input" onClick={productsWithFilterMostSold}/> 
             Productos más vendidos
           </div>
@@ -355,10 +355,10 @@ const ProductsCategories = () => {
           
           
         </div>
-        <div className="containerProducts  d-flex flex-column align-items-center px-0">
-          <div className="containerProductos row gap-4 d-flex justify-content-between ">
+        <div className="containerProducts  d-flex flex-column align-items-center  px-0 ">
+          <div className="containerProductos row gap-4 d-flex justify-content-between">
             {products && products.products && products.products.map((product, index)=> (
-              <a href="#" className='containerCard2 col-12 col-md-2' >
+              <a href="#" className='containerCard2 col-12 col-md-2 px-0 ' >
                   <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
                   <Card className="cardProducto1">
                     <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"1rem", objectFit: "cover" }} height="200px"/>
