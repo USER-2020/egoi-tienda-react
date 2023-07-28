@@ -26,6 +26,8 @@ import HeaderCategories from './headerCategories.tsx';
 import { getProductsByIdBrand } from '../../services/brands';
 import HeaderResponsiveCategorie from './headerResponsiveCategorie.tsx';
 import {AppContext} from '../../AppContext';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -69,7 +71,13 @@ const ProductsCategories = () => {
   // const handleNextPage = () => {
   //   setOffset(offset + PAGE_SIZE);
   // };
-  
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    scrollToTop();
+  }, [currentPage]);
 
   
 
@@ -242,19 +250,26 @@ const ProductsCategories = () => {
   }
 
   const pageButtons = [];
-  const totalPages = Math.ceil(totalResults / 12);
+  const totalPages = Math.ceil(totalResults / 30);
   for (let i = 0; i < totalPages; i++) {
-    const isActive = i === offset / 12;
+    const isActive = i === currentPage -1;
     pageButtons.push(
       <button
         key={i}
-        onClick={() => handlePageClick(i + 1)}
-        className={isActive ? 'active' : ''}
-      >
+        onClick={() => {
+          setCurrentPage(i + 1) 
+          handlePageClick(i * 30)
+         }
+        }
+        disabled={isActive}
+        className={isActive ? "d-flex justify-content-center align-items-center btn btn-primary rounded-circle mx-1" : "btn  rounded-circle mx-1 d-flex justify-content-center align-items-center"}
+        style={{width: "30px", height: "30px" }}
+     >
         {i + 1}
       </button>
     );
   }
+  console.log('page', currentPage)
 
   function handlePageClick(offset) {
     // const totalPages = Math.ceil(totalResults / 12);
@@ -304,7 +319,6 @@ const ProductsCategories = () => {
   //   setCurrentSubcategoryId(id);
   // };
 
-  
   return (
 
     
@@ -335,11 +349,11 @@ const ProductsCategories = () => {
 
                     />
   {/* <HeaderCategories onFilterCLick={handleFilterClick}/> */}
-  <div className='containerProductCategorie '>
+  <div className='containerProductCategorie' >
       <div className='container'>
-      <div className="containerProductsIndex ">
-        <div className="menuBusqueda">
-          <div className="filtros me-2">
+      <div className="containerProductsIndex  d-flex ">
+        <div className="menuBusqueda w-30 ">
+          <div className="filtros">
             <input type="radio" className="form-check-input" onClick={productsWithFilterMostSold}/> 
             Productos más vendidos
           </div>
@@ -355,13 +369,15 @@ const ProductsCategories = () => {
           
           
         </div>
-        <div className="containerProducts  d-flex flex-column align-items-center  px-0 ">
-          <div className="containerProductos row gap-4 d-flex justify-content-between">
+        <div className="containerProducts d-flex flex-column align-items-center align-items-md-end w-100">
+          <div className="containerProductos row w-100">
             {products && products.products && products.products.map((product, index)=> (
-              <a href="#" className='containerCard2 col-12 col-md-2 px-0 ' >
+              <div key={product.id} className="col-md-4 col-6 mb-4">
+              <a href="#" className='containerCard2  ' >
                   <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
-                  <Card className="cardProducto1">
-                    <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"1rem", objectFit: "cover" }} height="200px"/>
+                  <Card className="">
+                    <CardImg top src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"1rem", objectFit: "cover" }} height={300} className='d-none d-md-block'/>
+                    <CardImg top src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"1rem", objectFit: "cover" }} height={150} className='d-block d-md-none'/>
                     <CardBody>
                       <div className="starts">
                         <img src={start} />
@@ -378,7 +394,7 @@ const ProductsCategories = () => {
                   </Card>
                 </Link>
                 </a>
-              
+              </div>
               ))}
             
             
@@ -387,8 +403,62 @@ const ProductsCategories = () => {
             Prev Page
           </button>
           <button onClick={handleNextPage}>Next Page</button> */}
-          <div className="pagination mt-4">
-            {pageButtons}
+          <div className="d-flex align-items-center paginaton mt-4 align-self-center">
+          {
+              currentPage !== 1 && (
+                <button
+                onClick={() => {
+                  setCurrentPage(1);
+                  handlePageClick(0);
+                }}
+                className="btn mx-1"
+              >
+                <FontAwesomeIcon icon={faChevronLeft} /><FontAwesomeIcon icon={faChevronLeft} />
+              </button>
+              )
+              
+            }
+            {
+              currentPage !== 1 && (
+                <button
+                onClick={() => {
+                  setCurrentPage(currentPage - 1);
+                  handlePageClick(offset - 30);
+                }}
+                className="btn mx-1"
+              >
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </button>
+              )
+            }
+
+              {pageButtons}
+              {
+                currentPage !== totalPages && totalPages !== 0 && (
+                  <button
+                  onClick={() => {
+                    setCurrentPage(currentPage + 1);
+                    handlePageClick(offset + 30);
+                  }}
+                  className="btn mx-1"
+                >
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+                )
+              }
+              {
+                currentPage !== totalPages && totalPages !== 2 && totalPages!==0 && (
+                  <button
+                  onClick={() => {
+                    setCurrentPage(totalPages);
+                    handlePageClick((totalPages - 1) * 30);
+                  }}
+                  className="btn mx-1"
+                >
+                  <FontAwesomeIcon icon={faChevronRight} /><FontAwesomeIcon icon={faChevronRight} />
+                </button>
+                )
+              }
           </div>
         </div>
       </div>
