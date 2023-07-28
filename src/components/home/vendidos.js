@@ -163,13 +163,13 @@ const Vendidos = ({ bannersInfo }) => {
                             <div className='containerHot' ref={containerRef2}>
                                 <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
                                     <div className='masVendidosCards' key={index === 0}>
-                                        <div className='headerImg'>
+                                        {/* <div className='headerImg'>
                                             <img src={logoSamsung} width={'200px'} />
-                                        </div>
-                                        <div className='centerImg'>
-                                            <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} width={'134px'} alt={itemBanner.banner_data[0].imagen} />
-                                        </div>
-                                        <a href='#' className='btnVendidos'>
+                                        </div> */}
+                                        
+                                            <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} width={'100%'} alt={itemBanner.banner_data[0].imagen} />
+                                        
+                                        {/* <a href='#' className='btnVendidos'>
                                             Ver Tienda
                                         </a>
                                         <div className='footerSpanText'>
@@ -179,18 +179,18 @@ const Vendidos = ({ bannersInfo }) => {
                                             <span className='spanText2'>
                                                 50% Descuento
                                             </span>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </a>
                                 <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
                                     <div className='masVendidosCards' key={index === 1}>
-                                        <div className='headerImg'>
+                                        {/* <div className='headerImg'>
                                             <img src={logoSony} width={'200px'} />
-                                        </div>
-                                        <div className='centerImg'>
-                                            <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} width={'216px'} alt={itemBanner.banner_data[1].imagen} />
-                                        </div>
-                                        <a href='#' className='btnVendidos'>
+                                        </div> */}
+                                        
+                                            <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} width={'100%'} alt={itemBanner.banner_data[1].imagen} />
+                                        
+                                        {/* <a href='#' className='btnVendidos'>
                                             Ver Tienda
                                         </a>
                                         <div className='footerSpanText'>
@@ -200,18 +200,18 @@ const Vendidos = ({ bannersInfo }) => {
                                             <span className='spanText2'>
                                                 50% Descuento
                                             </span>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </a>
                                 <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
                                     <div className='masVendidosCards' key={index === 2}>
-                                        <div className='headerImg'>
+                                        {/* <div className='headerImg'>
                                             <img src={logoHaceb} width={'200px'} />
-                                        </div>
-                                        <div className='centerImg'>
-                                            <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} width={'216px'} alt={itemBanner.banner_data[2].imagen} />
-                                        </div>
-                                        <a href='#' className='btnVendidos'>
+                                        </div> */}
+                                        
+                                            <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} width={'100%'} alt={itemBanner.banner_data[2].imagen} />
+                                        
+                                        {/* <a href='#' className='btnVendidos'>
                                             Ver Tienda
                                         </a>
                                         <div className='footerSpanText'>
@@ -221,18 +221,18 @@ const Vendidos = ({ bannersInfo }) => {
                                             <span className='spanText2'>
                                                 50% Descuento
                                             </span>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </a>
                                 <a href="#" onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro)}>
                                     <div className='masVendidosCards' key={index === 3}>
-                                        <div className='headerImg'>
+                                        {/* <div className='headerImg'>
                                             <img src={logoAsus} width={'200px'} />
-                                        </div>
-                                        <div className='centerImg'>
-                                            <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} width={'216px'} alt={itemBanner.banner_data[3].imagen} />
-                                        </div>
-                                        <a href='#' className='btnVendidos'>
+                                        </div> */}
+                                        
+                                            <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} width={'100%'} alt={itemBanner.banner_data[3].imagen} />
+                                        
+                                        {/* <a href='#' className='btnVendidos'>
                                             Ver Tienda
                                         </a>
                                         <div className='footerSpanText'>
@@ -242,7 +242,7 @@ const Vendidos = ({ bannersInfo }) => {
                                             <span className='spanText2'>
                                                 50% Descuento
                                             </span>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </a>
                             </div>

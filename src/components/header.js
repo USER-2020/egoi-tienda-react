@@ -28,6 +28,7 @@ import { useContext } from 'react';
 
 import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
+import { allProductsCart } from "../services/cart";
 
 const Header = () => {
 
@@ -48,11 +49,14 @@ const Header = () => {
   const [products, setProducts] = useState([]);
   const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
 
+  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
   const { id } = useParams();
 
   const currenUser = getCurrentUser();
+  // const token = currenUser.token;
 
 
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
@@ -294,6 +298,17 @@ const Header = () => {
 
     // }
     handleLogin();
+    if(currenUser){
+      const token  = currenUser.token;
+      allProductsCart(token)
+      .then((res)=>{
+        const productsOncart = res.data;
+        console.log("Respuesta de productos del carrito de compras", productsOncart);
+        const numberOfProducts = productsOncart.length;
+        console.log("Cantidad de productos en el carrito", numberOfProducts);
+        setCantProductsOnCart(numberOfProducts);
+      }).catch((err)=>console.log(err));
+    }
 
 
   }, [currenUser, isLoggedIn]);
@@ -405,9 +420,6 @@ const Header = () => {
           </div>
 
           {/* Favorito icono  */}
-
-
-
           <a href="#" onClick={handleFavList}>
             <svg
               width="40"
@@ -425,8 +437,10 @@ const Header = () => {
             </svg>
           </a>
 
+
           {/* Carrito de compras  */}
-          <a href="#" onClick={() => { goToDetailCart() }}>
+          <a href="#" onClick={() => { goToDetailCart() }}
+          style={{textDecoration:'none', color:'black'}}>
             <svg
               width="40"
               height="40"
@@ -441,6 +455,9 @@ const Header = () => {
                 fill="#171523"
               />
             </svg>
+            {currenUser && cantProductsOnCart !== undefined ? (
+              <i>{cantProductsOnCart}</i>           
+            ): (<i></i>)}
           </a>
         </div>
       </div>

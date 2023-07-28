@@ -27,6 +27,7 @@ const Promociones = ({ bannersInfo }) => {
   const [productos, setProductos] = useState([]);
 
   const containerRef = useRef(null);
+  const containerRef2 = useRef(null);
 
   const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
   const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
@@ -81,6 +82,28 @@ const Promociones = ({ bannersInfo }) => {
     }, 300);
   };
 
+  const handleScrollLeft2 = () => {
+    if (containerRef2.current) {
+      containerRef2.current.scrollLeft -= 322; // Ajusta el valor según tus necesidades
+    }
+    const leftButton = document.querySelector('.scroll-button.left');
+    leftButton.classList.add('animate-left');
+    setTimeout(() => {
+      leftButton.classList.remove('animate-left');
+    }, 300);
+  };
+
+  const handleScrollRight2 = () => {
+    if (containerRef2.current) {
+      containerRef2.current.scrollLeft += 322; // Ajusta el valor según tus necesidades
+    }
+    const rightButton = document.querySelector('.scroll-button.right');
+    rightButton.classList.add('animate-right');
+    setTimeout(() => {
+      rightButton.classList.remove('animate-right');
+    }, 300);
+  };
+
   useEffect(() => {
     ProductosDescuentos();
   }, []);
@@ -98,7 +121,10 @@ const Promociones = ({ bannersInfo }) => {
         </div>
       </div>
 
-      <div className="containerProductos">
+      <div className="containerProductos" ref={containerRef2}>
+        {/* <button className="scroll-button left" onClick={handleScrollLeft2} onMouseOver={handleScrollLeft2}>
+          &#8249;
+        </button> */}
         {productos.map((product, index) => (
           <a href="#" className="containerCard2" key={index}>
             <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
@@ -122,6 +148,9 @@ const Promociones = ({ bannersInfo }) => {
             </Link>
           </a>
         ))}
+        {/* <button className="scroll-button right" onClick={handleScrollRight2} onMouseOver={handleScrollRight2}>
+          &#8250;
+        </button> */}
       </div>
       <div className="cardContainer2">
         <button className="scroll-button left" onClick={handleScrollLeft} onMouseOver={handleScrollLeft}>
@@ -134,38 +163,16 @@ const Promociones = ({ bannersInfo }) => {
               <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
                 <div className="contenedor1" key={index === 0}>
                   <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
-                  <div className="header">
-                    <p>Electrobelleza</p>
-                    <h4>40% dcto*</h4>
-                  </div>
-                  <div className="footer">
-                    <a href="#">Comprar ahora</a>
-                    <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
-                  </div>
                 </div>
               </a>
               <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
                 <div className="contenedor1" key={index === 1}>
                   <img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
-                  <div className="header">
-                    <p>Electrodomésticos</p>
-                    <h4>70% dcto*</h4>
-                  </div>
-                  <div className="footer">
-                    <a href="#">Comprar ahora</a>
-                    <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
-                  </div>
                 </div>
               </a>
               <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
                 <div className="contenedor2" key={index === 2}>
                   <img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
-                  <div className="left_">
-                    <h5>Portatiles y accesorios</h5>
-                    <h4>50% dcto*</h4>
-                    <a href="#">Comprar ahora</a>
-                    <p>Hasta el 5% de descuento del 1 al 15 de Marzo del 2023</p>
-                  </div>
                 </div>
               </a>
             </div>

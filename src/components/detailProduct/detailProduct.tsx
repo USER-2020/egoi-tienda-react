@@ -10,7 +10,8 @@ import {
     CarouselControl,
     CarouselIndicators,
     CarouselCaption,
-    UncontrolledCarousel
+    UncontrolledCarousel,
+    Input
 } from 'reactstrap';
 import iphone from '../../assets/iphoneMuestra.png';
 import start from '../../assets/egoi_icons/star-fill.svg';
@@ -57,6 +58,9 @@ function DetailProduct() {
 
     const [infoDescription, setInfoDescription] = useState('');
     const [formattedDescription, setFormattedDescription] = useState('')
+
+    /* Colores seleccion */
+    const [selectedOption, setSelectedOption] = useState('');
 
 
     const { id } = useParams();
@@ -173,6 +177,10 @@ function DetailProduct() {
 
     const closeModalCart = () => {
         setModalViewCart(false);
+    };
+
+    const handleSelectChange = (event) => {
+        setSelectedOption(event.target.value);
     };
 
     const handleChangeFormLogin = () => {
@@ -405,15 +413,24 @@ function DetailProduct() {
                     {detailProducts.variation && detailProducts.variation.length > 0 && (
                         <div className="containerVariacionesResponsiveColores">
 
-                            <p>Color: </p>
-                            {detailProducts.variation && detailProducts.variation.map((colors, index) => (
-                                <a href="#" key={index}>
+                            <p>Colores</p>
 
-                                    {colors.type}
-
-
-                                </a>
-                            ))}
+                            {detailProducts.variation?.length > 3 ? (
+                                <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>
+                                    <option value="">Seleccionar</option>
+                                    {detailProducts.variation.map((colors, index) => (
+                                        <option key={index} value={colors.type}>
+                                            {colors.type}
+                                        </option>
+                                    ))}
+                                </Input>
+                            ) : (
+                                detailProducts.variation?.map((colors, index) => (
+                                    <a href="#" key={index}>
+                                        {colors.type}
+                                    </a>
+                                ))
+                            )}
                         </div>
                     )}
                     <div className="containerResponsiveDescription">
@@ -456,16 +473,22 @@ function DetailProduct() {
                     <div className="containerColorsProduct">
                         <p>Colores</p>
 
-                        {detailProducts.variation && detailProducts.variation.map((colors, index) => (
-
-                            <a href="#" key={index}>
-
-                                {colors.type}
-
-
-                            </a>
-                        ))}
-
+                        {detailProducts.variation?.length > 3 ? (
+                            <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>
+                                <option value="">Seleccionar</option>
+                                {detailProducts.variation.map((colors, index) => (
+                                    <option key={index} value={colors.type}>
+                                        {colors.type}
+                                    </option>
+                                ))}
+                            </Input>
+                        ) : (
+                            detailProducts.variation?.map((colors, index) => (
+                                <a href="#" key={index}>
+                                    {colors.type}
+                                </a>
+                            ))
+                        )}
                     </div>
                     <div className="cant">
                         <p>Cantidad</p>

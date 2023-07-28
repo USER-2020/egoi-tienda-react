@@ -38,8 +38,8 @@ const Bannerdown = ({ bannersInfo }) => {
                 .map((itemBanner, index) => (
                     <a href='#' onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag)}>
                         <div className='container1'>
-                            <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} className='bannerDownImg' />
-                            <img src={bannerDown2} className='bannerDownImg2' />
+                            <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen_desk} className='bannerDownImg' />
+                            <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} className='bannerDownImg2' />
                             
                         </div>
                     </a>

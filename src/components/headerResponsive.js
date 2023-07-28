@@ -38,6 +38,7 @@ import { getAllBrands } from "../services/brands";
 import { allCategories } from "../services/categories";
 import { getCurrentUser, setCurrentUser } from '../helpers/Utils';
 import { myorders } from "../constants/defaultValues";
+import { allProductsCart } from "../services/cart";
 
 
 function HeaderResponsive() {
@@ -52,6 +53,7 @@ function HeaderResponsive() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
+  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
   const offcanvasRef = useRef(null);
@@ -174,9 +176,23 @@ function HeaderResponsive() {
   //   }
   // }, [isOffcanvasOpen]);
 
-  const handleAdminUser = () =>{
+  const handleAdminUser = () => {
     history.push(`${myorders}`);
   }
+
+  useEffect(() => {
+    if (currenUser) {
+      const token = currenUser.token;
+      allProductsCart(token)
+        .then((res) => {
+          const productsOncart = res.data;
+          console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
+          const numberOfProducts = productsOncart.length;
+          console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
+          setCantProductsOnCart(numberOfProducts);
+        }).catch((err) => console.log(err));
+    }
+  }, [currenUser, isLoggedIn]);
 
 
   useEffect(() => {
@@ -213,7 +229,8 @@ function HeaderResponsive() {
                 onKeyPress={handleEnterPress} />
             </InputGroup>
           </div>
-          <a href="#" onClick={() => { goToDetailCart() }}>
+          <a href="#" onClick={() => { goToDetailCart() }}
+          style={{textDecoration:'none', color:'black'}}>
             <svg
               width="40"
               height="40"
@@ -228,6 +245,9 @@ function HeaderResponsive() {
                 fill="#171523"
               />
             </svg>
+            {currenUser && cantProductsOnCart !== undefined ? (
+              <i>{cantProductsOnCart}</i>
+            ) : (<i></i>)}
           </a>
 
           <div ref={offcanvasRef} class={`offcanvas offcanvas-end ${isOffcanvasVisible ? 'show' : ''}`} tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -396,12 +416,12 @@ function HeaderResponsive() {
                 {currenUser ? (
                   <li class='nav-item pers'>
                     <a href="#" onClick={handleAdminUser}>
-                      <svg xmlns="http://www.w3.org/2000/svg" 
-                      width="40" 
-                      height="40" 
-                      fill="currentColor"
-                      class="bi bi-person-gear" 
-                      viewBox="0 0 20 20">
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        fill="currentColor"
+                        class="bi bi-person-gear"
+                        viewBox="0 0 20 20">
                         <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
                       </svg>
                       Administra tu cuenta
