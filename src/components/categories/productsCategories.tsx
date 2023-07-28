@@ -261,9 +261,8 @@ const ProductsCategories = () => {
           handlePageClick(i * 30)
          }
         }
-        disabled={isActive}
-        className={isActive ? "d-flex justify-content-center align-items-center btn btn-primary rounded-circle mx-1" : "btn  rounded-circle mx-1 d-flex justify-content-center align-items-center"}
-        style={{width: "30px", height: "30px" }}
+        className={isActive ? "selectedPage d-flex justify-content-center align-items-center btn rounded-circle mx-1" : "unSelectedPage btn  rounded-circle mx-1 d-flex justify-content-center align-items-center bg-none bg-#FC5241"}
+        style={{width: "30px", height: "30px"}}
      >
         {i + 1}
       </button>
@@ -319,6 +318,8 @@ const ProductsCategories = () => {
   //   setCurrentSubcategoryId(id);
   // };
 
+  console.log("Estos son los productos", products);
+
   return (
 
     
@@ -369,15 +370,25 @@ const ProductsCategories = () => {
           
           
         </div>
-        <div className="containerProducts d-flex flex-column align-items-center align-items-md-end w-100">
-          <div className="containerProductos row w-100">
+        <div className="containerProducts-categories d-flex flex-column align-items-center align-items-md-end w-100">
+          <div className="containerProducts-categories row">
             {products && products.products && products.products.map((product, index)=> (
               <div key={product.id} className="col-md-4 col-6 mb-4">
               <a href="#" className='containerCard2  ' >
                   <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
-                  <Card className="">
-                    <CardImg top src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"1rem", objectFit: "cover" }} height={300} className='d-none d-md-block'/>
-                    <CardImg top src={baseUrlImage + product.images[0]} alt={product.name} style={{padding:"1rem", objectFit: "cover" }} height={150} className='d-block d-md-none'/>
+                  <Card className='cardProducto1'>
+                  <CardImg
+                    src={baseUrlImage + product.images[0]}
+                    alt={product.name}
+                    className="producto-imagen-mobile"
+                    style={{ padding: "1px", objectFit: "contain", height: 150 }}
+                  />
+                  <CardImg
+                    src={baseUrlImage + product.images[0]}
+                    alt={product.name}
+                    className="producto-imagen-desktop"
+                    style={{ padding: "1rem", objectFit: "contain", height: 300 }}
+                  />
                     <CardBody>
                       <div className="starts">
                         <img src={start} />
@@ -411,9 +422,9 @@ const ProductsCategories = () => {
                   setCurrentPage(1);
                   handlePageClick(0);
                 }}
-                className="btn mx-1"
+                className="paginator-icon btn mx-1"
               >
-                <FontAwesomeIcon icon={faChevronLeft} /><FontAwesomeIcon icon={faChevronLeft} />
+                <FontAwesomeIcon icon={faChevronLeft} color='#FC5241'/><FontAwesomeIcon icon={faChevronLeft} color='#FC5241'/>
               </button>
               )
               
@@ -427,7 +438,7 @@ const ProductsCategories = () => {
                 }}
                 className="btn mx-1"
               >
-                <FontAwesomeIcon icon={faChevronLeft} />
+                <FontAwesomeIcon icon={faChevronLeft} color='#FC5241' />
               </button>
               )
             }
@@ -442,7 +453,7 @@ const ProductsCategories = () => {
                   }}
                   className="btn mx-1"
                 >
-                  <FontAwesomeIcon icon={faChevronRight} />
+                  <FontAwesomeIcon icon={faChevronRight} color='#FC5241' />
                 </button>
                 )
               }
@@ -455,7 +466,7 @@ const ProductsCategories = () => {
                   }}
                   className="btn mx-1"
                 >
-                  <FontAwesomeIcon icon={faChevronRight} /><FontAwesomeIcon icon={faChevronRight} />
+                  <FontAwesomeIcon icon={faChevronRight} color='#FC5241' /><FontAwesomeIcon icon={faChevronRight} color='#FC5241' />
                 </button>
                 )
               }
