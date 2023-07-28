@@ -230,7 +230,7 @@ const Banner = (args) => {
                             .map((banner, index) => (
                                 <div key={index}>
                                     <a href='#' onClick={() => showProductsByCategoryBanner()}>
-                                        <img src={baseUrlImageBanners + banner.banner_data[0].imagen} width={'100%'} height={'124px'} className='banner_1' />
+                                        <img src={baseUrlImageBanners + banner.banner_data[0].imagen_desk} width={'100%'} height={'124px'} className='banner_1' />
                                     </a>
                                     <a href='#' onClick={() => showProductsByCategoryBanner()}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen} width={'100%'} height={'124px'} className='banner_res_2' />

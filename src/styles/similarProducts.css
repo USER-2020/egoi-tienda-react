@@ -97,3 +97,12 @@
     padding: 0 20px;
 }
 
+
+@media (max-width: 768px){
+
+    .containerSimilarProduct .containerProductos .scroll-button .left,
+    .containerSimilarProduct .containerProductos .scroll-button .right{
+        display: none;
+    }
+}
+

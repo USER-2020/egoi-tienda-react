@@ -1,13 +1,13 @@
-.container{
+.container {
     width: 100%;
     height: auto;
     margin-top: 48px;
     background-color: #F5F5F5;
     margin-bottom: 32px;
-      
+
 }
 
-.containerDetalle{
+.containerDetalle {
     display: flex;
     flex-direction: row;
     gap: 24px;
@@ -15,7 +15,7 @@
 
 /* Estilos de activacion de 
 la imagen seleccionda */
-.activeMiniature{
+.activeMiniature {
     width: 80px;
     height: 80px;
     padding: 2px;
@@ -23,52 +23,55 @@ la imagen seleccionda */
     border-radius: 8px;
     cursor: pointer;
     opacity: 0.5;
-    
+
 }
 
-.containerIzq{
+.containerIzq {
     width: 50%;
     height: auto;
 }
 
-.cardImgProduct{
+.cardImgProduct {
     display: block;
     justify-content: center;
     text-align: center;
     border-radius: 32px;
 }
-.containerImgTop{
-    padding: 50px;    
+
+.containerImgTop {
+    padding: 50px;
 }
-.containerImgTop img{
+
+.containerImgTop img {
     width: 100%;
 }
-.containerImgMiniature{
+
+.containerImgMiniature {
     display: flex;
     justify-content: center;
     padding: 24px;
 }
 
-.containerImgMiniature img{
+.containerImgMiniature img {
     width: 80px;
     height: 80px;
     padding: 5px;
-    
-    
-    
+
+
+
 }
 
-.containerImgMiniature img:hover{
+.containerImgMiniature img:hover {
     width: 80px;
     height: 80px;
     padding: 2px;
     border: 1px solid #FC5241;
     border-radius: 8px;
     cursor: pointer;
-    
+
 }
 
-.containerDer{
+.containerDer {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -76,39 +79,39 @@ la imagen seleccionda */
 
 }
 
-.containerCharacteristicTop{
+.containerCharacteristicTop {
     display: flex;
     flex-direction: row;
     gap: 25px;
-    
+
 }
 
 
-.containerCharacteristicTop .characteristic{
+.containerCharacteristicTop .characteristic {
     width: 100px;
     /* border-left: 1px solid gray; */
     padding: 2px;
     color: #74737B;
-    
+
 }
 
-.containerNameProduct h4{
+.containerNameProduct h4 {
     font-size: 40px;
     width: 400px;
     color: #74737B;
     font-weight: 700;
-    
+
 }
 
-.containerNameProduct h5{
+.containerNameProduct h5 {
     font-size: 32px;
     font-weight: 700;
-    
+
 }
 
-.containerColorsProduct{
+.containerColorsProduct {
     display: flex;
-    background-color:rgba(162, 161, 167, 0.16);
+    background-color: rgba(162, 161, 167, 0.16);
     width: 300px;
     height: 50px;
     flex-direction: row;
@@ -116,12 +119,18 @@ la imagen seleccionda */
     align-items: center;
     padding: 16px;
     border-radius: 32px;
-    
+
 }
 
-.containerColorsProduct p ,
-.cant p, .opciones a p
-{
+.containerColorsProduct .inputStyleVariation {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.containerColorsProduct p,
+.cant p,
+.opciones a p {
     margin: 0;
 }
 
@@ -132,7 +141,7 @@ la imagen seleccionda */
     flex-direction: row;
     gap: 4px;
     align-items: center;
-    
+
 }
 
 .containerColorsProduct a:hover {
@@ -140,12 +149,12 @@ la imagen seleccionda */
     border-radius: 32px;
     color: #FC5241;
     padding: 2px;
-    
+
 }
 
-.cant{
+.cant {
     display: flex;
-    background-color:rgba(162, 161, 167, 0.16);
+    background-color: rgba(162, 161, 167, 0.16);
     width: 150px;
     height: 50px;
     flex-direction: row;
@@ -155,20 +164,20 @@ la imagen seleccionda */
     border-radius: 32px;
 }
 
-.cant input[type="number"]{
+.cant input[type="number"] {
     width: 40px;
     background-color: transparent;
     border: none;
     border-radius: 32px;
 }
 
-.opciones{
+.opciones {
     display: flex;
     flex-direction: row;
     gap: 24px;
 }
 
-.opciones a{
+.opciones a {
     display: flex;
     text-decoration: none;
     width: 224px;
@@ -178,7 +187,7 @@ la imagen seleccionda */
     padding: 16px;
 }
 
-.opciones .addCart{
+.opciones .addCart {
     color: #FC5241;
     font-size: 14px;
     font-weight: 700;
@@ -187,7 +196,7 @@ la imagen seleccionda */
     justify-content: center;
 }
 
-.opciones .buyNow{
+.opciones .buyNow {
     color: white;
     background-color: #FC5241;
     font-size: 14px;
@@ -196,7 +205,7 @@ la imagen seleccionda */
     border-radius: 32px;
 }
 
-.opciones .fav{
+.opciones .fav {
     /* padding: 16px; */
     width: auto;
     border: 1px solid #FC5241;
@@ -204,101 +213,109 @@ la imagen seleccionda */
     color: #FC5241;
 }
 
-.opciones .fav .svgFav path{
-   fill: #FC5241;
+.opciones .fav .svgFav path {
+    fill: #FC5241;
 }
 
-.containerDescription{
+.containerDescription {
     width: 768px;
     margin-top: 77px;
 }
 
-.containerDescription h5{
+.containerDescription h5 {
     font-size: 16px;
     color: #FC5241;
 }
 
-.opinions{
+.opinions {
     display: flex;
     flex-direction: row;
     gap: 146px;
     margin-top: 40px;
 }
-.raitingLeft{
+
+.raitingLeft {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
-.raiting{
+
+.raiting {
     display: flex;
     flex-direction: row;
     gap: 16px;
 
 }
-.cardRaiting{
+
+.cardRaiting {
     width: 75px;
     border-radius: 16px;
-    
+
 }
-.cardRaiting .card-body{
+
+.cardRaiting .card-body {
     padding: 11px;
     justify-content: center;
     display: flex;
 }
 
-.raitingStarts{
+.raitingStarts {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
-.raitingStarts img{
+.raitingStarts img {
     width: 17px;
 }
 
-.nrOpinions h6{
+.nrOpinions h6 {
     font-size: 14px;
 }
 
-.stats{
+.stats {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 /* Estadisticas con barra de opiniones */
-.stats_raiting{
+.stats_raiting {
     display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    
+
 }
 
-.stats_raiting img{
+.stats_raiting img {
     width: 16px;
     height: 16px;
-    
+
 }
 
-.stats_raiting .progress{
+.stats_raiting .progress {
     width: 140px;
     height: 4px;
-    
+
 }
-.stats_raiting .progress-bar{
+
+.stats_raiting .progress-bar {
     background-color: #FC5241;
 }
-.stats_raiting h5, h6{
+
+.stats_raiting h5,
+h6 {
     margin: 0;
 }
 
-.stats_raiting h5{
+.stats_raiting h5 {
     color: #FC5241;
     font-weight: 400;
     font-size: 12px;
 }
-.stats_raiting h6{
+
+.stats_raiting h6 {
     color: black;
     font-weight: 400;
     font-size: 12px;
@@ -306,81 +323,88 @@ la imagen seleccionda */
 
 
 /* Estadisiticas con barra gris */
-.stats_raiting_gray{
+.stats_raiting_gray {
     display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    
+
 }
 
-.stats_raiting_gray img{
+.stats_raiting_gray img {
     width: 16px;
     height: 16px;
-    
+
 }
 
-.stats_raiting_gray .progress{
+.stats_raiting_gray .progress {
     width: 140px;
     height: 4px;
-    
+
 }
-.stats_raiting_gray .progress-bar{
+
+.stats_raiting_gray .progress-bar {
     background-color: rgba(162, 161, 167, 0.16);
 }
-.stats_raiting_gray h5, h6{
+
+.stats_raiting_gray h5,
+h6 {
     margin: 0;
 }
 
-.stats_raiting_gray h5{
+.stats_raiting_gray h5 {
     color: #FC5241;
     font-weight: 400;
     font-size: 12px;
 }
-.stats_raiting_gray h6{
+
+.stats_raiting_gray h6 {
     color: black;
     font-weight: 400;
     font-size: 12px;
 }
 
-.comments{
+.comments {
     display: flex;
     flex-direction: column;
     gap: 8px;
     width: 741px;
 }
 
-.comment{
+.comment {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid rgba(162, 161, 167, 0.16);
     height: auto;
 }
-.comments .comment_index{
+
+.comments .comment_index {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
+
 }
 
-.comments .comment_index h6{
+.comments .comment_index h6 {
     font-size: 16px;
     color: #FC5241;
     margin: 0;
 }
-.comments .comment_index .starts{
+
+.comments .comment_index .starts {
     display: flex;
     flex-direction: row;
     gap: 18px;
 }
-.comments .comment_index .starts h5{
+
+.comments .comment_index .starts h5 {
     font-size: 12px;
     color: #74737B;
     margin: 0;
     align-self: center;
 }
 
-.starts_comments{
+.starts_comments {
     display: flex;
     flex-direction: row;
     gap: 5px;
@@ -388,18 +412,18 @@ la imagen seleccionda */
 
 }
 
-.starts_comments img{
+.starts_comments img {
     width: 8px;
     height: 8px;
 }
 
-.dateComment p{
-   padding-top: 20px;
-   padding-bottom: 20px;
-   
+.dateComment p {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
 }
 
-.btnMoreOpinions{
+.btnMoreOpinions {
     display: flex;
     flex-direction: row;
     align-self: center;
@@ -416,86 +440,91 @@ la imagen seleccionda */
 }
 
 /* Cosas del responsive */
-.containerResponsiveNameProduct{
+.containerResponsiveNameProduct {
     display: none;
 }
 
-.containerResposniveProductosVendidos{
+.containerResposniveProductosVendidos {
     display: none;
 }
 
-.containerVariacionesResponsiveColores{
+.containerVariacionesResponsiveColores {
     display: none;
 }
 
-.containerCharacteristicTopResponsive{
+.containerCharacteristicTopResponsive {
     display: none;
 }
 
-.containerResponsiveDescription{
-    display: none;
-}
-#scrollModalAddToCart{
+.containerResponsiveDescription {
     display: none;
 }
 
-
-.scroll-modal-content{
+#scrollModalAddToCart {
     display: none;
 }
 
-.containerResponsiveStockAndQuantity{
+
+.scroll-modal-content {
+    display: none;
+}
+
+.containerResponsiveStockAndQuantity {
     display: none;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .containerIzq{
+    .containerIzq {
         width: 100%;
         height: auto;
         margin-top: 0px;
     }
 
-    .cardImgProduct .containerImgTop img{
+    .cardImgProduct .containerImgTop img {
         width: 200px;
         height: 200px;
     }
-    .cardImgProduct .containerImgMiniature{
+
+    .cardImgProduct .containerImgMiniature {
         height: 80px;
     }
+
     .cardImgProduct .containerImgMiniature img {
         width: 40px;
         height: 40px;
     }
 
-    .containerDetalle{
+    .containerDetalle {
         display: flex;
         flex-direction: column;
     }
 
-    .containerCharacteristicTop{
+    .containerCharacteristicTop {
         display: none;
     }
 
-    .containerNameProduct{
-        display: none;
-    }
-    .containerColorsProduct{
+    .containerNameProduct {
         display: none;
     }
 
-    .cant{
-        display: none;
-    }
-    .opciones{
+    .containerColorsProduct {
         display: none;
     }
 
-    .containerDescription{
+    .cant {
         display: none;
     }
 
-    .containerResponsiveNameProduct{
+    .opciones {
+        display: none;
+    }
+
+    .containerDescription {
+        display: none;
+    }
+
+    .containerResponsiveNameProduct {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -508,15 +537,15 @@ la imagen seleccionda */
         padding: 10px;
     }
 
-    .containerNameAndStarts{
+    .containerNameAndStarts {
         width: 60%;
     }
 
-    .containerNameAndStarts .starts img{
+    .containerNameAndStarts .starts img {
         width: 15px;
     }
 
-    .containerNameAndStarts .Name h2{
+    .containerNameAndStarts .Name h2 {
         color: #74737B;
         font-size: 24px;
     }
@@ -527,7 +556,7 @@ la imagen seleccionda */
         margin: 0;
     }
 
-    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts{
+    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts {
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -535,13 +564,22 @@ la imagen seleccionda */
     }
 
 
-    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts .Name{
+    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts .Name {
         width: 70%;
     }
 
-    
 
-    .containerResponsiveNameProduct .favAndShareAndQuantity{
+    /* Variaciones colores input */
+    .containerVariacionesResponsiveColores .inputStyleVariation {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        
+    }
+
+
+
+    .containerResponsiveNameProduct .favAndShareAndQuantity {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -549,22 +587,22 @@ la imagen seleccionda */
         padding: 10px;
     }
 
-    .containerResponsiveNameProduct .favAndShareAndQuantity .favAndShare{
+    .containerResponsiveNameProduct .favAndShareAndQuantity .favAndShare {
         display: flex;
         flex-direction: row;
         gap: 15px;
         align-items: center;
         justify-content: center;
-        
+
     }
 
-    .containerResponsiveStockAndQuantity{
-        display:flex;
+    .containerResponsiveStockAndQuantity {
+        display: flex;
         flex-direction: column;
         gap: 12px;
     }
 
-    .containerResponsiveStockAndQuantity .quantity{
+    .containerResponsiveStockAndQuantity .quantity {
         width: 100%;
         height: 50px;
         background-color: #A2A1A729;
@@ -577,53 +615,54 @@ la imagen seleccionda */
         align-items: center;
     }
 
-    .containerResponsiveStockAndQuantity .quantity h4{
+    .containerResponsiveStockAndQuantity .quantity h4 {
         margin: 0;
         font-size: 20px;
     }
-    
-    .containerResponsiveStockAndQuantity .quantity button{
+
+    .containerResponsiveStockAndQuantity .quantity button {
         border: none;
         background-color: transparent;
     }
 
-    .containerResponsiveStockAndQuantity .quantity button svg path{
+    .containerResponsiveStockAndQuantity .quantity button svg path {
         fill: #FC5241;
     }
-    
+
     .containerResponsiveStockAndQuantity .quantity input {
         width: 35px;
         border: none;
         text-align: center;
         background-color: transparent;
     }
-   
-    
+
+
 
     .containerResponsiveNameProduct .favAndShare .svgFav path,
-    .containerResponsiveNameProduct .favAndShare .svgShare{
+    .containerResponsiveNameProduct .favAndShare .svgShare {
         fill: #74737B;
     }
 
-    .containerResposniveProductosVendidos{
+    .containerResposniveProductosVendidos {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         width: 98%;
     }
 
-    .containerResposniveProductosVendidos .productosVendidos{
+    .containerResposniveProductosVendidos .productosVendidos {
         display: flex;
         flex-direction: column;
         align-self: center;
     }
-    .containerResposniveProductosVendidos h6{
+
+    .containerResposniveProductosVendidos h6 {
         font-size: 12px;
         color: #74737B;
         font-weight: 400;
     }
 
-    .containerResposniveProductosVendidos .sendMessage a{
+    .containerResposniveProductosVendidos .sendMessage a {
         display: flex;
         flex-direction: row;
         color: #FC5241;
@@ -637,22 +676,22 @@ la imagen seleccionda */
         margin: 0;
     }
 
-    .containerResposniveProductosVendidos .sendMessage path{
+    .containerResposniveProductosVendidos .sendMessage path {
         fill: #FC5241;
     }
 
-    .containerCharacteristicTopResponsive{
+    .containerCharacteristicTopResponsive {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         color: #74737B;
     }
 
-    .containerVariacionesResponsiveColores p{
+    .containerVariacionesResponsiveColores p {
         margin: 0;
     }
 
-    .containerVariacionesResponsiveColores{
+    .containerVariacionesResponsiveColores {
         display: flex;
         flex-direction: row;
         width: auto;
@@ -663,18 +702,19 @@ la imagen seleccionda */
         border-radius: 32px;
 
     }
+
     .containerVariacionesResponsiveColores a {
         text-decoration: none;
         color: #74737B;
     }
 
-    .containerVariacionesResponsiveColores a:active{
+    .containerVariacionesResponsiveColores a:active {
         border-radius: 32px;
-        border:1px solid #FC5241;
+        border: 1px solid #FC5241;
         padding: 5px;
     }
 
-    .containerResponsiveDescription{
+    .containerResponsiveDescription {
         display: flex;
         flex-direction: column;
         gap: 5px;
@@ -682,14 +722,14 @@ la imagen seleccionda */
 
     }
 
-    .containerResponsiveDescription h6{
+    .containerResponsiveDescription h6 {
         color: #FC5241;
         font-size: 18px;
         font-weight: 400;
     }
 
-    .opinions{
-        display:none;
+    .opinions {
+        display: none;
     }
 
     #scrollModalAddToCart {
@@ -704,9 +744,9 @@ la imagen seleccionda */
         z-index: 9999;
         width: 100vw;
         height: 200px;
-      }
-      
-      .scroll-modal-content {
+    }
+
+    .scroll-modal-content {
         /* Estilos para el contenido del modal */
         display: flex;
         flex-direction: column;
@@ -714,14 +754,14 @@ la imagen seleccionda */
         gap: 24px;
         padding: 24px;
         align-items: center;
-      }
+    }
 
-      .scroll-modal-content .svgCart path{
+    .scroll-modal-content .svgCart path {
         fill: white;
-      }
+    }
 
-      .scroll-modal-content .anadiralcarrito {
-        
+    .scroll-modal-content .anadiralcarrito {
+
         font-size: 16px;
         background-color: #FC5241;
         width: 100%;
@@ -733,8 +773,9 @@ la imagen seleccionda */
         align-items: center;
         border-radius: 32px;
 
-      }
-      .scroll-modal-content .anadiralcarrito a{
+    }
+
+    .scroll-modal-content .anadiralcarrito a {
         text-decoration: none;
         color: #F5F5F5;
         width: 100%;
@@ -742,9 +783,9 @@ la imagen seleccionda */
         justify-content: center;
         align-items: center;
         display: flex;
-      }
+    }
 
-      .scroll-modal-content .buyNowResponsive{
+    .scroll-modal-content .buyNowResponsive {
         width: 100%;
         font-size: 16px;
         height: 48px;
@@ -754,9 +795,9 @@ la imagen seleccionda */
         align-items: center;
         border: 1px solid #FC5241;
         border-radius: 32px;
-      }
+    }
 
-      .scroll-modal-content .buyNowResponsive a{
+    .scroll-modal-content .buyNowResponsive a {
         width: 100%;
         height: 48px;
         text-decoration: none;
@@ -765,10 +806,10 @@ la imagen seleccionda */
         justify-content: center;
         align-items: center;
         align-self: center;
-      }
+    }
 
-      .modal-dialog-centered {
+    .modal-dialog-centered {
         width: 96vw;
-      }
+    }
 
 }
