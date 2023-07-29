@@ -65,12 +65,12 @@ const Home = (props) => {
   return (
 
     // <Nav/>
-    <>
+    <div className="w-100 d-flex flex-column align-items-center">
 
       <Header />
       <HeaderResponsive />
       <Banner />
-      <Recientes bannersInfo={bannersInfo}/>
+      <Recientes bannersInfo={bannersInfo} className="w-100"/>
       <Promociones bannersInfo={bannersInfo}/>
       <Vendidos bannersInfo={bannersInfo}/>
       {/* <Populares /> */}
@@ -87,7 +87,7 @@ const Home = (props) => {
           <Popup handleModalData={handleModalData} />
         </ModalBody>
       </Modal>
-    </>
+    </div>
     // <h1>Home</h1>
 
   );

@@ -6,12 +6,12 @@ import Footer from '../components/footer'
 
 function MyOrders(props) {
   return (
-    <>
+    <div className="w-100 d-flex flex-column align-items-center">
     <Header/>
     <HeaderResponsive/>
     <Orders/>
     <Footer/>
-    </>
+    </div>
   )
 }
 

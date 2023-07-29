@@ -326,7 +326,7 @@ const Header = () => {
 
 
   return (
-    <nav>
+    <nav className="container">
       <div className="containerNav">
         <div className={styles.navbarLogo}>
           <a href="/">
@@ -461,11 +461,12 @@ const Header = () => {
           </a>
         </div>
       </div>
+      <hr className="divider"></hr>
+
 
       <div className="containerHeader">
         {/*Categorias*/}
         <div className="dropdown">
-          <a href="#" className="option">
             <svg
               width="32"
               height="32"
@@ -481,7 +482,6 @@ const Header = () => {
               />
             </svg>
             Categorías
-          </a>
 
           <div className="menuCategorias">
             <div className="column">
