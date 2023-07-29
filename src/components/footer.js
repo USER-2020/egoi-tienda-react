@@ -6,10 +6,13 @@ import pse from "../assets/mastercard-8 3.png";
 import visa from "../assets/mastercard-8 2.png";
 import mastercard from "../assets/mastercard-8 1.png";
 import americanexpress from "../assets/mastercard-8 5.png";
-import playstore from "../assets/image 1.png";
-import appstore from "../assets/image 2.png";
-import superintendencia from "../assets/LogoSuperintendencia.png";
+// import playstore from "../assets/image 1.png";
+// import appstore from "../assets/image 2.png";
+// import superintendencia from "../assets/LogoSuperintendencia.png";
 import { activar } from './../services/login';
+import appstore from "../assets/appstore.svg";
+import playstore from "../assets/playStore.svg";
+import logoSIC from "../assets/logo-sic.png";
 
 
 const Footer = (props) => {
@@ -73,10 +76,10 @@ const Footer = (props) => {
                         </div>
                         <div className="derApps">
                             <a href="https://play.google.com/store/apps/details?id=com.egoi_user.flutter" target="_blank" rel="noreferrer">
-                                <img src={playstore} alt="logo" className={styles.logo} width={'120px'} height={'36px'} />
+                                <img src={playstore} alt="logo" className={styles.logo} width={'180px'} height={'54px'} />
 
                             </a>
-                            <img src={appstore} alt="logo" className={styles.logo} width={'120px'} height={'36px'} />
+                            <img src={appstore} alt="logo" className={styles.logo} width={'180px'} height={'54px'} />
 
                         </div>
                     </div>
@@ -121,7 +124,7 @@ const Footer = (props) => {
                         </div>
                         <div className="iconICS" style={{ float: 'right' }}>
                             <a href="https://www.sic.gov.co" target="_blanck">
-                                <img src={superintendencia} alt="logo" className={styles.logo} width={'120px'} height={'36px'} />
+                                <img src={logoSIC} alt="logo" className={styles.logo} width={'240px'} height={'72px'} />
                             </a>
                         </div>
                     </div>
