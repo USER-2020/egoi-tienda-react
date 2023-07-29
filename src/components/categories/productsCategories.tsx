@@ -323,7 +323,7 @@ const ProductsCategories = () => {
   return (
 
     
-  <>
+  <div className='w-100'>
   <HeaderCategories handleClickFilterRecent={handleButtonClickRecent} 
                     handleClickFilterHigh_Low={handleButtonClickHigh_Low} 
                     handleClickFilterLow_High={handleButtonClickLow_High} 
@@ -381,7 +381,7 @@ const ProductsCategories = () => {
                     src={baseUrlImage + product.images[0]}
                     alt={product.name}
                     className="producto-imagen-mobile"
-                    style={{ padding: "1px", objectFit: "contain", height: 150 }}
+                    style={{ padding: "1rem", objectFit: "contain", height: 150 }}
                   />
                   <CardImg
                     src={baseUrlImage + product.images[0]}
@@ -475,7 +475,7 @@ const ProductsCategories = () => {
       </div>
     </div>
   </div>
-  </>
+  </div>
     
               
   )
