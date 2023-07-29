@@ -18,7 +18,7 @@ const Footer = (props) => {
 
     return (
         <footer className="container">
-            <div className="containerFooter containerFooterResponsive">
+            <div className="containerFooter containerFooterResponsive w-100">
                 <div className="row">
                     <div className="footerLogo">
                         <div className="izq">
