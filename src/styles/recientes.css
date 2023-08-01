@@ -787,7 +787,7 @@ h4 {
     }
 
     .carousel-indicators {
-        top: 260px;
+        /* top: 260px; */
         opacity: 1;
 
     }

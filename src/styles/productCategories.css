@@ -4,7 +4,6 @@
     margin-top: 48px;
     background-color: #F5F5F5;
     margin-bottom: 32px;
-      
     
 }
 
@@ -82,16 +81,16 @@ input[type="radio"]:checked {
     border-color: none;
 }
 
-.paginatorIcon:{
+/* .paginatorIcon:{
     color: #FC5241;
-}
+} */
 
 .producto-imagen-mobile {
     display: none;
-  }
-  .producto-imagen-desktop {
+}
+.producto-imagen-desktop {
     display: block;
-  }
+}
 
 @media (max-width: 768px) {
     
@@ -120,12 +119,12 @@ input[type="radio"]:checked {
         /* max-width: 300px; */
         /* width: 200px; */
         margin-bottom: 20px;
-      }
+    }
 
-      .producto-imagen-mobile {
+    .producto-imagen-mobile {
         display: block;
-      }
-      .producto-imagen-desktop {
+    }
+    .producto-imagen-desktop {
         display: none;
-      }
+    }
 }
