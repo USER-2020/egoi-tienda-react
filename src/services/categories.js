@@ -12,7 +12,7 @@ export const allCategories = () =>
 export const subcategorieById = (id, offset) => 
     axios.get(`${baseUrl}/categories/products/${id}`,{
         params:{
-            limit:30,
+            limit:20,
             offset:offset,
             
             

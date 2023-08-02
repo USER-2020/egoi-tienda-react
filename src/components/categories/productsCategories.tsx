@@ -250,7 +250,7 @@ const ProductsCategories = () => {
   }
 
   const pageButtons = [];
-  const totalPages = Math.ceil(totalResults / 30);
+  const totalPages = Math.ceil(totalResults / 20);
   for (let i = 0; i < totalPages; i++) {
     const isActive = i === currentPage -1;
     pageButtons.push(
@@ -258,7 +258,7 @@ const ProductsCategories = () => {
         key={i}
         onClick={() => {
           setCurrentPage(i + 1) 
-          handlePageClick(i * 30)
+          handlePageClick(i * 20)
          }
         }
         className={isActive ? "selectedPage d-flex justify-content-center align-items-center btn rounded-circle mx-1" : "unSelectedPage btn  rounded-circle mx-1 d-flex justify-content-center align-items-center bg-none bg-#FC5241"}
@@ -373,7 +373,7 @@ const ProductsCategories = () => {
         <div className="containerProducts-categories d-flex flex-column align-items-center align-items-md-end w-100">
           <div className="containerProducts-categories row">
             {products && products.products && products.products.map((product, index)=> (
-              <div key={product.id} className="col-md-4 col-6 mb-4">
+              <div key={product.id} className="col-md-3 col-6 mb-4">
               <a href="#" className='containerCard2  ' >
                   <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
                   <Card className='cardProducto1'>
@@ -434,7 +434,7 @@ const ProductsCategories = () => {
                 <button
                 onClick={() => {
                   setCurrentPage(currentPage - 1);
-                  handlePageClick(offset - 30);
+                  handlePageClick(offset - 20);
                 }}
                 className="btn mx-1"
               >
@@ -449,7 +449,7 @@ const ProductsCategories = () => {
                   <button
                   onClick={() => {
                     setCurrentPage(currentPage + 1);
-                    handlePageClick(offset + 30);
+                    handlePageClick(offset + 20);
                   }}
                   className="btn mx-1"
                 >
@@ -462,7 +462,7 @@ const ProductsCategories = () => {
                   <button
                   onClick={() => {
                     setCurrentPage(totalPages);
-                    handlePageClick((totalPages - 1) * 30);
+                    handlePageClick((totalPages - 1) * 20);
                   }}
                   className="btn mx-1"
                 >
