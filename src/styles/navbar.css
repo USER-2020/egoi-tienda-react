@@ -274,6 +274,7 @@ nav .containerHeader a {
   width: auto;
   padding: 5px;
   border-radius: 16px;
+  text-align:center;
 }
 
 /* .menuCategorias > .column ul li:active{
