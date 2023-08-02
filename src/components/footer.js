@@ -124,7 +124,7 @@ const Footer = (props) => {
                         </div>
                         <div className="iconICS" style={{ float: 'right' }}>
                             <a href="https://www.sic.gov.co" target="_blanck">
-                                <img src={logoSIC} alt="logo" className={styles.logo} width={'240px'} height={'72px'} />
+                                <img src={logoSIC} alt="logo" className={styles.logo} width={'240px'} height={'55px'} />
                             </a>
                         </div>
                     </div>
