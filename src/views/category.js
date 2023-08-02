@@ -23,7 +23,7 @@ const Category = (props) => {
     // };
 
   return (
-    <>
+    <div className="w-100 d-flex flex-column align-items-center">
     <Header />
     <HeaderResponsive/>
     {/* <HeaderCategories/> */}
@@ -31,7 +31,7 @@ const Category = (props) => {
     <ProductsCategories/>
     {/* <ProductsResponsiveCategorie/> */}
     <Footer />
-    </>
+    </div>
   )
 }
 

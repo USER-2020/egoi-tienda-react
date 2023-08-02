@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Card, CardImg, CardBody, CardSubtitle, CardTitle } from 'reactstrap';
 
 import '../../styles/similarProducts.css';
-import start from '../../assets/Star.png';
+import start from '../../assets/egoi_icons/star-fill.svg';
+import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
 import start_1 from '../../assets/Star-1.png';
 import iphone from '../../assets/iphoneMuestra.png';
 import { ProductosSimilaresById } from '../../services/productos';
@@ -84,11 +85,13 @@ function SimilarProduct() {
                                     <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
                                     <CardBody>
                                         <div className='starts'>
-                                            <img src={start} />
-                                            <img src={start} />
-                                            <img src={start} />
-                                            <img src={start_1} />
-                                            <img src={start_1} />
+                                        {[...Array(5)].map((_, index) => (
+                                    <img
+                                        key={index}
+                                        src={index < product.count_rating ? start : startEmpty}
+                                        alt=""
+                                    />
+                                ))}
                                         </div>
                                         <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>{product.name}</CardSubtitle>
                                         <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>

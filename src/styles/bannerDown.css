@@ -119,6 +119,9 @@
 }
 
 @media (max-width: 768px) {
+    .container {
+        margin-top: 25px;
+    }
     .container .bannerDownImg{
         display: none;
     }

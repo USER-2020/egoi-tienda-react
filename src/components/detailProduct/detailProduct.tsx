@@ -69,26 +69,26 @@ function DetailProduct() {
 
     const history = useHistory();
 
-    const token = currenUser.token;
+    // const token = currenUser.token;
 
 
 
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
 
 
-    const getAllProductsByCart = () => {
-        if (token) {
-            allProductsCart(token)
-                .then((res) => {
-                    console.log(res);
-                    setProductsCart(res.data);
-                    console.log("traer todos los producstos del carrito", productsCart);
+    // const getAllProductsByCart = (token) => {
+    //     if (token) {
+    //         allProductsCart(token)
+    //             .then((res) => {
+    //                 console.log(res);
+    //                 setProductsCart(res.data);
+    //                 console.log("traer todos los producstos del carrito", productsCart);
 
-                })
-                .catch((err) => console.log(err));
-        }
+    //             })
+    //             .catch((err) => console.log(err));
+    //     }
 
-    }
+    // }
 
     const addToCart = () => {
         if (currenUser) {

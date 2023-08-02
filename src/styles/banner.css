@@ -134,6 +134,7 @@
     .banner_res_2 {
         display: block;
         border-radius: 16px;
+        margin-top: 25px;
     }
 
     .carousel-inner {
