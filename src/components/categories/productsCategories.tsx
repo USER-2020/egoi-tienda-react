@@ -189,7 +189,7 @@ const ProductsCategories = () => {
     .catch((err)=> console.log(err));
   }
   else{
-    subcategorieById(id, offset)
+    subcategorieById(id, currentPage -1)
     .then((res) => {
       console.log(res);
       setProducts(res.data);
@@ -274,8 +274,8 @@ const ProductsCategories = () => {
     // const totalPages = Math.ceil(totalResults / 12);
     const maxOffset = (totalPages);
     const adjustedOffset = Math.min(Math.max(offset, 0), maxOffset);
-    setOffset(adjustedOffset);
-    console.log("Offset", adjustedOffset);
+    setOffset(currentPage - 1);
+    console.log("OFFSET", adjustedOffset);
     
     // const adjustedOffset = Math.min(Math.max(newOffset, 0), totalPages);
     // setOffset(adjustedOffset);
