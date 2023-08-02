@@ -36,7 +36,7 @@
 
 .containerProductsIndex .menuBusqueda{
     display: block;
-    
+    width: 25%;
 }
 
 .containerProductsIndex .menuBusqueda .filtros{
