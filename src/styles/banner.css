@@ -19,6 +19,10 @@
     border-radius: 16px;
 }
 
+.movilView {
+    display: none;
+}
+
 .carousel-item img {
     width: 100vw;
     height: auto;
@@ -145,6 +149,14 @@
     }
 
 
+    .movilView{
+        display: block;
+    }
+
+    .desktopView{
+        display: none;
+    }
+    
     .carousel-caption {
         display: block !important;
         position: absolute;
