@@ -179,28 +179,28 @@ const Banner = (args) => {
 
     }
 
-    const handleChangueCategoryCelulares = (id, offset, tag)=>{
-    
+    const handleChangueCategoryCelulares = (id, offset, tag) => {
+
         history.push(`/categories/Celulares%20y%20Accesorios/Celulares%20y%20Smartphones/2`)
     }
 
-    const handleChangueCategoryTV = (id, offset, tag)=>{
-    
+    const handleChangueCategoryTV = (id, offset, tag) => {
+
         history.push(`/categories/Tv.%20Audio%20y%20Video/tv%20y%20audio/3`)
     }
 
-    
-    const handleChangueCategoryComputacion = (id, offset, tag)=>{
-    
+
+    const handleChangueCategoryComputacion = (id, offset, tag) => {
+
         history.push(`/categories/Computacion/Computación/4`)
     }
 
 
-    const handleChangueCategoryConsolas = (id, offset, tag) =>{
+    const handleChangueCategoryConsolas = (id, offset, tag) => {
         history.push(`/categories/Consolas%20y%20videos%20juegos/Consolas%20y%20videojuegos/5`)
     }
 
-    
+
 
     useEffect(() => {
         getAllBanners();
@@ -259,8 +259,13 @@ const Banner = (args) => {
                                     <div className="carousel-inner">
                                         {itemBanner.banner_data.map((item, i) => (
                                             <div className={`carousel-item ${i === 0 ? "active" : ""}`} key={i}>
-                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro)}>
-                                                    <img src={baseUrlImageBanners + item.imagen} className="d-block w-100" alt="..." />
+                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro)} className='desktopView'>
+                                                    <img src={baseUrlImageBanners + item.imagen_desk} className="d-block w-100 desktopView" alt="..." />
+
+                                                </a>
+                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro)} className='movilView'>
+                                                    <img src={baseUrlImageBanners + item.imagen} className="d-block w-100" alt="..."/>
+
                                                 </a>
                                             </div>
                                         ))}
@@ -278,25 +283,25 @@ const Banner = (args) => {
                             ))}
                 </div >
                 <div className='containerCategoriasBanner'>
-                    
-                        <a href='#' className='categoriaCards1' onClick={()=>handleChangueCategoryCelulares(2, offset, tag==="")}>
-                            <div className='Categoriaimg'>
-                                <img
-                                    src={celularCategoria}
-                                    width={'80px'}
-                                />
 
-                            </div>
-                            <div className='span_flecha'>
-                                <p className='textCategoria'>
-                                    Celulares y Accesorios
-                                </p>
-                                <i><img src={arrow} width={'4px'} /></i>
-                            </div>
-                        </a>
-                    
+                    <a href='#' className='categoriaCards1' onClick={() => handleChangueCategoryCelulares(2, offset, tag === "")}>
+                        <div className='Categoriaimg'>
+                            <img
+                                src={celularCategoria}
+                                width={'80px'}
+                            />
 
-                    <a href='#' className='categoriaCards' onClick={()=>handleChangueCategoryTV(3,offset, tag==="")}>
+                        </div>
+                        <div className='span_flecha'>
+                            <p className='textCategoria'>
+                                Celulares y Accesorios
+                            </p>
+                            <i><img src={arrow} width={'4px'} /></i>
+                        </div>
+                    </a>
+
+
+                    <a href='#' className='categoriaCards' onClick={() => handleChangueCategoryTV(3, offset, tag === "")}>
                         <div className='Categoriaimg'>
                             <img
                                 src={TV}
@@ -312,7 +317,7 @@ const Banner = (args) => {
                         </div>
                     </a>
 
-                    <a href='#' className='categoriaCards' onClick={()=>handleChangueCategoryComputacion(4, offset, tag==="")}>
+                    <a href='#' className='categoriaCards' onClick={() => handleChangueCategoryComputacion(4, offset, tag === "")}>
                         <div className='Categoriaimg'>
                             <img
                                 src={mac}
@@ -328,7 +333,7 @@ const Banner = (args) => {
                         </div>
                     </a>
 
-                    <a href='#' className='categoriaCards' onClick={()=>handleChangueCategoryConsolas(5, offset, tag==="")}>
+                    <a href='#' className='categoriaCards' onClick={() => handleChangueCategoryConsolas(5, offset, tag === "")}>
                         <div className='Categoriaimg'>
                             <img
                                 src={ps5}
