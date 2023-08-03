@@ -86,7 +86,7 @@ function AddressCart() {
   const [showPDF, setShowPDF] = useState(false);
 
   /* Boton deshabilitado */
-  const [botonDeshabilitado, setBotonDeshabilitado]= useState(false);
+  const [botonDeshabilitado, setBotonDeshabilitado] = useState(false);
 
 
 
@@ -1025,9 +1025,20 @@ function AddressCart() {
                   <a href="#" onClick={() => handleStepClick(2, 50)} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Regresar al checkout</a>
                 </div>
-                <div className="toPay">
-                  <a href="#" onClick={() => setModalSuccessPurchase(true)}>Finalizar compra</a>
-                </div>
+                {botonDeshabilitado ? (
+                  <div className="toPay">
+                    <a href="#" onClick={() => setModalSuccessPurchase(true)}>Finalizar compra</a>
+                  </div>
+
+                ) : (
+                  <div className="toPay">
+                    <a href="#" onClick={() => setModalSuccessPurchase(true)}
+                      style={{
+                        display:'none'
+                      }}
+                    >Finalizar compra</a>
+                  </div>
+                )}
 
               </>
             )}
@@ -1297,12 +1308,12 @@ function AddressCart() {
 
               {botonDeshabilitado ? (
                 <div className="containerToPayResponsive">
-                <a href="#" onClick={() => setModalSuccessPurchase(true)} >Finalizar compra</a>
-              </div>
-              ):(
+                  <a href="#" onClick={() => setModalSuccessPurchase(true)} >Finalizar compra</a>
+                </div>
+              ) : (
                 <div className="containerToPayResponsive">
-                <a href="#" style={{pointerEvents:'none', backgroundColor:'gray', height:'100%', borderRadius:'32px', border:'none'}} >Finalizar compra</a>
-              </div>
+                  <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', height: '100%', borderRadius: '32px', borderColor: 'gray' }} >Finalizar compra</a>
+                </div>
               )}
             </div>
           </div>

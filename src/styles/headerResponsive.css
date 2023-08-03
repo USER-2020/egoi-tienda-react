@@ -12,7 +12,7 @@ nav {
     display: none;
 }
 
-.offcanvas-body .pers{
+.offcanvas-body .pers {
     width: 196px;
     height: 72px;
     display: flex;
@@ -24,27 +24,27 @@ nav {
     color: black;
 }
 
-.btnsPers{
+.btnsPers {
     display: none;
 }
 
 .btnPersonalizadosL {
     width: 240px;
-    height:40px;
+    height: 40px;
     background-color: #FC5241;
     color: white !important;
     border-radius: 32px;
 }
 
-.btnPersonalizadosR{
+.btnPersonalizadosR {
     width: 240px;
-    height:40px;
+    height: 40px;
     border: 1px solid #FC5241;
     color: #FC5241 !important;
     border-radius: 32px;
 }
 
-.offcanvas-body ul li{
+.offcanvas-body ul li {
     list-style: none;
 }
 
@@ -65,12 +65,24 @@ nav {
         /* justify-content: center; */
     }
 
-    .searchContainer{
+    .cart-products {
+        position: absolute;
+        justify-content: center;
+        background-color: #FC5241;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: small;
+        transform: translate(25px, -45px);
+    }
+
+    .searchContainer {
         width: 55%;
     }
 
-    
-    .input-icon{
+
+    .input-icon {
         display: none;
     }
 
@@ -78,30 +90,31 @@ nav {
         width: 100vw;
         /* justify-content: space-between; */
         align-items: center;
-        display:flex;
+        display: flex;
         flex-direction: row;
-        
+
 
     }
-    
-    a .navbar-brand{
+
+    a .navbar-brand {
         margin-right: 0px;
-        
+
     }
 
-    .btnsPers{
+    .btnsPers {
         display: grid;
         gap: 20px;
         justify-content: center;
         text-align: center;
-        
-    }
-    .modal-content{
-        width: 96vw;
-        
-    }
-    
 
-      
-    
-  }
+    }
+
+    .modal-content {
+        width: 96vw;
+
+    }
+
+
+
+
+}
