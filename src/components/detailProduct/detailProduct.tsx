@@ -115,7 +115,7 @@ function DetailProduct() {
     const favClick = (idProductFav) => {
         console.log(idProductFav)
         if (currenUser) {
-            addFavoriteProduct(token, idProductFav)
+            addFavoriteProduct(currenUser.token, idProductFav)
                 .then((res) => {
                     console.log('Se añadio el producto a favoritos', res);
                     detailProductBySlug(slug);
