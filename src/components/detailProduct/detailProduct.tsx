@@ -438,7 +438,7 @@ function DetailProduct() {
                         <p>{formattedDescription}</p>
                     </div>
                     <div className="containerResponsiveStockAndQuantity">
-                        <h4>Stock Disponible</h4>
+                        <h4>Stock disponible</h4>
                         <div className="quantity">
                             <h4>Cantidad: </h4>
                             {quantity >= 2 && (
