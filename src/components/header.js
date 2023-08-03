@@ -455,7 +455,7 @@ const Header = () => {
                 fill="#171523"
               />
             </svg>
-            {currenUser && cantProductsOnCart !== undefined ? (
+            {currenUser && cantProductsOnCart !== undefined && cantProductsOnCart>= 1 ? (
               <span className="cart-products"><p >{cantProductsOnCart}</p></span>          
             ): (<i></i>)}
           </a>

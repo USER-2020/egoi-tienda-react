@@ -230,7 +230,7 @@ function HeaderResponsive() {
             </InputGroup>
           </div>
           <a href="#" onClick={() => { goToDetailCart() }}
-          style={{textDecoration:'none', color:'black'}}>
+            style={{ textDecoration: 'none', color: 'black' }}>
             <svg
               width="40"
               height="40"
@@ -245,8 +245,8 @@ function HeaderResponsive() {
                 fill="#171523"
               />
             </svg>
-            {currenUser && cantProductsOnCart !== undefined ? (
-              <i>{cantProductsOnCart}</i>
+            {currenUser && cantProductsOnCart !== undefined && cantProductsOnCart >= 1 ? (
+              <span className="cart-products"><p >{cantProductsOnCart}</p></span>
             ) : (<i></i>)}
           </a>
 

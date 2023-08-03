@@ -324,7 +324,7 @@ const HeaderResponsiveCategorie = ({
             </div>
           ) : (
             <div>
-              <p>No hay ningun filtro seleccionado</p>
+              <p style={{marginLeft:'20px'}}>No hay ningun filtro seleccionado</p>
             </div>
           )}
 
