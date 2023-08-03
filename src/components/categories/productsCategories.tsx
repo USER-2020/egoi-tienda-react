@@ -156,51 +156,51 @@ const ProductsCategories = () => {
     }
     else if (selectedFiltersHigh_Low === 'H-L') {
       filterProductsHigh_Low(id)
-        .then((res) => {
-          console.log(res);
-          setProducts(res.data);
-          console.log("Productos filtrados del mas caro al mas barato", res.data.products);
-        })
-        .catch((err) => console.log(err));
-    }
-    else if (selectedFiltersLow_High == 'L-H') {
-      filterProductsLow_High(id)
-        .then((res) => {
-          console.log(res);
-          setProducts(res.data);
-          console.log("Productos filtrados del mas barato al mas caro", res.data.products);
-        })
-        .catch((err) => console.log(err));
-    }
-    else if (selectedFiltersA_Z === 'A-Z') {
-      filterProductsA_Z(id)
-        .then((res) => {
-          console.log(res);
-          setProducts(res.data);
-          console.log("Productos filtrados por orden alfabetico A-Z", res.data.products);
-        })
-        .catch((err) => console.log(err));
-    }
-    else if (selectedFiltersZ_A === 'Z-A') {
-      filterProductsZ_A(id)
-        .then((res) => {
-          console.log(res);
-          setProducts(res.data);
-          console.log("Productos filtrados por orden alfabetico Z-A", res.data.products);
-        })
-        .catch((err) => console.log(err));
-    }
-    else {
-      subcategorieById(id, offset)
-        .then((res) => {
-          console.log(res);
-          setProducts(res.data);
-          setTotalResults(res.data.total_size);
-          console.log("Productos por el id", res.data.products);
-          console.log("Este es el total de productos", res.data.total_size);
-
-        })
-        .catch((err) => console.log(err));
+      .then((res)=>{
+        console.log(res);
+        setProducts(res.data);
+        console.log("Productos filtrados del mas caro al mas barato", res.data.products);
+      })
+      .catch((err)=> console.log(err));
+  }
+  else if(selectedFiltersLow_High == 'L-H'){
+    filterProductsLow_High(id)
+    .then((res)=> {
+      console.log(res);
+      setProducts(res.data);
+      console.log("Productos filtrados del mas barato al mas caro", res.data.products);
+    })
+    .catch((err) => console.log(err));
+  }
+  else if(selectedFiltersA_Z === 'A-Z'){
+    filterProductsA_Z(id)
+    .then((res)=>{
+      console.log(res);
+      setProducts(res.data);
+      console.log("Productos filtrados por orden alfabetico A-Z", res.data.products);
+    })
+    .catch((err)=> console.log(err));
+  }
+  else if(selectedFiltersZ_A === 'Z-A'){
+    filterProductsZ_A(id)
+    .then((res)=>{
+      console.log(res);
+      setProducts(res.data);
+      console.log("Productos filtrados por orden alfabetico Z-A", res.data.products);
+    })
+    .catch((err)=> console.log(err));
+  }
+  else{
+    subcategorieById(id, offset)
+    .then((res) => {
+      console.log(res);
+      setProducts(res.data);
+      setTotalResults(res.data.total_size);
+      console.log("Productos por el id", res.data.products);
+      console.log("Este es el total de productos", res.data.total_size);
+      
+    })
+    .catch((err) => console.log(err));
 
     }
 
@@ -278,7 +278,7 @@ const ProductsCategories = () => {
     const adjustedOffset = Math.min(Math.max(offset, 0), maxOffset);
     setOffset(adjustedOffset);
     console.log("Offset", adjustedOffset);
-
+    
     // const adjustedOffset = Math.min(Math.max(newOffset, 0), totalPages);
     // setOffset(adjustedOffset);
     // console.log("Offset", adjustedOffset);

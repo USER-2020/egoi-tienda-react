@@ -440,7 +440,7 @@ const Header = () => {
 
           {/* Carrito de compras  */}
           <a href="#" onClick={() => { goToDetailCart() }}
-          style={{textDecoration:'none', color:'black'}}>
+          style={{textDecoration:'none', color:'black', display: 'flex'}}>
             <svg
               width="40"
               height="40"
@@ -456,7 +456,7 @@ const Header = () => {
               />
             </svg>
             {currenUser && cantProductsOnCart !== undefined ? (
-              <i>{cantProductsOnCart}</i>           
+              <span className="cart-products"><p >{cantProductsOnCart}</p></span>          
             ): (<i></i>)}
           </a>
         </div>

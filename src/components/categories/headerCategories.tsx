@@ -17,6 +17,9 @@ import { filterProductsRecents } from '../../services/filtros';
 
 import { Display } from 'react-bootstrap-icons';
 import { getBrandsByCategory } from '../../services/brands';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
 
 
 const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
@@ -131,6 +134,8 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
                 <div ref = {ref1} className={`dropdown ${isOpen1 ? "open" : ""}`}>
                   <button onClick={() => setIsOpen1(!isOpen1)}>
                     <span>Marcas</span>
+                    <FontAwesomeIcon icon={faChevronDown} />
+
                     {/* <Icon>
                       {isOpen ? "close" : "expand_more"}
                     </Icon> */}
@@ -170,6 +175,8 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
               <div ref = {ref2} className={`dropdown ${isOpen2 ? "open" : ""}`}>
                   <button onClick={() => setIsOpen2(!isOpen2)}>
                     <span>Precio</span>
+                    <FontAwesomeIcon icon={faChevronDown} />
+
                     {/* <Icon>
                       {isOpen ? "close" : "expand_more"}
                     </Icon> */}
@@ -203,8 +210,10 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
               <div ref = {ref3} className={`dropdown ${isOpen3 ? "open" : ""}`}>
                   <button onClick={() => setIsOpen3(!isOpen3)}>
                     <span>Ordenar por</span>
+                    <FontAwesomeIcon icon={faChevronDown} />
+
                     {/* <Icon>
-                      {isOpen ? "close" : "expand_more"}
+                      {isOpen1 ? "close" : "expand_more"}
                     </Icon> */}
                   </button>
                   <div className="menu3">
