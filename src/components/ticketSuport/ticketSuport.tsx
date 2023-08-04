@@ -75,7 +75,7 @@ function TicketSuport({ closemodalAndOpenOtherModal, setIdTicket }) {
               {detailTicketSupport && detailTicketSupport.map((item, index) => (
                 <tr key={index}>
                   <td style={{ color: '#FC5241' }}>{item.subject}</td>
-                  <td>{item.created_at}</td>
+                  <td>{new Date(item.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
                   <td>{item.status}</td>
                   <td>{item.type}</td>
                   <td>

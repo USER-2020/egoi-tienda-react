@@ -93,6 +93,15 @@ function HeaderResponsive() {
     }
   }
 
+  const handleFavList = () => {
+    if (currenUser) {
+      const url = `/myorders?activeOption=ListaDeseos&selectedOption=Lista%20Deseos`;
+      window.location.href = url;
+    } else {
+      setModalViewLogin(true);
+    }
+  }
+
 
 
   const closeModalLogin = () => {
@@ -192,7 +201,7 @@ function HeaderResponsive() {
           setCantProductsOnCart(numberOfProducts);
         }).catch((err) => console.log(err));
     }
-  }, [currenUser, isLoggedIn]);
+  }, [currenUser, isLoggedIn, cantProductsOnCart]);
 
 
   useEffect(() => {
@@ -452,7 +461,7 @@ function HeaderResponsive() {
                   </a>
                 </li>
                 <li class='nav-item pers'>
-                  <a href="#">
+                  <a href="#" onClick={handleFavList}>
                     <svg
                       width="40"
                       height="40"

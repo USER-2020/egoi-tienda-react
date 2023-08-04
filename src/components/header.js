@@ -311,7 +311,7 @@ const Header = () => {
     }
 
 
-  }, [currenUser, isLoggedIn]);
+  }, [currenUser, isLoggedIn,cantProductsOnCart]);
 
   useEffect(() => {
     allCategoriesPromise();
