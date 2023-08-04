@@ -329,7 +329,7 @@ function Orders(props) {
                                         <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} />
                                     )}
                                     {showTrackOrder && (
-                                        <TrackOrder />
+                                        <TrackOrder orderDetalleId={orderDetalleId}/>
                                     )}
                                 </div>
                             )}
@@ -340,7 +340,7 @@ function Orders(props) {
                                         <TrackSearch handleChangueTrackOrder={handleChangueTrackOrder} />
                                     )}
                                     {showTrackOrder && (
-                                        <TrackOrder />
+                                        <TrackOrder orderDetalleId={orderDetalleId}/>
                                     )}
                                 </div>
                             )}
@@ -400,7 +400,7 @@ function Orders(props) {
                                     <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} />
                                 )}
                                 {showTrackOrder && (
-                                    <TrackOrder />
+                                    <TrackOrder orderDetalleId={orderDetalleId}/>
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
@@ -414,7 +414,7 @@ function Orders(props) {
                                     <TrackSearch handleChangueTrackOrder={handleChangueTrackOrder} />
                                 )}
                                 {showTrackOrder && (
-                                    <TrackOrder />
+                                    <TrackOrder orderDetalleId={orderDetalleId}/>
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
