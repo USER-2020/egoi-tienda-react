@@ -79,7 +79,14 @@ function TableOrders({ setOrderDetalleId }) {
                                           }
                                           
                                     />
-                                </svg>{item.order_status}</td>
+                                </svg>
+                                {item.order_status === 'canceled' ? 'cancelado' : '' ||
+                                item.order_status === 'pending' ? 'pendiente' : '' ||
+                                item.order_status === 'processing' ? 'procesando' : '' ||
+                                item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
+                                item.order_status === 'delivered' ? 'enviado' : ''
+                                }
+                                </td>
                                 <td>${item.order_amount.toLocaleString()}</td>
                                 <td>
                                     <div className="opcionesDetallePedido">

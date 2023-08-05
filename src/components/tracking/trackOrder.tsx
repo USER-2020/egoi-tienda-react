@@ -26,6 +26,12 @@ function TrackOrder({ orderDetalleId }) {
             }).catch((err) => console.log(err));
     }
 
+    const createdDate = new Date(infoOrderTrack.created_at);
+    createdDate.setDate(createdDate.getDate() + 3);
+
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const formattedDate = createdDate.toLocaleDateString('es-ES', options);
+
     useEffect(() => {
         if (token) {
             detailsOrderTrack();
@@ -47,17 +53,22 @@ function TrackOrder({ orderDetalleId }) {
                 }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <p style={{ fontSize: '12px', marginBottom: '0', fontWeight: '400', color: '#A2A1A7' }}>Estado del pedido</p>
-                        <p style={{ fontSize: '16px', marginBottom: '0', fontWeight: '400' }}>{infoOrderTrack.order_status}</p>
+                        <p style={{ fontSize: '16px', marginBottom: '0', fontWeight: '400' }}>
+                            {infoOrderTrack.order_status === 'canceled' ? 'Cancelado' :
+                            infoOrderTrack.order_status === 'pending' ? 'Pendiente' :
+                            infoOrderTrack.order_status === 'processing' ? 'Procesando' :
+                            infoOrderTrack.order_status === 'out_for_delivery' ? 'Enviando' :
+                            infoOrderTrack.order_status === 'delivered' ? 'Enviado' : ''}</p>
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <p style={{ fontSize: '12px', marginBottom: '0', fontWeight: '400', color: '#A2A1A7' }}>Estado del pago</p>
-                        <p style={{ fontSize: '16px', marginBottom: '0', fontWeight: '400' }}>{infoOrderTrack.payment_status}</p>
+                        <p style={{ fontSize: '16px', marginBottom: '0', fontWeight: '400' }}>{infoOrderTrack.payment_status === 'unpaid' ? 'Sin pagar' : infoOrderTrack.payment_status === 'paid' ? 'Pagado' : ''}</p>
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <p style={{ fontSize: '12px', marginBottom: '0', fontWeight: '400', color: '#A2A1A7' }}>Fecha estimada de entrega</p>
-                        <p style={{ fontSize: '16px', marginBottom: '0', fontWeight: '400' }}>18 Feb, 2023</p>
+                        <p style={{ fontSize: '16px', marginBottom: '0', fontWeight: '400' }}>{formattedDate}</p>
                     </div>
 
                 </div>

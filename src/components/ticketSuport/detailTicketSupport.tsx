@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Form, FormGroup, Input, Label } from 'reactstrap'
 import { getCurrentUser } from '../../helpers/Utils';
-import { getTicketById } from '../../services/ordenes';
+import { getTicketById, sendReplySupportTicket } from '../../services/ordenes';
 
 function DetailTicketSupport({idTicket}) {
 
   const currenUser = getCurrentUser();
   const token = currenUser.token;
+
+  const [message, setMessage]= useState('');
 
   const getInfoTicketById = ()=>{
     getTicketById(token, idTicket)
@@ -15,12 +17,26 @@ function DetailTicketSupport({idTicket}) {
     }).catch((err)=>console.log(err));
   }
 
+  const senReply = () => {
+    sendReplySupportTicket(token, message, idTicket)
+    .then((res)=>{
+      console.log('respuesta de enviar el mesnaje al ticekt por id', res.data);
+      setMessage('');
+    }).catch((err)=>console.log(err));
+  }
+
   useEffect(()=>{
     if(token){
       getInfoTicketById();
       console.log(idTicket);
+      
     }
-  },[])
+  },[]);
+
+  useEffect(()=>{
+    console.log(message);
+  },[message]);
+
   return (
     <div className='detailTicketSupportContainer'>
       <Card>
@@ -44,11 +60,13 @@ function DetailTicketSupport({idTicket}) {
               type="textarea"
               placeholder='Enviar mensaje...'
               style={{ height: '230px', backgroundColor:'#A2A1A729', borderRadius:'24px', border:'none'}}
+              value={message}
+              onChange={(e)=> setMessage(e.target.value)}
             />
           </FormGroup>
         </div>
         <div className="enviarMenssageContainer">
-          <a href="#">Enviar mensaje</a>
+          <a href="#" onClick={senReply}>Enviar mensaje</a>
         </div>
       </Card>
     </div>

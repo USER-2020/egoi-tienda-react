@@ -69,7 +69,7 @@ function TrackSearch({ handleChangueTrackOrder }) {
                     </Form>
                 </div>
                 <div className="trackSearchBtn">
-                    <a href="#" onClick={() => handleChangueTrackOrder()}>Seguir pedido</a>
+                    <a href="#" onClick={() => handleChangueTrackOrder(nroPedido)}>Seguir pedido</a>
                 </div>
             </Card>
         </div>

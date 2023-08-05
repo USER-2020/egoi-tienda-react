@@ -73,8 +73,8 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                             <div className="direccionesPedido">
                                 <div className="direccionEnv">
                                     <h6>Direccion  de envio</h6>
-                                    <p>Calle 10 # 10 - 20,
-                                        Medellín, Antioquia
+                                    <p>
+                                        {item.shipping_address_data.address}, {item.shipping_address_data.city}, {item.shipping_address_data.zip}
                                     </p>
                                 </div>
                                 <div className="direccionCompra">

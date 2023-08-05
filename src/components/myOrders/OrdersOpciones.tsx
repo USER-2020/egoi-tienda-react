@@ -188,9 +188,10 @@ function Orders(props) {
         setTicket(false);
     }
 
-    const handleChangueTrackOrder = () => {
+    const handleChangueTrackOrder = (nroPedido) => {
         setShowTrackOrder(true);
         setShowTrackSearch(false);
+        setOrderDetalleId(nroPedido);
     }
 
     const closeMisPedidosAndShowTrack = () => {
