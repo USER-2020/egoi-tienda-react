@@ -707,7 +707,7 @@ input[placeholder="Describe tu problema...  "]::placeholder {
 
     /* Mis Pedidos */
     .contenidoMisOrdenesResponsive .mispedidosResponsive .tablaContenedor {
-        width: 100%;
+        width: 95%;
     }
 
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedido {
@@ -894,7 +894,7 @@ input[placeholder="Describe tu problema...  "]::placeholder {
     }
 
     .contenidoMisOrdenesResponsive .ticketSoporteResponsive .supportTicket .tablaDeSoporte {
-        width: 80%;
+        width: 95%;
     }
 
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr .opcionesDetallePedidoResponsive .btnVerDetallesPedido {
