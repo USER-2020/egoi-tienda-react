@@ -404,6 +404,7 @@ div.filaMedia{
   height: 20px;
   border-radius: 50%;
   font-size: small;
+  transform: translate(-12px);
 }
 
 
