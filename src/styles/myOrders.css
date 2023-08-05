@@ -707,7 +707,7 @@ input[placeholder="Describe tu problema...  "]::placeholder {
 
     /* Mis Pedidos */
     .contenidoMisOrdenesResponsive .mispedidosResponsive .tablaContenedor {
-        width: 95%;
+        width: 90%;
     }
 
     .contenidoMisOrdenesResponsive .mispedidosResponsive .table tbody tr td .opcionesDetallePedido {
