@@ -79,7 +79,9 @@ const Footer = (props) => {
                                 <img src={playstore} alt="logo" className={styles.logo} width={'180px'} height={'54px'} />
 
                             </a>
-                            <img src={appstore} alt="logo" className={styles.logo} width={'180px'} height={'54px'} />
+                            <a href="https://apps.apple.com/co/app/egoi/id6443907168" target="_blank" rel="noreferrer">
+                                <img src={appstore} alt="logo" className={styles.logo} width={'180px'} height={'54px'} />
+                            </a>
 
                         </div>
                     </div>

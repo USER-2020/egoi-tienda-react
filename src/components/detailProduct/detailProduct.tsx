@@ -118,9 +118,21 @@ function DetailProduct() {
             addFavoriteProduct(currenUser.token, idProductFav)
                 .then((res) => {
                     console.log('Se añadio el producto a favoritos', res);
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Se añadió tu producto a favoritos!',
+                        text: 'Tu producto fue añadido a favortios satisfactoriamente.',
+                      });
                     detailProductBySlug(slug);
 
-                }).catch((err) => console.log(err));
+                }).catch((err) => {
+                    Swal.fire({
+                        title: '¡El producto ya está en tus favoritos!',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                      });
+                      console.log(err);
+                });
         } else {
             setModalViewLogin(true);
         }
@@ -434,7 +446,7 @@ function DetailProduct() {
                         </div>
                     )}
                     <div className="containerResponsiveDescription">
-                        <h6>Descripcion</h6>
+                        <h6>Descripción</h6>
                         <p>{formattedDescription}</p>
                     </div>
                     <div className="containerResponsiveStockAndQuantity">
@@ -551,7 +563,7 @@ function DetailProduct() {
 
             </div>
             <div className="containerDescription">
-                <h5>Descripcion</h5>
+                <h5>Descripción</h5>
                 <p>
                     {formattedDescription}
                 </p>

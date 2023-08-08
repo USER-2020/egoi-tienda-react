@@ -58,7 +58,7 @@ function TableOrders({ setOrderDetalleId }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {ordenes && ordenes.map((item, index) => (
+                        {ordenes && ordenes.slice().reverse().map((item, index) => (
                             <tr key={index}>
                                 <td>{item.id}</td>
                                 <td>{new Date(item.updated_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
