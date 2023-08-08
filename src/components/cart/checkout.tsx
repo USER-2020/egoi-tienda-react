@@ -280,7 +280,7 @@ function AddressCart() {
   const updateBtn = (addrId) => {
     if (token) {
       swalWithBootstrapButtons.fire({
-        title: '¿Quieres eliminar o actualizar esta direccion?',
+        title: '¿Quieres eliminar o actualizar esta dirección?',
         text: "Esto no es reversible",
         icon: 'warning',
         showCancelButton: true,
@@ -345,7 +345,7 @@ function AddressCart() {
   const eliminarDireccion = (addrId) => {
     deleteAddress(addrId, token)
       .then(() => {
-        console.log("Direccion ELiminada");
+        console.log("Dirección ELiminada");
         getAllAddress();
       })
       .catch((err) => {
@@ -739,7 +739,7 @@ function AddressCart() {
                     3
                   </button>
                   <div className="step-title">
-                    Metodo de pago
+                    Método de pago
                   </div>
                 </div>
               </div>
@@ -794,7 +794,7 @@ function AddressCart() {
                       </div>
                     ))}
                     <div className="addNewAddress" >
-                      <a href="#" onClick={() => setModalAddressCheckout(true)}>Agregar Direccion</a>
+                      <a href="#" onClick={() => setModalAddressCheckout(true)}>Agregar Dirección</a>
                     </div>
                   </div>
                 </div>
