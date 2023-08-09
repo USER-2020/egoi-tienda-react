@@ -289,7 +289,7 @@ function HeaderResponsive() {
 
                     {categories.map((category, index) => (
                       <li key={index}>
-                        <a className="dropdown-item" href="#">
+                        <a className="dropdown-item" href={`/categories/${category.name}/${category.name}/${category.id}`}>
                           <strong>{category.name}</strong>
                         </a>
                         <ul >
