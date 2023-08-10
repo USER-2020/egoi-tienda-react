@@ -140,15 +140,18 @@ const Banner = (args) => {
 
     };
 
-    const showProductsByCategoryBanner = () => {
+    const showProductsByCategoryBanner = (idTag) => {
         if (tipoFiltro === 'category') {
-            history.push(`/categories/products/filter/${bannerFiltro1}`);
+            // getAllCategoriesByBanner(bannersInfo);
+            history.push(`/categories/products/filter/${bannerFiltro1}/${idTag}`);
         }
         if (tipoFiltro === 'product') {
-            history.push(`/detailsProduct/${bannerFiltro1}/slug`);
+            // getAllCategoriesByBanner(bannersInfo);
+            history.push(`/detailsProduct/${bannerFiltro1}/slug/${idTag}`);
         }
         if (tipoFiltro === 'brand') {
-            history.push(`/brand/filterBrandBanner/${bannerFiltro1}`);
+            // getAllCategoriesByBanner(bannersInfo);
+            history.push(`/brand/filterBrandBanner/${bannerFiltro1}/${idTag}`);
         }
 
         // /* Banner 2 */
@@ -163,18 +166,18 @@ const Banner = (args) => {
         // }
     }
 
-    const showRutes = (itemId, filtro) => {
+    const showRutes = (itemId, filtro, tag) => {
         console.log("este el id elegido para pasar por rutas", itemId);
 
 
         if (filtro === 'category') {
-            history.push(`/categories/products/filter/${itemId}`);
+            history.push(`/categories/products/filter/${itemId}/${tag}`);
         }
         if (filtro === 'product') {
-            history.push(`/detailsProduct/${itemId}/slug`);
+            history.push(`/detailsProduct/${itemId}/slug/${tag}`);
         }
         if (filtro === 'brand') {
-            history.push(`/brand/filterBrandBanner/${itemId}`);
+            history.push(`/brand/filterBrandBanner/${itemId}/${tag}`);
         }
 
     }
@@ -229,10 +232,10 @@ const Banner = (args) => {
                             .filter((banner) => banner.banner_type === "banner_1")
                             .map((banner, index) => (
                                 <div key={index}>
-                                    <a href='#' onClick={() => showProductsByCategoryBanner()}>
+                                    <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag)}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen_desk} width={'100%'} height={'124px'} className='banner_1' />
                                     </a>
-                                    <a href='#' onClick={() => showProductsByCategoryBanner()}>
+                                    <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag)}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen} width={'100%'} height={'124px'} className='banner_res_2' />
                                     </a>
                                 </div>
@@ -259,11 +262,11 @@ const Banner = (args) => {
                                     <div className="carousel-inner">
                                         {itemBanner.banner_data.map((item, i) => (
                                             <div className={`carousel-item ${i === 0 ? "active" : ""}`} key={i}>
-                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro)} className='desktopView'>
+                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro, item.id_tag)} className='desktopView'>
                                                     <img src={baseUrlImageBanners + item.imagen_desk} className="d-block w-100 desktopView" alt="..." />
 
                                                 </a>
-                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro)} className='movilView'>
+                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro, item.id_tag)} className='movilView'>
                                                     <img src={baseUrlImageBanners + item.imagen} className="d-block w-100" alt="..."/>
 
                                                 </a>

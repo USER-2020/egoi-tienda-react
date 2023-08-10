@@ -58,8 +58,11 @@ const App = (props) => {
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />
               <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/categories/:category/:subcategory/:id/:tag" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/brand/:brand/:brandId" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/brand/:brand/:brandId/:tag" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/detailsProduct/:id/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
+              <Route path="/detailsProduct/:id/:slug/:tag" exact render={(props) => <ViewDetailProduct {...props} />} />
               <ProtectedRoute path={myorders} viewComponent={ViewMyOrders} />
               <ProtectedRoute path={checkout} viewComponent={ViewDetailCartAddress} />
               <ProtectedRoute path={addCart} viewComponent={ViewDetailCart}/>

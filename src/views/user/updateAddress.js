@@ -86,8 +86,8 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
             .then(() => {
                 Swal.fire({
                     icon: 'success',
-                    title: '¡Actualizacion exitosa!',
-                    text: 'La direccion ha sido actualizada exitosamente.',
+                    title: '¡Actualización exitosa!',
+                    text: 'La dirección ha sido actualizada exitosamente.',
                     confirmButtonColor: '#0d6efd',
                 });
                 closeModalUpdate();
@@ -152,7 +152,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                 justifyContent: "center",
                             }}
                         >
-                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Direccion de entrega</h5>
+                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Dirección de entrega</h5>
                         </div>
                         <Card style={{ border: 'none' }}>
                             <Form onSubmit={handleSubmitAddress}>

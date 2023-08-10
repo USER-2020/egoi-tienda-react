@@ -88,17 +88,17 @@ const Vendidos = ({ bannersInfo }) => {
         }, 300);
     };
 
-    const showRoutes = (itemId, filtro) => {
+    const showRoutes = (itemId, filtro, tag) => {
         console.log("este el id elegido para pasar por las rutas en el banner 4", itemId);
 
         if (filtro === 'category') {
-            history.push(`/categories/products/filter/${itemId}`);
+            history.push(`/categories/products/filter/${itemId}/${tag}`);
         }
         if (filtro === 'product') {
-            history.push(`/detailsProduct/${itemId}/slug`);
+            history.push(`/detailsProduct/${itemId}/slug/${tag}`);
         }
         if (filtro === 'brand') {
-            history.push(`/brand/filterBrandBanner/${itemId}`);
+            history.push(`/brand/filterBrandBanner/${itemId}/${tag}`);
         }
     }
 
@@ -163,7 +163,7 @@ const Vendidos = ({ bannersInfo }) => {
                         .filter((banner) => banner.banner_type === "banner_5")
                         .map((itemBanner, index) => (
                             <div className='containerHot' ref={containerRef2}>
-                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro)}>
+                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag)}>
                                     <div className='masVendidosCards' key={index === 0}>
                                         {/* <div className='headerImg'>
                                             <img src={logoSamsung} width={'200px'} />
@@ -184,7 +184,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro)}>
+                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag)}>
                                     <div className='masVendidosCards' key={index === 1}>
                                         {/* <div className='headerImg'>
                                             <img src={logoSony} width={'200px'} />
@@ -205,7 +205,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro)}>
+                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag)}>
                                     <div className='masVendidosCards' key={index === 2}>
                                         {/* <div className='headerImg'>
                                             <img src={logoHaceb} width={'200px'} />
@@ -226,7 +226,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro)}>
+                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag)}>
                                     <div className='masVendidosCards' key={index === 3}>
                                         {/* <div className='headerImg'>
                                             <img src={logoAsus} width={'200px'} />
