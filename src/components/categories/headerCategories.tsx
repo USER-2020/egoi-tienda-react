@@ -149,7 +149,7 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
                         </button>
                         ))
                         ):(
-                          <span>No hay marcas asociadas</span>
+                          <span style={{padding:'15px'}}>No hay marcas asociadas</span>
                         )}
                     {/* <button>
                       <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>

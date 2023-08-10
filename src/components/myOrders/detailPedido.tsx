@@ -59,7 +59,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                         <>
                             <div className="datosPrincipales">
                                 <div className="nroPedido">
-                                    <h6>Numero de pedido</h6>
+                                    <h6>Número de pedido</h6>
                                     <p>{item.order_id}</p>
                                 </div>
 
@@ -72,13 +72,13 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                             </div>
                             <div className="direccionesPedido">
                                 <div className="direccionEnv">
-                                    <h6>Direccion  de envio</h6>
+                                    <h6>Dirección  de envío</h6>
                                     <p>
                                         {item.shipping_address_data.address}, {item.shipping_address_data.city}, {item.shipping_address_data.zip}
                                     </p>
                                 </div>
                                 <div className="direccionCompra">
-                                    <h6>Direccion de compra</h6>
+                                    <h6>Dirección de compra</h6>
                                     <p>Calle 10 # 10 - 20,
                                         Medellín, Antioquia
                                     </p>
@@ -108,7 +108,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                             detalleOrden.map((item, index) => (
                                 <div key={index}>
                                     <div className="articulosPedidos">
-                                        <p>Articulos</p>
+                                        <p>Artículos</p>
                                         <p>1</p>
                                     </div>
                                     <div className="subtotal">
@@ -121,7 +121,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                         {/* 0 a menos que se cobre */}
                                     </div>
                                     <div className="Envio">
-                                        <p>Envio</p>
+                                        <p>Envío</p>
                                         {item.price <= 79900 ? (
                                             <p>{item.product_details.shipping_cost.toLocaleString()}</p>
                                         ) : (
@@ -134,7 +134,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                         <p>${item.discount.toLocaleString()}</p>
                                     </div>
                                     <div className="cuponDescuento">
-                                        <p>Cupon Descuento</p>
+                                        <p>Cupón Descuento</p>
                                         <p>$0</p>
                                     </div>
                                     <div className="totalAPagar">

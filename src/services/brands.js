@@ -23,7 +23,7 @@ export const getBrandsByCategory = (id, tag) =>
     axios.get(`${baseUrl}/brands/category/${id}`, {
         params:{
             limit:12,
-            tag:tag
+            tag: tag || '' // Si tag no tiene valor, se enviará como vacío
         },
         headers:{
             'Content-Type': 'application/json'

@@ -87,7 +87,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
                 Swal.fire({
                     icon: 'success',
                     title: '¡Registro exitoso!',
-                    text: 'La direccion ha sido registrada exitosamente.',
+                    text: 'La dirección ha sido registrada exitosamente.',
                     confirmButtonColor: '#0d6efd',
                 });
                 closeModalAddress();

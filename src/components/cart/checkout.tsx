@@ -794,7 +794,7 @@ function AddressCart() {
                       </div>
                     ))}
                     <div className="addNewAddress" >
-                      <a href="#" onClick={() => setModalAddressCheckout(true)}>Agregar Dirección</a>
+                      <a href="#" onClick={() => setModalAddressCheckout(true)}>Agregar dirección</a>
                     </div>
                   </div>
                 </div>

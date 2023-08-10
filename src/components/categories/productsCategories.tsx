@@ -36,7 +36,7 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 
 const ProductsCategories = () => {
 
-  const { category, subcategory, id, brandId, name } = useParams();
+  const { category, subcategory, id, brandId, name, tag } = useParams();
   const [products, setProducts] = useState([]);
   const [filterApplied, setFilterApplied] = useState(false);
 
@@ -191,7 +191,7 @@ const ProductsCategories = () => {
     .catch((err)=> console.log(err));
   }
   else{
-    subcategorieById(id, offset)
+    subcategorieById(id, offset, tag)
     .then((res) => {
       console.log(res);
       setProducts(res.data);
