@@ -39,6 +39,7 @@ import { allCategories } from "../services/categories";
 import { getCurrentUser, setCurrentUser } from '../helpers/Utils';
 import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 
 function HeaderResponsive() {
@@ -210,7 +211,7 @@ function HeaderResponsive() {
     allBrands();
   }, []);
 
-
+  console.log('HEREEEE', categories, selectedCategory)
   return (
     <div className='containerResponsive'>
       <nav class="navbar bg-body-tertiary fixed-top">
@@ -286,24 +287,30 @@ function HeaderResponsive() {
                     Categorias
                   </a>
                   <ul class="dropdown-menu dropdown-menu-extended">
-
                     {categories.map((category, index) => (
                       <li key={index}>
-                        <a className="dropdown-item" href={`/categories/${category.name}/${category.name}/${category.id}`}>
-                          <strong>{category.name}</strong>
+                        <a className="dropdown-item" 
+                        href={category.childes.length === 0 ? `/categories/${category.name}/${category.name}/${category.id}` : null}
+                        >
+                          <span className={`d-flex align-items-center justify-content-between dropdown-item-text ${category.name === selectedCategory ? "category-selected" : ""}`}
+                          onClick={(e) => { e.stopPropagation(); setSelectedCategory(category.name); }}
+                          >
+                          <strong 
+                          className={` ${category.name === selectedCategory ? "category-selected" : ""}`} >{category.name}</strong>
+                          {category.name !== selectedCategory  && <FontAwesomeIcon icon={faChevronDown} className='dropdown-icon' color='black'/>}
+                          </span>
                         </a>
                         <ul >
                           {category.childes.map((subcategory, index) => (
                             <li key={index}>
                               {/* <Link to={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}> */}
-                              <a className="dropdown-item" href={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}>{subcategory.name}</a>
+                              <a className={`dropdown-item subcategory-item ${category.name !== selectedCategory && "visually-hidden"}`} href={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}>{subcategory.name}</a>
                               {/* </Link> */}
                             </li>
                           ))}
                         </ul>
                       </li>
                     ))}
-
                   </ul>
                 </li>
                 <li class="nav-item pers">
