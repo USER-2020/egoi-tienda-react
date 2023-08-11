@@ -393,7 +393,7 @@ const Header = () => {
                     Inicia Sesion
                   </a>
                   <Modal
-                    className="modal-dialog-centered modal-lg"
+                    className="modal-dialog-centered modal-md"
                     toggle={() => setModalViewLogin(false)}
                     isOpen={modalViewLogin && !changeFormLogin}
                   >
@@ -406,7 +406,7 @@ const Header = () => {
                     Registrate
                   </a>
                   <Modal
-                    className="modal-dialog-centered modal-lg"
+                    className="modal-dialog-centered modal-md"
                     toggle={() => setModalViewRegistro(false)}
                     isOpen={modalViewRegistro && !changeFormRegister}
                   >
@@ -665,7 +665,7 @@ const Header = () => {
                   <FontAwesomeIcon icon={faUser} /> Inicia Sesion
                 </a>
                 <Modal
-                  className="modal-dialog-centered modal-lg"
+                  className="modal-dialog-centered modal-md"
                   toggle={() => setModalViewLogin(false)}
                   isOpen={modalViewLogin}
                 >
@@ -682,7 +682,7 @@ const Header = () => {
                   <FontAwesomeIcon icon={faUserPlus} /> Registrate
                 </a>
                 <Modal
-                  className="modal-dialog-centered modal-lg"
+                  className="modal-dialog-centered modal-md"
                   toggle={() => setModalViewRegistro(false)}
                   isOpen={modalViewRegistro}
                 >
