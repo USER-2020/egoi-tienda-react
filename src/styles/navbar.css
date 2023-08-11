@@ -111,9 +111,27 @@ nav .containerNav{
   
 }
 
+.dropdown:hover .menuUser {
+  opacity: 1;
+  visibility: visible;
+  
+}
+
 
 
 .menu > a {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  /* text-align: start; */
+  font-size: 14px;
+  padding: 10px ;
+  text-decoration: none;
+  color: black;
+
+}
+
+.menuUser > a {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -130,12 +148,34 @@ nav .containerNav{
   background: #F3F3F3;
 }
 
+.menuUser > a:hover {
+  /* background: #f5f5f5; */
+  background: #F3F3F3;
+}
+
 .menu {
   position:absolute;
   top: 60px;
   right: -20px;
   display: grid;
   width: 180px;
+  padding: 8px 0;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0 40px 40px rgb(0 0 0/ 6%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.25s;
+  z-index: 999;
+}
+
+.menuUser {
+  position:absolute;
+  top: 60px;
+  right: -20px;
+  display: grid;
+  width: 214px;
   padding: 8px 0;
   background: #ffffff;
   border-radius: 10px;
