@@ -373,7 +373,7 @@ const Header = () => {
                 />
               </svg>
             </a>
-            <div className="menu">
+            <div className="menuUser">
               {isLoggedIn ? (
                 <>
                   <a href="#" onClick={handleAdminUser}>
@@ -382,7 +382,7 @@ const Header = () => {
                   </a>
                   <a href="#" onClick={handleLogout}>
                     <FontAwesomeIcon icon={faRightFromBracket} />
-                    Cerrar Sesion
+                    Cerrar sesión
                   </a>
                 </>
 

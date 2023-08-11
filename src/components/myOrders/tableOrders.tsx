@@ -62,11 +62,11 @@ function TableOrders({ setOrderDetalleId }) {
                             <tr key={index}>
                                 <td>{item.id}</td>
                                 <td>{new Date(item.updated_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
-                                <td><svg width="15" height="15">
+                                <td><svg width="20" height="20">
                                     <circle
                                         cx="8"
                                         cy="8"
-                                        r="5"
+                                        r="8"
                                         fill={
                                             item.order_status === 'canceled' ? 'red' :
                                             item.order_status === 'pending' ? 'yellow' :
@@ -80,11 +80,11 @@ function TableOrders({ setOrderDetalleId }) {
                                           
                                     />
                                 </svg>
-                                {item.order_status === 'canceled' ? 'cancelado' : '' ||
-                                item.order_status === 'pending' ? 'pendiente' : '' ||
-                                item.order_status === 'processing' ? 'procesando' : '' ||
+                                {item.order_status === 'canceled' ? 'Cancelado' : '' ||
+                                item.order_status === 'pending' ? 'Pendiente' : '' ||
+                                item.order_status === 'processing' ? 'Procesando' : '' ||
                                 item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
-                                item.order_status === 'delivered' ? 'enviado' : ''
+                                item.order_status === 'delivered' ? 'Enviado' : ''
                                 }
                                 </td>
                                 <td>${item.order_amount.toLocaleString()}</td>
