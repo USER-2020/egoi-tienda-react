@@ -124,4 +124,8 @@ nav {
         fill: black;
     }
 
+    .subcategory-item{
+        font-weight: bold;
+    }
+
 }

@@ -211,7 +211,6 @@ function HeaderResponsive() {
     allBrands();
   }, []);
 
-  console.log('HEREEEE', categories, selectedCategory)
   return (
     <div className='containerResponsive'>
       <nav class="navbar bg-body-tertiary fixed-top">
@@ -304,9 +303,17 @@ function HeaderResponsive() {
                           {category.childes.map((subcategory, index) => (
                             <li key={index}>
                               {/* <Link to={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}> */}
-                              <a className={`dropdown-item subcategory-item ${category.name !== selectedCategory && "visually-hidden"}`} href={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}>{subcategory.name}</a>
+                              <a className={`dropdown-item subcategory-item  ${category.name !== selectedCategory && "visually-hidden"}`} href={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}>{subcategory.name}</a>
+                              {
+                                subcategory.childes.map((brand, index) => (
+                                  <li key={index}>
+                                    <a className={`dropdown-item  px-5 ${category.name !== selectedCategory && "visually-hidden"}`} href={`/categories/${category.name}/${brand.name}/${brand.id}`}>{brand.name}</a>
+                                  </li>
+                                ))
+                              }
                               {/* </Link> */}
                             </li>
+                              
                           ))}
                         </ul>
                       </li>
