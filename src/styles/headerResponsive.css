@@ -48,10 +48,6 @@ nav {
     list-style: none;
 }
 
-
-
-
-
 @media (max-width: 768px) {
     nav {
         width: 100vw;
@@ -114,7 +110,22 @@ nav {
 
     }
 
+    .category-selected {
+        background-color: #FC5241;
+        color: white;
+        border-radius: 10px;
+    }
 
+    .dropdown-item:hover {
+        background-color: transparent;
+    }
 
+    .dropdown:hover svg path {
+        fill: black;
+    }
+
+    .subcategory-item{
+        font-weight: bold;
+    }
 
 }
