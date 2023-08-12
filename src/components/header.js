@@ -648,7 +648,7 @@ const Header = () => {
             </svg>
             Vender
           </a>
-          <div className="menu">
+          <div className="menu text-nowrap">
             {isLoggedIn ? (
               <a href="#" onClick={handleLogout}>
                 <FontAwesomeIcon icon={faRightFromBracket} />
@@ -658,38 +658,41 @@ const Header = () => {
               <>
                 <a
                   href="#"
-                  onClick={() => {
-                    setModalViewLogin(true);
-                  }}
+                  // onClick={() => {
+                  //   setModalViewLogin(true);
+                  // }}
+
                 >
-                  <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+                  {/* <FontAwesomeIcon icon={faUser} /> */}
+                  Conviértete en vendedor
                 </a>
-                <Modal
-                  className="modal-dialog-centered modal-md"
+                {/* <Modal
+                  className="modal-dialog-centered modal-lg"
                   toggle={() => setModalViewLogin(false)}
                   isOpen={modalViewLogin}
-                >
-                  <ModalBody>
+                > */}
+                  {/* <ModalBody>
                     <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} handleChangeFormLogin={handleChangeFormLogin} />
                   </ModalBody>
-                </Modal>
+                </Modal> */}
                 <a
                   href="#"
-                  onClick={() => {
-                    setModalViewRegistro(true);
-                  }}
+                  // onClick={() => {
+                  //   setModalViewRegistro(true);
+                  // }}
                 >
-                  <FontAwesomeIcon icon={faUserPlus} /> Registrate
+                  {/* <FontAwesomeIcon icon={faUserPlus} />  */}
+                  Vendedor iniciar sesión
                 </a>
-                <Modal
-                  className="modal-dialog-centered modal-md"
+                {/* <Modal
+                  className="modal-dialog-centered modal-lg"
                   toggle={() => setModalViewRegistro(false)}
                   isOpen={modalViewRegistro}
                 >
                   <ModalBody>
                     <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
                   </ModalBody>
-                </Modal>
+                </Modal> */}
               </>
             )}
           </div>

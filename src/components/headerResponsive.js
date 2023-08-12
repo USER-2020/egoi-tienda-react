@@ -62,6 +62,7 @@ function HeaderResponsive() {
   const backdropRef = useRef(null);
   const [isOffcanvasVisible, setIsOffcanvasVisible] = useState(false);
   const [isBackdropVisible, setIsBackdropVisible] = useState(false);
+  const [showSaleOptions, setShowSaleOptions] = useState(false);
 
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -174,6 +175,8 @@ function HeaderResponsive() {
       })
       .catch((err) => console.log(err));
   }
+
+  console.log('HERE', currenUser)
 
   // useEffect(() => {
   //   // Actualizar el estado del offcanvas
@@ -380,7 +383,7 @@ function HeaderResponsive() {
                     ))}
                   </ul>
                 </li>
-                <li class="nav-item pers">
+                <li class="nav-item dropdown">
                   <a href="#">
                     <svg
                       width="32"
@@ -418,8 +421,11 @@ function HeaderResponsive() {
                     Tiendas
                   </a>
                 </li> */}
-                <li class='nav-item pers'>
-                  <a href="#">
+                <li class='nav-item dropdown'>
+                  <a class="nav-link dropdown-toggle w-full"
+                    href="#" role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     <svg
                       width="32"
                       height="32"
@@ -437,6 +443,14 @@ function HeaderResponsive() {
                     Vender
                     
                   </a>
+                  <ul class="dropdown-menu dropdown-menu-extended">
+                    <li>
+                      <a className='dropdown-item' href="#">
+                        <strong>Cerrar sesión como comprador</strong>
+                      </a>
+                    </li>
+                  </ul>
+
                 </li>
                 {currenUser ? (
                   <li class='nav-item pers'>
