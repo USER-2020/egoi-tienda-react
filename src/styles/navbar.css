@@ -117,6 +117,12 @@ nav .containerNav{
   
 }
 
+.dropdown:hover .menuSeller {
+  opacity: 1;
+  visibility: visible;
+  
+}
+
 
 
 .menu > a {
@@ -131,7 +137,7 @@ nav .containerNav{
 
 }
 
-.menu > button {
+.menuSeller > button {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -163,7 +169,12 @@ nav .containerNav{
   background: #F3F3F3;
 }
 
-.menu > button:hover {
+.menuSeller > a:hover {
+  /* background: #f5f5f5; */
+  background: #F3F3F3;
+}
+
+.menuSeller > button:hover {
   /* background: #f5f5f5; */
   background: #F3F3F3;
 }
@@ -207,7 +218,42 @@ nav .containerNav{
   z-index: 999;
 }
 
+.menuSeller {
+  position:absolute;
+  top: 60px;
+  right: -20px;
+  display: grid;
+  width: 250px;
+  padding: 8px 0;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0 40px 40px rgb(0 0 0/ 6%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.25s;
+  z-index: 999;
+}
+
+.menuSeller a {
+  padding: 10px;
+}
+
 .menu:before{
+  content: "";
+  background: inherit;
+  border-top: 1px solid #e1e1e1;
+  border-right: 1px solid #e1e1e1;
+  position: absolute;
+  top: -7px;
+  right: 22px;
+  width: 12px;
+  height: 12px;
+  rotate: -45deg;
+  
+}
+
+.menuSeller:before{
   content: "";
   background: inherit;
   border-top: 1px solid #e1e1e1;

@@ -648,7 +648,7 @@ const Header = () => {
             </svg>
             Vender
           </a>
-          <div className="menu">
+          <div className="menuSeller">
             {isLoggedIn  ? (
               <button onClick={() => {
                 setCurrentUser();
