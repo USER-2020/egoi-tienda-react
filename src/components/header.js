@@ -653,7 +653,7 @@ const Header = () => {
               <button onClick={() => {
                 setCurrentUser();
                 setIsLoggedIn(false);            
-              }}>
+              }} style={{fontSize:'14px'}}>
                 <FontAwesomeIcon icon={faRightFromBracket} />
                 Cerrar sesión como cliente
               </button>
