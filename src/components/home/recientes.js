@@ -107,13 +107,13 @@ const Recientes = ({ bannersInfo }) => {
         console.log("este el id elegido para pasar por las rutas en el banner 3", itemId);
 
         if (filtro === 'category') {
-            history.push(`/categories/products/filter/${itemId}/${tag}`);
+            history.push(`/categories/products/Descuento/${itemId}/${tag}`);
         }
         if (filtro === 'product') {
             history.push(`/detailsProduct/${itemId}/slug/${tag}`);
         }
         if (filtro === 'brand') {
-            history.push(`/brand/filterBrandBanner/${itemId}/${tag}`);
+            history.push(`/brand/Descuento/${itemId}/${tag}`);
         }
     }
 
