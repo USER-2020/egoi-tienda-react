@@ -172,6 +172,8 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   backgroundColor: "#fc5241",
                   borderColor: "#fc5241",
                   borderRadius: "50px",
+                  width:'285px',
+                  alignSelf:'center'
                 }}
                 type="submit"
               >
@@ -184,6 +186,8 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   borderColor: "#fc5241",
                   color: "#fc5241",
                   borderRadius: "50px",
+                  width:'285px',
+                  alignSelf:'center'
                 }}
                 onClick={() => {
                   closeModalLogin();

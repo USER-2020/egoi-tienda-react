@@ -88,7 +88,7 @@ const Bannerdown = ({ bannersInfo }) => {
 
         if (filtro === 'category') {
             // getAllCategoriesByBanner(bannersInfo);
-            history.push(`/categories/products/filter/${itemId}/${tag}`,{
+            history.push(`/categories/products/Descuento/${itemId}/${tag}`,{
                 tag:tag
             });
         }
@@ -98,7 +98,7 @@ const Bannerdown = ({ bannersInfo }) => {
         }
         if (filtro === 'brand') {
             // getAllCategoriesByBanner(bannersInfo);
-            history.push(`/brand/filterBrandBanner/${itemId}/${tag}`);
+            history.push(`/brand/Descuento/${itemId}/${tag}`);
         }
     }
 

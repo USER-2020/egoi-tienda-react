@@ -326,7 +326,8 @@ const ProductsCategories = () => {
 
 
     <div className='w-100'>
-      <HeaderCategories handleClickFilterRecent={handleButtonClickRecent}
+      <HeaderCategories productsTag={products}
+      handleClickFilterRecent={handleButtonClickRecent}
         handleClickFilterHigh_Low={handleButtonClickHigh_Low}
         handleClickFilterLow_High={handleButtonClickLow_High}
         handleClickFilterA_Z={handleButtonClickA_Z}
@@ -339,7 +340,8 @@ const ProductsCategories = () => {
         handleAplyFilterByBrand={productsByBrand}
 
       />
-      <HeaderResponsiveCategorie handleClickFilterRecent={handleButtonClickRecent}
+      <HeaderResponsiveCategorie productsTag={products}
+      handleClickFilterRecent={handleButtonClickRecent}
         handleClickFilterHigh_Low={handleButtonClickHigh_Low}
         handleClickFilterLow_High={handleButtonClickLow_High}
         handleClickFilterA_Z={handleButtonClickA_Z}

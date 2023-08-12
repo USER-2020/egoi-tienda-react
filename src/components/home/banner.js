@@ -143,7 +143,7 @@ const Banner = (args) => {
     const showProductsByCategoryBanner = (idTag) => {
         if (tipoFiltro === 'category') {
             // getAllCategoriesByBanner(bannersInfo);
-            history.push(`/categories/products/filter/${bannerFiltro1}/${idTag}`);
+            history.push(`/categories/products/Descuento/${bannerFiltro1}/${idTag}`);
         }
         if (tipoFiltro === 'product') {
             // getAllCategoriesByBanner(bannersInfo);
@@ -151,7 +151,7 @@ const Banner = (args) => {
         }
         if (tipoFiltro === 'brand') {
             // getAllCategoriesByBanner(bannersInfo);
-            history.push(`/brand/filterBrandBanner/${bannerFiltro1}/${idTag}`);
+            history.push(`/brand/Descuento/${bannerFiltro1}/${idTag}`);
         }
 
         // /* Banner 2 */
@@ -171,13 +171,13 @@ const Banner = (args) => {
 
 
         if (filtro === 'category') {
-            history.push(`/categories/products/filter/${itemId}/${tag}`);
+            history.push(`/categories/products/Descuento/${itemId}/${tag}`);
         }
         if (filtro === 'product') {
             history.push(`/detailsProduct/${itemId}/slug/${tag}`);
         }
         if (filtro === 'brand') {
-            history.push(`/brand/filterBrandBanner/${itemId}/${tag}`);
+            history.push(`/brand/Descuento/${itemId}/${tag}`);
         }
 
     }

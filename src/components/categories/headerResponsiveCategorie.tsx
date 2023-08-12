@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Modal, ModalBody, Card } from 'reactstrap';
 
 import '../../styles/headerCategories.css'
@@ -96,29 +96,40 @@ const HeaderResponsiveCategorie = ({
   priceEnd,
   handlePriceStartChange,
   handlePriceEndChange,
-  handleApplyRangeFilters
+  handleApplyRangeFilters,
+  productsTag
 }) => {
 
 
-  const { category, subcategory, id, brandId } = useParams();
+  const { category, subcategory, id, brandId, tag, brand } = useParams();
   // console.log(category)
   // console.log(subcategory)
 
   const [modalMarca, setModalMarca] = useState(false);
   const [modalPrecio, setModalPrecio] = useState(false);
   const [modalOrdenar, setModalOrdenar] = useState(false);
-  const [fichaDeFiltros, setFichaDeFiltros]= useState(false);
+  const [fichaDeFiltros, setFichaDeFiltros] = useState(false);
+
+  const [productsDetailTag, setProductsDetailTag] = useState([]);
+  const location = useLocation();
 
   /**
    * The function toggles the value of a modal state variable.
    */
-  const toggleMarca = () => {setModalMarca(!modalMarca); setFichaDeFiltros(true);}
-  const togglePrecio = () => {setModalPrecio(!modalPrecio); setFichaDeFiltros(true);}
-  const toggleOrdenar = () => {setModalOrdenar(!modalOrdenar); setFichaDeFiltros(true);}
+  const toggleMarca = () => { setModalMarca(!modalMarca); setFichaDeFiltros(true); }
+  const togglePrecio = () => { setModalPrecio(!modalPrecio); setFichaDeFiltros(true); }
+  const toggleOrdenar = () => { setModalOrdenar(!modalOrdenar); setFichaDeFiltros(true); }
 
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
   const [orderBy, setOrderBy] = useState([]);
+
+  // Verificar si la ruta es /categories/products/Descuento/
+  const isDescuentoRouteCategory = location.pathname === `/categories/products/Descuento/${id}/${tag}`;
+  const isDescuentoRouteBrand = location.pathname === `/brand/Descuento/${brandId}/${tag}`;
+
+  const shouldShowName = (isDescuentoRouteCategory || isDescuentoRouteBrand) &&
+    productsDetailTag && productsDetailTag.data_tag && productsDetailTag.data_tag[0];
 
   // const productsBySubcategory =(id) =>{
   //   subcategorieById(id)
@@ -175,12 +186,26 @@ const HeaderResponsiveCategorie = ({
     }
   }, [id]);
 
+  useEffect(() => {
+    if (productsTag && productsTag.products && productsTag.products.length > 0) {
+      console.log("Productos por etiqueta", productsTag.products[0]);
+      setProductsDetailTag(productsTag.products[0]);
+    }
+  }, [productsTag]);
+
   return (
 
     <div className='containerHeaderResponsiveCategorie'>
       <div className='container'>
         {/* Nombre de la categoria  */}
-        <h3 className='nameCategory'>{subcategory}</h3>
+        <h3 className='nameCategory'>
+          {subcategory}{' '}
+          {/* {productsDetailTag} */}
+          {/* {productsDetailTag && productsDetailTag.data_tag && productsDetailTag.data_tag[0] ? productsDetailTag.data_tag[0].name : ''} */}
+          {brand}
+          {isDescuentoRouteBrand ? ' ' + 'especial en marcas' : ''}
+          {shouldShowName ? productsDetailTag.data_tag[0].name : ''}
+        </h3>
 
         <div className='card categoriesCard'>
           <ul>
@@ -324,7 +349,7 @@ const HeaderResponsiveCategorie = ({
             </div>
           ) : (
             <div>
-              <p style={{marginLeft:'20px'}}>No hay ningun filtro seleccionado</p>
+              <p style={{ marginLeft: '20px' }}>No hay ningun filtro seleccionado</p>
             </div>
           )}
 
