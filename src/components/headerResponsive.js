@@ -42,6 +42,7 @@ import { allProductsCart } from "../services/cart";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 
+
 function HeaderResponsive() {
 
   /* global bootstrap */
@@ -418,7 +419,7 @@ function HeaderResponsive() {
                   </a>
                 </li> */}
                 <li class='nav-item pers'>
-                  <a href="#" >
+                  <a href="#">
                     <svg
                       width="32"
                       height="32"
@@ -434,6 +435,7 @@ function HeaderResponsive() {
                       />
                     </svg>
                     Vender
+                    
                   </a>
                 </li>
                 {currenUser ? (

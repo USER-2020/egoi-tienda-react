@@ -68,6 +68,7 @@ function TableOrders({ setOrderDetalleId }) {
                                         cy="8"
                                         r="8"
                                         fill={
+                                            item.order_status === 'confirmed'? 'green':
                                             item.order_status === 'canceled' ? 'red' :
                                             item.order_status === 'pending' ? 'yellow' :
                                             item.order_status === 'processing' ? '#009ddd' :
@@ -80,7 +81,9 @@ function TableOrders({ setOrderDetalleId }) {
                                           
                                     />
                                 </svg>
-                                {item.order_status === 'canceled' ? 'Cancelado' : '' ||
+                                {
+                                item.order_status === 'confirmed' ? 'Confirmado': '' ||
+                                item.order_status === 'canceled' ? 'Cancelado' : '' ||
                                 item.order_status === 'pending' ? 'Pendiente' : '' ||
                                 item.order_status === 'processing' ? 'Procesando' : '' ||
                                 item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
