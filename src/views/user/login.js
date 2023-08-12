@@ -118,7 +118,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               justifyContent: "center",
             }}
           >
-            <h5 style={{ color: "#fc5241" }}>Iniciar sesíon</h5>
+            <h5 style={{ color: "#fc5241" }}>Iniciar sesíón</h5>
           </div>
 
           <Form onSubmit={handleSubmitPersonaLogin}>
