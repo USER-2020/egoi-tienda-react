@@ -564,7 +564,7 @@ function HeaderResponsive() {
                           //   }
                         }}
                       >
-                        <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+                        <FontAwesomeIcon icon={faUser} /> Inicia sesión
                       </a>
                       <Modal
                         className="modal-dialog-centered modal-lg"
@@ -582,7 +582,7 @@ function HeaderResponsive() {
                           setModalViewRegistro(true);
                         }}
                         className='btn btnPersonalizadosR'>
-                        <FontAwesomeIcon icon={faUserPlus} /> Registrate
+                        <FontAwesomeIcon icon={faUserPlus} /> Regístrate
                       </a>
                       <Modal
                         className="modal-dialog-centered modal-lg"

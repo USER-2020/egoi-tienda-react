@@ -390,7 +390,7 @@ const Header = () => {
                 <>
                   <a href="#" onClick={() => setModalViewLogin(true)}>
                     <FontAwesomeIcon icon={faUser} />
-                    Inicia Sesion
+                    Inicia sesión
                   </a>
                   <Modal
                     className="modal-dialog-centered modal-md"
@@ -403,7 +403,7 @@ const Header = () => {
                   </Modal>
                   <a href="#" onClick={() => setModalViewRegistro(true)}>
                     <FontAwesomeIcon icon={faUserPlus} />
-                    Registrate
+                    Regístrate
                   </a>
                   <Modal
                     className="modal-dialog-centered modal-md"
