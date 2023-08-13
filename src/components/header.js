@@ -401,7 +401,7 @@ const Header = () => {
                       <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
                     </ModalBody>
                   </Modal>
-                  <a href="#" onClick={() => setModalViewRegistro(true)}>
+                  <a href="#" onClick={() => setModalViewRegistro(true)} style={{gap:'15px'}}>
                     <FontAwesomeIcon icon={faUserPlus} />
                     Regístrate
                   </a>
