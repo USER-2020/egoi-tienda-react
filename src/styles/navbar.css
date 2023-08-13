@@ -152,6 +152,21 @@ nav .containerNav{
 
 }
 
+.menuSeller > .logguedInfoBtn {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  /* text-align: start; */
+  font-size: 14px;
+  padding: 10px ;
+  text-decoration: none;
+  color: black;
+  border: none;
+  background-color: inherit;
+  width: 100%;
+
+}
+
 .menuUser > a {
   display: flex;
   flex-direction: row;
@@ -175,6 +190,10 @@ nav .containerNav{
 }
 
 .menuSeller > button:hover {
+  /* background: #f5f5f5; */
+  background: #F3F3F3;
+}
+.menuSeller > .logguedInfoBtn:hover {
   /* background: #f5f5f5; */
   background: #F3F3F3;
 }
