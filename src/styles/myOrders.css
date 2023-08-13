@@ -459,18 +459,169 @@
 .contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
 }
 
-.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card {
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .ticketSendMessageCard {
+    width: 50%;
+    padding: 24px;
+    border-radius: 24px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport {
+    width: 50%;
+    padding: 0px;
+    border-radius: 24px;
+    height: 450px;
+
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .messageUser {
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .messageAdmin {
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    justify-content: start;
+    margin-left: 2px;
+    display: flex;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .messageUser p {
+    width: 230px;
+    background-color: #FC5241;
+    padding: 10px;
+    color: white;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .messageAdmin p {
+    width: 230px;
+    background-color: #E9E9E9;
+    padding: 10px;
+    color: black;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .marcaTiempoUser {
+    width: 100%;
+    justify-content: end;
+    margin-right: 0;
+    display: flex;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .marcaTiempoAdmin {
+    width: 100%;
+    justify-content: start;
+    margin-left: 0;
+    display: flex;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .marcaTiempoUser p {
+    width: 230px;
+    text-align: end;
+    justify-content: end;
+    margin-bottom: 0;
+    border-radius: 16px;
+    padding: 5px;
+    font-size: 14px;
+    color: #74737B;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .marcaTiempoAdmin p {
+    width: 230px;
+    text-align: start;
+    justify-content: start;
+    margin-bottom: 0;
+    border-radius: 16px;
+    padding: 5px;
+    font-size: 14px;
+    color: #74737B;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    padding: 5px;
+
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes:hover {
+    overflow-y: scroll;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes::-webkit-scrollbar-thumbr {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .chatTicketSupport .headerChat {
+    width: 100%;
+    height: 48px;
+    background-color: #FC5241;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .ticketSendMessageCard {
+    width: 50%;
+}
+
+/* .contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card {
     padding: 24px;
     border-radius: 24px;
 
-}
+} */
 
 .contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .detailTicketSupportHeader {
     display: flex;
     flex-direction: row;
     gap: 70px;
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .detailTicketSupportHeader .containerDatos .badge {
+    background-color: #FC5241;
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 8px;
+    /* Para que el badge tenga bordes redondeados */
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .detailTicketSupportHeader .containerDatos .badgeS {
+    background-color: #c22f86;
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 8px;
+    font-size: 10px;
+    /* Para que el badge tenga bordes redondeados */
+}
+
+.contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .detailTicketSupportHeader .containerDatos {
+    margin-bottom: 20px;
 }
 
 .contenidoMisOrdenes .ticketSoporte .detailTicketSupportContainer .card .containerDatos h6 {
@@ -1174,5 +1325,133 @@ input[placeholder="Describe tu problema...  "]::placeholder {
         color: #FC5241;
     }
 
+    /* Ticket se sporte */
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .ticketSendMessageCard {
+        width: 100%;
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport {
+        width: 100%;
+        padding: 0px;
+        border-radius: 24px;
+        height: 450px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .messageUser {
+        width: 100%;
+        padding: 10px 0px 0px 0px;
+        justify-content: end;
+        margin-right: 0;
+        display: flex;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .messageAdmin {
+        width: 100%;
+        padding: 10px 0px 0px 0px;
+        justify-content: start;
+        margin-left: 2px;
+        display: flex;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .messageUser p {
+        width: 230px;
+        background-color: #FC5241;
+        padding: 10px;
+        color: white;
+        justify-content: end;
+        margin-bottom: 0;
+        border-radius: 16px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .messageAdmin p {
+        width: 230px;
+        background-color: #E9E9E9;
+        padding: 10px;
+        color: black;
+        justify-content: end;
+        margin-bottom: 0;
+        border-radius: 16px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .marcaTiempoUser {
+        width: 100%;
+        justify-content: end;
+        margin-right: 0;
+        display: flex;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .marcaTiempoAdmin {
+        width: 100%;
+        justify-content: start;
+        margin-left: 0;
+        display: flex;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .marcaTiempoUser p {
+        width: 230px;
+        text-align: end;
+        justify-content: end;
+        margin-bottom: 0;
+        border-radius: 16px;
+        padding: 5px;
+        font-size: 14px;
+        color: #74737B;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes .marcaTiempoAdmin p {
+        width: 230px;
+        text-align: start;
+        justify-content: start;
+        margin-bottom: 0;
+        border-radius: 16px;
+        padding: 5px;
+        font-size: 14px;
+        color: #74737B;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .contenedorMensajes {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 100%;
+        padding: 5px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .chatTicketSupport .headerChat {
+        width: 100%;
+        height: 48px;
+        background-color: #FC5241;
+        color: white;
+        padding: 10px;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .card .detailTicketSupportHeader .containerDatos .badge {
+        background-color: #FC5241;
+        color: white;
+        padding: 5px 10px;
+        font-weight: bold;
+        border-radius: 8px;
+        /* Para que el badge tenga bordes redondeados */
+    }
+
+    .contenedorOrdersOpcionesResponsive .contenidoMisOrdenesResponsive .ticketSoporteResponsive .detailTicketSupportContainer .card .detailTicketSupportHeader .containerDatos .badgeS {
+        background-color: #c22f86;
+        color: white;
+        padding: 5px 10px;
+        font-weight: bold;
+        border-radius: 8px;
+        font-size: 10px;
+        /* Para que el badge tenga bordes redondeados */
+    }
 
 }

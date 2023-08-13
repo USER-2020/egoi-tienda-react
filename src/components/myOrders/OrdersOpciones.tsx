@@ -30,12 +30,12 @@ function Orders(props) {
     const urlActiveOption = searchParams.get('activeOption');
     const urlSelectedOption = searchParams.get('selectedOption');
 
-    
+
 
     const [activeOption, setActiveOption] = useState(urlActiveOption || 'MisPedidos');
     const [selectedOption, setSelectedOption] = useState(urlSelectedOption || 'Mis pedidos');
 
-    
+
 
     // const [activeOption, setActiveOption] = useState('MisPedidos');
     // const [selectedOption, setSelectedOption] = useState('Mis Pedidos');
@@ -79,6 +79,8 @@ function Orders(props) {
 
     /* Id del ticket */
     const [idTicket, setIdTicket] = useState('');
+    const [statusTicket, setStatusTicket] = useState('');
+    const [priorityTicket, setPriorityTicket] = useState('');
 
     const handleMenuOptionClick = (option) => {
         setActiveOption(option);
@@ -252,9 +254,17 @@ function Orders(props) {
         setIdTicket(idTicket);
     }
 
+    const handleTicketClickPriority = (priority) => {
+        setPriorityTicket(priority);
+    }
+
+    const handleTicketClickStatus = (statusTicketGet) => {
+        setStatusTicket(statusTicketGet);
+    }
+
     useEffect(() => {
         console.log("desde la principal", orderDetalleId);
-        
+
     }, []);
 
     useEffect(() => {
@@ -330,7 +340,7 @@ function Orders(props) {
                                         <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} />
                                     )}
                                     {showTrackOrder && (
-                                        <TrackOrder orderDetalleId={orderDetalleId}/>
+                                        <TrackOrder orderDetalleId={orderDetalleId} />
                                     )}
                                 </div>
                             )}
@@ -341,7 +351,7 @@ function Orders(props) {
                                         <TrackSearch handleChangueTrackOrder={handleChangueTrackOrder} />
                                     )}
                                     {showTrackOrder && (
-                                        <TrackOrder orderDetalleId={orderDetalleId}/>
+                                        <TrackOrder orderDetalleId={orderDetalleId} />
                                     )}
                                 </div>
                             )}
@@ -376,10 +386,10 @@ function Orders(props) {
                             {ticket && (
                                 <div className="ticketSoporte">
                                     {showTicketSuport && (
-                                        <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket} setIdTicket={handleTicketClick} />
+                                        <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket} setIdTicket={handleTicketClick} setPriorityTicket={handleTicketClickPriority} setStatusTicket={handleTicketClickStatus} />
                                     )}
                                     {showDetailTicketSupport && (
-                                        <DetailTicketSupport idTicket={idTicket} />
+                                        <DetailTicketSupport idTicket={idTicket} status={statusTicket} priority={priorityTicket} />
                                     )}
                                 </div>
                             )}
@@ -401,7 +411,7 @@ function Orders(props) {
                                     <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} />
                                 )}
                                 {showTrackOrder && (
-                                    <TrackOrder orderDetalleId={orderDetalleId}/>
+                                    <TrackOrder orderDetalleId={orderDetalleId} />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
@@ -415,7 +425,7 @@ function Orders(props) {
                                     <TrackSearch handleChangueTrackOrder={handleChangueTrackOrder} />
                                 )}
                                 {showTrackOrder && (
-                                    <TrackOrder orderDetalleId={orderDetalleId}/>
+                                    <TrackOrder orderDetalleId={orderDetalleId} />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
@@ -465,10 +475,10 @@ function Orders(props) {
                         {ticket && (
                             <div className="ticketSoporteResponsive">
                                 {showTicketSuport && (
-                                    <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket} setIdTicket={handleTicketClick} />
+                                    <TicketSuport closemodalAndOpenOtherModal={closeTicketTableShowDetailTicket} setIdTicket={handleTicketClick} setPriorityTicket={handleTicketClickPriority} setStatusTicket={handleTicketClickStatus} />
                                 )}
                                 {showDetailTicketSupport && (
-                                    <DetailTicketSupport idTicket={idTicket} />
+                                    <DetailTicketSupport idTicket={idTicket} status={statusTicket} priority={priorityTicket} />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
@@ -492,7 +502,7 @@ function Orders(props) {
             </div>
 
 
-            
+
         </>
     )
 }
