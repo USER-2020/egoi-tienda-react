@@ -128,6 +128,9 @@ const HeaderResponsiveCategorie = ({
   const isDescuentoRouteCategory = location.pathname === `/categories/products/Descuento/${id}/${tag}`;
   const isDescuentoRouteBrand = location.pathname === `/brand/Descuento/${brandId}/${tag}`;
 
+  // Verificar si la ruta es /discountedProducts
+  const isDiscountedProducts = location.pathname === '/discountedProducts';
+
   const shouldShowName = (isDescuentoRouteCategory || isDescuentoRouteBrand) &&
     productsDetailTag && productsDetailTag.data_tag && productsDetailTag.data_tag[0];
 
@@ -205,6 +208,7 @@ const HeaderResponsiveCategorie = ({
           {brand}
           {isDescuentoRouteBrand ? ' ' + 'especial en marcas' : ''}
           {shouldShowName ? productsDetailTag.data_tag[0].name : ''}
+          {isDiscountedProducts ? 'Productos en descuento': ''}
         </h3>
 
         <div className='card categoriesCard'>

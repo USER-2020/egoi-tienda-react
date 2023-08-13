@@ -246,6 +246,8 @@
     margin-bottom: 20px;
 }
 
+
+
 .span_offer {
 
     justify-content: center;
@@ -801,14 +803,14 @@ h4 {
         border-radius: 50%;
         margin: 5px;
         transition: all 0.3s ease;
-        
+
     }
 
     .carousel-indicators .indicator.active {
         width: 45px;
         height: 15px;
         border-radius: 14px;
-        background-color:#F95738;
+        background-color: #F95738;
     }
 
     .tavtImage {

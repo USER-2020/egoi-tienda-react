@@ -10,8 +10,8 @@ import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
 import start_1 from '../../assets/Star-1.png';
 
 import iphoner from '../../assets/iphoneMuestra.png';
-import { Link, useParams, useHistory } from 'react-router-dom';
-import { subcategorieById } from '../../services/categories';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
+import { discountedProducts, subcategorieById } from '../../services/categories';
 import {
   filterProductsA_Z,
   filterProductsBestRated,
@@ -38,6 +38,7 @@ const ProductsCategories = () => {
 
   const { category, subcategory, id, brandId, name, tag } = useParams();
   const [products, setProducts] = useState([]);
+  // const [productsDiscounted, setProductsDiscounted] = useState([]);
   const [filterApplied, setFilterApplied] = useState(false);
 
   // const [selectedFilters, setSelectedFilters] = useState(null);
@@ -52,6 +53,11 @@ const ProductsCategories = () => {
   const [currentPage, setCurrentPage] = useState(1);
   // const [totalPages, setTotalPages] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+
+
+  // Verificar si la ruta es /discountedProducts
+  const location = useLocation();
+  const isDiscountedProducts = location.pathname === '/discountedProducts';
 
   // const {searchProducts, setSearchProducts} = useContext(AppContext);
 
@@ -120,6 +126,14 @@ const ProductsCategories = () => {
         console.log("Producttos filtrados por los mas vendidos", res.data.products);
       })
       .catch((err) => console.log(err));
+  }
+
+  const getDiscountByProducts = () => {
+    discountedProducts(offset)
+      .then((res) => {
+        console.log("Productos en descuento", res.data.products);
+        setProducts(res.data);
+      }).catch((err) => console.log(err));
   }
 
   const productsWithFilterBestRated = () => {
@@ -293,6 +307,13 @@ const ProductsCategories = () => {
 
       productsByBrand(brandId);
     }
+
+    if (isDiscountedProducts) {
+      getDiscountByProducts();
+      // setProducts(products.products);
+      console.log("Productos en descuento luego de llamar al endpoint", products);
+    }
+
     // productsWithFilterMostSold();
     // productsWithFilterBestRated();
     // productsWithFilterFeaturePrefer();
@@ -304,7 +325,8 @@ const ProductsCategories = () => {
 
   }, [id, brandId, selectedFiltersRecent, selectedFiltersHigh_Low,
     selectedFiltersLow_High, selectedFiltersA_Z, selectedFiltersZ_A,
-    offset, currentPage, name]);
+    offset, currentPage, name, isDiscountedProducts]);
+
 
 
 
@@ -327,7 +349,7 @@ const ProductsCategories = () => {
 
     <div className='w-100'>
       <HeaderCategories productsTag={products}
-      handleClickFilterRecent={handleButtonClickRecent}
+        handleClickFilterRecent={handleButtonClickRecent}
         handleClickFilterHigh_Low={handleButtonClickHigh_Low}
         handleClickFilterLow_High={handleButtonClickLow_High}
         handleClickFilterA_Z={handleButtonClickA_Z}
@@ -341,7 +363,7 @@ const ProductsCategories = () => {
 
       />
       <HeaderResponsiveCategorie productsTag={products}
-      handleClickFilterRecent={handleButtonClickRecent}
+        handleClickFilterRecent={handleButtonClickRecent}
         handleClickFilterHigh_Low={handleButtonClickHigh_Low}
         handleClickFilterLow_High={handleButtonClickLow_High}
         handleClickFilterA_Z={handleButtonClickA_Z}
@@ -376,11 +398,20 @@ const ProductsCategories = () => {
             </div>
             <div className="containerProducts-categories d-flex flex-column align-items-center align-items-md-end w-100">
               <div className="containerProducts-categories row">
+                {/* {isDiscountedProducts && productsDiscounted } */}
                 {products && products.products && products.products.map((product, index) => (
                   <div key={product.id} className="col-md-3 col-6 mb-4" >
                     <a href="#" className='containerCard2  ' >
                       <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
                         <Card className='cardProducto1'>
+                          {isDiscountedProducts && product.discount_type === 'flat' && (
+                            <span className='tagDiscounted'>$ {product.discount.toLocaleString()} Off</span>
+                          )}
+
+                          {isDiscountedProducts && product.discount_type === 'percent' && (
+                            <span className='tagDiscounted'>{product.discount}% Off</span>
+                          )}
+
                           <CardImg
                             src={baseUrlImage + product.images[0]}
                             alt={product.name}
