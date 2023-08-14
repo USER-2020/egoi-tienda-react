@@ -395,7 +395,8 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                     color: "#fc5241",
                     borderRadius: "50px",
                     width:'285px',
-                    alignSelf:'center'
+                    alignSelf:'center',
+                    marginTop:'-15px'
                   }}
                   onClick={() => {
                     limpiarCampos();
