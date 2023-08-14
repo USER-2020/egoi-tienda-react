@@ -83,7 +83,6 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
       .then((res) => {
         console.log("Orden enviada por OTP");
         console.log(res);
-
       })
       .catch((err) => console.log(err));
   }
