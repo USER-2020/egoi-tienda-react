@@ -95,7 +95,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                 <div className="description">
                                     <h6>{item.product_details.name}
                                     </h6>
-                                    <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: 0, color: '#171523' }}>${item.product_details.unit_price.toLocaleString()}</p>
+                                    <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: 0, color: '#171523' }}>${item.product_details.unit_price.toLocaleString('en')}</p>
                                     <p style={{ color: '#74737B', fontSize: '16px' }}>Cantidad: {item.qty}</p>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                     </div>
                                     <div className="subtotal">
                                         <p>Subtotal</p>
-                                        <p>${item.price.toLocaleString()}</p>
+                                        <p>${item.price.toLocaleString('en')}</p>
                                     </div>
                                     <div className="impuesto">
                                         <p>Impuesto</p>
@@ -123,7 +123,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                     <div className="Envio">
                                         <p>Envío</p>
                                         {item.price <= 79900 ? (
-                                            <p>{item.product_details.shipping_cost.toLocaleString()}</p>
+                                            <p>{item.product_details.shipping_cost.toLocaleString('en')}</p>
                                         ) : (
                                             <p>$0</p>
                                         )}
@@ -131,7 +131,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                     </div>
                                     <div className="descuentoProducto">
                                         <p>Descuento</p>
-                                        <p>${item.discount.toLocaleString()}</p>
+                                        <p>${item.discount.toLocaleString('en')}</p>
                                     </div>
                                     <div className="cuponDescuento">
                                         <p>Cupón Descuento</p>
@@ -140,9 +140,9 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                     <div className="totalAPagar">
                                         <h6>Total a pagar</h6>
                                         {item.price > 0 && item.discount > 0 && item.product_details.shipping_cost > 0 ? (
-                                            <h5>${(item.price + item.discount + item.product_details.shipping_cost).toLocaleString()}</h5>
+                                            <h5>${(item.price + item.discount + item.product_details.shipping_cost).toLocaleString('en')}</h5>
                                         ) : item.price > 0 ? (
-                                            <h5>${item.price.toLocaleString()}</h5>
+                                            <h5>${item.price.toLocaleString('en')}</h5>
                                         ) : null}
                                     </div>
                                 </div>
