@@ -166,7 +166,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               </InputGroup>
             </FormGroup>
 
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", flexDirection: "column"}}>
               <Button
                 style={{
                   backgroundColor: "#fc5241",
@@ -187,7 +187,8 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   color: "#fc5241",
                   borderRadius: "50px",
                   width:'285px',
-                  alignSelf:'center'
+                  alignSelf:'center',
+                  marginTop:'-15px'
                 }}
                 className="text-nowrap"
                 onClick={() => {

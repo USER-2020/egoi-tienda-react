@@ -928,7 +928,7 @@ function AddressCart() {
               <div className="descuento">
                 <p>Descuento</p>
                 {discountCoupon && discountCoupon.total !== undefined ? (
-                  <p>{formattedDiscount}</p>
+                  <p>{discountCoupon.discount}</p>
 
                 ) : (
                   <p>{cuponDescuento}</p>
@@ -953,7 +953,7 @@ function AddressCart() {
               <div className="totalCash">
                 <h6>Total a pagar</h6>
                 {discountCoupon && discountCoupon.total !== undefined ? (
-                  <h5><strong>{formattedTotal}</strong></h5>
+                  <h5><strong>{discountCoupon.total}</strong></h5>
                 ) : (
                   <h5><strong>{total}</strong></h5>
 
@@ -1094,7 +1094,7 @@ function AddressCart() {
               <p className="def">Cupón</p>
               {discountCoupon && discountCoupon.total !== undefined ? (
                 <p className='precio'>
-                  {formattedDiscount}
+                  {discountCoupon.discount}
                 </p>
 
               ) : (<p className="precio"> {cuponDescuento}</p>)}
@@ -1106,7 +1106,7 @@ function AddressCart() {
             <div className="containertotalAPagarResponsive">
               <p>Total a pagar</p>
               {discountCoupon && discountCoupon.total !== undefined ? (
-                <p>{formattedTotal}</p>
+                <p>{discountCoupon.total}</p>
               ) : (
 
                 <p>{total}</p>
