@@ -178,7 +178,7 @@ function DetailCart() {
   const totalPagar = () => {
 
     const precioTotalaPagar = subtotal + costoEnvio;
-    return `$${precioTotalaPagar.toLocaleString()}`;
+    return `$${precioTotalaPagar.toLocaleString('en')}`;
 
   }
 
@@ -276,7 +276,7 @@ function DetailCart() {
                       <div></div>
                     )}
 
-                    <h5>$ {products.price.toLocaleString()}</h5>
+                    <h5>$ {products.price.toLocaleString('en')}</h5>
                     <div className="cant">
                       <p>Cantidad:</p>
                       <input type="number" value={products.quantity} disabled />
@@ -321,16 +321,16 @@ function DetailCart() {
                   </div>
                 </div>
                 <div className="caracteristicaPrecio">
-                  $ {products.price.toLocaleString()}
+                  $ {products.price.toLocaleString('en')}
                 </div>
                 <div className="caracteristicaCantidad">
                   <input type="number" value={products.quantity} disabled />
                 </div>
                 <div className="caracteristicaPrecioTotal">
-                  $ {(products.price * products.quantity).toLocaleString()}
+                  $ {(products.price * products.quantity).toLocaleString('en')}
                 </div>
                 <div className="caracteristicaCostoEnvio">
-                  ${costoEnvio.toLocaleString()}
+                  ${costoEnvio.toLocaleString('en')}
                 </div>
                 <a href="#" onClick={() => deleteOne(products.id)}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -344,7 +344,7 @@ function DetailCart() {
             <Card>
               <div className="subtotal">
                 <p>Subtotal</p>
-                <p>${subtotal.toLocaleString()}</p>
+                <p>${subtotal.toLocaleString('en')}</p>
               </div>
               <div className="impuesto">
                 <p>Impuesto</p>
@@ -352,7 +352,7 @@ function DetailCart() {
               </div>
               <div className="envio">
                 <p>Envío</p>
-                <p>${costoEnvio.toLocaleString()}</p>
+                <p>${costoEnvio.toLocaleString('en')}</p>
               </div>
               <div className="descuento">
                 <p>Descuento</p>
@@ -441,7 +441,7 @@ function DetailCart() {
               </div>
             </Card>
             <div className="toPay">
-              <Link to={`/detailCart/address/${subtotal.toLocaleString()}/${costoEnvio.toLocaleString()}/${discountCoupon && discountCoupon.total !== undefined ? formattedTotal : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? formattedDiscount : descuento}`}>
+              <Link to={`/detailCart/address/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? formattedTotal : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? formattedDiscount : descuento}`}>
                 <a href="#" >Ir a pagar</a>
               </Link>
             </div>
@@ -468,7 +468,7 @@ function DetailCart() {
               {/* </Link> */}
             </div>
             <div className="awaitShopping">
-              <Link to={`/detailCart/address/${subtotal.toLocaleString()}/${costoEnvio.toLocaleString()}/${discountCoupon && discountCoupon.total !== undefined ? formattedTotal : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? formattedDiscount : descuento}`}>
+              <Link to={`/detailCart/address/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? formattedTotal : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? formattedDiscount : descuento}`}>
                 <a href="#">Continuar compra</a>
               </Link>
             </div>

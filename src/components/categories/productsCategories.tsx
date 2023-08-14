@@ -405,7 +405,7 @@ const ProductsCategories = () => {
                       <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
                         <Card className='cardProducto1'>
                           {isDiscountedProducts && product.discount_type === 'flat' && (
-                            <span className='tagDiscounted'>$ {product.discount.toLocaleString()} Off</span>
+                            <span className='tagDiscounted'>$ {product.discount.toLocaleString('en')} Off</span>
                           )}
 
                           {isDiscountedProducts && product.discount_type === 'percent' && (
@@ -449,7 +449,7 @@ const ProductsCategories = () => {
                             <CardSubtitle tag="h5" className="text-muted" style={{ lineHeight: "1.2", maxHeight: "2.5em", overflow: "hidden", textOverflow: "ellipsis" }}>
                               {product.name}
                             </CardSubtitle>
-                            <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>
+                            <CardTitle tag="h5">${product.unit_price.toLocaleString('en')}</CardTitle>
                           </CardBody>
                         </Card>
                       </Link>
