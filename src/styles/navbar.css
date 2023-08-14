@@ -54,7 +54,7 @@ nav {
   width: 100%;
   height: 80px;
   background-color: #f7f7f7;
-  border: 2px solid #e3e2e2;
+  /* border: 2px solid #e3e2e2; */
   display: inline-block;
   align-items: center;
   /* justify-content: center; */
@@ -62,7 +62,7 @@ nav {
 
 nav .containerNav{
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   display:flex;
   
@@ -111,9 +111,63 @@ nav .containerNav{
   
 }
 
+.dropdown:hover .menuUser {
+  opacity: 1;
+  visibility: visible;
+  
+}
+
+.dropdown:hover .menuSeller {
+  opacity: 1;
+  visibility: visible;
+  
+}
+
 
 
 .menu > a {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  /* text-align: start; */
+  font-size: 14px;
+  padding: 10px ;
+  text-decoration: none;
+  color: black;
+
+}
+
+.menuSeller > button {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  /* text-align: start; */
+  font-size: 14px;
+  padding: 10px ;
+  text-decoration: none;
+  color: black;
+  border: none;
+  background-color: inherit;
+  width: 100%;
+
+}
+
+.menuSeller > .logguedInfoBtn {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  /* text-align: start; */
+  font-size: 14px;
+  padding: 10px ;
+  text-decoration: none;
+  color: black;
+  border: none;
+  background-color: inherit;
+  width: 100%;
+
+}
+
+.menuUser > a {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -130,7 +184,43 @@ nav .containerNav{
   background: #F3F3F3;
 }
 
+.menuSeller > a:hover {
+  /* background: #f5f5f5; */
+  background: #F3F3F3;
+}
+
+.menuSeller > button:hover {
+  /* background: #f5f5f5; */
+  background: #F3F3F3;
+}
+.menuSeller > .logguedInfoBtn:hover {
+  /* background: #f5f5f5; */
+  background: #F3F3F3;
+}
+
+.menuUser > a:hover {
+  /* background: #f5f5f5; */
+  background: #F3F3F3;
+}
+
 .menu {
+  position:absolute;
+  top: 60px;
+  right: -20px;
+  display: grid;
+  width: 260px;
+  padding: 8px 0;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0 40px 40px rgb(0 0 0/ 6%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.25s;
+  z-index: 999;
+}
+
+.menuUser {
   position:absolute;
   top: 60px;
   right: -20px;
@@ -147,7 +237,42 @@ nav .containerNav{
   z-index: 999;
 }
 
+.menuSeller {
+  position:absolute;
+  top: 60px;
+  right: -20px;
+  display: grid;
+  width: 250px;
+  padding: 8px 0;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0 40px 40px rgb(0 0 0/ 6%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.25s;
+  z-index: 999;
+}
+
+.menuSeller a {
+  padding: 10px;
+}
+
 .menu:before{
+  content: "";
+  background: inherit;
+  border-top: 1px solid #e1e1e1;
+  border-right: 1px solid #e1e1e1;
+  position: absolute;
+  top: -7px;
+  right: 22px;
+  width: 12px;
+  height: 12px;
+  rotate: -45deg;
+  
+}
+
+.menuSeller:before{
   content: "";
   background: inherit;
   border-top: 1px solid #e1e1e1;
@@ -200,7 +325,7 @@ nav .containerHeader a {
 
  
   position: absolute;
-  width: 500px;
+  width: 700px;
   height: auto;
   text-decoration: none;
   /* left: 280px;
@@ -237,28 +362,44 @@ nav .containerHeader a {
 }
 
 .menuCategorias .column {
-  width: 50%;
+  width: 30%;
 }
 
 
 .menuCategorias > .column ul{
   padding-left: 10px;
 }
-.menuCategorias > .column2 ul{
-  padding-left: 0;
+
+.menuCategorias > .column2{
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 50%;
+  width: 70%;
 }
 
+.menuCategorias > .column2 ul{
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+
+
 .menuCategorias > .column ul li,
-.menuCategorias > .column2 ul li{
+.menuCategorias > .column2 ul li,
+.menuCategorias > .column3 ul li{
   list-style: none;
 }
 
-.menuCategorias > .column ul li:hover{
+.menuCategorias > .column ul li:hover,
+.menuCategorias > .column ul li.active{
   background-color: #FC5241;
   color: white;
   width: auto;
   padding: 5px;
   border-radius: 16px;
+  text-align:center;
 }
 
 /* .menuCategorias > .column ul li:active{
@@ -268,11 +409,15 @@ nav .containerHeader a {
   padding: 5px;
   border-radius: 16px;
 } */
-.menuCategorias > .column2 ul li a:hover{
+.menuCategorias > .column2 ul li a:hover,
+.menuCategorias > .column3 ul li a:hover{
   
   color: #FC5241;
   
 }
+
+
+
 .dropdown:hover .menuCategorias {
   opacity: 1;
   visibility: visible;
@@ -304,10 +449,10 @@ footer > .containerFooter{
 
 footer .containerFooter .row {
   /* border: 1px solid gray;ç */
-  padding: 30px;
+  padding: 30px 0;
   border-bottom: 1px solid rgb(219, 219, 219);
-  
- 
+  width: 100%; 
+  margin: 0;
   /* width: 80%; */
   /* display: inline-block; */
   /* text-align: center; */
@@ -319,12 +464,13 @@ footer .containerFooter .row {
 }
 
 div.filaMedia{
-  padding: 30px;
+  padding: 30px 0;
+  width: 100%;
 }
 
 
 .izqIconsMedia{
-  padding: 10px;
+  padding: 10px 0;
   color: #a2a1a7;
   display: flex;
 }
@@ -340,12 +486,12 @@ div.filaMedia{
 .footerLogo{
   display: flex;
   justify-content: space-between;
-  
+  padding: 0px;
 }
 
 .rowf{
   display: flex;
-  padding: 20px;
+  padding: 20px 0;
   justify-content: space-between;
   
   
@@ -353,7 +499,7 @@ div.filaMedia{
 
 .rowf > ul  {
   list-style: none;
-  
+  padding-left: 0px;
   
 }
 
@@ -364,6 +510,26 @@ div.filaMedia{
 
 .rowf ul a { 
   text-decoration: none;
+}
+
+.divider {
+  position: absolute;
+  left: 0;
+  width: 100vw;
+  margin: 0;
+  border: 2px solid #e3e2e2;
+  z-index: 998;
+}
+.cart-products{
+  display: flex;
+  justify-content: center;
+  background-color: #FC5241;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: small;
+  transform: translate(-12px);
 }
 
 
@@ -421,6 +587,8 @@ div.filaMedia{
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    padding: 10px 0;
+    width: 100%;
   }
   
   .izq {
@@ -448,13 +616,13 @@ div.filaMedia{
     /* Estilos generales de la fila de contenido de redes sociales y aplicaciones */
     display: flex;
     flex-direction: row;
-    padding: 10px;
+    padding: 10px 0;
   }
 
   div .filaMedia .izqIconsMedia{
     width: 100%;
     display: flex;
-    padding: 10px;
+    padding: 10px 0;
   }
   
   .izqIconsMedia {
@@ -476,7 +644,7 @@ div.filaMedia{
   .derApps{
     display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 20px;
     gap:10px;
     
@@ -485,6 +653,7 @@ div.filaMedia{
     /* Estilos generales del contenido de las aplicaciones */
     width: 161px;
     height: 48px;
+    margin: 0;
 
   }
   

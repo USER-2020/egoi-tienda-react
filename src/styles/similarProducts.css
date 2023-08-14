@@ -79,7 +79,6 @@
 }
 .cardProducto1{
     width: 100%;
-    height: 100%;
     border-radius: 16px;
 
     overflow: hidden;
@@ -95,5 +94,14 @@
 
 .card-body{
     padding: 0 20px;
+}
+
+
+@media (max-width: 768px){
+
+    .containerSimilarProduct .containerProductos .scroll-button .left,
+    .containerSimilarProduct .containerProductos .scroll-button .right{
+        display: none;
+    }
 }
 

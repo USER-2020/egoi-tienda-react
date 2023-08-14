@@ -47,7 +47,7 @@ function TrackSearch({ handleChangueTrackOrder }) {
                                 />
 
                             </InputGroup>
-                            <InputGroup style={{ display: 'flex', flexDirection: 'column' }}>
+                            {/* <InputGroup style={{ display: 'flex', flexDirection: 'column' }}>
                                 <Label style={{ fontSize: '14px' }}>Número de celular</Label>
                                 <Input
                                     addon={true}
@@ -64,12 +64,12 @@ function TrackSearch({ handleChangueTrackOrder }) {
                                     maxLength={10}
                                     onChange={handlePhoneChange}
                                 />
-                            </InputGroup>
+                            </InputGroup> */}
                         </FormGroup>
                     </Form>
                 </div>
                 <div className="trackSearchBtn">
-                    <a href="#" onClick={() => handleChangueTrackOrder()}>Seguir pedido</a>
+                    <a href="#" onClick={() => handleChangueTrackOrder(nroPedido)}>Seguir pedido</a>
                 </div>
             </Card>
         </div>

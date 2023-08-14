@@ -124,7 +124,7 @@
     align-self: center;
     text-align: center;
     justify-content: center;
-    width: 100px;
+    width: 200px;
     height: 30px;
 }
 
@@ -149,6 +149,7 @@
     flex-direction: row;
     margin-top: 10px;
     gap: 8px;
+    justify-content: space-evenly;
 }
 .containerDetailpurchase .card .capsulas .cut{
     text-align: center;
@@ -675,6 +676,7 @@ input[type="checkbox"]:checked {
         background-color: #FC5241;
         color: white;
         display: flex;
+        border: none;
         
       }
 
@@ -684,6 +686,7 @@ input[type="checkbox"]:checked {
         border-radius: 32px;
         color: #FC5241;
         display:flex;
+        border: none;
       }
 
       .scroll-modal-content .containerToPayResponsive a {

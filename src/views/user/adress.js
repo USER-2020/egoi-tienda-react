@@ -87,7 +87,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
                 Swal.fire({
                     icon: 'success',
                     title: '¡Registro exitoso!',
-                    text: 'La direccion ha sido registrada exitosamente.',
+                    text: 'La dirección ha sido registrada exitosamente.',
                     confirmButtonColor: '#0d6efd',
                 });
                 closeModalAddress();
@@ -160,7 +160,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
                                 justifyContent: "center",
                             }}
                         >
-                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Direccion de entrega</h5>
+                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Dirección de entrega</h5>
                         </div>
                         <Card style={{ border: 'none' }}>
                             <Form onSubmit={handleSubmitAddress}>
@@ -245,7 +245,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        placeholder="Direccion"
+                                        placeholder="Dirección"
                                         value={address}
                                         onChange={(event) => setAddress(event.target.value)}
                                     />

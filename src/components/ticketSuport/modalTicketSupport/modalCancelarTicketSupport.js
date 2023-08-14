@@ -1,6 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { deleteTicketSupport, getTicketsSupport } from '../../../services/ordenes';
+import { getCurrentUser } from '../../../helpers/Utils';
 
-function ModalCancelarTicketSupport() {
+function ModalCancelarTicketSupport({ idTicket, closeModalCancelarTicket, getAllTickets}) {
+
+    const currenUser = getCurrentUser();
+    const token = currenUser.token;
+
+    const deleteTicket = (idTicket) => {
+        deleteTicketSupport(token, idTicket)
+            .then((res) => {
+                console.log('Respuesta de eliminar ticket', res.data);
+                getAllTickets();
+                closeModalCancelarTicket();
+            }).catch((err) => console.log(err));
+    }
+
+    
+
+    useEffect(() => {
+        console.log(idTicket);
+    }, []);
+
     return (
         <div className='containerModalCanelarPedido'>
             <svg width="138" height="138" viewBox="0 0 138 138" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,8 +40,8 @@ function ModalCancelarTicketSupport() {
             </div>
 
             <div className='contenedorOpcionesCancelarPedido'>
-                <a href='#' className='si'>Sí, deseo cancelar</a>
-                <a href='#' className='no'>No, deseo regresar</a>
+                <a href='#' className='si' onClick={()=>deleteTicket(idTicket)}>Sí, deseo cancelar</a>
+                <a href='#' className='no'onClick={()=>closeModalCancelarTicket()}>No, deseo regresar</a>
             </div>
         </div>
     )

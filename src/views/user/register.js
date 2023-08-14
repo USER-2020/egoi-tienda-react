@@ -378,7 +378,9 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                     backgroundColor: "#fc5241",
                     borderColor: "#fc5241",
                     borderRadius: "50px",
-                    marginTop: "10px"
+                    marginTop: "10px",
+                    width:'285px',
+                    alignSelf:'center'
                   }}
                   type="submit"
                   disabled={!termsAccepted || loading}
@@ -392,6 +394,8 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                     borderColor: "#fc5241",
                     color: "#fc5241",
                     borderRadius: "50px",
+                    width:'285px',
+                    alignSelf:'center'
                   }}
                   onClick={() => {
                     limpiarCampos();

@@ -21,6 +21,17 @@
     
 }
 
+.categoriesCard ul li a{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+
+}
+
+.categoriesCard ul li a svg {
+    align-self: center;
+}
+
 .categoriesCard ul{
     margin: 0;
     display: flex;

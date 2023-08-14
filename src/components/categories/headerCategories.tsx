@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import '../../styles/headerCategories.css'
 
 import {
-  FC, 
+  FC,
   MouseEventHandler,
   PropsWithChildren,
   ReactNode,
@@ -12,29 +12,32 @@ import {
   useRef,
   useState
 } from "react"
-import { subcategorieById } from '../../services/categories';
+import { discountedProducts, subcategorieById } from '../../services/categories';
 import { filterProductsRecents } from '../../services/filtros';
 
 import { Display } from 'react-bootstrap-icons';
 import { getBrandsByCategory } from '../../services/brands';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 
-const Icon: FC<PropsWithChildren> = ({children}) => <i>{children}</i>
 
-const useOnClickOutside= (
+const Icon: FC<PropsWithChildren> = ({ children }) => <i>{children}</i>
+
+const useOnClickOutside = (
   ref: RefObject<HTMLDivElement>,
   handler: MouseEventHandler<HTMLButtonElement>
-)=>{
+) => {
   useEffect(() => {
-    const listener = (event: any)=>{
-      if(!ref.current || ref.current.contains(event.target)){
+    const listener = (event: any) => {
+      if (!ref.current || ref.current.contains(event.target)) {
         return;
       }
       handler(event);
     };
     document.addEventListener("mousedown", listener);
     document.addEventListener("touchstart", listener);
-    return()=>{
+    return () => {
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
     };
@@ -42,13 +45,13 @@ const useOnClickOutside= (
 }
 
 
-const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A, 
-  handleClickFilterA_Z, handleClickFilterHigh_Low, handleClickFilterLow_High, 
-  handleApplyRangeFilters, handlePriceStartChange,handlePriceEndChange, 
-  priceStart, priceEnd, handleAplyFilterByBrand}) => {
-// const HeaderCategories = ({onFilterCLick}) => {
+const HeaderCategories = ({ handleClickFilterRecent, handleClickFilterZ_A,
+  handleClickFilterA_Z, handleClickFilterHigh_Low, handleClickFilterLow_High,
+  handleApplyRangeFilters, handlePriceStartChange, handlePriceEndChange,
+  priceStart, priceEnd, handleAplyFilterByBrand, productsTag }) => {
+  // const HeaderCategories = ({onFilterCLick}) => {
 
- 
+
 
   const [isOpen1, setIsOpen1] = useState<boolean>(false);
   const [isOpen2, setIsOpen2] = useState<boolean>(false);
@@ -56,26 +59,42 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
 
 
   const [brands, setBrands] = useState([]);
-  const { category, subcategory, id, brandId } = useParams();
- 
-  const ref1 = useRef<HTMLDivElement>(null);
-  useOnClickOutside(ref1, ()=> setIsOpen1(false));
-  const ref2 = useRef<HTMLDivElement>(null);
-  useOnClickOutside(ref2, ()=> setIsOpen2(false));
-  const ref3 = useRef<HTMLDivElement>(null);
-  useOnClickOutside(ref3, ()=> setIsOpen3(false));
+  const { category, subcategory, id, brandId, tag, brand } = useParams();
 
- 
-  const brandsBySubcategory = (id) =>{
-    getBrandsByCategory(id)
-    .then((res)=>{
-      console.log(res);
-      setBrands(res.data);
-      console.log("Carga de marcas por categoria-subcategoria", brands);
-    })
-    .catch((err) => console.log(err));
-  }
+  const ref1 = useRef<HTMLDivElement>(null);
+  useOnClickOutside(ref1, () => setIsOpen1(false));
+  const ref2 = useRef<HTMLDivElement>(null);
+  useOnClickOutside(ref2, () => setIsOpen2(false));
+  const ref3 = useRef<HTMLDivElement>(null);
+  useOnClickOutside(ref3, () => setIsOpen3(false));
+
+  const [productsDetailTag, setProductsDetailTag] = useState([]);
+
+  const location = useLocation();
+
   
+
+  // Verificar si la ruta es /categories/products/Descuento/
+  const isDescuentoRouteCategory = location.pathname === `/categories/products/Descuento/${id}/${tag}`;
+  const isDescuentoRouteBrand = location.pathname === `/brand/Descuento/${brandId}/${tag}`;
+
+  // Verificar si la ruta es /discountedProducts
+  const isDiscountedProducts = location.pathname === '/discountedProducts';
+
+  const shouldShowName = (isDescuentoRouteCategory || isDescuentoRouteBrand) &&
+    productsDetailTag && productsDetailTag.data_tag && productsDetailTag.data_tag[0];
+
+
+  const brandsBySubcategory = (id) => {
+    getBrandsByCategory(id)
+      .then((res) => {
+        console.log(res);
+        setBrands(res.data);
+        console.log("Carga de marcas por categoria-subcategoria", brands);
+      })
+      .catch((err) => console.log(err));
+  }
+
   // const [selectedFiltersRecent, setSelectedFiltersRecent] = useState('');
 
 
@@ -88,7 +107,7 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
   //       console.log(res);
   //       setProducts(res.data);
   //       console.log("Productos filtrados por mas reciente", products);
-  
+
   //     })
   //     .catch((err)=> console.log(err));
   //   }else{
@@ -99,53 +118,76 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
   //       console.log("Productos por el id", products);
   //     })
   //     .catch((err) => console.log(err));
-  
+
   //   }
   //   };
-    
+
   //   useEffect(()=>{
   //     if(id){
   //       productsBySubcategoryWithFilter(id, sort);
   //     }
   //   }, [id, sort]);
 
-  useEffect(()=>{
-    if(id || brandId){
+  useEffect(() => {
+    if (id || brandId) {
       brandsBySubcategory(id);
     }
-  },[id, brandId]);
- 
+    
+  }, [id, brandId]);
+
+  useEffect(() => {
+    if (productsTag && productsTag.products && productsTag.products.length > 0) {
+      console.log("Productos por etiqueta", productsTag.products[0]);
+      setProductsDetailTag(productsTag.products[0]);
+    }
+  }, [productsTag]);
+  
+
 
   return (
 
-  <div className='containerHeaderCategorie'>
-    <div className='containerHeaderFull'>
-      <div className='container'>
-        {/* Nombre de la categoria  */}
-        <h3 className='nameCategory'>{subcategory}</h3>
+    <div className='containerHeaderCategorie'>
+      <div className='containerHeaderFull'>
+        <div className='container'>
+          {/* Nombre de la categoria  */}
+          <h3 className='nameCategory'>
+            {subcategory}{' '}
+            {/* {productsDetailTag} */}
+            {/* {productsDetailTag && productsDetailTag.data_tag && productsDetailTag.data_tag[0] ? productsDetailTag.data_tag[0].name : ''} */}
+            {brand}
+            {isDescuentoRouteBrand ? ' '+'especial en marcas' : ''}
+            {shouldShowName ? productsDetailTag.data_tag[0].name : ''}
+            {isDiscountedProducts ? 'Productos en descuento': ''}
 
-        <div className='card categoriesCard'>
+
+          </h3>
+
+
+
+          <div className='card categoriesCard'>
             <ul>
               {/* <li><a href='#'>Marcas</a></li> */}
               <li>
-                <div ref = {ref1} className={`dropdown ${isOpen1 ? "open" : ""}`}>
+                <div ref={ref1} className={`dropdown ${isOpen1 ? "open" : ""}`}>
                   <button onClick={() => setIsOpen1(!isOpen1)}>
                     <span>Marcas</span>
+                    <FontAwesomeIcon icon={faChevronDown} />
+
                     {/* <Icon>
                       {isOpen ? "close" : "expand_more"}
                     </Icon> */}
                   </button>
                   <div className="menu">
-                  {brands.length ? (
+                    {brands.length ? (
                       brands.map((brand, index) => (
                         <button key={index}>
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={handleAplyFilterByBrand}/>
-                            <span>{brand.name}</span>
+                          <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={handleAplyFilterByBrand} />
+                          <span>{brand.name}</span>
                         </button>
-                        ))
-                        ):(
-                          <span>No hay marcas asociadas</span>
-                        )}
+                      ))
+                    ) : (
+                      <span style={{ padding: '15px' }}>No hay marcas asociadas</span>
+                    )}
                     {/* <button>
                       <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
                       <span>Samsung</span>
@@ -167,9 +209,11 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
               </li>
               {/* <li><a href='#'>Precio</a></li> */}
               <li>
-              <div ref = {ref2} className={`dropdown ${isOpen2 ? "open" : ""}`}>
+                <div ref={ref2} className={`dropdown ${isOpen2 ? "open" : ""}`}>
                   <button onClick={() => setIsOpen2(!isOpen2)}>
                     <span>Precio</span>
+                    <FontAwesomeIcon icon={faChevronDown} />
+
                     {/* <Icon>
                       {isOpen ? "close" : "expand_more"}
                     </Icon> */}
@@ -179,19 +223,19 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
                       <div className="containerPrecios">
                         <div className="desde">
                           Desde
-                          <input type="number" placeholder='Ej: 5000' 
-                          className='inputPrecio'
-                          value={priceStart}
-                          onChange={handlePriceStartChange}/>
+                          <input type="number" placeholder='Ej: 5000'
+                            className='inputPrecio'
+                            value={priceStart}
+                            onChange={handlePriceStartChange} />
                         </div>
                         <h1>-</h1>
                         <div className="hasta">
                           Hasta
-                          <input type="number" placeholder='Ej: 8000' 
-                          className='inputPrecio'
-                          value={priceEnd}
-                          onChange={handlePriceEndChange}/>
-                        </div> 
+                          <input type="number" placeholder='Ej: 8000'
+                            className='inputPrecio'
+                            value={priceEnd}
+                            onChange={handlePriceEndChange} />
+                        </div>
                       </div>
                       <button className='btnAplicar' onClick={handleApplyRangeFilters}>Aplicar</button>
                     </div>
@@ -200,26 +244,28 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
               </li>
               {/* <li><a href='#'>Ordenar por</a></li> */}
               <li>
-              <div ref = {ref3} className={`dropdown ${isOpen3 ? "open" : ""}`}>
+                <div ref={ref3} className={`dropdown ${isOpen3 ? "open" : ""}`}>
                   <button onClick={() => setIsOpen3(!isOpen3)}>
                     <span>Ordenar por</span>
+                    <FontAwesomeIcon icon={faChevronDown} />
+
                     {/* <Icon>
-                      {isOpen ? "close" : "expand_more"}
+                      {isOpen1 ? "close" : "expand_more"}
                     </Icon> */}
                   </button>
                   <div className="menu3">
                     <div className="containerPersonalizado2">
-                      
-                        <h5>Precio</h5>
-                        <button onClick={handleClickFilterLow_High}><strong><h6>Del más bajo al más alto</h6></strong></button>
-                        <button onClick={handleClickFilterHigh_Low}><strong><h6>Del más alto al más bajo</h6></strong></button>
-                        <h5>En orden alfabético</h5>
-                        <button onClick={handleClickFilterA_Z}><strong><h6>De la A - Z</h6></strong></button>
-                        <button onClick={handleClickFilterZ_A}><strong><h6>De la Z - A</h6></strong></button>
-                        <h5>Otros</h5>
-                        <button onClick={handleClickFilterRecent}><strong><h6>El más reciente</h6></strong></button>
-                        
-                         {/* <h5>Precio</h5>
+
+                      <h5>Precio</h5>
+                      <button onClick={handleClickFilterLow_High}><strong><h6>Del más bajo al más alto</h6></strong></button>
+                      <button onClick={handleClickFilterHigh_Low}><strong><h6>Del más alto al más bajo</h6></strong></button>
+                      <h5>En orden alfabético</h5>
+                      <button onClick={handleClickFilterA_Z}><strong><h6>De la A - Z</h6></strong></button>
+                      <button onClick={handleClickFilterZ_A}><strong><h6>De la Z - A</h6></strong></button>
+                      <h5>Otros</h5>
+                      <button onClick={handleClickFilterRecent}><strong><h6>El más reciente</h6></strong></button>
+
+                      {/* <h5>Precio</h5>
                         <button onClick={() => onFilterCLick('L-H')}><strong><h6>Del más bajo al más alto</h6></strong></button>
                         <button onClick={() => onFilterCLick('H-L')}><strong><h6>Del más alto al más bajo</h6></strong></button>
                         <h5>En orden alfabético</h5>
@@ -228,21 +274,21 @@ const HeaderCategories = ({handleClickFilterRecent, handleClickFilterZ_A,
                         <h5>Otros</h5>
                         <button onClick={() => onFilterCLick('recent')}><strong><h6>El más reciente</h6></strong></button>
                          */}
-                        
-                        
+
+
                     </div>
                   </div>
-                      
+
                 </div>
               </li>
             </ul>
-              
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
-    
+
   )
-} 
+}
 
 export default HeaderCategories;

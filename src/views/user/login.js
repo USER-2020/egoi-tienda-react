@@ -118,7 +118,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               justifyContent: "center",
             }}
           >
-            <h5 style={{ color: "#fc5241" }}>Iniciar sesíon</h5>
+            <h5 style={{ color: "#fc5241" }}>Iniciar sesión</h5>
           </div>
 
           <Form onSubmit={handleSubmitPersonaLogin}>
@@ -172,6 +172,8 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   backgroundColor: "#fc5241",
                   borderColor: "#fc5241",
                   borderRadius: "50px",
+                  width:'285px',
+                  alignSelf:'center'
                 }}
                 type="submit"
               >
@@ -184,7 +186,10 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   borderColor: "#fc5241",
                   color: "#fc5241",
                   borderRadius: "50px",
+                  width:'285px',
+                  alignSelf:'center'
                 }}
+                className="text-nowrap"
                 onClick={() => {
                   closeModalLogin();
                   handleChangeFormLogin();

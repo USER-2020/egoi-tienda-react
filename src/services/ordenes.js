@@ -125,6 +125,25 @@ export const createTicketSupport = (token, data) =>
         }
     });
 
+
+//Enviar mensaje a el id del ticket
+export const sendReplySupportTicket = (token, message, idTicket) =>
+    axios.post(`${urlBase}/customer/support-ticket/reply/${idTicket}`, { message: message }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+//Eliminar ticket
+export const deleteTicketSupport = (token, idTicket) =>
+    axios.delete(`${urlBase}/customer/support-ticket/remove?ticket_id=${idTicket}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
 //Favoritos
 //Add Favoritos 
 export const addFavoriteProduct = (token, idProduct) =>

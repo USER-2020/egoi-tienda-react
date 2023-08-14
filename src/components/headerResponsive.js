@@ -38,6 +38,9 @@ import { getAllBrands } from "../services/brands";
 import { allCategories } from "../services/categories";
 import { getCurrentUser, setCurrentUser } from '../helpers/Utils';
 import { myorders } from "../constants/defaultValues";
+import { allProductsCart } from "../services/cart";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
 
 
 function HeaderResponsive() {
@@ -52,12 +55,14 @@ function HeaderResponsive() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
+  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
   const offcanvasRef = useRef(null);
   const backdropRef = useRef(null);
   const [isOffcanvasVisible, setIsOffcanvasVisible] = useState(false);
   const [isBackdropVisible, setIsBackdropVisible] = useState(false);
+  const [showSaleOptions, setShowSaleOptions] = useState(false);
 
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -87,6 +92,17 @@ function HeaderResponsive() {
       history.push(`/detailCart`)
     }
     else {
+      setIsOffcanvasVisible(false);
+      setModalViewLogin(true);
+    }
+  }
+
+  const handleFavList = () => {
+    if (currenUser) {
+      const url = `/myorders?activeOption=ListaDeseos&selectedOption=Lista%20Deseos`;
+      window.location.href = url;
+    } else {
+      setIsOffcanvasVisible(false);
       setModalViewLogin(true);
     }
   }
@@ -162,6 +178,8 @@ function HeaderResponsive() {
       .catch((err) => console.log(err));
   }
 
+  console.log('HERE', currenUser)
+
   // useEffect(() => {
   //   // Actualizar el estado del offcanvas
   //   const offcanvasBodyElement = offcanvasBodyRef.current;
@@ -174,9 +192,23 @@ function HeaderResponsive() {
   //   }
   // }, [isOffcanvasOpen]);
 
-  const handleAdminUser = () =>{
+  const handleAdminUser = () => {
     history.push(`${myorders}`);
   }
+
+  useEffect(() => {
+    if (currenUser) {
+      const token = currenUser.token;
+      allProductsCart(token)
+        .then((res) => {
+          const productsOncart = res.data;
+          console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
+          const numberOfProducts = productsOncart.length;
+          console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
+          setCantProductsOnCart(numberOfProducts);
+        }).catch((err) => console.log(err));
+    }
+  }, [currenUser, isLoggedIn, cantProductsOnCart]);
 
 
   useEffect(() => {
@@ -184,7 +216,6 @@ function HeaderResponsive() {
     allCategoriesPromise();
     allBrands();
   }, []);
-
 
   return (
     <div className='containerResponsive'>
@@ -213,7 +244,8 @@ function HeaderResponsive() {
                 onKeyPress={handleEnterPress} />
             </InputGroup>
           </div>
-          <a href="#" onClick={() => { goToDetailCart() }}>
+          <a href="#" onClick={() => { goToDetailCart() }}
+            style={{ textDecoration: 'none', color: 'black' }}>
             <svg
               width="40"
               height="40"
@@ -228,6 +260,9 @@ function HeaderResponsive() {
                 fill="#171523"
               />
             </svg>
+            {currenUser && cantProductsOnCart !== undefined && cantProductsOnCart >= 1 ? (
+              <span className="cart-products"><p >{cantProductsOnCart}</p></span>
+            ) : (<i></i>)}
           </a>
 
           <div ref={offcanvasRef} class={`offcanvas offcanvas-end ${isOffcanvasVisible ? 'show' : ''}`} tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -257,24 +292,38 @@ function HeaderResponsive() {
                     Categorias
                   </a>
                   <ul class="dropdown-menu dropdown-menu-extended">
-
                     {categories.map((category, index) => (
                       <li key={index}>
-                        <a className="dropdown-item" href="#">
-                          <strong>{category.name}</strong>
+                        <a className="dropdown-item"
+                          href={category.childes.length === 0 ? `/categories/${category.name}/${category.name}/${category.id}` : null}
+                        >
+                          <span className={`d-flex align-items-center justify-content-between dropdown-item-text ${category.name === selectedCategory ? "category-selected" : ""}`}
+                            onClick={(e) => { e.stopPropagation(); setSelectedCategory(category.name); }}
+                          >
+                            <strong
+                              className={` ${category.name === selectedCategory ? "category-selected" : ""}`} >{category.name}</strong>
+                            {category.name !== selectedCategory && <FontAwesomeIcon icon={faChevronDown} className='dropdown-icon' color='black' />}
+                          </span>
                         </a>
                         <ul >
                           {category.childes.map((subcategory, index) => (
                             <li key={index}>
                               {/* <Link to={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}> */}
-                              <a className="dropdown-item" href={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}>{subcategory.name}</a>
+                              <a className={`dropdown-item subcategory-item  ${category.name !== selectedCategory && "visually-hidden"}`} href={`/categories/${category.name}/${subcategory.name}/${subcategory.id}`}>{subcategory.name}</a>
+                              {
+                                subcategory.childes.map((brand, index) => (
+                                  <li key={index}>
+                                    <a className={`dropdown-item  px-5 ${category.name !== selectedCategory && "visually-hidden"}`} href={`/categories/${category.name}/${brand.name}/${brand.id}`}>{brand.name}</a>
+                                  </li>
+                                ))
+                              }
                               {/* </Link> */}
                             </li>
+
                           ))}
                         </ul>
                       </li>
                     ))}
-
                   </ul>
                 </li>
                 <li class="nav-item pers">
@@ -336,24 +385,26 @@ function HeaderResponsive() {
                     ))}
                   </ul>
                 </li>
-                <li class="nav-item pers">
-                  <a href="#">
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 32 32"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M13.6508 6.51141C14.9675 5.29633 17.0325 5.29633 18.3492 6.51141C18.7467 6.87815 19.3035 7.0556 19.8617 6.98236C21.6445 6.74846 23.3438 7.90763 23.6754 9.6754C23.7702 10.1809 24.1015 10.6292 24.5914 10.8829C26.1977 11.7149 26.866 13.6442 26.0555 15.2639C25.8223 15.7299 25.8223 16.2703 26.0555 16.7363C26.866 18.356 26.1977 20.2853 24.5914 21.1173C24.1015 21.371 23.7702 21.8193 23.6754 22.3248C23.3438 24.0926 21.6445 25.2517 19.8617 25.0178C19.3035 24.9446 18.7467 25.122 18.3492 25.4888C17.0325 26.7039 14.9675 26.7039 13.6508 25.4888C13.2533 25.122 12.6965 24.9446 12.1383 25.0178C10.3555 25.2517 8.65623 24.0926 8.32463 22.3248C8.22981 21.8193 7.89852 21.371 7.40862 21.1173C5.80233 20.2853 5.134 18.356 5.94451 16.7363C6.17769 16.2703 6.17769 15.7299 5.94451 15.2639C5.134 13.6442 5.80233 11.7149 7.40862 10.8829C7.89852 10.6292 8.22981 10.1809 8.32463 9.6754C8.65623 7.90763 10.3555 6.74846 12.1383 6.98236C12.6965 7.0556 13.2533 6.87815 13.6508 6.51141ZM17.2642 7.68726C16.5603 7.03771 15.4397 7.03771 14.7358 7.68726C13.9829 8.38207 12.9499 8.70255 11.9302 8.56876C10.9412 8.43901 10.0633 9.08477 9.8972 9.97039C9.70867 10.9755 9.05742 11.8308 8.14447 12.3037C7.28666 12.7479 6.97059 13.739 7.37537 14.5479C7.83407 15.4646 7.83407 16.5356 7.37537 17.4523C6.97059 18.2612 7.28666 19.2523 8.14447 19.6965C9.05742 20.1694 9.70867 21.0247 9.8972 22.0298C10.0633 22.9154 10.9412 23.5612 11.9302 23.4314C12.9499 23.2976 13.9829 23.6181 14.7358 24.3129C15.4397 24.9625 16.5603 24.9625 17.2642 24.3129C18.0171 23.6181 19.0501 23.2976 20.0698 23.4314C21.0588 23.5612 21.9367 22.9154 22.1028 22.0298C22.2913 21.0247 22.9426 20.1694 23.8555 19.6965C24.7133 19.2523 25.0294 18.2612 24.6246 17.4523C24.1659 16.5356 24.1659 15.4646 24.6246 14.5479C25.0294 13.739 24.7133 12.7479 23.8555 12.3037C22.9426 11.8308 22.2913 10.9755 22.1028 9.97039L22.8891 9.82289L22.1028 9.97039C21.9367 9.08477 21.0588 8.43901 20.0698 8.56876C19.0501 8.70255 18.0171 8.38207 17.2642 7.68726ZM11.2 12.8001C11.2 11.9164 11.9163 11.2001 12.8 11.2001C13.6837 11.2001 14.4 11.9164 14.4 12.8001C14.4 13.6838 13.6837 14.4001 12.8 14.4001C11.9163 14.4001 11.2 13.6838 11.2 12.8001ZM20.5315 11.4344C20.8439 11.7468 20.8439 12.2534 20.5315 12.5658L12.5657 20.5315C12.2533 20.844 11.7467 20.844 11.4343 20.5315C11.1219 20.2191 11.1219 19.7126 11.4343 19.4002L19.4001 11.4344C19.7125 11.122 20.219 11.122 20.5315 11.4344ZM17.6 19.2001C17.6 18.3164 18.3163 17.6001 19.2 17.6001C20.0837 17.6001 20.8 18.3164 20.8 19.2001C20.8 20.0838 20.0837 20.8001 19.2 20.8001C18.3163 20.8001 17.6 20.0838 17.6 19.2001Z"
-                        fill="#171523"
-                      />
-                    </svg>
-                    Descuentos
-                  </a>
+                <li class="nav-item dropdown">
+                  
+                    <a href="/discountedProducts">
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M13.6508 6.51141C14.9675 5.29633 17.0325 5.29633 18.3492 6.51141C18.7467 6.87815 19.3035 7.0556 19.8617 6.98236C21.6445 6.74846 23.3438 7.90763 23.6754 9.6754C23.7702 10.1809 24.1015 10.6292 24.5914 10.8829C26.1977 11.7149 26.866 13.6442 26.0555 15.2639C25.8223 15.7299 25.8223 16.2703 26.0555 16.7363C26.866 18.356 26.1977 20.2853 24.5914 21.1173C24.1015 21.371 23.7702 21.8193 23.6754 22.3248C23.3438 24.0926 21.6445 25.2517 19.8617 25.0178C19.3035 24.9446 18.7467 25.122 18.3492 25.4888C17.0325 26.7039 14.9675 26.7039 13.6508 25.4888C13.2533 25.122 12.6965 24.9446 12.1383 25.0178C10.3555 25.2517 8.65623 24.0926 8.32463 22.3248C8.22981 21.8193 7.89852 21.371 7.40862 21.1173C5.80233 20.2853 5.134 18.356 5.94451 16.7363C6.17769 16.2703 6.17769 15.7299 5.94451 15.2639C5.134 13.6442 5.80233 11.7149 7.40862 10.8829C7.89852 10.6292 8.22981 10.1809 8.32463 9.6754C8.65623 7.90763 10.3555 6.74846 12.1383 6.98236C12.6965 7.0556 13.2533 6.87815 13.6508 6.51141ZM17.2642 7.68726C16.5603 7.03771 15.4397 7.03771 14.7358 7.68726C13.9829 8.38207 12.9499 8.70255 11.9302 8.56876C10.9412 8.43901 10.0633 9.08477 9.8972 9.97039C9.70867 10.9755 9.05742 11.8308 8.14447 12.3037C7.28666 12.7479 6.97059 13.739 7.37537 14.5479C7.83407 15.4646 7.83407 16.5356 7.37537 17.4523C6.97059 18.2612 7.28666 19.2523 8.14447 19.6965C9.05742 20.1694 9.70867 21.0247 9.8972 22.0298C10.0633 22.9154 10.9412 23.5612 11.9302 23.4314C12.9499 23.2976 13.9829 23.6181 14.7358 24.3129C15.4397 24.9625 16.5603 24.9625 17.2642 24.3129C18.0171 23.6181 19.0501 23.2976 20.0698 23.4314C21.0588 23.5612 21.9367 22.9154 22.1028 22.0298C22.2913 21.0247 22.9426 20.1694 23.8555 19.6965C24.7133 19.2523 25.0294 18.2612 24.6246 17.4523C24.1659 16.5356 24.1659 15.4646 24.6246 14.5479C25.0294 13.739 24.7133 12.7479 23.8555 12.3037C22.9426 11.8308 22.2913 10.9755 22.1028 9.97039L22.8891 9.82289L22.1028 9.97039C21.9367 9.08477 21.0588 8.43901 20.0698 8.56876C19.0501 8.70255 18.0171 8.38207 17.2642 7.68726ZM11.2 12.8001C11.2 11.9164 11.9163 11.2001 12.8 11.2001C13.6837 11.2001 14.4 11.9164 14.4 12.8001C14.4 13.6838 13.6837 14.4001 12.8 14.4001C11.9163 14.4001 11.2 13.6838 11.2 12.8001ZM20.5315 11.4344C20.8439 11.7468 20.8439 12.2534 20.5315 12.5658L12.5657 20.5315C12.2533 20.844 11.7467 20.844 11.4343 20.5315C11.1219 20.2191 11.1219 19.7126 11.4343 19.4002L19.4001 11.4344C19.7125 11.122 20.219 11.122 20.5315 11.4344ZM17.6 19.2001C17.6 18.3164 18.3163 17.6001 19.2 17.6001C20.0837 17.6001 20.8 18.3164 20.8 19.2001C20.8 20.0838 20.0837 20.8001 19.2 20.8001C18.3163 20.8001 17.6 20.0838 17.6 19.2001Z"
+                          fill="#171523"
+                        />
+                      </svg>
+                      Descuentos
+                    </a>
+                  
                 </li>
                 {/* <li class="nav-item pers">
                   <a href="#">
@@ -374,8 +425,11 @@ function HeaderResponsive() {
                     Tiendas
                   </a>
                 </li> */}
-                <li class='nav-item pers'>
-                  <a href="#" >
+                <li class='nav-item dropdown'>
+                  <a class="nav-link dropdown-toggle w-full"
+                    href="#" role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     <svg
                       width="32"
                       height="32"
@@ -391,20 +445,59 @@ function HeaderResponsive() {
                       />
                     </svg>
                     Vender
+
                   </a>
+                  <ul class="dropdown-menu dropdown-menu-extended">
+                    {currenUser ? (
+                      <li>
+                        <a className='dropdown-item' href="#" onClick={() => {
+                          setCurrentUser();
+                          setIsLoggedIn(false);
+                        }}>
+                          <strong>Cerrar sesión como cliente</strong>
+                        </a>
+                      </li>
+                    ) : (
+                      <>
+                        <li style={{ display: 'flex', flexDirection: 'column', gap: '15px', padding: '20px' }}>
+
+                          <a
+                            href="https://egoi.xyz/shop/apply"
+                          // onClick={() => {
+                          //   setModalViewLogin(true);
+                          // }}
+
+                          >
+                            {/* <FontAwesomeIcon icon={faUser} /> */}
+                            Conviértete en vendedor
+                          </a>
+                          <a
+                            href="https://egoi.xyz/seller/auth/login"
+                          // onClick={() => {
+                          //   setModalViewRegistro(true);
+                          // }}
+                          >
+                            {/* <FontAwesomeIcon icon={faUserPlus} />  */}
+                            Vendedor iniciar sesión
+                          </a>
+                        </li>
+                      </>
+                    )}
+                  </ul>
+
                 </li>
                 {currenUser ? (
                   <li class='nav-item pers'>
                     <a href="#" onClick={handleAdminUser}>
-                      <svg xmlns="http://www.w3.org/2000/svg" 
-                      width="40" 
-                      height="40" 
-                      fill="currentColor"
-                      class="bi bi-person-gear" 
-                      viewBox="0 0 20 20">
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        fill="currentColor"
+                        class="bi bi-person-gear"
+                        viewBox="0 0 20 20">
                         <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
                       </svg>
-                      Administra tu cuenta
+                      Mi cuenta
                     </a>
                   </li>
                 ) : (
@@ -413,7 +506,7 @@ function HeaderResponsive() {
 
                 <hr></hr>
                 <li class='nav-item pers'>
-                  <a href="#">
+                  <a href="#" onClick={() => { goToDetailCart() }}>
                     <svg
                       width="40"
                       height="40"
@@ -432,7 +525,7 @@ function HeaderResponsive() {
                   </a>
                 </li>
                 <li class='nav-item pers'>
-                  <a href="#">
+                  <a href="#" onClick={handleFavList}>
                     <svg
                       width="40"
                       height="40"
@@ -475,7 +568,7 @@ function HeaderResponsive() {
                           //   }
                         }}
                       >
-                        <FontAwesomeIcon icon={faUser} /> Inicia Sesion
+                        <FontAwesomeIcon icon={faUser} /> Inicia sesión
                       </a>
                       <Modal
                         className="modal-dialog-centered modal-lg"
@@ -493,7 +586,7 @@ function HeaderResponsive() {
                           setModalViewRegistro(true);
                         }}
                         className='btn btnPersonalizadosR'>
-                        <FontAwesomeIcon icon={faUserPlus} /> Registrate
+                        <FontAwesomeIcon icon={faUserPlus} /> Regístrate
                       </a>
                       <Modal
                         className="modal-dialog-centered modal-lg"
@@ -513,8 +606,8 @@ function HeaderResponsive() {
 
             </div>
           </div>
-        </div>
-      </nav>
+        </div >
+      </nav >
       <div>
 
 
@@ -522,7 +615,7 @@ function HeaderResponsive() {
 
 
       </div>
-    </div>
+    </div >
   )
 }
 

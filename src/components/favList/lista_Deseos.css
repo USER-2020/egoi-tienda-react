@@ -3,6 +3,10 @@
     
 }
 
+.productosListaDeseo a {
+    text-decoration: none;
+}
+
 .imgListaDeseosAndDescription{
     display: flex;
     flex-direction: row;
@@ -37,6 +41,7 @@
     flex-direction: column;
     justify-content: start;
     align-self: center;
+    
 }
 
 .listaDeseosDescripcion h6{
