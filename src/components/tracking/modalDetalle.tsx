@@ -27,17 +27,17 @@ function ModalDetallePedido({ closeModalDetallePedido, orderDetalleId }) {
 
     const calcSubtotal = () => {
         const subtotal = detalleOrden.reduce((total, itemProduct) => total + itemProduct.price, 0);
-        return subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+        return subtotal.toLocaleString('en', { style: 'currency', currency: 'COP' });
     }
 
     const calcDiscount = () => {
         const descuento = detalleOrden.reduce((total, itemProduct) => total + itemProduct.discount, 0);
-        return descuento.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+        return descuento.toLocaleString('en', { style: 'currency', currency: 'COP' });
     }
 
     const calcShippingCost = () => {
         const costShipping = detalleOrden.reduce((total, itemProduct)=> total + itemProduct.product_details.shipping_cost, 0);
-        return costShipping.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+        return costShipping.toLocaleString('en', { style: 'currency', currency: 'COP' });
     }
 
     const calTotal = () => {
@@ -45,7 +45,7 @@ function ModalDetallePedido({ closeModalDetallePedido, orderDetalleId }) {
         const descuento = detalleOrden.reduce((total, itemProduct) => total + itemProduct.discount, 0);
         const costShipping = detalleOrden.reduce((total, itemProduct)=> total + itemProduct.product_details.shipping_cost, 0);
         const totalPurchase = subtotal - descuento + costShipping;
-        return totalPurchase.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+        return totalPurchase.toLocaleString('en', { style: 'currency', currency: 'COP' });
       };
 
     useEffect(() => {
@@ -79,7 +79,7 @@ function ModalDetallePedido({ closeModalDetallePedido, orderDetalleId }) {
                             <h6>
                                 {itemProduct.product_details.name}
                             </h6>
-                            <p className='precio'>${itemProduct.price.toLocaleString()}</p>
+                            <p className='precio'>${itemProduct.price.toLocaleString('en')}</p>
                             <p className='cantidad'>Cantidad: {itemProduct.qty}</p>
                         </>
                     ))}
