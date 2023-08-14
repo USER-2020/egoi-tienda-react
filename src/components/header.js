@@ -376,11 +376,11 @@ const Header = () => {
             <div className="menuUser">
               {isLoggedIn ? (
                 <>
-                  <a href="#" onClick={handleAdminUser}>
-                    <FontAwesomeIcon icon={faUserGear} style={{ alignSelf: 'center' }} />
+                  <a href="#" onClick={handleAdminUser} style={{gap:'12px'}}>
+                    <FontAwesomeIcon icon={faUserGear} style={{ alignSelf: 'center'}} />
                     Mi cuenta
                   </a>
-                  <a href="#" onClick={handleLogout}>
+                  <a href="#" onClick={handleLogout} style={{gap:'15px'}}>
                     <FontAwesomeIcon icon={faRightFromBracket} />
                     Cerrar sesión
                   </a>
