@@ -357,7 +357,7 @@ function DetailCart() {
               <div className="descuento">
                 <p>Descuento</p>
                 {discountCoupon && discountCoupon.total !== undefined ? (
-                  <p>{formattedDiscount}</p>
+                  <p>{discountCoupon.discount}</p>
 
                 ) : (
                   <p>$0</p>
@@ -399,7 +399,7 @@ function DetailCart() {
               <div className="totalCash">
                 <h6>Total a pagar</h6>
                 {discountCoupon && discountCoupon.total !== undefined ? (
-                  <h5><strong>{formattedTotal}</strong></h5>
+                  <h5><strong>{discountCoupon.total}</strong></h5>
                 ) : (
                   <h5><strong>{totalaPagar}</strong></h5>
                 )}
@@ -441,7 +441,7 @@ function DetailCart() {
               </div>
             </Card>
             <div className="toPay">
-              <Link to={`/detailCart/address/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? formattedTotal : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? formattedDiscount : descuento}`}>
+              <Link to={`/detailCart/address/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}>
                 <a href="#" >Ir a pagar</a>
               </Link>
             </div>
@@ -468,7 +468,7 @@ function DetailCart() {
               {/* </Link> */}
             </div>
             <div className="awaitShopping">
-              <Link to={`/detailCart/address/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? formattedTotal : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? formattedDiscount : descuento}`}>
+              <Link to={`/detailCart/address/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}>
                 <a href="#">Continuar compra</a>
               </Link>
             </div>
