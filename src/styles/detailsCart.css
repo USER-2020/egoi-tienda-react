@@ -149,6 +149,7 @@
     flex-direction: row;
     margin-top: 10px;
     gap: 8px;
+    justify-content: space-evenly;
 }
 .containerDetailpurchase .card .capsulas .cut{
     text-align: center;
