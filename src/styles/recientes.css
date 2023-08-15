@@ -868,10 +868,11 @@ h4 {
     }
 
     .container{
-        height: 350px;
+        height: 360px !important;
     }
 
     .cardProducto1{
         width: 200px !important;
+        height: 360px !important;
     }
 }
