@@ -148,7 +148,8 @@ input[type="radio"]:checked {
     }
 
     .cardProducto1{
-        height: 20rem !important
+        height: 20rem !important;
+        width: 171px !important
     }
 
 
