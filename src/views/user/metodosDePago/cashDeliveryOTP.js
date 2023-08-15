@@ -224,7 +224,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
                         visible={true}
                       />
                     }
-                    Enviar código vía sms
+                    Enviar código vía SMS
                   </a>
                 </>
               )}
