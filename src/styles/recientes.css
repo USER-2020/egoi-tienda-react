@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    height: auto;
+    height: 340px;
     margin-top: 52.5px;
     background-color: #F5F5F5;
 
@@ -865,5 +865,13 @@ h4 {
 
     .cardContainerHot .scroll-button.left {
         display: none;
+    }
+
+    .container{
+        height: 350px;
+    }
+
+    .cardProducto1{
+        width: 200px !important;
     }
 }
