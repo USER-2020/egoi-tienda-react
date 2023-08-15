@@ -401,9 +401,9 @@ const ProductsCategories = () => {
                 {/* {isDiscountedProducts && productsDiscounted } */}
                 {products && products.products && products.products.map((product, index) => (
                   <div key={product.id} className="col-md-3 col-6 mb-4" >
-                    <a href="#" className='containerCard2  ' >
+                    <a href="#" className='containerCard2  '  >
                       <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
-                        <Card className='cardProducto1'>
+                        <Card className='cardProducto1' style={{height: "30rem"}} >
                           {isDiscountedProducts && product.discount_type === 'flat' && (
                             <span className='tagDiscounted'>$ {product.discount.toLocaleString('en')} Off</span>
                           )}
@@ -411,7 +411,7 @@ const ProductsCategories = () => {
                           {isDiscountedProducts && product.discount_type === 'percent' && (
                             <span className='tagDiscounted'>{product.discount}% Off</span>
                           )}
-
+                            
                           <CardImg
                             src={baseUrlImage + product.images[0]}
                             alt={product.name}
@@ -446,9 +446,10 @@ const ProductsCategories = () => {
                                 <p style={{ marginBottom: '0' }}>Envío gratis</p>
                               </div>
                             )}
-                            <CardSubtitle tag="h5" className="text-muted" style={{ lineHeight: "1.2", maxHeight: "2.5em", overflow: "hidden", textOverflow: "ellipsis" }}>
-                              {product.name}
-                            </CardSubtitle>
+                              <CardSubtitle tag="h5" className="text-wrap" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible" }}>
+                                {product.name.length < 40 ? product.name : product.name.slice(0, 40) + '...'}
+                              </CardSubtitle>
+
                             <CardTitle tag="h5">${product.unit_price.toLocaleString('en')}</CardTitle>
                           </CardBody>
                         </Card>
