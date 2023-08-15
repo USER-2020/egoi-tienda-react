@@ -25,12 +25,12 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
       console.log("Orden enviada por Efecty");
       console.log(res);
       setModalPurchaseSuccess();
+      closeEfectyModal();
     })
     .catch((err)=>console.log(err));
   }
   const orderPlaceEfecty = () => {
     makePlaceOrder();
-    closeEfectyModal();
   }
 
   useEffect(() => {
