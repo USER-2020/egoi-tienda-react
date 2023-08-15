@@ -146,4 +146,10 @@ input[type="radio"]:checked {
     .producto-imagen-desktop {
         display: none;
     }
+
+    .cardProducto1{
+        height: 24rem !important
+    }
+
+
 }
