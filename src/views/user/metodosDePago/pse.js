@@ -8,7 +8,7 @@ import { makePay } from '../../../services/metodosDePago';
 import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 
-function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder }) {
+function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setBtnFinalizarCompra }) {
 
     const [pseDocument, setPseDocument] = useState("");
     const [pseTypeDocument, setPseTypeDocument] = useState("");
@@ -231,6 +231,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                     title: '¡Tu compra ha sido registrada!',
                     text: 'La compra se ha realizado exitosamente.',
                 });
+                setBtnFinalizarCompra();
             }).catch((err) => {
                 console.log(err);
                 Swal.fire({

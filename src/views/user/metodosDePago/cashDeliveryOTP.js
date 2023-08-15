@@ -13,7 +13,7 @@ import { placeOrder } from '../../../services/metodosDePago';
 import { getCurrentUser } from './../../../helpers/Utils';
 
 
-function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder }) {
+function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder, setBtnFinalizarCompra }) {
   const [otp, setOTP] = useState('');
   const [loading, setLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
@@ -99,7 +99,8 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
         '¡Tu compra fue verificada!',
         '¡Gracias por comprar con nosotros!',
         'success'
-      )
+      );
+      setBtnFinalizarCompra();
     }).catch((error) => {
       console.log(error);
       setLoading(false);
