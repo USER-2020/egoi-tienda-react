@@ -11,7 +11,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 
 
-function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setBtnFinalizarCompra }) {
+function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess}) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -187,7 +187,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
             if (discountCoupon && discountCoupon.discount !== undefined) {
                 cuponOffSale = discountCoupon.discount;
             }
-            const unformattedValue = total.toString().replace(/[.]/g, '');
+            const unformattedValue = total.toString().replace(/[,]/g, '');
             // Eliminar el símbolo "$" y convertir a número
             const numericValue = Number(unformattedValue.replace("$", ""));
 
@@ -316,12 +316,8 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                     })
                 } else {
                     console.log("El pago se registro");
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Tu compra ha sido registrada!',
-                        text: 'La compra se ha realizado exitosamente.',
-                    });
-                    setBtnFinalizarCompra();
+                    setModalPurchaseSuccess();
+                    // setBtnFinalizarCompra();
                 }
             }).catch((err) => {
                 console.log(err);

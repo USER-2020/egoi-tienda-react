@@ -194,7 +194,7 @@ const Recientes = ({ bannersInfo }) => {
                                                         <p style={{ marginBottom: '0' }}>Envío gratis</p>
                                                     </div>
                                                 )}
-                                                     <CardSubtitle tag="h5" className="text-wrap" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible" }}>
+                                                     <CardSubtitle tag="h5" className="text-wrap text-muted" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible" }}>
                                                         {product.name.length < 30 ? product.name : product.name.slice(0, 30) + '...'}
                                                     </CardSubtitle>
                                                 <CardTitle tag="h5">${product.unit_price.toLocaleString('en')}</CardTitle>

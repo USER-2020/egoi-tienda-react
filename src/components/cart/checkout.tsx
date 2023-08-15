@@ -65,6 +65,9 @@ function AddressCart() {
   //Modal de pedido exitoso
   const [modalSuccessPurchase, setModalSuccessPurchase] = useState(false);
 
+  /* Manejo de estados del tercer modal */
+  const [shouldShowCollapseThree, setShouldShowCollapseThree] = useState(false);
+
 
   // Modales de metodos de pagos 
   const [modalTarjetaDebito, setModalTarjetaDebito] = useState(false);
@@ -86,7 +89,7 @@ function AddressCart() {
   const [showPDF, setShowPDF] = useState(false);
 
   /* Boton deshabilitado */
-  const [botonDeshabilitado, setBotonDeshabilitado] = useState(false);
+  const [botonDeshabilitado, setBotonDeshabilitado] = useState(true);
 
 
 
@@ -167,6 +170,54 @@ function AddressCart() {
     }
   }
 
+  /* Validacion de metodos de pago para finalizar compra */
+  const handleFinalizarPurchase = () => {
+    if (selectedCheckbox === null) {
+      console.log("Elige un metodo de pago !!!");
+    }
+  }
+
+  /* Validacion de el boton de finalizar compra y de metodos de pago selsccionados */
+  const handlePurchaseSucces =() =>{
+    if(selectedCheckbox != null){
+      setModalSuccessPurchase(true);
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡No has seleccionado ningun método de pago!',
+        confirmButtonColor:'#FC5241',
+
+      });
+    }
+    
+  }
+
+  /* Validacion de direccion en el checkout */
+  const handleProcederCompra = () => {
+    if (selectedAddressIndex === null) {
+      console.log("Elegir dirección para proceder con la compra");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡No has seleccionado ninguna dirección!',
+        confirmButtonColor:'#FC5241',
+
+      });
+      
+    } else {
+      // Agregar los atributos al evento
+      
+      const button = document.getElementById('procederButton');
+      if (button) {
+        button.dataset.bsToggle = "collapse";
+        button.dataset.bsTarget = "#collapseThree";
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-controls", "collapseThree");
+      }
+      handleStepClick(3, 100);
+    }
+  };
 
 
   const handleCheckboxChange = (index) => {
@@ -193,13 +244,75 @@ function AddressCart() {
       }
       if (index === 3) {
         console.log(index);
-        handleSubmitOrderEfecty();
+        if (token) {
+          swalWithBootstrapButtons.fire({
+            title: '¿Quieres realizar el pago por efecty?',
+            text: "Esto no es reversible",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, acepto',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            didOpen: () => {
+              const confirmButton = document.querySelector('.swal2-confirm');
+              confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              handleSubmitOrderEfecty();
+    
+            } else if (
+              /* Read more about handling dismissals below */
+              result.dismiss === Swal.DismissReason.cancel
+    
+            ) {
+              
+    
+    
+    
+            }
+          })
+    
+    
+        }
+        
         // setBotonDeshabilitado(true);
 
       }
       if (index === 4) {
         console.log(index);
-        setModalOTP(true);
+        if (token) {
+          swalWithBootstrapButtons.fire({
+            title: '¿Quieres realizar el pago contra entrega?',
+            text: "Esto no es reversible",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, acepto',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            didOpen: () => {
+              const confirmButton = document.querySelector('.swal2-confirm');
+              confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setModalOTP(true);
+    
+            } else if (
+              /* Read more about handling dismissals below */
+              result.dismiss === Swal.DismissReason.cancel
+    
+            ) {
+              
+    
+    
+    
+            }
+          })
+    
+    
+        }
+        
         // setBotonDeshabilitado(true);
       }
     }
@@ -322,6 +435,9 @@ function AddressCart() {
 
     }
   }
+
+
+
   /* traer datos de los modales para efectuar el pago */
   const handleModalData = (data) => {
     console.log("Datos del modal:", data);
@@ -670,6 +786,9 @@ function AddressCart() {
   }, []);
 
 
+  useEffect(() => {
+    console.log(shouldShowCollapseThree);
+  }, [shouldShowCollapseThree]);
 
 
 
@@ -713,6 +832,8 @@ function AddressCart() {
     }
 
 
+
+
   }, [activeStep, token, selectedAddressId, showPDF, modalDataPSE, modalDataTarjetas, subtotalNumber]);
 
   return (
@@ -742,11 +863,17 @@ function AddressCart() {
                     Dirección y facturación
                   </div>
                 </div>
-                <div className={`step-item ${activeStep >= 3 ? 'active' : ''}`}>
-                  <button className={`step-button text-center ${activeStep >= 3 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" onClick={() => handleStepClick(3, 100)}>
+                <div className={`step-item ${activeStep >= 3 && selectedAddressIndex !== null ? 'active' : ''}`}>
+                  <button
+                    id="procederButton"
+                    className={`step-button text-center ${activeStep >= 3 && selectedAddressIndex !== null ? 'active' : ''}`}
+                    type="button"
+                    onClick={() => handleProcederCompra()}
+                  >
                     3
                   </button>
+
+
                   <div className="step-title">
                     Método de pago
                   </div>
@@ -808,108 +935,110 @@ function AddressCart() {
                   </div>
                 </div>
               </div>
-              <div className="card">
-                <div id="headingThree">
+              {selectedAddressIndex != null && (
+                <div className="card">
+                  <div id="headingThree">
 
-                </div>
-                <div id="collapseThree" className="collapse" aria-labelledby="headingThree"
-                  data-bs-parent="#accordionExample">
-                  <div className="card-body paymentMethods">
-                    <h6>Escoge tu médoto de pago</h6>
-                    <Card>
-                      <div className="payment">
-                        <div className="imgPayment">
-                          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9632 11H23.0368C24.4035 11 25.4801 11 26.351 11.0594C27.2387 11.12 27.9853 11.2456 28.6788 11.5328C30.394 12.2433 31.7567 13.606 32.4672 15.3212C32.7853 16.0893 32.906 16.9257 32.9584 17.9489C33 18.7623 33 19.7511 33 20.9741V21.0369C33 22.4035 33 23.4801 32.9406 24.351C32.88 25.2387 32.7544 25.9853 32.4672 26.6788C31.7567 28.394 30.394 29.7567 28.6788 30.4672C27.9853 30.7544 27.2387 30.88 26.351 30.9406C25.4801 31 24.4035 31 23.0369 31H16.9631C15.5965 31 14.5199 31 13.649 30.9406C12.7613 30.88 12.0147 30.7544 11.3212 30.4672C9.60602 29.7567 8.2433 28.394 7.53284 26.6788C7.2456 25.9853 7.11997 25.2387 7.05941 24.351C6.99999 23.4801 7 22.4035 7 21.0368V20.974C7 19.7511 7 18.7623 7.04161 17.9489C7.09395 16.9257 7.21468 16.0893 7.53284 15.3212C8.2433 13.606 9.60602 12.2433 11.3212 11.5328C12.0147 11.2456 12.7613 11.12 13.649 11.0594C14.5199 11 15.5965 11 16.9632 11ZM13.7851 13.0548C12.9993 13.1084 12.4957 13.2111 12.0866 13.3806C10.8614 13.8881 9.88807 14.8614 9.3806 16.0866C9.27532 16.3407 9.19613 16.6303 9.13834 17H30.8617C30.8039 16.6303 30.7247 16.3407 30.6194 16.0866C30.1119 14.8614 29.1386 13.8881 27.9134 13.3806C27.5043 13.2111 27.0007 13.1084 26.2149 13.0548C25.4201 13.0005 24.4115 13 23 13H17C15.5885 13 14.5799 13.0005 13.7851 13.0548ZM30.9906 19H9.00942C9.00011 19.5665 9 20.2225 9 21C9 22.4115 9.00054 23.4201 9.05477 24.2149C9.10839 25.0007 9.21112 25.5043 9.3806 25.9134C9.88807 27.1386 10.8614 28.1119 12.0866 28.6194C12.4957 28.7889 12.9993 28.8916 13.7851 28.9452C14.5799 28.9995 15.5885 29 17 29H23C24.4115 29 25.4201 28.9995 26.2149 28.9452C27.0007 28.8916 27.5043 28.7889 27.9134 28.6194C29.1386 28.1119 30.1119 27.1386 30.6194 25.9134C30.7889 25.5043 30.8916 25.0007 30.9452 24.2149C30.9995 23.4201 31 22.4115 31 21C31 20.2225 30.9999 19.5665 30.9906 19ZM25 22C25 21.4477 25.4477 21 26 21H28C28.5523 21 29 21.4477 29 22C29 22.5523 28.5523 23 28 23H26C25.4477 23 25 22.5523 25 22Z" fill="#A75BFF" />
-                          </svg>
-                        </div>
-                        <div className="contentPayment">
-                          <h6>Tarjeta Débito</h6>
-                          <p>Paga con tarjetas débito</p>
-                        </div>
-                      </div>
-                      <div className="checkPayment">
-                        <Input type='checkbox'
-                          checked={selectedCheckbox === 0}
-                          onChange={() => handleCheckboxChange(0)} />
-                      </div>
-                    </Card>
-                    <Card>
-                      <div className="payment">
-                        <div className="imgPayment">
-                          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9632 11H23.0368C24.4035 11 25.4801 11 26.351 11.0594C27.2387 11.12 27.9853 11.2456 28.6788 11.5328C30.394 12.2433 31.7567 13.606 32.4672 15.3212C32.7853 16.0893 32.906 16.9257 32.9584 17.9489C33 18.7623 33 19.7511 33 20.9741V21.0369C33 22.4035 33 23.4801 32.9406 24.351C32.88 25.2387 32.7544 25.9853 32.4672 26.6788C31.7567 28.394 30.394 29.7567 28.6788 30.4672C27.9853 30.7544 27.2387 30.88 26.351 30.9406C25.4801 31 24.4035 31 23.0369 31H16.9631C15.5965 31 14.5199 31 13.649 30.9406C12.7613 30.88 12.0147 30.7544 11.3212 30.4672C9.60602 29.7567 8.2433 28.394 7.53284 26.6788C7.2456 25.9853 7.11997 25.2387 7.05941 24.351C6.99999 23.4801 7 22.4035 7 21.0368V20.974C7 19.7511 7 18.7623 7.04161 17.9489C7.09395 16.9257 7.21468 16.0893 7.53284 15.3212C8.2433 13.606 9.60602 12.2433 11.3212 11.5328C12.0147 11.2456 12.7613 11.12 13.649 11.0594C14.5199 11 15.5965 11 16.9632 11ZM13.7851 13.0548C12.9993 13.1084 12.4957 13.2111 12.0866 13.3806C10.8614 13.8881 9.88807 14.8614 9.3806 16.0866C9.27532 16.3407 9.19613 16.6303 9.13834 17H30.8617C30.8039 16.6303 30.7247 16.3407 30.6194 16.0866C30.1119 14.8614 29.1386 13.8881 27.9134 13.3806C27.5043 13.2111 27.0007 13.1084 26.2149 13.0548C25.4201 13.0005 24.4115 13 23 13H17C15.5885 13 14.5799 13.0005 13.7851 13.0548ZM30.9906 19H9.00942C9.00011 19.5665 9 20.2225 9 21C9 22.4115 9.00054 23.4201 9.05477 24.2149C9.10839 25.0007 9.21112 25.5043 9.3806 25.9134C9.88807 27.1386 10.8614 28.1119 12.0866 28.6194C12.4957 28.7889 12.9993 28.8916 13.7851 28.9452C14.5799 28.9995 15.5885 29 17 29H23C24.4115 29 25.4201 28.9995 26.2149 28.9452C27.0007 28.8916 27.5043 28.7889 27.9134 28.6194C29.1386 28.1119 30.1119 27.1386 30.6194 25.9134C30.7889 25.5043 30.8916 25.0007 30.9452 24.2149C30.9995 23.4201 31 22.4115 31 21C31 20.2225 30.9999 19.5665 30.9906 19ZM25 22C25 21.4477 25.4477 21 26 21H28C28.5523 21 29 21.4477 29 22C29 22.5523 28.5523 23 28 23H26C25.4477 23 25 22.5523 25 22Z" fill="#A75BFF" />
-                          </svg>
-                        </div>
-                        <div className="contentPayment">
-                          <h6>Tarjeta de Crédito</h6>
-                          <p>VISA, MasterCard, American Express</p>
-                        </div>
-                      </div>
-                      <div className="checkPayment">
-                        <Input type='checkbox'
-                          checked={selectedCheckbox === 1}
-                          onChange={() => handleCheckboxChange(1)} />
-                      </div>
-                    </Card>
-                    <Card>
-                      <div className="payment">
-                        <div className="imgPayment">
-                          <img src={pseLogo} />
-
-                        </div>
-                        <div className="contentPayment">
-                          <h6>PSE</h6>
-                          <p>Pago por transferencia</p>
-                        </div>
-                      </div>
-                      <div className="checkPayment">
-                        <Input type='checkbox'
-                          checked={selectedCheckbox === 2}
-                          onChange={() => handleCheckboxChange(2)} />
-                      </div>
-                    </Card>
-                    <Card>
-                      <div className="payment">
-                        <div className="imgPayment">
-                          <img src={efectyLogo} />
-                        </div>
-                        <div className="contentPayment">
-                          <h6>Efecty</h6>
-                          <p>Pago realizado por consignación</p>
-                        </div>
-                      </div>
-                      <div className="checkPayment">
-                        <Input type='checkbox'
-                          checked={selectedCheckbox === 3}
-                          onChange={() => handleCheckboxChange(3)} />
-                      </div>
-                    </Card>
-                    {subtotalNumber >= 79900 ? (
-
+                  </div>
+                  <div id="collapseThree" className="collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample">
+                    <div className="card-body paymentMethods">
+                      <h6>Escoge tu médoto de pago</h6>
                       <Card>
                         <div className="payment">
                           <div className="imgPayment">
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12.3063 9H18.3604C19.611 8.99999 20.6081 8.99999 21.4132 9.06317C22.2378 9.12789 22.9466 9.26351 23.5987 9.58267C24.6475 10.0961 25.5078 10.919 26.0495 11.9403C26.3889 12.5801 26.5324 13.2757 26.6005 14.0764C26.6387 14.5256 26.6549 15.0361 26.6617 15.6176H27.7757C29.1866 15.6176 30.3043 15.6176 31.205 15.6883C32.1253 15.7606 32.9051 15.9112 33.6186 16.2604C34.7755 16.8267 35.7236 17.734 36.3203 18.859C36.6909 19.5578 36.8501 20.3215 36.926 21.2142C37 22.0843 37 23.1621 37 24.5135V26.0633C37 26.3429 37.0001 26.6116 36.9808 26.8386C36.9596 27.0876 36.9099 27.3746 36.7583 27.6605C36.5468 28.0592 36.2135 28.3759 35.8127 28.5721C35.5291 28.7109 35.2455 28.7564 34.9953 28.776C34.7642 28.7942 34.489 28.7941 34.1955 28.7941H33.9674C33.5313 30.0925 32.2694 31 30.8333 31C29.3973 31 28.1354 30.0925 27.6993 28.7941H15.0229C14.5868 30.0925 13.3249 31 11.8889 31C10.4096 31 9.1151 30.037 8.71773 28.6758C8.11401 28.5963 7.57317 28.4587 7.06797 28.2114C6.01912 27.6981 5.15884 26.8751 4.61714 25.8538C4.27778 25.214 4.13428 24.5185 4.06617 23.7177C3.99998 22.9395 3.99999 21.9775 4 20.7801V17.014C3.99999 15.8166 3.99998 14.8546 4.06617 14.0764C4.13428 13.2757 4.27778 12.5801 4.61714 11.9403C5.15884 10.919 6.01911 10.0961 7.06797 9.58267C7.72004 9.26351 8.42891 9.12789 9.2535 9.06317C10.0586 8.99999 11.0557 8.99999 12.3063 9ZM8.80097 26.6667C9.27478 25.4364 10.5001 24.5882 11.8889 24.5882C13.3249 24.5882 14.5868 25.4957 15.0229 26.7941H24.6667V17.0588C24.6667 15.8062 24.6658 14.9294 24.6077 14.2459C24.5507 13.5754 24.4439 13.1814 24.2827 12.8774C23.9438 12.2385 23.3989 11.7116 22.7194 11.379C22.3891 11.2173 21.9637 11.1125 21.2567 11.057C20.5391 11.0007 19.6204 11 18.3185 11H12.3481C11.0462 11 10.1276 11.0007 9.40999 11.057C8.70292 11.1125 8.27757 11.2173 7.94723 11.379C7.26778 11.7116 6.7229 12.2385 6.38399 12.8774C6.22278 13.1814 6.11601 13.5754 6.05897 14.2459C6.00084 14.9294 6 15.8062 6 17.0588V20.7353C6 21.9879 6.00084 22.8647 6.05897 23.5482C6.11601 24.2187 6.22278 24.6128 6.38399 24.9167C6.7229 25.5556 7.26778 26.0825 7.94723 26.4151C8.17065 26.5244 8.43613 26.6073 8.80097 26.6667ZM26.6667 17.6176V26.7941H27.6993C28.1354 25.4957 29.3973 24.5882 30.8333 24.5882C32.2694 24.5882 33.5313 25.4957 33.9674 26.7941H34.163C34.5003 26.7941 34.6956 26.7934 34.8388 26.7822C34.8985 26.7775 34.9313 26.7719 34.9459 26.769C34.9605 26.7602 34.9715 26.7503 34.9796 26.7407C34.9819 26.7263 34.9851 26.7032 34.988 26.6691C34.9992 26.5374 35 26.3554 35 26.0294V24.5588C35 23.1518 34.9992 22.1592 34.9332 21.3837C34.8684 20.6212 34.7459 20.1591 34.5534 19.7962C34.1595 19.0535 33.5268 18.4422 32.7393 18.0568C32.3476 17.865 31.8513 17.7452 31.0485 17.6822C30.2352 17.6184 29.196 17.6176 27.7333 17.6176H26.6667ZM11.8889 26.5882C11.144 26.5882 10.6049 27.1526 10.5928 27.7714L10.5926 27.7941C10.5926 28.4226 11.1347 29 11.8889 29C12.6431 29 13.1852 28.4226 13.1852 27.7941C13.1852 27.1656 12.6431 26.5882 11.8889 26.5882ZM30.8333 26.5882C30.0792 26.5882 29.537 27.1656 29.537 27.7941C29.537 28.4226 30.0792 29 30.8333 29C31.5875 29 32.1296 28.4226 32.1296 27.7941C32.1296 27.1656 31.5875 26.5882 30.8333 26.5882Z" fill="#A75BFF" />
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9632 11H23.0368C24.4035 11 25.4801 11 26.351 11.0594C27.2387 11.12 27.9853 11.2456 28.6788 11.5328C30.394 12.2433 31.7567 13.606 32.4672 15.3212C32.7853 16.0893 32.906 16.9257 32.9584 17.9489C33 18.7623 33 19.7511 33 20.9741V21.0369C33 22.4035 33 23.4801 32.9406 24.351C32.88 25.2387 32.7544 25.9853 32.4672 26.6788C31.7567 28.394 30.394 29.7567 28.6788 30.4672C27.9853 30.7544 27.2387 30.88 26.351 30.9406C25.4801 31 24.4035 31 23.0369 31H16.9631C15.5965 31 14.5199 31 13.649 30.9406C12.7613 30.88 12.0147 30.7544 11.3212 30.4672C9.60602 29.7567 8.2433 28.394 7.53284 26.6788C7.2456 25.9853 7.11997 25.2387 7.05941 24.351C6.99999 23.4801 7 22.4035 7 21.0368V20.974C7 19.7511 7 18.7623 7.04161 17.9489C7.09395 16.9257 7.21468 16.0893 7.53284 15.3212C8.2433 13.606 9.60602 12.2433 11.3212 11.5328C12.0147 11.2456 12.7613 11.12 13.649 11.0594C14.5199 11 15.5965 11 16.9632 11ZM13.7851 13.0548C12.9993 13.1084 12.4957 13.2111 12.0866 13.3806C10.8614 13.8881 9.88807 14.8614 9.3806 16.0866C9.27532 16.3407 9.19613 16.6303 9.13834 17H30.8617C30.8039 16.6303 30.7247 16.3407 30.6194 16.0866C30.1119 14.8614 29.1386 13.8881 27.9134 13.3806C27.5043 13.2111 27.0007 13.1084 26.2149 13.0548C25.4201 13.0005 24.4115 13 23 13H17C15.5885 13 14.5799 13.0005 13.7851 13.0548ZM30.9906 19H9.00942C9.00011 19.5665 9 20.2225 9 21C9 22.4115 9.00054 23.4201 9.05477 24.2149C9.10839 25.0007 9.21112 25.5043 9.3806 25.9134C9.88807 27.1386 10.8614 28.1119 12.0866 28.6194C12.4957 28.7889 12.9993 28.8916 13.7851 28.9452C14.5799 28.9995 15.5885 29 17 29H23C24.4115 29 25.4201 28.9995 26.2149 28.9452C27.0007 28.8916 27.5043 28.7889 27.9134 28.6194C29.1386 28.1119 30.1119 27.1386 30.6194 25.9134C30.7889 25.5043 30.8916 25.0007 30.9452 24.2149C30.9995 23.4201 31 22.4115 31 21C31 20.2225 30.9999 19.5665 30.9906 19ZM25 22C25 21.4477 25.4477 21 26 21H28C28.5523 21 29 21.4477 29 22C29 22.5523 28.5523 23 28 23H26C25.4477 23 25 22.5523 25 22Z" fill="#A75BFF" />
                             </svg>
-
                           </div>
                           <div className="contentPayment">
-                            <h6>Pago contra entrega</h6>
-                            <p>Realizarás el pago al recibir tu pedido</p>
+                            <h6>Tarjeta Débito</h6>
+                            <p>Paga con tarjetas débito</p>
                           </div>
                         </div>
                         <div className="checkPayment">
                           <Input type='checkbox'
-                            checked={selectedCheckbox === 4}
-                            onChange={() => handleCheckboxChange(4)} />
+                            checked={selectedCheckbox === 0}
+                            onChange={() => handleCheckboxChange(0)} />
                         </div>
                       </Card>
-                    ) : (<></>)}
+                      <Card>
+                        <div className="payment">
+                          <div className="imgPayment">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9632 11H23.0368C24.4035 11 25.4801 11 26.351 11.0594C27.2387 11.12 27.9853 11.2456 28.6788 11.5328C30.394 12.2433 31.7567 13.606 32.4672 15.3212C32.7853 16.0893 32.906 16.9257 32.9584 17.9489C33 18.7623 33 19.7511 33 20.9741V21.0369C33 22.4035 33 23.4801 32.9406 24.351C32.88 25.2387 32.7544 25.9853 32.4672 26.6788C31.7567 28.394 30.394 29.7567 28.6788 30.4672C27.9853 30.7544 27.2387 30.88 26.351 30.9406C25.4801 31 24.4035 31 23.0369 31H16.9631C15.5965 31 14.5199 31 13.649 30.9406C12.7613 30.88 12.0147 30.7544 11.3212 30.4672C9.60602 29.7567 8.2433 28.394 7.53284 26.6788C7.2456 25.9853 7.11997 25.2387 7.05941 24.351C6.99999 23.4801 7 22.4035 7 21.0368V20.974C7 19.7511 7 18.7623 7.04161 17.9489C7.09395 16.9257 7.21468 16.0893 7.53284 15.3212C8.2433 13.606 9.60602 12.2433 11.3212 11.5328C12.0147 11.2456 12.7613 11.12 13.649 11.0594C14.5199 11 15.5965 11 16.9632 11ZM13.7851 13.0548C12.9993 13.1084 12.4957 13.2111 12.0866 13.3806C10.8614 13.8881 9.88807 14.8614 9.3806 16.0866C9.27532 16.3407 9.19613 16.6303 9.13834 17H30.8617C30.8039 16.6303 30.7247 16.3407 30.6194 16.0866C30.1119 14.8614 29.1386 13.8881 27.9134 13.3806C27.5043 13.2111 27.0007 13.1084 26.2149 13.0548C25.4201 13.0005 24.4115 13 23 13H17C15.5885 13 14.5799 13.0005 13.7851 13.0548ZM30.9906 19H9.00942C9.00011 19.5665 9 20.2225 9 21C9 22.4115 9.00054 23.4201 9.05477 24.2149C9.10839 25.0007 9.21112 25.5043 9.3806 25.9134C9.88807 27.1386 10.8614 28.1119 12.0866 28.6194C12.4957 28.7889 12.9993 28.8916 13.7851 28.9452C14.5799 28.9995 15.5885 29 17 29H23C24.4115 29 25.4201 28.9995 26.2149 28.9452C27.0007 28.8916 27.5043 28.7889 27.9134 28.6194C29.1386 28.1119 30.1119 27.1386 30.6194 25.9134C30.7889 25.5043 30.8916 25.0007 30.9452 24.2149C30.9995 23.4201 31 22.4115 31 21C31 20.2225 30.9999 19.5665 30.9906 19ZM25 22C25 21.4477 25.4477 21 26 21H28C28.5523 21 29 21.4477 29 22C29 22.5523 28.5523 23 28 23H26C25.4477 23 25 22.5523 25 22Z" fill="#A75BFF" />
+                            </svg>
+                          </div>
+                          <div className="contentPayment">
+                            <h6>Tarjeta de Crédito</h6>
+                            <p>VISA, MasterCard, American Express</p>
+                          </div>
+                        </div>
+                        <div className="checkPayment">
+                          <Input type='checkbox'
+                            checked={selectedCheckbox === 1}
+                            onChange={() => handleCheckboxChange(1)} />
+                        </div>
+                      </Card>
+                      <Card>
+                        <div className="payment">
+                          <div className="imgPayment">
+                            <img src={pseLogo} />
+
+                          </div>
+                          <div className="contentPayment">
+                            <h6>PSE</h6>
+                            <p>Pago por transferencia</p>
+                          </div>
+                        </div>
+                        <div className="checkPayment">
+                          <Input type='checkbox'
+                            checked={selectedCheckbox === 2}
+                            onChange={() => handleCheckboxChange(2)} />
+                        </div>
+                      </Card>
+                      <Card>
+                        <div className="payment">
+                          <div className="imgPayment">
+                            <img src={efectyLogo} />
+                          </div>
+                          <div className="contentPayment">
+                            <h6>Efecty</h6>
+                            <p>Pago realizado por consignación</p>
+                          </div>
+                        </div>
+                        <div className="checkPayment">
+                          <Input type='checkbox'
+                            checked={selectedCheckbox === 3}
+                            onChange={() => handleCheckboxChange(3)} />
+                        </div>
+                      </Card>
+                      {subtotalNumber >= 79900 ? (
+
+                        <Card>
+                          <div className="payment">
+                            <div className="imgPayment">
+                              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.3063 9H18.3604C19.611 8.99999 20.6081 8.99999 21.4132 9.06317C22.2378 9.12789 22.9466 9.26351 23.5987 9.58267C24.6475 10.0961 25.5078 10.919 26.0495 11.9403C26.3889 12.5801 26.5324 13.2757 26.6005 14.0764C26.6387 14.5256 26.6549 15.0361 26.6617 15.6176H27.7757C29.1866 15.6176 30.3043 15.6176 31.205 15.6883C32.1253 15.7606 32.9051 15.9112 33.6186 16.2604C34.7755 16.8267 35.7236 17.734 36.3203 18.859C36.6909 19.5578 36.8501 20.3215 36.926 21.2142C37 22.0843 37 23.1621 37 24.5135V26.0633C37 26.3429 37.0001 26.6116 36.9808 26.8386C36.9596 27.0876 36.9099 27.3746 36.7583 27.6605C36.5468 28.0592 36.2135 28.3759 35.8127 28.5721C35.5291 28.7109 35.2455 28.7564 34.9953 28.776C34.7642 28.7942 34.489 28.7941 34.1955 28.7941H33.9674C33.5313 30.0925 32.2694 31 30.8333 31C29.3973 31 28.1354 30.0925 27.6993 28.7941H15.0229C14.5868 30.0925 13.3249 31 11.8889 31C10.4096 31 9.1151 30.037 8.71773 28.6758C8.11401 28.5963 7.57317 28.4587 7.06797 28.2114C6.01912 27.6981 5.15884 26.8751 4.61714 25.8538C4.27778 25.214 4.13428 24.5185 4.06617 23.7177C3.99998 22.9395 3.99999 21.9775 4 20.7801V17.014C3.99999 15.8166 3.99998 14.8546 4.06617 14.0764C4.13428 13.2757 4.27778 12.5801 4.61714 11.9403C5.15884 10.919 6.01911 10.0961 7.06797 9.58267C7.72004 9.26351 8.42891 9.12789 9.2535 9.06317C10.0586 8.99999 11.0557 8.99999 12.3063 9ZM8.80097 26.6667C9.27478 25.4364 10.5001 24.5882 11.8889 24.5882C13.3249 24.5882 14.5868 25.4957 15.0229 26.7941H24.6667V17.0588C24.6667 15.8062 24.6658 14.9294 24.6077 14.2459C24.5507 13.5754 24.4439 13.1814 24.2827 12.8774C23.9438 12.2385 23.3989 11.7116 22.7194 11.379C22.3891 11.2173 21.9637 11.1125 21.2567 11.057C20.5391 11.0007 19.6204 11 18.3185 11H12.3481C11.0462 11 10.1276 11.0007 9.40999 11.057C8.70292 11.1125 8.27757 11.2173 7.94723 11.379C7.26778 11.7116 6.7229 12.2385 6.38399 12.8774C6.22278 13.1814 6.11601 13.5754 6.05897 14.2459C6.00084 14.9294 6 15.8062 6 17.0588V20.7353C6 21.9879 6.00084 22.8647 6.05897 23.5482C6.11601 24.2187 6.22278 24.6128 6.38399 24.9167C6.7229 25.5556 7.26778 26.0825 7.94723 26.4151C8.17065 26.5244 8.43613 26.6073 8.80097 26.6667ZM26.6667 17.6176V26.7941H27.6993C28.1354 25.4957 29.3973 24.5882 30.8333 24.5882C32.2694 24.5882 33.5313 25.4957 33.9674 26.7941H34.163C34.5003 26.7941 34.6956 26.7934 34.8388 26.7822C34.8985 26.7775 34.9313 26.7719 34.9459 26.769C34.9605 26.7602 34.9715 26.7503 34.9796 26.7407C34.9819 26.7263 34.9851 26.7032 34.988 26.6691C34.9992 26.5374 35 26.3554 35 26.0294V24.5588C35 23.1518 34.9992 22.1592 34.9332 21.3837C34.8684 20.6212 34.7459 20.1591 34.5534 19.7962C34.1595 19.0535 33.5268 18.4422 32.7393 18.0568C32.3476 17.865 31.8513 17.7452 31.0485 17.6822C30.2352 17.6184 29.196 17.6176 27.7333 17.6176H26.6667ZM11.8889 26.5882C11.144 26.5882 10.6049 27.1526 10.5928 27.7714L10.5926 27.7941C10.5926 28.4226 11.1347 29 11.8889 29C12.6431 29 13.1852 28.4226 13.1852 27.7941C13.1852 27.1656 12.6431 26.5882 11.8889 26.5882ZM30.8333 26.5882C30.0792 26.5882 29.537 27.1656 29.537 27.7941C29.537 28.4226 30.0792 29 30.8333 29C31.5875 29 32.1296 28.4226 32.1296 27.7941C32.1296 27.1656 31.5875 26.5882 30.8333 26.5882Z" fill="#A75BFF" />
+                              </svg>
+
+                            </div>
+                            <div className="contentPayment">
+                              <h6>Pago contra entrega</h6>
+                              <p>Realizarás el pago al recibir tu pedido</p>
+                            </div>
+                          </div>
+                          <div className="checkPayment">
+                            <Input type='checkbox'
+                              checked={selectedCheckbox === 4}
+                              onChange={() => handleCheckboxChange(4)} />
+                          </div>
+                        </Card>
+                      ) : (<></>)}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           <div className="containerDetailpurchase">
@@ -1001,7 +1130,7 @@ function AddressCart() {
                   <a href="/detailCart">Ir al carrito</a>
                 </div>
                 <div className="awaitShopping">
-                  <a href="#" onClick={() => handleStepClick(3, 100)} type="button" data-bs-toggle="collapse"
+                  <a href="#" onClick={() => handleProcederCompra()} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Proceder con la compra</a>
                 </div>
               </>
@@ -1015,7 +1144,7 @@ function AddressCart() {
                 </div>
                 {botonDeshabilitado ? (
                   <div className="toPay">
-                    <a href="#" onClick={() => setModalSuccessPurchase(true)}>Finalizar compra</a>
+                    <a href="#" onClick={() => handlePurchaseSucces()}>Finalizar compra</a>
                   </div>
 
                 ) : (
@@ -1275,7 +1404,7 @@ function AddressCart() {
 
               {botonDeshabilitado ? (
                 <div className="containerToPayResponsive">
-                  <a href="#" onClick={() => setModalSuccessPurchase(true)} >Finalizar compra</a>
+                  <a href="#" onClick={() => handlePurchaseSucces()} >Finalizar compra</a>
                 </div>
               ) : (
                 <div className="containerToPayResponsive">
@@ -1335,7 +1464,8 @@ function AddressCart() {
             ipAddress={ipAddress}
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
-            setBtnFinalizarCompra={()=>setBotonDeshabilitado(true)} />
+            // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)} />
         </ModalBody>
       </Modal>
 
@@ -1358,7 +1488,8 @@ function AddressCart() {
             ipAddress={ipAddress}
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
-            setBtnFinalizarCompra={()=>setBotonDeshabilitado(true)}
+            // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
           />
         </ModalBody>
       </Modal>
@@ -1377,7 +1508,8 @@ function AddressCart() {
             dataRef={dataRef}
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
-            cupon={cupon} />
+            cupon={cupon} 
+            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}/>
         </ModalBody>
       </Modal>
 
@@ -1399,7 +1531,8 @@ function AddressCart() {
             ipAddress={ipAddress}
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
-            setBtnFinalizarCompra={()=>setBotonDeshabilitado(true)}
+            // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
           />
         </ModalBody>
       </Modal>
@@ -1418,7 +1551,7 @@ function AddressCart() {
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
             cupon={cupon}
-            setBtnFinalizarCompra={()=>setBotonDeshabilitado(true)} />
+            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)} />
         </ModalBody>
       </Modal>
 

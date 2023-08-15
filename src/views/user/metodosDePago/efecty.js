@@ -3,7 +3,7 @@ import { Card, Col, Row, Button, FormGroup, Form, Input, InputGroupText, InputGr
 import { placeOrder } from '../../../services/metodosDePago';
 import { getCurrentUser } from '../../../helpers/Utils';
 
-function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descriptionOrder, cupon }) {
+function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descriptionOrder, cupon, setModalPurchaseSuccess }) {
 
   // const [transactionAmount, setTransactionAmount] = useState("");
   const [paymentMethodId, setPaymentMethodId] = useState("");
@@ -24,6 +24,7 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
     .then((res)=>{
       console.log("Orden enviada por Efecty");
       console.log(res);
+      setModalPurchaseSuccess();
     })
     .catch((err)=>console.log(err));
   }
