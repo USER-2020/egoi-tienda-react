@@ -866,4 +866,12 @@ h4 {
     .cardContainerHot .scroll-button.left {
         display: none;
     }
+
+    .container{
+        height: 350px;
+    }
+
+    .cardProducto1{
+        width: 200px !important;
+    }
 }
