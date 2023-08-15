@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 
 
 
-function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress }) {
+function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setBtnFinalizarCompra }) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -323,6 +323,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                         title: '¡Tu compra ha sido registrada!',
                         text: 'La compra se ha realizado exitosamente.',
                     });
+                    setBtnFinalizarCompra();
                 }
 
             }).catch((err) => {
