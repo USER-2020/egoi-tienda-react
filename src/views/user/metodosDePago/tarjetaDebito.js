@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 
 
 
-function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setBtnFinalizarCompra }) {
+function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess }) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -188,7 +188,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
             if (discountCoupon && discountCoupon.discount !== undefined) {
                 cuponOffSale = discountCoupon.discount;
             }
-            const unformattedValue = total.toString().replace(/[.]/g, '');
+            const unformattedValue = total.toString().replace(/[,]/g, '');
             // Eliminar el símbolo "$" y convertir a número
             const numericValue = Number(unformattedValue.replace("$", ""));
 
@@ -318,12 +318,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                     })
                 } else {
                     console.log("El pago se registro");
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Tu compra ha sido registrada!',
-                        text: 'La compra se ha realizado exitosamente.',
-                    });
-                    setBtnFinalizarCompra();
+                    setModalPurchaseSuccess();
+                    // setBtnFinalizarCompra();
                 }
 
             }).catch((err) => {

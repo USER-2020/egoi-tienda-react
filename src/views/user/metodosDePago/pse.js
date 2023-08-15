@@ -8,7 +8,7 @@ import { makePay } from '../../../services/metodosDePago';
 import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 
-function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setBtnFinalizarCompra }) {
+function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess }) {
 
     const [pseDocument, setPseDocument] = useState("");
     const [pseTypeDocument, setPseTypeDocument] = useState("");
@@ -105,7 +105,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
             if (discountCoupon && discountCoupon.discount !== undefined) {
                 cuponOffSale = discountCoupon.discount;
             }
-            const unformattedValue = total.toString().replace(/[.]/g, '');
+            const unformattedValue = total.toString().replace(/[,]/g, '');
             // Eliminar el símbolo "$" y convertir a número
             const numericValue = Number(unformattedValue.replace("$", ""));
 
@@ -226,12 +226,8 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                     openWindowPSExternal(direccion_url_pse);
                 }
                 console.log("El pago se registro");
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Tu compra ha sido registrada!',
-                    text: 'La compra se ha realizado exitosamente.',
-                });
-                setBtnFinalizarCompra();
+                setModalPurchaseSuccess();
+                
             }).catch((err) => {
                 console.log(err);
                 Swal.fire({
