@@ -23,6 +23,10 @@
 
 }
 
+.spanRecent a {
+    text-decoration: none;
+}
+
 
 .refshowAll {
     margin-left: 14px;
