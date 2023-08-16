@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import AppLocale from '../src/lang';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { isMultiColorActive, adminRoot, UserRole, checkout, addCart, myorders } from './constants/defaultValues.js';
-import  ProtectedRoute  from './helpers/authHelper';
+import ProtectedRoute from './helpers/authHelper';
 import { getCurrentUser } from './helpers/Utils';
 import { ModalBody, Modal } from 'reactstrap';
 import Login from "./views/user/login.js";
@@ -25,32 +26,79 @@ const ViewError = React.lazy(() => import(/* webpackChunkName: "views-error" */ 
 const ViewUnauthorized = React.lazy(() => import(/* webpackChunkName: "views-error" */ './views/unauthorized'));
 
 
+function DynamicTitle() {
+  const location = useLocation();
+  const routeName = location.pathname.replace('/', '');
+
+  useEffect(() => {
+    if (routeName === '') {
+      document.title = 'Egoi';
+
+    } else {
+
+      document.title = `Egoi - ${routeName}`;
+    }
+  }, [routeName]);
+
+  useEffect(() => {
+    const handlePopstate = () => {
+      // Obtener la parte de la ruta antes de la almohadilla
+      const routeBeforeHash = window.location.pathname;
+
+      // Forzar un refresh solo si la ruta antes de la almohadilla cambia
+      if (routeBeforeHash !== location.pathname && !location.hash) {
+        window.location.reload();
+      }
+    };
+
+    // Agregar el evento popstate al cargar el componente
+    window.addEventListener('popstate', handlePopstate);
+
+    // Remover el evento popstate al desmontar el componente
+    return () => {
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, [location.pathname, location.hash]);
+
+  return null; // No renderizar nada en este componente
+
+
+}
+
+
 const App = (props) => {
   const { locale } = props;
+
+  // const location = useLocation();
+  // const routeName = location.pathname.replace('/', '')
 
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const currenUser = getCurrentUser();
-  
+
 
   const handleLogin = () => {
     // Code to handle user login, such as storing session storage, etc.
-    if(currenUser){
+    if (currenUser) {
       setIsLoggedIn(true);
-    }else{
+    } else {
       setIsLoggedIn(false);
     }
 
   };
 
- 
+  // useEffect(() => {
+  //   document.title = `React App - ${routeName}`;
+  // }, [routeName]);
+
 
   return (
     <div className="h-100">
       <Suspense fallback={<div className="loading" />}>
         <IntlProvider locale={locale} messages={AppLocale[locale]}>
           <Router>
+            <Route component={DynamicTitle} />
             <Switch>
               {/* <Route path="/user/login" exact render={(props)=> <ViewLogin {...props} />}/> */}
               <Route path="/error" exact render={(props) => <ViewError {...props} />} />
@@ -66,7 +114,7 @@ const App = (props) => {
               <Route path="/detailsProduct/:id/:slug/:tag" exact render={(props) => <ViewDetailProduct {...props} />} />
               <ProtectedRoute path={myorders} viewComponent={ViewMyOrders} />
               <ProtectedRoute path={checkout} viewComponent={ViewDetailCartAddress} />
-              <ProtectedRoute path={addCart} viewComponent={ViewDetailCart}/>
+              <ProtectedRoute path={addCart} viewComponent={ViewDetailCart} />
               <Redirect to="/error" />
             </Switch>
           </Router>
