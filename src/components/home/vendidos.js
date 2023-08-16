@@ -128,7 +128,7 @@ const Vendidos = ({ bannersInfo }) => {
 
                             <a href="#" className="containerCard2" key={index}>
                                 <Link to={`/detailsProduct/${product.id}/${product.slug}`}>
-                                    <Card className="cardProducto1" style={{height: "350px"}}>
+                                    <Card className="cardProducto1" style={{height: "340px"}}>
                                         <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
                                         <CardBody>
                                             <div className="starts">
@@ -152,7 +152,7 @@ const Vendidos = ({ bannersInfo }) => {
                                                     <p style={{ marginBottom: '0' }}>Envío gratis</p>
                                                 </div>
                                             )}
-                                            <CardSubtitle tag="h5" className="text-wrap text-muted" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible" }}>
+                                            <CardSubtitle tag="h5" className="text-wrap text-muted" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible", fontSize:'16px' }}>
                                                 {product.name.length < 30 ? product.name : product.name.slice(0, 30) + '...'}
                                             </CardSubtitle>
                                             <CardTitle tag="h5">${product.unit_price.toLocaleString('en')}</CardTitle>

@@ -403,7 +403,7 @@ const ProductsCategories = () => {
                   <div key={product.id} className="col-md-3 col-6 mb-4" >
                     <a href="#" className='containerCard2  '  >
                       <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
-                        <Card className='cardProducto1' style={{height: "30rem"}} >
+                        <Card className='cardProducto1' style={{height: "350px"}} >
                           {isDiscountedProducts && product.discount_type === 'flat' && (
                             <span className='tagDiscounted'>$ {product.discount.toLocaleString('en')} Off</span>
                           )}
