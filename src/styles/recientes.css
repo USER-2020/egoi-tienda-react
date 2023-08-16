@@ -866,4 +866,10 @@ h4 {
     .cardContainerHot .scroll-button.left {
         display: none;
     }
+
+    #promociones .containerCard2 .cardProducto1{
+        width: 207px;
+        height: 360px;
+        margin-bottom: 20px;
+    }
 }
