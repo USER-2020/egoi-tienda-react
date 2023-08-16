@@ -101,7 +101,7 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
     event.preventDefault();
 
     // Validar que el nombre y apellido solo contengan letras y espacios
-    const nameRegex = /^[a-zA-Z ]+$/;
+    const nameRegex = /^[a-zA-ZñÑ ]+$/;
     if (!nameRegex.test(name) || !nameRegex.test(lastName)) {
       Swal.fire({
         icon: "error",
