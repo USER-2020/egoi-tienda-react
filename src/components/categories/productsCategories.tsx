@@ -446,7 +446,7 @@ const ProductsCategories = () => {
                                 <p style={{ marginBottom: '0' }}>Envío gratis</p>
                               </div>
                             )}
-                              <CardSubtitle tag="h5" className="text-wrap" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible", fontSize:'16px' }}>
+                              <CardSubtitle tag="h5" className="text-wrap text-muted" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible", fontSize:'16px' }}>
                                 {product.name.length < 40 ? product.name : product.name.slice(0, 40) + '...'}
                               </CardSubtitle>
 

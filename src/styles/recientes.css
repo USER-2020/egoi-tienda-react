@@ -867,12 +867,9 @@ h4 {
         display: none;
     }
 
-    .container{
-        height: 360px !important;
-    }
-
-    .cardProducto1{
-        width: 200px !important;
-        height: 360px !important;
+    #promociones .containerCard2 .cardProducto1{
+        width: 207px;
+        height: 360px;
+        margin-bottom: 20px;
     }
 }
