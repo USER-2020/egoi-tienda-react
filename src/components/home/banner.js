@@ -245,7 +245,7 @@ const Banner = (args) => {
                         bannersInfo
                             .filter((banner) => banner.banner_type === "banner_2")
                             .map((itemBanner, index) => (
-                                <div id={`carouselExampleAutoplaying-${index}`} className="carousel slide" key={index} data-bs-ride="carousel" data-bs-interval="3000">
+                                <div id={`carouselExampleAutoplaying-${index}`} className="carousel slide" key={index} data-bs-ride="carousel" data-bs-interval="3000" >
                                     <div className="carousel-indicators">
                                         {itemBanner.banner_data.map((_, i) => (
                                             <button
