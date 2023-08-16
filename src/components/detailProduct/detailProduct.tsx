@@ -588,7 +588,7 @@ function DetailProduct() {
                             </ModalBody>
                         </Modal>
                         <Modal
-                            className="modal-dialog-centered modal-lg"
+                            className="modal-dialog-centered modal-md"
                             toggle={() => setModalViewLogin(false)}
                             isOpen={modalViewLogin && !changeFormLogin}
                         >
@@ -597,7 +597,7 @@ function DetailProduct() {
                             </ModalBody>
                         </Modal>
                         <Modal
-                            className="modal-dialog-centered modal-lg"
+                            className="modal-dialog-centered modal-md"
                             toggle={() => setModalViewRegistro(false)}
                             isOpen={modalViewRegistro && !changeFormRegister}
                         >

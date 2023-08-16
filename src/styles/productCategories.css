@@ -79,6 +79,18 @@
     border-bottom-left-radius: 10px;
 }
 
+.cardProducto1 .tagPromotions{
+        justify-content: center;
+        width: 71px;
+        height: 17px;
+        background-color: #A75BFF;
+        border-radius: 8px;
+        color: white;
+        padding: 4px 8px;
+        font-size: 10px;
+   
+}
+
 
 
 input[type="radio"]:checked {

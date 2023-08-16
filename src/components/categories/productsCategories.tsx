@@ -30,6 +30,7 @@ import HeaderResponsiveCategorie from './headerResponsiveCategorie.tsx';
 import { AppContext } from '../../AppContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { ProductosDescuento, ProductosMasVendidos, ProductosRecientes } from '../../services/productos';
 
 
 
@@ -58,6 +59,15 @@ const ProductsCategories = () => {
   // Verificar si la ruta es /discountedProducts
   const location = useLocation();
   const isDiscountedProducts = location.pathname === '/discountedProducts';
+  // Verificar si la ruta es /discountedProducts
+
+  const isRecentlyProducts = location.pathname === '/recentlySeen';
+  // Verificar si la ruta es /discountedProducts
+
+  const isPromotionsProducts = location.pathname === '/promotions';
+  // Verificar si la ruta es /discountedProducts
+
+  const isBestProducts = location.pathname === '/bestSellers';
 
   // const {searchProducts, setSearchProducts} = useContext(AppContext);
 
@@ -128,12 +138,40 @@ const ProductsCategories = () => {
       .catch((err) => console.log(err));
   }
 
+  /* Productos en descuento */
   const getDiscountByProducts = () => {
     discountedProducts(offset)
       .then((res) => {
         console.log("Productos en descuento", res.data.products);
         setProducts(res.data);
       }).catch((err) => console.log(err));
+  }
+
+  /* Vistos recientemente */
+  const getRecentlySee = () => {
+    ProductosRecientes()
+      .then((res) => {
+        console.log("Productos recientes", res.data.products);
+        setProducts(res.data);
+      }).catch((err) => console.log(err));
+  }
+
+  /* Promociones imperdibles */
+  const getPromotions = () => {
+    ProductosDescuento()
+      .then((res) => {
+        console.log("Promociones imperdibles", res.data.products);
+        setProducts(res.data);
+      }).catch((err) => console.log(err));
+  }
+
+  /* Productos mas vendidos */
+  const getBestSelling = () => {
+    ProductosMasVendidos()
+      .then((res) => {
+        console.log("Productos mas vendidos", res.data.products);
+        setProducts(res.data);
+      })
   }
 
   const productsWithFilterBestRated = () => {
@@ -265,6 +303,9 @@ const ProductsCategories = () => {
     }
   }
 
+
+
+
   const pageButtons = [];
   const totalPages = Math.ceil(totalResults / 20);
   for (let i = 0; i < totalPages; i++) {
@@ -311,7 +352,18 @@ const ProductsCategories = () => {
     if (isDiscountedProducts) {
       getDiscountByProducts();
       // setProducts(products.products);
-      console.log("Productos en descuento luego de llamar al endpoint", products);
+    }
+
+    if (isRecentlyProducts) {
+      getRecentlySee();
+    }
+
+    if (isPromotionsProducts) {
+      getPromotions();
+    }
+
+    if (isBestProducts) {
+      getBestSelling();
     }
 
     // productsWithFilterMostSold();
@@ -411,7 +463,7 @@ const ProductsCategories = () => {
                           {isDiscountedProducts && product.discount_type === 'percent' && (
                             <span className='tagDiscounted'>{product.discount}% Off</span>
                           )}
-                            
+
                           <CardImg
                             src={baseUrlImage + product.images[0]}
                             alt={product.name}
@@ -422,7 +474,7 @@ const ProductsCategories = () => {
                             src={baseUrlImage + product.images[0]}
                             alt={product.name}
                             className="producto-imagen-desktop"
-                            style={{ padding: "1rem", objectFit: "contain", height: isDiscountedProducts ? '200px' : '300px' }}
+                            style={{ padding: "1rem", objectFit: "contain", height: isDiscountedProducts || isPromotionsProducts ? '200px' : '300px' }}
                           />
                           <CardBody>
                             <div className="starts">
@@ -446,11 +498,14 @@ const ProductsCategories = () => {
                                 <p style={{ marginBottom: '0' }}>Envío gratis</p>
                               </div>
                             )}
-                              <CardSubtitle tag="h5" className="text-wrap text-muted" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible", fontSize:'16px' }}>
-                                {product.name.length < 40 ? product.name : product.name.slice(0, 40) + '...'}
-                              </CardSubtitle>
+                            <CardSubtitle tag="h5" className="text-wrap text-muted" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible", fontSize: '16px' }}>
+                              {product.name.length < 40 ? product.name : product.name.slice(0, 40) + '...'}
+                            </CardSubtitle>
 
                             <CardTitle tag="h5">${product.unit_price.toLocaleString('en')}</CardTitle>
+                            {isPromotionsProducts && (
+                              <span className='tagPromotions'>Oferta del día</span>
+                            )}
                           </CardBody>
                         </Card>
                       </Link>
