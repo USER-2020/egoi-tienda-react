@@ -403,7 +403,7 @@ const ProductsCategories = () => {
                   <div key={product.id} className="col-md-3 col-6 mb-4" >
                     <a href="#" className='containerCard2  '  >
                       <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index}>
-                        <Card className='cardProducto1' style={{height: "350px"}} >
+                        <Card className='cardProducto1' style={{ height: isDiscountedProducts ? '400px' : '390px' }} >
                           {isDiscountedProducts && product.discount_type === 'flat' && (
                             <span className='tagDiscounted'>$ {product.discount.toLocaleString('en')} Off</span>
                           )}
@@ -422,7 +422,7 @@ const ProductsCategories = () => {
                             src={baseUrlImage + product.images[0]}
                             alt={product.name}
                             className="producto-imagen-desktop"
-                            style={{ padding: "1rem", objectFit: "contain", height: 300 }}
+                            style={{ padding: "1rem", objectFit: "contain", height: isDiscountedProducts ? '200px' : '300px' }}
                           />
                           <CardBody>
                             <div className="starts">
