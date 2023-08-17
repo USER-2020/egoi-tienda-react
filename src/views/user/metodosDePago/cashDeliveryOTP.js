@@ -13,7 +13,7 @@ import { placeOrder } from '../../../services/metodosDePago';
 import { getCurrentUser } from './../../../helpers/Utils';
 
 
-function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder,setModalPurchaseSuccess }) {
+function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder,setModalPurchaseSuccess, setOk }) {
   const [otp, setOTP] = useState('');
   const [loading, setLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
@@ -97,6 +97,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
       makePlaceOrder();
       closeModalOTP();
       setModalPurchaseSuccess();
+      setOk();
       
     }).catch((error) => {
       console.log(error);

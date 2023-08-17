@@ -8,7 +8,7 @@ import { makePay } from '../../../services/metodosDePago';
 import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 
-function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess }) {
+function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk }) {
 
     const [pseDocument, setPseDocument] = useState("");
     const [pseTypeDocument, setPseTypeDocument] = useState("");
@@ -227,6 +227,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                 }
                 console.log("El pago se registro");
                 setModalPurchaseSuccess();
+                setOk();
                 
             }).catch((err) => {
                 console.log(err);

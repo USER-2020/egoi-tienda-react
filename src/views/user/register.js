@@ -88,7 +88,7 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+          text: '¡El usuario ya está creado, revisalo!',
           confirmButtonColor: '#dc3545',
         });
         setLoading(false);
