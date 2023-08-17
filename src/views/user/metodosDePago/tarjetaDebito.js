@@ -320,7 +320,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                         title: 'Oops...',
                         text: '¡No cuentas con fondos suficientes, vuelve a intentarlo!',
 
-                    })
+                    });
+                    setModalProcesoPagoClose();
                 } else {
                     console.log("El pago se registro");
                     // succesfulPayment = true;

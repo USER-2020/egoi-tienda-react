@@ -25,7 +25,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
     const [zip, setZip] = useState("");
     const [phone, setphone] = useState("");
     const [phone2, setphone2] = useState("");
-    const [country, setCountry] = useState("");
+    const [country, setCountry] = useState("Colombia");
     const [localDescription, setLocalDescription] = useState("");
     const [barrio, setBarrio] = useState("");
     const [latitude, setLatitude] = useState("1234");
@@ -152,7 +152,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                 justifyContent: "center",
                             }}
                         >
-                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Dirección de entrega</h5>
+                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Actualizar dirección de entrega</h5>
                         </div>
                         <Card style={{ border: 'none' }}>
                             <Form onSubmit={handleSubmitAddress}>
@@ -236,7 +236,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        placeholder="Direccion"
+                                        placeholder="Dirección"
                                         value={address}
                                         onChange={(event) => setAddress(event.target.value)}
                                     />
@@ -297,7 +297,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                 </FormGroup>
 
                                 {/* Como llegar o descripcion  y barrio */}
-                                <FormGroup controlId="formBasicDescripcionandBarrio" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                                <FormGroup controlId="formBasicDescripcionandBarrio" >
                                     <Input addon={true}
                                         name="barrio"
                                         classNanme="form-control"
@@ -309,17 +309,22 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                         onChange={(event) => setBarrio(event.target.value)}
                                     />
 
+
+
+                                </FormGroup>
+
+                                <FormGroup>
                                     <Input addon={true}
+                                        type="textarea"
                                         name="local_description"
                                         classNanme="form-control"
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        placeholder="Como llegar"
+                                        placeholder="¿Cómo llegar?"
                                         value={localDescription}
                                         onChange={(event) => setLocalDescription(event.target.value)}
                                     />
-
                                 </FormGroup>
 
                                 <FormGroup controlId="formBasicCellphone1">

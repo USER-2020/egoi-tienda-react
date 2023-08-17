@@ -1466,7 +1466,8 @@ function AddressCart() {
 
       {/* Modal checkout tarjeta de credito */}
       <Modal
-        className="modal-dialog-centered modal-md"
+        className={`modal-dialog-centered ${window.innerWidth >= 992 ? 'modal-lg' : 'modal-md'}`}
+        id='modalCredito'
         toggle={() => setModalTarjetaCredito(false)}
         isOpen={modalTarjetaCredito}
         onOpened={() => setIsScrollModalEnabled(false)}
@@ -1495,7 +1496,8 @@ function AddressCart() {
 
       {/* Modal checkout tarjeta de credito */}
       <Modal
-        className="modal-dialog-centered modal-md"
+        className='modal-dialog-centered modal-md'
+        id='modalDebito'
         toggle={() => setModalTarjetaDebito(false)}
         isOpen={modalTarjetaDebito}
         onOpened={() => setIsScrollModalEnabled(false)}
