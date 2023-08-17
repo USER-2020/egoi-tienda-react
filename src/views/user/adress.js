@@ -259,7 +259,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        placeholder="Pais"
+                                        placeholder="País"
                                         value={country}
                                         onChange={(event) => setCountry(event.target.value)}
                                     />

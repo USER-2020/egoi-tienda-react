@@ -416,7 +416,7 @@ input[placeholder="Celular"]::placeholder {
   background-image: var(--placeholder-icon-cellphone);
 }
 
-input[placeholder="Direccion"]::placeholder {
+input[placeholder="Dirección"]::placeholder {
   background-image: var(--placeholder-icon-map);
 }
 
@@ -521,6 +521,13 @@ input[type="checkbox"]:checked {
 #scrollModalCheckout .scroll-modal-content {
   display: none;
 }
+
+/* Modal Perzonalizado */
+
+  .modal-lg {
+    min-width: 400px; /* Cambia esto según tus necesidades */
+  }
+
 
 @media (max-width: 768px) {
 
