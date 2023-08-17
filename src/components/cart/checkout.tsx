@@ -1434,7 +1434,7 @@ function AddressCart() {
 
       {/* Modales */}
       <Modal
-        className="modal-dialog-centered modal-lg"
+        className="modal-dialog-centered modal-md"
         toggle={() => closeAddressCheckoutModal()}
         isOpen={modalAddressCheckout}
         onOpened={() => setIsScrollModalEnabled(false)}
@@ -1446,7 +1446,7 @@ function AddressCart() {
       </Modal>
 
       <Modal
-        className="modal-dialog-centered modal-lg"
+        className="modal-dialog-centered modal-md"
         toggle={() => setModalAddressUpdate(false)}
         isOpen={modalAddressUpdate}
         onOpened={() => setIsScrollModalEnabled(false)}
