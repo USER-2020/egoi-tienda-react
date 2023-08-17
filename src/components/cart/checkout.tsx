@@ -180,7 +180,7 @@ function AddressCart() {
 
   /* Validacion de el boton de finalizar compra y de metodos de pago selsccionados */
   const handlePurchaseSucces =() =>{
-    if(selectedCheckbox && okPurchase != null){
+    if(selectedCheckbox != null && okPurchase){
       setModalSuccessPurchase(true);
     }else{
       if(selectedCheckbox===null){
@@ -192,15 +192,17 @@ function AddressCart() {
   
         });
 
-      }
-      if(!okPurchase){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: '¡No se ha registrado tu pago correctamente, intentalo de nuevo!',
-          confirmButtonColor:'#FC5241',
-  
-        });
+        
+      }else{
+        if(okPurchase===false){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '¡No se ha registrado tu pago correctamente, intentalo de nuevo!',
+            confirmButtonColor:'#FC5241',
+    
+          });
+        }
       }
     }
     
