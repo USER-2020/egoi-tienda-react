@@ -29,6 +29,7 @@ import PDFContent from '../PDF/PDFContent';
 import SuccessPurchase from '../../views/user/success_purchase';
 import efectyLogo from '../../assets/egoi_icons/logo_efecty.svg';
 import pseLogo from '../../assets/egoi_icons/logo_pse.svg';
+import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoPago';
 
 
 
@@ -91,6 +92,9 @@ function AddressCart() {
   /* Boton deshabilitado */
   const [botonDeshabilitado, setBotonDeshabilitado] = useState(true);
   const [okPurchase, setOkPurchase] = useState(false);
+
+  /* Modal procesando pago */
+  const [modalProcesandoPago, setModalProcesoPago] = useState(false);
 
 
 
@@ -179,33 +183,33 @@ function AddressCart() {
   }
 
   /* Validacion de el boton de finalizar compra y de metodos de pago selsccionados */
-  const handlePurchaseSucces =() =>{
-    if(selectedCheckbox != null && okPurchase){
+  const handlePurchaseSucces = () => {
+    if (selectedCheckbox != null && okPurchase) {
       setModalSuccessPurchase(true);
-    }else{
-      if(selectedCheckbox===null){
+    } else {
+      if (selectedCheckbox === null) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: '¡No has seleccionado ningun método de pago!',
-          confirmButtonColor:'#FC5241',
-  
+          confirmButtonColor: '#FC5241',
+
         });
 
-        
-      }else{
-        if(okPurchase===false){
+
+      } else {
+        if (okPurchase === false) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: '¡No se ha registrado tu pago correctamente, intentalo de nuevo!',
-            confirmButtonColor:'#FC5241',
-    
+            confirmButtonColor: '#FC5241',
+
           });
         }
       }
     }
-    
+
   }
 
   /* Validacion de direccion en el checkout */
@@ -216,13 +220,13 @@ function AddressCart() {
         icon: 'error',
         title: 'Oops...',
         text: '¡No has seleccionado ninguna dirección!',
-        confirmButtonColor:'#FC5241',
+        confirmButtonColor: '#FC5241',
 
       });
-      
+
     } else {
       // Agregar los atributos al evento
-      
+
       const button = document.getElementById('procederButton');
       if (button) {
         button.dataset.bsToggle = "collapse";
@@ -275,22 +279,22 @@ function AddressCart() {
           }).then((result) => {
             if (result.isConfirmed) {
               handleSubmitOrderEfecty();
-    
+
             } else if (
               /* Read more about handling dismissals below */
               result.dismiss === Swal.DismissReason.cancel
-    
+
             ) {
-              
-    
-    
-    
+
+
+
+
             }
           })
-    
-    
+
+
         }
-        
+
         // setBotonDeshabilitado(true);
 
       }
@@ -312,22 +316,22 @@ function AddressCart() {
           }).then((result) => {
             if (result.isConfirmed) {
               setModalOTP(true);
-    
+
             } else if (
               /* Read more about handling dismissals below */
               result.dismiss === Swal.DismissReason.cancel
-    
+
             ) {
-              
-    
-    
-    
+
+
+
+
             }
           })
-    
-    
+
+
         }
-        
+
         // setBotonDeshabilitado(true);
       }
     }
@@ -1166,7 +1170,7 @@ function AddressCart() {
                   <div className="toPay">
                     <a href="#" onClick={() => handlePurchaseSucces()}
                       style={{
-                        
+
                       }}
                     >Finalizar compra</a>
                   </div>
@@ -1480,8 +1484,11 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
-            setOk={()=>setOkPurchase(true)} />
+            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setOk={() => setOkPurchase(true)} 
+            setModalProcesoPago={()=>setModalProcesoPago(true)}
+            setModalProcesoPagoClose={()=>setModalProcesoPago(false)}
+            />
         </ModalBody>
       </Modal>
 
@@ -1505,8 +1512,10 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
-            setOk={()=>setOkPurchase(true)}
+            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setOk={() => setOkPurchase(true)}
+            setModalProcesoPago={()=>setModalProcesoPago(true)}
+            setModalProcesoPagoClose={()=>setModalProcesoPago(false)}
           />
         </ModalBody>
       </Modal>
@@ -1525,9 +1534,9 @@ function AddressCart() {
             dataRef={dataRef}
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
-            cupon={cupon} 
-            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
-            setOk={()=>setOkPurchase(true)}/>
+            cupon={cupon}
+            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setOk={() => setOkPurchase(true)} />
         </ModalBody>
       </Modal>
 
@@ -1550,8 +1559,10 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
-            setOk={()=>setOkPurchase(true)}
+            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setOk={() => setOkPurchase(true)}
+            setModalProcesoPago={()=>setModalProcesoPago(true)}
+            setModalProcesoPagoClose={()=>setModalProcesoPago(false)}
           />
         </ModalBody>
       </Modal>
@@ -1570,8 +1581,8 @@ function AddressCart() {
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
             cupon={cupon}
-            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)} 
-            setOk={()=>setOkPurchase(true)}/>
+            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setOk={() => setOkPurchase(true)} />
         </ModalBody>
       </Modal>
 
@@ -1587,6 +1598,19 @@ function AddressCart() {
           <SuccessPurchase />
         </ModalBody>
 
+      </Modal>
+
+      {/* Modal procesando Pago */}
+      <Modal
+        className="modal-dialog-centered modal-md"
+        toggle={() => setModalProcesoPago(false)}
+        isOpen={modalProcesandoPago}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
+      >
+        <ModalBody>
+          <ModalProcesandoPago />
+        </ModalBody>
       </Modal>
 
 

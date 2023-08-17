@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 
 
 
-function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk }) {
+function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk , setModalProcesoPago, setModalProcesoPagoClose }) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -270,39 +270,40 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     const verifyPurchase = (dataOrder) => {
         console.log("Estos son los datos de las ordenes", dataOrder);
         closeModalTarjetaDebito();
+        setModalProcesoPago();
         //Manejo de modal procesando pago
-        let succesfulPayment = false;
+        // let succesfulPayment = false;
         // Mostrar SweetAlert de carga
-        Swal.fire({
-            title: 'Procesando pago',
-            html: `
-              <div style="display: flex; justify-content: center; align-items: center;">
-                <div id="loaderContainer"></div>
-              </div>
-            `,
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-                const loaderContainer = document.getElementById('loaderContainer');
-                if (loaderContainer) {
-                    ReactDOM.render(
-                        <ThreeDots height={80} width={80} color="#FC5241" />,
-                        loaderContainer
-                    );
-                }
-            },
-            willClose: () => {
-                // Realizar acciones después de cerrar el cuadro de diálogo
-            },
-            onClose: () => {
-                if (succesfulPayment) {
-                    const loaderContainer = document.getElementById('loaderContainer');
-                    if (loaderContainer) {
-                        ReactDOM.unmountComponentAtNode(loaderContainer);
-                    }
-                }
-            },
-        });
+        // Swal.fire({
+        //     title: 'Procesando pago',
+        //     html: `
+        //       <div style="display: flex; justify-content: center; align-items: center;">
+        //         <div id="loaderContainer"></div>
+        //       </div>
+        //     `,
+        //     allowOutsideClick: false,
+        //     showConfirmButton: false,
+        //     didOpen: () => {
+        //         const loaderContainer = document.getElementById('loaderContainer');
+        //         if (loaderContainer) {
+        //             ReactDOM.render(
+        //                 <ThreeDots height={80} width={80} color="#FC5241" />,
+        //                 loaderContainer
+        //             );
+        //         }
+        //     },
+        //     willClose: () => {
+        //         // Realizar acciones después de cerrar el cuadro de diálogo
+        //     },
+        //     onClose: () => {
+        //         if (succesfulPayment) {
+        //             const loaderContainer = document.getElementById('loaderContainer');
+        //             if (loaderContainer) {
+        //                 ReactDOM.unmountComponentAtNode(loaderContainer);
+        //             }
+        //         }
+        //     },
+        // });
         makePay(dataOrder, token)
             .then((res) => {
 
@@ -322,7 +323,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                     })
                 } else {
                     console.log("El pago se registro");
-                    succesfulPayment = true;
+                    // succesfulPayment = true;
+                    setModalProcesoPagoClose();
                     setModalPurchaseSuccess();
                     setOk();
                     // setBtnFinalizarCompra();
