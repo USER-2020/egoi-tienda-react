@@ -7,8 +7,9 @@ import Swal from 'sweetalert2';
 import { makePay } from '../../../services/metodosDePago';
 import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
+import ModalProcesandoPago from './modalProcesandoPago';
 
-function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk }) {
+function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose}) {
 
     const [pseDocument, setPseDocument] = useState("");
     const [pseTypeDocument, setPseTypeDocument] = useState("");
@@ -17,6 +18,11 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     const [selectTypeCard, setSelectTypeCard] = useState("");
     const [identificationType, setIdentificationType] = useState("");
     const [valueBank, setValueBank] = useState();
+
+    //Manejo de modal procesando pago
+    const [succesfulPayment, setSuccesfulPayment] = useState(false);
+
+    
 
     const currenUSer = getCurrentUser();
     const token = currenUSer.token;
@@ -73,9 +79,8 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
 
     const handleSubmitOrderPaymentCard = () => {
         if (token) {
-            console.log("Envio de orden por tarjeta de credito");
-
-
+            console.log("Envio de orden por pse");
+            
             /* The code is assigning a default value to the variable `amountValue` which is equal to the
             value of `total`. Then, it checks if there is a `discountCoupon` object and if the `total`
             property of that object is defined. If it is defined, the code assigns the value of
@@ -182,35 +187,40 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     const verifyPurchase = (dataOrder) => {
         console.log("Estos son los datos de las ordenes", dataOrder);
         closeModalPse();
+        setModalProcesoPago();
+        // let sweetAlertInstance = null;
         // Mostrar SweetAlert de carga
-        Swal.fire({
-            title: 'Procesando pago',
-            html: `
-              <div style="display: flex; justify-content: center; align-items: center;">
-                <div id="loaderContainer"></div>
-              </div>
-            `,
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-                const loaderContainer = document.getElementById('loaderContainer');
-                if (loaderContainer) {
-                    ReactDOM.render(
-                        <ThreeDots height={80} width={80} color="#FC5241" />,
-                        loaderContainer
-                    );
-                }
-            },
-            willClose: () => {
-                // Realizar acciones después de cerrar el cuadro de diálogo
-            },
-            onClose: () => {
-                const loaderContainer = document.getElementById('loaderContainer');
-                if (loaderContainer) {
-                    ReactDOM.unmountComponentAtNode(loaderContainer);
-                }
-            },
-        });
+        // Swal.fire({
+        //     title: 'Procesando pago',
+        //     html: `
+        //       <div style="display: flex; justify-content: center; align-items: center;">
+        //         <div id="loaderContainer"></div>
+        //       </div>
+        //     `,
+        //     allowOutsideClick: false,
+        //     showConfirmButton: false,
+        //     didOpen: () => {
+        //         const loaderContainer = document.getElementById('loaderContainer');
+        //         if (loaderContainer) {
+        //             ReactDOM.render(
+        //                 <ThreeDots height={80} width={80} color="#FC5241" />,
+        //                 loaderContainer
+        //             );
+        //         }
+        //     },
+        // willClose: () => {
+        //     // Realizar acciones después de cerrar el cuadro de diálogo
+        //     succesfulPayment = true;
+        // },
+        // onClose: () => {
+        //     if (succesfulPayment) {
+        //         const loaderContainer = document.getElementById('loaderContainer');
+        //         if (loaderContainer) {
+        //             ReactDOM.unmountComponentAtNode(loaderContainer);
+        //         }
+        //     }
+        // },
+        // });
         makePay(dataOrder, token)
             .then((res) => {
 
@@ -226,9 +236,11 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                     openWindowPSExternal(direccion_url_pse);
                 }
                 console.log("El pago se registro");
+                // succesfulPayment = true;
+                setModalProcesoPagoClose();
                 setModalPurchaseSuccess();
                 setOk();
-                
+
             }).catch((err) => {
                 console.log(err);
                 Swal.fire({
@@ -237,7 +249,13 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                     text: '¡Ha ocurrido un error procesando el pago!',
 
                 })
-            });
+            })
+        // .finally(() => {
+        //     // Cerrar SweetAlert independientemente del resultado del pago
+        //     if (sweetAlertInstance) {
+        //         sweetAlertInstance.close();
+        //     }
+        // });
 
     }
 
@@ -343,6 +361,8 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                     </div>
                 </Col>
             </Row>
+
+            
         </>
     )
 }
