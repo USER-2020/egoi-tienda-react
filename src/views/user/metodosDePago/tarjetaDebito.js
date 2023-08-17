@@ -270,6 +270,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     const verifyPurchase = (dataOrder) => {
         console.log("Estos son los datos de las ordenes", dataOrder);
         closeModalTarjetaDebito();
+        //Manejo de modal procesando pago
+        let succesfulPayment = false;
         // Mostrar SweetAlert de carga
         Swal.fire({
             title: 'Procesando pago',
@@ -293,9 +295,11 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                 // Realizar acciones después de cerrar el cuadro de diálogo
             },
             onClose: () => {
-                const loaderContainer = document.getElementById('loaderContainer');
-                if (loaderContainer) {
-                    ReactDOM.unmountComponentAtNode(loaderContainer);
+                if (succesfulPayment) {
+                    const loaderContainer = document.getElementById('loaderContainer');
+                    if (loaderContainer) {
+                        ReactDOM.unmountComponentAtNode(loaderContainer);
+                    }
                 }
             },
         });
@@ -318,6 +322,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                     })
                 } else {
                     console.log("El pago se registro");
+                    succesfulPayment = true;
                     setModalPurchaseSuccess();
                     setOk();
                     // setBtnFinalizarCompra();

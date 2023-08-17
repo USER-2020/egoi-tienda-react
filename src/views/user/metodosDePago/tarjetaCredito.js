@@ -11,7 +11,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 
 
-function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk}) {
+function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk }) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -28,6 +28,8 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
     const [banks, setBanks] = useState([]);
     const [banksById, setBanksById] = useState([]);
     const [modalData, setModalData] = useState(null);
+
+
 
     const {
         wrapperProps,
@@ -269,6 +271,8 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
     const verifyPurchase = (dataOrder) => {
         console.log("Estos son los datos de las ordenes", dataOrder);
         closeModalTarjetaCredito();
+        //Manejo de modal procesando pago
+        let succesfulPayment = false;
         // Mostrar SweetAlert de carga
         Swal.fire({
             title: 'Procesando pago',
@@ -292,9 +296,12 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                 // Realizar acciones después de cerrar el cuadro de diálogo
             },
             onClose: () => {
-                const loaderContainer = document.getElementById('loaderContainer');
-                if (loaderContainer) {
-                    ReactDOM.unmountComponentAtNode(loaderContainer);
+                if (succesfulPayment) {
+                    const loaderContainer = document.getElementById('loaderContainer');
+                    if (loaderContainer) {
+                        ReactDOM.unmountComponentAtNode(loaderContainer);
+                    }
+
                 }
             },
         });
@@ -316,6 +323,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                     })
                 } else {
                     console.log("El pago se registro");
+                    succesfulPayment = true;
                     setModalPurchaseSuccess();
                     setOk();
                     // setBtnFinalizarCompra();
@@ -478,7 +486,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
                                 <FormGroup style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
 
-                                    <InputGroup style={{width:'40%'}}>
+                                    <InputGroup style={{ width: '40%' }}>
                                         <Input
                                             name="Cuotes"
                                             classNanme="form-control"
@@ -495,7 +503,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
                                     </InputGroup>
 
-                                    <InputGroup style={{width:'60%'}}>
+                                    <InputGroup style={{ width: '60%' }}>
                                         <Input addon={true}
                                             name="contactPersonName"
                                             classNanme="form-control"
@@ -548,7 +556,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
                                 <FormGroup>
                                     <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center" ,backgroundColor: "#FC5241", alignItems:"center", borderRadius: "32px"}} onClick={handleSubmitOrderPaymentCard}>Registrar pago</a>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={handleSubmitOrderPaymentCard}>Registrar pago</a>
                                     </div>
                                 </FormGroup>
 
