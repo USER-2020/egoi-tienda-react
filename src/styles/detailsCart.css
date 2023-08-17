@@ -524,8 +524,8 @@ input[type="checkbox"]:checked {
 
 /* Modal Perzonalizado */
 
-  .modal-lg {
-    min-width: 400px; /* Cambia esto según tus necesidades */
+  .personalizado {
+    min-width: 600px; /* Cambia esto según tus necesidades */
   }
 
 

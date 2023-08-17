@@ -1467,6 +1467,7 @@ function AddressCart() {
       {/* Modal checkout tarjeta de credito */}
       <Modal
         className={`modal-dialog-centered ${window.innerWidth >= 992 ? 'modal-lg' : 'modal-md'}`}
+        //personalizado
         id='modalCredito'
         toggle={() => setModalTarjetaCredito(false)}
         isOpen={modalTarjetaCredito}
