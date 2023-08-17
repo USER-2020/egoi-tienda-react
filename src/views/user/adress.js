@@ -82,26 +82,40 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
 
     const onSubmit = (data) => {
         setLoading(true);
-        saveAddress(data, token)
-            .then(() => {
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Registro exitoso!',
-                    text: 'La dirección ha sido registrada exitosamente.',
-                    confirmButtonColor: '#0d6efd',
-                });
-                closeModalAddress();
-                refreshAddress();
-            })
-            .catch((err) => {
-                console.log(err);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
-                    confirmButtonColor: '#dc3545',
-                });
-            })
+        if (!contactPersonName || !contactPersonLastName || !address || !selectedDepto || !selectedCiudad || !phone || !phone2 || !barrio || !localDescription) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Por favor, complete todos los campos. ",
+              confirmButtonColor: "#0d6efd",
+            });
+            setLoading(false);
+            
+            
+          }else{
+
+              saveAddress(data, token)
+                  .then(() => {
+                      Swal.fire({
+                          icon: 'success',
+                          title: '¡Registro exitoso!',
+                          text: 'La dirección ha sido registrada exitosamente.',
+                          confirmButtonColor: '#0d6efd',
+                      });
+                      closeModalAddress();
+                      refreshAddress();
+                  })
+                  .catch((err) => {
+                      console.log(err);
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error',
+                          text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+                          confirmButtonColor: '#dc3545',
+                      });
+                      setLoading(false);
+                  })
+          }
     }
 
     const handleSubmitAddress = (e) => {
