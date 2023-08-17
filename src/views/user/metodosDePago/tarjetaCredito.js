@@ -11,7 +11,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 
 
-function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess}) {
+function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk}) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -317,6 +317,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                 } else {
                     console.log("El pago se registro");
                     setModalPurchaseSuccess();
+                    setOk();
                     // setBtnFinalizarCompra();
                 }
             }).catch((err) => {

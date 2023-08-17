@@ -90,6 +90,7 @@ function AddressCart() {
 
   /* Boton deshabilitado */
   const [botonDeshabilitado, setBotonDeshabilitado] = useState(true);
+  const [okPurchase, setOkPurchase] = useState(false);
 
 
 
@@ -179,16 +180,28 @@ function AddressCart() {
 
   /* Validacion de el boton de finalizar compra y de metodos de pago selsccionados */
   const handlePurchaseSucces =() =>{
-    if(selectedCheckbox != null){
+    if(selectedCheckbox && okPurchase != null){
       setModalSuccessPurchase(true);
     }else{
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: '¡No has seleccionado ningun método de pago!',
-        confirmButtonColor:'#FC5241',
+      if(selectedCheckbox===null){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡No has seleccionado ningun método de pago!',
+          confirmButtonColor:'#FC5241',
+  
+        });
 
-      });
+      }
+      if(!okPurchase){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡No se ha registrado tu pago correctamente, intentalo de nuevo!',
+          confirmButtonColor:'#FC5241',
+  
+        });
+      }
     }
     
   }
@@ -943,7 +956,7 @@ function AddressCart() {
                   <div id="collapseThree" className="collapse" aria-labelledby="headingThree"
                     data-bs-parent="#accordionExample">
                     <div className="card-body paymentMethods">
-                      <h6>Escoge tu médoto de pago</h6>
+                      <h6>Escoge tu método de pago</h6>
                       <Card>
                         <div className="payment">
                           <div className="imgPayment">
@@ -1142,16 +1155,16 @@ function AddressCart() {
                   <a href="#" onClick={() => handleStepClick(2, 50)} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Regresar al checkout</a>
                 </div>
-                {botonDeshabilitado ? (
+                {botonDeshabilitado && okPurchase ? (
                   <div className="toPay">
                     <a href="#" onClick={() => handlePurchaseSucces()}>Finalizar compra</a>
                   </div>
 
                 ) : (
                   <div className="toPay">
-                    <a href="#" onClick={() => setModalSuccessPurchase(true)}
+                    <a href="#" onClick={() => handlePurchaseSucces()}
                       style={{
-                        display: 'none'
+                        
                       }}
                     >Finalizar compra</a>
                   </div>
@@ -1402,7 +1415,7 @@ function AddressCart() {
                 <p>Tu pedido tardará de 3 a 4 días hábiles en llegar a tu domicilio</p>
               </div>
 
-              {botonDeshabilitado ? (
+              {/* {botonDeshabilitado && okPurchase ? (
                 <div className="containerToPayResponsive">
                   <a href="#" onClick={() => handlePurchaseSucces()} >Finalizar compra</a>
                 </div>
@@ -1410,7 +1423,7 @@ function AddressCart() {
                 <div className="containerToPayResponsive">
                   <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', height: '100%', borderRadius: '32px', borderColor: 'gray' }} >Finalizar compra</a>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         )}
@@ -1421,7 +1434,7 @@ function AddressCart() {
 
       {/* Modales */}
       <Modal
-        className="modal-dialog-centered modal-lg"
+        className="modal-dialog-centered modal-md"
         toggle={() => closeAddressCheckoutModal()}
         isOpen={modalAddressCheckout}
         onOpened={() => setIsScrollModalEnabled(false)}
@@ -1433,7 +1446,7 @@ function AddressCart() {
       </Modal>
 
       <Modal
-        className="modal-dialog-centered modal-lg"
+        className="modal-dialog-centered modal-md"
         toggle={() => setModalAddressUpdate(false)}
         isOpen={modalAddressUpdate}
         onOpened={() => setIsScrollModalEnabled(false)}
@@ -1465,7 +1478,8 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)} />
+            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
+            setOk={()=>setOkPurchase(true)} />
         </ModalBody>
       </Modal>
 
@@ -1490,6 +1504,7 @@ function AddressCart() {
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
             setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
+            setOk={()=>setOkPurchase(true)}
           />
         </ModalBody>
       </Modal>
@@ -1509,7 +1524,8 @@ function AddressCart() {
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
             cupon={cupon} 
-            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}/>
+            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
+            setOk={()=>setOkPurchase(true)}/>
         </ModalBody>
       </Modal>
 
@@ -1533,6 +1549,7 @@ function AddressCart() {
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
             setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)}
+            setOk={()=>setOkPurchase(true)}
           />
         </ModalBody>
       </Modal>
@@ -1551,7 +1568,8 @@ function AddressCart() {
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
             cupon={cupon}
-            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)} />
+            setModalPurchaseSuccess={()=>setModalSuccessPurchase(true)} 
+            setOk={()=>setOkPurchase(true)}/>
         </ModalBody>
       </Modal>
 
