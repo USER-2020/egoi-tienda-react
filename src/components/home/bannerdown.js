@@ -40,8 +40,8 @@ const Bannerdown = ({ bannersInfo }) => {
                         setBannerFiltro6(bannerData.id_filtro);
                         subcategorieById(bannerData.id_filtro, offset, bannerData.id_tag)
                             .then((res) => {
-                                console.log("Informacion de banner 6 category", res.data);
-                                console.log("Datos de etiquedtado 6", res.data);
+                                // console.log("Informacion de banner 6 category", res.data);
+                                // console.log("Datos de etiquedtado 6", res.data);
                                 // setSubcategory(res.data.products);
                                 // history.push(`/categories/products/filter/${bannerData.id_filtro}`);
                             })
@@ -52,7 +52,7 @@ const Bannerdown = ({ bannersInfo }) => {
                         setBannerFiltro6(bannerData.id_filtro);
                         detailProductById(bannerData.id_filtro, bannerData.id_tag)
                             .then((res) => {
-                                console.log('Detalle del producto del banner 6 product ', res.data);
+                                // console.log('Detalle del producto del banner 6 product ', res.data);
                             })
                             .catch((err) => {
                                 console.log(err);
@@ -64,7 +64,7 @@ const Bannerdown = ({ bannersInfo }) => {
                         setBannerFiltro6(bannerData.id_filtro);
                         getProductsByIdBrand(bannerData.id_filtro, bannerData.id_tag)
                             .then((res) => {
-                                console.log('Detalle del producto por marca desde el banner 6', res.data);
+                                // console.log('Detalle del producto por marca desde el banner 6', res.data);
                             })
                             .catch((err) => console.log(err));
                     }
@@ -83,8 +83,8 @@ const Bannerdown = ({ bannersInfo }) => {
     };
 
     const showRoutes = (itemId, filtro, tag) => {
-        console.log("este el id elegido para pasar por las rutas en el banner 6", itemId);
-        console.log("este el id elegido para pasar por las rutas en el banner 6", tag);
+        // console.log("este el id elegido para pasar por las rutas en el banner 6", itemId);
+        // console.log("este el id elegido para pasar por las rutas en el banner 6", tag);
 
         if (filtro === 'category') {
             // getAllCategoriesByBanner(bannersInfo);

@@ -133,18 +133,18 @@ function AddressCart() {
     if (token) {
       allProductsCart(token)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProductsCart(res.data);
-          console.log("traer todos los producstos del carrito", productsCart);
+          // console.log("traer todos los producstos del carrito", productsCart);
 
           // Obtener los nombres de los productos del carrito
           const productNames = res.data.map((product) => product.name);
-          console.log(productNames);
+          // console.log(productNames);
           // Concatenar los nombres de los productos separados por comas
           const concatenatedNames = productNames.join(', ');
 
-          console.log("Traer todos los productos del carrito", res.data);
-          console.log("Nombres de los productos concatenados:", concatenatedNames);
+          // console.log("Traer todos los productos del carrito", res.data);
+          // console.log("Nombres de los productos concatenados:", concatenatedNames);
           setDescriptionOrder(concatenatedNames);
 
         })
@@ -157,9 +157,9 @@ function AddressCart() {
     if (token) {
       allAddress(token)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setAddress(res.data);
-          console.log("Estas son las direcciones", address);
+          // console.log("Estas son las direcciones", address);
 
         })
     }
@@ -169,7 +169,7 @@ function AddressCart() {
     if (token) {
       allDeptos(token)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setDeptos(res.data);
         })
     }
@@ -215,7 +215,7 @@ function AddressCart() {
   /* Validacion de direccion en el checkout */
   const handleProcederCompra = () => {
     if (selectedAddressIndex === null) {
-      console.log("Elegir dirección para proceder con la compra");
+      // console.log("Elegir dirección para proceder con la compra");
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -247,22 +247,22 @@ function AddressCart() {
       // Seleccionar el checkbox correspondiente al índice dado
       setSelectedCheckbox(index);
       if (index === 0) {
-        console.log(index);
+        // console.log(index);
         setModalTarjetaDebito(true);
         // setBotonDeshabilitado(true);
       }
       if (index === 1) {
-        console.log(index);
+        // console.log(index);
         setModalTarjetaCredito(true);
         // setBotonDeshabilitado(true);
       }
       if (index === 2) {
-        console.log(index);
+        // console.log(index);
         setModalPse(true);
         // setBotonDeshabilitado(true);
       }
       if (index === 3) {
-        console.log(index);
+        // console.log(index);
         if (token) {
           swalWithBootstrapButtons.fire({
             title: '¿Quieres realizar el pago por efecty?',
@@ -299,7 +299,7 @@ function AddressCart() {
 
       }
       if (index === 4) {
-        console.log(index);
+        // console.log(index);
         if (token) {
           swalWithBootstrapButtons.fire({
             title: '¿Quieres realizar el pago contra entrega?',
@@ -459,7 +459,7 @@ function AddressCart() {
 
   /* traer datos de los modales para efectuar el pago */
   const handleModalData = (data) => {
-    console.log("Datos del modal:", data);
+    // console.log("Datos del modal:", data);
     setModalDataTarjetas(data);
     setModalDataPSE(data);
     setModalTarjetaCredito(false);
@@ -472,10 +472,10 @@ function AddressCart() {
   const getAddressById = () => {
     addressById(selectedAddressId, token)
       .then((res) => {
-        console.log("Datos traidos de la direcicon ID", res.data);
-        console.log("Nombre", res.data[0].contact_person_name);
-        console.log("Celular", res.data[0].phone);
-        console.log("Como llegar", res.data[0].local_description);
+        // console.log("Datos traidos de la direcicon ID", res.data);
+        // console.log("Nombre", res.data[0].contact_person_name);
+        // console.log("Celular", res.data[0].phone);
+        // console.log("Como llegar", res.data[0].local_description);
         setDataAddress(res.data);
 
       })
@@ -485,7 +485,7 @@ function AddressCart() {
   const eliminarDireccion = (addrId) => {
     deleteAddress(addrId, token)
       .then(() => {
-        console.log("Dirección ELiminada");
+        // console.log("Dirección ELiminada");
         getAllAddress();
       })
       .catch((err) => {
@@ -501,11 +501,11 @@ function AddressCart() {
 
   const aplicarCupon = () => {
     if (cupon && token) {
-      console.log(cupon);
+      // console.log(cupon);
       aplyCupon(cupon, token)
         .then((res) => {
-          console.log("Cupon aplicado ==>", res.data);
-          console.log("Total", res.data.total);
+          // console.log("Cupon aplicado ==>", res.data);
+          // console.log("Total", res.data.total);
           setDiscountCoupon(res.data);
 
           // Validar si el cupón es inválido
@@ -537,7 +537,7 @@ function AddressCart() {
 
   const handleSubmitOrderPaymentCard = () => {
     if (token) {
-      console.log("Envio de orden por tarjeta");
+      // console.log("Envio de orden por tarjeta");
 
 
       /* The code is assigning a default value to the variable `amountValue` which is equal to the
@@ -659,17 +659,17 @@ function AddressCart() {
 
   /* Verificar compra */
   const verifyPurchase = (dataOrder) => {
-    console.log("Estos son los datos de las ordenes", dataOrder);
+    // console.log("Estos son los datos de las ordenes", dataOrder);
 
     makePay(dataOrder, token)
       .then((res) => {
-        console.log(res.data);
-        console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
+        // console.log(res.data);
+        // console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
         let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
         if (direccion_url_pse !== null) {
           openWindowPSExternal(direccion_url_pse);
         }
-        console.log("El pago se registro");
+        // console.log("El pago se registro");
         Swal.fire({
           icon: 'success',
           title: '¡Tu compra ha sido registrada!',
@@ -690,7 +690,7 @@ function AddressCart() {
   const generateEfectyREF = (data, descriptionOrder) => {
     referenciaPago(data, token)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         const newDataRef = res.data;
         setDataRef(newDataRef);
         let timerInterval;
@@ -749,7 +749,7 @@ function AddressCart() {
         }).then((result) => {
           /* Read more about handling dismissals below */
           if (result.dismiss === Swal.DismissReason.timer) {
-            console.log('I was closed by the timer');
+            // console.log('I was closed by the timer');
           }
         });
       })
@@ -759,8 +759,8 @@ function AddressCart() {
 
   const handleSubmitOrderEfecty = () => {
     if (token) {
-      console.log("Envio de orden por efecty");
-      console.log(formattedTotal);
+      // console.log("Envio de orden por efecty");
+      // console.log(formattedTotal);
 
       let amountValue = formattedTotal !== '' ? formattedTotal : total; // Valor por defecto, en caso de que no haya cupón aplicado
 
@@ -794,7 +794,7 @@ function AddressCart() {
       try {
         const response = await axios.get('https://api.ipify.org?format=json');
         const data = response.data.ip;
-        console.log(data);
+        // console.log(data);
         setIpAddress(data);
       } catch (error) {
         console.error(error);
@@ -805,9 +805,9 @@ function AddressCart() {
   }, []);
 
 
-  useEffect(() => {
-    console.log(shouldShowCollapseThree);
-  }, [shouldShowCollapseThree]);
+  // useEffect(() => {
+  //   console.log(shouldShowCollapseThree);
+  // }, [shouldShowCollapseThree]);
 
 
 
@@ -818,7 +818,7 @@ function AddressCart() {
       getAllAddress();
       getAllDeptos();
 
-      console.log(ipAddress);
+      // console.log(ipAddress);
 
     } else {
 
@@ -826,15 +826,15 @@ function AddressCart() {
       setModalViewLogin(true);
     }
     ;
-    console.log(total);
+    // console.log(total);
     handleStepClick(activeStep, valueProgressBar);
-    if (cupon) {
-      console.log("Este es el cupon", cupon);
+    // if (cupon) {
+    //   console.log("Este es el cupon", cupon);
 
-    }
-    if (selectedAddressId) {
-      console.log("Este es el id de la direccion", selectedAddressId);
-    }
+    // }
+    // if (selectedAddressId) {
+    //   console.log("Este es el id de la direccion", selectedAddressId);
+    // }
 
     if (selectedAddressId) {
       getAddressById();
@@ -842,13 +842,13 @@ function AddressCart() {
 
 
 
-    if (showPDF) {
-      console.log("se muestra el pdf", showPDF);
-    }
+    // if (showPDF) {
+    //   console.log("se muestra el pdf", showPDF);
+    // }
 
-    if (subtotalNumber) {
-      console.log("Este es el subtotal formateado", subtotalNumber);
-    }
+    // if (subtotalNumber) {
+    //   console.log("Este es el subtotal formateado", subtotalNumber);
+    // }
 
 
 

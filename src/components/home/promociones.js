@@ -51,7 +51,7 @@ const Promociones = ({ bannersInfo }) => {
     ProductosDescuento()
       .then((res) => {
         setProductos(res.data.products);
-        console.log("descuentos", productos);
+        // console.log("descuentos", productos);
       })
       .catch((err) => console.log(err));
 
@@ -69,8 +69,8 @@ const Promociones = ({ bannersInfo }) => {
             setBannerFiltro6(bannerData.id_filtro);
             subcategorieById(bannerData.id_filtro, offset, bannerData.id_tag)
               .then((res) => {
-                console.log("Informacion de banner 6 category", res.data);
-                console.log("Datos de etiquedtado 6", res.data);
+                // console.log("Informacion de banner 6 category", res.data);
+                // console.log("Datos de etiquedtado 6", res.data);
                 // setSubcategory(res.data.products);
                 // history.push(`/categories/products/filter/${bannerData.id_filtro}`);
               })
@@ -81,7 +81,7 @@ const Promociones = ({ bannersInfo }) => {
             setBannerFiltro6(bannerData.id_filtro);
             detailProductById(bannerData.id_filtro, bannerData.id_tag)
               .then((res) => {
-                console.log('Detalle del producto del banner 6 product ', res.data);
+                // console.log('Detalle del producto del banner 6 product ', res.data);
               })
               .catch((err) => {
                 console.log(err);
@@ -93,7 +93,7 @@ const Promociones = ({ bannersInfo }) => {
             setBannerFiltro6(bannerData.id_filtro);
             getProductsByIdBrand(bannerData.id_filtro, bannerData.id_tag)
               .then((res) => {
-                console.log('Detalle del producto por marca desde el banner 6', res.data);
+                // console.log('Detalle del producto por marca desde el banner 6', res.data);
               })
               .catch((err) => console.log(err));
           }
@@ -112,8 +112,8 @@ const Promociones = ({ bannersInfo }) => {
   };
 
   const showRoutes = (itemId, filtro, tag) => {
-    console.log("este el id elegido para pasar por las rutas en el banner 4", itemId);
-    console.log("este el id elegido para pasar por las rutas en el banner 4", tag);
+    // console.log("este el id elegido para pasar por las rutas en el banner 4", itemId);
+    // console.log("este el id elegido para pasar por las rutas en el banner 4", tag);
 
     if (filtro === 'category') {
       getAllCategoriesByBanner(bannersInfo)

@@ -22,7 +22,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
     const getDetailPedido = () => {
         getOrdenDetalleById(token, orderDetalleId)
             .then((res) => {
-                console.log("Detalle de pedido por id", res.data);
+                // console.log("Detalle de pedido por id", res.data);
                 setDetalleOrden(res.data);
             }).catch((err) => console.log(err));
     }
@@ -44,7 +44,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
 
     useEffect(() => {
         if (token) {
-            console.log("Este es el id de la orden", orderDetalleId);
+            // console.log("Este es el id de la orden", orderDetalleId);
             getDetailPedido();
         }
     }, [])

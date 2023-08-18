@@ -25,9 +25,9 @@ function SimilarProduct() {
     const similarProducts = (id) => {
         ProductosSimilaresById(id)
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 setProducts(res.data);
-                console.log("Estos son los productos similares al id seleccionado");
+                // console.log("Estos son los productos similares al id seleccionado");
             })
             .catch((err) => console.log(err));
     }

@@ -20,7 +20,7 @@ function ModalDetallePedido({ closeModalDetallePedido, orderDetalleId }) {
     const getDetailPedido = () => {
         getOrdenDetalleById(token, orderDetalleId)
             .then((res) => {
-                console.log("Detalle de pedido por id desde el modal de orderTrack", res.data);
+                // console.log("Detalle de pedido por id desde el modal de orderTrack", res.data);
                 setDetalleOrden(res.data);
             }).catch((err) => console.log(err));
     }

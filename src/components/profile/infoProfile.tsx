@@ -27,7 +27,7 @@ function InfoProfile() {
   const getAllInfoPerfil = () => {
     getUserProfileInfo(token)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDetailInfoProfile(res.data);
       }).catch((err) => console.log(err));
   }
@@ -35,7 +35,7 @@ function InfoProfile() {
   const onSubmit = (data) => {
     updateInfoProfile(token, data)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         Swal.fire({
           icon: 'success',
           title: 'Actualización exitosa',

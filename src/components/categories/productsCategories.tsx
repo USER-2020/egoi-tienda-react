@@ -131,9 +131,9 @@ const ProductsCategories = () => {
   const productsWithFilterMostSold = () => {
     filterProductsMostSold(id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProducts(res.data);
-        console.log("Producttos filtrados por los mas vendidos", res.data.products);
+        // console.log("Producttos filtrados por los mas vendidos", res.data.products);
       })
       .catch((err) => console.log(err));
   }
@@ -142,7 +142,7 @@ const ProductsCategories = () => {
   const getDiscountByProducts = () => {
     discountedProducts(offset)
       .then((res) => {
-        console.log("Productos en descuento", res.data.products);
+        // console.log("Productos en descuento", res.data.products);
         setProducts(res.data);
       }).catch((err) => console.log(err));
   }
@@ -151,7 +151,7 @@ const ProductsCategories = () => {
   const getRecentlySee = () => {
     ProductosRecientes()
       .then((res) => {
-        console.log("Productos recientes", res.data.products);
+        // console.log("Productos recientes", res.data.products);
         setProducts(res.data);
       }).catch((err) => console.log(err));
   }
@@ -160,7 +160,7 @@ const ProductsCategories = () => {
   const getPromotions = () => {
     ProductosDescuento()
       .then((res) => {
-        console.log("Promociones imperdibles", res.data.products);
+        // console.log("Promociones imperdibles", res.data.products);
         setProducts(res.data);
       }).catch((err) => console.log(err));
   }
@@ -169,7 +169,7 @@ const ProductsCategories = () => {
   const getBestSelling = () => {
     ProductosMasVendidos()
       .then((res) => {
-        console.log("Productos mas vendidos", res.data.products);
+        // console.log("Productos mas vendidos", res.data.products);
         setProducts(res.data);
       })
   }
@@ -177,9 +177,9 @@ const ProductsCategories = () => {
   const productsWithFilterBestRated = () => {
     filterProductsBestRated(id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProducts(res.data);
-        console.log("Producttos filtrados por los mas vendidos", res.data.products);
+        // console.log("Producttos filtrados por los mas vendidos", res.data.products);
       })
       .catch((err) => console.log(err));
   }
@@ -187,9 +187,9 @@ const ProductsCategories = () => {
   const productsWithFilterFeaturePrefer = () => {
     filterProductsFeaturePrefer(id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProducts(res.data);
-        console.log("Producttos filtrados por los mas vendidos", res.data.products);
+        // console.log("Producttos filtrados por los mas vendidos", res.data.products);
       })
       .catch((err) => console.log(err));
   }
@@ -198,9 +198,9 @@ const ProductsCategories = () => {
     if (selectedFiltersRecent === 'recent') {
       filterProductsRecents(id)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProducts(res.data);
-          console.log("Productos filtrados por mas reciente", res.data.products);
+          // console.log("Productos filtrados por mas reciente", res.data.products);
 
         })
         .catch((err) => console.log(err));
@@ -209,47 +209,47 @@ const ProductsCategories = () => {
     else if (selectedFiltersHigh_Low === 'H-L') {
       filterProductsHigh_Low(id)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProducts(res.data);
-          console.log("Productos filtrados del mas caro al mas barato", res.data.products);
+          // console.log("Productos filtrados del mas caro al mas barato", res.data.products);
         })
         .catch((err) => console.log(err));
     }
     else if (selectedFiltersLow_High == 'L-H') {
       filterProductsLow_High(id)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProducts(res.data);
-          console.log("Productos filtrados del mas barato al mas caro", res.data.products);
+          // console.log("Productos filtrados del mas barato al mas caro", res.data.products);
         })
         .catch((err) => console.log(err));
     }
     else if (selectedFiltersA_Z === 'A-Z') {
       filterProductsA_Z(id)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProducts(res.data);
-          console.log("Productos filtrados por orden alfabetico A-Z", res.data.products);
+          // console.log("Productos filtrados por orden alfabetico A-Z", res.data.products);
         })
         .catch((err) => console.log(err));
     }
     else if (selectedFiltersZ_A === 'Z-A') {
       filterProductsZ_A(id)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProducts(res.data);
-          console.log("Productos filtrados por orden alfabetico Z-A", res.data.products);
+          // console.log("Productos filtrados por orden alfabetico Z-A", res.data.products);
         })
         .catch((err) => console.log(err));
     }
     else {
       subcategorieById(id, offset, tag)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProducts(res.data);
           setTotalResults(res.data.total_size);
-          console.log("Productos por el id", res.data.products);
-          console.log("Este es el total de productos", res.data.total_size);
+          // console.log("Productos por el id", res.data.products);
+          // console.log("Este es el total de productos", res.data.total_size);
 
         })
         .catch((err) => console.log(err));
@@ -269,12 +269,12 @@ const ProductsCategories = () => {
   };
 
   const handleApplyFilters = () => {
-    console.log("Estoy adentro de apllyFilters");
+    // console.log("Estoy adentro de apllyFilters");
     filterProductsPrice(id, priceStart, priceEnd)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProducts(res.data);
-        console.log("Productos filtrados por rango de precio", res.data.products);
+        // console.log("Productos filtrados por rango de precio", res.data.products);
       })
       .catch((error) => console.error(error));
 
@@ -284,9 +284,9 @@ const ProductsCategories = () => {
   const productsByBrand = (brandId) => {
     getProductsByIdBrand(brandId)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProducts(res.data);
-        console.log("Productos por marca", res.data.products);
+        // console.log("Productos por marca", res.data.products);
 
       })
       .catch((err) => console.log(err));
@@ -296,9 +296,9 @@ const ProductsCategories = () => {
     if (searchProducts) {
       getProductsBySearch(searchProducts)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProducts(res.data);
-          console.log("Respuesta de los productos por busqueda", res.data.products);
+          // console.log("Respuesta de los productos por busqueda", res.data.products);
         })
     }
   }
@@ -325,14 +325,14 @@ const ProductsCategories = () => {
       </button>
     );
   }
-  console.log('page', currentPage)
+  // console.log('page', currentPage)
 
   function handlePageClick(offset) {
     // const totalPages = Math.ceil(totalResults / 12);
     const maxOffset = (totalPages);
     const adjustedOffset = Math.min(Math.max(offset, 0), maxOffset);
     setOffset(adjustedOffset);
-    console.log("Offset", adjustedOffset);
+    // console.log("Offset", adjustedOffset);
 
     // const adjustedOffset = Math.min(Math.max(newOffset, 0), totalPages);
     // setOffset(adjustedOffset);
@@ -372,7 +372,7 @@ const ProductsCategories = () => {
     if (name?.length) {
       resultsSearch(name);
     } else {
-      console.log("No existe SearchProducts");
+      // console.log("No existe SearchProducts");
     }
 
   }, [id, brandId, selectedFiltersRecent, selectedFiltersHigh_Low,
@@ -394,7 +394,7 @@ const ProductsCategories = () => {
   //   setCurrentSubcategoryId(id);
   // };
 
-  console.log("Estos son los productos", products);
+  // console.log("Estos son los productos", products);
 
   return (
 

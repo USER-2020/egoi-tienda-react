@@ -10,7 +10,7 @@ function ModalCancelarTicketSupport({ idTicket, closeModalCancelarTicket, getAll
     const deleteTicket = (idTicket) => {
         deleteTicketSupport(token, idTicket)
             .then((res) => {
-                console.log('Respuesta de eliminar ticket', res.data);
+                // console.log('Respuesta de eliminar ticket', res.data);
                 getAllTickets();
                 closeModalCancelarTicket();
             }).catch((err) => console.log(err));
@@ -18,9 +18,9 @@ function ModalCancelarTicketSupport({ idTicket, closeModalCancelarTicket, getAll
 
     
 
-    useEffect(() => {
-        console.log(idTicket);
-    }, []);
+    // useEffect(() => {
+    //     console.log(idTicket);
+    // }, []);
 
     return (
         <div className='containerModalCanelarPedido'>

@@ -88,9 +88,9 @@ const HeaderCategories = ({ handleClickFilterRecent, handleClickFilterZ_A,
   const brandsBySubcategory = (id) => {
     getBrandsByCategory(id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setBrands(res.data);
-        console.log("Carga de marcas por categoria-subcategoria", brands);
+        // console.log("Carga de marcas por categoria-subcategoria", brands);
       })
       .catch((err) => console.log(err));
   }
@@ -137,7 +137,7 @@ const HeaderCategories = ({ handleClickFilterRecent, handleClickFilterZ_A,
 
   useEffect(() => {
     if (productsTag && productsTag.products && productsTag.products.length > 0) {
-      console.log("Productos por etiqueta", productsTag.products[0]);
+      // console.log("Productos por etiqueta", productsTag.products[0]);
       setProductsDetailTag(productsTag.products[0]);
     }
   }, [productsTag]);

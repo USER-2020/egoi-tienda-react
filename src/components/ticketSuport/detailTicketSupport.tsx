@@ -15,7 +15,7 @@ function DetailTicketSupport({ idTicket, status, priority }) {
   const getInfoTicketById = () => {
     getTicketById(token, idTicket)
       .then((res) => {
-        console.log("Respuesta del ticket por id", res.data);
+        // console.log("Respuesta del ticket por id", res.data);
         setDataChats(res.data);
         setDataChatById(res.data);
       }).catch((err) => console.log(err));
@@ -24,7 +24,7 @@ function DetailTicketSupport({ idTicket, status, priority }) {
   const senReply = () => {
     sendReplySupportTicket(token, message, idTicket)
       .then((res) => {
-        console.log('respuesta de enviar el mesnaje al ticekt por id', res.data);
+        // console.log('respuesta de enviar el mesnaje al ticekt por id', res.data);
         setMessage('');
         getInfoTicketById();
       }).catch((err) => console.log(err));
@@ -33,9 +33,9 @@ function DetailTicketSupport({ idTicket, status, priority }) {
   useEffect(() => {
     if (token) {
       getInfoTicketById();
-      console.log(idTicket);
-      console.log(status);
-      console.log(priority);
+      // console.log(idTicket);
+      // console.log(status);
+      // console.log(priority);
 
     }
   }, []);

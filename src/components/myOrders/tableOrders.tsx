@@ -19,7 +19,7 @@ function TableOrders({ setOrderDetalleId }) {
     const getAllPedidos = () => {
         getOrdenes(token)
             .then((res) => {
-                console.log("Estas son las ordenes", res.data);
+                // console.log("Estas son las ordenes", res.data);
                 setOrdenes(res.data);
             }).catch((err) => console.log(err));
     }
@@ -31,7 +31,7 @@ function TableOrders({ setOrderDetalleId }) {
     }
 
     const sendId = (orderDetalleId) => {
-        console.log("desde la tabla", orderDetalleId);
+        // console.log("desde la tabla", orderDetalleId);
         setOrderDetalleId(orderDetalleId);
 
     }

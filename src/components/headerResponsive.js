@@ -82,7 +82,7 @@ function HeaderResponsive() {
   const handleEnterPress = (event) => {
     if (event.key === 'Enter') {
       setPrevSearchProducts(prevSearchProducts);
-      console.log("Este es el valor guardado en el search: ", prevSearchProducts);
+      // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       history.push(`/products/${prevSearchProducts}`);
     }
   }
@@ -153,7 +153,7 @@ function HeaderResponsive() {
 
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
-    console.log("Entro al logout");
+    // console.log("Entro al logout");
     setCurrentUser();
     setIsLoggedIn(false);
     history.push(`/`);
@@ -163,7 +163,7 @@ function HeaderResponsive() {
     allCategories()
       .then((res) => {
         setCategories(res.data);
-        console.log("Recibiendo todas las categorias desde el responsive", categories);
+        // console.log("Recibiendo todas las categorias desde el responsive", categories);
 
       })
       .catch((err) => console.log(err));
@@ -173,12 +173,12 @@ function HeaderResponsive() {
     getAllBrands()
       .then((res) => {
         setBrands(res.data);
-        console.log("Recibiendo todas las marcas desde el responsive", brands);
+        // console.log("Recibiendo todas las marcas desde el responsive", brands);
       })
       .catch((err) => console.log(err));
   }
 
-  console.log('HERE', currenUser)
+  // console.log('HERE', currenUser);
 
   // useEffect(() => {
   //   // Actualizar el estado del offcanvas
@@ -202,9 +202,9 @@ function HeaderResponsive() {
       allProductsCart(token)
         .then((res) => {
           const productsOncart = res.data;
-          console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
+          // console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
           const numberOfProducts = productsOncart.length;
-          console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
+          // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
           setCantProductsOnCart(numberOfProducts);
         }).catch((err) => console.log(err));
     }
