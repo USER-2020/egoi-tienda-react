@@ -6,7 +6,7 @@ import DetailCart from '../components/cart/detailCart.tsx';
 
 const ProtectedRoute = ({ path, viewComponent: ViewComponent }) => {
   const currentUser = getCurrentUser();
-  console.log(getCurrentUser());
+  // console.log(getCurrentUser());
   
 
   return currentUser ? (

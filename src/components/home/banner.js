@@ -71,10 +71,10 @@ const Banner = (args) => {
     const getAllBanners = () => {
         getBanners()
             .then((res) => {
-                console.log(res.data);
-                console.log(res.data[0]);
-                console.log(res.data[1]);
-                console.log(res.data[2]);
+                // console.log(res.data);
+                // console.log(res.data[0]);
+                // console.log(res.data[1]);
+                // console.log(res.data[2]);
                 setBannersInfo(res.data);
                 getAllCategoriesByBanner(res.data);
                 // getInfoByBanner2(res.data);
@@ -84,7 +84,7 @@ const Banner = (args) => {
     const getSubcategoriesById = (id, offset, tag) =>
         subcategorieById(id, offset, tag)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
             }).catch((err) => console.log(err));
 
 
@@ -98,8 +98,8 @@ const Banner = (args) => {
                         setBannerFiltro1(bannerData.id_filtro);
                         subcategorieById(bannerData.id_filtro, offset, bannerData.id_tag)
                             .then((res) => {
-                                console.log("Informacion de banner 1 category", res.data);
-                                console.log("Datos de etiquedtado", res.data);
+                                // console.log("Informacion de banner 1 category", res.data);
+                                // console.log("Datos de etiquedtado", res.data);
                                 // setSubcategory(res.data.products);
                                 // history.push(`/categories/products/filter/${bannerData.id_filtro}`);
                             })
@@ -110,7 +110,7 @@ const Banner = (args) => {
                         setBannerFiltro1(bannerData.id_filtro);
                         detailProductById(bannerData.id_filtro, bannerData.id_tag)
                             .then((res) => {
-                                console.log('Detalle del producto del banner 1 product ', res.data);
+                                // console.log('Detalle del producto del banner 1 product ', res.data);
                             })
                             .catch((err) => {
                                 console.log(err);
@@ -122,7 +122,7 @@ const Banner = (args) => {
                         setBannerFiltro1(bannerData.id_filtro);
                         getProductsByIdBrand(bannerData.id_filtro, bannerData.id_tag)
                             .then((res) => {
-                                console.log('Detalle del producto por marca desde el banner 1', res.data);
+                                // console.log('Detalle del producto por marca desde el banner 1', res.data);
                             })
                             .catch((err) => console.log(err));
                     }
@@ -208,17 +208,17 @@ const Banner = (args) => {
     useEffect(() => {
         getAllBanners();
 
-        if (bannersInfo) {
-            console.log(bannersInfo);
+        // if (bannersInfo) {
+        //     console.log(bannersInfo);
 
-        }
-        if (bannerFiltro1) {
-            console.log("Banner filtro 1", bannerFiltro1);
-        }
+        // }
+        // if (bannerFiltro1) {
+        //     console.log("Banner filtro 1", bannerFiltro1);
+        // }
 
-        if (bannerFiltro2) {
-            console.log("banner Filtro 2", bannerFiltro2);
-        }
+        // if (bannerFiltro2) {
+        //     console.log("banner Filtro 2", bannerFiltro2);
+        // }
 
     }, [bannerFiltro1, bannerFiltro2, tipoFiltro2]);
 

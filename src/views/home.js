@@ -53,7 +53,7 @@ const Home = (props) => {
   const getAllBanners = () => {
     getBanners()
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setBannersInfo(res.data);
       }).catch((err)=> console.log(err));
   }

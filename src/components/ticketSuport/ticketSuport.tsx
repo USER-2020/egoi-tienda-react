@@ -31,7 +31,7 @@ function TicketSuport({ closemodalAndOpenOtherModal, setIdTicket, setPriorityTic
   const getAllTickets = () => {
     getTicketsSupport(token)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDetailTicketSupport(res.data);
       }).catch((err) => console.log(err));
   }

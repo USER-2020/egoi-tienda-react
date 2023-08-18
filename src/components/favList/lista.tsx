@@ -23,7 +23,7 @@ function Lista() {
     const getAllProductsWishList = () => {
         getWishList(token)
             .then((res) => {
-                console.log("Productos de lista de desos", res.data);
+                // console.log("Productos de lista de desos", res.data);
                 setWishListProducts(res.data);
             }).catch((err) => console.log(err));
     }
@@ -35,7 +35,7 @@ function Lista() {
     const deleteItemProductWhish = (idProducto) => {
         deleteProductWishList(token, idProducto)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 getAllProductsWishList();
             }).catch((err) => console.log(err));
     }

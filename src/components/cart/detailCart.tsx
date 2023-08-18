@@ -72,7 +72,7 @@ function DetailCart() {
     // Code to handle user login, such as storing session storage, etc.
     if (currenUser) {
       setIsLoggedIn(true);
-      console.log("Estas logueado")
+      // console.log("Estas logueado")
 
     } else {
       setIsLoggedIn(false);
@@ -83,7 +83,7 @@ function DetailCart() {
 
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
-    console.log("Entro al logout");
+    // console.log("Entro al logout");
     setCurrentUser();
     setIsLoggedIn(false);
   };
@@ -100,9 +100,9 @@ function DetailCart() {
     if (token) {
       allProductsCart(token)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProductsCart(res.data);
-          console.log("traer todos los producstos del carrito", productsCart);
+          // console.log("traer todos los producstos del carrito", productsCart);
 
         })
         .catch((err) => console.log(err));
@@ -113,7 +113,7 @@ function DetailCart() {
   const deleteOne = (key) => {
     deleteItemCart(key, token)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         Swal.fire({
           icon: 'error',
           title: 'Producto eliminado del carrito',
@@ -165,10 +165,10 @@ function DetailCart() {
   const costoDeENvio = () => {
     // console.log(subtotal);
     if (subtotal && subtotal <= 79900) {
-      console.log(subtotal);
+      // console.log(subtotal);
       const costodelEnvio = 9900;
       setCostoEnvio(costodelEnvio);
-      console.log(costoEnvio);
+      // console.log(costoEnvio);
 
     } else {
       setCostoEnvio(0);
@@ -186,11 +186,11 @@ function DetailCart() {
 
   const aplicarCupon = () => {
     if (cupon && token) {
-      console.log(cupon);
+      // console.log(cupon);
       aplyCupon(cupon, token)
         .then((res) => {
-          console.log("Cupon aplicado ==>", res.data);
-          console.log("Total", res.data.total);
+          // console.log("Cupon aplicado ==>", res.data);
+          // console.log("Total", res.data.total);
           setDiscountCoupon(res.data);
 
           // Validar si el cupón es inválido
@@ -237,9 +237,9 @@ function DetailCart() {
     }
 
     costoDeENvio();
-    console.log(costoEnvio);
-    console.log(discountCoupon.total);
-    console.log(discountCoupon.discount);
+    // console.log(costoEnvio);
+    // console.log(discountCoupon.total);
+    // console.log(discountCoupon.discount);
 
 
   }, [token, subtotal, discountCoupon]);

@@ -244,7 +244,7 @@ function Orders(props) {
     /* Funciones de conexiones de api manejando el id del detalle de la order*/
     const handleOrderClick = (orderId) => {
         setOrderDetalleId(orderId);
-        console.log("desde la principal", orderDetalleId);
+        // console.log("desde la principal", orderDetalleId);
         closemodalAndOpenOtherModal();
         // Realizar otras acciones necesarias con el ID de la orden
     };
@@ -262,10 +262,10 @@ function Orders(props) {
         setStatusTicket(statusTicketGet);
     }
 
-    useEffect(() => {
-        console.log("desde la principal", orderDetalleId);
+    // useEffect(() => {
+    //     console.log("desde la principal", orderDetalleId);
 
-    }, []);
+    // }, []);
 
     useEffect(() => {
         if (urlActiveOption && urlSelectedOption) {

@@ -72,7 +72,7 @@ const Header = () => {
   const handleEnterPress = (event) => {
     if (event.key === 'Enter') {
       setPrevSearchProducts(prevSearchProducts);
-      console.log("Este es el valor guardado en el search: ", prevSearchProducts);
+      // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       history.push(`/products/${prevSearchProducts}`);
     }
   }
@@ -96,7 +96,7 @@ const Header = () => {
     allCategories()
       .then((res) => {
         setCategories(res.data);
-        console.log("Recibiendo todas las categorias", categories);
+        // console.log("Recibiendo todas las categorias", categories);
 
       })
       .catch((err) => console.log(err));
@@ -109,7 +109,7 @@ const Header = () => {
     getAllBrands()
       .then((res) => {
         setBrands(res.data);
-        console.log("Recibiendo todas las marcas", brands);
+        // console.log("Recibiendo todas las marcas", brands);
       })
       .catch((err) => console.log(err));
   }
@@ -118,9 +118,9 @@ const Header = () => {
   const productsByBrand = (brandId) => {
     getProductsByIdBrand(brandId)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProducts(res.data);
-        console.log("Productos por marca", res.data.products);
+        // console.log("Productos por marca", res.data.products);
 
       })
       .catch((err) => console.log(err));
@@ -131,9 +131,9 @@ const Header = () => {
     if (prevSearchProducts) {
       getProductsBySearch(prevSearchProducts)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setProducts(res.data);
-          console.log("Respuesta de los productos por busqueda", res.data.products);
+          // console.log("Respuesta de los productos por busqueda", res.data.products);
         })
     }
   }
@@ -147,12 +147,12 @@ const Header = () => {
    */
   const mostrarSubcategorias = (e) => {
     const categoryId = e.currentTarget.dataset.categoryId;
-    console.log("Este es el id de la categoria", categoryId);
+    // console.log("Este es el id de la categoria", categoryId);
     setSelectedCategoryId(categoryId);
     // console.log("Este es el arreglo" ,categories);
     const selectedCategory = categories.find((categoria) => categoria.id == categoryId);
     setSelectedCategory(selectedCategory);
-    console.log("Esta es la categoría seleccionada:", selectedCategory);
+    // console.log("Esta es la categoría seleccionada:", selectedCategory);
     // setSubcategorias(selectedCategory.subcategories);
     if (selectedCategory) {
       setSubcategorias(selectedCategory.childes);
@@ -164,10 +164,10 @@ const Header = () => {
 
   const showSubSubCategory = (e) => {
     const subcategoryId = e.currentTarget.dataset.subcategoryId;
-    console.log("Este es el id de la sub-subcategoria", subcategoryId);
+    // console.log("Este es el id de la sub-subcategoria", subcategoryId);
     const selectedSubcategory = subcategorias.find((subcategoria) => subcategoria.id == subcategoryId);
     setSelectedSubcategory(selectedSubcategory);
-    console.log("Esta es la subcategoria seleccionada:", selectedSubcategory);
+    // console.log("Esta es la subcategoria seleccionada:", selectedSubcategory);
 
     if (selectedSubcategory) {
       setSubSubCategory(selectedSubcategory.childes);
@@ -223,7 +223,7 @@ const Header = () => {
 
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
-    console.log("Entro al logout");
+    // console.log("Entro al logout");
     setCurrentUser();
     setIsLoggedIn(false);
     history.push(`/`);
@@ -250,11 +250,11 @@ const Header = () => {
   }
 
 
-  useEffect(() => {
-    if (subSubCategory.length > 0) {
-      console.log("Datos en subSubCategory:", subSubCategory);
-    }
-  }, [subSubCategory]);
+  // useEffect(() => {
+  //   if (subSubCategory.length > 0) {
+  //    console.log("Datos en subSubCategory:", subSubCategory);
+  //   }
+  // }, [subSubCategory]);
 
 
   useEffect(() => {
@@ -303,9 +303,9 @@ const Header = () => {
       allProductsCart(token)
         .then((res) => {
           const productsOncart = res.data;
-          console.log("Respuesta de productos del carrito de compras", productsOncart);
+          // console.log("Respuesta de productos del carrito de compras", productsOncart);
           const numberOfProducts = productsOncart.length;
-          console.log("Cantidad de productos en el carrito", numberOfProducts);
+          // console.log("Cantidad de productos en el carrito", numberOfProducts);
           setCantProductsOnCart(numberOfProducts);
         }).catch((err) => console.log(err));
     }
@@ -320,7 +320,7 @@ const Header = () => {
 
   useEffect(() => {
     if (selectedCategoryId) {
-      console.log("Este el id selesccionado para activar el boton active ", selectedCategoryId);
+      // console.log("Este el id selesccionado para activar el boton active ", selectedCategoryId);
     }
   }, [selectedCategoryId]);
 
@@ -376,11 +376,11 @@ const Header = () => {
             <div className="menuUser">
               {isLoggedIn ? (
                 <>
-                  <a href="#" onClick={handleAdminUser} style={{gap:'12px'}}>
-                    <FontAwesomeIcon icon={faUserGear} style={{ alignSelf: 'center'}} />
+                  <a href="#" onClick={handleAdminUser} style={{ gap: '12px' }}>
+                    <FontAwesomeIcon icon={faUserGear} style={{ alignSelf: 'center' }} />
                     Mi cuenta
                   </a>
-                  <a href="#" onClick={handleLogout} style={{gap:'15px'}}>
+                  <a href="#" onClick={handleLogout} style={{ gap: '15px' }}>
                     <FontAwesomeIcon icon={faRightFromBracket} />
                     Cerrar sesión
                   </a>
@@ -401,7 +401,7 @@ const Header = () => {
                       <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
                     </ModalBody>
                   </Modal>
-                  <a href="#" onClick={() => setModalViewRegistro(true)} style={{gap:'15px'}}>
+                  <a href="#" onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
                     <FontAwesomeIcon icon={faUserPlus} />
                     Regístrate
                   </a>

@@ -14,13 +14,13 @@ function Popup({ handleModalData }) {
 
   const getPrincipalPopup = () => {
     getPopup().then((res) => {
-      console.log("Datos del popup", res.data);
+      // console.log("Datos del popup", res.data);
       setDatosPopup(res.data);
     }).catch((err) => console.log(err));
   }
 
   const showRoutes = (itemId, filtro, tag) => {
-    console.log("este el id elegido para pasar por las rutas popup", itemId);
+    // console.log("este el id elegido para pasar por las rutas popup", itemId);
 
     if (filtro === 'category') {
       history.push(`/categories/products/filter/${itemId}/${tag}`);

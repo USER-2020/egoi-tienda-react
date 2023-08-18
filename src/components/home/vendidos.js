@@ -36,7 +36,7 @@ const Vendidos = ({ bannersInfo }) => {
         ProductosMasVendidos()
             .then((res) => {
                 setProductos(res.data.products);
-                console.log("mas vendidos", productos);
+                // console.log("mas vendidos", productos);
             })
             .catch((err) => console.log(err));
 
@@ -89,7 +89,7 @@ const Vendidos = ({ bannersInfo }) => {
     };
 
     const showRoutes = (itemId, filtro, tag) => {
-        console.log("este el id elegido para pasar por las rutas en el banner 4", itemId);
+        // console.log("este el id elegido para pasar por las rutas en el banner 4", itemId);
 
         if (filtro === 'category') {
             history.push(`/categories/products/Descuento/${itemId}/${tag}`);

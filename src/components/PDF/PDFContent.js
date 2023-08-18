@@ -63,7 +63,7 @@ const PDFContent = ({ closeModalPDF, dataRefEfecty, totalAmount , description}) 
   
 
     useEffect(() => {
-        console.log("datos de la referencia", dataRefEfecty);
+        // console.log("datos de la referencia", dataRefEfecty);
         
         if (dataRefEfecty) {
             setReferenciaData(dataRefEfecty);

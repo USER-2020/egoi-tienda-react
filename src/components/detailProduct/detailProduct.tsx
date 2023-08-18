@@ -95,7 +95,7 @@ function DetailProduct() {
             setModalViewCart(true);
             addProductsCart(id, quantity, currenUser.token)
                 .then((res) => {
-                    console.log("Producto enviado", res.data);
+                    // console.log("Producto enviado", res.data);
                     // console.log(token);
                 })
                 .catch((err) => console.log(err));
@@ -113,11 +113,11 @@ function DetailProduct() {
 
 
     const favClick = (idProductFav) => {
-        console.log(idProductFav)
+        // console.log(idProductFav)
         if (currenUser) {
             addFavoriteProduct(currenUser.token, idProductFav)
                 .then((res) => {
-                    console.log('Se añadio el producto a favoritos', res);
+                    // console.log('Se añadio el producto a favoritos', res);
                     Swal.fire({
                         icon: 'success',
                         title: '¡Se añadió tu producto a favoritos!',
@@ -145,7 +145,7 @@ function DetailProduct() {
         if (currenUser) {
             addProductsCart(id, quantity, currenUser.token)
                 .then((res) => {
-                    console.log("Producto agregado", res.data);
+                    // console.log("Producto agregado", res.data);
 
                 })
                 .catch((err) => console.log(err));
@@ -165,7 +165,7 @@ function DetailProduct() {
             setTotalAPagar(totalAPagar);
             console.log("Este es el costo de envio", costoEnvio);
             if (totalAPagar) {
-                console.log("total a pagar ahora", totalAPagar);
+                // console.log("total a pagar ahora", totalAPagar);
             } else {
 
             }
@@ -215,7 +215,7 @@ function DetailProduct() {
         // Code to handle user login, such as storing session storage, etc.
         if (currenUser) {
             setIsLoggedIn(true);
-            console.log("Estas logueado")
+            // console.log("Estas logueado")
 
         } else {
             setIsLoggedIn(false);
@@ -225,7 +225,7 @@ function DetailProduct() {
 
     const handleLogout = () => {
         // Code to handle user logout, such as clearing session storage, etc.
-        console.log("Entro al logout");
+        // console.log("Entro al logout");
         setCurrentUser();
         setIsLoggedIn(false);
     };
@@ -233,7 +233,7 @@ function DetailProduct() {
     const handleQuantity = (e) => {
         const value = parseInt(e.target.value);
         setQuantity(value);
-        console.log("quantity: ", value);
+        // console.log("quantity: ", value);
     }
     /**
      * This function retrieves and sets the details of a product based on its slug using useEffect hook
@@ -247,7 +247,7 @@ function DetailProduct() {
             .then((res) => {
                 // console.log(res);
                 setDetailProducts(res.data);
-                console.log("Detalle del producto por slug", res.data.count_orden);
+                // console.log("Detalle del producto por slug", res.data.count_orden);
             })
             .catch((err) => console.log(err));
     }
@@ -256,7 +256,7 @@ function DetailProduct() {
         detailProductById(id)
             .then((res) => {
                 setDetailProducts(res.data);
-                console.log("Detalle del producto traido por id desde un banner", res.data);
+                // console.log("Detalle del producto traido por id desde un banner", res.data);
             })
             .catch((err) => console.log(err));
     }
@@ -291,7 +291,7 @@ function DetailProduct() {
     /* Share Link */
     const handleShare = async () => {
         const currentUrl = window.location.href;
-        console.log(currentUrl);
+        // console.log(currentUrl);
 
         if (navigator.share) {
             try {
@@ -337,14 +337,14 @@ function DetailProduct() {
 
         }
 
-        console.log(precioProduct);
+        // console.log(precioProduct);
 
         const elementoTemporal = document.createElement('div');
         elementoTemporal.innerHTML = detailProducts.details;
         const descripcionSinEtiquetas = elementoTemporal.textContent;
 
         setFormattedDescription(descripcionSinEtiquetas);
-        console.log("Esta es la descripcion sin etiquetas", formattedDescription);
+        // console.log("Esta es la descripcion sin etiquetas", formattedDescription);
 
 
         // history.push(history.location.pathname);

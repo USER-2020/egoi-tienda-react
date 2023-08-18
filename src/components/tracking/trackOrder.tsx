@@ -18,10 +18,10 @@ function TrackOrder({ orderDetalleId }) {
 
     const detailsOrderTrack = () => {
         // console.log("Token desde el modadl de seguimineto y rastreo de pedido", token);
-        console.log("Id de la orden traido desde el numero de pedido", orderDetalleId);
+        // console.log("Id de la orden traido desde el numero de pedido", orderDetalleId);
         trackerOrder(token, orderDetalleId)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setInfoOrderTrack(res.data);
             }).catch((err) => console.log(err));
     }

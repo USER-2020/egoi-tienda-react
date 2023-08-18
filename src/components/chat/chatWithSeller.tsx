@@ -20,18 +20,18 @@ function ChatWithSeller() {
   const getAllChats = () => {
     allChatsSellers(token)
       .then((res) => {
-        console.log(res.data);
-        console.log('Datos de tienda', res.data.unique_shops[0].shop);
+        // console.log(res.data);
+        // console.log('Datos de tienda', res.data.unique_shops[0].shop);
         setDataChats(res.data);
       })
       .catch((err) => console.log(err));
   };
 
   const showChatById = (idChat) => {
-    console.log('Esta es el id del chat', idChat);
+    // console.log('Esta es el id del chat', idChat);
     getSellerChatByStoreId(token, idChat)
       .then((res) => {
-        console.log("Desde el id del chat", res.data);
+        // console.log("Desde el id del chat", res.data);
         setDataChatById(res.data);
         setShowChat(true); // Mostrar el chat cuando se hace clic en un elemento de chat
       })
@@ -39,11 +39,11 @@ function ChatWithSeller() {
   };
 
   const sendMessageToSeller = (idSeller, idShop) => {
-    console.log(idSeller);
-    console.log(idShop);
+    // console.log(idSeller);
+    // console.log(idShop);
     addMessage(token, idSeller, idShop, sendMessage)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setStatusMessage(res.data);
         setSendMessage(''); // Borrar el mensaje del input después de enviarlo
         showChatById(idShop); // Actualizar el chat después de enviar el mensaje
