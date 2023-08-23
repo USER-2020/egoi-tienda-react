@@ -44,6 +44,18 @@
 
 }
 
+.agotadoTag {
+    background-color: #FC5241;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
 .containerProductsIndex .menuBusqueda .filtros input {
     margin-right: 5px;
 }
@@ -79,16 +91,16 @@
     border-bottom-left-radius: 10px;
 }
 
-.cardProducto1 .tagPromotions{
-        justify-content: center;
-        width: 71px;
-        height: 17px;
-        background-color: #A75BFF;
-        border-radius: 8px;
-        color: white;
-        padding: 4px 8px;
-        font-size: 10px;
-   
+.cardProducto1 .tagPromotions {
+    justify-content: center;
+    width: 71px;
+    height: 17px;
+    background-color: #A75BFF;
+    border-radius: 8px;
+    color: white;
+    padding: 4px 8px;
+    font-size: 10px;
+
 }
 
 
@@ -159,9 +171,9 @@ input[type="radio"]:checked {
         display: none;
     }
 
-    .cardProducto1{
+    .cardProducto1 {
         height: 22rem !important;
-        
+
     }
 
 

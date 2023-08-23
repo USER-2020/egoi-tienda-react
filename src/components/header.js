@@ -67,12 +67,14 @@ const Header = () => {
 
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
+    console.log(event.target.value);
+    handleEnterPress(event);
   }
 
   const handleEnterPress = (event) => {
     if (event.key === 'Enter') {
       setPrevSearchProducts(prevSearchProducts);
-      // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
+      console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       history.push(`/products/${prevSearchProducts}`);
     }
   }
