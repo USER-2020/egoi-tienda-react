@@ -381,6 +381,9 @@ function DetailProduct() {
                                 <img src={currentImg || baseUrlImage + detailProducts.images[0]} alt={detailProducts.name} />
                             </div>
                             <div className="containerImgMiniature">
+                                {detailProducts.current_stock <= 0 && (
+                                    <span className="agotadoTag">Agotado</span>
+                                )}
                                 {detailProducts.images.map((imgProduct, index) => (
 
                                     <img src={baseUrlImage + imgProduct}
@@ -400,7 +403,7 @@ function DetailProduct() {
 
 
                             <div className="precio">
-                                <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString()}</h5>
+                                <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</h5>
                                 {detailProducts.unit_price >= 79990 ? (
                                     <div style={{ display: 'flex', flexDirection: "row", color: 'green', gap: '5px' }}>
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ alignSelf: 'center' }}>
@@ -457,8 +460,12 @@ function DetailProduct() {
                     </div>
                     {detailProducts.variation && detailProducts.variation.length > 0 ? (
                         <div className="containerVariacionesResponsiveColores">
-
-                            <p>Colores</p>
+                            {detailProducts.choice_options.title === 'Colores' && (
+                                <p>Colores</p>
+                            )}
+                            {detailProducts.choice_options.title === 'Tallas' && (
+                                <p>Tallas</p>
+                            )}
 
                             {detailProducts.variation?.length > 3 ? (
                                 <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>
@@ -514,7 +521,7 @@ function DetailProduct() {
 
                         <h4>{detailProducts.name}</h4>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
-                            <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString()}</h5>
+                            <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</h5>
                             {detailProducts.unit_price >= 79990 ? (
                                 <div style={{ display: 'flex', flexDirection: "row", color: 'green', gap: '5px' }}>
                                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ alignSelf: 'center' }}>
@@ -532,7 +539,12 @@ function DetailProduct() {
                     </div>
                     {detailProducts.variation?.length > 0 ? (
                         <div className="containerColorsProduct">
-                            <p>Colores</p>
+                            {detailProducts.choice_options[0].title === 'Colores' && (
+                                <p>Colores</p>
+                            )}
+                            {detailProducts.choice_options[0].title === 'Tallas' && (
+                                <p>Tallas</p>
+                            )}
 
                             {detailProducts.variation?.length > 3 ? (
                                 <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>

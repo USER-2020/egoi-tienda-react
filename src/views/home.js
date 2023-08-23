@@ -34,6 +34,7 @@ import HeaderResponsive from "../components/headerResponsive";
 
 import Popup from "./user/popup";
 import { getBanners } from "../services/banners";
+import AddRecents from "../components/home/addRecents";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +71,7 @@ const Home = (props) => {
       <Header />
       <HeaderResponsive />
       <Banner />
+      <AddRecents/>
       <Recientes bannersInfo={bannersInfo} className="w-100"/>
       <Promociones bannersInfo={bannersInfo}/>
       <Vendidos bannersInfo={bannersInfo}/>

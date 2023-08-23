@@ -100,6 +100,9 @@ function SimilarProduct() {
 
                                 {/* <Link to={`/detailsProduct/${product.id}/${product.slug}`} > */}
                                 <Card className='cardProducto1'>
+                                    {product.current_stock <= 0 && (
+                                        <span className="agotadoTag">Agotado</span>
+                                    )}
                                     <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
                                     <CardBody>
                                         <div className='starts'>
@@ -124,7 +127,7 @@ function SimilarProduct() {
                                             </div>
                                         )}
                                         <CardSubtitle tag="h5" className="mb-2 text-muted" style={{ lineHeight: "1.2", maxHeight: "2.4em", overflow: "hidden", textOverflow: "ellipsis" }}>{product.name}</CardSubtitle>
-                                        <CardTitle tag="h5">${product.unit_price.toLocaleString()}</CardTitle>
+                                        <CardTitle tag="h5">${product.unit_price.toLocaleString('en')}</CardTitle>
                                     </CardBody>
                                 </Card>
                                 {/* </Link> */}

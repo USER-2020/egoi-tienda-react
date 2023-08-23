@@ -213,11 +213,14 @@ const Promociones = ({ bannersInfo }) => {
           <button className="scroll-button left" onClick={handleScrollLeft2} onMouseOver={handleScrollLeft2}>
             &#8249;
           </button>
-        ):(null)}
+        ) : (null)}
         {productos.map((product, index) => (
           <a href="#" className="containerCard2" key={index}>
             <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
               <Card className="cardProducto1" style={{ height: "360px", width: "200px" }} >
+                {product.current_stock <= 0 && (
+                  <span className="agotadoTag">Agotado</span>
+                )}
                 <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} height={'175px'} />
                 <CardBody>
                   <div className="starts">

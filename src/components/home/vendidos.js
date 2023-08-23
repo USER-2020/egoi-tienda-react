@@ -147,6 +147,9 @@ const Vendidos = ({ bannersInfo }) => {
                             <a href="#" className="containerCard2" key={index}>
                                 <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
                                     <Card className="cardProducto1" style={{ height: "340px" }}>
+                                        {product.current_stock <= 0 && (
+                                            <span className="agotadoTag">Agotado</span>
+                                        )}
                                         <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
                                         <CardBody>
                                             <div className="starts">
