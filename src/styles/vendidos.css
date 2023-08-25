@@ -11,6 +11,13 @@
 
 }
 
+.tachado {
+    color: red;
+    align-self: center;
+    font-size: small;
+    
+}
+
 .spanRecent {
     display: flex;
     align-items: center;
@@ -69,11 +76,11 @@
     overflow-x: scroll;
 }
 
-.containerHot::-webkit-scrollbar{
+.containerHot::-webkit-scrollbar {
     display: none;
 }
 
-.containerHot{
+.containerHot {
     scroll-behavior: smooth;
 }
 
@@ -129,7 +136,7 @@
     position: sticky;
     width: 50px;
     height: 120px;
-    
+
 }
 
 .cardContainerHot .scroll-button.right {
@@ -137,7 +144,7 @@
     position: sticky;
     width: 50px;
     height: 120px;
-    
+
 }
 
 .cardContainerHot .scroll-button:focus {
@@ -188,14 +195,14 @@
     font-weight: 700;
 }
 
-@media(max-width: 768px){
-    .containerProductos .scroll-button.left{
+@media(max-width: 768px) {
+    .containerProductos .scroll-button.left {
         display: none;
     }
 
-    .containerProductos .scroll-button.right{
+    .containerProductos .scroll-button.right {
         display: none;
     }
 
-    
+
 }

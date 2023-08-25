@@ -12,6 +12,13 @@
     gap: 30px;
 }
 
+.tachado {
+    color: red;
+    font-size: 15px;
+    margin-top: -15px;
+    align-self: flex-start;
+}
+
 .containerProducts-categories {
     height: 100%;
     margin-bottom: 10px;

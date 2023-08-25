@@ -403,7 +403,15 @@ function DetailProduct() {
 
 
                             <div className="precio">
-                                <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</h5>
+                                {detailProducts.discount_tag_valor != 0 || detailProducts.discount_valor != 0 ? (
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                        <h5>${detailProducts.discount_valor && detailProducts.discount_valor.toLocaleString('en') || detailProducts.discount_tag_valor && detailProducts.discount_tag_valor.toLocaleString('en')}</h5>
+                                        <h5 className='tachado'><s>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</s></h5>
+                                    </div>
+
+                                ) : (
+                                    <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</h5>
+                                )}
                                 {detailProducts.unit_price >= 79990 ? (
                                     <div style={{ display: 'flex', flexDirection: "row", color: 'green', gap: '5px' }}>
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ alignSelf: 'center' }}>
@@ -412,9 +420,7 @@ function DetailProduct() {
                                         <p style={{ marginBottom: '0' }}>Envío gratis</p>
                                     </div>
                                 ) : (
-                                    <div style={{ display: 'flex', flexDirection: "row", color: 'white', gap: '5px' }}>
-                                        <p style={{ marginBottom: '0' }}>Envío gratis</p>
-                                    </div>
+                                    null
                                 )}
                             </div>
                         </div>
@@ -521,7 +527,15 @@ function DetailProduct() {
 
                         <h4>{detailProducts.name}</h4>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
-                            <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</h5>
+                            {detailProducts.discount_tag_valor != 0 || detailProducts.discount_valor != 0 ? (
+                                <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
+                                    <h5>${detailProducts.discount_valor && detailProducts.discount_valor.toLocaleString('en') || detailProducts.discount_tag_valor && detailProducts.discount_tag_valor.toLocaleString('en')}</h5>
+                                    <h5 className='tachado'><s>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</s></h5>
+                                </div>
+
+                            ) : (
+                                <h5>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</h5>
+                            )}
                             {detailProducts.unit_price >= 79990 ? (
                                 <div style={{ display: 'flex', flexDirection: "row", color: 'green', gap: '5px' }}>
                                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ alignSelf: 'center' }}>
@@ -530,9 +544,7 @@ function DetailProduct() {
                                     <p style={{ marginBottom: '0', alignSelf: 'center' }}>Envío gratis</p>
                                 </div>
                             ) : (
-                                <div style={{ display: 'flex', flexDirection: "row", color: 'white', gap: '5px' }}>
-                                    <p style={{ marginBottom: '0' }}>Envío gratis</p>
-                                </div>
+                                null
                             )}
                         </div>
 

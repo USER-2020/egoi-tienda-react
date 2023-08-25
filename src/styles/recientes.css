@@ -11,6 +11,12 @@
 
 }
 
+.tachado{
+    color: red;
+    align-self: center;
+    font-size: small;
+}
+
 .containerPromociones {
     width: 100%;
 }
