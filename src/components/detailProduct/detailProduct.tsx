@@ -406,7 +406,7 @@ function DetailProduct() {
                                 {detailProducts.discount_tag_valor != 0 || detailProducts.discount_valor != 0 ? (
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                                         <h5>${detailProducts.discount_valor && detailProducts.discount_valor.toLocaleString('en') || detailProducts.discount_tag_valor && detailProducts.discount_tag_valor.toLocaleString('en')}</h5>
-                                        <h5 className='tachado'><s>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</s></h5>
+                                        <h5 id='tachado'><s>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</s></h5>
                                     </div>
 
                                 ) : (
@@ -530,7 +530,7 @@ function DetailProduct() {
                             {detailProducts.discount_tag_valor != 0 || detailProducts.discount_valor != 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
                                     <h5>${detailProducts.discount_valor && detailProducts.discount_valor.toLocaleString('en') || detailProducts.discount_tag_valor && detailProducts.discount_tag_valor.toLocaleString('en')}</h5>
-                                    <h5 className='tachado'><s>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</s></h5>
+                                    <h5 id='tachado'><s>${detailProducts.unit_price && detailProducts.unit_price.toLocaleString('en')}</s></h5>
                                 </div>
 
                             ) : (
