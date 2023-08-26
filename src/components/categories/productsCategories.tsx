@@ -536,7 +536,7 @@ const ProductsCategories = () => {
                               {product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignSelf:'start' }}>
                                   <h5>${product.discount_valor && product.discount_valor.toLocaleString('en') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('en')}</h5>
-                                  <h5 id='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
+                                  <h5 id='tachadoProductsCard'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                 </div>
 
                               ) : (
@@ -615,7 +615,7 @@ const ProductsCategories = () => {
                                   product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignSelf:'start' }}>
                                       <h5>${(product.discount_valor || product.discount_tag_valor).toLocaleString('en')}</h5>
-                                      <h5 id='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
+                                      <h5 id='tachadoProductsCard'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                     </div>
                                   ) : (
                                     <h5>${product.unit_price && product.unit_price.toLocaleString('en')}</h5>
