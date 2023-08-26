@@ -112,8 +112,8 @@ const App = (props) => {
               <Route path="/privacyPolicy" exact render={(props) => <ViewPoliticasPrivacidad {...props} />} />
               <Route path="/aboutUs" exact render={(props) => <ViewSobreNosotros {...props} />} />
               <Route path="/contactUs" exact render={(props) => <ViewContactanos {...props} />} />
-              {/* <Route path="/" exact render={(props) => <ViewHome {...props} />} /> */}
-              <Route path="/" exact render={(props) => <ViewMantenince {...props} />} />
+              <Route path="/" exact render={(props) => <ViewHome {...props} />} />
+              {/* <Route path="/" exact render={(props) => <ViewMantenince {...props} />} /> */}
               <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id/:tag" exact render={(props) => <ViewCategory {...props} />} />
