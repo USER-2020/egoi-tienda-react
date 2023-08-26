@@ -121,6 +121,12 @@ la imagen seleccionda */
 
 }
 
+.containerNameProduct .tachado {
+    font-size: large;
+    align-self: center;
+    color: red;
+}
+
 .containerColorsProduct {
     display: flex;
     background-color: rgba(162, 161, 167, 0.16);
@@ -521,6 +527,8 @@ h6 {
         display: none;
     }
 
+
+
     .containerColorsProduct {
         display: none;
     }
@@ -569,6 +577,15 @@ h6 {
         margin: 0;
     }
 
+    .containerNameAndStarts .precio .tachado {
+        font-size: large;
+        color: red;
+        margin-top: 0px;
+        margin-bottom: 15px;
+        align-self: flex-start;
+        
+    }
+
     .containerIzq .containerResponsiveNameProduct .containerNameAndStarts {
         width: 100%;
         display: flex;
@@ -581,7 +598,7 @@ h6 {
         width: 70%;
     }
 
-    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts .Name h2{
+    .containerIzq .containerResponsiveNameProduct .containerNameAndStarts .Name h2 {
         font-size: medium;
         color: black;
     }
@@ -592,7 +609,7 @@ h6 {
         background-color: transparent;
         border: none;
         outline: none;
-        
+
     }
 
 

@@ -13,11 +13,111 @@ import { activar } from './../services/login';
 import appstore from "../assets/appstore.svg";
 import playstore from "../assets/playStore.svg";
 import logoSIC from "../assets/logo-sic.png";
+import { getCurrentUser } from './../helpers/Utils';
+import {
+    InputGroup,
+    Input,
+    Modal,
+    ModalBody,
+} from "reactstrap";
+import Register from "../views/user/register.js";
+import Login from "../views/user/login.js";
 
 
 const Footer = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+
+    const [modalViewRegistro, setModalViewRegistro] = useState(false);
+    const [modalViewLogin, setModalViewLogin] = useState(false);
+    const [changeFormLogin, setChangeFormLogin] = useState(false);
+    const [changeFormRegister, setChangeFormRegister] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const currenUser = getCurrentUser();
+
+    const closeModalRegistro = () => {
+        setModalViewRegistro(false);
+    };
+
+    const closeModalLogin = () => {
+        setModalViewLogin(false);
+    };
+
+    const handleChangeFormLogin = () => {
+
+        if (modalViewLogin === true) {
+            setModalViewRegistro(true);
+        }
+    };
+
+    const handleChangeFormRegister = () => {
+
+        if (modalViewRegistro === true) {
+            setModalViewLogin(true);
+        }
+
+    };
+
+    const handleLogin = () => {
+        // Code to handle user login, such as storing session storage, etc.
+        if (currenUser) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+
+    };
+
+    /* Lista de deseos */
+    const handleFavList = () => {
+        if (currenUser) {
+            const url = `/myorders?activeOption=ListaDeseos&selectedOption=Lista%20Deseos`;
+            window.location.href = url;
+        } else {
+            setModalViewLogin(true);
+        }
+    }
+
+    /* Seguir tu pedido */
+    const handleSeguirPedido = () => {
+        if (currenUser) {
+            const url = `/myorders?activeOption=SigueTuPedido&selectedOption=Sigue%20tu%20pedido`;
+            window.location.href = url;
+        } else {
+            setModalViewLogin(true);
+        }
+    }
+
+    /* Informacion de tu perfil */
+    const handleInfoPerfil = () => {
+        if (currenUser) {
+            const url = `/myorders?activeOption=InfoPerfil&selectedOption=Información%20del%20perfil`;
+            window.location.href = url;
+        } else {
+            setModalViewLogin(true);
+        }
+    }
+
+    /* Direccion */
+    const handleDireccion = () => {
+        if (currenUser) {
+            const url = `/myorders?activeOption=Direccion&selectedOption=Información%20de%20las%20direcciones`;
+            window.location.href = url;
+        } else {
+            setModalViewLogin(true);
+        }
+    }
+
+    /* Ticket de soporte */
+    const handleTicketSupport = () => {
+        if(currenUser){
+            const url = `/myorders?activeOption=Ticket&selectedOption=Crear%20un%20ticket`;
+            window.location.href = url;
+        }else{
+            setModalViewLogin(true);
+        }
+    }
 
     return (
         <footer className="container">
@@ -88,28 +188,29 @@ const Footer = (props) => {
                 </div>
                 <div className="rowf">
                     <ul>
-                        <a href="#"><li><strong>Atajos</strong></li></a>
+                        <li><strong>Atajos</strong></li>
                         <a href="#"><li>Productos destacados </li></a>
-                        <a href="#"><li>Últimos productos</li></a>
-                        <a href="#"><li>Productos más vendidos</li></a>
+                        <a href="/addRecently"><li>Últimos productos</li></a>
+                        <a href="/bestSellers"><li>Productos más vendidos</li></a>
                         <a href="#"><li>Productos mejor calificados</li></a>
                         <a href="#"><li>Todas las marcas </li></a>
                         <a href="#"><li>Todas las categorías </li></a>
                     </ul>
                     <ul>
-                        <a href="#"><li><strong>Información sobre tu cuenta y el envío</strong></li></a>
-                        <a href="#"><li>Información de tu perfil </li></a>
-                        <a href="#"><li>Lista de deseos </li></a>
-                        <a href="#"><li>Seguir tu pedido </li></a>
-                        <a href="#"><li>Dirección </li></a>
-                        <a href="#"><li>Ticket de soporte</li></a>
+                        <li><strong>Información sobre tu cuenta y el envío</strong></li>
+                        <a href="#" onClick={handleInfoPerfil}><li>Información de tu perfil </li></a>
+                        <a href="#" onClick={handleFavList}><li>Lista de deseos </li></a>
+                        <a href="#" onClick={handleSeguirPedido}><li>Seguir tu pedido </li></a>
+                        <a href="#" onClick={handleDireccion}><li>Dirección </li></a>
+                        <a href="#" onClick={handleTicketSupport}><li>Ticket de soporte</li></a>
                     </ul>
                     <ul>
-                        <a href="#"><li><strong>Sobre nosotros</strong></li></a>
-                        <a href="#"><li>Política de privacidad</li></a>
-                        <a href="#"><li>Términos y condiciones </li></a>
-                        <a href="#"><li>Contáctanos </li></a>
-                        <a href="#"><li>Preguntas frecuentes</li></a>
+                        <li><strong>Sobre nosotros</strong></li>
+                        <a href="/privacyPolicy"><li>Política de privacidad</li></a>
+                        <a href="/termsAndConditions"><li>Términos y condiciones </li></a>
+                        <a href="/contactUs"><li>Contáctanos </li></a>
+                        <a href="/aboutUs"><li>Acerca de la empresa </li></a>
+                        <a href="/"><li>Preguntas frecuentes</li></a>
                     </ul>
                     {/* <div className="bottom-right">
                         <br></br>
@@ -132,7 +233,29 @@ const Footer = (props) => {
                     </div>
                 </div>
             </div>
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalViewLogin(false)}
+                isOpen={modalViewLogin && !changeFormLogin}
+            >
+                <ModalBody>
+                    <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
+                </ModalBody>
+            </Modal>
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalViewRegistro(false)}
+                isOpen={modalViewRegistro && !changeFormRegister}
+            >
+                <ModalBody>
+                    <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                </ModalBody>
+            </Modal>
         </footer>
+
+
+
+
     );
 };
 

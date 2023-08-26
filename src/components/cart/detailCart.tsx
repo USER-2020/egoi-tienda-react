@@ -146,8 +146,10 @@ function DetailCart() {
   const sumSubTotal = (productsCart) => {
     let total = 0;
     productsCart.map((product) => {
-      const precioTotal = product.price * product.quantity;
-      total += precioTotal;
+        const precioTotal = (product.price - product.discount) * product.quantity;
+        total += precioTotal;      
+      // const precioTotal = product.price * product.quantity;
+      // total += precioTotal;
     });
     return total;
   };
@@ -336,13 +338,13 @@ function DetailCart() {
                     </div>
                   </div>
                   <div className="caracteristicaPrecio">
-                    $ {products.price.toLocaleString('en')}
+                    $ {(products.price - products.discount).toLocaleString('en')}
                   </div>
                   <div className="caracteristicaCantidad">
                     <input type="number" value={products.quantity} disabled />
                   </div>
                   <div className="caracteristicaPrecioTotal">
-                    $ {(products.price * products.quantity).toLocaleString('en')}
+                    $ {((products.price - products.discount) * products.quantity).toLocaleString('en')}
                   </div>
                   <div className="caracteristicaCostoEnvio">
                     ${costoEnvio.toLocaleString('en')}

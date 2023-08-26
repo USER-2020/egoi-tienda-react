@@ -11,6 +11,14 @@
     width: 100%;
 }
 
+.tachado{
+    color: red;
+    align-self: center;
+    font-size: small;
+    
+    
+}
+
 .spanRecent{
     display:flex;
     align-items: center;

@@ -71,7 +71,6 @@ const Home = (props) => {
       <Header />
       <HeaderResponsive />
       <Banner />
-      <AddRecents/>
       <Recientes bannersInfo={bannersInfo} className="w-100"/>
       <Promociones bannersInfo={bannersInfo}/>
       <Vendidos bannersInfo={bannersInfo}/>

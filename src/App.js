@@ -24,6 +24,10 @@ const ViewApp = React.lazy(() => import(/* webpackChunkName: "views-app" */ './v
 const ViewUser = React.lazy(() => import(/* webpackChunkName: "views-user" */ './views/user'));
 const ViewError = React.lazy(() => import(/* webpackChunkName: "views-error" */ './views/error'));
 const ViewUnauthorized = React.lazy(() => import(/* webpackChunkName: "views-error" */ './views/unauthorized'));
+const ViewPoliticasPrivacidad = React.lazy(() => import(/* webpackChunkName: "views" */'./views/politicaPrivacidad'));
+const ViewTerminosCondiciones = React.lazy(() => import(/* webpackChunkName: "views" */'./views/terminosYCondiciones'));
+const ViewSobreNosotros = React.lazy(() => import(/* webpackChunkName: "views" */ './views/sobreNosotros'));
+const ViewContactanos = React.lazy(() => import(/* webpackChunkName: "views" */ './views/contactanos'));
 
 
 function DynamicTitle() {
@@ -103,6 +107,10 @@ const App = (props) => {
               {/* <Route path="/user/login" exact render={(props)=> <ViewLogin {...props} />}/> */}
               <Route path="/error" exact render={(props) => <ViewError {...props} />} />
               <Route path="/unauthorized" exact render={(props) => <ViewUnauthorized {...props} />} />
+              <Route path="/termsAndConditions" exact render={(props) => <ViewTerminosCondiciones {...props} />} />
+              <Route path="/privacyPolicy" exact render={(props) => <ViewPoliticasPrivacidad {...props} />} />
+              <Route path="/aboutUs" exact render={(props) => <ViewSobreNosotros {...props} />} />
+              <Route path="/contactUs" exact render={(props) => <ViewContactanos {...props} />} />
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />
               <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />

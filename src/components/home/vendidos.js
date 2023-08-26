@@ -176,7 +176,17 @@ const Vendidos = ({ bannersInfo }) => {
                                             <CardSubtitle tag="h5" className="text-wrap text-muted" style={{ lineHeight: "1.2", maxHeight: "none", overflow: "visible", fontSize: '16px' }}>
                                                 {product.name.length < 30 ? product.name : product.name.slice(0, 30) + '...'}
                                             </CardSubtitle>
-                                            <CardTitle tag="h5">${product.unit_price.toLocaleString('en')}</CardTitle>
+                                            <CardTitle tag="h5">
+                                                {product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
+                                                    <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
+                                                        <h5>${product.discount_valor && product.discount_valor.toLocaleString('en') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('en')}</h5>
+                                                        <h5 className='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
+                                                    </div>
+
+                                                ) : (
+                                                    <h5>${product.unit_price && product.unit_price.toLocaleString('en')}</h5>
+                                                )}
+                                            </CardTitle>
                                         </CardBody>
                                     </Card>
                                 </Link>

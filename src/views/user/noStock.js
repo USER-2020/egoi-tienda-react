@@ -32,7 +32,15 @@ function NoStock(
       </div>
       <div className='totalPrice'>
         <h5 className='precioTotal'>Precio Total</h5>
-        <h4>${detailsProducts.unit_price.toLocaleString('en')}</h4>
+        <h4>
+          {detailsProducts.discount_tag_valor > 0 || detailsProducts.discount_valor > 0 ? (
+
+            <h5>${detailsProducts.discount_valor && detailsProducts.discount_valor.toLocaleString('en') || detailsProducts.discount_tag_valor && detailsProducts.discount_tag_valor.toLocaleString('en')}</h5>
+
+          ) : (
+            <h5>${detailsProducts.unit_price && detailsProducts.unit_price.toLocaleString('en')}</h5>
+          )}
+        </h4>
       </div>
       { }
       <div className='btnsRedirect noStock'>
