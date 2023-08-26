@@ -12,7 +12,7 @@
     gap: 30px;
 }
 
-.tachado {
+#tachado {
     color: red;
     font-size: 15px;
     margin-top: -15px;

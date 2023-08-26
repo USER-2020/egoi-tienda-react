@@ -228,7 +228,7 @@ const Recientes = ({ bannersInfo }) => {
                                                         {product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
                                                             <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf:'center' }}>
                                                                 <h5>${product.discount_valor && product.discount_valor.toLocaleString('en') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('en')}</h5>
-                                                                <h5 className='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
+                                                                <h5 id='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                                             </div>
 
                                                         ) : (
