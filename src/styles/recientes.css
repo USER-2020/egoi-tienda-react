@@ -11,7 +11,7 @@
 
 }
 
-.containerRecents .tachado{
+#tachado{
     color: red;
     align-self: center;
     font-size: small;
@@ -52,7 +52,7 @@
 
 } */
 
-.agotadoTag {
+/* .agotadoTag {
     background-color: #FC5241;
     color: white;
     position: absolute;
@@ -62,7 +62,7 @@
     padding: 5px 10px;
     font-size: 14px;
     border-radius: 5px;
-}
+} */
 
 .containerProductos {
     display: flex;
