@@ -121,10 +121,11 @@ la imagen seleccionda */
 
 }
 
-.containerNameProduct .tachado {
+.containerNameProduct #tachado {
     font-size: large;
     align-self: center;
     color: red;
+    margin-top: 5px;
 }
 
 .containerColorsProduct {
@@ -577,7 +578,7 @@ h6 {
         margin: 0;
     }
 
-    .containerNameAndStarts .precio .tachado {
+    .containerNameAndStarts .precio #tachado {
         font-size: large;
         color: red;
         margin-top: 0px;
