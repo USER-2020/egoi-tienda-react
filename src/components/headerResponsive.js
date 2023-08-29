@@ -517,7 +517,7 @@ function HeaderResponsive({ setCarrito, aok}) {
                           // }}
                           >
                             {/* <FontAwesomeIcon icon={faUserPlus} />  */}
-                            Vendedor iniciar sesión
+                            Iniciar sesión vendedor
                           </a>
                         </li>
                       </>
