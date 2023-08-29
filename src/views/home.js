@@ -85,7 +85,7 @@ const Home = (props) => {
 
       >
         <ModalBody>
-          <Popup handleModalData={handleModalData} />
+          <Popup handleModalData={handleModalData} setNoShowModal={()=>setModalPopup(false)} setShowModalPopup={()=>setModalPopup(true)}/>
         </ModalBody>
       </Modal>
     </div>
