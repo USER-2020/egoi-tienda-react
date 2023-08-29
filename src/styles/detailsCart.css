@@ -675,6 +675,10 @@ input[type="checkbox"]:checked {
     align-items: center;
   }
 
+  #spanPago{
+    height: 22px;
+  }
+
   #scrollModalToPay .scroll-modal-content .containerCaracteristicaPrecio {
     width: 100%;
     display: flex;

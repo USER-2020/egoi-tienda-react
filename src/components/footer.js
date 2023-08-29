@@ -189,12 +189,12 @@ const Footer = (props) => {
                 <div className="rowf">
                     <ul>
                         <li><strong>Atajos</strong></li>
-                        <a href="#"><li>Productos destacados </li></a>
+                        <a href="/topFeatured"><li>Productos destacados </li></a>
                         <a href="/addRecently"><li>Últimos productos</li></a>
                         <a href="/bestSellers"><li>Productos más vendidos</li></a>
-                        <a href="#"><li>Productos mejor calificados</li></a>
-                        <a href="#"><li>Todas las marcas </li></a>
-                        <a href="#"><li>Todas las categorías </li></a>
+                        <a href="/topRated"><li>Productos mejor calificados</li></a>
+                        <a href="/allBrands"><li>Todas las marcas </li></a>
+                        <a href="/allCategories"><li>Todas las categorías </li></a>
                     </ul>
                     <ul>
                         <li><strong>Información sobre tu cuenta y el envío</strong></li>

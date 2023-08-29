@@ -30,7 +30,7 @@ import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
 
-const Header = () => {
+const Header = ({ setCarrito, aok}) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -219,6 +219,8 @@ const Header = () => {
 
   };
 
+
+
   const handleAdminUser = () => {
     history.push(`${myorders}`);
   }
@@ -300,7 +302,7 @@ const Header = () => {
 
     // }
     handleLogin();
-    if (currenUser) {
+    if (currenUser ) {
       const token = currenUser.token;
       allProductsCart(token)
         .then((res) => {
@@ -309,16 +311,38 @@ const Header = () => {
           const numberOfProducts = productsOncart.length;
           // console.log("Cantidad de productos en el carrito", numberOfProducts);
           setCantProductsOnCart(numberOfProducts);
+          
+
         }).catch((err) => console.log(err));
     }
 
 
+
+
   }, [currenUser, isLoggedIn, cantProductsOnCart]);
+
+  // useEffect(() => {
+  //   if (setCarrito) {
+  //     const token = currenUser.token;
+  //     allProductsCart(token)
+  //       .then((res) => {
+  //         const productsOncart = res.data;
+  //         // console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
+  //         const numberOfProducts = productsOncart.length;
+  //         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
+  //         setCantProductsOnCart(numberOfProducts);
+  //         resetCardProduct();
+
+  //       }).catch((err) => console.log(err));
+  //   }
+  // }, []);
 
   useEffect(() => {
     allCategoriesPromise();
     allBrands();
   }, []);
+
+  
 
   useEffect(() => {
     if (selectedCategoryId) {
@@ -460,6 +484,7 @@ const Header = () => {
             {currenUser && cantProductsOnCart !== undefined && cantProductsOnCart >= 1 ? (
               <span className="cart-products"><p >{cantProductsOnCart}</p></span>
             ) : (<i></i>)}
+            
           </a>
         </div>
       </div>

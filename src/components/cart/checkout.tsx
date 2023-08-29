@@ -30,6 +30,8 @@ import SuccessPurchase from '../../views/user/success_purchase';
 import efectyLogo from '../../assets/egoi_icons/logo_efecty.svg';
 import pseLogo from '../../assets/egoi_icons/logo_pse.svg';
 import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoPago';
+import Header from '../header';
+import HeaderResponsive from '../headerResponsive';
 
 
 
@@ -79,6 +81,9 @@ function AddressCart() {
 
   const [dataOrderDetail, setDataOrderDetail] = useState([]);
 
+  const [changueCantCart, setChangueCantCart] = useState(false);
+
+
 
   const [cupon, setCupon] = useState("");
   const [discountCoupon, setDiscountCoupon] = useState("");
@@ -97,6 +102,7 @@ function AddressCart() {
   const [modalProcesandoPago, setModalProcesoPago] = useState(false);
 
 
+  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
 
 
 
@@ -105,6 +111,9 @@ function AddressCart() {
   };
 
   const { subtotal, total, costoEnvio, cuponDescuento } = useParams();
+
+  /* Reseteo de tarjeta */
+  const [isResetOk, setIsResetOk] = useState(false);
 
   const currenUser = getCurrentUser();
 
@@ -675,6 +684,7 @@ function AddressCart() {
           title: '¡Tu compra ha sido registrada!',
           text: 'La compra se ha realizado exitosamente.',
         });
+
       }).catch((err) => {
         console.log(err);
         Swal.fire({
@@ -756,6 +766,13 @@ function AddressCart() {
       .catch((err) => console.log(err));
   }
 
+  /* Reseteo de tarjeta */
+  const resetProductCardDetail = () => {
+    setIsResetOk(true);
+    setCantProductsOnCart(0);
+
+  }
+
 
   const handleSubmitOrderEfecty = () => {
     if (token) {
@@ -785,6 +802,21 @@ function AddressCart() {
     formattedDiscount = discountCoupon.discount.toString().replace(',', '.');
 
     formattedTotal = discountCoupon.total.toString().replace(',', '.');
+  }
+
+  const getCantCarritos = () => {
+    if (currenUser) {
+      const token = currenUser.token;
+      allProductsCart(token)
+        .then((res) => {
+          const productsOncart = res.data;
+          // console.log("Respuesta de productos del carrito de compras", productsOncart);
+          const numberOfProducts = productsOncart.length;
+          // console.log("Cantidad de productos en el carrito", numberOfProducts);
+          setCantProductsOnCart(numberOfProducts);
+
+        }).catch((err) => console.log(err));
+    }
   }
 
 
@@ -817,6 +849,7 @@ function AddressCart() {
       getAllProductsByCart();
       getAllAddress();
       getAllDeptos();
+
 
       // console.log(ipAddress);
 
@@ -855,8 +888,12 @@ function AddressCart() {
 
   }, [activeStep, token, selectedAddressId, showPDF, modalDataPSE, modalDataTarjetas, subtotalNumber]);
 
+
+
   return (
     <>
+      {/* <Header setCarrito={()=>resetProductCardDetail()}  aok={changueCantCart}/>
+      <HeaderResponsive setCarrito={()=>resetProductCardDetail()} aok={changueCantCart}/> */}
       <div className='container'>
         <h5 style={{ color: '#74737B', fontSize: '16px' }}>Dirección de envío y facturación</h5>
         <div className="containerCheckoutSteps">
@@ -1064,23 +1101,44 @@ function AddressCart() {
             <Card>
               <div className="subtotal">
                 <p>Subtotal</p>
-                <p>${subtotal.toLocaleString('en')}</p>
+                {isResetOk ? (
+                  <p>$0</p>
+                ) : (
+
+                  <p>${subtotal.toLocaleString('en')}</p>
+                )}
               </div>
               <div className="impuesto">
                 <p>Impuesto</p>
-                <p>$0</p>
+                {isResetOk ? (
+                  <p>$0</p>
+                ) : (
+
+                  <p>$0</p>
+                )}
               </div>
               <div className="envio">
                 <p>Envío</p>
-                <p>${costoEnvio.toLocaleString('en')}</p>
+                {isResetOk ? (
+                  <p>$0</p>
+                ) : (
+                  subtotalNumber && subtotalNumber <= 39900 ? (
+                    <span className='badge text-bg-success'>paga el cliente</span>
+                  ) : (
+                    <p>${costoEnvio.toLocaleString('en')}</p>
+                  )
+                )}
               </div>
               <div className="descuento">
                 <p>Descuento</p>
-                {discountCoupon && discountCoupon.total !== undefined ? (
-                  <p>{discountCoupon.discount}</p>
-
+                {isResetOk ? (
+                  <p>$0</p>
                 ) : (
-                  <p>{cuponDescuento}</p>
+                  discountCoupon && discountCoupon.total !== undefined ? (
+                    <p>{discountCoupon.discount}</p>
+                  ) : (
+                    <p>{cuponDescuento}</p>
+                  )
                 )}
               </div>
               <div className="cupon">
@@ -1101,11 +1159,16 @@ function AddressCart() {
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
-                {discountCoupon && discountCoupon.total !== undefined ? (
-                  <h5><strong>{discountCoupon.total}</strong></h5>
+                {isResetOk ? (
+                  <h5><strong>$0</strong></h5>
                 ) : (
-                  <h5><strong>{total}</strong></h5>
 
+                  discountCoupon && discountCoupon.total !== undefined ? (
+                    <h5><strong>{discountCoupon.total}</strong></h5>
+                  ) : (
+                    <h5><strong>{total}</strong></h5>
+
+                  )
                 )}
               </div>
               <div className="capsulas">
@@ -1232,33 +1295,59 @@ function AddressCart() {
             <p className='title'>Factura</p>
             <span className="subtotal">
               <p className="def">En productos</p>
-              <p className="precio">$ {subtotal}</p>
+              {isResetOk ? (
+                <p>$0</p>
+              ) : (<p className="precio">$ {subtotal}</p>)}
             </span>
             <span className="costoEnvio">
               <p className="def">Costo de envío</p>
-              <p className="precio">$ {costoEnvio}</p>
+              {isResetOk ? (
+                <p>$0</p>
+              ) : (
+
+                subtotal && subtotal <= 39, 900 ? (
+                  <span className='badge text-bg-success' id='spanPago'>paga el cliente</span>
+                ) : (
+                  <p className="precio">$ {costoEnvio}</p>
+                )
+
+              )}
             </span>
 
             <span className="cupon">
               <p className="def">Cupón</p>
-              {discountCoupon && discountCoupon.total !== undefined ? (
-                <p className='precio'>
-                  {discountCoupon.discount}
-                </p>
+              {isResetOk ? (
+                <p>$0</p>
+              ) : (
+                discountCoupon && discountCoupon.total !== undefined ? (
+                  <p className='precio'>
+                    {discountCoupon.discount}
+                  </p>
 
-              ) : (<p className="precio"> {cuponDescuento}</p>)}
+                ) : (<p className="precio"> {cuponDescuento}</p>)
+              )}
             </span>
             <span className="impuesto">
               <p className="def">Impuesto</p>
-              <p className="precio">$ 0</p>
+              {isResetOk ? (
+                <p>$0</p>
+              ) : (
+                <p className="precio">$ 0</p>
+
+              )}
             </span>
             <div className="containertotalAPagarResponsive">
               <p>Total a pagar</p>
-              {discountCoupon && discountCoupon.total !== undefined ? (
-                <p>{discountCoupon.total}</p>
+              {isResetOk ? (
+                <p>$0</p>
               ) : (
 
-                <p>{total}</p>
+                discountCoupon && discountCoupon.total !== undefined ? (
+                  <p>{discountCoupon.total}</p>
+                ) : (
+
+                  <p>{total}</p>
+                )
               )}
             </div>
             {/* elegir direccion Responsive */}
@@ -1486,11 +1575,11 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
-            setOk={() => setOkPurchase(true)} 
-            setModalProcesoPago={()=>setModalProcesoPago(true)}
-            setModalProcesoPagoClose={()=>setModalProcesoPago(false)}
-            />
+            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            setOk={() => setOkPurchase(true)}
+            setModalProcesoPago={() => setModalProcesoPago(true)}
+            setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+          />
         </ModalBody>
       </Modal>
 
@@ -1515,10 +1604,10 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)}
-            setModalProcesoPago={()=>setModalProcesoPago(true)}
-            setModalProcesoPagoClose={()=>setModalProcesoPago(false)}
+            setModalProcesoPago={() => setModalProcesoPago(true)}
+            setModalProcesoPagoClose={() => setModalProcesoPago(false)}
           />
         </ModalBody>
       </Modal>
@@ -1538,7 +1627,7 @@ function AddressCart() {
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
             cupon={cupon}
-            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)} />
         </ModalBody>
       </Modal>
@@ -1562,10 +1651,10 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)}
-            setModalProcesoPago={()=>setModalProcesoPago(true)}
-            setModalProcesoPagoClose={()=>setModalProcesoPago(false)}
+            setModalProcesoPago={() => setModalProcesoPago(true)}
+            setModalProcesoPagoClose={() => setModalProcesoPago(false)}
           />
         </ModalBody>
       </Modal>
@@ -1584,7 +1673,7 @@ function AddressCart() {
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
             cupon={cupon}
-            setModalPurchaseSuccess={() => setModalSuccessPurchase(true)}
+            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)} />
         </ModalBody>
       </Modal>

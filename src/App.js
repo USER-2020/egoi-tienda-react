@@ -29,6 +29,8 @@ const ViewTerminosCondiciones = React.lazy(() => import(/* webpackChunkName: "vi
 const ViewSobreNosotros = React.lazy(() => import(/* webpackChunkName: "views" */ './views/sobreNosotros'));
 const ViewContactanos = React.lazy(() => import(/* webpackChunkName: "views" */ './views/contactanos'));
 const ViewMantenince = React.lazy(()=> import(/* webpackChunkName: "views" */  './views/mantenince'));
+const ViewAllBrands = React.lazy(()=>import(/* webpackChunkName: "views" */ './views/allBrands'));
+const ViewAllCategories = React.lazy(()=>import(/* webpackChunkName: "views" */ './views/allCategories'));
 
 
 function DynamicTitle() {
@@ -122,6 +124,10 @@ const App = (props) => {
               <Route path="/addRecently" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/promotions" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/bestSellers" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/topRated" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/topFeatured" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/allBrands" exact render={(props) => <ViewAllBrands {...props} />} />
+              <Route path="/allCategories" exact render={(props) => <ViewAllCategories {...props} />} />
               <Route path="/brand/:brand/:brandId" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/brand/:brand/:brandId/:tag" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/detailsProduct/:id/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
