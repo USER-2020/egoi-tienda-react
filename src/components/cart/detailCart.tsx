@@ -146,8 +146,8 @@ function DetailCart() {
   const sumSubTotal = (productsCart) => {
     let total = 0;
     productsCart.map((product) => {
-        const precioTotal = (product.price - product.discount) * product.quantity;
-        total += precioTotal;      
+      const precioTotal = (product.price - product.discount) * product.quantity;
+      total += precioTotal;
       // const precioTotal = product.price * product.quantity;
       // total += precioTotal;
     });
@@ -166,12 +166,11 @@ function DetailCart() {
 
   const costoDeENvio = () => {
     // console.log(subtotal);
-    if (subtotal && subtotal <= 79990) {
-      // console.log(subtotal);
+    if (subtotal && subtotal <= 39900) {
+      setCostoEnvio(0);
+    } else if (subtotal && subtotal <= 79990) {
       const costodelEnvio = 9900;
       setCostoEnvio(costodelEnvio);
-      // console.log(costoEnvio);
-
     } else {
       setCostoEnvio(0);
     }
@@ -179,6 +178,10 @@ function DetailCart() {
 
   const totalPagar = () => {
 
+    if (subtotal <= 39900) {
+      const precioTotalaPagar = subtotal + 0;
+      return `$${precioTotalaPagar.toLocaleString('en')}`;
+    }
     const precioTotalaPagar = subtotal + costoEnvio;
     return `$${precioTotalaPagar.toLocaleString('en')}`;
 
@@ -382,7 +385,11 @@ function DetailCart() {
               </div>
               <div className="envio">
                 <p>Envío</p>
-                <p>${costoEnvio.toLocaleString('en')}</p>
+                {subtotal <= 39900 ? (
+                  <span className='badge text-bg-success'>paga el cliente</span>
+                ) : (
+                  <p>${costoEnvio.toLocaleString('en')}</p>
+                )}
               </div>
               <div className="descuento">
                 <p>Descuento</p>
@@ -428,10 +435,14 @@ function DetailCart() {
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
-                {discountCoupon && discountCoupon.total !== undefined ? (
-                  <h5><strong>{discountCoupon.total}</strong></h5>
-                ) : (
+                {subtotal <= 39900 ? (
                   <h5><strong>{totalaPagar}</strong></h5>
+                ) : (
+                  discountCoupon && discountCoupon.total !== undefined ? (
+                    <h5><strong>{discountCoupon.total}</strong></h5>
+                  ) : (
+                    <h5><strong>{totalaPagar}</strong></h5>
+                  )
                 )}
               </div>
               <div className="capsulas">
@@ -512,7 +523,7 @@ function DetailCart() {
                   </Link>
                 </div>
               </>
-            ):(<></>)}
+            ) : (<></>)}
           </div>
         </div>
       </div>
