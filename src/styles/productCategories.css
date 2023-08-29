@@ -19,6 +19,13 @@
     align-self: start;
 }
 
+#tachadoProductsCardDiscounted{
+    color: red;
+    font-size: 15px;
+    align-self: start;
+}
+
+
 .containerProducts-categories {
     height: 100%;
     margin-bottom: 10px;
