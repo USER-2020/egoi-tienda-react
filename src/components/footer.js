@@ -189,12 +189,12 @@ const Footer = (props) => {
                 <div className="rowf">
                     <ul>
                         <li><strong>Atajos</strong></li>
-                        <a href="/topFeatured"><li>Productos destacados </li></a>
-                        <a href="/addRecently"><li>Últimos productos</li></a>
-                        <a href="/bestSellers"><li>Productos más vendidos</li></a>
-                        <a href="/topRated"><li>Productos mejor calificados</li></a>
-                        <a href="/allBrands"><li>Todas las marcas </li></a>
-                        <a href="/allCategories"><li>Todas las categorías </li></a>
+                        <a href="https://egoi.com.co/topFeatured"><li>Productos destacados </li></a>
+                        <a href="https://egoi.com.co/addRecently"><li>Últimos productos</li></a>
+                        <a href="https://egoi.com.co/bestSellers"><li>Productos más vendidos</li></a>
+                        <a href="https://egoi.com.co/topRated"><li>Productos mejor calificados</li></a>
+                        <a href="https://egoi.com.co/allBrands"><li>Todas las marcas </li></a>
+                        <a href="https://egoi.com.co/allCategories"><li>Todas las categorías </li></a>
                     </ul>
                     <ul>
                         <li><strong>Información sobre tu cuenta y el envío</strong></li>
