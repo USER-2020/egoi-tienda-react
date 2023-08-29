@@ -30,7 +30,7 @@ import HeaderResponsiveCategorie from './headerResponsiveCategorie.tsx';
 import { AppContext } from '../../AppContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { ProductosDescuento, ProductosMasVendidos, ProductosRecientes } from '../../services/productos';
+import { ProductosDescuento, ProductosMasVendidos, ProductosParaPresentar, ProductosRecientes, ProdutosMejorValorados } from '../../services/productos';
 
 
 
@@ -70,6 +70,10 @@ const ProductsCategories = () => {
   const isBestProducts = location.pathname === '/bestSellers';
 
   const isAddRecently = location.pathname === '/addRecently';
+
+  const isTopRated = location.pathname === '/topRated';
+
+  const isFeatureProduct = location.pathname === '/topFeatured';
 
   // const {searchProducts, setSearchProducts} = useContext(AppContext);
 
@@ -146,34 +150,58 @@ const ProductsCategories = () => {
       .then((res) => {
         // console.log("Productos en descuento", res.data.products);
         setProducts(res.data);
+        setTotalResults(res.data.total_size);
       }).catch((err) => console.log(err));
   }
 
   /* Vistos recientemente */
   const getRecentlySee = () => {
-    ProductosRecientes()
+    ProductosRecientes(offset)
       .then((res) => {
-        console.log("Productos recientes", res.data.products);
+        //console.log("Productos recientes", res.data.products);
         setProducts(res.data);
+        setTotalResults(res.data.total_size);
       }).catch((err) => console.log(err));
   }
 
   /* Promociones imperdibles */
   const getPromotions = () => {
-    ProductosDescuento()
+    ProductosDescuento(offset)
       .then((res) => {
         // console.log("Promociones imperdibles", res.data.products);
         setProducts(res.data);
+        setTotalResults(res.data.total_size);
       }).catch((err) => console.log(err));
   }
 
   /* Productos mas vendidos */
   const getBestSelling = () => {
-    ProductosMasVendidos()
+    ProductosMasVendidos(offset)
       .then((res) => {
         // console.log("Productos mas vendidos", res.data.products);
         setProducts(res.data);
-      })
+        setTotalResults(res.data.total_size);
+      }).catch((err) => console.log(err));
+  }
+
+  /* Productos mejor calificados */
+  const getTopRated = () => {
+    ProdutosMejorValorados(offset)
+      .then((res) => {
+        // console.log('Produtos Mejor Valorados',res.data.products);
+        setProducts(res.data);
+        setTotalResults(res.data.total_size);
+      }).catch((err) => console.log(err));
+  }
+
+  /* Proiductos destacados */
+  const getFeatureProducts = () => {
+    ProductosParaPresentar(offset)
+      .then((res) => {
+        //console.log("Productos destacados", res.data.products);
+        setProducts(res.data);
+        setTotalResults(res.data.total_size);
+      }).catch((err)=>console.log(err));
   }
 
   const productsWithFilterBestRated = () => {
@@ -392,6 +420,14 @@ const ProductsCategories = () => {
       getBestSelling();
     }
 
+    if (isTopRated) {
+      getTopRated();
+    }
+
+    if(isFeatureProduct){
+      getFeatureProducts();
+    }
+
     // productsWithFilterMostSold();
     // productsWithFilterBestRated();
     // productsWithFilterFeaturePrefer();
@@ -534,7 +570,7 @@ const ProductsCategories = () => {
 
                             <CardTitle tag="h5">
                               {product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignSelf:'start' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignSelf: 'start' }}>
                                   <h5>${product.discount_valor && product.discount_valor.toLocaleString('en') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('en')}</h5>
                                   <h5 id='tachadoProductsCard'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                 </div>
@@ -613,7 +649,7 @@ const ProductsCategories = () => {
                                   <h5>${(product.discount_valor || product.discount_tag_valor).toLocaleString('en')}</h5>
                                 ) : (
                                   product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignSelf:'start' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignSelf: 'start' }}>
                                       <h5>${(product.discount_valor || product.discount_tag_valor).toLocaleString('en')}</h5>
                                       <h5 id='tachadoProductsCard'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                     </div>
@@ -705,6 +741,9 @@ const ProductsCategories = () => {
 
 
   )
+
 }
 
 export default ProductsCategories;
+
+

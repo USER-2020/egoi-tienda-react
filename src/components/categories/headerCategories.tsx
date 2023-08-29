@@ -81,6 +81,18 @@ const HeaderCategories = ({ handleClickFilterRecent, handleClickFilterZ_A,
   // Verificar si la ruta es /discountedProducts
   const isDiscountedProducts = location.pathname === '/discountedProducts';
 
+  /* Verificar si la ruta es  /bestSellers*/
+  const isBestSeller = location.pathname === '/bestSellers';
+
+  /* Productos agregados recientemente */
+  const isAddRecently = location.pathname === '/addRecently'
+
+  /* Productos mejor valorados */
+  const isTopRated = location.pathname === '/topRated';
+
+  /* Productos destacados */
+  const isFeatureProduct = location.pathname === '/topFeatured';
+
   const shouldShowName = (isDescuentoRouteCategory || isDescuentoRouteBrand) &&
     productsDetailTag && productsDetailTag.data_tag && productsDetailTag.data_tag[0];
 
@@ -158,6 +170,10 @@ const HeaderCategories = ({ handleClickFilterRecent, handleClickFilterZ_A,
             {isDescuentoRouteBrand ? ' '+'especial en marcas' : ''}
             {shouldShowName ? productsDetailTag.data_tag[0].name : ''}
             {isDiscountedProducts ? 'Productos en descuento': ''}
+            {isBestSeller ? 'Productos más vendidos': ''}
+            {isAddRecently ? 'Productos agregados recientemente': ''}
+            {isTopRated ? 'Productos mejor calificados': ''}
+            {isFeatureProduct ? 'Productos destacados': ''}
 
 
           </h3>

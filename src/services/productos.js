@@ -3,31 +3,71 @@ import { urlBase } from '../constants/defaultValues';
 
 const baseUrl = urlBase;
 
-export const ProductosDescuento = () =>
-  axios.get(`${baseUrl}/products/discounted-product`);
+export const ProductosDescuento = (offset) =>
+  axios.get(`${baseUrl}/products/discounted-product`, {
+    params: {
+      limit: 20,
+      offset: offset,
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 
-export const ProductosRecientes = () =>
-  axios.get(`${baseUrl}/products/latest`);
+export const ProductosRecientes = (offset) =>
+  axios.get(`${baseUrl}/products/latest`, {
+    params: {
+      limit: 20,
+      offset: offset,
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 
 
-export const ProdutosMejorValorados = () =>
-  axios.get(`${baseUrl}/products/top-rated`);
+export const ProdutosMejorValorados = (offset) =>
+  axios.get(`${baseUrl}/products/top-rated`, {
+    params: {
+      limit: 20,
+      offset: offset,
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 
-  //products/featured
+//products/featured
 
-export const ProductosParaPresentar = () =>
-  axios.get(`${baseUrl}/products/featured`);
+export const ProductosParaPresentar = (offset) =>
+  axios.get(`${baseUrl}/products/featured`, {
+    params: {
+      limit: 20,
+      offset: offset,
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 
 //products/home-categories
 
 export const ProductosPorCategoria = () =>
   axios.get(`${baseUrl}/products/home-categories`);
 
-  //mas vendidos
+//mas vendidos
 
-export const ProductosMasVendidos = () =>
-  axios.get(`${baseUrl}/products/best-sellings`);
+export const ProductosMasVendidos = (offset) =>
+  axios.get(`${baseUrl}/products/best-sellings`, {
+    params: {
+      limit: 20,
+      offset: offset,
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 
-  //Similar Products
+//Similar Products
 export const ProductosSimilaresById = (id) =>
   axios.get(`${baseUrl}/products/related-products/${id}`);
