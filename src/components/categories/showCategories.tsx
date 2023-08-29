@@ -21,7 +21,7 @@ const ShowCategoriesComponent = () => {
 
   return (
     <div className='container'>
-      <h4 className="mb-3" style={{ color: '#74737B' }}>Todas las categorias</h4>
+      <h4 className="mb-3" style={{ color: '#74737B' }}>Todas las categorías</h4>
             <div className="row row-cols-1 row-cols-md-5 g-4">
                 {allCategory && allCategory.map((category, index) => (
                     <div className="col" key={index}> {/* Agregamos key para evitar advertencias */}

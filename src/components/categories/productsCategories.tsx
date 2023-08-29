@@ -201,7 +201,7 @@ const ProductsCategories = () => {
         //console.log("Productos destacados", res.data.products);
         setProducts(res.data);
         setTotalResults(res.data.total_size);
-      }).catch((err)=>console.log(err));
+      }).catch((err) => console.log(err));
   }
 
   const productsWithFilterBestRated = () => {
@@ -424,7 +424,7 @@ const ProductsCategories = () => {
       getTopRated();
     }
 
-    if(isFeatureProduct){
+    if (isFeatureProduct) {
       getFeatureProducts();
     }
 
@@ -519,7 +519,7 @@ const ProductsCategories = () => {
                       <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index} onClick={() => agregarProductoVisto(product)}>
                         <Card className='cardProducto1' style={{ height: isDiscountedProducts ? '400px' : '390px' }} >
                           {isDiscountedProducts && product.discount_type === 'flat' && (
-                            <span className='tagDiscounted'>$ {product.discount.toLocaleString('en')} Off</span>
+                            <span className='tagDiscounted'>$ {product.discount.toLocaleString('en')} off</span>
                           )}
 
                           {isDiscountedProducts && product.discount_type === 'percent' && (
@@ -646,12 +646,17 @@ const ProductsCategories = () => {
                             <CardTitle tag="h5">
                               {
                                 isDiscountedProducts ? (
+                                  <>
                                   <h5>${(product.discount_valor || product.discount_tag_valor).toLocaleString('en')}</h5>
+                                  <h5 id='tachadoProductsCardDiscounted'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
+                                  </>
+
                                 ) : (
                                   product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignSelf: 'start' }}>
                                       <h5>${(product.discount_valor || product.discount_tag_valor).toLocaleString('en')}</h5>
                                       <h5 id='tachadoProductsCard'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
+
                                     </div>
                                   ) : (
                                     <h5>${product.unit_price && product.unit_price.toLocaleString('en')}</h5>

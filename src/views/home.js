@@ -35,13 +35,16 @@ import HeaderResponsive from "../components/headerResponsive";
 import Popup from "./user/popup";
 import { getBanners } from "../services/banners";
 import AddRecents from "../components/home/addRecents";
+import { getPopup } from '../services/banners';
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
-  const [modalPopup, setModalPopup] = useState(true);
+  const [modalPopup, setModalPopup] = useState(false);
   const [bannersInfo, setBannersInfo] = useState([]);
+
+  const [datosPopup, setDatosPopup] = useState('');
 
   const toggleLogin = () => {
     setIsLoggedIn(!isLoggedIn);
@@ -49,6 +52,14 @@ const Home = (props) => {
 
   const handleModalData = () => {
     setModalPopup(false);
+  }
+  
+  const handleTogglePopup = () => {
+    setModalPopup(false);
+  }
+
+  const handleShowPopup = () => {
+    setModalPopup(true);
   }
 
   const getAllBanners = () => {
@@ -59,8 +70,23 @@ const Home = (props) => {
       }).catch((err)=> console.log(err));
   }
 
+  const getPrincipalPopup = () => {
+    getPopup()
+      .then((res) => {
+        if (!res.data || Object.keys(res.data).length > 0) {
+          setDatosPopup(res.data);
+          setModalPopup(true);
+        } else {
+          // setDatosPopup(res.data);
+          setModalPopup(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(()=>{
     getAllBanners();
+    getPrincipalPopup();
   },[]);
 
   return (
@@ -85,7 +111,7 @@ const Home = (props) => {
 
       >
         <ModalBody>
-          <Popup handleModalData={handleModalData} setNoShowModal={()=>setModalPopup(false)} setShowModalPopup={()=>setModalPopup(true)}/>
+          <Popup handleModalData={handleModalData} datosPopup={datosPopup}/>
         </ModalBody>
       </Modal>
     </div>
