@@ -3,7 +3,7 @@ import { getPopup } from '../../services/banners';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
-function Popup({ handleModalData }) {
+function Popup({ handleModalData, setNoShowModal, setShowModalPopup }) {
 
   const [datosPopup, setDatosPopup] = useState('');
 
@@ -13,11 +13,18 @@ function Popup({ handleModalData }) {
   const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
 
   const getPrincipalPopup = () => {
-    getPopup().then((res) => {
-      // console.log("Datos del popup", res.data);
-      setDatosPopup(res.data);
-    }).catch((err) => console.log(err));
-  }
+    getPopup()
+      .then((res) => {
+        if (!res.data || Object.keys(res.data).length === 0) {
+          setNoShowModal(false);
+        } else {
+          setDatosPopup(res.data);
+          setShowModalPopup(true);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
 
   const showRoutes = (itemId, filtro, tag) => {
     // console.log("este el id elegido para pasar por las rutas popup", itemId);
@@ -33,8 +40,10 @@ function Popup({ handleModalData }) {
     }
   }
 
+
   useEffect(() => {
     getPrincipalPopup();
+
   }, []);
 
   return (
