@@ -386,7 +386,7 @@ function DetailCart() {
               <div className="envio">
                 <p>Envío</p>
                 {subtotal <= 39900 ? (
-                  <span className='badge text-bg-success'>paga el cliente</span>
+                  <span className='badge text-bg-success'>Paga el cliente</span>
                 ) : (
                   <p>${costoEnvio.toLocaleString('en')}</p>
                 )}
