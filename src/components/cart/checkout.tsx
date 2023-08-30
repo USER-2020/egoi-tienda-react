@@ -1123,7 +1123,7 @@ function AddressCart() {
                   <p>$0</p>
                 ) : (
                   subtotalNumber && subtotalNumber <= 39900 ? (
-                    <span className='badge text-bg-success'>paga el cliente</span>
+                    <span className='badge text-bg-success'>Paga el cliente</span>
                   ) : (
                     <p>${costoEnvio.toLocaleString('en')}</p>
                   )
@@ -1306,7 +1306,7 @@ function AddressCart() {
               ) : (
 
                 subtotal && subtotal <= 39, 900 ? (
-                  <span className='badge text-bg-success' id='spanPago'>paga el cliente</span>
+                  <span className='badge text-bg-success' id='spanPago'>Paga el cliente</span>
                 ) : (
                   <p className="precio">$ {costoEnvio}</p>
                 )
