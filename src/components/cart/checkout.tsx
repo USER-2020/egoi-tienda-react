@@ -275,8 +275,16 @@ function AddressCart() {
       if (index === 2) {
         // console.log(index);
         // setModalPse(true);
-        setModalMantenimientoPSE(true);
+        // setModalMantenimientoPSE(true);
         // setBotonDeshabilitado(true);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Estamos presentando fallos en los pagos por PSE, por favor intenta con otro medio de pago',
+          confirmButtonColor: '#FC5241',
+          confirmButtonText:'Cancelar'
+  
+        });
       }
       if (index === 3) {
         // console.log(index);
@@ -431,7 +439,7 @@ function AddressCart() {
   }
 
   const closeModalMantenimientoPSE = ()=>{
-    setShowMantenimientoPSE(false);
+    setModalMantenimientoPSE(false);
   }
 
 
@@ -906,24 +914,24 @@ function AddressCart() {
   }, [activeStep, token, selectedAddressId, showPDF, modalDataPSE, modalDataTarjetas, subtotalNumber]);
 
 
-  useEffect(() => {
-    // Obtener la URL actual
-    const currentPath = window.location.pathname;
-    console.log(currentPath);
+  // useEffect(() => {
+  //   // Obtener la URL actual
+  //   const currentPath = window.location.pathname;
+  //   console.log(currentPath);
 
-    // Encontrar la posición de '/checkout' en la URL
-    const checkoutIndex = currentPath.indexOf('/checkout');
+  //   // Encontrar la posición de '/checkout' en la URL
+  //   const checkoutIndex = currentPath.indexOf('/checkout');
 
-    if (checkoutIndex !== -1) {
-      // Crear la nueva ruta conservando solo '/checkout' y los parámetros
-      const newPath = currentPath.substring(0, checkoutIndex + '/checkout'.length);
+  //   if (checkoutIndex !== -1) {
+  //     // Crear la nueva ruta conservando solo '/checkout' y los parámetros
+  //     const newPath = currentPath.substring(0, checkoutIndex + '/checkout'.length);
 
-      // Modificar la URL en la barra de direcciones
-      window.history.replaceState(null, '', newPath);
-    }
+  //     // Modificar la URL en la barra de direcciones
+  //     window.history.replaceState(null, '', newPath);
+  //   }
 
-    // Resto de tu lógica de la aplicación
-  }, []);
+  //   // Resto de tu lógica de la aplicación
+  // }, []);
 
   return (
     <>
