@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min
 import { getCurrentUser } from '../../helpers/Utils';
 import { allProductsCart } from '../../services/cart';
 import start from '../../assets/Star.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AdressCheckout from '../../views/user/adress';
 import es from "react-phone-input-2/lang/es.json";
 import PhoneInput from 'react-phone-input-2';
@@ -30,8 +30,8 @@ import SuccessPurchase from '../../views/user/success_purchase';
 import efectyLogo from '../../assets/egoi_icons/logo_efecty.svg';
 import pseLogo from '../../assets/egoi_icons/logo_pse.svg';
 import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoPago';
-import Header from '../header';
-import HeaderResponsive from '../headerResponsive';
+import ModalNoPse from '../../views/user/metodosDePago/modalNoPse.tsx';
+
 
 
 
@@ -64,6 +64,8 @@ function AddressCart() {
   const [modalDataPSE, setModalDataPSE] = useState("");
   const [modalDataTarjetas, setModalDataTarjetas] = useState("");
 
+  const [modalMantenimientoPSE ,setModalMantenimientoPSE] = useState(false);
+
 
   //Modal de pedido exitoso
   const [modalSuccessPurchase, setModalSuccessPurchase] = useState(false);
@@ -83,6 +85,11 @@ function AddressCart() {
 
   const [changueCantCart, setChangueCantCart] = useState(false);
 
+
+  const location = useLocation();
+
+  // Obtén la parte de la URL antes de los parámetros
+  const checkoutPath = location.pathname.split('/')[1]; // Esto debería ser 'checkout'
 
 
   const [cupon, setCupon] = useState("");
@@ -267,7 +274,8 @@ function AddressCart() {
       }
       if (index === 2) {
         // console.log(index);
-        setModalPse(true);
+        // setModalPse(true);
+        setModalMantenimientoPSE(true);
         // setBotonDeshabilitado(true);
       }
       if (index === 3) {
@@ -422,6 +430,10 @@ function AddressCart() {
     setIsScrollModalEnabled(true);
   }
 
+  const closeModalMantenimientoPSE = ()=>{
+    setShowMantenimientoPSE(false);
+  }
+
 
   const updateBtn = (addrId) => {
     if (token) {
@@ -489,6 +501,8 @@ function AddressCart() {
 
       })
   }
+
+
 
 
   const eliminarDireccion = (addrId) => {
@@ -820,6 +834,8 @@ function AddressCart() {
   }
 
 
+
+
   /* Estado para obtener IP del usuario */
   useEffect(() => {
     const fetchIp = async () => {
@@ -842,6 +858,7 @@ function AddressCart() {
   // }, [shouldShowCollapseThree]);
 
 
+  
 
   useEffect(() => {
 
@@ -889,11 +906,28 @@ function AddressCart() {
   }, [activeStep, token, selectedAddressId, showPDF, modalDataPSE, modalDataTarjetas, subtotalNumber]);
 
 
+  useEffect(() => {
+    // Obtener la URL actual
+    const currentPath = window.location.pathname;
+    console.log(currentPath);
+
+    // Encontrar la posición de '/checkout' en la URL
+    const checkoutIndex = currentPath.indexOf('/checkout');
+
+    if (checkoutIndex !== -1) {
+      // Crear la nueva ruta conservando solo '/checkout' y los parámetros
+      const newPath = currentPath.substring(0, checkoutIndex + '/checkout'.length);
+
+      // Modificar la URL en la barra de direcciones
+      window.history.replaceState(null, '', newPath);
+    }
+
+    // Resto de tu lógica de la aplicación
+  }, []);
 
   return (
     <>
-      {/* <Header setCarrito={()=>resetProductCardDetail()}  aok={changueCantCart}/>
-      <HeaderResponsive setCarrito={()=>resetProductCardDetail()} aok={changueCantCart}/> */}
+      
       <div className='container'>
         <h5 style={{ color: '#74737B', fontSize: '16px' }}>Dirección de envío y facturación</h5>
         <div className="containerCheckoutSteps">
@@ -936,9 +970,8 @@ function AddressCart() {
                 </div>
               </div>
 
-              <div className="card">
-                <div id="headingOne">
-                </div>
+              <div className="cards">
+                
 
                 <div id="collapseOne" className="collapse" aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample">
@@ -947,10 +980,8 @@ function AddressCart() {
                   </div>
                 </div>
               </div>
-              <div className="card">
-                <div id="headingTwo">
-
-                </div>
+              <div className="cards">
+                
                 <div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                   <div className="cards">
                     {address && address.map((addr, index) => (
@@ -992,10 +1023,8 @@ function AddressCart() {
                 </div>
               </div>
               {selectedAddressIndex != null && (
-                <div className="card">
-                  <div id="headingThree">
-
-                  </div>
+                <div className="cards">
+                  
                   <div id="collapseThree" className="collapse" aria-labelledby="headingThree"
                     data-bs-parent="#accordionExample">
                     <div className="card-body paymentMethods">
@@ -1305,7 +1334,7 @@ function AddressCart() {
                 <p>$0</p>
               ) : (
 
-                subtotal && subtotal <= 39, 900 ? (
+                subtotalNumber && subtotalNumber <= 39900 ? (
                   <span className='badge text-bg-success' id='spanPago'>Paga el cliente</span>
                 ) : (
                   <p className="precio">$ {costoEnvio}</p>
@@ -1629,6 +1658,22 @@ function AddressCart() {
             cupon={cupon}
             setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)} />
+        </ModalBody>
+      </Modal>
+
+      {/* Modal para mantenimiento PSE */}
+      <Modal
+        className="modal-dialog-centered modal-sm"
+        toggle={() => setModalMantenimientoPSE(false)}
+        isOpen={modalMantenimientoPSE}
+        onOpened={() => setIsScrollModalEnabled(false)}
+        onClosed={() => setIsScrollModalEnabled(true)}
+      >
+        <ModalBody>
+          <ModalNoPse
+            closeModalPse={closeModalMantenimientoPSE}
+            
+          />
         </ModalBody>
       </Modal>
 

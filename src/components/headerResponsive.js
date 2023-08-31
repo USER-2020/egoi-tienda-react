@@ -43,7 +43,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 
 
-function HeaderResponsive({ setCarrito, aok}) {
+function HeaderResponsive({ canCart }) {
 
   /* global bootstrap */
 
@@ -55,7 +55,7 @@ function HeaderResponsive({ setCarrito, aok}) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
-  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+  // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [subcategorias, setSubcategorias] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
   const offcanvasRef = useRef(null);
@@ -196,26 +196,28 @@ function HeaderResponsive({ setCarrito, aok}) {
     history.push(`${myorders}`);
   }
 
-  useEffect(() => {
-    if (currenUser) {
-      const token = currenUser.token;
-      allProductsCart(token)
-        .then((res) => {
-          const productsOncart = res.data;
-          // console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
-          const numberOfProducts = productsOncart.length;
-          // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
-          setCantProductsOnCart(numberOfProducts);
-          
+  // const getCantCart = () => {
+  //   const token = currenUser.token;
+  //   allProductsCart(token)
+  //     .then((res) => {
+  //       const productsOncart = res.data;
+  //       // console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
+  //       const numberOfProducts = productsOncart.length;
+  //       // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
+  //       setCantProductsOnCart(numberOfProducts);
 
-        }).catch((err) => console.log(err));
 
-    }
-    // if(setCarrito){
-    //   resetCardProduct();
-    // }
+  //     }).catch((err) => console.log(err));
+  // }
 
-  }, [currenUser, isLoggedIn, cantProductsOnCart]);
+  // useEffect(() => {
+  //   getCantCart();
+  // }, []);
+
+  // useEffect(() => {
+  //   getCantCart();
+  // }, [currenUser, cantProductsOnCart]);
+
 
   // useEffect(() => {
   //   if (setCarrito) {
@@ -250,9 +252,9 @@ function HeaderResponsive({ setCarrito, aok}) {
   // },[aok])
 
   useEffect(() => {
-
     allCategoriesPromise();
     allBrands();
+    console.log(canCart)
   }, []);
 
   return (
@@ -298,10 +300,10 @@ function HeaderResponsive({ setCarrito, aok}) {
                 fill="#171523"
               />
             </svg>
-            {currenUser && cantProductsOnCart !== undefined && cantProductsOnCart >= 1 ? (
-              <span className="cart-products"><p >{cantProductsOnCart}</p></span>
+            {currenUser && canCart !== undefined && canCart >= 1 ? (
+              <span className="cart-products"><p >{canCart}</p></span>
             ) : (<i></i>)}
-            
+
           </a>
 
           <div ref={offcanvasRef} class={`offcanvas offcanvas-end ${isOffcanvasVisible ? 'show' : ''}`} tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">

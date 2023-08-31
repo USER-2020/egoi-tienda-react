@@ -20,7 +20,7 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
       cuponLimpio = cupon;
     }
     console.log(cuponLimpio);
-    placeOrder(addressId, cuponLimpio, descriptionOrder, token)
+    placeOrder(addressId, cuponLimpio, descriptionOrder, 1, token)
     .then((res)=>{
       console.log("Orden enviada por Efecty");
       console.log(res);

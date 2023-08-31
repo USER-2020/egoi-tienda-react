@@ -36,6 +36,8 @@ import Popup from "./user/popup";
 import { getBanners } from "../services/banners";
 import AddRecents from "../components/home/addRecents";
 import { getPopup } from '../services/banners';
+import { getCurrentUser } from './../helpers/Utils';
+import { allProductsCart } from "../services/cart";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +48,14 @@ const Home = (props) => {
 
   const [datosPopup, setDatosPopup] = useState('');
 
+  const currenUser = getCurrentUser();
+
+  const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+
+
+  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+
+
   const toggleLogin = () => {
     setIsLoggedIn(!isLoggedIn);
   };
@@ -53,7 +63,7 @@ const Home = (props) => {
   const handleModalData = () => {
     setModalPopup(false);
   }
-  
+
   const handleTogglePopup = () => {
     setModalPopup(false);
   }
@@ -67,7 +77,7 @@ const Home = (props) => {
       .then((res) => {
         // console.log(res.data);
         setBannersInfo(res.data);
-      }).catch((err)=> console.log(err));
+      }).catch((err) => console.log(err));
   }
 
   const getPrincipalPopup = () => {
@@ -84,24 +94,42 @@ const Home = (props) => {
       .catch((err) => console.log(err));
   };
 
-  useEffect(()=>{
+  const getCantCart = () => {
+    allProductsCart(token)
+      .then((res) => {
+        const productsOncart = res.data;
+        // console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
+        const numberOfProducts = productsOncart.length;
+        // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
+        setCantProductsOnCart(numberOfProducts);
+
+
+      }).catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
     getAllBanners();
     getPrincipalPopup();
-  },[]);
+    
+  }, []);
+
+  useEffect(()=>{
+    getCantCart();
+  },[token]);
 
   return (
 
     // <Nav/>
     <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header />
-      <HeaderResponsive />
+      <Header cantCart={cantProductsOnCart}/>
+      <HeaderResponsive canCart={cantProductsOnCart}/>
       <Banner />
-      <Recientes bannersInfo={bannersInfo} className="w-100"/>
-      <Promociones bannersInfo={bannersInfo}/>
-      <Vendidos bannersInfo={bannersInfo}/>
+      <Recientes bannersInfo={bannersInfo} className="w-100" />
+      <Promociones bannersInfo={bannersInfo} />
+      <Vendidos bannersInfo={bannersInfo} />
       {/* <Populares /> */}
-      <Bannerdown bannersInfo={bannersInfo}/>
+      <Bannerdown bannersInfo={bannersInfo} />
       <Footer />
       {/* Modal popup */}
       <Modal
@@ -111,7 +139,7 @@ const Home = (props) => {
 
       >
         <ModalBody>
-          <Popup handleModalData={handleModalData} datosPopup={datosPopup}/>
+          <Popup handleModalData={handleModalData} datosPopup={datosPopup} />
         </ModalBody>
       </Modal>
     </div>

@@ -28,9 +28,9 @@ const ViewPoliticasPrivacidad = React.lazy(() => import(/* webpackChunkName: "vi
 const ViewTerminosCondiciones = React.lazy(() => import(/* webpackChunkName: "views" */'./views/terminosYCondiciones'));
 const ViewSobreNosotros = React.lazy(() => import(/* webpackChunkName: "views" */ './views/sobreNosotros'));
 const ViewContactanos = React.lazy(() => import(/* webpackChunkName: "views" */ './views/contactanos'));
-const ViewMantenince = React.lazy(()=> import(/* webpackChunkName: "views" */  './views/mantenince'));
-const ViewAllBrands = React.lazy(()=>import(/* webpackChunkName: "views" */ './views/allBrands'));
-const ViewAllCategories = React.lazy(()=>import(/* webpackChunkName: "views" */ './views/allCategories'));
+const ViewMantenince = React.lazy(() => import(/* webpackChunkName: "views" */  './views/mantenince'));
+const ViewAllBrands = React.lazy(() => import(/* webpackChunkName: "views" */ './views/allBrands'));
+const ViewAllCategories = React.lazy(() => import(/* webpackChunkName: "views" */ './views/allCategories'));
 
 
 function DynamicTitle() {

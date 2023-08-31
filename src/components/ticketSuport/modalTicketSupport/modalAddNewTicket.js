@@ -32,10 +32,14 @@ function ModalAddNewTicket({ closeModalNewTicket, refreshTickets }) {
             .then(() => {
                 Swal.fire({
                     icon: 'success',
-                    title: '¡Actualizacion exitosa!',
-                    text: 'El ticket de soporte ha sido creado con exito, prontamente nos pondremos en contacto contigo!.',
-                    confirmButtonColor: '#0d6efd',
-                });
+                    title: '¡Actualización exitosa!',
+                    text: '¡El ticket de soporte ha sido creado con éxito, pronto nos pondremos en contacto contigo!',
+                    confirmButtonColor: '#FC5241',
+                    confirmButtonText: 'Aceptar', // Cambia el texto del botón de confirmación
+                    customClass: {
+                      confirmButton: 'custom-confirm-button-class', // Agrega tus estilos personalizados al botón
+                    },
+                  });
                 closeModalNewTicket();
                 refreshTickets();
             })
@@ -45,7 +49,7 @@ function ModalAddNewTicket({ closeModalNewTicket, refreshTickets }) {
                     icon: 'error',
                     title: 'Error',
                     text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
-                    confirmButtonColor: '#dc3545',
+                    confirmButtonColor: '#FC5241',
                 });
             })
     }
@@ -146,7 +150,7 @@ function ModalAddNewTicket({ closeModalNewTicket, refreshTickets }) {
                                             <Button style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "60%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px", border:'none'}} type='submit'>Enviar ticket</Button>
                                         </div>
                                         <div style={{ width: "100%", height: "10px", display: "flex", justifyContent: "center", marginTop: "20px", marginBottom: '0' }}>
-                                            <a href='#' style={{ textDecoration: 'none', color: '#74737B' }} onClick={() => closeModalNewTicket}>Volver</a>
+                                            <a href='#' style={{ textDecoration: 'none', color: '#74737B' }} onClick={() => closeModalNewTicket()}>Volver</a>
                                         </div>
                                     </FormGroup>
                                 </Form>

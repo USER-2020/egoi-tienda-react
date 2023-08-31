@@ -50,7 +50,7 @@ const ProductsCategories = () => {
   const [selectedFiltersLow_High, setSelectedFiltersLow_High] = useState("");
   const [priceStart, setPriceStart] = useState("");
   const [priceEnd, setPriceEnd] = useState("");
-  const [offset, setOffset] = useState([]);
+  const [offset, setOffset] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   // const [totalPages, setTotalPages] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
@@ -275,11 +275,12 @@ const ProductsCategories = () => {
     else {
       subcategorieById(id, offset, tag)
         .then((res) => {
-          // console.log(res);
+          console.log(res);
           setProducts(res.data);
           setTotalResults(res.data.total_size);
+          console.log(res.data.total_size);
           // console.log("Productos por el id", res.data.products);
-          // console.log("Este es el total de productos", res.data.total_size);
+          console.log("Este es el total de productos", res.data.total_size);
 
         })
         .catch((err) => console.log(err));
@@ -334,8 +335,6 @@ const ProductsCategories = () => {
   }
 
 
-
-
   const pageButtons = [];
   const totalPages = Math.ceil(totalResults / 20);
   for (let i = 0; i < totalPages; i++) {
@@ -343,11 +342,7 @@ const ProductsCategories = () => {
     pageButtons.push(
       <button
         key={i}
-        onClick={() => {
-          setCurrentPage(i + 1)
-          handlePageClick(i * 20)
-        }
-        }
+        onClick={() => handlePageClick(i + 1)}
         className={isActive ? "selectedPage d-flex justify-content-center align-items-center btn rounded-circle mx-1" : "unSelectedPage btn  rounded-circle mx-1 d-flex justify-content-center align-items-center bg-none bg-#FC5241"}
         style={{ width: "30px", height: "30px" }}
       >
@@ -355,17 +350,47 @@ const ProductsCategories = () => {
       </button>
     );
   }
+
+
+  // const pageButtons = [];
+  // const totalPages = Math.ceil(totalResults / 20);
+  // for (let i = 0; i < totalPages; i++) {
+  //   const isActive = i === currentPage - 1;
+  //   console.log(currentPage);
+  //   pageButtons.push(
+  //     <button
+  //       key={i}
+  //       onClick={() => {
+  //         setCurrentPage(i + 1)
+  //         handlePageClick(i * 20)
+  //       }
+  //       }
+  //       className={isActive ? "selectedPage d-flex justify-content-center align-items-center btn rounded-circle mx-1" : "unSelectedPage btn  rounded-circle mx-1 d-flex justify-content-center align-items-center bg-none bg-#FC5241"}
+  //       style={{ width: "30px", height: "30px" }}
+  //     >
+  //       {i + 1}
+  //     </button>
+  //   );
+  // }
   // console.log('page', currentPage)
 
-  function handlePageClick(offset) {
-    // const totalPages = Math.ceil(totalResults / 12);
-    const maxOffset = (totalPages);
-    const adjustedOffset = Math.min(Math.max(offset, 0), maxOffset);
-    setOffset(adjustedOffset);
-    // console.log("Offset", adjustedOffset);
+  // function handlePageClick(offset) {
+  //   // const totalPages = Math.ceil(totalResults / 12);
+  //   const maxOffset = (totalPages);
+  //   const adjustedOffset = Math.min(Math.max(offset, 0), maxOffset);
+  //   setOffset(adjustedOffset);
+  //   console.log("Offset", adjustedOffset);
+  //   console.log(totalResults);
 
-    // const adjustedOffset = Math.min(Math.max(newOffset, 0), totalPages);
-    // setOffset(adjustedOffset);
+  //   // const adjustedOffset = Math.min(Math.max(newOffset, 0), totalPages);
+  //   // setOffset(adjustedOffset);
+  //   // console.log("Offset", adjustedOffset);
+  // }
+  function handlePageClick(newPage) {
+    // console.log(newPage);
+    const adjustedOffset = (newPage);
+    setOffset(adjustedOffset);
+    setCurrentPage(newPage);
     // console.log("Offset", adjustedOffset);
   }
 
@@ -647,8 +672,8 @@ const ProductsCategories = () => {
                               {
                                 isDiscountedProducts ? (
                                   <>
-                                  <h5>${(product.discount_valor || product.discount_tag_valor).toLocaleString('en')}</h5>
-                                  <h5 id='tachadoProductsCardDiscounted'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
+                                    <h5>${(product.discount_valor || product.discount_tag_valor).toLocaleString('en')}</h5>
+                                    <h5 id='tachadoProductsCardDiscounted'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                   </>
 
                                 ) : (
@@ -701,7 +726,7 @@ const ProductsCategories = () => {
                     <button
                       onClick={() => {
                         setCurrentPage(currentPage - 1);
-                        handlePageClick(offset - 20);
+                        handlePageClick(currentPage - 1);
                       }}
                       className="btn mx-1"
                     >
@@ -716,7 +741,7 @@ const ProductsCategories = () => {
                     <button
                       onClick={() => {
                         setCurrentPage(currentPage + 1);
-                        handlePageClick(offset + 20);
+                        handlePageClick(currentPage +1);
                       }}
                       className="btn mx-1"
                     >
@@ -729,7 +754,7 @@ const ProductsCategories = () => {
                     <button
                       onClick={() => {
                         setCurrentPage(totalPages);
-                        handlePageClick((totalPages - 1) * 20);
+                        handlePageClick((totalPages));
                       }}
                       className="btn mx-1"
                     >

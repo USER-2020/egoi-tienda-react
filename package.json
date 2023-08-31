@@ -42,6 +42,7 @@
     "reactstrap": "^9.1.6",
     "styled-components": "^4.0.0",
     "sweetalert2": "^11.7.3",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

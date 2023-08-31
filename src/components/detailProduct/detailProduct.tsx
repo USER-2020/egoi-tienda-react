@@ -31,7 +31,7 @@ import { addProductsCart, allProductsCart } from '../../services/cart';
 import NoStock from '../../views/user/noStock';
 import { addFavoriteProduct } from '../../services/ordenes';
 
-function DetailProduct() {
+function DetailProduct({setCantCart, handleLogged}) {
     const { slug } = useParams();
     const [detailProducts, setDetailProducts] = useState([]);
     const [currentImg, setCurrentImage] = useState('');
@@ -95,6 +95,7 @@ function DetailProduct() {
             setModalViewCart(true);
             addProductsCart(id, quantity, currenUser.token)
                 .then((res) => {
+                    setCantCart();
                     // console.log("Producto enviado", res.data);
                     // console.log(token);
                 })
@@ -169,7 +170,7 @@ function DetailProduct() {
             } else {
 
             }
-            history.push(`/detailCart/address/${buyNowProduct.toLocaleString()}/${costoEnvio.toLocaleString()}/$${totalAPagar.toLocaleString()}/${descuento}`);
+            history.push(`/checkout/${buyNowProduct.toLocaleString()}/${costoEnvio.toLocaleString()}/$${totalAPagar.toLocaleString()}/${descuento}`);
 
         }
         else {
@@ -215,6 +216,7 @@ function DetailProduct() {
         // Code to handle user login, such as storing session storage, etc.
         if (currenUser) {
             setIsLoggedIn(true);
+            handleLogged(true);
             // console.log("Estas logueado")
 
         } else {
@@ -348,7 +350,7 @@ function DetailProduct() {
 
 
         // history.push(history.location.pathname);
-    }, [currenUser])
+    }, [currenUser, handleLogged])
 
     return (
         <div className='container'>
