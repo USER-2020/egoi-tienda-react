@@ -509,10 +509,14 @@ function DetailCart({ setCantCart }) {
                 </div>
                 <div className="envio">
                   <p>Envío</p>
-                  {subtotal <= 39900 ? (
-                    <span className='badge text-bg-success'>Paga el cliente</span>
-                  ) : (
-                    <p>${costoEnvio.toLocaleString('en')}</p>
+                  {productsCart && productsCart.length === 0 ? (
+                    <p>$0</p>
+                  ):(
+                    subtotal <= 39900 ? (
+                      <span className='badge text-bg-success'>Paga el cliente</span>
+                    ) : (
+                      <p>${costoEnvio.toLocaleString('en')}</p>
+                    )
                   )}
                 </div>
                 <div className="descuento">
