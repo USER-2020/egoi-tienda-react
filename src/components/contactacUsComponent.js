@@ -4,6 +4,8 @@ import { addContact } from "../services/contact";
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content';
 import './contactUsComponent.css';
+import gmailIcon from '../assets/egoi_icons/Gmail_icon_(2020).png';
+import WhatsappIcon from '../assets/egoi_icons/whatsapp.png';
 
 
 const ContactacUsComponent = () => {
@@ -39,7 +41,7 @@ const ContactacUsComponent = () => {
               ¡Hemos recibido tu mensaje <strong>{name}</strong> y lo responderemos a la mayor brevedad posible!
             </div>
           ),
-          
+
         });
 
 
@@ -105,6 +107,18 @@ const ContactacUsComponent = () => {
                   <div className="form-group">
                     <label for="cf-message">Mensaje</label>
                     <textarea className="form-control message" value={message} onChange={(e) => setMessage(e.target.value)} rows="6" required></textarea>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-12" style={{marginTop:'10px'}}>
+                <div className="form-group" >
+                  <p>También puedes contactarnos a través de los siguientes canales de atención.</p>
+                  <div style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
+                    <span><img src={gmailIcon} width={20} style={{marginRight:'10px'}}/>Cliente@egoi.com.co</span>
+                    <span><img src={WhatsappIcon} width={20} style={{marginRight:'10px'}}/>
+                    <a href="https://wa.link/81um87" style={{textDecoration:'none', color:'black'}}>3057146688</a> -  
+                    <a href="https://wa.link/78cdti" style={{textDecoration:'none', color:'black'}}> 3187179526</a> 
+                    </span>
                   </div>
                 </div>
               </div>
