@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, FormGroup, Form, Input, InputGroupText, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { placeOrder } from '../../../services/metodosDePago';
 import { getCurrentUser } from '../../../helpers/Utils';
+import { Loader, TailSpin } from 'react-loader-spinner';
 
 function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descriptionOrder, cupon, setModalPurchaseSuccess, setOk }) {
 
@@ -9,6 +10,7 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
   const [paymentMethodId, setPaymentMethodId] = useState("");
   const [emailCustom, setEmailCustom] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const currenUser = getCurrentUser();
   const token = currenUser.token;
@@ -31,6 +33,7 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
     .catch((err)=>console.log(err));
   }
   const orderPlaceEfecty = () => {
+    setLoading(true);
     makePlaceOrder();
   }
 
@@ -82,7 +85,21 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
                 </div>
               </div>
               <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
-                <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={orderPlaceEfecty}>Enviar copia</a>
+                <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={orderPlaceEfecty}>
+                {loading &&
+                      <TailSpin
+                        height="20"
+                        width="20"
+                        color="white"
+                        ariaLabel="tail-spin-loading"
+                        radius="1"
+                        wrapperStyle={{ marginRight: '20px' }}
+                        wrapperClass=""
+                        visible={true}
+                      />
+                    }
+                  Enviar copia
+                  </a>
               </div>
 
             </Card>
