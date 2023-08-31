@@ -18,6 +18,12 @@
   width: 65%;
 }
 
+.containerTableProducts .loadingDiv{
+  display:flex ;
+  flex-direction: column;
+  align-items: center;
+}
+
 .containerTableProducts .noProductsOnCart {
   display: flex;
   flex-direction: column;
@@ -339,8 +345,19 @@
   gap: 20px;
   background-color: var(--body-gray);
   border: none;
+  border-radius: none;
+  
 
 
+}
+
+#collapseThree .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--body-gray);
+  border: none;
+  border-radius: none;
 }
 
 #collapseTwo .cards .card1 {
@@ -539,6 +556,12 @@ input[type="checkbox"]:checked {
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  
+  .containerProductsAndDetailpurchaseResponsive .loadingDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .containerProductsAndDetailpurchaseResponsive .noProductsOnCart {

@@ -30,7 +30,7 @@ import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
 
-const Header = ({ setCarrito, aok}) => {
+const Header = ({ cantCart }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ const Header = ({ setCarrito, aok}) => {
   const [products, setProducts] = useState([]);
   const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
 
-  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+  // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
 
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
@@ -78,18 +78,6 @@ const Header = ({ setCarrito, aok}) => {
       history.push(`/products/${prevSearchProducts}`);
     }
   }
-
-  // const handleInputChange = (event) => {
-  //   setPrevSearch(searchProducts);
-  //   setSearchProducts(event.target.value);
-  //   console.log("Este es el producto buscado", searchProducts);
-  // }
-
-  // const handleKeyDown = (event) => {
-  //   if (event.key === 'Enter') {
-  //     // Hacer algo con el valor de searchProducts
-  //   }
-  // }
 
   /**
    * This function retrieves all categories and sets them in state using a promise and useEffect hook.
@@ -253,6 +241,20 @@ const Header = ({ setCarrito, aok}) => {
     }
   }
 
+  // const getCantCart = () => {
+  //   const token = currenUser.token;
+  //   allProductsCart(token)
+  //     .then((res) => {
+  //       const productsOncart = res.data;
+  //       // console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
+  //       const numberOfProducts = productsOncart.length;
+  //       // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
+  //       setCantProductsOnCart(numberOfProducts);
+
+
+  //     }).catch((err) => console.log(err));
+  // }
+
 
   // useEffect(() => {
   //   if (subSubCategory.length > 0) {
@@ -302,24 +304,15 @@ const Header = ({ setCarrito, aok}) => {
 
     // }
     handleLogin();
-    if (currenUser ) {
-      const token = currenUser.token;
-      allProductsCart(token)
-        .then((res) => {
-          const productsOncart = res.data;
-          // console.log("Respuesta de productos del carrito de compras", productsOncart);
-          const numberOfProducts = productsOncart.length;
-          // console.log("Cantidad de productos en el carrito", numberOfProducts);
-          setCantProductsOnCart(numberOfProducts);
-          
-
-        }).catch((err) => console.log(err));
-    }
 
 
 
+  }, [currenUser, isLoggedIn, cantCart]);
 
-  }, [currenUser, isLoggedIn, cantProductsOnCart]);
+
+  // useEffect(() => {
+  //   getCantCart();
+  // }, [currenUser,cantProductsOnCart]);
 
   // useEffect(() => {
   //   if (setCarrito) {
@@ -342,7 +335,7 @@ const Header = ({ setCarrito, aok}) => {
     allBrands();
   }, []);
 
-  
+
 
   useEffect(() => {
     if (selectedCategoryId) {
@@ -481,10 +474,10 @@ const Header = ({ setCarrito, aok}) => {
                 fill="#171523"
               />
             </svg>
-            {currenUser && cantProductsOnCart !== undefined && cantProductsOnCart >= 1 ? (
-              <span className="cart-products"><p >{cantProductsOnCart}</p></span>
+            {currenUser && cantCart !== undefined && cantCart >= 1 ? (
+              <span className="cart-products"><p >{cantCart}</p></span>
             ) : (<i></i>)}
-            
+
           </a>
         </div>
       </div>

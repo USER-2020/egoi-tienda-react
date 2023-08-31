@@ -6,7 +6,7 @@ export const UserRole = {
 export const adminRoot = '/app';
 export const searchPath = `${adminRoot}/#`;
 export const addCart = '/detailCart';
-export const checkout = '/detailCart/address/:subtotal/:costoEnvio/:total/:cuponDescuento';
+export const checkout = '/checkout/:subtotal/:costoEnvio/:total/:cuponDescuento';
 export const myorders = '/myOrders';
 
 // export const currentUser = {

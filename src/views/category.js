@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -7,30 +7,41 @@ import HeaderCategories from "../components/categories/headerCategories.tsx";
 import ProductsCategories from "../components/categories/productsCategories.tsx";
 import HeaderResponsiveCategorie from "../components/categories/headerResponsiveCategorie.tsx";
 import ProductsResponsiveCategorie from './../components/categories/productsResponsiveCategorie.tsx';
+import { allProductsCart } from "../services/cart";
+import { getCurrentUser } from './../helpers/Utils';
 
 const Category = (props) => {
-    // const categoryId = props.match.params.category;
-    // const subcategoryId = props.match.params.subcategory;
-    // const productId = props.match.params.id;
-    // const [isOpen, setIsOpen] = useState(false);
-    // const toggle = () => setIsOpen(!isOpen);
-    // const [isOpen, setIsOpen] = useState(false);
-    // const toggle = () => setIsOpen(!isOpen);
-    // const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
+  const currenUser = getCurrentUser();
 
-    // const toggleLogin = () => {
-    //   setIsLoggedIn(!isLoggedIn);
-    // };
+  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+
+  const getCantCart = () => {
+    const token = currenUser.token;
+    allProductsCart(token)
+      .then((res) => {
+        const productsOncart = res.data;
+        // console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
+        const numberOfProducts = productsOncart.length;
+        // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
+        setCantProductsOnCart(numberOfProducts);
+
+
+      }).catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    getCantCart();
+  }, []);
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-    <Header />
-    <HeaderResponsive/>
-    {/* <HeaderCategories/> */}
-    {/* <HeaderResponsiveCategorie/> */}
-    <ProductsCategories/>
-    {/* <ProductsResponsiveCategorie/> */}
-    <Footer />
+      <Header cantCart={cantProductsOnCart}/>
+      <HeaderResponsive canCart={cantProductsOnCart}/>
+      {/* <HeaderCategories/> */}
+      {/* <HeaderResponsiveCategorie/> */}
+      <ProductsCategories />
+      {/* <ProductsResponsiveCategorie/> */}
+      <Footer />
     </div>
   )
 }
