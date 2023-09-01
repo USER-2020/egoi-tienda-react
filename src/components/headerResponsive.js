@@ -77,6 +77,8 @@ function HeaderResponsive({ canCart }) {
 
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
+    console.log(event.target.value);
+    handleEnterPress(event);
   }
 
   const handleEnterPress = (event) => {
@@ -281,7 +283,7 @@ function HeaderResponsive({ canCart }) {
                 borderRadius: "50px",
               }} type="text" placeholder="Busca productos, marcas..."
                 onChange={handleInputChange}
-                onKeyPress={handleEnterPress} />
+                onKeyUp={handleEnterPress} />
             </InputGroup>
           </div>
           <a href="#" onClick={() => { goToDetailCart() }}

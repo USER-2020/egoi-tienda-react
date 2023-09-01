@@ -110,22 +110,22 @@ const ContactacUsComponent = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-12" style={{marginTop:'10px'}}>
-                <div className="form-group" >
-                  <p>También puedes contactarnos a través de los siguientes canales de atención.</p>
-                  <div style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
-                    <span><img src={gmailIcon} width={20} style={{marginRight:'10px'}}/>Cliente@egoi.com.co</span>
-                    <span><img src={WhatsappIcon} width={20} style={{marginRight:'10px'}}/>
-                    <a href="https://wa.link/81um87" style={{textDecoration:'none', color:'black'}}>3057146688</a> -  
-                    <a href="https://wa.link/78cdti" style={{textDecoration:'none', color:'black'}}> 3187179526</a> 
-                    </span>
-                  </div>
-                </div>
-              </div>
               <div className=" " style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                 <button style={{ backgroundColor: '#FC5241', border: 'none', borderRadius: '32px', width: '300px', color: 'white' }} type="submit" id="submit">Enviar</button>
               </div>
             </form>
+            <div className="col-md-12" style={{ marginTop: '10px' }}>
+              <div className="form-group" >
+                <p>También puedes contactarnos a través de los siguientes canales de atención.</p>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                  <span><img src={gmailIcon} width={20} style={{ marginRight: '10px' }} />Cliente@egoi.com.co</span>
+                  <span><img src={WhatsappIcon} width={20} style={{ marginRight: '10px' }} />
+                    <a href="https://wa.link/81um87" style={{ textDecoration: 'none', color: 'black' }}>3057146688</a> -
+                    <a href="https://wa.link/78cdti" style={{ textDecoration: 'none', color: 'black' }}> 3187179526</a>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

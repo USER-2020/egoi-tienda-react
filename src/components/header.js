@@ -367,7 +367,7 @@ const Header = ({ cantCart }) => {
               placeholder="Busca productos, marcas..."
               value={prevSearchProducts}
               onChange={handleInputChange}
-              onKeyPress={handleEnterPress}
+              onKeyUp={handleEnterPress}
 
             />
           </InputGroup>
