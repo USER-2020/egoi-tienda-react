@@ -16,7 +16,7 @@ const Category = (props) => {
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
 
   const getCantCart = () => {
-    const token = currenUser.token;
+    const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currentUser sea null
     allProductsCart(token)
       .then((res) => {
         const productsOncart = res.data;
