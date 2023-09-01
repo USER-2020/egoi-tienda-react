@@ -98,7 +98,7 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
                         visible={true}
                       />
                     }
-                  Enviar copia
+                  Terminar compra
                   </a>
               </div>
 

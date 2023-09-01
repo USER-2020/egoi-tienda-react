@@ -110,12 +110,11 @@ const Home = (props) => {
   useEffect(() => {
     getAllBanners();
     getPrincipalPopup();
+    getCantCart();
     
   }, []);
 
-  useEffect(()=>{
-    getCantCart();
-  },[token]);
+
 
   return (
 

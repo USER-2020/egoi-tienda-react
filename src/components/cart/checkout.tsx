@@ -656,7 +656,7 @@ function AddressCart() {
 
         firstname: dataAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
         lastname: dataAddress[0].contact_person_name, //apellido del usuario traido desde el id de la direccion seleccionada
-        email: "juanfernandozuluaga2014310@gmail.com", // correo del usuario userEmail
+        email: userEmail, // correo del usuario userEmail
         numberPhone: dataAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
         type: tipo, //medio de pago traido del id del metodo de pago selesccionado
         issuer_id: issuerID,  // id de banco traido del modal de pago seleccionado solo para pse !!
@@ -984,7 +984,7 @@ function AddressCart() {
                 <div id="collapseOne" className="collapse" aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample">
                   <div className="card-body">
-                    <h2><strong>Hola, Juan Perez, ya estas logueado, sigue con el checkout!</strong></h2>
+                    <h2><strong>Hola, {userEmail}, ya estas logueado, sigue con el checkout!</strong></h2>
                   </div>
                 </div>
               </div>
