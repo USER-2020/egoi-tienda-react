@@ -424,7 +424,7 @@
   margin-left: 23px;
 }
 
-input[placeholder="Nombre de contacto"]::placeholder,
+input[placeholder="Nombre del contacto"]::placeholder,
 input[placeholder="Apellido del contacto"]::placeholder {
   background-image: var(--placeholder-icon-nombre);
 }
