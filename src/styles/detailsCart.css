@@ -982,6 +982,7 @@ input[type="checkbox"]:checked {
     list-style: none;
     width: 100%;
     padding: 10px;
+    align-items: center;
   }
 
   .containerCheckoutResponsive .direcciones ul li .img {
@@ -1006,7 +1007,7 @@ input[type="checkbox"]:checked {
     display: flex;
     flex-direction: row;
     width: 30%;
-
+    margin: 0;
     align-self: center;
   }
 

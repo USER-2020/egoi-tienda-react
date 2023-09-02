@@ -60,6 +60,7 @@ const Header = ({ cantCart }) => {
 
 
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
+  const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad del menú de resultados
 
   const history = useHistory();
 
@@ -68,7 +69,7 @@ const Header = ({ cantCart }) => {
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
     console.log(event.target.value);
-    handleEnterPress(event);
+    // handleEnterPress(event);
   }
 
   const handleEnterPress = (event) => {
@@ -122,8 +123,13 @@ const Header = ({ cantCart }) => {
       getProductsBySearch(prevSearchProducts)
         .then((res) => {
           // console.log(res);
-          setProducts(res.data);
-          // console.log("Respuesta de los productos por busqueda", res.data.products);
+          setProducts(res.data.products);
+          if(res.data.products.lenght > 0){
+            setShowResults(true);
+          }else{
+            setShowResults(false);
+          }
+          console.log("Respuesta de los productos por busqueda", res.data.products);
         })
     }
   }
@@ -336,12 +342,13 @@ const Header = ({ cantCart }) => {
   }, []);
 
 
-
   useEffect(() => {
-    if (selectedCategoryId) {
+    if (prevSearchProducts) {
       // console.log("Este el id selesccionado para activar el boton active ", selectedCategoryId);
+      resultsSearch(prevSearchProducts);
+      console.log(products);
     }
-  }, [selectedCategoryId]);
+  }, [prevSearchProducts]);
 
 
   return (
@@ -354,9 +361,9 @@ const Header = ({ cantCart }) => {
         </div>
         <div className={styles.searchContainer}>
           <InputGroup className={styles.search}>
-            <span className="input-icon">
+            {/* <span className="input-icon">
               <FontAwesomeIcon icon={faSearch} />
-            </span>
+            </span> */}
             <Input
               style={{
                 border: "none",
@@ -371,6 +378,17 @@ const Header = ({ cantCart }) => {
 
             />
           </InputGroup>
+          {/* Contenedor para mostrar los resultados de búsqueda */}
+          <div
+            className={`${styles.searchResultsContainer} ${showResults ? "visible" : ""}`}
+          >
+            {products &&
+              products.map((result, index) => (
+                <div key={index} className={styles.searchResult}>
+                  {result.name}
+                </div>
+              ))}
+          </div>
         </div>
         <div className="userInteraction">
           {/* Usuario Icono  */}
