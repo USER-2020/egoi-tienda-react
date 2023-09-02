@@ -23,18 +23,21 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
     }
     console.log(cuponLimpio);
     placeOrder(addressId, cuponLimpio, descriptionOrder, 1, token)
-    .then((res)=>{
-      console.log("Orden enviada por Efecty");
-      console.log(res);
-      setModalPurchaseSuccess();
-      closeEfectyModal();
-      setOk();
-    })
-    .catch((err)=>console.log(err));
+      .then((res) => {
+        console.log("Orden enviada por Efecty");
+        console.log(res);
+        setModalPurchaseSuccess();
+        closeEfectyModal();
+        setOk();
+      })
+      .catch((err) => console.log(err));
   }
   const orderPlaceEfecty = () => {
     setLoading(true);
-    makePlaceOrder();
+    setModalPurchaseSuccess();
+    closeEfectyModal();
+    setOk();
+    // makePlaceOrder();
   }
 
   useEffect(() => {
@@ -86,20 +89,20 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
               </div>
               <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
                 <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={orderPlaceEfecty}>
-                {loading &&
-                      <TailSpin
-                        height="20"
-                        width="20"
-                        color="white"
-                        ariaLabel="tail-spin-loading"
-                        radius="1"
-                        wrapperStyle={{ marginRight: '20px' }}
-                        wrapperClass=""
-                        visible={true}
-                      />
-                    }
+                  {loading &&
+                    <TailSpin
+                      height="20"
+                      width="20"
+                      color="white"
+                      ariaLabel="tail-spin-loading"
+                      radius="1"
+                      wrapperStyle={{ marginRight: '20px' }}
+                      wrapperClass=""
+                      visible={true}
+                    />
+                  }
                   Terminar compra
-                  </a>
+                </a>
               </div>
 
             </Card>

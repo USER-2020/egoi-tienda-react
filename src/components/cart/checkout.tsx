@@ -23,7 +23,7 @@ import { allBanks } from '../../services/bank';
 import { aplyCupon } from '../../services/cupon';
 import CashDeliveryOTP from '../../views/user/metodosDePago/cashDeliveryOTP';
 import axios from 'axios';
-import { makePay, referenciaPago } from '../../services/metodosDePago';
+import { makePay, placeOrder, referenciaPago } from '../../services/metodosDePago';
 import { PDFViewer } from '@react-pdf/renderer';
 import PDFContent from '../PDF/PDFContent';
 import SuccessPurchase from '../../views/user/success_purchase';
@@ -860,6 +860,29 @@ function AddressCart() {
       });
 
   }
+
+  /* Realizar order */
+  const makePlaceOrder = () => {
+
+    let cuponOffSale = "$0";
+    if (discountCoupon && discountCoupon.discount !== undefined) {
+      cuponOffSale = discountCoupon.discount;
+    }
+
+    const cuponDescuentoLimpio = Number(cuponOffSale.replace("$", ""));
+
+    console.log(cuponDescuentoLimpio);
+    placeOrder(selectedAddressId, cuponDescuentoLimpio, descriptionOrder, 1, token)
+      .then((res) => {
+        console.log("Orden enviada por Efecty");
+        console.log(res);
+        setModalEfecty(true);
+        // setModalSuccessPurchase(true);
+        // setModalEfecty(false);
+        // setOkPurchase(true);
+      })
+      .catch((err) => console.log(err));
+  }
   /* Generar referencia de pago de efecty */
   const generateEfectyREF = (data, descriptionOrder) => {
     referenciaPago(data, token)
@@ -871,9 +894,10 @@ function AddressCart() {
         Swal.fire({
           title: 'Generando ticket!',
           html: 'Generando<b></b>',
-          timer: 2000,
+          timer: 3000,
           timerProgressBar: true,
           didOpen: () => {
+            makePlaceOrder();
             Swal.showLoading();
             const b = Swal.getHtmlContainer().querySelector('b');
             timerInterval = setInterval(() => {
@@ -882,7 +906,7 @@ function AddressCart() {
           },
           didClose: () => {
             clearInterval(timerInterval);
-            setModalEfecty(true);
+            // setModalEfecty(true);
             // Actualizar el estado para mostrar el PDF
             // setShowPDF(true);
 
@@ -953,7 +977,7 @@ function AddressCart() {
         transaction_amount: numericValue, // Monto total validado si es con cupón o no
         description: descriptionOrder, // Descripción concatenada de los productos del carrito de compras
         payment_method_id: "efecty", // Id del método de pago seleccionado
-        email: userEmail // Email del usuario //userEmail
+        email: "juanfernandozuluaga2014310@gmail.com" // Email del usuario //userEmail
       }
 
       generateEfectyREF(dataOrder, descriptionOrder);
