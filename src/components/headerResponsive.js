@@ -40,6 +40,7 @@ import { getCurrentUser, setCurrentUser } from '../helpers/Utils';
 import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { getProductsBySearch } from "../services/filtros";
 
 
 
@@ -66,6 +67,7 @@ function HeaderResponsive({ canCart }) {
 
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
 
@@ -86,6 +88,18 @@ function HeaderResponsive({ canCart }) {
       setPrevSearchProducts(prevSearchProducts);
       // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       history.push(`/products/${prevSearchProducts}`);
+    }
+  }
+
+  const resultsSearch = (prevSearchProducts) => {
+    console.log("Entre al resuktado de search");
+    if (prevSearchProducts) {
+      getProductsBySearch(prevSearchProducts)
+        .then((res) => {
+          // console.log(res);
+          setProducts(res.data);
+          console.log("Respuesta de los productos por busqueda", res.data.products);
+        })
     }
   }
 
@@ -252,11 +266,17 @@ function HeaderResponsive({ canCart }) {
   //       }).catch((err) => console.log(err));
   //   }
   // },[aok])
+  useEffect(() => {
+    if (prevSearchProducts) {
+      // console.log("Este el id selesccionado para activar el boton active ", selectedCategoryId);
+      resultsSearch(prevSearchProducts);
+    }
+  }, [prevSearchProducts]);
 
   useEffect(() => {
     allCategoriesPromise();
     allBrands();
-    console.log(canCart)
+    // console.log(canCart)
   }, []);
 
   return (

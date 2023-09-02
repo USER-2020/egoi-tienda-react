@@ -64,7 +64,7 @@ function AddressCart() {
   const [modalDataPSE, setModalDataPSE] = useState("");
   const [modalDataTarjetas, setModalDataTarjetas] = useState("");
 
-  const [modalMantenimientoPSE ,setModalMantenimientoPSE] = useState(false);
+  const [modalMantenimientoPSE, setModalMantenimientoPSE] = useState(false);
 
 
   //Modal de pedido exitoso
@@ -228,6 +228,22 @@ function AddressCart() {
 
   }
 
+  /* Validacion de direccion responsive */
+  const handleProcederCompraResponsive = () => {
+    // Verificar el ancho de la ventana
+    if (window.innerWidth <= 480) {
+      if (selectedAddressIndex === null) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡No has seleccionado ninguna dirección!',
+          confirmButtonColor: '#FC5241',
+        });
+      }
+    }
+  }
+
+
   /* Validacion de direccion en el checkout */
   const handleProcederCompra = () => {
     if (selectedAddressIndex === null) {
@@ -264,12 +280,44 @@ function AddressCart() {
       setSelectedCheckbox(index);
       if (index === 0) {
         // console.log(index);
-        setModalTarjetaDebito(true);
+        if (window.innerWidth <= 480) {
+          if (selectedAddressIndex === null) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: '¡No has seleccionado ninguna dirección!',
+              confirmButtonColor: '#FC5241',
+            });
+            setModalTarjetaDebito(false);
+          } else {
+
+            setModalTarjetaDebito(true);
+          }
+        } else {
+
+          setModalTarjetaDebito(true);
+        }
         // setBotonDeshabilitado(true);
       }
       if (index === 1) {
         // console.log(index);
-        setModalTarjetaCredito(true);
+        if (window.innerWidth <= 480) {
+          if (selectedAddressIndex === null) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: '¡No has seleccionado ninguna dirección!',
+              confirmButtonColor: '#FC5241',
+            });
+            setModalTarjetaCredito(false);
+          } else {
+
+            setModalTarjetaCredito(true);
+          }
+        } else {
+
+          setModalTarjetaCredito(true);
+        }
         // setBotonDeshabilitado(true);
       }
       if (index === 2) {
@@ -282,80 +330,174 @@ function AddressCart() {
           title: 'Oops...',
           text: 'Estamos presentando fallos en los pagos por PSE, por favor intenta con otro medio de pago',
           confirmButtonColor: '#FC5241',
-          confirmButtonText:'Cancelar'
-  
+          confirmButtonText: 'Cancelar'
+
         });
       }
       if (index === 3) {
         // console.log(index);
-        if (token) {
-          swalWithBootstrapButtons.fire({
-            title: '¿Quieres realizar el pago por efecty?',
-            text: "Esto no es reversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, acepto',
-            cancelButtonText: 'Cancelar',
-            reverseButtons: true,
-            didOpen: () => {
-              const confirmButton = document.querySelector('.swal2-confirm');
-              confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+        if (window.innerWidth <= 480) {
+          if (selectedAddressIndex === null) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: '¡No has seleccionado ninguna dirección!',
+              confirmButtonColor: '#FC5241',
+            });
+
+          } else {
+
+            if (token) {
+              swalWithBootstrapButtons.fire({
+                title: '¿Quieres realizar el pago por efecty?',
+                text: "Esto no es reversible",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, acepto',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,
+                didOpen: () => {
+                  const confirmButton = document.querySelector('.swal2-confirm');
+                  confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+                }
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  handleSubmitOrderEfecty();
+
+                } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+
+                ) {
+
+
+
+
+                }
+              })
+
+
             }
-          }).then((result) => {
-            if (result.isConfirmed) {
-              handleSubmitOrderEfecty();
+          }
+        } else {
 
-            } else if (
-              /* Read more about handling dismissals below */
-              result.dismiss === Swal.DismissReason.cancel
+          if (token) {
+            swalWithBootstrapButtons.fire({
+              title: '¿Quieres realizar el pago por efecty?',
+              text: "Esto no es reversible",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, acepto',
+              cancelButtonText: 'Cancelar',
+              reverseButtons: true,
+              didOpen: () => {
+                const confirmButton = document.querySelector('.swal2-confirm');
+                confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+              }
+            }).then((result) => {
+              if (result.isConfirmed) {
+                handleSubmitOrderEfecty();
 
-            ) {
+              } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+
+              ) {
 
 
 
 
-            }
-          })
+              }
+            })
 
 
+          }
         }
+
 
         // setBotonDeshabilitado(true);
 
       }
       if (index === 4) {
         // console.log(index);
-        if (token) {
-          swalWithBootstrapButtons.fire({
-            title: '¿Quieres realizar el pago contra entrega?',
-            text: "Esto no es reversible",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, acepto',
-            cancelButtonText: 'Cancelar',
-            reverseButtons: true,
-            didOpen: () => {
-              const confirmButton = document.querySelector('.swal2-confirm');
-              confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+        if (window.innerWidth <= 480) {
+          if (selectedAddressIndex === null) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: '¡No has seleccionado ninguna dirección!',
+              confirmButtonColor: '#FC5241',
+            });
+
+          } else {
+
+            if (token) {
+              swalWithBootstrapButtons.fire({
+                title: '¿Quieres realizar el pago contra entrega?',
+                text: "Esto no es reversible",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, acepto',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,
+                didOpen: () => {
+                  const confirmButton = document.querySelector('.swal2-confirm');
+                  confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+                }
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  setModalOTP(true);
+
+                } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+
+                ) {
+
+
+
+
+                }
+              })
+
+
             }
-          }).then((result) => {
-            if (result.isConfirmed) {
-              setModalOTP(true);
+          }
+        } else {
 
-            } else if (
-              /* Read more about handling dismissals below */
-              result.dismiss === Swal.DismissReason.cancel
+          if (token) {
+            swalWithBootstrapButtons.fire({
+              title: '¿Quieres realizar el pago contra entrega?',
+              text: "Esto no es reversible",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, acepto',
+              cancelButtonText: 'Cancelar',
+              reverseButtons: true,
+              didOpen: () => {
+                const confirmButton = document.querySelector('.swal2-confirm');
+                confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+              }
+            }).then((result) => {
+              if (result.isConfirmed) {
+                setModalOTP(true);
 
-            ) {
+              } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+
+              ) {
 
 
 
 
-            }
-          })
+              }
+            })
 
 
+          }
         }
+
 
         // setBotonDeshabilitado(true);
       }
@@ -438,7 +580,7 @@ function AddressCart() {
     setIsScrollModalEnabled(true);
   }
 
-  const closeModalMantenimientoPSE = ()=>{
+  const closeModalMantenimientoPSE = () => {
     setModalMantenimientoPSE(false);
   }
 
@@ -866,7 +1008,7 @@ function AddressCart() {
   // }, [shouldShowCollapseThree]);
 
 
-  
+
 
   useEffect(() => {
 
@@ -914,6 +1056,8 @@ function AddressCart() {
   }, [activeStep, token, selectedAddressId, showPDF, modalDataPSE, modalDataTarjetas, subtotalNumber]);
 
 
+
+
   // useEffect(() => {
   //   // Obtener la URL actual
   //   const currentPath = window.location.pathname;
@@ -935,7 +1079,7 @@ function AddressCart() {
 
   return (
     <>
-      
+
       <div className='container'>
         <h5 style={{ color: '#74737B', fontSize: '16px' }}>Dirección de envío y facturación</h5>
         <div className="containerCheckoutSteps">
@@ -979,7 +1123,7 @@ function AddressCart() {
               </div>
 
               <div className="cards">
-                
+
 
                 <div id="collapseOne" className="collapse" aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample">
@@ -989,7 +1133,7 @@ function AddressCart() {
                 </div>
               </div>
               <div className="cards">
-                
+
                 <div id="collapseTwo" className="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                   <div className="cards">
                     {address && address.map((addr, index) => (
@@ -1032,7 +1176,7 @@ function AddressCart() {
               </div>
               {selectedAddressIndex != null && (
                 <div className="cards">
-                  
+
                   <div id="collapseThree" className="collapse" aria-labelledby="headingThree"
                     data-bs-parent="#accordionExample">
                     <div className="card-body paymentMethods">
@@ -1680,7 +1824,7 @@ function AddressCart() {
         <ModalBody>
           <ModalNoPse
             closeModalPse={closeModalMantenimientoPSE}
-            
+
           />
         </ModalBody>
       </Modal>
