@@ -31,7 +31,7 @@ import { addProductsCart, allProductsCart } from '../../services/cart';
 import NoStock from '../../views/user/noStock';
 import { addFavoriteProduct } from '../../services/ordenes';
 
-function DetailProduct({setCantCart, handleLogged}) {
+function DetailProduct({ setCantCart, handleLogged }) {
     const { slug } = useParams();
     const [detailProducts, setDetailProducts] = useState([]);
     const [currentImg, setCurrentImage] = useState('');
@@ -44,6 +44,7 @@ function DetailProduct({setCantCart, handleLogged}) {
     const [changeFormLogin, setChangeFormLogin] = useState(false);
     const [changeFormRegister, setChangeFormRegister] = useState(false);
     const [quantity, setQuantity] = useState(1);
+    const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
 
     const [productsCart, setProductsCart] = useState([]);
     // const [costoEnvio, setCostoEnvio] = useState(0);
@@ -528,7 +529,7 @@ function DetailProduct({setCantCart, handleLogged}) {
                         {/* <h4>iPhone 14 Pro Max 256 GB </h4>  */}
 
                         <h4>{detailProducts.name}</h4>
-                        <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf:'center'}}>
+                        <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf: 'center' }}>
                             {detailProducts.discount_tag_valor > 0 || detailProducts.discount_valor > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
                                     <h5>${detailProducts.discount_valor && detailProducts.discount_valor.toLocaleString('en') || detailProducts.discount_tag_valor && detailProducts.discount_tag_valor.toLocaleString('en')}</h5>
@@ -606,6 +607,8 @@ function DetailProduct({setCantCart, handleLogged}) {
                             className="modal-dialog-centered modal-sm"
                             toggle={() => setModalViewCart(false)}
                             isOpen={modalViewCart}
+                            onOpened={() => setIsScrollModalEnabled(false)}
+                            onClosed={() => setIsScrollModalEnabled(true)}
                         >
                             <ModalBody>
                                 {detailProducts.current_stock && detailProducts.current_stock > 0 ? (
@@ -620,6 +623,8 @@ function DetailProduct({setCantCart, handleLogged}) {
                             className="modal-dialog-centered modal-md"
                             toggle={() => setModalViewLogin(false)}
                             isOpen={modalViewLogin && !changeFormLogin}
+                            onOpened={() => setIsScrollModalEnabled(false)}
+                            onClosed={() => setIsScrollModalEnabled(true)}
                         >
                             <ModalBody>
                                 <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
@@ -629,6 +634,8 @@ function DetailProduct({setCantCart, handleLogged}) {
                             className="modal-dialog-centered modal-md"
                             toggle={() => setModalViewRegistro(false)}
                             isOpen={modalViewRegistro && !changeFormRegister}
+                            onOpened={() => setIsScrollModalEnabled(false)}
+                            onClosed={() => setIsScrollModalEnabled(true)}
                         >
                             <ModalBody>
                                 <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
@@ -787,29 +794,31 @@ function DetailProduct({setCantCart, handleLogged}) {
                     </div>
                 </div>
             </div>
-            <div id="scrollModalAddToCart" className="scroll-modal">
-                <div className="scroll-modal-content">
-                    {/* <!-- Contenido del modal --> */}
-                    {/* <div className="carrito">
+            {isScrollModalEnabled && (
+                <div id="scrollModalAddToCart" className="scroll-modal">
+                    <div className="scroll-modal-content">
+                        {/* <!-- Contenido del modal --> */}
+                        {/* <div className="carrito">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" className="bi bi-cart3 svgCart" viewBox="0 0 16 16">
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                         </svg>
                     </div> */}
-                    <div className="anadiralcarrito">
+                        <div className="anadiralcarrito">
 
-                        <a href="#" onClick={addToCart}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" className="bi bi-cart3 svgCart" viewBox="0 0 16 16">
-                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                            </svg>
-                            Añadir al carrito
-                        </a>
-                    </div>
-                    <div className="buyNowResponsive">
-                        <a href="#" onClick={buyNow}>Comprar ahora</a>
-                    </div>
+                            <a href="#" onClick={addToCart}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" className="bi bi-cart3 svgCart" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                </svg>
+                                Añadir al carrito
+                            </a>
+                        </div>
+                        <div className="buyNowResponsive">
+                            <a href="#" onClick={buyNow}>Comprar ahora</a>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 }
