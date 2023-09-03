@@ -1,4 +1,4 @@
-import React, { useEffect , useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import efecty from '../../assets/mastercard-8 4.png';
 
@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
         width: 150,
         fontWeight: 'bold'
     },
+    infoLabelConvenio: {
+        width: 200,
+        fontWeight: 'bold'
+    },
     infoValue: {
         flex: 1
     },
@@ -57,14 +61,14 @@ const styles = StyleSheet.create({
     }
 });
 
-const PDFContent = ({ closeModalPDF, dataRefEfecty, totalAmount , description}) => {
+const PDFContent = ({ closeModalPDF, dataRefEfecty, totalAmount, description }) => {
     const id = dataRefEfecty ? dataRefEfecty.id : null;
     const [referenciaData, setReferenciaData] = useState("");
-  
+
 
     useEffect(() => {
         // console.log("datos de la referencia", dataRefEfecty);
-        
+
         if (dataRefEfecty) {
             setReferenciaData(dataRefEfecty);
         }
@@ -77,6 +81,12 @@ const PDFContent = ({ closeModalPDF, dataRefEfecty, totalAmount , description}) 
                     <View style={styles.header}>
                         <Image style={styles.image} src={efecty} />
                         <Text style={styles.headerText}>Referencia de Pago</Text>
+                        {/* <Text style={styles.headerText}>Número de convenio</Text>
+                        <Text style={styles.headerText}>110757</Text> */}
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <Text style={styles.infoLabelConvenio}>Número de convenio:</Text>
+                        <Text style={styles.infoValue}>110757</Text>
                     </View>
                     <View style={styles.infoContainer}>
                         <Text style={styles.infoLabel}>ID de referencia:</Text>
