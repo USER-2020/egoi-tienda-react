@@ -154,15 +154,15 @@ function TableOrders({ setOrderDetalleId }) {
                                 <td>{item.id}</td>
                                 <td>{new Date(item.updated_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
                                 <td>
-                                <span className={`badge text-${getStatusColorClass(item.order_status)}`}>
-                                    {
-                                item.order_status === 'confirmed' ? 'Confirmado': '' ||
-                                item.order_status === 'canceled' ? 'Cancelado' : '' ||
-                                item.order_status === 'pending' ? 'Pendiente' : '' ||
-                                item.order_status === 'processing' ? 'Procesando' : '' ||
-                                item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
-                                item.order_status === 'delivered' ? 'Enviado' : ''
-                                }</span>
+                                    <span className={`badge text-${getStatusColorClass(item.order_status)}`}>
+                                        {
+                                            item.order_status === 'confirmed' ? 'Confirmado' : '' ||
+                                                item.order_status === 'canceled' ? 'Cancelado' : '' ||
+                                                    item.order_status === 'pending' ? 'Pendiente' : '' ||
+                                                        item.order_status === 'processing' ? 'Procesando' : '' ||
+                                                            item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
+                                                                item.order_status === 'delivered' ? 'Enviado' : ''
+                                        }</span>
                                 </td>
                                 <td>${item.order_amount.toLocaleString()}</td>
                                 <td>
@@ -200,19 +200,19 @@ function TableOrders({ setOrderDetalleId }) {
                                 </td>
                             </tr>
                         ))}
-                </tbody>
-            </Table>
-        </div >
-            {/* Modal de cancelar pedido */ }
+                    </tbody>
+                </Table>
+            </div >
+            {/* Modal de cancelar pedido */}
             < Modal
-    className = "modal-dialog-centered modal-sm"
-    toggle = {() => closeModalCancelOrder()
-}
-isOpen = { modalCancelOrder }
-    >
-    <ModalBody>
-        <ModalCancelarPedido />
-    </ModalBody>
+                className="modal-dialog-centered modal-sm"
+                toggle={() => closeModalCancelOrder()
+                }
+                isOpen={modalCancelOrder}
+            >
+                <ModalBody>
+                    <ModalCancelarPedido setModalCancelarPedido={closeModalCancelOrder}/>
+                </ModalBody>
 
             </Modal >
         </>

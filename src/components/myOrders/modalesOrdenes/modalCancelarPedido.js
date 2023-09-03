@@ -1,6 +1,6 @@
 import React from 'react'
 import './modalCancelarPedido.css';
-function ModalCancelarPedido() {
+function ModalCancelarPedido({setModalCancelarPedido}) {
     return (
         <div className='containerModalCanelarPedido'>
             <svg width="138" height="138" viewBox="0 0 138 138" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,12 +15,12 @@ function ModalCancelarPedido() {
 
             <div className='contenedorHeaderModalCanelarPedido'>
                 <h5 style={{color:'#E01C0F', fontWeight:'700'}}>¿Estás seguro?</h5>
-                <p style={{fontSize:'14px'}}>Deseas cancelar este pedido.</p>
+                <p style={{fontSize:'14px'}}>Para atender tu solicitud por favor comunícate a través de nuestros canales de atención en la opción contáctanos.</p>
             </div>
 
             <div className='contenedorOpcionesCancelarPedido'>
-                <a href='#' className='si'>Sí, deseo cancelar</a>
-                <a href='#'className='no'>No, deseo regresar</a>
+                <a href='/contactUs' className='si'>Ir a contáctanos</a>
+                <a href='#'className='no' onClick={()=>setModalCancelarPedido()}>No, deseo regresar</a>
             </div>
         </div>
     )
