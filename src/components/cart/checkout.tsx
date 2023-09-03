@@ -31,6 +31,7 @@ import efectyLogo from '../../assets/egoi_icons/logo_efecty.svg';
 import pseLogo from '../../assets/egoi_icons/logo_pse.svg';
 import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoPago';
 import ModalNoPse from '../../views/user/metodosDePago/modalNoPse.tsx';
+// import twilio from 'twilio';
 
 
 
@@ -110,6 +111,37 @@ function AddressCart() {
 
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+
+  /* Twilio */
+  const accountSid = 'AC8b58947dd886254c3e214afb4251a7b8'; // Reemplaza con tu Account SID
+  const authToken = '3186432bdf158410ada41181bf52254d';   // Reemplaza con tu Auth Token
+  const fromPhoneNumber = 'whatsapp:+14155238886'; // Reemplaza con el número de teléfono de Twilio configurado en el WhatsApp Sandbox
+  const toPhoneNumber = `whatsapp:+${dataAddress && dataAddress[0].phone}`;   // Reemplaza con el número de teléfono del destinatario en formato internacional
+
+  const messageBody = 'Hola, esto es un mensaje de prueba desde Twilio para WhatsApp.';
+  // const client = twilio(accountSid, authToken);
+  const sendCopyForTwilio = () => {
+    console.log(dataAddress[0].phone);
+    axios({
+      method: 'post',
+      url: `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+      auth: {
+        username: accountSid,
+        password: authToken,
+      },
+      data: {
+        From: fromPhoneNumber,
+        To: toPhoneNumber,
+        Body: messageBody,
+      },
+    })
+      .then(response => {
+        console.log(`Mensaje enviado con SID: ${response.data.sid}`);
+      })
+      .catch(error => {
+        console.error(`Error al enviar el mensaje: ${error.response.data.message}`);
+      });
+  }
 
 
 
@@ -519,6 +551,9 @@ function AddressCart() {
 
   const closeModalEfecty = () => {
     setModalEfecty(false);
+    setOkPurchase(true);
+    setModalSuccessPurchase(true);
+    resetProductCardDetail();
     setBotonDeshabilitado(true);
   }
 
@@ -898,6 +933,7 @@ function AddressCart() {
           timerProgressBar: true,
           didOpen: () => {
             makePlaceOrder();
+            sendCopyForTwilio();
             Swal.showLoading();
             const b = Swal.getHtmlContainer().querySelector('b');
             timerInterval = setInterval(() => {
@@ -977,7 +1013,7 @@ function AddressCart() {
         transaction_amount: numericValue, // Monto total validado si es con cupón o no
         description: descriptionOrder, // Descripción concatenada de los productos del carrito de compras
         payment_method_id: "efecty", // Id del método de pago seleccionado
-        email: userEmail // Email del usuario //userEmail
+        email: "juanfernandozuluaga2014310@gmail.com" // Email del usuario //userEmail
       }
 
       generateEfectyREF(dataOrder, descriptionOrder);
@@ -1820,14 +1856,14 @@ function AddressCart() {
       {/* Modal checkout efecty */}
       <Modal
         className="modal-dialog-centered modal-sm"
-        toggle={() => setModalEfecty(false)}
+        toggle={() => closeModalEfecty()}
         isOpen={modalEfecty}
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : total}
-            closeEfectyModal={closeModalEfecty}
+            closeEfectyModal={() => closeModalEfecty()}
             dataRef={dataRef}
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
