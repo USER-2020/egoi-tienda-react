@@ -125,44 +125,99 @@ nav .containerNav {
 }
 
 /* Estilos para el contenedor de resultados de búsqueda */
-.styles.searchResultsContainer {
+
+.input-group .searchResultsContainer {
+  margin-left: -1px;
+  background: white;
   position: absolute;
-  /* Para posicionarlo debajo del input */
-  top: 100%;
-  /* Coloca el contenedor debajo del input */
-  left: 0;
-  /* Alinea el contenedor a la izquierda */
-  width: 100%;
-  /* Ancho completo del contenedor */
-  background-color: white;
-  /* Fondo blanco */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  /* Sombra ligera */
-  border-radius: 4px;
-  /* Bordes redondeados */
-  z-index: 1;
-  /* Asegura que esté encima de otros elementos */
+  z-index: 999;
+  margin-top: 40px;
+  padding: 10px;
+  border-radius: 16px !important;
+  width: 400px;
+  height: 300px;
+  overflow-y: scroll;
+  margin-left: 0px !important;
 }
 
-/* Estilos para cada resultado individual */
-.styles.searchResult {
-  padding: 8px 16px;
-  /* Espaciado interior */
-  border-bottom: 1px solid #ddd;
-  /* Borde inferior para separar los resultados */
+/* Estilos para la barra de desplazamiento */
+.input-group .searchResultsContainer::-webkit-scrollbar {
+  width: 0px;
+  /* Ancho de la barra de desplazamiento */
+}
+
+/* Estilo del riel de la barra de desplazamiento */
+.input-group .searchResultsContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Estilo del pulgar de la barra de desplazamiento */
+.input-group .searchResultsContainer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+  /* Bordes redondeados para el pulgar */
+}
+
+/* Cambio de estilo al pasar el mouse sobre la barra de desplazamiento */
+.input-group .searchResultsContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.input-group .searchContainer {
+  position: relative;
+}
+
+/* Estilos para cada resultado de búsqueda */
+.input-group .searchResult {
+  padding: 10px;
+  /* Espaciado interno */
   cursor: pointer;
-  /* Cambia el cursor al pasar por encima */
+  /* Cambia el cursor al pasar sobre los resultados */
 }
 
-/* Estilo para el último resultado para eliminar el borde inferior */
-.styles.searchResult:last-child {
-  border-bottom: none;
+/* Estilos para la lista de resultados */
+.resultsList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* Estilos para mostrar el menú de resultados */
-.visible {
+/* Estilos para cada elemento de resultado */
+.searchResultItem {
+  margin-bottom: 8px;
+  /* Espacio entre cada resultado */
+}
+
+.searchResultItem a {
   display: block;
+  padding: 8px;
+  text-decoration: none;
+  color: #333;
+  /* Color del texto */
+  border: none;
+  /* Borde del resultado */
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  /* Transición de color al hacer hover */
 }
+
+.searchResultItem a:hover {
+  background-color: #f5f5f5;
+  /* Color de fondo al hacer hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Sombreado al hacer hover */
+}
+
+
+/* Estilos cuando el contenedor es visible */
+/* .input-group .searchResultsContainer .visible {
+  display: block;
+} */
+
+/* Estilos cuando el contenedor está oculto */
+/* .input-group .searchResultsContainer .hidden {
+  display: none;
+} */
 
 
 
@@ -717,6 +772,19 @@ div.filaMedia {
 
   .iconICS img {
     float: left;
+  }
+
+  .input-group .searchResultsContainer {
+    background: white;
+    position: absolute;
+    z-index: 999;
+    margin-top: 40px;
+    padding: 10px;
+    border-radius: 16px !important;
+    width: 97vw;
+    height: 300px;
+    overflow-y: scroll;
+    margin-left: -120px !important;
   }
 
   /* Puedes agregar estilos adicionales según tus necesidades */

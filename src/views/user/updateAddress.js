@@ -166,7 +166,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                 justifyContent: "center",
                             }}
                         >
-                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Actualizar dirección de entrega</h5>
+                            <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Actualizar la dirección de entrega</h5>
                         </div>
                         <Card style={{ border: 'none' }}>
                             <Form onSubmit={handleSubmitAddress}>
@@ -176,7 +176,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                         width: '100px',
                                         backgroundColor: selectedLink === 'home' ? '#FC5241' : 'white',
                                         textDecoration: 'none', color: selectedLink === 'home' ? 'white' : 'black',
-                                        height: '30px',
+                                        height: '28px',
                                         alignSelf: 'center',
                                         textAlign: 'center',
                                         borderRadius: '12px',
@@ -189,7 +189,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                         width: '100px',
                                         backgroundColor: selectedLink === 'permanent' ? '#FC5241' : 'white',
                                         textDecoration: 'none', color: selectedLink === 'permanent' ? 'white' : 'black',
-                                        height: '30px',
+                                        height: '28px',
                                         alignSelf: 'center',
                                         textAlign: 'center',
                                         borderRadius: '12px',
@@ -202,7 +202,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                         width: '100px',
                                         backgroundColor: selectedLink === 'others' ? '#FC5241' : 'white',
                                         textDecoration: 'none', color: selectedLink === 'others' ? 'white' : 'black',
-                                        height: '30px',
+                                        height: '28px',
                                         alignSelf: 'center',
                                         textAlign: 'center',
                                         borderRadius: '12px',
@@ -221,7 +221,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        placeholder="Nombre de contacto"
+                                        placeholder="Nombre del contacto"
                                         value={contactPersonName}
                                         onChange={(event) => setContactPersonName(event.target.value)}
                                     />

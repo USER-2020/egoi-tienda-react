@@ -22,3 +22,22 @@
   input[placeholder="Título corto"]::placeholder {
     background-image: var(--placeholder-icon-asunto);
   }
+
+
+  @media (max-width: 768px) {
+    #infoPlus .infoClienteContact{
+      display: flex !important;
+      flex-direction: column !important;
+      text-align: center !important;
+      gap: 10px;
+      
+     
+
+    }
+
+    #infoPlus .infoClienteContact span {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }

@@ -280,7 +280,7 @@ function AddressCart() {
       setSelectedCheckbox(index);
       if (index === 0) {
         // console.log(index);
-        if (window.innerWidth <= 480) {
+        if (window.innerWidth <= 768) {
           if (selectedAddressIndex === null) {
             Swal.fire({
               icon: 'error',
@@ -301,7 +301,7 @@ function AddressCart() {
       }
       if (index === 1) {
         // console.log(index);
-        if (window.innerWidth <= 480) {
+        if (window.innerWidth <= 768) {
           if (selectedAddressIndex === null) {
             Swal.fire({
               icon: 'error',
@@ -336,7 +336,7 @@ function AddressCart() {
       }
       if (index === 3) {
         // console.log(index);
-        if (window.innerWidth <= 480) {
+        if (window.innerWidth <= 768) {
           if (selectedAddressIndex === null) {
             Swal.fire({
               icon: 'error',
@@ -420,7 +420,7 @@ function AddressCart() {
       }
       if (index === 4) {
         // console.log(index);
-        if (window.innerWidth <= 480) {
+        if (window.innerWidth <= 768) {
           if (selectedAddressIndex === null) {
             Swal.fire({
               icon: 'error',

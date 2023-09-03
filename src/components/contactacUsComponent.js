@@ -114,14 +114,14 @@ const ContactacUsComponent = () => {
                 <button style={{ backgroundColor: '#FC5241', border: 'none', borderRadius: '32px', width: '300px', color: 'white' }} type="submit" id="submit">Enviar</button>
               </div>
             </form>
-            <div className="col-md-12" style={{ marginTop: '10px' }}>
-              <div className="form-group" >
+            <div  style={{ marginTop: '10px' }}>
+              <div className="form-group" id="infoPlus">
                 <p>También puedes contactarnos a través de los siguientes canales de atención.</p>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                  <span><img src={gmailIcon} width={20} style={{ marginRight: '10px' }} />Cliente@egoi.com.co</span>
-                  <span><img src={WhatsappIcon} width={20} style={{ marginRight: '10px' }} />
-                    <a href="https://wa.link/81um87" style={{ textDecoration: 'none', color: 'black' }}>3057146688</a> -
-                    <a href="https://wa.link/78cdti" style={{ textDecoration: 'none', color: 'black' }}> 3187179526</a>
+                <div className="infoClienteContact" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                  <span style={{alignItems:'center', diplay:'flex'}}><img src={gmailIcon} width={20} style={{ marginRight: '10px'}} />Cliente@egoi.com.co</span>
+                  <span style={{alignItems:'center', diplay:'flex'}}><img src={WhatsappIcon} width={20} style={{ marginRight: '10px'}} />
+                    <a href="https://wa.link/81um87" style={{ textDecoration: 'none', color: 'black' , alignItems:'center'}}>3057146688</a> -
+                    <a href="https://wa.link/78cdti" style={{ textDecoration: 'none', color: 'black' , alignItems:'center'}}> 3187179526</a>
                   </span>
                 </div>
               </div>
