@@ -69,15 +69,25 @@ const Header = ({ cantCart }) => {
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
     console.log(event.target.value);
+    resultsSearch(event.target.value);
+    if (event.target.value === '') {
+      setShowResults(false);
+    } else {
+      setShowResults(true);
+    }
     // handleEnterPress(event);
   }
 
   const handleEnterPress = (event) => {
     if (event.key === 'Enter') {
       setPrevSearchProducts(prevSearchProducts);
-      console.log("Este es el valor guardado en el search: ", prevSearchProducts);
+      // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       history.push(`/products/${prevSearchProducts}`);
     }
+  }
+
+  const handleClickResult = (name) => {
+    history.push(`/products/${name}`);
   }
 
   /**
@@ -118,21 +128,22 @@ const Header = ({ cantCart }) => {
   }
 
   const resultsSearch = (prevSearchProducts) => {
-    console.log("Entre al resuktado de search");
-    if (prevSearchProducts) {
+    console.log("Entré al resultado de búsqueda");
+    if (!prevSearchProducts || prevSearchProducts.length === 0) {
+      setShowResults(false); // Oculta los resultados si prevSearchProducts está vacío
+      setProducts([]); // Borra los resultados anteriores si los hubiera
+    } else {
       getProductsBySearch(prevSearchProducts)
         .then((res) => {
           // console.log(res);
           setProducts(res.data.products);
-          if(res.data.products.lenght > 0){
-            setShowResults(true);
-          }else{
-            setShowResults(false);
-          }
-          console.log("Respuesta de los productos por busqueda", res.data.products);
-        })
+          setShowResults(true); // Muestra los resultados si hay resultados de búsqueda
+          console.log("Respuesta de los productos por búsqueda", res.data.products);
+        });
     }
-  }
+  };
+
+
   /**
    * The function "mostrarSubcategorias" logs the selected category and sets the subcategories based on
    * the category's childes property.
@@ -342,13 +353,13 @@ const Header = ({ cantCart }) => {
   }, []);
 
 
-  useEffect(() => {
-    if (prevSearchProducts) {
-      // console.log("Este el id selesccionado para activar el boton active ", selectedCategoryId);
-      resultsSearch(prevSearchProducts);
-      console.log(products);
-    }
-  }, [prevSearchProducts]);
+  // useEffect(() => {
+  //   if (prevSearchProducts) {
+  //     // console.log("Este el id selesccionado para activar el boton active ", selectedCategoryId);
+  //     resultsSearch(prevSearchProducts);
+  //     // console.log(products);
+  //   }
+  // }, [prevSearchProducts]);
 
 
   return (
@@ -377,18 +388,25 @@ const Header = ({ cantCart }) => {
               onKeyUp={handleEnterPress}
 
             />
+            {/* Contenedor para mostrar los resultados de búsqueda */}
+            {showResults && (
+              <div className={`searchResultsContainer`}>
+                {products && products.length > 0 ? (
+                  <ul className="resultsList">
+                    {products.map((result, index) => (
+                      <li key={index} className="searchResultItem">
+                        <a href="#" onClick={()=>handleClickResult(result.name)}>{result.name}</a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No se encontraron resultados.</p>
+                )}
+              </div>
+            )}
+
           </InputGroup>
-          {/* Contenedor para mostrar los resultados de búsqueda */}
-          <div
-            className={`${styles.searchResultsContainer} ${showResults ? "visible" : ""}`}
-          >
-            {products &&
-              products.map((result, index) => (
-                <div key={index} className={styles.searchResult}>
-                  {result.name}
-                </div>
-              ))}
-          </div>
+
         </div>
         <div className="userInteraction">
           {/* Usuario Icono  */}

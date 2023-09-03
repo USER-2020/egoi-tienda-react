@@ -70,6 +70,7 @@ function HeaderResponsive({ canCart }) {
   const [products, setProducts] = useState([]);
 
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
+  const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad del menú de resultados
 
   const [fieldsEnabled, setFieldsEnabled] = useState(false);
 
@@ -80,7 +81,12 @@ function HeaderResponsive({ canCart }) {
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
     console.log(event.target.value);
-    handleEnterPress(event);
+    resultsSearch(event.target.value);
+    if (event.target.value === '') {
+      setShowResults(false);
+    } else {
+      setShowResults(true);
+    }
   }
 
   const handleEnterPress = (event) => {
@@ -91,17 +97,25 @@ function HeaderResponsive({ canCart }) {
     }
   }
 
+  const handleClickResult = (name) => {
+    history.push(`/products/${name}`);
+  }
+
   const resultsSearch = (prevSearchProducts) => {
-    console.log("Entre al resuktado de search");
-    if (prevSearchProducts) {
+    console.log("Entré al resultado de búsqueda");
+    if (!prevSearchProducts || prevSearchProducts.length === 0) {
+      setShowResults(false); // Oculta los resultados si prevSearchProducts está vacío
+      setProducts([]); // Borra los resultados anteriores si los hubiera
+    } else {
       getProductsBySearch(prevSearchProducts)
         .then((res) => {
           // console.log(res);
-          setProducts(res.data);
-          console.log("Respuesta de los productos por busqueda", res.data.products);
-        })
+          setProducts(res.data.products);
+          setShowResults(true); // Muestra los resultados si hay resultados de búsqueda
+          console.log("Respuesta de los productos por búsqueda", res.data.products);
+        });
     }
-  }
+  };
 
   const goToDetailCart = () => {
     if (currenUser) {
@@ -304,6 +318,22 @@ function HeaderResponsive({ canCart }) {
               }} type="text" placeholder="Busca productos, marcas..."
                 onChange={handleInputChange}
                 onKeyUp={handleEnterPress} />
+              {/* Contenedor para mostrar los resultados de búsqueda */}
+              {showResults && (
+                <div className={`searchResultsContainer`}>
+                  {products && products.length > 0 ? (
+                    <ul className="resultsList">
+                      {products.map((result, index) => (
+                        <li key={index} className="searchResultItem">
+                          <a href="#" onClick={() => handleClickResult(result.name)}>{result.name}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No se encontraron resultados.</p>
+                  )}
+                </div>
+              )}
             </InputGroup>
           </div>
           <a href="#" onClick={() => { goToDetailCart() }}
