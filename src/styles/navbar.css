@@ -784,7 +784,7 @@ div.filaMedia {
     width: 97vw;
     height: 300px;
     overflow-y: scroll;
-    margin-left: -120px !important;
+    margin-left: calc((100% - 115vw) / 2) !important;
   }
 
   /* Puedes agregar estilos adicionales según tus necesidades */
