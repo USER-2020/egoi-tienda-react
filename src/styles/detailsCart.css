@@ -299,7 +299,7 @@
 #progress {
   -webkit-appearance: none;
   position: absolute;
-  width: 85%;
+  width: 80%;
   z-index: 5;
   height: 10px;
   margin-left: 55px;
