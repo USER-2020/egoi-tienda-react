@@ -207,7 +207,7 @@ const Recientes = ({ bannersInfo }) => {
                             </Link>
                         </div>
                     ) : (null)}
-                    <div className='containerProductos' ref={containerRef}>
+                    <div className={uniqueProducts.length > 0 ? 'containerProductos1' : 'containerProductos2'} ref={containerRef}>
                         {((uniqueProducts && uniqueProducts.length >= 5)) && (
                             <button className="scroll-button left" onClick={handleScrollLeft} onMouseOver={handleScrollLeft}>
                                 &#8249;
