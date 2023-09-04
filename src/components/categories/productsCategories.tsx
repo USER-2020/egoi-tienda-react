@@ -410,7 +410,30 @@ const ProductsCategories = () => {
     localStorage.setItem('recentlyViewed', JSON.stringify(limitedList));
   }
 
-  const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+   // Paso 1: Obtener productos de localStorage
+   const storedProducts = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+
+   // Paso 2: Crear un conjunto para almacenar ids únicos
+   const uniqueIds = new Set();
+
+   // Paso 3: Iterar a través de los productos y agregar sus ids al conjunto
+   const filteredProducts = storedProducts.filter(product => {
+       if (!uniqueIds.has(product.id)) {
+           uniqueIds.add(product.id);
+           return true; // Mantener este producto en la lista final
+       }
+       return false; // Descartar productos duplicados
+   });
+
+   // Paso 4: Convertir el conjunto en un array de ids únicos
+   const uniqueIdsArray = Array.from(uniqueIds);
+
+   // Paso 5: Crear un nuevo array de productos filtrados basados en los ids únicos
+   const uniqueProducts = uniqueIdsArray.map(id => {
+       return filteredProducts.find(product => product.id === id);
+   });
+
+   // Ahora `uniqueProducts` contiene los productos filtrados sin duplicados por id
 
   useEffect(() => {
     if (id) {
@@ -429,7 +452,7 @@ const ProductsCategories = () => {
 
     if (isRecentlyProducts) {
 
-      console.log(recentlyViewed);
+      // console.log(recentlyViewed);
     }
 
     if (isAddRecently) {
@@ -538,7 +561,7 @@ const ProductsCategories = () => {
             <div className="containerProducts-categories d-flex flex-column align-items-center align-items-md-end w-100">
               <div className="containerProducts-categories row">
                 {/* {isDiscountedProducts && productsDiscounted } */}
-                {isRecentlyProducts && recentlyViewed && recentlyViewed.map((product, index) => (
+                {isRecentlyProducts && uniqueProducts && uniqueProducts.map((product, index) => (
                   <div key={product.id} className="col-md-3 col-6 mb-4" >
                     <a href="#" className='containerCard2  '  >
                       <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index} onClick={() => agregarProductoVisto(product)}>
