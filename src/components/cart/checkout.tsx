@@ -23,7 +23,7 @@ import { allBanks } from '../../services/bank';
 import { aplyCupon } from '../../services/cupon';
 import CashDeliveryOTP from '../../views/user/metodosDePago/cashDeliveryOTP';
 import axios from 'axios';
-import { makePay, placeOrder, referenciaPago } from '../../services/metodosDePago';
+import { makePay, placeOrder, placeOrderEfecty, referenciaPago } from '../../services/metodosDePago';
 import { PDFViewer } from '@react-pdf/renderer';
 import PDFContent from '../PDF/PDFContent';
 import SuccessPurchase from '../../views/user/success_purchase';
@@ -174,6 +174,9 @@ function AddressCart() {
 
   /* CAmbio de precio subtotal */
   const subtotalNumber = parseInt(subtotal.replace(',', ''), 10);
+  
+  /* Cambio de precio en total */
+  const totalNumber = parseInt(total.replace(/[\$,]/g,''), 10);
 
 
 
@@ -897,7 +900,7 @@ function AddressCart() {
   }
 
   /* Realizar order */
-  const makePlaceOrder = () => {
+  const makePlaceOrder = (newDataRefId) => {
 
     let cuponOffSale = "$0";
     if (discountCoupon && discountCoupon.discount !== undefined) {
@@ -907,7 +910,8 @@ function AddressCart() {
     const cuponDescuentoLimpio = Number(cuponOffSale.replace("$", ""));
 
     console.log(cuponDescuentoLimpio);
-    placeOrder(selectedAddressId, cuponDescuentoLimpio, descriptionOrder, 1, token)
+    console.log(newDataRefId);
+    placeOrderEfecty(selectedAddressId, cuponDescuentoLimpio, descriptionOrder, 1, token, newDataRefId)
       .then((res) => {
         console.log("Orden enviada por Efecty");
         console.log(res);
@@ -932,7 +936,7 @@ function AddressCart() {
           timer: 3000,
           timerProgressBar: true,
           didOpen: () => {
-            makePlaceOrder();
+            makePlaceOrder(newDataRef.id);
             sendCopyForTwilio();
             Swal.showLoading();
             const b = Swal.getHtmlContainer().querySelector('b');
@@ -1013,7 +1017,7 @@ function AddressCart() {
         transaction_amount: numericValue, // Monto total validado si es con cupón o no
         description: descriptionOrder, // Descripción concatenada de los productos del carrito de compras
         payment_method_id: "efecty", // Id del método de pago seleccionado
-        email: "juanfernandozuluaga2014310@gmail.com" // Email del usuario //userEmail
+        email: userEmail // Email del usuario //userEmail
       }
 
       generateEfectyREF(dataOrder, descriptionOrder);
@@ -1023,9 +1027,9 @@ function AddressCart() {
   let formattedDiscount = '';
   let formattedTotal = '';
   if (discountCoupon && discountCoupon.discount !== undefined && discountCoupon.total !== undefined) {
-    formattedDiscount = discountCoupon.discount.toString().replace(',', '.');
+    formattedDiscount = discountCoupon.discount.toString().replace(',', '');
 
-    formattedTotal = discountCoupon.total.toString().replace(',', '.');
+    formattedTotal = discountCoupon.total.toString().replace(',', '');
   }
 
   const getCantCarritos = () => {
@@ -1100,7 +1104,7 @@ function AddressCart() {
       getAddressById();
     }
 
-
+    console.log(totalNumber);
 
     // if (showPDF) {
     //   console.log("se muestra el pdf", showPDF);
@@ -1310,7 +1314,7 @@ function AddressCart() {
                             onChange={() => handleCheckboxChange(3)} />
                         </div>
                       </Card>
-                      {subtotalNumber >= 79990 ? (
+                      {totalNumber >= 39990 && totalNumber <= 1999000 && (
 
                         <Card>
                           <div className="payment">
@@ -1331,7 +1335,7 @@ function AddressCart() {
                               onChange={() => handleCheckboxChange(4)} />
                           </div>
                         </Card>
-                      ) : (<></>)}
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1712,7 +1716,7 @@ function AddressCart() {
                 </div>
               </Card>
               <Card>
-                {subtotalNumber >= 79990 ? (
+                {totalNumber >= 39900 && totalNumber <= 1999000 && (
                   <div className="payment">
                     <div className="imgPayment">
                       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1731,7 +1735,6 @@ function AddressCart() {
                     </div>
 
                   </div>
-                ) : (<></>
                 )}
               </Card>
 
@@ -1938,7 +1941,6 @@ function AddressCart() {
       {/* Modal compra exitosa */}
       <Modal
         className="modal-dialog-centered modal-md"
-        toggle={() => setModalSuccessPurchase(false)}
         isOpen={modalSuccessPurchase}
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
