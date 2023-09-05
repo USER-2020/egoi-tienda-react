@@ -17,6 +17,7 @@
     "bs-stepper": "^1.7.0",
     "firebase": "^9.22.2",
     "formik": "^2.2.9",
+    "html-react-parser": "^4.2.2",
     "node": "^18.14.0",
     "pdfjs-dist": "^3.7.107",
     "react": "^18.2.0",
