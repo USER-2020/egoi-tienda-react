@@ -65,10 +65,31 @@
     border-radius: 5px;
 } */
 
-.containerProductos {
+.containerProductos1 {
     display: flex;
     gap: 25px;
     overflow-x: scroll;
+    white-space: nowrap;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    height: 400px;
+    scroll-behavior: smooth;
+
+    /* padding-left: 30px; */
+    /* Ajustar el espacio a la izquierda para el botón de "left" */
+}
+
+.containerProductos1 .cardContainer a{
+    text-decoration: none;
+
+}
+
+.containerProductos2 {
+    display: flex;
+    gap: 25px;
+    overflow-x: hidden;
     white-space: nowrap;
     overflow-y: hidden;
     margin-bottom: 20px;
@@ -109,7 +130,32 @@
     margin: -20px;
 }
 
+.containerProductos1 .scroll-button {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 70px;
+    background-color: #fff;
+    border: none;
+    color: #333;
+    font-size: 50px;
+    cursor: pointer;
+    z-index: 1;
+    transition: 0.3s ease;
+    border-radius: 50px;
+    margin: -20px;
+}
+
 .containerProductos .scroll-button.left {
+    left: 0;
+    position: sticky;
+    width: 100px;
+    height: 100px;
+
+}
+
+.containerProductos1 .scroll-button.left {
     left: 0;
     position: sticky;
     width: 100px;
@@ -124,8 +170,19 @@
     height: 100px;
 
 }
+.containerProductos1 .scroll-button.right {
+    right: 0;
+    position: sticky;
+    width: 100px;
+    height: 100px;
+
+}
 
 .containerProductos .scroll-button:focus {
+    outline: none;
+}
+
+.containerProductos1.scroll-button:focus {
     outline: none;
 }
 
@@ -222,6 +279,17 @@
 }
 
 .containerProductos::-webkit-scrollbar {
+
+    /* width: 5px;
+    height: 5px;
+    border-radius: 10px;
+    margin-top: 5px;
+    pointer-events: all;
+    cursor: pointer; */
+    display: none;
+}
+
+.containerProductos1::-webkit-scrollbar {
 
     /* width: 5px;
     height: 5px;
@@ -880,7 +948,15 @@ h4 {
         display: none;
     }
 
+    .containerProductos1 .scroll-button.left {
+        display: none;
+    }
+
     .containerProductos .scroll-button {
+        display: none;
+    }
+
+    .containerProductos1 .scroll-button {
         display: none;
     }
 
@@ -897,6 +973,9 @@ h4 {
     }
 
     .containerProductos .scroll-button.right {
+        display: none;
+    }
+    .containerProductos1 .scroll-button.right {
         display: none;
     }
 

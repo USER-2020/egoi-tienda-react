@@ -111,7 +111,7 @@ const ContactacUsComponent = () => {
                 </div>
               </div>
               <div className=" " style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                <button style={{ backgroundColor: '#FC5241', border: 'none', borderRadius: '32px', width: '300px', color: 'white' }} type="submit" id="submit">Enviar</button>
+                <button style={{ backgroundColor: '#FC5241', border: 'none', borderRadius: '32px', width: '200px', color: 'white', height:'48px'}} type="submit" id="submit">Enviar</button>
               </div>
             </form>
             <div  style={{ marginTop: '10px' }}>
