@@ -1017,7 +1017,7 @@ function AddressCart() {
         transaction_amount: numericValue, // Monto total validado si es con cupón o no
         description: descriptionOrder, // Descripción concatenada de los productos del carrito de compras
         payment_method_id: "efecty", // Id del método de pago seleccionado
-        email: userEmail // Email del usuario //userEmail
+        email: "juanfernandozuluaga2014310@gmail.com" // Email del usuario //userEmail
       }
 
       generateEfectyREF(dataOrder, descriptionOrder);
