@@ -24,7 +24,7 @@ import { aplyCupon } from '../../services/cupon';
 import CashDeliveryOTP from '../../views/user/metodosDePago/cashDeliveryOTP';
 import axios from 'axios';
 import { makePay, placeOrder, placeOrderEfecty, referenciaPago } from '../../services/metodosDePago';
-import { PDFViewer } from '@react-pdf/renderer';
+import { PDFViewer, pdf } from '@react-pdf/renderer';
 import PDFContent from '../PDF/PDFContent';
 import SuccessPurchase from '../../views/user/success_purchase';
 import efectyLogo from '../../assets/egoi_icons/logo_efecty.svg';
@@ -113,35 +113,9 @@ function AddressCart() {
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
 
   /* Twilio */
-  const accountSid = 'AC8b58947dd886254c3e214afb4251a7b8'; // Reemplaza con tu Account SID
-  const authToken = '3186432bdf158410ada41181bf52254d';   // Reemplaza con tu Auth Token
-  const fromPhoneNumber = 'whatsapp:+14155238886'; // Reemplaza con el número de teléfono de Twilio configurado en el WhatsApp Sandbox
-  const toPhoneNumber = `whatsapp:+${dataAddress && dataAddress[0].phone}`;   // Reemplaza con el número de teléfono del destinatario en formato internacional
 
-  const messageBody = 'Hola, esto es un mensaje de prueba desde Twilio para WhatsApp.';
-  // const client = twilio(accountSid, authToken);
-  const sendCopyForTwilio = () => {
-    console.log(dataAddress[0].phone);
-    axios({
-      method: 'post',
-      url: `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-      auth: {
-        username: accountSid,
-        password: authToken,
-      },
-      data: {
-        From: fromPhoneNumber,
-        To: toPhoneNumber,
-        Body: messageBody,
-      },
-    })
-      .then(response => {
-        console.log(`Mensaje enviado con SID: ${response.data.sid}`);
-      })
-      .catch(error => {
-        console.error(`Error al enviar el mensaje: ${error.response.data.message}`);
-      });
-  }
+
+
 
 
 
@@ -174,9 +148,9 @@ function AddressCart() {
 
   /* CAmbio de precio subtotal */
   const subtotalNumber = parseInt(subtotal.replace(',', ''), 10);
-  
+
   /* Cambio de precio en total */
-  const totalNumber = parseInt(total.replace(/[\$,]/g,''), 10);
+  const totalNumber = parseInt(total.replace(/[\$,]/g, ''), 10);
 
 
 
@@ -916,12 +890,73 @@ function AddressCart() {
         console.log("Orden enviada por Efecty");
         console.log(res);
         setModalEfecty(true);
+        // sendCopyForTwilio();
         // setModalSuccessPurchase(true);
         // setModalEfecty(false);
         // setOkPurchase(true);
       })
       .catch((err) => console.log(err));
   }
+
+  /* Twilio */
+  const sendCopyForTwilio = async (newDataRef) => {
+    // Genera el archivo PDF
+    const pdfBlob = await pdf(
+      <PDFContent
+        
+        dataRefEfecty={newDataRef}
+        totalAmount={formattedTotal !== '' ? formattedTotal : total}
+        description={descriptionOrder}
+      />
+    ).toBlob();
+
+    // Convierte el blob del PDF a una cadena base64
+    const pdfBase64 = await blobToBase64(pdfBlob);
+    console.log(pdfBase64);
+
+    // Tu configuración de Twilio (cuenta SID, token, números de teléfono, etc.)
+    const accountSid = 'AC8b58947dd886254c3e214afb4251a7b8'; // Reemplaza con tu Account SID
+    const authToken = 'eb3b16a42239ca953f96d7dd474c28a6'; // Reemplaza con tu Auth Token
+    const fromPhoneNumber = 'whatsapp:+14155238886'; // Reemplaza con el número de teléfono de Twilio configurado en el WhatsApp Sandbox
+    const toPhoneNumber = `whatsapp:+${dataAddress && dataAddress[0].phone}`; // Reemplaza con el número de teléfono del destinatario en formato internacional
+
+    // Crea el cuerpo del mensaje que incluye el archivo PDF codificado en base64
+    const messageBody = `Aquí está tu archivo PDF:\n\n${pdfBase64}`;
+
+    // Define tus encabezados personalizados aquí
+    const headers = {
+      'Authorization': 'Basic ' + btoa(`${accountSid}:${authToken}`), // Autenticación básica en base64
+    };
+
+    // Realiza la solicitud POST a la API de Twilio utilizando fetch
+    const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/x-www-form-urlencoded', // Establece el tipo de contenido
+      },
+      body: new URLSearchParams({
+        From: fromPhoneNumber,
+        To: toPhoneNumber,
+        Body: messageBody,
+      }).toString(),
+    });
+
+    const responseData = await response.json();
+    console.log(`Mensaje enviado con SID: ${responseData.sid}`);
+  };
+
+  // Función para convertir un blob a una cadena base64
+  const blobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result.split(',')[1]); // Obtiene el contenido base64 después de la coma
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
   /* Generar referencia de pago de efecty */
   const generateEfectyREF = (data, descriptionOrder) => {
     referenciaPago(data, token)
@@ -937,7 +972,7 @@ function AddressCart() {
           timerProgressBar: true,
           didOpen: () => {
             makePlaceOrder(newDataRef.id);
-            sendCopyForTwilio();
+            sendCopyForTwilio(newDataRef);
             Swal.showLoading();
             const b = Swal.getHtmlContainer().querySelector('b');
             timerInterval = setInterval(() => {
@@ -1017,7 +1052,7 @@ function AddressCart() {
         transaction_amount: numericValue, // Monto total validado si es con cupón o no
         description: descriptionOrder, // Descripción concatenada de los productos del carrito de compras
         payment_method_id: "efecty", // Id del método de pago seleccionado
-        email: "juanfernandozuluaga2014310@gmail.com" // Email del usuario //userEmail
+        email: userEmail // Email del usuario //userEmail
       }
 
       generateEfectyREF(dataOrder, descriptionOrder);
