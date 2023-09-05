@@ -99,7 +99,7 @@ function AddRecents() {
                         </a>
                     </Link>
                 </div>
-                <div className='containerProductos' ref={containerRef}>
+                <div className='containerProductos1' ref={containerRef}>
                     {products && products.length >= 5 && (
                         <button className="scroll-button left" onClick={handleScrollLeft} onMouseOver={handleScrollLeft}>
                             &#8249;
