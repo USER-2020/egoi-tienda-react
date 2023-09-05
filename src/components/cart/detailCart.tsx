@@ -198,7 +198,7 @@ function DetailCart({ setCantCart }) {
     // console.log(subtotal);
     if (subtotal && subtotal <= 39900) {
       setCostoEnvio(0);
-    } else if (subtotal && subtotal <= 79990) {
+    } else if (subtotal && subtotal <= 79990 && subtotal >39900) {
       const costodelEnvio = 9900;
       setCostoEnvio(costodelEnvio);
     } else {
