@@ -77,10 +77,14 @@
   color: #FC5241;
   font-weight: 700;
   width: 170px;
+  text-align: center;
 }
 
 .containerTableProducts .card .caracteristicaCantidad {
   width: 100px;
+  text-align: end;
+  display: flex;
+  justify-content: end;
 
 }
 
@@ -89,10 +93,12 @@
   border: none;
   border-radius: 32px;
   background-color: #A2A1A729;
-  text-align: center;
+  text-align: end;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: end;
+
+
 }
 
 .containerTableProducts .card .caracteristicaPrecioTotal {
@@ -100,6 +106,7 @@
   color: #74737B;
   font-weight: 700;
   width: 130px;
+  text-align: end;
 }
 
 .containerTableProducts .card .caracteristicaCostoEnvio {
