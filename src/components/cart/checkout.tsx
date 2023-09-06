@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 import '../../styles/detailsCart.css';
 import { Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, Row } from 'reactstrap';
@@ -1094,6 +1095,7 @@ function AddressCart() {
       getAllProductsByCart();
       getAllAddress();
       getAllDeptos();
+      // toast.success('Código enviado con éxito!');
 
 
       // console.log(ipAddress);
@@ -1760,15 +1762,15 @@ function AddressCart() {
 
 
         </div>
-        {isScrollModalEnabled && (
+        {/* {isScrollModalEnabled && (
           <div id="scrollModalCheckout" className="scroll-modal">
-            <div className="scroll-modal-content">
-              {/* Contenido del modal */}
-              <div className="containerInfoPedido">
+            <div className="scroll-modal-content"> */}
+        {/* Contenido del modal */}
+        {/* <div className="containerInfoPedido">
                 <p>Tu pedido tardará de 3 a 4 días hábiles en llegar a tu domicilio</p>
-              </div>
+              </div> */}
 
-              {/* {botonDeshabilitado && okPurchase ? (
+        {/* {botonDeshabilitado && okPurchase ? (
                 <div className="containerToPayResponsive">
                   <a href="#" onClick={() => handlePurchaseSucces()} >Finalizar compra</a>
                 </div>
@@ -1777,9 +1779,20 @@ function AddressCart() {
                   <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', height: '100%', borderRadius: '32px', borderColor: 'gray' }} >Finalizar compra</a>
                 </div>
               )} */}
-            </div>
+        {/* </div>
           </div>
-        )}
+        )} */}
+        {/* {isScrollModalEnabled && (
+          toast.success('Código enviado con éxito!')
+        )} */}
+        {/* {isScrollModalEnabled && (
+          <div id="scrollModalCheckout">
+            <Toaster
+              position="bottom-center"
+              reverseOrder={false}
+            />
+          </div>
+        )} */}
 
 
 
