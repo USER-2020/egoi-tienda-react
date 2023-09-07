@@ -36,6 +36,8 @@ const Banner = (args) => {
     const [bannersInfo, setBannersInfo] = useState([]);
     const [offset, setOffset] = useState([]);
     const [bannerFiltro1, setBannerFiltro1] = useState('');
+    const [bannerSubcategory, setBannerSubcategory] = useState('');
+    const [bannerSubsubCategory, setBannerSubsubCategory] = useState([]);
     const [tipoFiltro, setTipoFiltro] = useState('');
 
 
@@ -71,7 +73,7 @@ const Banner = (args) => {
     const getAllBanners = () => {
         getBanners()
             .then((res) => {
-                // console.log(res.data);
+                console.log(res.data);
                 // console.log(res.data[0]);
                 // console.log(res.data[1]);
                 // console.log(res.data[2]);
@@ -96,7 +98,10 @@ const Banner = (args) => {
                     if (bannerData.tipo_filtro === "category") {
                         setTipoFiltro(bannerData.tipo_filtro);
                         setBannerFiltro1(bannerData.id_filtro);
-                        subcategorieById(bannerData.id_filtro, offset, bannerData.id_tag)
+                        setTag(bannerData.id_tag);
+                        setBannerSubcategory(bannerData.ids_filtro_sub);
+                        setBannerSubsubCategory(bannerData.ids_filtro_s_sub);
+                        subcategorieById(bannerData.id_filtro, offset, bannerData.id_tag, bannerData.ids_filtro_sub, bannerData.ids_filtro_s_sub)
                             .then((res) => {
                                 // console.log("Informacion de banner 1 category", res.data);
                                 // console.log("Datos de etiquedtado", res.data);
@@ -140,18 +145,36 @@ const Banner = (args) => {
 
     };
 
-    const showProductsByCategoryBanner = (idTag) => {
-        if (tipoFiltro === 'category') {
-            // getAllCategoriesByBanner(bannersInfo);
-            history.push(`/categories/products/Descuento/${bannerFiltro1}/${idTag}`);
-        }
+    const showProductsByCategoryBanner = (idtag) => {
+        console.log(tag);
+        console.log(bannerFiltro1);
+        // if (tipoFiltro === 'category') {
+        //     // getAllCategoriesByBanner(bannersInfo);
+
+        //     if (subcate !== '' || subsubcate !== []) {
+        //         if (idTag !== '') {
+        //             const subsubcateStr = JSON.stringify(subsubcate);
+        //             history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${idTag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+        //         } else {
+
+        //             const subsubcateStr = JSON.stringify(subsubcate);
+        //             history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+        //         }
+
+        //     } else {
+        //         if (tipoFiltro === 'category') {
+        //             history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${idTag}`);
+        //         }
+        //     }
+
+        // }
         if (tipoFiltro === 'product') {
-            // getAllCategoriesByBanner(bannersInfo);
-            history.push(`/detailsProduct/${bannerFiltro1}/slug/${idTag}`);
+            // getAllCategoriesByBanner(bannersInfo); 
+            history.push(`/detailsProduct/${bannerFiltro1}/slug/${tag}`);
         }
         if (tipoFiltro === 'brand') {
             // getAllCategoriesByBanner(bannersInfo);
-            history.push(`/brand/Descuento/${bannerFiltro1}/${idTag}`);
+            history.push(`/brand/Descuento/${bannerFiltro1}/${tag}`);
         }
 
         // /* Banner 2 */
@@ -166,13 +189,28 @@ const Banner = (args) => {
         // }
     }
 
-    const showRutes = (itemId, filtro, tag) => {
+    const showRutes = (itemId, filtro, tag, subcate, subsubcate) => {
         console.log("este el id elegido para pasar por rutas", itemId);
-
-
         if (filtro === 'category') {
-            history.push(`/categories/products/Descuento/${itemId}/${tag}`);
+            if (subcate !== '' || subsubcate !== []) {
+                if (tag !== '') {
+                    const subsubcateStr = JSON.stringify(subsubcate);
+                    history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+                } else {
+
+                    const subsubcateStr = JSON.stringify(subsubcate);
+                    history.push(`/categories/products/Precios%20especiales/${itemId}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+                }
+
+            } else {
+                if (filtro === 'category') {
+                    history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+                }
+            }
         }
+
+
+
         if (filtro === 'product') {
             history.push(`/detailsProduct/${itemId}/slug/${tag}`);
         }
@@ -235,7 +273,7 @@ const Banner = (args) => {
                                     <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag)}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen_desk} width={'100%'} height={'124px'} className='banner_1' />
                                     </a>
-                                    <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag)}>
+                                    <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag, banner.banner_data[0].ids_filtro_sub, banner.banner_data[0].ids_filtro_s_sub)}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen} width={'100%'} height={'124px'} className='banner_res_2' />
                                     </a>
                                 </div>
@@ -262,12 +300,12 @@ const Banner = (args) => {
                                     <div className="carousel-inner">
                                         {itemBanner.banner_data.map((item, i) => (
                                             <div className={`carousel-item ${i === 0 ? "active" : ""}`} key={i}>
-                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro, item.id_tag)} className='desktopView'>
+                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)} className='desktopView'>
                                                     <img src={baseUrlImageBanners + item.imagen_desk} className="d-block w-100 desktopView" alt="..." />
 
                                                 </a>
-                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro, item.id_tag)} className='movilView'>
-                                                    <img src={baseUrlImageBanners + item.imagen} className="d-block w-100" alt="..."/>
+                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)} className='movilView'>
+                                                    <img src={baseUrlImageBanners + item.imagen} className="d-block w-100" alt="..." />
 
                                                 </a>
                                             </div>
