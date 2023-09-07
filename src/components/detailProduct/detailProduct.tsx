@@ -505,7 +505,8 @@ function DetailProduct({ setCantCart, handleLogged }) {
                     ) : (null)}
                     <div className="containerResponsiveDescription">
                         <h6>Descripción</h6>
-                        <p>{parse(detailProducts.details)}</p>
+                        <p>{typeof detailProducts.details === 'string' ? parse(detailProducts.details) : null}
+                        </p>
                     </div>
                     <div className="containerResponsiveStockAndQuantity">
                         <h4>Stock disponible</h4>
@@ -658,7 +659,8 @@ function DetailProduct({ setCantCart, handleLogged }) {
             <div className="containerDescription">
                 <h5>Descripción</h5>
                 <p>
-                    {parse(detailProducts.details)}
+                    {typeof detailProducts.details === 'string' ? parse(detailProducts.details) : null}
+
                 </p>
             </div>
             <div className="opinions">
