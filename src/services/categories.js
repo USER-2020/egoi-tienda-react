@@ -9,12 +9,14 @@ export const allCategories = () =>
     axios.get(`${baseUrl}/categories`);
 
 // Categoria por Id 
-export const subcategorieById = (id, offset, tag) =>
+export const subcategorieById = (id, offset, tag, subcate, subsubcate) =>
     axios.get(`${baseUrl}/categories/products/${id}`, {
         params: {
             limit: 20,
             offset: offset,
-            tag: tag || '' // Si tag no tiene valor, se enviará como vacío
+            tag: tag || '' ,// Si tag no tiene valor, se enviará como vacío
+            sub_cate: subcate || '',
+            sub_s_cate: subsubcate || []
 
 
         },
@@ -29,7 +31,7 @@ export const discountedProducts = (offset) =>
         params: {
             limit: 20,
             offset: offset,
-            
+
         },
         headers: {
             'Content-Type': 'application/json'

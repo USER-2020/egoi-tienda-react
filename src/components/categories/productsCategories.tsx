@@ -37,7 +37,11 @@ import { ProductosDescuento, ProductosMasVendidos, ProductosParaPresentar, Produ
 
 const ProductsCategories = () => {
 
-  const { category, subcategory, id, brandId, name, tag } = useParams();
+  const { category, subcategory, id, brandId, name, tag, subcate, subsubcate } = useParams();
+
+  // Decodifica el valor subsubcate de la URL en un array
+  const subsubcateArray = JSON.parse(decodeURIComponent(subsubcate || '[]'));
+
   const [products, setProducts] = useState([]);
   // const [productsDiscounted, setProductsDiscounted] = useState([]);
   const [filterApplied, setFilterApplied] = useState(false);
@@ -273,7 +277,7 @@ const ProductsCategories = () => {
         .catch((err) => console.log(err));
     }
     else {
-      subcategorieById(id, offset, tag)
+      subcategorieById(id, offset, tag, subcate, subsubcateArray)
         .then((res) => {
           console.log(res);
           setProducts(res.data);
@@ -410,30 +414,30 @@ const ProductsCategories = () => {
     localStorage.setItem('recentlyViewed', JSON.stringify(limitedList));
   }
 
-   // Paso 1: Obtener productos de localStorage
-   const storedProducts = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+  // Paso 1: Obtener productos de localStorage
+  const storedProducts = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
 
-   // Paso 2: Crear un conjunto para almacenar ids únicos
-   const uniqueIds = new Set();
+  // Paso 2: Crear un conjunto para almacenar ids únicos
+  const uniqueIds = new Set();
 
-   // Paso 3: Iterar a través de los productos y agregar sus ids al conjunto
-   const filteredProducts = storedProducts.filter(product => {
-       if (!uniqueIds.has(product.id)) {
-           uniqueIds.add(product.id);
-           return true; // Mantener este producto en la lista final
-       }
-       return false; // Descartar productos duplicados
-   });
+  // Paso 3: Iterar a través de los productos y agregar sus ids al conjunto
+  const filteredProducts = storedProducts.filter(product => {
+    if (!uniqueIds.has(product.id)) {
+      uniqueIds.add(product.id);
+      return true; // Mantener este producto en la lista final
+    }
+    return false; // Descartar productos duplicados
+  });
 
-   // Paso 4: Convertir el conjunto en un array de ids únicos
-   const uniqueIdsArray = Array.from(uniqueIds);
+  // Paso 4: Convertir el conjunto en un array de ids únicos
+  const uniqueIdsArray = Array.from(uniqueIds);
 
-   // Paso 5: Crear un nuevo array de productos filtrados basados en los ids únicos
-   const uniqueProducts = uniqueIdsArray.map(id => {
-       return filteredProducts.find(product => product.id === id);
-   });
+  // Paso 5: Crear un nuevo array de productos filtrados basados en los ids únicos
+  const uniqueProducts = uniqueIdsArray.map(id => {
+    return filteredProducts.find(product => product.id === id);
+  });
 
-   // Ahora `uniqueProducts` contiene los productos filtrados sin duplicados por id
+  // Ahora `uniqueProducts` contiene los productos filtrados sin duplicados por id
 
   useEffect(() => {
     if (id) {
@@ -485,9 +489,19 @@ const ProductsCategories = () => {
       // console.log("No existe SearchProducts");
     }
 
+    if (!category || !subcategory || !id || !tag || !subcate || !subsubcate) {
+      // Uno o más parámetros son nulos o indefinidos, manejar este caso
+      console.error('Valores de ruta no válidos');
+      // Puedes mostrar un mensaje de error o redirigir a otra página en este caso
+    } else {
+      // Todos los parámetros son válidos, puedes utilizarlos
+      console.log('Valores de ruta válidos:', category, subcategory, id, tag, subcate, subsubcate);
+      // Realizar acciones basadas en los valores de la ruta aquí
+    }
+
   }, [id, brandId, selectedFiltersRecent, selectedFiltersHigh_Low,
     selectedFiltersLow_High, selectedFiltersA_Z, selectedFiltersZ_A,
-    offset, currentPage, name, isDiscountedProducts]);
+    offset, currentPage, name, isDiscountedProducts, subcate, subsubcate]);
 
 
 
@@ -764,7 +778,7 @@ const ProductsCategories = () => {
                     <button
                       onClick={() => {
                         setCurrentPage(currentPage + 1);
-                        handlePageClick(currentPage +1);
+                        handlePageClick(currentPage + 1);
                       }}
                       className="btn mx-1"
                     >

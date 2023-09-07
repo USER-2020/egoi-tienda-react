@@ -67,7 +67,7 @@ function DynamicTitle() {
     };
   }, [location.pathname, location.hash]);
 
-  return null; // No renderizar nada en este componente
+  // return null; // No renderizar nada en este componente
 
 
 }
@@ -119,6 +119,8 @@ const App = (props) => {
               <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id/:tag" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/categories/products/:subcategory/:id/:subcate/:subsubcate" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/categories/products/:subcategory/:id/:tag/:subcate/:subsubcate" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/discountedProducts" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/recentlySeen" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/addRecently" exact render={(props) => <ViewCategory {...props} />} />
