@@ -104,18 +104,38 @@ const Vendidos = ({ bannersInfo }) => {
         localStorage.setItem('recentlyViewed', JSON.stringify(limitedList));
     }
 
-    const showRoutes = (itemId, filtro, tag) => {
-        // console.log("este el id elegido para pasar por las rutas en el banner 4", itemId);
-
+    const showRutes = (itemId, filtro, tag, subcate, subsubcate) => {
+        console.log("este el id elegido para pasar por rutas", itemId);
         if (filtro === 'category') {
-            history.push(`/categories/products/Descuento/${itemId}/${tag}`);
+            if (tag !== '' && subcate !== '' && subsubcate !== []) {
+                // Todas las variables tienen valores, construir la URL con todas ellas
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la primera validación de subcategorías, subsubcategorías e idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (subcate !== '' && subsubcate !== []) {
+                // idtag está vacío, pero subcate y subsubcate tienen valores, construir la URL sin idtag
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la segunda validación cuando idTag es vacío");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (tag !== '') {
+                // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+            } else {
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+            }
         }
+
+
+
         if (filtro === 'product') {
             history.push(`/detailsProduct/${itemId}/slug/${tag}`);
         }
         if (filtro === 'brand') {
             history.push(`/brand/Descuento/${itemId}/${tag}`);
         }
+
     }
 
     useEffect(() => {
@@ -178,7 +198,7 @@ const Vendidos = ({ bannersInfo }) => {
                                             </CardSubtitle>
                                             <CardTitle tag="h5">
                                                 {product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
-                                                    <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf:'center'}}>
+                                                    <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf: 'center' }}>
                                                         <h5>${product.discount_valor && product.discount_valor.toLocaleString('en') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('en')}</h5>
                                                         <h5 id='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                                     </div>
@@ -206,7 +226,7 @@ const Vendidos = ({ bannersInfo }) => {
                         .filter((banner) => banner.banner_type === "banner_5")
                         .map((itemBanner, index) => (
                             <div className='containerHot' ref={containerRef2}>
-                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag)}>
+                                <a href="#" onClick={() => showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}>
                                     <div className='masVendidosCards' key={index === 0}>
                                         {/* <div className='headerImg'>
                                             <img src={logoSamsung} width={'200px'} />
@@ -227,7 +247,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag)}>
+                                <a href="#" onClick={() => showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub)}>
                                     <div className='masVendidosCards' key={index === 1}>
                                         {/* <div className='headerImg'>
                                             <img src={logoSony} width={'200px'} />
@@ -248,7 +268,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag)}>
+                                <a href="#" onClick={() => showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[2].ids_filtro_s_sub)}>
                                     <div className='masVendidosCards' key={index === 2}>
                                         {/* <div className='headerImg'>
                                             <img src={logoHaceb} width={'200px'} />
@@ -269,7 +289,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag)}>
+                                <a href="#" onClick={() => showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub)}>
                                     <div className='masVendidosCards' key={index === 3}>
                                         {/* <div className='headerImg'>
                                             <img src={logoAsus} width={'200px'} />
