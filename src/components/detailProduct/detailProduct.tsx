@@ -478,10 +478,12 @@ function DetailProduct({ setCantCart, handleLogged }) {
                     </div>
                     {detailProducts.variation && detailProducts.variation.length > 0 ? (
                         <div className="containerVariacionesResponsiveColores">
-                            {detailProducts.choice_options.title === 'Colores' && (
+                            {detailProducts.choice_options[0] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Colores' && (
                                 <p>Colores</p>
                             )}
-                            {detailProducts.choice_options.title === 'Tallas' && (
+
+
+                            {detailProducts.choice_options[0] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Tallas' && (
                                 <p>Tallas</p>
                             )}
 
@@ -564,12 +566,15 @@ function DetailProduct({ setCantCart, handleLogged }) {
                     </div>
                     {detailProducts.variation?.length > 0 ? (
                         <div className="containerColorsProduct">
-                            {detailProducts.choice_options[0].title === 'Colores' && (
+                            {detailProducts.choice_options[0] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Colores' && (
                                 <p>Colores</p>
                             )}
-                            {detailProducts.choice_options[0].title === 'Tallas' && (
+
+
+                            {detailProducts.choice_options[0] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Tallas' && (
                                 <p>Tallas</p>
                             )}
+
 
                             {detailProducts.variation?.length > 3 ? (
                                 <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>
@@ -795,7 +800,6 @@ function DetailProduct({ setCantCart, handleLogged }) {
                         <div className="dateComment">
                             <p>
                                 Excelente producto, llego tal como lo esperaba.
-
                             </p>
 
                         </div>

@@ -61,7 +61,12 @@
     margin-top: 32px;
     display: flex;
     overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
 
+}
+
+.containerCategoriasBanner::-webkit-scrollbar {
+    display: none; /* Oculta la barra de desplazamiento en navegadores WebKit (Chrome, Safari, etc.) */
 }
 
 .containerCategoriasBanner>.categoriaCards {
