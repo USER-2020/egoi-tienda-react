@@ -145,9 +145,31 @@ const Banner = (args) => {
 
     };
 
-    const showProductsByCategoryBanner = (idtag) => {
-        console.log(tag);
+    const showProductsByCategoryBanner = (idtag, subcate, subsubcate) => {
+        console.log(idtag);
         console.log(bannerFiltro1);
+        console.log(tipoFiltro);
+        if (tipoFiltro === 'category') {
+            if (idtag !== '' && subcate !== '' && subsubcate !== []) {
+                // Todas las variables tienen valores, construir la URL con todas ellas
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la primera validación de subcategorías, subsubcategorías e idTag");
+                history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${idtag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (subcate !== '' && subsubcate !== []) {
+                // idtag está vacío, pero subcate y subsubcate tienen valores, construir la URL sin idtag
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la segunda validación cuando idTag es vacío");
+                history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (idtag !== '') {
+                // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${idtag}`);
+            }else{
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${idtag}`);
+            }
+        }
+
         // if (tipoFiltro === 'category') {
         //     // getAllCategoriesByBanner(bannersInfo);
 
@@ -192,20 +214,23 @@ const Banner = (args) => {
     const showRutes = (itemId, filtro, tag, subcate, subsubcate) => {
         console.log("este el id elegido para pasar por rutas", itemId);
         if (filtro === 'category') {
-            if (subcate !== '' || subsubcate !== []) {
-                if (tag !== '') {
-                    const subsubcateStr = JSON.stringify(subsubcate);
-                    history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
-                } else {
-
-                    const subsubcateStr = JSON.stringify(subsubcate);
-                    history.push(`/categories/products/Precios%20especiales/${itemId}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
-                }
-
-            } else {
-                if (filtro === 'category') {
-                    history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
-                }
+            if (tag !== '' && subcate !== '' && subsubcate !== []) {
+                // Todas las variables tienen valores, construir la URL con todas ellas
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la primera validación de subcategorías, subsubcategorías e idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (subcate !== '' && subsubcate !== []) {
+                // idtag está vacío, pero subcate y subsubcate tienen valores, construir la URL sin idtag
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la segunda validación cuando idTag es vacío");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (tag !== '') {
+                // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+            }else{
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
             }
         }
 
@@ -270,7 +295,7 @@ const Banner = (args) => {
                             .filter((banner) => banner.banner_type === "banner_1")
                             .map((banner, index) => (
                                 <div key={index}>
-                                    <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag)}>
+                                    <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag, banner.banner_data[0].ids_filtro_sub, banner.banner_data[0].ids_filtro_s_sub)}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen_desk} width={'100%'} height={'124px'} className='banner_1' />
                                     </a>
                                     <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag, banner.banner_data[0].ids_filtro_sub, banner.banner_data[0].ids_filtro_s_sub)}>
