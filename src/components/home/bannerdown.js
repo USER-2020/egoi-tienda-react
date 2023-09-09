@@ -82,24 +82,38 @@ const Bannerdown = ({ bannersInfo }) => {
 
     };
 
-    const showRoutes = (itemId, filtro, tag) => {
-        // console.log("este el id elegido para pasar por las rutas en el banner 6", itemId);
-        // console.log("este el id elegido para pasar por las rutas en el banner 6", tag);
-
+    const showRutes = (itemId, filtro, tag, subcate, subsubcate) => {
+        console.log("este el id elegido para pasar por rutas", itemId);
         if (filtro === 'category') {
-            // getAllCategoriesByBanner(bannersInfo);
-            history.push(`/categories/products/Descuento/${itemId}/${tag}`,{
-                tag:tag
-            });
+            if (tag !== '' && subcate !== '' && subsubcate !== []) {
+                // Todas las variables tienen valores, construir la URL con todas ellas
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la primera validación de subcategorías, subsubcategorías e idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (subcate !== '' && subsubcate !== []) {
+                // idtag está vacío, pero subcate y subsubcate tienen valores, construir la URL sin idtag
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la segunda validación cuando idTag es vacío");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (tag !== '') {
+                // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+            }else{
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+            }
         }
+
+
+
         if (filtro === 'product') {
-            // getAllCategoriesByBanner(bannersInfo);
             history.push(`/detailsProduct/${itemId}/slug/${tag}`);
         }
         if (filtro === 'brand') {
-            // getAllCategoriesByBanner(bannersInfo);
             history.push(`/brand/Descuento/${itemId}/${tag}`);
         }
+
     }
 
     return (
@@ -107,17 +121,28 @@ const Bannerdown = ({ bannersInfo }) => {
             {bannersInfo && bannersInfo
                 .filter((banner) => banner.banner_type === "banner_6")
                 .map((itemBanner, index) => (
-                    <a href='#' onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag)}>
+                    <a href='#' onClick={() => {
+                        if (itemBanner.bannerData && itemBanner.bannerData.length > 0) {
+                            showRutes(
+                                itemBanner.bannerData[0].id_filtro,
+                                itemBanner.bannerData[0].tipo_filtro,
+                                itemBanner.bannerData[0].id_tag,
+                                itemBanner.bannerData[0].ids_filtro_sub,
+                                itemBanner.bannerData[0].ids_filtro_s_sub
+                            );
+                        } else {
+                            console.error('itemBanner.bannerData está vacío o no definido.');
+                        }
+                    }}>
                         <div className='container1'>
                             <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen_desk} className='bannerDownImg' />
                             <img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} className='bannerDownImg2' />
-
                         </div>
                     </a>
                 ))}
         </div>
-
-    )
+    );
+    
 }
 
 export default Bannerdown
