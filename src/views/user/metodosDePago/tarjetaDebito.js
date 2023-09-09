@@ -44,6 +44,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     const [showTooltipCvc, setShowTooltipCvc] = useState(false);
     const [showTooltipMonth, setShowTooltipMonth] = useState(false);
 
+
     /* Manejo de codigo de seguridad */
     const handleCvcChange = (event) => {
         const value = event.target.value;
@@ -96,6 +97,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
 
     const currenUser = getCurrentUser();
     const token = currenUser.token;
+    const userEmail = currenUser.email;
+
 
     const handleSelectChangeTypeCard = (e) => {
         const valorSeleccionadoTypeCard = e.target.value;
@@ -239,7 +242,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
 
                 firstname: dataOrderAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
                 lastname: "", //apellido del usuario traido desde el id de la direccion seleccionada
-                email: "juanfernandozuluaga2014310@gmail.com", // correo del usuario userEmail
+                email: userEmail, // correo del usuario userEmail
                 numberPhone: dataOrderAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
                 type: "visa", //medio de pago traido del id del metodo de pago selesccionado
                 issuer_id: "",  // id de banco traido del modal de pago seleccionado solo para pse !!
@@ -311,17 +314,17 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
             .then((res) => {
 
                 console.log(res.data);
-                console.log("Mensaje: ", res.data.Message);
+                // console.log("Mensaje: ", res.data.Message);
                 // console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
                 // let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
                 // if(direccion_url_pse !== null){
                 //   openWindowPSExternal(direccion_url_pse);
                 // }
-                if (res.data.Message === "Undefined variable: status") {
+                if (res.data.MpTransactionId.status === "rejected" || res.data.MpTransactionId.status === "in_process") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: '¡No cuentas con fondos suficientes, vuelve a intentarlo!',
+                        text: '¡Rechazamos tu pago, intentalo de nuevo!',
 
                     });
                     setModalProcesoPagoClose();

@@ -97,6 +97,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
     const currenUser = getCurrentUser();
     const token = currenUser.token;
+    const userEmail = currenUser.email;
 
     const handleSelectChangeTypeCard = (e) => {
         const valorSeleccionadoTypeCard = e.target.value;
@@ -240,7 +241,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
 
                 firstname: dataOrderAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
                 lastname: "", //apellido del usuario traido desde el id de la direccion seleccionada
-                email: "juanfernandozuluaga2014310@gmail.com", // correo del usuario userEmail
+                email: userEmail, // correo del usuario userEmail
                 numberPhone: dataOrderAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
                 type: "visa", //medio de pago traido del id del metodo de pago selesccionado
                 issuer_id: "",  // id de banco traido del modal de pago seleccionado solo para pse !!
@@ -260,7 +261,9 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                 billing_address_id: idAddress, // id de la direccion
                 coupon_code: cuponCodeLimpio, //codigo del cupon
                 coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
-                order_note: dataOrderAddress[0].local_description// como llegar infor traida de la direccion seleccionada por Id
+                order_note: dataOrderAddress[0].local_description,// como llegar infor traida de la direccion seleccionada por Id
+                plataforma:'web',//Plataforma desde que se hace la transaccion
+                tipo_pago:'tarjeta credito' //tipo de pago registrado
             }
 
 
@@ -315,11 +318,11 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                 // if(direccion_url_pse !== null){
                 //   openWindowPSExternal(direccion_url_pse);
                 // }
-                if (res.data.Message === "Undefined variable: status") {
+                if (res.data.MpTransactionId.status === "rejected" || res.data.MpTransactionId.status === "in_process") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: '¡No cuentas con fondos suficientes, vuelve a intentarlo!',
+                        text: '¡Rechazamos tu pago, intentalo de nuevo!',
 
                     });
                     setModalProcesoPagoClose();
@@ -338,7 +341,8 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                     title: 'Oops...',
                     text: '¡Ha ocurrido un error procesando el pago!',
 
-                })
+                });
+                setModalProcesoPagoClose();
             });
 
     }
