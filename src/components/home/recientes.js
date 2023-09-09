@@ -146,18 +146,38 @@ const Recientes = ({ bannersInfo }) => {
     // Ahora `uniqueProducts` contiene los productos filtrados sin duplicados por id
 
 
-    const showRoutes = (itemId, filtro, tag) => {
-        // console.log("este el id elegido para pasar por las rutas en el banner 3", itemId);
-
+    const showRutes = (itemId, filtro, tag, subcate, subsubcate) => {
+        console.log("este el id elegido para pasar por rutas", itemId);
         if (filtro === 'category') {
-            history.push(`/categories/products/Descuento/${itemId}/${tag}`);
+            if (tag !== '' && subcate !== '' && subsubcate !== []) {
+                // Todas las variables tienen valores, construir la URL con todas ellas
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la primera validación de subcategorías, subsubcategorías e idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (subcate !== '' && subsubcate !== []) {
+                // idtag está vacío, pero subcate y subsubcate tienen valores, construir la URL sin idtag
+                const subsubcateStr = JSON.stringify(subsubcate);
+                console.log("Entré en la segunda validación cuando idTag es vacío");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+            } else if (tag !== '') {
+                // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+            } else {
+                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+            }
         }
+
+
+
         if (filtro === 'product') {
             history.push(`/detailsProduct/${itemId}/slug/${tag}`);
         }
         if (filtro === 'brand') {
             history.push(`/brand/Descuento/${itemId}/${tag}`);
         }
+
     }
 
     const handleScrollLeft = () => {
@@ -303,7 +323,7 @@ const Recientes = ({ bannersInfo }) => {
                                                         <a
                                                             href="#"
                                                             onClick={() =>
-                                                                showRoutes(banner.id_filtro, banner.tipo_filtro, banner.id_tag)
+                                                                showRutes(banner.id_filtro, banner.tipo_filtro, banner.id_tag, banner.ids_filtro_sub, banner.ids_filtro_s_sub)
                                                             }
                                                         >
                                                             <img
@@ -373,7 +393,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='catImage'>
-                                                <a href='#' onClick={() => showRoutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag)}>
+                                                <a href='#' onClick={() => showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
                                                 </a>
                                             </div>
@@ -392,7 +412,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='cvtImage'>
-                                                <a href='#' onClick={() => showRoutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag)}>
+                                                <a href='#' onClick={() => showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub)}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
                                                 </a>
                                             </div>
@@ -414,7 +434,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='tavtImage'>
-                                                <a href='#' onClick={() => showRoutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[3].id_tag)}>
+                                                <a href='#' onClick={() => showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
                                                 </a>
                                             </div>
@@ -433,7 +453,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='cvt2Image'>
-                                                <a href='#' onClick={() => showRoutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag)}>
+                                                <a href='#'onClick={() => showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub)}>
                                                     <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
                                                 </a>
                                             </div>

@@ -259,7 +259,9 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                 billing_address_id: idAddress, // id de la direccion
                 coupon_code: cuponCodeLimpio, //codigo del cupon
                 coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
-                order_note: dataOrderAddress[0].local_description// como llegar infor traida de la direccion seleccionada por Id
+                order_note: dataOrderAddress[0].local_description,// como llegar infor traida de la direccion seleccionada por Id
+                plataforma:'web',//Plataforma desde que se hace la transaccion
+                tipo_pago:'tarjeta debito' //tipo de pago registrado
             }
 
 
@@ -268,6 +270,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     }
 
     const verifyPurchase = (dataOrder) => {
+        console.log(token);
         console.log("Estos son los datos de las ordenes", dataOrder);
         closeModalTarjetaDebito();
         setModalProcesoPago();
@@ -338,7 +341,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                     title: 'Oops...',
                     text: '¡Ha ocurrido un error procesando el pago!',
 
-                })
+                });
+                setModalProcesoPagoClose();
             });
 
     }
