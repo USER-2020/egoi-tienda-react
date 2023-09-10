@@ -11,7 +11,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 
 
-function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk , setModalProcesoPago, setModalProcesoPagoClose}) {
+function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose }) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -244,9 +244,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                 email: userEmail, // correo del usuario userEmail
                 numberPhone: dataOrderAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
                 type: "visa", //medio de pago traido del id del metodo de pago selesccionado
-                issuer_id: "",  // id de banco traido del modal de pago seleccionado solo para pse !!
                 installments: cardCuotes,//cuotas de tarjeta
-                financial_institution: "", //id del tipo de banco que se obtiene del modal de pago
                 identificationNumber: identificationNumber, //cedula del usuario traido del modal de pago
                 amount: numericValue, //valor de la compra
                 ipAddress: ipAddress, //ip del cliente
@@ -262,8 +260,8 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                 coupon_code: cuponCodeLimpio, //codigo del cupon
                 coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
                 order_note: dataOrderAddress[0].local_description,// como llegar infor traida de la direccion seleccionada por Id
-                plataforma:'web',//Plataforma desde que se hace la transaccion
-                tipo_pago:'tarjeta credito' //tipo de pago registrado
+                plataforma: 'web',//Plataforma desde que se hace la transaccion
+                tipo_pago: 'tarjeta credito' //tipo de pago registrado
             }
 
 
@@ -318,7 +316,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                 // if(direccion_url_pse !== null){
                 //   openWindowPSExternal(direccion_url_pse);
                 // }
-                if (res.data.MpTransactionId.status === "rejected" || res.data.MpTransactionId.status === "in_process") {
+                if (res.data.data.MpTransactionId.status || res.data.data.MpTransactionId.status === "rejected" || res.data.data.MpTransactionId.status === "in_process") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
