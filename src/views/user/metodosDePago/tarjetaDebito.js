@@ -242,12 +242,10 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
 
                 firstname: dataOrderAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
                 lastname: "", //apellido del usuario traido desde el id de la direccion seleccionada
-                email: userEmail, // correo del usuario userEmail
+                email:userEmail, // correo del usuario userEmail
                 numberPhone: dataOrderAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
-                type: "visa", //medio de pago traido del id del metodo de pago selesccionado
-                issuer_id: "",  // id de banco traido del modal de pago seleccionado solo para pse !!
+                type: "visa", //medio de pago traido del id del metodo de pago selesccionada
                 installments: cardCuotes,//cuotas de tarjeta
-                financial_institution: "", //id del tipo de banco que se obtiene del modal de pago
                 identificationNumber: identificationNumber, //cedula del usuario traido del modal de pago
                 amount: numericValue, //valor de la compra
                 ipAddress: ipAddress, //ip del cliente
@@ -313,14 +311,14 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
         makePay(dataOrder, token)
             .then((res) => {
 
-                console.log(res.data);
+                console.log(res.data.data);
                 // console.log("Mensaje: ", res.data.Message);
                 // console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
                 // let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
                 // if(direccion_url_pse !== null){
                 //   openWindowPSExternal(direccion_url_pse);
                 // }
-                if (res.data.MpTransactionId.status === "rejected" || res.data.MpTransactionId.status === "in_process") {
+                if (res.data.data.MpTransactionId.status || res.data.data.MpTransactionId.status === "rejected" || res.data.data.MpTransactionId.status === "in_process") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
