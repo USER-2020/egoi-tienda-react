@@ -17,7 +17,8 @@ import {
   InputGroupAddon,
   Input,
   Button,
-  Modal, ModalBody
+  Modal, ModalBody, 
+  ModalHeader
 } from "reactstrap";
 import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
@@ -137,6 +138,7 @@ const Home = (props) => {
         isOpen={modalPopup}
 
       >
+        <ModalHeader toggle={()=>setModalPopup(false)}></ModalHeader>
         <ModalBody>
           <Popup handleModalData={handleModalData} datosPopup={datosPopup} closeModalPopup={()=>setModalPopup(false)}/>
         </ModalBody>

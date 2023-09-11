@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
 import '../../styles/detailsCart.css';
-import { Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, Row } from 'reactstrap';
+import { Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { getCurrentUser } from '../../helpers/Utils';
 import { allProductsCart } from '../../services/cart';
@@ -1806,6 +1806,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
+        <ModalHeader toggle={()=>closeAddressCheckoutModal()}></ModalHeader>
         <ModalBody>
           <AdressCheckout closeModalAddress={closeModalAddress} deptos={deptos} refreshAddress={refreshAddress} />
         </ModalBody>
@@ -1818,6 +1819,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
+        <ModalHeader toggle={()=>setModalAddressUpdate(false)}></ModalHeader>
         <ModalBody>
           <UpdateAddress closeModalUpdate={closeModalUpdate} deptos={deptos} refreshAddress={refreshAddress}
             idAddress={idAddress} />
@@ -1826,7 +1828,8 @@ function AddressCart() {
 
       {/* Modal checkout tarjeta de credito */}
       <Modal
-        className={`modal-dialog-centered ${window.innerWidth >= 992 ? 'modal-lg' : 'modal-md'}`}
+        // className={`modal-dialog-centered ${window.innerWidth >= 992 ? 'modal-lg' : 'modal-md'}`}
+        className={`modal-dialog-centered modal-md`}
         //personalizado
         id='modalCredito'
         toggle={() => setModalTarjetaCredito(false)}
@@ -1834,6 +1837,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
+        <ModalHeader toggle={()=>setModalTarjetaCredito(false)}></ModalHeader>
         <ModalBody>
           <TarjetaCreditoModal
             // handleModalData={handleModalData} 
@@ -1864,6 +1868,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
+        <ModalHeader toggle={()=>setModalTarjetaDebito(false)}></ModalHeader>
         <ModalBody>
           <TarjetaDebitoModal
             closeModalTarjetaDebito={closeModalTarjetaDebito}
@@ -1891,6 +1896,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
+        <ModalHeader toggle={()=>closeModalEfecty()}></ModalHeader>
         <ModalBody>
           <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : total}
             closeEfectyModal={() => closeModalEfecty()}
@@ -1927,6 +1933,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
+        <ModalHeader toggle={()=>setModalPse(false)}></ModalHeader>
         <ModalBody>
           <PseModal
             closeModalPse={closeModalPse}
@@ -1954,6 +1961,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
+        <ModalHeader toggle={()=>setModalOTP(false)}></ModalHeader>
         <ModalBody>
           <CashDeliveryOTP phone={dataAddress[0]?.phone}
             closeModalOTP={closeModalOTP}

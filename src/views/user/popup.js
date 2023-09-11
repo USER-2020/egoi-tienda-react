@@ -48,7 +48,7 @@ function Popup({ handleModalData, datosPopup, closeModalPopup }) {
     <div style={{ width: '100%', height: '100%' }}>
       {datosPopup && datosPopup.map((itemPopup, index) => (
         <div key={index} style={{ justifyContent: 'flex-end', alignItems: 'center', height: '100%' }}>
-          <a onClick={()=>closeModalPopup()}className="btn-close" aria-label="Close" style={{ marginLeft: 'auto', marginRight: '10px', cursor: "pointer" }}></a>
+          {/* <a onClick={()=>closeModalPopup()}className="btn-close" aria-label="Close" style={{ marginLeft: 'auto', marginRight: '10px', cursor: "pointer" }}></a> */}
           <a onClick={() => showRutes(itemPopup.banner_data[0].id_filtro, itemPopup.banner_data[0].tipo_filtro, itemPopup.banner_data[0].id_tag, itemPopup.banner_data[0].ids_filtro_sub, itemPopup.banner_data[0].ids_filtro_s_sub)} style={styles.bannerLinkDesktop}>
             <img src={baseUrlImageBanners + itemPopup.banner_data[0].imagen_desk} width={'100%'} height={'100%'} alt="Banner Desktop" />
           </a>
