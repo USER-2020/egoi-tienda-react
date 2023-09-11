@@ -5,10 +5,10 @@ import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import es from "react-phone-input-2/lang/es.json";
 import '../../styles/detailsCart.css';
-import { allCitysByIdDepto, saveAddress, updateAddress } from '../../services/address';
+import { addressById, allCitysByIdDepto, saveAddress, updateAddress } from '../../services/address';
 import { getCurrentUser } from '../../helpers/Utils';
 
-function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) {
+function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress, dataAddress }) {
 
     const {
         reset,
@@ -36,6 +36,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
     const [selectedCiudad, setSelectedCiudad] = useState();
     const [selectedDepto, setSelectedDepto] = useState();
     const [deptoId, setDeptoId] = useState();
+    // const [dataAddress, setDataAddress ] = useState("");
 
 
 
@@ -47,6 +48,20 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
     const handleLinkClick = (link) => {
         setSelectedLink(link);
     };
+
+
+    // const getAddressById = () => {
+    //     addressById(idAddress, token)
+    //       .then((res) => {
+    //         // console.log("Datos traidos de la direcicon ID", res.data);
+    //         // console.log("Nombre", res.data[0].contact_person_name);
+    //         // console.log("Celular", res.data[0].phone);
+    //         // console.log("Como llegar", res.data[0].local_description);
+    //         console.log(res.data);
+    //         setDataAddress(res.data);
+    
+    //       })
+    //   }
 
     const handleSelectChangeZip = (e) => {
         const valorSeleccionadoZip = (e.target.value);
@@ -84,38 +99,38 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
         setLoading(true);
         if (!contactPersonName || !contactPersonLastName || !address || !selectedDepto || !selectedCiudad || !phone || !phone2 || !barrio || !localDescription) {
             Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Por favor, complete todos los campos. ",
-              confirmButtonColor: "#0d6efd",
+                icon: "error",
+                title: "Oops...",
+                text: "Por favor, complete todos los campos. ",
+                confirmButtonColor: "#0d6efd",
             });
             setLoading(false);
-            
-            
-          }else{
 
-              updateAddress(idAddress, data, token)
-                  .then(() => {
-                      Swal.fire({
-                          icon: 'success',
-                          title: '¡Actualización exitosa!',
-                          text: 'La dirección ha sido actualizada exitosamente.',
-                          confirmButtonColor: '#0d6efd',
-                      });
-                      closeModalUpdate();
-                      refreshAddress();
-                  })
-                  .catch((err) => {
-                      console.log(err);
-                      Swal.fire({
-                          icon: 'error',
-                          title: 'Error',
-                          text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
-                          confirmButtonColor: '#dc3545',
-                      });
-                      setLoading(false);
-                  })
-          }
+
+        } else {
+
+            updateAddress(idAddress, data, token)
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Actualización exitosa!',
+                        text: 'La dirección ha sido actualizada exitosamente.',
+                        confirmButtonColor: '#0d6efd',
+                    });
+                    closeModalUpdate();
+                    refreshAddress();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+                        confirmButtonColor: '#dc3545',
+                    });
+                    setLoading(false);
+                })
+        }
     }
 
     const handleSubmitAddress = (e) => {
@@ -149,10 +164,26 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                     setCity(res.data);
                 })
         }
+        // getAddressById();
         const fullName = contactPersonName + " " + contactPersonLastName;
         setContactPersonFullName(fullName);
         // console.log("Id Address: ", idAddress);
-    }, [selectedZip, token, contactPersonName, contactPersonLastName, contactPersonFullName])
+    }, [selectedZip, token, contactPersonName, contactPersonLastName, contactPersonFullName]);
+
+    // useEffect(() => {
+    //     getAddressById();         // ... otros estados
+        
+        
+    // },[]);
+
+    useEffect(()=>{
+        // console.log(dataF_Name);
+        console.log(dataAddress);
+            setContactPersonName(dataAddress.f_name || "");
+            setContactPersonLastName(dataAddress.l_name || "");
+            setContactPersonFullName(dataAddress.contact_person_name || "");
+    },[]);
+
 
     return (
         <>

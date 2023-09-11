@@ -57,7 +57,7 @@ function AddressCart() {
   const [selectedLink, setSelectedLink] = useState('hogar');
   const [address, setAddress] = useState([]);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(null);
-  const [dataAddress, setDataAddress] = useState("");
+  const [dataAddress, setDataAddress] = useState([]);
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [idAddress, setIdAddress] = useState([]);
@@ -652,6 +652,7 @@ function AddressCart() {
       }).then((result) => {
         if (result.isConfirmed) {
           setIdAddress(addrId);
+          
           setModalAddressUpdate(true);
 
         } else if (
@@ -1822,7 +1823,7 @@ function AddressCart() {
         <ModalHeader toggle={()=>setModalAddressUpdate(false)}></ModalHeader>
         <ModalBody>
           <UpdateAddress closeModalUpdate={closeModalUpdate} deptos={deptos} refreshAddress={refreshAddress}
-            idAddress={idAddress} />
+            idAddress={idAddress} dataAddress={dataAddress}/>
         </ModalBody>
       </Modal>
 
