@@ -311,7 +311,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
         makePay(dataOrder, token)
             .then((res) => {
 
-                console.log(res.data.data);
+                console.log(res.data);
                 // console.log("Mensaje: ", res.data.Message);
                 // console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
                 // let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
