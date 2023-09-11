@@ -309,40 +309,38 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
         // });
         makePay(dataOrder, token)
             .then((res) => {
-
                 console.log(res.data);
-                // console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
-                // let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
-                // if(direccion_url_pse !== null){
-                //   openWindowPSExternal(direccion_url_pse);
-                // }
-                if (res.data.data.MpTransactionId.status || res.data.data.MpTransactionId.status === "rejected" || res.data.data.MpTransactionId.status === "in_process") {
+
+                if (res.data.responsePayMp.message && res.data.responsePayMp.message === "payer.email must be a valid email") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '¡Rechazamos tu pago, tu email no es correcto!',
+                    });
+                    setModalProcesoPagoClose();
+                } else if (res.data.data.MpTransactionId.status === "rejected" || res.data.data.MpTransactionId.status === "in_process") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: '¡Rechazamos tu pago, intentalo de nuevo!',
-
                     });
                     setModalProcesoPagoClose();
                 } else {
-                    console.log("El pago se registro");
-                    // succesfulPayment = true;
+                    console.log("El pago se registró con éxito");
                     setModalProcesoPagoClose();
                     setModalPurchaseSuccess();
                     setOk();
-                    // setBtnFinalizarCompra();
                 }
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.log(err);
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: '¡Ha ocurrido un error procesando el pago!',
-
                 });
                 setModalProcesoPagoClose();
             });
-
     }
 
     useEffect(() => {

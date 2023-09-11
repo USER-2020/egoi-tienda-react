@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 
 
 
-function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk , setModalProcesoPago, setModalProcesoPagoClose }) {
+function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose }) {
 
     // const [typeCard, setTypeCard] = useState("");
     const [selectTypeCard, setSelectTypeCard] = useState("");
@@ -242,7 +242,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
 
                 firstname: dataOrderAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
                 lastname: "", //apellido del usuario traido desde el id de la direccion seleccionada
-                email:userEmail, // correo del usuario userEmail
+                email:"jfzuluagaa@unal.edu.co", // correo del usuario userEmail
                 numberPhone: dataOrderAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
                 type: "visa", //medio de pago traido del id del metodo de pago selesccionada
                 installments: cardCuotes,//cuotas de tarjeta
@@ -261,8 +261,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                 coupon_code: cuponCodeLimpio, //codigo del cupon
                 coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
                 order_note: dataOrderAddress[0].local_description,// como llegar infor traida de la direccion seleccionada por Id
-                plataforma:'web',//Plataforma desde que se hace la transaccion
-                tipo_pago:'tarjeta debito' //tipo de pago registrado
+                plataforma: 'web',//Plataforma desde que se hace la transaccion
+                tipo_pago: 'tarjeta debito' //tipo de pago registrado
             }
 
 
@@ -310,42 +310,38 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
         // });
         makePay(dataOrder, token)
             .then((res) => {
+                console.log(res.data);
 
-                console.log(res.data.data);
-                // console.log("Mensaje: ", res.data.Message);
-                // console.log(res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url);
-                // let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
-                // if(direccion_url_pse !== null){
-                //   openWindowPSExternal(direccion_url_pse);
-                // }
-                if (res.data.data.MpTransactionId.status || res.data.data.MpTransactionId.status === "rejected" || res.data.data.MpTransactionId.status === "in_process") {
+                if (res.data.responsePayMp.message && res.data.responsePayMp.message === "payer.email must be a valid email") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '¡Rechazamos tu pago, tu email no es correcto!',
+                    });
+                    setModalProcesoPagoClose();
+                } else if (res.data.data.MpTransactionId.status === "rejected" || res.data.data.MpTransactionId.status === "in_process") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: '¡Rechazamos tu pago, intentalo de nuevo!',
-
                     });
                     setModalProcesoPagoClose();
                 } else {
-                    console.log("El pago se registro");
-                    // succesfulPayment = true;
+                    console.log("El pago se registró con éxito");
                     setModalProcesoPagoClose();
                     setModalPurchaseSuccess();
                     setOk();
-                    // setBtnFinalizarCompra();
                 }
-
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.log(err);
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: '¡Ha ocurrido un error procesando el pago!',
-
                 });
                 setModalProcesoPagoClose();
             });
-
     }
 
     useEffect(() => {
