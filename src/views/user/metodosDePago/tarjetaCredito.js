@@ -56,6 +56,15 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
         setShowTooltipCvc(!isValid);
     };
 
+    const handleInputChange = (event) => {
+        const inputValue = event.target.value;
+
+        // Utiliza una expresión regular para verificar que solo haya números y guiones bajos
+        if (/^[0-9_]*$/.test(inputValue)) {
+            setIdentificationNumber(inputValue);
+        }
+    }
+
     /* Manejo de anio de expiracion */
     const handleAnioChangue = (event) => {
         const value = event.target.value;
@@ -376,45 +385,57 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                         <Card style={{ border: 'none' }}>
                             <Form>
 
-                                <FormGroup >
-
-
+                                <FormGroup style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
                                     <PaymentInputsWrapper {...wrapperProps}
                                         styles={{
                                             inputWrapper: {
                                                 base: css`
-                                            border-radius: 32px;
-                                            
-                                            
-                                            `,
-                                            }
+          border-radius: 32px;
+          widht: 100%;
+        `,
+                                            },
                                         }}
                                         style={{ width: '100%' }}>
 
                                         <svg {...getCardImageProps({ images })}
-                                            style={{ width: '5%' }} />
+                                            style={{ width: '10%', marginLeft:'10px' }} />
 
                                         <input {...getCardNumberProps({
-                                            onChange: (e) => setCardNumber(e.target.value)
-
-
+                                            onChange: (e) => setCardNumber(e.target.value),
                                         })}
-
                                             value={cardNumber}
                                             placeholder="0000 0000 0000 0000"
-                                            style={{ width: '55%', marginRight: '5px' }}
-                                        // className="card-number-input"
-
+                                            style={{ width: '100%', marginRight: '5px' }}
                                         />
-
                                     </PaymentInputsWrapper>
 
-
-
+                                    <InputGroup style={{ width: '40%' }}>
+                                        <Input
+                                            addon={true}
+                                            name="anioExpiracion"
+                                            className={`form-control ${showTooltipMonth ? 'error' : ''}`}
+                                            style={{
+                                                borderRadius: '50px',
+                                                borderColor: showTooltipMonth ? 'red' : '',
+                                            }}
+                                            type="text"
+                                            placeholder="Mes"
+                                            value={cardMonth}
+                                            onChange={handleMonthChangue}
+                                            onBlur={handleMonthBlur}
+                                            maxLength={2}
+                                        />
+                                        {showTooltipMonth && (
+                                            <div className="custom-tooltip" data-html={true} data-effect="solid" data-place="bottom" data-event-off="click">
+                                                Debe ingresar una fecha para mes válida menor o igual a 12
+                                            </div>
+                                        )}
+                                    </InputGroup>
                                 </FormGroup>
 
+
                                 <FormGroup style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                    <InputGroup>
+                                    {/* <InputGroup>
                                         <Input
                                             addon={true}
                                             name="anioExpiracion"
@@ -436,7 +457,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 Debe ingresar una fecha para mes valida menor o igual a 12
                                             </div>
                                         )}
-                                    </InputGroup>
+                                    </InputGroup> */}
 
                                     <InputGroup>
                                         <Input
@@ -485,11 +506,29 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                             </div>
                                         )}
                                     </InputGroup>
+
+                                    <InputGroup>
+                                        <Input
+                                            name="Cuotes"
+                                            className="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                                width: "33.3%",
+                                                // Empuja el texto hacia el centro horizontalmente
+                                            }}
+                                            type="number"
+                                            placeholder="Cuotas"
+                                            value={cardCuotes}
+                                            onChange={(event) => setCardCuotes(event.target.value)}
+                                        />
+
+
+                                    </InputGroup>
                                 </FormGroup>
 
                                 <FormGroup style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
 
-                                    <InputGroup style={{ width: '40%' }}>
+                                    {/* <InputGroup style={{ width: '40%' }}>
                                         <Input
                                             name="Cuotes"
                                             classNanme="form-control"
@@ -504,15 +543,15 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                             onChange={(event) => setCardCuotes(event.target.value)}
                                         />
 
-                                    </InputGroup>
+                                    </InputGroup> */}
 
-                                    <InputGroup style={{ width: '60%' }}>
+                                    <InputGroup style={{ width: '100%' }}>
                                         <Input addon={true}
                                             name="contactPersonName"
                                             classNanme="form-control"
                                             style={{
                                                 borderRadius: "50px",
-                                                width: "80%"
+                                                width: "100%"
                                             }}
                                             placeholder="Nombre en la tarjeta"
                                             value={cardName}
@@ -543,17 +582,14 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <Input addon={true}
-                                        name="contactPersonName"
-                                        classNanme="form-control"
+                                    <Input
+                                        type="text"
                                         style={{
                                             borderRadius: "50px",
-
                                         }}
-                                        type="number"
                                         placeholder="Número de documento"
                                         value={identificationNumber}
-                                        onChange={(event) => setIdentificationNumber(event.target.value)}
+                                        onChange={handleInputChange}
                                     />
                                 </FormGroup>
 
