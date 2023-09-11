@@ -64,7 +64,7 @@ const Home = (props) => {
     setModalPopup(false);
   }
 
-  const handleTogglePopup = () => {
+  const closeModalPopup = () => {
     setModalPopup(false);
   }
 
@@ -138,7 +138,7 @@ const Home = (props) => {
 
       >
         <ModalBody>
-          <Popup handleModalData={handleModalData} datosPopup={datosPopup} />
+          <Popup handleModalData={handleModalData} datosPopup={datosPopup} closeModalPopup={()=>setModalPopup(false)}/>
         </ModalBody>
       </Modal>
     </div>
