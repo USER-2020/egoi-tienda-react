@@ -1543,7 +1543,8 @@ function AddressCart() {
                     <h5>$ {products.price.toLocaleString('en')}</h5>
                     <div className="cant">
                       <p>Cantidad:</p>
-                      <input type="number" value={products.quantity} disabled />
+                      {/* <input type="number" value={products.quantity} disabled /> */}
+                      <h5>{products.quantity}</h5>
                     </div>
                   </div>
                 </div>
