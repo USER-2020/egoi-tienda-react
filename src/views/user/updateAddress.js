@@ -8,7 +8,7 @@ import '../../styles/detailsCart.css';
 import { addressById, allCitysByIdDepto, saveAddress, updateAddress } from '../../services/address';
 import { getCurrentUser } from '../../helpers/Utils';
 
-function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress, dataAddress }) {
+function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) {
 
     const {
         reset,
@@ -36,7 +36,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress, da
     const [selectedCiudad, setSelectedCiudad] = useState();
     const [selectedDepto, setSelectedDepto] = useState();
     const [deptoId, setDeptoId] = useState();
-    // const [dataAddress, setDataAddress ] = useState("");
+    const [dataAddress, setDataAddress ] = useState("");
 
 
 
@@ -50,18 +50,21 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress, da
     };
 
 
-    // const getAddressById = () => {
-    //     addressById(idAddress, token)
-    //       .then((res) => {
-    //         // console.log("Datos traidos de la direcicon ID", res.data);
-    //         // console.log("Nombre", res.data[0].contact_person_name);
-    //         // console.log("Celular", res.data[0].phone);
-    //         // console.log("Como llegar", res.data[0].local_description);
-    //         console.log(res.data);
-    //         setDataAddress(res.data);
+    const getAddressById = () => {
+        addressById(idAddress, token)
+          .then((res) => {
+            // console.log("Datos traidos de la direcicon ID", res.data);
+            // console.log("Nombre", res.data[0].contact_person_name);
+            // console.log("Celular", res.data[0].phone);
+            // console.log("Como llegar", res.data[0].local_description);
+            console.log(res.data);
+            setDataAddress(res.data);
+            setContactPersonName(dataAddress.f_name || "");
+            setContactPersonLastName(dataAddress.l_name || "");
+            setContactPersonFullName(dataAddress.contact_person_name || "");
     
-    //       })
-    //   }
+          })
+      }
 
     const handleSelectChangeZip = (e) => {
         const valorSeleccionadoZip = (e.target.value);
@@ -165,6 +168,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress, da
                 })
         }
         // getAddressById();
+        console.log(dataAddress);
         const fullName = contactPersonName + " " + contactPersonLastName;
         setContactPersonFullName(fullName);
         // console.log("Id Address: ", idAddress);
@@ -178,10 +182,9 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress, da
 
     useEffect(()=>{
         // console.log(dataF_Name);
+        getAddressById();
         console.log(dataAddress);
-            setContactPersonName(dataAddress.f_name || "");
-            setContactPersonLastName(dataAddress.l_name || "");
-            setContactPersonFullName(dataAddress.contact_person_name || "");
+            
     },[]);
 
 
