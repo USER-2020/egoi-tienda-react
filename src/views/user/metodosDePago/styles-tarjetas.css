@@ -26,8 +26,7 @@
 .form-control[placeholder="Año"]::placeholder,
 .form-control[placeholder="Mes"]::placeholder,
 .form-control[placeholder="CVC"]::placeholder,
-.form-control[placeholder="Cuotas"]::placeholder
-{
+.form-control[placeholder="Cuotas"]::placeholder {
   /* Estilos personalizados aquí */
   color: #999;
   /* Cambia el color del texto del placeholder */
@@ -45,13 +44,15 @@
 
 
 
+
 input[placeholder="Nombre en la tarjeta"]::placeholder {
   background-image: var(--placeholder-icon-nombre);
 
 }
 
 @media (max-width: 768px) {
+
   /* Estilos para pantallas con un ancho máximo de 768px */
-  
+ 
 
 }

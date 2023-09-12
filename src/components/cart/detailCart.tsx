@@ -173,7 +173,7 @@ function DetailCart({ setCantCart }) {
         total += precioTotal;
       }
 
-      if(product.discount_tag === 0 && product.discount=== 0){
+      if (product.discount_tag === 0 && product.discount === 0) {
         const precioTotal = (product.price) * product.quantity;
         total += precioTotal;
       }
@@ -198,7 +198,7 @@ function DetailCart({ setCantCart }) {
     // console.log(subtotal);
     if (subtotal && subtotal <= 39900) {
       setCostoEnvio(0);
-    } else if (subtotal && subtotal <= 79990 && subtotal >39900) {
+    } else if (subtotal && subtotal <= 79990 && subtotal > 39900) {
       const costodelEnvio = 9900;
       setCostoEnvio(costodelEnvio);
     } else {
@@ -511,7 +511,7 @@ function DetailCart({ setCantCart }) {
                   <p>Envío</p>
                   {productsCart && productsCart.length === 0 ? (
                     <p>$0</p>
-                  ):(
+                  ) : (
                     subtotal <= 39900 ? (
                       <span className='badge text-bg-success'>Paga el cliente</span>
                     ) : (
@@ -613,7 +613,7 @@ function DetailCart({ setCantCart }) {
                 <>
                   <div className="toPay">
                     <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}>
-                    {/* <Link to={checkout}> */}
+                      {/* <Link to={checkout}> */}
                       <a href="#" >Ir a pagar</a>
                     </Link>
                   </div>
@@ -635,8 +635,17 @@ function DetailCart({ setCantCart }) {
           <div className="scroll-modal-content">
             {/* <!-- Contenido del modal --> */}
             <div className="containerCaracteristicaEnvio">
-              <p className="caract">Envío Medellín</p>
-              <p className="envio">Gratis</p>
+              <p className="caract">Envío</p>
+              <p className="envio">
+                {productsCart && productsCart.length === 0 ? (
+                  <p>$0</p>
+                ) : (
+                  subtotal <= 39900 ? (
+                    <span className='badge text-bg-success'>Paga el cliente</span>
+                  ) : (
+                    <p>${costoEnvio.toLocaleString('en')}</p>
+                  )
+                )}</p>
             </div>
             <div className="containerCaracteristicaPrecio">
               <p>Precio Total</p>
