@@ -11,7 +11,7 @@
 
 }
 
-#tachado{
+#tachado {
     color: red;
     align-self: center;
     font-size: small;
@@ -81,7 +81,7 @@
     /* Ajustar el espacio a la izquierda para el botón de "left" */
 }
 
-.containerProductos1 .cardContainer a{
+.containerProductos1 .cardContainer a {
     text-decoration: none;
 
 }
@@ -170,6 +170,7 @@
     height: 100px;
 
 }
+
 .containerProductos1 .scroll-button.right {
     right: 0;
     position: sticky;
@@ -975,6 +976,7 @@ h4 {
     .containerProductos .scroll-button.right {
         display: none;
     }
+
     .containerProductos1 .scroll-button.right {
         display: none;
     }
@@ -983,9 +985,15 @@ h4 {
         display: none;
     }
 
+    #promociones {
+        height: 390px;
+        margin-bottom: 50px;
+
+    }
+
     #promociones .containerCard2 .cardProducto1 {
         width: 207px;
-        height: 360px;
-        margin-bottom: 20px;
+        height: 380px;
+        
     }
 }

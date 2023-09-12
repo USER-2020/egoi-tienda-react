@@ -225,7 +225,7 @@ const Promociones = ({ bannersInfo }) => {
         </div>
       </div>
 
-      <div className="containerProductos" ref={containerRef2} id="promociones" style={{marginBottom:'80px'}}>
+      <div className="containerProductos" ref={containerRef2} id="promociones" >
         {productos.length >= 5 ? (
           <button className="scroll-button left" onClick={handleScrollLeft2} onMouseOver={handleScrollLeft2}>
             &#8249;
