@@ -270,8 +270,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                     coupon_code: cuponCodeLimpio, //codigo del cupon
                     coupon_discount: cuponDescuentoLimpio, //el decuento que te da el cupon 
                     order_note: dataOrderAddress[0].local_description,// como llegar infor traida de la direccion seleccionada por Id
-                    plataforma: 'web',//Plataforma desde que se hace la transaccion
-                    tipo_pago: 'tarjeta debito' //tipo de pago registrado
+                    plataforma: 'Web',//Plataforma desde que se hace la transaccion
+                    tipo_pago: 'Tarjeta débito' //tipo de pago registrado
                 }
 
 

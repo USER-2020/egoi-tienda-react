@@ -43,7 +43,7 @@ export const makePay = (data, token) =>
         }
     });
 
-//Registar compra despues del OTP
+//Registar compra despues en el modal Efecty
 export const placeOrderEfecty = (addressId, cuponLimpio, descriptionOrder, tmp, token, dataRefEfecty) =>
     axios.get(`${urlBase}/customer/order/place`, {
         params: {
@@ -51,7 +51,8 @@ export const placeOrderEfecty = (addressId, cuponLimpio, descriptionOrder, tmp, 
             coupon_code: cuponLimpio,
             order_note: descriptionOrder,
             tmp: tmp,
-            transaction_ref: dataRefEfecty
+            transaction_ref: dataRefEfecty,
+            plataforma:"Web",
 
         },
         headers: {
@@ -68,7 +69,8 @@ export const placeOrder = (addressId, cuponLimpio, descriptionOrder, tmp, token)
             address_id: addressId,
             coupon_code: cuponLimpio,
             order_note: descriptionOrder,
-            tmp: tmp
+            tmp: tmp,
+            plataforma:"Web",
 
         },
         headers: {
