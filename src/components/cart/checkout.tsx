@@ -7,7 +7,8 @@ import { Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, M
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { getCurrentUser } from '../../helpers/Utils';
 import { allProductsCart } from '../../services/cart';
-import start from '../../assets/Star.png';
+import start from '../../assets/egoi_icons/star-fill.svg';
+import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
 import { Link, useLocation } from 'react-router-dom';
 import AdressCheckout from '../../views/user/adress';
 import es from "react-phone-input-2/lang/es.json";
@@ -63,7 +64,7 @@ function AddressCart() {
   const [idAddress, setIdAddress] = useState([]);
   const [descriptionOrder, setDescriptionOrder] = useState("");
 
-  const [dataAddressUpdate, setDataAddressUpdate ] = useState("");
+  const [dataAddressUpdate, setDataAddressUpdate] = useState("");
 
   const [modalDataPSE, setModalDataPSE] = useState("");
   const [modalDataTarjetas, setModalDataTarjetas] = useState("");
@@ -653,9 +654,9 @@ function AddressCart() {
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          
+
           setIdAddress(addrId);
-                    
+
           setModalAddressUpdate(true);
 
         } else if (
@@ -1519,11 +1520,13 @@ function AddressCart() {
                 </div>
                 <div className="info">
                   <div className="starts">
-                    <img src={start} alt="" />
-                    <img src={start} alt="" />
-                    <img src={start} alt="" />
-                    <img src={start} alt="" />
-                    <img src={start} alt="" />
+                    {[...Array(5)].map((_, index) => (
+                      <img
+                        key={index}
+                        src={index < products.count_rating ? start : startEmpty}
+                        alt=""
+                      />
+                    ))}
                   </div>
                   <div className="productInfo">
                     <h6>{products.name}</h6>
@@ -1812,7 +1815,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
-        <ModalHeader toggle={()=>closeAddressCheckoutModal()}></ModalHeader>
+        <ModalHeader toggle={() => closeAddressCheckoutModal()}></ModalHeader>
         <ModalBody>
           <AdressCheckout closeModalAddress={closeModalAddress} deptos={deptos} refreshAddress={refreshAddress} />
         </ModalBody>
@@ -1825,10 +1828,10 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
-        <ModalHeader toggle={()=>setModalAddressUpdate(false)}></ModalHeader>
+        <ModalHeader toggle={() => setModalAddressUpdate(false)}></ModalHeader>
         <ModalBody>
           <UpdateAddress closeModalUpdate={closeModalUpdate} deptos={deptos} refreshAddress={refreshAddress}
-            idAddress={idAddress} dataAddress={dataAddressUpdate}/>
+            idAddress={idAddress} dataAddress={dataAddressUpdate} />
         </ModalBody>
       </Modal>
 
@@ -1843,7 +1846,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
-        <ModalHeader toggle={()=>setModalTarjetaCredito(false)}></ModalHeader>
+        <ModalHeader toggle={() => setModalTarjetaCredito(false)}></ModalHeader>
         <ModalBody>
           <TarjetaCreditoModal
             // handleModalData={handleModalData} 
@@ -1874,7 +1877,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
-        <ModalHeader toggle={()=>setModalTarjetaDebito(false)}></ModalHeader>
+        <ModalHeader toggle={() => setModalTarjetaDebito(false)}></ModalHeader>
         <ModalBody>
           <TarjetaDebitoModal
             closeModalTarjetaDebito={closeModalTarjetaDebito}
@@ -1902,7 +1905,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
-        <ModalHeader toggle={()=>closeModalEfecty()}></ModalHeader>
+        <ModalHeader toggle={() => closeModalEfecty()}></ModalHeader>
         <ModalBody>
           <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : total}
             closeEfectyModal={() => closeModalEfecty()}
@@ -1939,7 +1942,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
-        <ModalHeader toggle={()=>setModalPse(false)}></ModalHeader>
+        <ModalHeader toggle={() => setModalPse(false)}></ModalHeader>
         <ModalBody>
           <PseModal
             closeModalPse={closeModalPse}
@@ -1967,7 +1970,7 @@ function AddressCart() {
         onOpened={() => setIsScrollModalEnabled(false)}
         onClosed={() => setIsScrollModalEnabled(true)}
       >
-        <ModalHeader toggle={()=>setModalOTP(false)}></ModalHeader>
+        <ModalHeader toggle={() => setModalOTP(false)}></ModalHeader>
         <ModalBody>
           <CashDeliveryOTP phone={dataAddress[0]?.phone}
             closeModalOTP={closeModalOTP}

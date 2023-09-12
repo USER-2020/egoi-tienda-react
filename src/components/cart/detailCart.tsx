@@ -11,7 +11,8 @@ import { allProductsCart, deleteItemCart } from '../../services/cart';
 import Swal from 'sweetalert2';
 import { checkout } from '../../constants/defaultValues';
 import AddressCart from './checkout.tsx';
-import start from '../../assets/Star.png';
+import start from '../../assets/egoi_icons/star-fill.svg';
+import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
 import { aplyCupon } from '../../services/cupon';
 import { ThreeCircles } from 'react-loader-spinner';
 function DetailCart({ setCantCart }) {
@@ -115,6 +116,7 @@ function DetailCart({ setCantCart }) {
 
   const getAllProductsByCart = async () => {
     if (token) {
+      console.log(token);
       try {
         const res = await allProductsCart(token);
         setProductsCart(res.data);
@@ -319,11 +321,13 @@ function DetailCart({ setCantCart }) {
                     </div>
                     <div className="info">
                       <div className="starts">
-                        <img src={start} alt="" />
-                        <img src={start} alt="" />
-                        <img src={start} alt="" />
-                        <img src={start} alt="" />
-                        <img src={start} alt="" />
+                        {[...Array(5)].map((_, index) => (
+                          <img
+                            key={index}
+                            src={index < products.count_rating ? start : startEmpty}
+                            alt=""
+                          />
+                        ))}
                       </div>
                       <div className="productInfo">
                         <h6>{products.name}</h6>
