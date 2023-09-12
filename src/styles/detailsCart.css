@@ -672,11 +672,14 @@ input[type="checkbox"]:checked {
     margin-right: 0;
   }
 
-  .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant input {
+  .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant h5 {
 
     border: none;
     margin-left: 0px;
     width: 20px;
+    font-weight: 700;
+    margin-bottom: 0;
+    align-self: center;
   }
 
   /* modal de compra */

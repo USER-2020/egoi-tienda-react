@@ -116,7 +116,7 @@ function DetailCart({ setCantCart }) {
 
   const getAllProductsByCart = async () => {
     if (token) {
-      console.log(token);
+      // console.log(token);
       try {
         const res = await allProductsCart(token);
         setProductsCart(res.data);
@@ -358,7 +358,8 @@ function DetailCart({ setCantCart }) {
                         )}
                         <div className="cant">
                           <p>Cantidad:</p>
-                          <input type="number" value={products.quantity} disabled />
+                          {/* <input type="number" value={products.quantity} disabled /> */}
+                          <h5>{products.quantity}</h5>
                         </div>
                       </div>
                     </div>
