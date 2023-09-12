@@ -853,6 +853,7 @@ input[type="checkbox"]:checked {
     width: 30%;
     background-color: var(--prm-color);
     border-radius: 32px;
+    
 
 
   }
@@ -862,6 +863,7 @@ input[type="checkbox"]:checked {
     color: white;
     font-size: 14px;
     text-align: center;
+    align-self: center;
   }
 
   .containerCheckoutResponsive .factura .title {
@@ -879,7 +881,7 @@ input[type="checkbox"]:checked {
 
   .containerCheckoutResponsive .factura .containertotalAPagarResponsive {
     width: 100%;
-    height: 32px;
+    height: 35px;
     padding: 5px;
     display: flex;
     flex-direction: row;
@@ -892,6 +894,8 @@ input[type="checkbox"]:checked {
   .containerCheckoutResponsive .factura .containertotalAPagarResponsive p {
     font-size: 18px;
     font-weight: 700;
+    margin-bottom: 0;
+    align-self: center;
   }
 
   .containerCheckoutResponsive .paymentMethods {
