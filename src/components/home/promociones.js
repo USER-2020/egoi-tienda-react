@@ -275,7 +275,7 @@ const Promociones = ({ bannersInfo }) => {
                       <h5>${product.unit_price && product.unit_price.toLocaleString('en')}</h5>
                     )}
                   </CardTitle>
-                  <span className="span_offer">Oferta del dia</span>
+                  <span className="span_offer">Oferta del día</span>
                 </CardBody>
               </Card>
             </Link>

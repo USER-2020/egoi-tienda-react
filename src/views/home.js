@@ -85,6 +85,7 @@ const Home = (props) => {
     getPopup()
       .then((res) => {
         if (!res.data || Object.keys(res.data).length > 0) {
+          console.log(res.data);
           setDatosPopup(res.data);
           setModalPopup(true);
         } else {

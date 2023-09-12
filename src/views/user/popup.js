@@ -41,7 +41,7 @@ function Popup({ handleModalData, datosPopup, closeModalPopup }) {
   }
 
   useEffect(() => {
-    console.log(datosPopup);
+    console.log("estos sonm los datos del popup",datosPopup);
   }, []);
 
   return (

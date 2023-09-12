@@ -352,19 +352,25 @@
     margin-bottom: 20px;
 }
 
-
+.CardBody {
+    position: relative;
+}
 
 .span_offer {
-
-    justify-content: center;
-    width: 71px;
-    height: 17px;
+    position: absolute;
+    align-self: center;
+    align-items: center;
+    /* Alinea verticalmente al centro */
+    width: 76px;
+    height: 22px;
     background-color: #A75BFF;
     border-radius: 8px;
     color: white;
     padding: 4px 8px;
     font-size: 10px;
+    bottom: 10px;
 }
+
 
 .cardProducto1 {
     width: 100%;
@@ -994,6 +1000,6 @@ h4 {
     #promociones .containerCard2 .cardProducto1 {
         width: 207px;
         height: 380px;
-        
+
     }
 }
