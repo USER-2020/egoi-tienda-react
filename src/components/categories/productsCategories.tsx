@@ -743,63 +743,60 @@ const ProductsCategories = () => {
             Prev Page
           </button>
           <button onClick={handleNextPage}>Next Page</button> */}
-              <div className="d-flex align-items-center paginaton mt-4 align-self-center">
-                {
-                  currentPage !== 1 && (
-                    <button
-                      onClick={() => {
-                        setCurrentPage(1);
-                        handlePageClick(0);
-                      }}
-                      className="paginator-icon btn mx-1"
-                    >
-                      <FontAwesomeIcon icon={faChevronLeft} color='#FC5241' /><FontAwesomeIcon icon={faChevronLeft} color='#FC5241' />
-                    </button>
-                  )
+              <div className="pagination-container d-flex flex-wrap justify-content-center align-items-center mt-4">
+                {currentPage !== 1 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(1);
+                      handlePageClick(0);
+                    }}
+                    className="paginator-icon btn mx-1"
+                  >
+                    <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
+                    <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
+                  </button>
+                )}
 
-                }
-                {
-                  currentPage !== 1 && (
-                    <button
-                      onClick={() => {
-                        setCurrentPage(currentPage - 1);
-                        handlePageClick(currentPage - 1);
-                      }}
-                      className="btn mx-1"
-                    >
-                      <FontAwesomeIcon icon={faChevronLeft} color='#FC5241' />
-                    </button>
-                  )
-                }
+                {currentPage !== 1 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(currentPage - 1);
+                      handlePageClick(currentPage - 1);
+                    }}
+                    className="btn mx-1"
+                  >
+                    <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
+                  </button>
+                )}
 
                 {pageButtons}
-                {
-                  currentPage !== totalPages && totalPages !== 0 && (
-                    <button
-                      onClick={() => {
-                        setCurrentPage(currentPage + 1);
-                        handlePageClick(currentPage + 1);
-                      }}
-                      className="btn mx-1"
-                    >
-                      <FontAwesomeIcon icon={faChevronRight} color='#FC5241' />
-                    </button>
-                  )
-                }
-                {
-                  currentPage !== totalPages && totalPages !== 2 && totalPages !== 0 && (
-                    <button
-                      onClick={() => {
-                        setCurrentPage(totalPages);
-                        handlePageClick((totalPages));
-                      }}
-                      className="btn mx-1"
-                    >
-                      <FontAwesomeIcon icon={faChevronRight} color='#FC5241' /><FontAwesomeIcon icon={faChevronRight} color='#FC5241' />
-                    </button>
-                  )
-                }
+
+                {currentPage !== totalPages && totalPages !== 0 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(currentPage + 1);
+                      handlePageClick(currentPage + 1);
+                    }}
+                    className="btn mx-1"
+                  >
+                    <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
+                  </button>
+                )}
+
+                {currentPage !== totalPages && totalPages !== 2 && totalPages !== 0 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(totalPages);
+                      handlePageClick(totalPages);
+                    }}
+                    className="btn mx-1"
+                  >
+                    <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
+                    <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
+                  </button>
+                )}
               </div>
+
             </div>
           </div>
         </div>
