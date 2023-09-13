@@ -289,7 +289,7 @@ function AddressCart() {
           text: '¡No has seleccionado ninguna dirección!',
           confirmButtonColor: '#FC5241',
         });
-        
+
       }
     }
   }
@@ -1182,7 +1182,7 @@ function AddressCart() {
                 <div className={`step-item ${activeStep >= 1 ? 'active' : ''}`} >
                   <button className={`step-button text-center ${activeStep >= 1 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onClick={() => handleStepClick(1, 0)}
-                    style={{pointerEvents:'none'}}>
+                    style={{ pointerEvents: 'none' }}>
                     1
                   </button>
                   <div className="step-title">
@@ -1192,7 +1192,7 @@ function AddressCart() {
                 <div className={`step-item ${activeStep >= 2 ? 'active' : ''}`} >
                   <button className={`step-button text-center ${activeStep >= 2 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onClick={() => handleStepClick(2, 50)}
-                    style={{pointerEvents:'none'}}>
+                    style={{ pointerEvents: 'none' }}>
                     2
                   </button>
                   <div className="step-title">
@@ -1205,7 +1205,7 @@ function AddressCart() {
                     className={`step-button text-center ${activeStep >= 3 && selectedAddressIndex !== null ? 'active' : ''}`}
                     type="button"
                     onClick={() => handleProcederCompra()}
-                    style={{pointerEvents:'none'}}
+                    style={{ pointerEvents: 'none' }}
                   >
                     3
                   </button>
@@ -1329,22 +1329,25 @@ function AddressCart() {
                             onChange={() => handleCheckboxChange(2)} />
                         </div>
                       </Card>
-                      <Card>
-                        <div className="payment">
-                          <div className="imgPayment">
-                            <img src={efectyLogo} />
+                      {totalNumber >= 5000 && (
+                        <Card>
+                          <div className="payment">
+                            <div className="imgPayment">
+                              <img src={efectyLogo} />
+                            </div>
+                            <div className="contentPayment">
+                              <h6>Efecty</h6>
+                              <p>Pago realizado por consignación</p>
+                            </div>
                           </div>
-                          <div className="contentPayment">
-                            <h6>Efecty</h6>
-                            <p>Pago realizado por consignación</p>
+                          <div className="checkPayment">
+                            <Input type='checkbox'
+                              checked={selectedCheckbox === 3}
+                              onChange={() => handleCheckboxChange(3)} />
                           </div>
-                        </div>
-                        <div className="checkPayment">
-                          <Input type='checkbox'
-                            checked={selectedCheckbox === 3}
-                            onChange={() => handleCheckboxChange(3)} />
-                        </div>
-                      </Card>
+                        </Card>
+
+                      )}
                       {totalNumber >= 39990 && totalNumber <= 1999000 && (
 
                         <Card>
@@ -1734,20 +1737,23 @@ function AddressCart() {
                 </div>
               </Card>
               <Card>
-                <div className="payment">
-                  <div className="imgPayment">
-                    <img src={efectyLogo} />
+                {totalNumber >= 5000 && (
+                  <div className="payment">
+                    <div className="imgPayment">
+                      <img src={efectyLogo} />
+                    </div>
+                    <div className="contentPayment">
+                      <h6>Efecty</h6>
+                      <p>Pago realizado por consignación</p>
+                    </div>
+                    <div className="checkPayment">
+                      <Input type='radio'
+                        checked={selectedCheckbox === 3}
+                        onChange={() => handleCheckboxChange(3)} />
+                    </div>
                   </div>
-                  <div className="contentPayment">
-                    <h6>Efecty</h6>
-                    <p>Pago realizado por consignación</p>
-                  </div>
-                  <div className="checkPayment">
-                    <Input type='radio'
-                      checked={selectedCheckbox === 3}
-                      onChange={() => handleCheckboxChange(3)} />
-                  </div>
-                </div>
+
+                )}
               </Card>
               <Card>
                 {totalNumber >= 39900 && totalNumber <= 1999000 && (
