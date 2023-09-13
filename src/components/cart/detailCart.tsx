@@ -617,10 +617,10 @@ function DetailCart({ setCantCart }) {
               {productsCart.length > 0 ? (
                 <>
                   <div className="toPay">
-                    <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}>
+                    {/* <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
                       {/* <Link to={checkout}> */}
-                      <a href="#" >Ir a pagar</a>
-                    </Link>
+                      <a href={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`} >Ir a pagar</a>
+                    {/* </Link> */}
                   </div>
                   <div className="awaitShopping">
                     <a href="/">Seguir comprando</a>
