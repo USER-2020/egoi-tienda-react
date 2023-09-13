@@ -289,6 +289,7 @@ function AddressCart() {
           text: '¡No has seleccionado ninguna dirección!',
           confirmButtonColor: '#FC5241',
         });
+        
       }
     }
   }
@@ -338,6 +339,7 @@ function AddressCart() {
               text: '¡No has seleccionado ninguna dirección!',
               confirmButtonColor: '#FC5241',
             });
+            setSelectedCheckbox(null);
             setModalTarjetaDebito(false);
           } else {
 
@@ -359,6 +361,7 @@ function AddressCart() {
               text: '¡No has seleccionado ninguna dirección!',
               confirmButtonColor: '#FC5241',
             });
+            setSelectedCheckbox(null);
             setModalTarjetaCredito(false);
           } else {
 
@@ -394,6 +397,7 @@ function AddressCart() {
               text: '¡No has seleccionado ninguna dirección!',
               confirmButtonColor: '#FC5241',
             });
+            setSelectedCheckbox(null);
 
           } else {
 
@@ -478,6 +482,7 @@ function AddressCart() {
               text: '¡No has seleccionado ninguna dirección!',
               confirmButtonColor: '#FC5241',
             });
+            setSelectedCheckbox(null);
 
           } else {
 
