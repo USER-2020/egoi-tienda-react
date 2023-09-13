@@ -174,7 +174,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
             } else {
 
             }
-            history.push(`/checkout/${buyNowProduct.toLocaleString()}/${costoEnvio.toLocaleString()}/$${totalAPagar.toLocaleString()}/${descuento}`);
+            history.push(`/checkout/${buyNowProduct.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/$${totalAPagar.toLocaleString('en')}/${descuento}`);
 
         }
         else {
