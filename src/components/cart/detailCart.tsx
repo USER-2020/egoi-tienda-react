@@ -664,9 +664,9 @@ function DetailCart({ setCantCart }) {
                   {/* </Link> */}
                 </div>
                 <div className="awaitShopping">
-                  <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}>
-                    <a href="#">Continuar compra</a>
-                  </Link>
+                  {/* <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
+                    <a href={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}>Continuar compra</a>
+                  {/* </Link> */}
                 </div>
               </>
             ) : (<></>)}

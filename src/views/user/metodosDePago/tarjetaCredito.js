@@ -318,28 +318,23 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
         // });
         makePay(dataOrder, token)
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data.data);
 
-                if (res.data.responsePayMp.message && res.data.responsePayMp.message === "payer.email must be a valid email") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: '¡Rechazamos tu pago, tu email no es correcto!',
-                    });
+                if (res.data.data.MpTransactionId.status === "approved") {
+                    console.log("El pago se registró con éxito");
                     setModalProcesoPagoClose();
-                } else if (res.data.data.MpTransactionId.status === "rejected" || res.data.data.MpTransactionId.status === "in_process") {
+                    setModalPurchaseSuccess();
+                    setOk();
+                }
+                if (res.data.data.MpTransactionId.status === "rejected" || res.data.data.MpTransactionId.status === "in_process") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: '¡Rechazamos tu pago, intentalo de nuevo!',
                     });
                     setModalProcesoPagoClose();
-                } else {
-                    console.log("El pago se registró con éxito");
-                    setModalProcesoPagoClose();
-                    setModalPurchaseSuccess();
-                    setOk();
                 }
+
             })
             .catch((err) => {
                 console.log(err);
@@ -398,14 +393,14 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                         style={{ width: '100%' }}>
 
                                         <svg {...getCardImageProps({ images })}
-                                            style={{ width: '10%', marginLeft:'10px' }} />
+                                            style={{ width: '10%', marginLeft: '10px' }} />
 
                                         <input {...getCardNumberProps({
                                             onChange: (e) => setCardNumber(e.target.value),
                                         })}
                                             value={cardNumber}
                                             placeholder="0000 0000 0000 0000"
-                                            style={{ width:'100%',marginRight: '15px', transform: "translateX(-14%)" }}
+                                            style={{ width: '100%', marginRight: '15px', transform: "translateX(-14%)" }}
                                         />
                                     </PaymentInputsWrapper>
 
