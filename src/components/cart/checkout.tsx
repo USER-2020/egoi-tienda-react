@@ -1181,7 +1181,8 @@ function AddressCart() {
                 <progress id="progress" value={valueProgressBar} max={100} ></progress>
                 <div className={`step-item ${activeStep >= 1 ? 'active' : ''}`} >
                   <button className={`step-button text-center ${activeStep >= 1 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onClick={() => handleStepClick(1, 0)}>
+                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onClick={() => handleStepClick(1, 0)}
+                    style={{pointerEvents:'none'}}>
                     1
                   </button>
                   <div className="step-title">
@@ -1190,7 +1191,8 @@ function AddressCart() {
                 </div>
                 <div className={`step-item ${activeStep >= 2 ? 'active' : ''}`} >
                   <button className={`step-button text-center ${activeStep >= 2 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onClick={() => handleStepClick(2, 50)}>
+                    data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onClick={() => handleStepClick(2, 50)}
+                    style={{pointerEvents:'none'}}>
                     2
                   </button>
                   <div className="step-title">
@@ -1203,6 +1205,7 @@ function AddressCart() {
                     className={`step-button text-center ${activeStep >= 3 && selectedAddressIndex !== null ? 'active' : ''}`}
                     type="button"
                     onClick={() => handleProcederCompra()}
+                    style={{pointerEvents:'none'}}
                   >
                     3
                   </button>

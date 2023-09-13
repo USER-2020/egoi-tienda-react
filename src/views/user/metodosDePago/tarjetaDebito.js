@@ -280,7 +280,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     }
 
     const verifyPurchase = (dataOrder) => {
-        console.log(token);
+        // console.log(token);
         console.log("Estos son los datos de las ordenes", dataOrder);
         closeModalTarjetaDebito();
         setModalProcesoPago();
