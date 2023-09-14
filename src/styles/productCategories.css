@@ -147,8 +147,15 @@ input[type="radio"]:checked {
     display: block;
 }
 
-@media (max-width: 768px) {
+/* .pagination-container {
+    text-align: center; /* Centra el contenido horizontalmente en dispositivos de escritorio */
+  /* } */
 
+@media (max-width: 768px) {
+    
+    /* .pagination-container {
+        text-align: left; /* Cambia la alineación a la izquierda en dispositivos móviles si es necesario */
+      /* } */
     /* .containerProductCategorie{
         display: none;
     } */
