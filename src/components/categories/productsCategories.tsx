@@ -743,7 +743,7 @@ const ProductsCategories = () => {
             Prev Page
           </button>
           <button onClick={handleNextPage}>Next Page</button> */}
-              <div className="pagination-container d-flex flex-wrap justify-content-center align-items-center mt-4">
+              <div className="pagination-container d-flex flex-wrap justify-content-center align-items-center mt-4 align-self-center">
                 {currentPage !== 1 && (
                   <button
                     onClick={() => {
