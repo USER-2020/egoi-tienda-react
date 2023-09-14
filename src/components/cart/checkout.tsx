@@ -45,7 +45,7 @@ function AddressCart() {
   const toggle = () => setIsOpen(!isOpen);
   const [previousStep, setPreviousStep] = useState(0);
   const [activeStep, setActiveStep] = useState(2);
-  const [valueProgressBar, setValueProgressBar] = useState(50);
+  const [valueProgressBar, setValueProgressBar] = useState(55);
   const [productsCart, setProductsCart] = useState([]);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
@@ -1182,7 +1182,7 @@ function AddressCart() {
                 <div className={`step-item ${activeStep >= 1 ? 'active' : ''}`} >
                   <button className={`step-button text-center ${activeStep >= 1 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onClick={() => handleStepClick(1, 0)}
-                    style={{ pointerEvents: 'none' }}>
+                    style={{  pointerEvents: 'none', width:'40px', height:'40px'  }}>
                     1
                   </button>
                   <div className="step-title">
@@ -1192,7 +1192,7 @@ function AddressCart() {
                 <div className={`step-item ${activeStep >= 2 ? 'active' : ''}`} >
                   <button className={`step-button text-center ${activeStep >= 2 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onClick={() => handleStepClick(2, 50)}
-                    style={{ pointerEvents: 'none' }}>
+                    style={{  pointerEvents: 'none', width:'40px', height:'40px' }}>
                     2
                   </button>
                   <div className="step-title">
@@ -1205,7 +1205,7 @@ function AddressCart() {
                     className={`step-button text-center ${activeStep >= 3 && selectedAddressIndex !== null ? 'active' : ''}`}
                     type="button"
                     onClick={() => handleProcederCompra()}
-                    style={{ pointerEvents: 'none' }}
+                    style={{ pointerEvents: 'none', width:'40px', height:'40px' }}
                   >
                     3
                   </button>
