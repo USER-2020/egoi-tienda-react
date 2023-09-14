@@ -306,11 +306,12 @@
 #progress {
   -webkit-appearance: none;
   position: absolute;
-  width: 80%;
+  width: 79%;
   z-index: 5;
   height: 10px;
-  margin-left: 55px;
+  margin-left: 61px;
   margin-bottom: 18px;
+  
 }
 
 /* to customize progress bar */
