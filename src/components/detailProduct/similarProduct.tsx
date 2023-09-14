@@ -99,7 +99,7 @@ function SimilarProduct() {
                             <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
 
                                 {/* <Link to={`/detailsProduct/${product.id}/${product.slug}`} > */}
-                                <Card className='cardProducto1'>
+                                <Card className='cardProducto1' style={{ height: "370px", width: "200px"}}>
                                     {product.current_stock <= 0 && (
                                         <span className="agotadoTag">Agotado</span>
                                     )}

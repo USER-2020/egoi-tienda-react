@@ -53,6 +53,7 @@
     overflow-x: scroll;
     overflow-y: hidden;
     margin-bottom: 20px;
+    height: 390px;
 }
 .cardProducto1 .card-img-top {
     /* width: 100%; */
@@ -101,9 +102,11 @@
     margin-bottom: 20px;
 }
 .cardProducto1{
-    width: 100%;
+    /* width: 100%; */
     border-radius: 16px;
-
+    height: 200px;
+    object-fit: cover;
+    padding: 10px;
     overflow: hidden;
 }
 
