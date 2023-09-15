@@ -226,7 +226,7 @@ const Vendidos = ({ bannersInfo }) => {
                         .filter((banner) => banner.banner_type === "banner_5")
                         .map((itemBanner, index) => (
                             <div className='containerHot' ref={containerRef2}>
-                                <a href="#" onClick={() => showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}>
+                                <a href="#" onClick={(e) => {e.preventDefault(); showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}}>
                                     <div className='masVendidosCards' key={index === 0}>
                                         {/* <div className='headerImg'>
                                             <img src={logoSamsung} width={'200px'} />
@@ -247,7 +247,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub)}>
+                                <a href="#" onClick={(e) => {e.preventDefault(); showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub)}}>
                                     <div className='masVendidosCards' key={index === 1}>
                                         {/* <div className='headerImg'>
                                             <img src={logoSony} width={'200px'} />
@@ -268,7 +268,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[2].ids_filtro_s_sub)}>
+                                <a href="#" onClick={(e) => {e.preventDefault();showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[2].ids_filtro_s_sub)}}>
                                     <div className='masVendidosCards' key={index === 2}>
                                         {/* <div className='headerImg'>
                                             <img src={logoHaceb} width={'200px'} />
@@ -289,7 +289,7 @@ const Vendidos = ({ bannersInfo }) => {
                                         </div> */}
                                     </div>
                                 </a>
-                                <a href="#" onClick={() => showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub)}>
+                                <a href="#" onClick={(e) => {e.preventDefault(); showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub)}}>
                                     <div className='masVendidosCards' key={index === 3}>
                                         {/* <div className='headerImg'>
                                             <img src={logoAsus} width={'200px'} />

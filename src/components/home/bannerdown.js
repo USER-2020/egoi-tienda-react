@@ -121,8 +121,9 @@ const Bannerdown = ({ bannersInfo }) => {
             {bannersInfo && bannersInfo
                 .filter((banner) => banner.banner_type === "banner_6")
                 .map((itemBanner, index) => (
-                    <a href='#' onClick={() => {
+                    <a href='#' onClick={(e) => {
                         console.log(itemBanner.banner_data);
+                        e.preventDefault();
                         if (itemBanner.banner_data && itemBanner.banner_data.length > 0) {
                             showRutes(
                                 itemBanner.banner_data[0].id_filtro,
@@ -131,6 +132,7 @@ const Bannerdown = ({ bannersInfo }) => {
                                 itemBanner.banner_data[0].ids_filtro_sub,
                                 itemBanner.banner_data[0].ids_filtro_s_sub
                             );
+
                         } else {
                             console.error('itemBanner.bannerData está vacío o no definido.');
                         }
