@@ -70,7 +70,8 @@ const Footer = (props) => {
     };
 
     /* Lista de deseos */
-    const handleFavList = () => {
+    const handleFavList = (e) => {
+        e.preventDefault();
         if (currenUser) {
             const url = `/myorders?activeOption=ListaDeseos&selectedOption=Lista%20Deseos`;
             window.location.href = url;
@@ -80,7 +81,8 @@ const Footer = (props) => {
     }
 
     /* Seguir tu pedido */
-    const handleSeguirPedido = () => {
+    const handleSeguirPedido = (e) => {
+        e.preventDefault();
         if (currenUser) {
             const url = `/myorders?activeOption=SigueTuPedido&selectedOption=Sigue%20tu%20pedido`;
             window.location.href = url;
@@ -90,7 +92,8 @@ const Footer = (props) => {
     }
 
     /* Informacion de tu perfil */
-    const handleInfoPerfil = () => {
+    const handleInfoPerfil = (e) => {
+        e.preventDefault();
         if (currenUser) {
             const url = `/myorders?activeOption=InfoPerfil&selectedOption=Información%20del%20perfil`;
             window.location.href = url;
@@ -100,7 +103,8 @@ const Footer = (props) => {
     }
 
     /* Direccion */
-    const handleDireccion = () => {
+    const handleDireccion = (e) => {
+        e.preventDefault();
         if (currenUser) {
             const url = `/myorders?activeOption=Direccion&selectedOption=Información%20de%20las%20direcciones`;
             window.location.href = url;
@@ -110,7 +114,8 @@ const Footer = (props) => {
     }
 
     /* Ticket de soporte */
-    const handleTicketSupport = () => {
+    const handleTicketSupport = (e) => {
+        e.preventDefault();
         if(currenUser){
             const url = `/myorders?activeOption=Ticket&selectedOption=Crear%20un%20ticket`;
             window.location.href = url;
