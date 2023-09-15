@@ -26,6 +26,7 @@ const ViewError = React.lazy(() => import(/* webpackChunkName: "views-error" */ 
 const ViewUnauthorized = React.lazy(() => import(/* webpackChunkName: "views-error" */ './views/unauthorized'));
 const ViewPoliticasPrivacidad = React.lazy(() => import(/* webpackChunkName: "views" */'./views/politicaPrivacidad'));
 const ViewTerminosCondiciones = React.lazy(() => import(/* webpackChunkName: "views" */'./views/terminosYCondiciones'));
+const ViewFAQ = React.lazy(() => import(/* webpackChunkName: "views" */'./views/FAQ'));
 const ViewSobreNosotros = React.lazy(() => import(/* webpackChunkName: "views" */ './views/sobreNosotros'));
 const ViewContactanos = React.lazy(() => import(/* webpackChunkName: "views" */ './views/contactanos'));
 const ViewMantenince = React.lazy(() => import(/* webpackChunkName: "views" */  './views/mantenince'));
@@ -112,6 +113,7 @@ const App = (props) => {
               <Route path="/unauthorized" exact render={(props) => <ViewUnauthorized {...props} />} />
               <Route path="/termsAndConditions" exact render={(props) => <ViewTerminosCondiciones {...props} />} />
               <Route path="/privacyPolicy" exact render={(props) => <ViewPoliticasPrivacidad {...props} />} />
+              <Route path="/faq" exact render={(props) => <ViewFAQ {...props} />} />
               <Route path="/aboutUs" exact render={(props) => <ViewSobreNosotros {...props} />} />
               <Route path="/contactUs" exact render={(props) => <ViewContactanos {...props} />} />
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />

@@ -84,14 +84,17 @@ nav .containerNav {
 .userInteraction {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  gap: 5px;
 
 
 }
 
-.userInteraction a svg {
+.userInteraction {
   margin-left: 25px;
 }
+
+
 
 .dropdown {
   position: relative;
@@ -341,7 +344,7 @@ nav .containerNav {
 
 .menuSeller {
   position: absolute;
-  top: 60px;
+  top: 40px;
   right: -20px;
   display: grid;
   width: 250px;
@@ -392,6 +395,14 @@ nav .containerNav {
   fill: #FC5241;
 
 }
+
+.containerHeader .option:hover,
+.containerHeader .option:hover svg path {
+  color: #FC5241;
+  fill: #FC5241;
+}
+
+
 
 .containerHeader>.dropdown:hover>.option {
   color: #FC5241;
@@ -561,6 +572,11 @@ footer .containerFooter .row {
 
 }
 
+footer .filaMedia .footerLogo .izqIconsMedia svg path:hover
+{
+  fill: #FC5241;
+}
+
 .derPagos {
   opacity: 0.5;
 }
@@ -599,6 +615,10 @@ div.filaMedia {
 
 }
 
+.rowf ul a li:hover{
+  color: #FC5241;
+}
+
 .rowf>ul {
   list-style: none;
   padding-left: 0px;
@@ -632,7 +652,8 @@ div.filaMedia {
   height: 20px;
   border-radius: 50%;
   font-size: small;
-  transform: translate(-12px);
+  position: absolute;
+  transform: translate(18px, -40px);
 }
 
 

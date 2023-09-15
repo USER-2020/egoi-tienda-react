@@ -829,7 +829,7 @@ h6 {
         align-self: center;
         justify-content: center;
         align-items: center;
-        border: 1px solid #FC5241;
+        border: none;
         border-radius: 32px;
     }
 

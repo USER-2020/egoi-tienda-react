@@ -210,7 +210,7 @@ const Footer = (props) => {
                         <a href="/termsAndConditions"><li>Términos y condiciones </li></a>
                         <a href="/contactUs"><li>Contáctanos </li></a>
                         <a href="/aboutUs"><li>Acerca de la empresa </li></a>
-                        <a href="/"><li>Preguntas frecuentes</li></a>
+                        <a href="/faq"><li>Preguntas frecuentes</li></a>
                     </ul>
                     {/* <div className="bottom-right">
                         <br></br>
