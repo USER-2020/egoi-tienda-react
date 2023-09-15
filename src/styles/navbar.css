@@ -84,6 +84,7 @@ nav .containerNav {
 .userInteraction {
   display: flex;
   align-items: center;
+  justify-content: space-around;
 
 
 }
@@ -97,7 +98,7 @@ nav .containerNav {
   cursor: pointer;
 }
 
-.dropdown>a {
+.dropdown>span {
   display: flex;
   align-items: center;
   gap: 2px;
@@ -106,13 +107,13 @@ nav .containerNav {
 
 
 
-.dropdown:hover .menu {
+.dropdown:hover #menu {
   opacity: 1;
   visibility: visible;
 
 }
 
-.dropdown:hover .menuUser {
+.dropdown:hover #menuUser {
   opacity: 1;
   visibility: visible;
 
@@ -221,7 +222,7 @@ nav .containerNav {
 
 
 
-.menu>a {
+#menu>a {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -263,7 +264,7 @@ nav .containerNav {
 
 }
 
-.menuUser>a {
+#menuUser>button {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -272,10 +273,12 @@ nav .containerNav {
   padding: 10px;
   text-decoration: none;
   color: black;
+  border: none;
+  background-color: inherit;
 
 }
 
-.menu>a:hover {
+#menu>a:hover {
   /* background: #f5f5f5; */
   background: #F3F3F3;
 }
@@ -295,12 +298,12 @@ nav .containerNav {
   background: #F3F3F3;
 }
 
-.menuUser>a:hover {
+#menuUser>button:hover {
   /* background: #f5f5f5; */
   background: #F3F3F3;
 }
 
-.menu {
+#menu {
   position: absolute;
   top: 60px;
   right: -20px;
@@ -317,7 +320,7 @@ nav .containerNav {
   z-index: 999;
 }
 
-.menuUser {
+#menuUser {
   position: absolute;
   top: 60px;
   right: -20px;
@@ -333,6 +336,8 @@ nav .containerNav {
   transition: 0.25s;
   z-index: 999;
 }
+
+
 
 .menuSeller {
   position: absolute;
@@ -355,7 +360,7 @@ nav .containerNav {
   padding: 10px;
 }
 
-.menu:before {
+#menu:before {
   content: "";
   background: inherit;
   border-top: 1px solid #e1e1e1;
