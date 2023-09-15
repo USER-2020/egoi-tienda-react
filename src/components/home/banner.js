@@ -146,9 +146,9 @@ const Banner = (args) => {
     };
 
     const showProductsByCategoryBanner = (idtag, subcate, subsubcate) => {
-        console.log(idtag);
-        console.log(bannerFiltro1);
-        console.log(tipoFiltro);
+        // console.log(idtag);
+        // console.log(bannerFiltro1);
+        // console.log(tipoFiltro);
         if (tipoFiltro === 'category') {
             if (idtag !== '' && subcate !== '' && subsubcate !== []) {
                 // Todas las variables tienen valores, construir la URL con todas ellas
@@ -164,7 +164,7 @@ const Banner = (args) => {
                 // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
                 console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
                 history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${idtag}`);
-            }else{
+            } else {
                 console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
                 history.push(`/categories/products/Precios%20especiales/${bannerFiltro1}/${idtag}`);
             }
@@ -228,7 +228,7 @@ const Banner = (args) => {
                 // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
                 console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
                 history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
-            }else{
+            } else {
                 console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
                 history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
             }
@@ -245,24 +245,30 @@ const Banner = (args) => {
 
     }
 
-    const handleChangueCategoryCelulares = (id, offset, tag) => {
+    const handleBannerClick = (idTag, subcate, subsubcate, e) => {
+        e.preventDefault();
+        showProductsByCategoryBanner(idTag, subcate, subsubcate);
+    };
 
+    const handleChangueCategoryCelulares = (e) => {
+        e.preventDefault(); // Evita que el enlace funcione como un enlace normal
         history.push(`/categories/Celulares%20y%20Accesorios/Celulares%20y%20Smartphones/2`)
     }
 
-    const handleChangueCategoryTV = (id, offset, tag) => {
-
+    const handleChangueCategoryTV = (e) => {
+        e.preventDefault(); // Evita que el enlace funcione como un enlace normal
         history.push(`/categories/Tv.%20Audio%20y%20Video/tv%20y%20audio/3`)
     }
 
 
-    const handleChangueCategoryComputacion = (id, offset, tag) => {
-
+    const handleChangueCategoryComputacion = (e) => {
+        e.preventDefault(); // Evita que el enlace funcione como un enlace normal
         history.push(`/categories/Computacion/Computación/4`)
     }
 
 
-    const handleChangueCategoryConsolas = (id, offset, tag) => {
+    const handleChangueCategoryConsolas = (e) => {
+        e.preventDefault(); // Evita que el enlace funcione como un enlace normal
         history.push(`/categories/Consolas%20y%20videos%20juegos/Consolas%20y%20videojuegos/5`)
     }
 
@@ -295,10 +301,10 @@ const Banner = (args) => {
                             .filter((banner) => banner.banner_type === "banner_1")
                             .map((banner, index) => (
                                 <div key={index}>
-                                    <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag, banner.banner_data[0].ids_filtro_sub, banner.banner_data[0].ids_filtro_s_sub)}>
+                                    <a href='#' onClick={(e) => { e.preventDefault(); showProductsByCategoryBanner(banner.banner_data[0].id_tag, banner.banner_data[0].ids_filtro_sub, banner.banner_data[0].ids_filtro_s_sub) }}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen_desk} width={'100%'} height={'124px'} className='banner_1' />
                                     </a>
-                                    <a href='#' onClick={() => showProductsByCategoryBanner(banner.banner_data[0].id_tag, banner.banner_data[0].ids_filtro_sub, banner.banner_data[0].ids_filtro_s_sub)}>
+                                    <a href='#' onClick={(e) => { e.preventDefault(); showProductsByCategoryBanner(banner.banner_data[0].id_tag, banner.banner_data[0].ids_filtro_sub, banner.banner_data[0].ids_filtro_s_sub) }}>
                                         <img src={baseUrlImageBanners + banner.banner_data[0].imagen} width={'100%'} height={'124px'} className='banner_res_2' />
                                     </a>
                                 </div>
@@ -325,11 +331,11 @@ const Banner = (args) => {
                                     <div className="carousel-inner">
                                         {itemBanner.banner_data.map((item, i) => (
                                             <div className={`carousel-item ${i === 0 ? "active" : ""}`} key={i}>
-                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)} className='desktopView'>
+                                                <a href='#' onClick={(e) => {e.preventDefault();showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)}} className='desktopView'>
                                                     <img src={baseUrlImageBanners + item.imagen_desk} className="d-block w-100 desktopView" alt="..." />
 
                                                 </a>
-                                                <a href='#' onClick={() => showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)} className='movilView'>
+                                                <a href='#' onClick={(e) => {e.preventDefault();showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)}} className='movilView'>
                                                     <img src={baseUrlImageBanners + item.imagen} className="d-block w-100" alt="..." />
 
                                                 </a>
@@ -350,7 +356,7 @@ const Banner = (args) => {
                 </div >
                 <div className='containerCategoriasBanner'>
 
-                    <a href='#' className='categoriaCards1' onClick={() => handleChangueCategoryCelulares(2, offset, tag === "")}>
+                    <a href='#' className='categoriaCards1' onClick={handleChangueCategoryCelulares}>
                         <div className='Categoriaimg'>
                             <img
                                 src={celularCategoria}
@@ -367,7 +373,7 @@ const Banner = (args) => {
                     </a>
 
 
-                    <a href='#' className='categoriaCards' onClick={() => handleChangueCategoryTV(3, offset, tag === "")}>
+                    <a href='#' className='categoriaCards' onClick={handleChangueCategoryTV}>
                         <div className='Categoriaimg'>
                             <img
                                 src={TV}
@@ -383,7 +389,7 @@ const Banner = (args) => {
                         </div>
                     </a>
 
-                    <a href='#' className='categoriaCards' onClick={() => handleChangueCategoryComputacion(4, offset, tag === "")}>
+                    <a href='#' className='categoriaCards' onClick={handleChangueCategoryComputacion}>
                         <div className='Categoriaimg'>
                             <img
                                 src={mac}
@@ -399,7 +405,7 @@ const Banner = (args) => {
                         </div>
                     </a>
 
-                    <a href='#' className='categoriaCards' onClick={() => handleChangueCategoryConsolas(5, offset, tag === "")}>
+                    <a href='#' className='categoriaCards' onClick={handleChangueCategoryConsolas}>
                         <div className='Categoriaimg'>
                             <img
                                 src={ps5}

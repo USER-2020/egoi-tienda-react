@@ -68,7 +68,7 @@ function DynamicTitle() {
     };
   }, [location.pathname, location.hash]);
 
-  // return null; // No renderizar nada en este componente
+  return null; // No renderizar nada en este componente
 
 
 }
@@ -105,7 +105,7 @@ const App = (props) => {
     <div className="h-100">
       <Suspense fallback={<div className="loading" />}>
         <IntlProvider locale={locale} messages={AppLocale[locale]}>
-          <Router>
+          <Router basename={process.env.PUBLIC_URL}>
             <Route component={DynamicTitle} />
             <Switch>
               {/* <Route path="/user/login" exact render={(props)=> <ViewLogin {...props} />}/> */}
