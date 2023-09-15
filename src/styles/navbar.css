@@ -84,14 +84,17 @@ nav .containerNav {
 .userInteraction {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  gap: 5px;
 
 
 }
 
-.userInteraction a svg {
+.userInteraction {
   margin-left: 25px;
 }
+
+
 
 .dropdown {
   position: relative;
@@ -393,9 +396,12 @@ nav .containerNav {
 
 }
 
-.containerHeader .dropdown:hover .option:hover {
+.containerHeader .option:hover,
+.containerHeader .option:hover svg path {
   color: #FC5241;
+  fill: #FC5241;
 }
+
 
 
 .containerHeader>.dropdown:hover>.option {
@@ -637,7 +643,8 @@ div.filaMedia {
   height: 20px;
   border-radius: 50%;
   font-size: small;
-  transform: translate(-12px);
+  position: absolute;
+  transform: translate(18px, -40px);
 }
 
 
