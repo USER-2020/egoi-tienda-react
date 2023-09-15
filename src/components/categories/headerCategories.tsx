@@ -193,7 +193,7 @@ const HeaderCategories = ({ handleClickFilterRecent, handleClickFilterZ_A,
                       {isOpen ? "close" : "expand_more"}
                     </Icon> */}
                   </button>
-                  <div className="menu">
+                  <div id="menu">
                     {brands.length ? (
                       brands.map((brand, index) => (
                         <button key={index}>

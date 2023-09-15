@@ -395,7 +395,7 @@ const Header = ({ cantCart }) => {
                   <ul className="resultsList">
                     {products.map((result, index) => (
                       <li key={index} className="searchResultItem">
-                        <a href="#" onClick={()=>handleClickResult(result.name)}>{result.name}</a>
+                        <a href="" onClick={()=>handleClickResult(result.name)}>{result.name}</a>
                       </li>
                     ))}
                   </ul>
@@ -412,7 +412,7 @@ const Header = ({ cantCart }) => {
           {/* Usuario Icono  */}
 
           <div className="dropdown">
-            <a href="#">
+            <span>
               <svg
                 width="40"
                 height="40"
@@ -427,26 +427,26 @@ const Header = ({ cantCart }) => {
                   fill="#171523"
                 />
               </svg>
-            </a>
-            <div className="menuUser">
+            </span>
+            <div id="menuUser">
               {isLoggedIn ? (
                 <>
-                  <a href="#" onClick={handleAdminUser} style={{ gap: '12px' }}>
+                  <button  onClick={handleAdminUser} style={{ gap: '12px' }}>
                     <FontAwesomeIcon icon={faUserGear} style={{ alignSelf: 'center' }} />
                     Mi cuenta
-                  </a>
-                  <a href="#" onClick={handleLogout} style={{ gap: '15px' }}>
+                  </button>
+                  <button  onClick={handleLogout} style={{ gap: '15px' }}>
                     <FontAwesomeIcon icon={faRightFromBracket} />
                     Cerrar sesión
-                  </a>
+                  </button>
                 </>
 
               ) : (
                 <>
-                  <a href="#" onClick={() => setModalViewLogin(true)}>
+                  <button onClick={() => setModalViewLogin(true)}>
                     <FontAwesomeIcon icon={faUser} />
                     Inicia sesión
-                  </a>
+                  </button>
                   <Modal
                     className="modal-dialog-centered modal-md"
                     toggle={() => setModalViewLogin(false)}
@@ -456,10 +456,10 @@ const Header = ({ cantCart }) => {
                       <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
                     </ModalBody>
                   </Modal>
-                  <a href="#" onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
+                  <button onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
                     <FontAwesomeIcon icon={faUserPlus} />
                     Regístrate
-                  </a>
+                  </button>
                   <Modal
                     className="modal-dialog-centered modal-md"
                     toggle={() => setModalViewRegistro(false)}
@@ -475,7 +475,7 @@ const Header = ({ cantCart }) => {
           </div>
 
           {/* Favorito icono  */}
-          <a href="#" onClick={handleFavList}>
+          <button onClick={handleFavList} style={{border:'none', backgroundColor:'inherit'}}>
             <svg
               width="40"
               height="40"
@@ -490,12 +490,12 @@ const Header = ({ cantCart }) => {
                 fill="#171523"
               />
             </svg>
-          </a>
+          </button>
 
 
           {/* Carrito de compras  */}
-          <a href="#" onClick={() => { goToDetailCart() }}
-            style={{ textDecoration: 'none', color: 'black', display: 'flex' }}>
+          <button href="#" onClick={() => { goToDetailCart() }}
+            style={{ textDecoration: 'none', color: 'black', border:'none', backgroundColor:'inherit'}}>
             <svg
               width="40"
               height="40"
@@ -514,7 +514,7 @@ const Header = ({ cantCart }) => {
               <span className="cart-products"><p >{cantCart}</p></span>
             ) : (<i></i>)}
 
-          </a>
+          </button>
         </div>
       </div>
       <hr className="divider"></hr>
@@ -543,7 +543,7 @@ const Header = ({ cantCart }) => {
             <div className="column">
               <ul>
                 {categories.map((categoria, index) => (
-                  <Link to={`/categories/${selectedCategory.name}/${categoria.name}/${categoria.id}`} >
+                  <Link to={`/categories/${encodeURIComponent(selectedCategory.name)}/${encodeURIComponent(categoria.name)}/${encodeURIComponent(categoria.id)}`} >
                     <a href="#" data-category-id={categoria.id} data-category={categoria.name} key={index} onMouseOver={mostrarSubcategorias} className={selectedCategoryId === categoria.id ? "active" : ""}>
                       <li >
                         <strong>{categoria.name}</strong>
@@ -561,14 +561,14 @@ const Header = ({ cantCart }) => {
               <ul>
                 {subcategorias.map((subcategoria, index) => (
                   <li key={subcategoria.name}>
-                    <Link to={`/categories/${selectedCategory.name}/${subcategoria.name}/${subcategoria.id}`} >
+                    <Link to={`/categories/${encodeURIComponent(selectedCategory.name)}/${encodeURIComponent(subcategoria.name)}/${encodeURIComponent(subcategoria.id)}`} >
                       <a href="#" data-subcategory-id={subcategoria.id} data-subcategory={subcategoria.name} key={index} >
                         <strong>{subcategoria.name}</strong>
                       </a>
                     </Link>
                     {subcategoria.childes.map((subsubcategoria, index) => (
                       <li key={subsubcategoria.name}>
-                        <Link to={`/categories/${selectedSubcategory.name}/${subsubcategoria.name}/${subsubcategoria.id}`} >
+                        <Link to={`/categories/${encodeURIComponent(selectedSubcategory.name)}/${encodeURIComponent(subsubcategoria.name)}/${encodeURIComponent(subsubcategoria.id)}`} >
                           <a href="#" key={index} >
                             {subsubcategoria.name}
                           </a>
