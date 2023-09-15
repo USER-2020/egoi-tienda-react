@@ -572,6 +572,11 @@ footer .containerFooter .row {
 
 }
 
+footer .filaMedia .footerLogo .izqIconsMedia svg path:hover
+{
+  fill: #FC5241;
+}
+
 .derPagos {
   opacity: 0.5;
 }
@@ -608,6 +613,10 @@ div.filaMedia {
   justify-content: space-between;
 
 
+}
+
+.rowf ul a li:hover{
+  color: #FC5241;
 }
 
 .rowf>ul {
