@@ -1182,7 +1182,7 @@ function AddressCart() {
                 <div className={`step-item ${activeStep >= 1 ? 'active' : ''}`} >
                   <button className={`step-button text-center ${activeStep >= 1 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onClick={() => handleStepClick(1, 0)}
-                    style={{  pointerEvents: 'none', width:'40px', height:'40px'  }}>
+                    style={{ pointerEvents: 'none', width: '40px', height: '40px' }}>
                     1
                   </button>
                   <div className="step-title">
@@ -1192,7 +1192,7 @@ function AddressCart() {
                 <div className={`step-item ${activeStep >= 2 ? 'active' : ''}`} >
                   <button className={`step-button text-center ${activeStep >= 2 ? 'active' : ''}`} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" onClick={() => handleStepClick(2, 50)}
-                    style={{  pointerEvents: 'none', width:'40px', height:'40px' }}>
+                    style={{ pointerEvents: 'none', width: '40px', height: '40px' }}>
                     2
                   </button>
                   <div className="step-title">
@@ -1205,7 +1205,7 @@ function AddressCart() {
                     className={`step-button text-center ${activeStep >= 3 && selectedAddressIndex !== null ? 'active' : ''}`}
                     type="button"
                     onClick={() => handleProcederCompra()}
-                    style={{ pointerEvents: 'none', width:'40px', height:'40px' }}
+                    style={{ pointerEvents: 'none', width: '40px', height: '40px' }}
                   >
                     3
                   </button>
@@ -1551,7 +1551,21 @@ function AddressCart() {
                     ) : (
                       <div></div>
                     )}
-                    <h5>$ {products.price.toLocaleString('en')}</h5>
+                    {products.discount === 0 && products.discount_tag === 0 && (
+                      <>
+                        <h5> ${((products.price) * products.quantity).toLocaleString('en')}</h5>
+                      </>
+                    )}
+                    {products.discount > 0 && (
+                      <>
+                        <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
+                      </>
+                    )}
+                    {products.discount_tag > 0 && (
+                      <>
+                        <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
+                      </>
+                    )}
                     <div className="cant">
                       <p>Cantidad:</p>
                       {/* <input type="number" value={products.quantity} disabled /> */}
