@@ -322,8 +322,11 @@ const Recientes = ({ bannersInfo }) => {
                                                     <div className="tavtImage">
                                                         <a
                                                             href="#"
-                                                            onClick={() =>
-                                                                showRutes(banner.id_filtro, banner.tipo_filtro, banner.id_tag, banner.ids_filtro_sub, banner.ids_filtro_s_sub)
+                                                            onClick={(e) =>
+                                                                {
+                                                                    e.preventDefault();
+                                                                    showRutes(banner.id_filtro, banner.tipo_filtro, banner.id_tag, banner.ids_filtro_sub, banner.ids_filtro_s_sub)
+                                                                }
                                                             }
                                                         >
                                                             <img
@@ -393,7 +396,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='catImage'>
-                                                <a href='#' onClick={() => showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}>
+                                                <a href='#' onClick={(e) => {e.preventDefault(); showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
                                                 </a>
                                             </div>
@@ -412,7 +415,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='cvtImage'>
-                                                <a href='#' onClick={() => showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub)}>
+                                                <a href='#' onClick={(e) => {e.preventDefault();showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub)}}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
                                                 </a>
                                             </div>
@@ -434,7 +437,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='tavtImage'>
-                                                <a href='#' onClick={() => showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}>
+                                                <a href='#' onClick={(e) => {e.preventDefault();showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
                                                 </a>
                                             </div>
@@ -453,7 +456,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='cvt2Image'>
-                                                <a href='#'onClick={() => showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub)}>
+                                                <a href='#'onClick={(e) => {e.preventDefault();showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub)}}>
                                                     <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
                                                 </a>
                                             </div>
