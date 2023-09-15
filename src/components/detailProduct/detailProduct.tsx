@@ -147,40 +147,44 @@ function DetailProduct({ setCantCart, handleLogged }) {
     const descuento = "$0";
 
     const buyNow = () => {
+        // Verificar si el usuario está autenticado
         if (currenUser) {
-            addProductsCart(id, quantity, currenUser.token)
-                .then((res) => {
-                    // console.log("Producto agregado", res.data);
+            // Calcular el precio del producto según descuentos (si los hay)
+            let buyNowProduct;
+            if (detailProducts && (detailProducts.discount_tag_valor > 0 || detailProducts.discount_valor > 0)) {
+                buyNowProduct = detailProducts.discount_tag_valor || detailProducts.discount_valor;
+            } else {
+                buyNowProduct = detailProducts.unit_price * quantity;
+            }
 
-                })
-                .catch((err) => console.log(err));
-            const buyNowProduct = detailProducts.unit_price * quantity;
+            // Actualizar el estado del precio del producto
             setPrecioProduct(buyNowProduct);
+
+            // Calcular el costo de envío
             let costoEnvio = 0;
             const costoDeEnvio = () => {
-                if (buyNowProduct <= 79990) {
+                if (buyNowProduct <= 79990 && buyNowProduct >= 39990) {
                     costoEnvio = 9900;
-
                 } else {
                     costoEnvio = 0;
                 }
-            }
+            };
             costoDeEnvio();
+
+            // Calcular el total a pagar
             const totalAPagar = buyNowProduct + costoEnvio;
+
+            // Actualizar el estado del total a pagar
             setTotalAPagar(totalAPagar);
-            console.log("Este es el costo de envio", costoEnvio);
-            if (totalAPagar) {
-                // console.log("total a pagar ahora", totalAPagar);
-            } else {
 
-            }
+            // Redirigir al usuario a la página de pago con los datos calculados
             history.push(`/checkout/${buyNowProduct.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/$${totalAPagar.toLocaleString('en')}/${descuento}`);
-
-        }
-        else {
+        } else {
+            // Si el usuario no está autenticado, mostrar un modal de inicio de sesión
             setModalViewLogin(true);
         }
-    }
+    };
+
 
 
 
@@ -642,7 +646,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
                                             <p>Comprar ahora</p>
                                         </a>
                                     ) : (
-                                        <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight:700 }}><p style={{ textAlign: 'center' }}>Comprar ahora</p></a>
+                                        <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center' }}>Comprar ahora</p></a>
                                     )}
 
                                     <a href="#" className='fav' onClick={() => favClick(detailProducts.id)}>
@@ -863,9 +867,9 @@ function DetailProduct({ setCantCart, handleLogged }) {
                                     <div className="buyNowResponsive">
                                         {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
-                                            <a href="#" onClick={buyNow} style={{border:'1px solid #FC5241', borderRadius:'32px'}}>Comprar ahora</a>
+                                            <a href="#" onClick={buyNow} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>Comprar ahora</a>
                                         ) : (
-                                            <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight:700 }}><p style={{ textAlign: 'center', marginBottom:'0' }}>Comprar ahora</p></a>
+                                            <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center', marginBottom: '0' }}>Comprar ahora</p></a>
                                         )}
                                     </div>
 
