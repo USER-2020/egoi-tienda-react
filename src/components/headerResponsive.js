@@ -127,7 +127,8 @@ function HeaderResponsive({ canCart }) {
     }
   }
 
-  const handleFavList = () => {
+  const handleFavList = (e) => {
+    e.preventDefault();
     if (currenUser) {
       const url = `/myorders?activeOption=ListaDeseos&selectedOption=Lista%20Deseos`;
       window.location.href = url;
@@ -336,7 +337,7 @@ function HeaderResponsive({ canCart }) {
               )}
             </InputGroup>
           </div>
-          <a href="#" onClick={() => { goToDetailCart() }}
+          <a href="#" onClick={(e) => {e.preventDefault(); goToDetailCart() }}
             style={{ textDecoration: 'none', color: 'black' }}>
             <svg
               width="40"
@@ -543,7 +544,8 @@ function HeaderResponsive({ canCart }) {
                   <ul class="dropdown-menu dropdown-menu-extended">
                     {currenUser ? (
                       <li>
-                        <a className='dropdown-item' href="#" onClick={() => {
+                        <a className='dropdown-item' href="#" onClick={(e) => {
+                          e.preventDefault();
                           setCurrentUser();
                           setIsLoggedIn(false);
                         }}>
@@ -599,7 +601,7 @@ function HeaderResponsive({ canCart }) {
 
                 <hr></hr>
                 <li class='nav-item pers'>
-                  <a href="#" onClick={() => { goToDetailCart() }}>
+                  <a href="#" onClick={(e) => {e.preventDefault(); goToDetailCart() }}>
                     <svg
                       width="40"
                       height="40"
@@ -647,7 +649,8 @@ function HeaderResponsive({ canCart }) {
 
                     <>
                       <a href='#' className='btn btnPersonalizadosL'
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
                           setIsOffcanvasVisible(false);
                           setModalViewLogin(true);
 
@@ -674,7 +677,8 @@ function HeaderResponsive({ canCart }) {
                       </Modal>
 
                       <a href='#'
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
                           setIsOffcanvasVisible(false);
                           setModalViewRegistro(true);
                         }}
