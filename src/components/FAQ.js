@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getPreguntasFrecuentes } from '../services/sobreNosotros';
 import parse from 'html-react-parser';
+import { AccordionBody, AccordionHeader, AccordionItem, UncontrolledAccordion } from 'reactstrap';
 
 const PreguntasFrecuentes = () => {
     const [data, setData] = useState([]);
@@ -26,8 +27,16 @@ const PreguntasFrecuentes = () => {
                     // Mapea los datos para renderizar preguntas frecuentes
                     data.map((dato, index) => (
                         <div key={index}>
-                            {/* Renderiza el contenido de la pregunta utilizando parse */}
-                            {dato.question}- {dato.answer}
+                            <UncontrolledAccordion>
+                                <AccordionItem>
+                                    <AccordionHeader targetId={`faq${index}`}>
+                                        {dato.question}
+                                    </AccordionHeader>
+                                    <AccordionBody accordionId={`faq${index}`}>
+                                        {parse(dato.answer)}
+                                    </AccordionBody>
+                                </AccordionItem>
+                            </UncontrolledAccordion>
                         </div>
                     ))
                 ) : (

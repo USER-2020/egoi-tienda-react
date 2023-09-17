@@ -332,7 +332,7 @@ const Banner = (args) => {
                                         {itemBanner.banner_data.map((item, i) => (
                                             <div className={`carousel-item ${i === 0 ? "active" : ""}`} key={i}>
                                                 <a href='#' onClick={(e) => {e.preventDefault();showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)}} className='desktopView'>
-                                                    <img src={baseUrlImageBanners + item.imagen_desk} className="d-block w-100 desktopView" alt="..." />
+                                                    <img src={baseUrlImageBanners + item.imagen_desk} className="d-block w-100" alt="..." style={{height:'426px'}}/>
 
                                                 </a>
                                                 <a href='#' onClick={(e) => {e.preventDefault();showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)}} className='movilView'>

@@ -572,12 +572,12 @@ const ProductsCategories = () => {
 
 
             </div>
-            {totalResults && totalResults > 0 ? (
-              
-              <div className="containerProducts-categories d-flex flex-column align-items-center align-items-md-end w-100">
-                <div className="containerProducts-categories row">
-                  {/* {isDiscountedProducts && productsDiscounted } */}
-                  {isRecentlyProducts && uniqueProducts && uniqueProducts.map((product, index) => (
+            {/* { products.length > 0 ? ( */}
+
+            <div className="containerProducts-categories d-flex flex-column align-items-center align-items-md-end w-100">
+              <div className="containerProducts-categories row">
+                {/* {isDiscountedProducts && productsDiscounted } */}
+                {isRecentlyProducts && uniqueProducts && uniqueProducts.map((product, index) => (
                     <div key={product.id} className="col-md-3 col-6 mb-4" >
                       <a href="#" className='containerCard2  '  >
                         <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index} onClick={() => agregarProductoVisto(product)}>
@@ -652,7 +652,10 @@ const ProductsCategories = () => {
                       </a>
                     </div>
                   ))}
-                  {products && products.products && products.products.map((product, index) => (
+                {!isRecentlyProducts && products.products && products.products.length ===0 && totalResults === 0 ? (
+                  <div><p>No hay productos en esta categoría.</p></div>
+                ) : (
+                  products && products.products && products.products.map((product, index) => (
                     <div key={product.id} className="col-md-3 col-6 mb-4" >
                       <a href="#" className='containerCard2  '  >
                         <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index} onClick={() => agregarProductoVisto(product)}>
@@ -737,74 +740,76 @@ const ProductsCategories = () => {
                         </Link>
                       </a>
                     </div>
-                  ))}
+                  ))
+                )}
 
 
-                </div>
-                {/* <button disabled={offset === 0} onClick={handlePrevPage}>
+
+              </div>
+              {/* <button disabled={offset === 0} onClick={handlePrevPage}>
             Prev Page
           </button>
           <button onClick={handleNextPage}>Next Page</button> */}
-                <div className="pagination-container d-flex flex-wrap justify-content-center align-items-center mt-4 align-self-center">
-                  {currentPage !== 1 && (
-                    <button
-                      onClick={() => {
-                        setCurrentPage(1);
-                        handlePageClick(0);
-                      }}
-                      className="paginator-icon btn mx-1"
-                    >
-                      <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
-                      <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
-                    </button>
-                  )}
+              <div className="pagination-container d-flex flex-wrap justify-content-center align-items-center mt-4 align-self-center">
+                {currentPage !== 1 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(1);
+                      handlePageClick(0);
+                    }}
+                    className="paginator-icon btn mx-1"
+                  >
+                    <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
+                    <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
+                  </button>
+                )}
 
-                  {currentPage !== 1 && (
-                    <button
-                      onClick={() => {
-                        setCurrentPage(currentPage - 1);
-                        handlePageClick(currentPage - 1);
-                      }}
-                      className="btn mx-1"
-                    >
-                      <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
-                    </button>
-                  )}
+                {currentPage !== 1 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(currentPage - 1);
+                      handlePageClick(currentPage - 1);
+                    }}
+                    className="btn mx-1"
+                  >
+                    <FontAwesomeIcon icon={faChevronLeft} color="#FC5241" />
+                  </button>
+                )}
 
-                  {pageButtons}
+                {pageButtons}
 
-                  {currentPage !== totalPages && totalPages !== 0 && (
-                    <button
-                      onClick={() => {
-                        setCurrentPage(currentPage + 1);
-                        handlePageClick(currentPage + 1);
-                      }}
-                      className="btn mx-1"
-                    >
-                      <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
-                    </button>
-                  )}
+                {currentPage !== totalPages && totalPages !== 0 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(currentPage + 1);
+                      handlePageClick(currentPage + 1);
+                    }}
+                    className="btn mx-1"
+                  >
+                    <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
+                  </button>
+                )}
 
-                  {currentPage !== totalPages && totalPages !== 2 && totalPages !== 0 && (
-                    <button
-                      onClick={() => {
-                        setCurrentPage(totalPages);
-                        handlePageClick(totalPages);
-                      }}
-                      className="btn mx-1"
-                    >
-                      <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
-                      <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
-                    </button>
-                  )}
-                </div>
-
+                {currentPage !== totalPages && totalPages !== 2 && totalPages !== 0 && (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(totalPages);
+                      handlePageClick(totalPages);
+                    }}
+                    className="btn mx-1"
+                  >
+                    <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
+                    <FontAwesomeIcon icon={faChevronRight} color="#FC5241" />
+                  </button>
+                )}
               </div>
-            ): (
-              <div className="containerProducts-categories d-flex flex-column align-items-center align-items-md-end w-100">
-                No hay productos en esta categoría
-              </div>
-            )}
+
+            </div>
+            {/* // ): (
+            //   <div className="containerProducts-categories d-flex flex-column align-items-center align-items-md-end w-100">
+            //     No hay productos en esta categoría
+            //   </div>
+            // )} */}
           </div>
         </div>
       </div>
