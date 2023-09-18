@@ -479,7 +479,7 @@ function HeaderResponsive({ canCart }) {
                     ))}
                   </ul>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item pers">
 
                   <a href="/discountedProducts">
                     <svg
