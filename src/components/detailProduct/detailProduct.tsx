@@ -650,7 +650,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
                                     </a>
                                     {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
-                                        <a href="#" className='buyNow' onClick={(e)=> {e.preventDefault(); buyNow()}}>
+                                        <a href="#" className='buyNow' onClick={(e) => { e.preventDefault(); buyNow() }}>
                                             <p>Comprar ahora</p>
                                         </a>
                                     ) : (
@@ -876,7 +876,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
                                         <div className="buyNowResponsive">
                                             {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
-                                                <a href="#" onClick={(e)=> {e.preventDefault(); buyNow()}} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>Comprar ahora</a>
+                                                <a href="#" onClick={(e) => { e.preventDefault(); buyNow() }} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>Comprar ahora</a>
                                             ) : (
                                                 <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center', marginBottom: '0' }}>Comprar ahora</p></a>
                                             )}
@@ -886,7 +886,8 @@ function DetailProduct({ setCantCart, handleLogged }) {
                                 </div>
                             )
                         }
-                        {/* <SimilarProduct /> */}
+
+                        
                     </div >
                 )
 
