@@ -53,6 +53,17 @@ input[placeholder="Nombre en la tarjeta"]::placeholder {
 @media (max-width: 768px) {
 
   /* Estilos para pantallas con un ancho máximo de 768px */
- 
+  .form-control[placeholder="Cuotas"]::placeholder {
+    /* Estilos personalizados aquí */
+    color: #999;
+    /* Cambia el color del texto del placeholder */
+    font-size: 16px;
+    /* Cambia el tamaño de fuente del placeholder */
+    text-align: center;
+    /* Centra el texto del placeholder horizontalmente */
+    transform: translateX(-35%);
+    /* Centra el texto del placeholder horizontalmente */
+    width: 100%;
+  }
 
 }
