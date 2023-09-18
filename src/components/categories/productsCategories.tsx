@@ -653,7 +653,7 @@ const ProductsCategories = () => {
                     </div>
                   ))}
                 {!isRecentlyProducts && products.products && products.products.length ===0 && totalResults === 0 ? (
-                  <div><p>No hay productos en esta categoría.</p></div>
+                  <div style={{fontSize:'24px', textAlign:'center'}}><p>No hay productos en esta categoría.</p></div>
                 ) : (
                   products && products.products && products.products.map((product, index) => (
                     <div key={product.id} className="col-md-3 col-6 mb-4" >

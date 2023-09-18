@@ -398,7 +398,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
             ) : (
 
                 Object.keys(detailProducts).length === 0 ? (
-                    <div style={{ marginTop: '25px', fontSize: '24px', textAlign: 'center' }}>Este producto ya no está disponible</div>
+                    <div style={{ marginTop: '25px', fontSize: '24px', textAlign: 'center' }}>Este producto ya no está disponible.</div>
                 ) : (
                     <>
                         <div className='container'>

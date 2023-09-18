@@ -401,7 +401,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                         })}
                                             value={cardNumber}
                                             placeholder="0000 0000 0000 0000"
-                                            style={{ width: '100%', marginRight: '15px', transform: "translateX(-14%)" }}
+                                            style={{ width: '100%', marginRight: '-25px', transform: "translateX(-19%)" }}
                                         />
                                     </PaymentInputsWrapper>
 
