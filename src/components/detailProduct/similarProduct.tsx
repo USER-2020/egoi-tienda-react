@@ -95,7 +95,7 @@ function SimilarProduct() {
                     ) : (null)}
                     {products && products.map((product, index) =>
 
-                        <a href='#' className='containerCard'>
+                        <div  className='containerCard'>
                             <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
 
                                 {/* <Link to={`/detailsProduct/${product.id}/${product.slug}`} > */}
@@ -142,7 +142,7 @@ function SimilarProduct() {
                                 </Card>
                                 {/* </Link> */}
                             </Link>
-                        </a>
+                        </div>
                     )}
                     {products.length >= 5 ? (
                         <button className="scroll-button right" onClick={handleScrollRight} onMouseOver={handleScrollRight}>
