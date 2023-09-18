@@ -40,7 +40,7 @@ function DetailsProduct() {
       <Header cantCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} />
       <HeaderResponsive canCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} />
       <DetailProduct setCantCart={getCantCart} handleLogged={() => setIsLoggedIn(true)} />
-      {/* <SimilarProduct /> */}
+      <SimilarProduct />
       <Footer />
     </div>
   )
