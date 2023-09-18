@@ -94,6 +94,7 @@ function HeaderResponsive({ canCart }) {
       setPrevSearchProducts(prevSearchProducts);
       // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       history.push(`/products/${prevSearchProducts}`);
+      setShowResults(false);
     }
   }
 
