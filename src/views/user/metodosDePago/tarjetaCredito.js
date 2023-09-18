@@ -386,9 +386,9 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                         styles={{
                                             inputWrapper: {
                                                 base: css`
-          border-radius: 32px;
-          widht: 100%;
-        `,
+                                            border-radius: 32px;
+                                            widht: 100%;
+                                            `,
                                             },
                                         }}
                                         style={{ width: '100%' }}>
@@ -404,8 +404,25 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                             style={{ width: '100%', marginRight: '-25px', transform: "translateX(-19%)" }}
                                         />
                                     </PaymentInputsWrapper>
+                                    <InputGroup style={{width:'40%'}}>
+                                        <Input
+                                            name="Cuotas"
+                                            className="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                                width:'10.3%'
+                                                // Empuja el texto hacia el centro horizontalmente
+                                            }}
+                                            type="number"
+                                            placeholder="Cuotas"
+                                            value={cardCuotes}
+                                            onChange={(event) => setCardCuotes(event.target.value)}
+                                        />
 
-                                    <InputGroup style={{ width: '40%' }}>
+
+                                    </InputGroup>
+
+                                    {/* <InputGroup style={{ width: '40%' }}>
                                         <Input
                                             addon={true}
                                             name="anioExpiracion"
@@ -426,12 +443,12 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 Debe ingresar una fecha para mes válida menor o igual a 12
                                             </div>
                                         )}
-                                    </InputGroup>
+                                    </InputGroup> */}
                                 </FormGroup>
 
 
                                 <FormGroup style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                    {/* <InputGroup>
+                                    <InputGroup>
                                         <Input
                                             addon={true}
                                             name="anioExpiracion"
@@ -453,7 +470,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                                 Debe ingresar una fecha para mes valida menor o igual a 12
                                             </div>
                                         )}
-                                    </InputGroup> */}
+                                    </InputGroup>
 
                                     <InputGroup>
                                         <Input
@@ -503,7 +520,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                         )}
                                     </InputGroup>
 
-                                    <InputGroup>
+                                    {/* <InputGroup>
                                         <Input
                                             name="Cuotes"
                                             className="form-control"
@@ -519,7 +536,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
                                         />
 
 
-                                    </InputGroup>
+                                    </InputGroup> */}
                                 </FormGroup>
 
                                 <FormGroup style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
