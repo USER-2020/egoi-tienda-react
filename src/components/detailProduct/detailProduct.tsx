@@ -886,7 +886,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
                                 </div>
                             )
                         }
-                        <SimilarProduct />
+                        {/* <SimilarProduct /> */}
                     </div >
                 )
 

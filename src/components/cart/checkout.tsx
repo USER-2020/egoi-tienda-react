@@ -1675,7 +1675,7 @@ function AddressCart() {
               <p className="def">En productos</p>
               {isResetOk ? (
                 <p>$0</p>
-              ) : (<p className="precio">$ {subtotal}</p>)}
+              ) : (<p className="precio">$ {subtotal.toLocaleString('en')}</p>)}
             </span>
             <span className="costoEnvio">
               <p className="def">Costo de envío</p>
@@ -1686,7 +1686,7 @@ function AddressCart() {
                 subtotal && subtotal <= 39900 ? (
                   <span className='badge text-bg-success' id='spanPago'>Paga el cliente</span>
                 ) : (
-                  <p className="precio">$ {costoEnvio}</p>
+                  <p className="precio">$ {costoEnvio.toLocaleString('en')}</p>
                 )
 
               )}
@@ -1710,7 +1710,7 @@ function AddressCart() {
               {isResetOk ? (
                 <p>$0</p>
               ) : (
-                <p className="precio">$ 0</p>
+                <p className="precio">$0</p>
 
               )}
             </span>
