@@ -83,6 +83,7 @@ const Header = ({ cantCart }) => {
       setPrevSearchProducts(prevSearchProducts);
       // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       history.push(`/products/${prevSearchProducts}`);
+      setShowResults(false);
     }
   }
 

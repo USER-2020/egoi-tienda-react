@@ -355,6 +355,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
             console.log(selectTypeCard);
             console.log(valueBank);
             console.log(identificationType);
+            console.log(total);
         }
         if (dataOrderAddress || discountCoupon) {
             console.log(dataOrderAddress);

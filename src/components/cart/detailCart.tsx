@@ -619,7 +619,7 @@ function DetailCart({ setCantCart }) {
                   <div className="toPay">
                     {/* <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
                       {/* <Link to={checkout}> */}
-                      <a href={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`} >Ir a pagar</a>
+                      <a href={`/checkout`} >Ir a pagar</a>
                     {/* </Link> */}
                   </div>
                   <div className="awaitShopping">
@@ -665,7 +665,7 @@ function DetailCart({ setCantCart }) {
                 </div>
                 <div className="awaitShopping">
                   {/* <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
-                    <a href={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}>Continuar compra</a>
+                    <a href={`/checkout`}>Continuar compra</a>
                   {/* </Link> */}
                 </div>
               </>
