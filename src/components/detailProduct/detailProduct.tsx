@@ -151,35 +151,35 @@ function DetailProduct({ setCantCart, handleLogged }) {
         // Verificar si el usuario está autenticado
         if (currenUser) {
             // Calcular el precio del producto según descuentos (si los hay)
-            let buyNowProduct;
-            if (detailProducts && (detailProducts.discount_tag_valor > 0 || detailProducts.discount_valor > 0)) {
-                buyNowProduct = detailProducts.discount_tag_valor || detailProducts.discount_valor;
-            } else {
-                buyNowProduct = detailProducts.unit_price * quantity;
-            }
+            // let buyNowProduct;
+            // if (detailProducts && (detailProducts.discount_tag_valor > 0 || detailProducts.discount_valor > 0)) {
+            //     buyNowProduct = detailProducts.discount_tag_valor || detailProducts.discount_valor;
+            // } else {
+            //     buyNowProduct = detailProducts.unit_price * quantity;
+            // }
 
-            // Actualizar el estado del precio del producto
-            setPrecioProduct(buyNowProduct);
+            // // Actualizar el estado del precio del producto
+            // setPrecioProduct(buyNowProduct);
 
-            // Calcular el costo de envío
-            let costoEnvio = 0;
-            const costoDeEnvio = () => {
-                if (buyNowProduct <= 79990 && buyNowProduct >= 39990) {
-                    costoEnvio = 9900;
-                } else {
-                    costoEnvio = 0;
-                }
-            };
-            costoDeEnvio();
+            // // Calcular el costo de envío
+            // let costoEnvio = 0;
+            // const costoDeEnvio = () => {
+            //     if (buyNowProduct <= 79990 && buyNowProduct >= 39990) {
+            //         costoEnvio = 9900;
+            //     } else {
+            //         costoEnvio = 0;
+            //     }
+            // };
+            // costoDeEnvio();
 
-            // Calcular el total a pagar
-            const totalAPagar = buyNowProduct + costoEnvio;
+            // // Calcular el total a pagar
+            // const totalAPagar = buyNowProduct + costoEnvio;
 
-            // Actualizar el estado del total a pagar
-            setTotalAPagar(totalAPagar);
-
+            // // Actualizar el estado del total a pagar
+            // setTotalAPagar(totalAPagar);
+            addToCart();
             // Redirigir al usuario a la página de pago con los datos calculados
-            history.push(`/checkout/${buyNowProduct.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/$${totalAPagar.toLocaleString('en')}/${descuento}`);
+            history.push(`/checkout`);
         } else {
             // Si el usuario no está autenticado, mostrar un modal de inicio de sesión
             setModalViewLogin(true);
@@ -650,7 +650,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
                                     </a>
                                     {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
-                                        <a href="#" className='buyNow' onClick={buyNow}>
+                                        <a href="#" className='buyNow' onClick={(e)=> {e.preventDefault(); buyNow()}}>
                                             <p>Comprar ahora</p>
                                         </a>
                                     ) : (
@@ -876,7 +876,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
                                         <div className="buyNowResponsive">
                                             {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
-                                                <a href="#" onClick={buyNow} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>Comprar ahora</a>
+                                                <a href="#" onClick={(e)=> {e.preventDefault(); buyNow()}} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>Comprar ahora</a>
                                             ) : (
                                                 <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center', marginBottom: '0' }}>Comprar ahora</p></a>
                                             )}
