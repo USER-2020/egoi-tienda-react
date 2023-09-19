@@ -64,6 +64,7 @@ function HeaderResponsive({ canCart }) {
   const [isOffcanvasVisible, setIsOffcanvasVisible] = useState(false);
   const [isBackdropVisible, setIsBackdropVisible] = useState(false);
   const [showSaleOptions, setShowSaleOptions] = useState(false);
+  const [categoriesSearch, setCategoriesSearch] = useState([]);
 
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -98,8 +99,14 @@ function HeaderResponsive({ canCart }) {
     }
   }
 
-  const handleClickResult = (name) => {
-    history.push(`/products/${name}`);
+  const handleClickResultProduct = (itemId, slug) => {
+    // history.push(`/products/${name}`);
+    history.push(`/detailsProduct/${itemId}/${slug}`)
+  }
+
+  const handleClickResultCategorie = (nameCategory, idCategory) => {
+    // history.push(`/products/${name}`);
+    history.push(`/categories/${nameCategory}/${nameCategory}/${idCategory}`)
   }
 
   const resultsSearch = (prevSearchProducts) => {
@@ -111,6 +118,7 @@ function HeaderResponsive({ canCart }) {
       getProductsBySearch(prevSearchProducts)
         .then((res) => {
           // console.log(res);
+          setCategoriesSearch(res.data.categories);
           setProducts(res.data.products);
           setShowResults(true); // Muestra los resultados si hay resultados de búsqueda
           console.log("Respuesta de los productos por búsqueda", res.data.products);
@@ -323,22 +331,42 @@ function HeaderResponsive({ canCart }) {
               {/* Contenedor para mostrar los resultados de búsqueda */}
               {showResults && (
                 <div className={`searchResultsContainer`}>
-                  {products && products.length > 0 ? (
-                    <ul className="resultsList">
-                      {products.map((result, index) => (
-                        <li key={index} className="searchResultItem">
-                          <a href="#" onClick={() => handleClickResult(result.name)}>{result.name}</a>
-                        </li>
-                      ))}
-                    </ul>
+                  {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
+                    <div>
+                      {products.length > 0 && (
+                        <h3>Productos</h3>
+                      )}
+                      <ul className="resultsList">
+                        {products.map((result, index) => (
+                          <li key={index} className="searchResultItem">
+                            <a href="" onClick={() => handleClickResultProduct(result.id, result.slug)}>{result.name}</a>
+                          </li>
+                        ))}
+                      </ul>
+                      {categoriesSearch.length > 0 && (
+                        <>
+                          <hr />
+                          <h3>Categorias</h3>
+                        </>
+                      )}
+                      <ul className="resultsList">
+                        {categoriesSearch.map((result, index) => (
+                          <li key={index} className="searchResultItem">
+                            <a href="" onClick={() => handleClickResultCategorie(result.name, result.id)}>{result.name}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   ) : (
                     <p>No se encontraron resultados.</p>
                   )}
                 </div>
+
               )}
+
             </InputGroup>
           </div>
-          <a href="#" onClick={(e) => {e.preventDefault(); goToDetailCart() }}
+          <a href="#" onClick={(e) => { e.preventDefault(); goToDetailCart() }}
             style={{ textDecoration: 'none', color: 'black' }}>
             <svg
               width="40"
@@ -602,7 +630,7 @@ function HeaderResponsive({ canCart }) {
 
                 <hr></hr>
                 <li class='nav-item pers'>
-                  <a href="#" onClick={(e) => {e.preventDefault(); goToDetailCart() }}>
+                  <a href="#" onClick={(e) => { e.preventDefault(); goToDetailCart() }}>
                     <svg
                       width="40"
                       height="40"
