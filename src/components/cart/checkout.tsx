@@ -362,7 +362,8 @@ function AddressCart() {
   /* Validacion de el boton de finalizar compra y de metodos de pago selsccionados */
   const handlePurchaseSucces = () => {
     if (selectedCheckbox != null && okPurchase) {
-      setModalSuccessPurchase(true);
+      // setModalSuccessPurchase(true);
+      handleFinishPurchase();
     } else {
       if (selectedCheckbox === null) {
         Swal.fire({
@@ -1592,12 +1593,12 @@ function AddressCart() {
                 </div>
                 {botonDeshabilitado && okPurchase ? (
                   <div className="toPay">
-                    <a href="#" onClick={() => handleFinishPurchase()}>Finalizar compra</a>
+                    <a href="#" onClick={() => handlePurchaseSucces()}>Finalizar compra</a>
                   </div>
 
                 ) : (
                   <div className="toPay">
-                    <a href="#" onClick={() => handleFinishPurchase()}
+                    <a href="#" onClick={() => handlePurchaseSucces()}
                       style={{
 
                       }}
