@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 import AppLocale from '../src/lang';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { isMultiColorActive, adminRoot, UserRole, checkout, addCart, myorders } from './constants/defaultValues.js';
+import { isMultiColorActive, adminRoot, UserRole, checkout, addCart, myorders, thankYouForPay } from './constants/defaultValues.js';
 import ProtectedRoute from './helpers/authHelper';
 import { getCurrentUser } from './helpers/Utils';
 import { ModalBody, Modal } from 'reactstrap';
@@ -32,6 +32,7 @@ const ViewContactanos = React.lazy(() => import(/* webpackChunkName: "views" */ 
 const ViewMantenince = React.lazy(() => import(/* webpackChunkName: "views" */  './views/mantenince'));
 const ViewAllBrands = React.lazy(() => import(/* webpackChunkName: "views" */ './views/allBrands'));
 const ViewAllCategories = React.lazy(() => import(/* webpackChunkName: "views" */ './views/allCategories'));
+const ViewThankYouForPay = React.lazy(() => import(/* webpackChunkName: "views" */ './views/thankyouforpay'));
 
 
 function DynamicTitle() {
@@ -139,6 +140,7 @@ const App = (props) => {
               <ProtectedRoute path={myorders} viewComponent={ViewMyOrders} />
               <ProtectedRoute path={checkout} viewComponent={ViewDetailCartAddress} />
               <ProtectedRoute path={addCart} viewComponent={ViewDetailCart} />
+              <ProtectedRoute path={thankYouForPay} viewComponent={ViewThankYouForPay} />
               <Redirect to="/error" />
             </Switch>
           </Router>

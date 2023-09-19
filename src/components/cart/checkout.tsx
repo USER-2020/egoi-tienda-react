@@ -152,6 +152,11 @@ function AddressCart() {
 
 
 
+  /* Redireccion a compra exitosa */
+  const handleFinishPurchase = () => {
+       console.log("handlefinishpurchase");
+       history.push("/congrats");
+  }
 
 
 
@@ -1587,12 +1592,12 @@ function AddressCart() {
                 </div>
                 {botonDeshabilitado && okPurchase ? (
                   <div className="toPay">
-                    <a href="#" onClick={() => handlePurchaseSucces()}>Finalizar compra</a>
+                    <a href="#" onClick={() => handleFinishPurchase()}>Finalizar compra</a>
                   </div>
 
                 ) : (
                   <div className="toPay">
-                    <a href="#" onClick={() => handlePurchaseSucces()}
+                    <a href="#" onClick={() => handleFinishPurchase()}
                       style={{
 
                       }}
@@ -1923,8 +1928,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-md"
         toggle={() => closeAddressCheckoutModal()}
         isOpen={modalAddressCheckout}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => closeAddressCheckoutModal()}></ModalHeader>
         <ModalBody>
@@ -1936,8 +1941,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-md"
         toggle={() => setModalAddressUpdate(false)}
         isOpen={modalAddressUpdate}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalAddressUpdate(false)}></ModalHeader>
         <ModalBody>
@@ -1954,8 +1959,8 @@ function AddressCart() {
         id='modalCredito'
         toggle={() => setModalTarjetaCredito(false)}
         isOpen={modalTarjetaCredito}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalTarjetaCredito(false)}></ModalHeader>
         <ModalBody>
@@ -1970,7 +1975,8 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)}
             setModalProcesoPago={() => setModalProcesoPago(true)}
             setModalProcesoPagoClose={() => setModalProcesoPago(false)}
@@ -1985,8 +1991,8 @@ function AddressCart() {
         id='modalDebito'
         toggle={() => setModalTarjetaDebito(false)}
         isOpen={modalTarjetaDebito}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalTarjetaDebito(false)}></ModalHeader>
         <ModalBody>
@@ -2000,7 +2006,8 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)}
             setModalProcesoPago={() => setModalProcesoPago(true)}
             setModalProcesoPagoClose={() => setModalProcesoPago(false)}
@@ -2013,8 +2020,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-sm"
         toggle={() => closeModalEfecty()}
         isOpen={modalEfecty}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => closeModalEfecty()}></ModalHeader>
         <ModalBody>
@@ -2024,7 +2031,8 @@ function AddressCart() {
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
             cupon={cupon}
-            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)} />
         </ModalBody>
       </Modal>
@@ -2034,8 +2042,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-sm"
         toggle={() => setModalMantenimientoPSE(false)}
         isOpen={modalMantenimientoPSE}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <ModalNoPse
@@ -2050,8 +2058,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-sm"
         toggle={() => setModalPse(false)}
         isOpen={modalPse}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalPse(false)}></ModalHeader>
         <ModalBody>
@@ -2065,7 +2073,8 @@ function AddressCart() {
             idAddress={selectedAddressId}
             descriptionOrder={descriptionOrder}
             // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)}
             setModalProcesoPago={() => setModalProcesoPago(true)}
             setModalProcesoPagoClose={() => setModalProcesoPago(false)}
@@ -2078,8 +2087,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-sm"
         toggle={() => setModalOTP(false)}
         isOpen={modalOTP}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalOTP(false)}></ModalHeader>
         <ModalBody>
@@ -2088,7 +2097,8 @@ function AddressCart() {
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
             cupon={cupon}
-            setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
             setOk={() => setOkPurchase(true)} />
         </ModalBody>
       </Modal>
@@ -2097,8 +2107,8 @@ function AddressCart() {
       <Modal
         className="modal-dialog-centered modal-md"
         isOpen={modalSuccessPurchase}
-        onOpened={() => setIsScrollModalEnabled(false)}
-        onClosed={() => setIsScrollModalEnabled(true)}
+        // onOpened={() => setIsScrollModalEnabled(false)}
+        // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <SuccessPurchase />
