@@ -90,6 +90,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
 
 
   const onOTPVerify = () => {
+    // e.preventDefautl();
     setLoading(true);
     window.confirmationResult.confirm(otp).then(async (res) => {
       console.log(res);
@@ -192,8 +193,8 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
                       <input {...props} style={{ width: '100%', marginRight: '10px', borderRadius: '12px', height: '40px', textAlign: 'center', borderColor: 'rgba(162, 161, 167, 0.16)' }} maxLength={1} key={index} />
                     )}
                   />
-                  <p><a href='#' onClick={() => onSignUp()}>Reenviar mensaje</a></p>
-                  <a href='#' className="verficationOTP" onClick={onOTPVerify}>
+                  <p><a href='#' onClick={(e) => {e.preventDefault();onSignUp()}}>Reenviar mensaje</a></p>
+                  <a href='#' className="verficationOTP" onClick={(e)=> {e.preventDefault();onOTPVerify()}}>
                     {loading &&
                       <TailSpin
                         height="20"
@@ -212,7 +213,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
               ) : (
                 <>
                   <PhoneInput country={"co"} value={phoneUser} onChange={(value)=>setPhoneUser(value)} inputStyle={{ width: '100%' }} />
-                  <a href="#" onClick={() => onSignUp()} className="verficationOTP">
+                  <a href="#" onClick={(e) => {e.preventDefault();onSignUp()}} className="verficationOTP">
                     {loading &&
                       <TailSpin
                         height="20"
