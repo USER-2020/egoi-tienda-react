@@ -112,7 +112,7 @@ export const filterProductsFeaturePrefer = (id) =>
     });
 
 export const getProductsBySearch = (searchProducts) =>
-    axios.get(`${baseUrl}/products/search`, {
+    axios.get(`${baseUrl}/search_v2`, {
         params: {
             name: searchProducts
         },
