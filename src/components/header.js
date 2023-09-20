@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Link, useParams } from 'react-router-dom';
 import {
   InputGroup,
@@ -53,15 +53,17 @@ const Header = ({ cantCart }) => {
   // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
 
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-
+  
+  
   const { id } = useParams();
-
+  
   const currenUser = getCurrentUser();
   // const token = currenUser.token;
-
-
+  
+  
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
   const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad del menú de resultados
+  const resultsContainerRef = useRef(null);
 
   const history = useHistory();
 
@@ -148,6 +150,14 @@ const Header = ({ cantCart }) => {
           setShowResults(true); // Muestra los resultados si hay resultados de búsqueda
           console.log("Respuesta de los productos por búsqueda", res.data);
         });
+    }
+  };
+
+
+  const handleOutsideClick = (event) => {
+    if (resultsContainerRef.current && !resultsContainerRef.current.contains(event.target)) {
+      // Clic fuera del área de resultados, ocultar los resultados
+      setShowResults(false);
     }
   };
 
@@ -360,6 +370,21 @@ const Header = ({ cantCart }) => {
     allBrands();
   }, []);
 
+  
+  useEffect(() => {
+    // Agregar un detector de clics fuera de los resultados cuando los resultados están visibles
+    if (showResults) {
+      document.addEventListener('click', handleOutsideClick);
+    } else {
+      document.removeEventListener('click', handleOutsideClick);
+    }
+
+    // Limpiar el detector de clics cuando el componente se desmonta
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [showResults]);
+
 
   // useEffect(() => {
   //   if (prevSearchProducts) {
@@ -397,40 +422,42 @@ const Header = ({ cantCart }) => {
 
             />
             {/* Contenedor para mostrar los resultados de búsqueda */}
-            {showResults && (
-              <div className={`searchResultsContainer`}>
-                {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
-                  <div>
-                    {products.length > 0 && (
-                      <h3>Productos</h3>
-                    )}
-                    <ul className="resultsList">
-                      {products.map((result, index) => (
-                        <li key={index} className="searchResultItem">
-                          <a href="" onClick={() => handleClickResultProduct(result.id, result.slug)}>{result.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                    {categoriesSearch.length > 0 && (
-                      <>
-                        <hr />
-                        <h3>Categorias</h3>
-                      </>
-                    )}
-                    <ul className="resultsList">
-                      {categoriesSearch.map((result, index) => (
-                        <li key={index} className="searchResultItem">
-                          <a href="" onClick={() => handleClickResultCategorie(result.name, result.id)}>{result.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p>No se encontraron resultados.</p>
-                )}
-              </div>
+            
+              {showResults && (
+                <div className={`searchResultsContainer`} ref={resultsContainerRef}>
+                  {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
+                    <div>
+                      {products.length > 0 && (
+                        <h3>Productos</h3>
+                      )}
+                      <ul className="resultsList">
+                        {products.map((result, index) => (
+                          <li key={index} className="searchResultItem">
+                            <a href="" onClick={() => handleClickResultProduct(result.id, result.slug)}>{result.name}</a>
+                          </li>
+                        ))}
+                      </ul>
+                      {categoriesSearch.length > 0 && (
+                        <>
+                          <hr />
+                          <h3>Categorias</h3>
+                        </>
+                      )}
+                      <ul className="resultsList">
+                        {categoriesSearch.map((result, index) => (
+                          <li key={index} className="searchResultItem">
+                            <a href="" onClick={() => handleClickResultCategorie(result.name, result.id)}>{result.name}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p>No se encontraron resultados.</p>
+                  )}
+                </div>
 
-            )}
+              )}
+            
 
           </InputGroup>
 
