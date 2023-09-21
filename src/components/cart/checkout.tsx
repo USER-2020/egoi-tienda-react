@@ -2059,7 +2059,7 @@ function AddressCart() {
       {/* Modal checkout efecty */}
       <Modal
         className="modal-dialog-centered modal-sm"
-        toggle={() => closeModalEfecty()}
+        // toggle={() => handleFinishPurchase()}
         isOpen={modalEfecty}
       // onOpened={() => setIsScrollModalEnabled(false)}
       // onClosed={() => setIsScrollModalEnabled(true)}
