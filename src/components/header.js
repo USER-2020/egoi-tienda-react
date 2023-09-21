@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams } from 'react-router-dom';
 import {
   InputGroup,
@@ -62,6 +62,7 @@ const Header = ({ cantCart }) => {
 
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
   const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad del menú de resultados
+  const searchInputRef = useRef(null);
 
   const history = useHistory();
 
@@ -90,11 +91,13 @@ const Header = ({ cantCart }) => {
 
   const handleClickResultProduct = (itemId, slug) => {
     // history.push(`/products/${name}`);
+    console.log("entre al resultado de producto")
     history.push(`/detailsProduct/${itemId}/${slug}`)
   }
 
   const handleClickResultCategorie = (nameCategory, idCategory) => {
     // history.push(`/products/${name}`);
+    console.log("entre al resultado de categorias")
     history.push(`/categories/${nameCategory}/${nameCategory}/${idCategory}`)
   }
   /**
@@ -150,6 +153,8 @@ const Header = ({ cantCart }) => {
         });
     }
   };
+
+
 
 
   /**
@@ -360,6 +365,23 @@ const Header = ({ cantCart }) => {
     allBrands();
   }, []);
 
+  useEffect(() => {
+    // Agregar un evento de clic global para cerrar los resultados al hacer clic fuera de ellos
+    const handleGlobalClick = (event) => {
+      if (showResults && !event.target.closest('.searchResultsContainer')) {
+        setShowResults(false);
+      }
+    };
+
+    // Agregar el evento de clic global cuando se monta el componente
+    document.addEventListener('click', handleGlobalClick);
+
+    // Eliminar el evento de clic global cuando se desmonta el componente
+    return () => {
+      document.removeEventListener('click', handleGlobalClick);
+    };
+  }, [showResults]);
+
 
   // useEffect(() => {
   //   if (prevSearchProducts) {
@@ -394,11 +416,13 @@ const Header = ({ cantCart }) => {
               value={prevSearchProducts}
               onChange={handleInputChange}
               onKeyUp={handleEnterPress}
+              // onBlur={handleSearchInputBlur} // Cerrar los resultados cuando se cambie el foco
+              
 
             />
             {/* Contenedor para mostrar los resultados de búsqueda */}
             {showResults && (
-              <div className={`searchResultsContainer`}>
+              <div className={`searchResultsContainer`} ref={searchInputRef}>
                 {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
                   <div>
                     {products.length > 0 && (
@@ -407,20 +431,20 @@ const Header = ({ cantCart }) => {
                     <ul className="resultsList">
                       {products.map((result, index) => (
                         <li key={index} className="searchResultItem">
-                          <a href="" onClick={() => handleClickResultProduct(result.id, result.slug)}>{result.name}</a>
+                          <a href="#" onClick={(e) => {e.preventDefault(); handleClickResultProduct(result.id, result.slug)}}>{result.name}</a>
                         </li>
                       ))}
                     </ul>
                     {categoriesSearch.length > 0 && (
                       <>
                         <hr />
-                        <h3>Categorias</h3>
+                        <h3>Categorías</h3>
                       </>
                     )}
                     <ul className="resultsList">
                       {categoriesSearch.map((result, index) => (
                         <li key={index} className="searchResultItem">
-                          <a href="" onClick={() => handleClickResultCategorie(result.name, result.id)}>{result.name}</a>
+                          <a href="#" onClick={(e) => {e.preventDefault(); handleClickResultCategorie(result.name, result.id)}}>{result.name}</a>
                         </li>
                       ))}
                     </ul>
