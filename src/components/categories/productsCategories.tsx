@@ -43,6 +43,7 @@ const ProductsCategories = () => {
   const subsubcateArray = JSON.parse(decodeURIComponent(subsubcate || '[]'));
 
   const [products, setProducts] = useState([]);
+  const [categoriesBySearch, setCategoriesBySearch] = useState([]);
   // const [productsDiscounted, setProductsDiscounted] = useState([]);
   const [filterApplied, setFilterApplied] = useState(false);
 
@@ -331,8 +332,9 @@ const ProductsCategories = () => {
     if (searchProducts) {
       getProductsBySearch(searchProducts)
         .then((res) => {
-          // console.log(res);
+          console.log(res.data.products);
           setProducts(res.data);
+          setCategoriesBySearch(res.data.categories)
           // console.log("Respuesta de los productos por busqueda", res.data.products);
         })
     }
