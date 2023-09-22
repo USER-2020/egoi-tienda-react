@@ -259,9 +259,54 @@ function DetailProduct({ setCantCart, handleLogged }) {
                 // console.log(res);
                 setDetailProducts(res.data);
                 setIsLoading(false);
-                // console.log("Detalle del producto por slug", res.data);
+                // gtagView();
+                // console.log("Detalle del producto por slug", res.data);                
             })
             .catch((err) => console.log(err));
+    }
+
+    const gtagView = () => {
+        console.log({
+            items: [{
+                item_id: id,
+                item_name: detailProducts.name,
+                coupon: 0,
+                discount: detailProducts.discount_valor || detailProducts.dicount_tag_valor || 0,
+                index: 5,
+                item_list_name: id,
+                item_list_id: id,
+                affiliation: 'Egoi',
+                item_brand: detailProducts.brand_id,
+                item_category: '',
+                item_variant: '',
+                price: detailProducts.unit_price,
+                currency: 'COP',
+                quantity: 1
+            }],
+            item_list_name: '',
+            item_list_id: ''
+        });
+
+        gtag('event', 'select_item', {
+            items: [{
+                item_id: id,
+                item_name: detailProducts.name,
+                coupon: 0,
+                discount: detailProducts.discount_valor || detailProducts.dicount_tag_valor || 0,
+                index: 5,
+                item_list_name: id,
+                item_list_id: id,
+                affiliation: 'Egoi',
+                item_brand: detailProducts.brand_id,
+                item_category: '',
+                item_variant: '',
+                price: detailProducts.unit_price,
+                currency: 'COP',
+                quantity: 1
+            }],
+            item_list_name: '',
+            item_list_id: ''
+        });
     }
 
     const detailProductByIdProduct = (id) => {
@@ -336,28 +381,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setCurrentImage(0);
         }
-        // history.push(history.location.pathname);
-        gtag('event', 'select_item', {
-            items: [{
-              item_id: 'SKU_12345',
-              item_name: 'jeggings',
-              coupon: 'SUMMER_FUN',
-              discount: 2.22,
-              index: 5,
-              item_list_name: 'Related Products',
-              item_list_id: 'related_products',
-              affiliation: 'Google Store',
-              item_brand: 'Gucci',
-              item_category: 'pants',
-              item_variant: 'black',
-              price: 9.99,
-              currency: 'USD',
-              quantity: 1
-            }],
-            item_list_name: 'Related products',
-            item_list_id: 'related_products'
-          });
-
+        // history.push(history.location.pathname);   
     }, [slug, id]);
 
     useEffect(() => {
@@ -391,6 +415,10 @@ function DetailProduct({ setCantCart, handleLogged }) {
         // setFormattedDescription(descripcionSinEtiquetas);
         console.log(detailProducts);
     }, []);
+
+    useEffect(() => {
+        gtagView();
+    }, [detailProducts, slug, id]);
 
     return (
         <div>
