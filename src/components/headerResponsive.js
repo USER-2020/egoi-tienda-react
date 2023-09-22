@@ -95,7 +95,8 @@ function HeaderResponsive({ canCart }) {
     if (event.key === 'Enter') {
       setPrevSearchProducts(prevSearchProducts);
       // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
-      history.push(`/products/${prevSearchProducts}`);
+      // history.push(`/products/${prevSearchProducts}`);
+      history.push(`/categories/${categoriesSearch[0].name}/${categoriesSearch[0].name}/${categoriesSearch[0].id}`);
       setShowResults(false);
     }
   }
@@ -368,7 +369,7 @@ function HeaderResponsive({ canCart }) {
                       {categoriesSearch.length > 0 && (
                         <>
                           <hr />
-                          <h3>Categorias</h3>
+                          <h3>Categorías</h3>
                         </>
                       )}
                       <ul className="resultsList">
