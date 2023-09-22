@@ -1079,7 +1079,7 @@ function AddressCart() {
               ReactDOM.render(
                 <div style={containerStyles}>
                   <PDFViewer style={viewerStyles}>
-                    <PDFContent closeModalPDF={newWindow.close} dataRefEfecty={newDataRef}
+                    <PDFContent  dataRefEfecty={newDataRef}
                       totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
                       description={descriptionOrder} />
                   </PDFViewer>
@@ -2019,15 +2019,15 @@ function AddressCart() {
       {/* Modal checkout efecty */}
       <Modal
         className="modal-dialog-centered modal-sm"
-        toggle={() => closeModalEfecty()}
+        // toggle={() => closeModalEfecty()}
         isOpen={modalEfecty}
         // onOpened={() => setIsScrollModalEnabled(false)}
         // onClosed={() => setIsScrollModalEnabled(true)}
       >
-        <ModalHeader toggle={() => closeModalEfecty()}></ModalHeader>
+        {/* <ModalHeader toggle={() => closeModalEfecty()}></ModalHeader> */}
         <ModalBody>
           <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
-            closeEfectyModal={() => closeModalEfecty()}
+            // closeEfectyModal={() => closeModalEfecty()}
             dataRef={dataRef}
             addressId={selectedAddressId}
             descriptionOrder={descriptionOrder}
