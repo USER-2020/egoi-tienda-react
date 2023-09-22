@@ -337,6 +337,26 @@ function DetailProduct({ setCantCart, handleLogged }) {
             setCurrentImage(0);
         }
         // history.push(history.location.pathname);
+        gtag('event', 'select_item', {
+            items: [{
+              item_id: 'SKU_12345',
+              item_name: 'jeggings',
+              coupon: 'SUMMER_FUN',
+              discount: 2.22,
+              index: 5,
+              item_list_name: 'Related Products',
+              item_list_id: 'related_products',
+              affiliation: 'Google Store',
+              item_brand: 'Gucci',
+              item_category: 'pants',
+              item_variant: 'black',
+              price: 9.99,
+              currency: 'USD',
+              quantity: 1
+            }],
+            item_list_name: 'Related products',
+            item_list_id: 'related_products'
+          });
 
     }, [slug, id]);
 

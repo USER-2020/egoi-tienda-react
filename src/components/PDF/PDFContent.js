@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const PDFContent = ({ closeModalPDF, dataRefEfecty, totalAmount, description }) => {
+const PDFContent = ({ dataRefEfecty, totalAmount, description }) => {
     const id = dataRefEfecty ? dataRefEfecty.id : null;
     const [referenciaData, setReferenciaData] = useState("");
 

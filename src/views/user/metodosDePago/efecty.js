@@ -4,7 +4,7 @@ import { placeOrder } from '../../../services/metodosDePago';
 import { getCurrentUser } from '../../../helpers/Utils';
 import { Loader, TailSpin } from 'react-loader-spinner';
 
-function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descriptionOrder, cupon, setModalPurchaseSuccess, setOk }) {
+function EfectyModal({ totalAmount, dataRef, addressId, descriptionOrder, cupon, setModalPurchaseSuccess, setOk }) {
 
   // const [transactionAmount, setTransactionAmount] = useState("");
   const [paymentMethodId, setPaymentMethodId] = useState("");
@@ -27,7 +27,7 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
         console.log("Orden enviada por Efecty");
         console.log(res);
         setModalPurchaseSuccess();
-        closeEfectyModal();
+        // closeEfectyModal();
         setOk();
       })
       .catch((err) => console.log(err));
@@ -35,7 +35,7 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
   const orderPlaceEfecty = () => {
     setLoading(true);
     setModalPurchaseSuccess();
-    closeEfectyModal();
+    // closeEfectyModal();
     setOk();
     // makePlaceOrder();
   }
@@ -88,7 +88,7 @@ function EfectyModal({ totalAmount, closeEfectyModal, dataRef, addressId, descri
                 </div>
               </div>
               <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
-                <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={orderPlaceEfecty}>
+                <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={(e)=>{e.preventDefault(); orderPlaceEfecty()}}>
                   {loading &&
                     <TailSpin
                       height="20"

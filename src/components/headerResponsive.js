@@ -72,7 +72,7 @@ function HeaderResponsive({ canCart }) {
 
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
   const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad del menú de resultados
-  const searchInputRef = useRef(null);
+  const resultsContainerRef = useRef(null);
 
   const [fieldsEnabled, setFieldsEnabled] = useState(false);
 
@@ -124,6 +124,13 @@ function HeaderResponsive({ canCart }) {
           setShowResults(true); // Muestra los resultados si hay resultados de búsqueda
           console.log("Respuesta de los productos por búsqueda", res.data.products);
         });
+    }
+  };
+
+  const handleOutsideClick = (event) => {
+    if (resultsContainerRef.current && !resultsContainerRef.current.contains(event.target)) {
+      // Clic fuera del área de resultados, ocultar los resultados
+      setShowResults(false);
     }
   };
 
@@ -299,27 +306,24 @@ function HeaderResponsive({ canCart }) {
   }, [prevSearchProducts]);
 
   useEffect(() => {
-    // Agregar un evento de clic global para cerrar los resultados al hacer clic fuera de ellos
-    const handleGlobalClick = (event) => {
-      if (showResults && !event.target.closest('.searchResultsContainer')) {
-        setShowResults(false);
-      }
-    };
-
-    // Agregar el evento de clic global cuando se monta el componente
-    document.addEventListener('click', handleGlobalClick);
-
-    // Eliminar el evento de clic global cuando se desmonta el componente
-    return () => {
-      document.removeEventListener('click', handleGlobalClick);
-    };
-  }, [showResults]);
-
-  useEffect(() => {
     allCategoriesPromise();
     allBrands();
     // console.log(canCart)
   }, []);
+
+  useEffect(() => {
+    // Agregar un detector de clics fuera de los resultados cuando los resultados están visibles
+    if (showResults) {
+      document.addEventListener('click', handleOutsideClick);
+    } else {
+      document.removeEventListener('click', handleOutsideClick);
+    }
+
+    // Limpiar el detector de clics cuando el componente se desmonta
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [showResults]);
 
   return (
     <div className='containerResponsive'>
@@ -348,7 +352,7 @@ function HeaderResponsive({ canCart }) {
                 onKeyUp={handleEnterPress} />
               {/* Contenedor para mostrar los resultados de búsqueda */}
               {showResults && (
-                <div className={`searchResultsContainer`} ref={searchInputRef}>
+                <div className={`searchResultsContainer`} ref={resultsContainerRef}>
                   {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
                     <div>
                       {products.length > 0 && (
