@@ -7,10 +7,11 @@ import { urlBase } from '../constants/defaultValues';
 const baseUrl = urlBase;
 
 // Filtro de productos mas recientes 
-export const filterProductsRecents = (id) =>
+export const filterProductsRecents = (id, offset) =>
     axios.get(`${baseUrl}/categories/products_latest/${id}`, {
         params:{
-            limit:12
+            limit:12,
+            offset: offset,
         },
         headers:{
             'Content-Type': 'application/json'
@@ -18,10 +19,11 @@ export const filterProductsRecents = (id) =>
     });
 
 // Filtro del mas alto al mas bajo precio
-export const filterProductsHigh_Low = (id) =>
+export const filterProductsHigh_Low = (id, offset) =>
     axios.get(`${baseUrl}/categories/products_high_price/${id}`, {
         params:{
-            limit:12
+            limit:12,
+            offset: offset,
         },
         headers:{
             'Content-Type': 'application/json'
@@ -29,10 +31,11 @@ export const filterProductsHigh_Low = (id) =>
     });
 
 // Filtro del mas bajo al mas alto
-export const filterProductsLow_High = (id) =>
+export const filterProductsLow_High = (id, offset) =>
     axios.get(`${baseUrl}/categories/products_low_price/${id}`, {
         params:{
-            limit:12
+            limit:12,
+            offset:offset
         },
         headers:{
             'Content-Type': 'application/json'
@@ -40,10 +43,11 @@ export const filterProductsLow_High = (id) =>
     });
 
 // Filtro de la A-Z 
-export const filterProductsA_Z = (id) =>
+export const filterProductsA_Z = (id, offset) =>
     axios.get(`${baseUrl}/categories/products_a_z/${id}`, {
         params:{
-            limit:12
+            limit:12,
+            offset: offset,
         },
         headers:{
             'Content-Type': 'application/json'
@@ -52,10 +56,11 @@ export const filterProductsA_Z = (id) =>
 
 
 // Filtro de la Z-A 
-export const filterProductsZ_A = (id)=>
+export const filterProductsZ_A = (id, offset)=>
     axios.get(`${baseUrl}/categories/products_z_a/${id}` ,{
         params:{
-           limit:12 
+           limit:12,
+           offset: offset, 
         },
         headers:{
             'Content-Type': 'application/json'
@@ -63,12 +68,13 @@ export const filterProductsZ_A = (id)=>
     });
 
 // filtro por rango de precio
-export const filterProductsPrice = (id, priceStart, priceEnd) => 
+export const filterProductsPrice = (id, priceStart, priceEnd, offset) => 
     axios.get(`${baseUrl}/categories/products_range_price/${id}`, {
         params: {
             price_start: priceStart,
             price_end: priceEnd,
-            limit:12
+            limit:12,
+            offset:offset,
         },
         headers:{
             'Content-Type': 'application/json'
