@@ -286,7 +286,7 @@ const ProductsCategories = () => {
         .catch((err) => console.log(err));
     }
     else if(selectedFilters === 'price'){
-      handleApplyFilters();\
+      handleApplyFilters();
     }else {
       subcategorieById(id, offset, tag, subcate, subsubcateArray)
         .then((res) => {
