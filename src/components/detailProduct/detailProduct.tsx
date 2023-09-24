@@ -407,18 +407,52 @@ function DetailProduct({ setCantCart, handleLogged }) {
         // history.push(history.location.pathname);
     }, [currenUser, handleLogged]);
 
-    useEffect(() => {
-        // const elementoTemporal = document.createElement('div');
-        // elementoTemporal.innerHTML = detailProducts.details;
-        // const descripcionSinEtiquetas = elementoTemporal.textContent;
 
-        // setFormattedDescription(descripcionSinEtiquetas);
-        console.log(detailProducts);
-    }, []);
 
     useEffect(() => {
-        gtagView();
-    }, [detailProducts, slug, id]);
+        // gtagView();
+        console.log({
+            items: [{
+                item_id: id,
+                item_name: detailProducts.name,
+                coupon: 0,
+                discount: detailProducts.discount_valor || detailProducts.dicount_tag_valor || 0,
+                index: 5,
+                item_list_name: id,
+                item_list_id: id,
+                affiliation: 'Egoi',
+                item_brand: detailProducts.brand_id,
+                item_category: '',
+                item_variant: '',
+                price: detailProducts.unit_price,
+                currency: 'COP',
+                quantity: 1
+            }],
+            item_list_name: '',
+            item_list_id: ''
+        });
+
+        gtag('event', 'select_item', {
+            items: [{
+                item_id: id,
+                item_name: detailProducts.name,
+                coupon: 0,
+                discount: detailProducts.discount_valor || detailProducts.dicount_tag_valor || 0,
+                index: 5,
+                item_list_name: id,
+                item_list_id: id,
+                affiliation: 'Egoi',
+                item_brand: detailProducts.brand_id,
+                item_category: '',
+                item_variant: '',
+                price: detailProducts.unit_price,
+                currency: 'COP',
+                quantity: 1
+            }],
+            item_list_name: '',
+            item_list_id: ''
+        });
+    }, [detailProducts]);
 
     return (
         <div>
