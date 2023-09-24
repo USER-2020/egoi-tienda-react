@@ -103,7 +103,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
                     setCantCart();
                     let discount = 0;
                     if (detailProducts.discount_valor > 0) {
-                        discount = detailProducts.discount_valor;
+                        discount = detailProducts.unit_price - detailProducts.discount_valor;
                     }
                     if (detailProducts.discount_tag_valor > 0) {
                         discount = detailProducts.discount_tag_valor;
