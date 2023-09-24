@@ -101,6 +101,33 @@ function DetailProduct({ setCantCart, handleLogged }) {
             addProductsCart(id, quantity, currenUser.token)
                 .then((res) => {
                     setCantCart();
+                    let discount = 0;
+                    if (detailProducts.discount_valor > 0) {
+                        discount = detailProducts.discount_valor;
+                    }
+                    if (detailProducts.discount_tag_valor > 0) {
+                        discount = detailProducts.discount_tag_valor;
+                    }
+                    if (detailProducts.discount_valor === 0 && detailProducts.discount_tag_valor === 0) {
+                        discount = 0;
+                    }
+                    gtag('event', 'add_to_cart', {
+                        currency: 'USD',
+                        items: [{
+                            item_id: id,
+                            item_name: detailProducts.name,
+                            coupon: '',
+                            discount: discount,
+                            affiliation: 'Egoi',
+                            item_brand: detailProducts.brand_id,
+                            item_category: '',
+                            item_variant: '',
+                            price: detailProducts.unit_price,
+                            currency: 'COP',
+                            quantity: quantity
+                        }],
+                        value: detailProducts.unit_price
+                    });
                     // console.log("Producto enviado", res.data);
                     // console.log(token);
                 })
@@ -452,6 +479,25 @@ function DetailProduct({ setCantCart, handleLogged }) {
             item_list_name: '',
             item_list_id: ''
         });
+
+        gtag('event', 'view_item', {
+            currency: 'COP',
+            items: [{
+                item_id: id,
+                item_name: detailProducts.name,
+                coupon: 0,
+                discount: detailProducts.discount_valor || detailProducts.dicount_tag_valor || 0,
+                affiliation: 'Egoi',
+                item_brand: detailProducts.brand_id,
+                item_category: '',
+                item_variant: '',
+                price: detailProducts.unit_price,
+                currency: 'COP',
+                quantity: 1
+            }],
+            value: detailProducts.unit_price
+        });
+
     }, [detailProducts]);
 
     return (

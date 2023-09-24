@@ -245,8 +245,30 @@ function AddressCart() {
     return total;
   };
 
+  const sumWithoutDiscount = (productsCart) => {
+    let totalWithoutDiscount = 0;
+    productsCart.map((product) => {
+      const precioTotalWithoutDiscount = (product.price) * product.quantity;
+      totalWithoutDiscount += precioTotalWithoutDiscount;
+    })
+    return totalWithoutDiscount;
+  }
+
+  const discountWhithTags = (productsCart) => {
+    let totalDiscounts = 0;
+    productsCart.map((product) => {
+      const descuentosTotales = (product.discount);
+      totalDiscounts += descuentosTotales;
+    })
+    return totalDiscounts;
+  }
+
 
   const subtotal = sumSubTotal(productsCart);
+
+  const subtotalWithoutDiscount = sumWithoutDiscount(productsCart);
+
+  const discountedProducts = discountWhithTags(productsCart);
 
   const impuesto = '0';
 
@@ -1472,7 +1494,7 @@ function AddressCart() {
                   <p>$0</p>
                 ) : (
 
-                  <p>${subtotal.toLocaleString('en')}</p>
+                  <p>${subtotalWithoutDiscount.toLocaleString('en')}</p>
                 )}
               </div>
               <div className="impuesto">
@@ -1504,7 +1526,7 @@ function AddressCart() {
                   discountCoupon && discountCoupon.total !== undefined ? (
                     <p>{discountCoupon.discount}</p>
                   ) : (
-                    <p>$0</p>
+                    <p>${discountedProducts.toLocaleString('en')}</p>
                   )
                 )}
               </div>
@@ -1646,12 +1668,18 @@ function AddressCart() {
                     )}
                     {products.discount > 0 && (
                       <>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                          <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
                         <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
+                        </div>
                       </>
                     )}
                     {products.discount_tag > 0 && (
                       <>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                          <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
                         <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
+                        </div>
                       </>
                     )}
                     <div className="cant">
@@ -1681,7 +1709,7 @@ function AddressCart() {
               <p className="def">En productos</p>
               {isResetOk ? (
                 <p>$0</p>
-              ) : (<p className="precio">$ {subtotal.toLocaleString('en')}</p>)}
+              ) : (<p className="precio">$ {subtotalWithoutDiscount.toLocaleString('en')}</p>)}
             </span>
             <span className="costoEnvio">
               <p className="def">Costo de envío</p>
@@ -1698,6 +1726,18 @@ function AddressCart() {
               )}
             </span>
 
+            <span className="cupon">
+              <p className="def">Descuento</p>
+              {isResetOk ? (
+                <p>$0</p>
+              ) : (
+                <p className='precio'>
+                  ${discountedProducts.toLocaleString('en')}
+                </p>
+
+
+              )}
+            </span>
             <span className="cupon">
               <p className="def">Cupón</p>
               {isResetOk ? (

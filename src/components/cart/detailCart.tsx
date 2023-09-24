@@ -128,7 +128,7 @@ function DetailCart({ setCantCart }) {
     }
   }
 
-  const deleteOne = (key) => {
+  const deleteOne = (key, nameProduct, price, discountF, discountT, quantity) => {
     deleteItemCart(key, token)
       .then((res) => {
         // console.log(res);
@@ -137,6 +137,33 @@ function DetailCart({ setCantCart }) {
           title: 'Producto eliminado del carrito',
           // text: 'Sesión expirada. Por favor, vuelva a logearse.',
           confirmButtonColor: '#fc5241',
+        });
+        let discount = 0;
+        if(discountF > 0){
+          discount = discountF;
+        }
+        if(discountT > 0){
+          discount = discountT;
+        }
+        if(discountF === 0 && discountT === 0){
+          discount= 0;
+        }
+        gtag('event', 'remove_from_cart', {
+          currency: 'COP',
+          items: [{
+            item_id: key,
+            item_name: nameProduct,
+            coupon: '',
+            discount: discount,
+            affiliation: 'Egoi',
+            item_brand: '',
+            item_category: '',
+            item_variant: '',
+            price: price,
+            currency: 'COP',
+            quantity: quantity
+          }],
+          value: price
         });
         getAllProductsByCart();
         setCantCart();
@@ -187,8 +214,30 @@ function DetailCart({ setCantCart }) {
   };
 
 
+  const sumWithoutDiscount = (productsCart) => {
+    let totalWithoutDiscount = 0;
+    productsCart.map((product)=>{
+      const precioTotalWithoutDiscount = (product.price) * product.quantity;
+      totalWithoutDiscount += precioTotalWithoutDiscount;
+    })
+    return totalWithoutDiscount;
+  }
+
+  const discountWhithTags = (productsCart) => {
+    let totalDiscounts = 0;
+    productsCart.map((product)=> {
+      const descuentosTotales = (product.discount);
+      totalDiscounts+=descuentosTotales;
+    })
+    return totalDiscounts;
+  }
+
 
   const subtotal = sumSubTotal(productsCart);
+
+  const subtotalWithoutDiscount = sumWithoutDiscount(productsCart);
+
+  const discountedProducts = discountWhithTags(productsCart);
 
   const impuesto = '0';
 
@@ -348,12 +397,18 @@ function DetailCart({ setCantCart }) {
                         )}
                         {products.discount > 0 && (
                           <>
+                            <div style={{display:'flex', flexDirection:'column', gap:'5px'}}>
+                              <h5 style={{color:'#A2A1A7', fontSize:'12px'}}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
                             <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
+                            </div>
                           </>
                         )}
                         {products.discount_tag > 0 && (
                           <>
+                          <div style={{display:'flex', flexDirection:'column', gap:'5px'}}>
+                            <h5 style={{color:'#A2A1A7', fontSize:'12px'}}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
                             <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
+                          </div>
                           </>
                         )}
                         <div className="cant">
@@ -364,7 +419,7 @@ function DetailCart({ setCantCart }) {
                       </div>
                     </div>
                     <div className="deleteProduct">
-                      <a href="#" onClick={() => deleteOne(products.id)}>
+                      <a href="#" onClick={() => deleteOne(products.id, products.name, products.price, products.discount, products.discount_tag, products.quantity)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                           <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                         </svg>
@@ -443,12 +498,18 @@ function DetailCart({ setCantCart }) {
                       )}
                       {products.discount_tag > 0 && (
                         <>
-                          $ {(products.discount_tag).toLocaleString('en')}
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <p style={{ marginBottom: '0px', color: '#A2A1A7' }}><s>$ {(products.price.toLocaleString('en'))}</s></p>
+                            <p style={{ marginBottom: '0px' }}>$ {(products.discount_tag).toLocaleString('en')}</p>
+                          </div>
                         </>
                       )}
                       {products.discount > 0 && (
                         <>
-                          $ {(products.price - products.discount).toLocaleString('en')}
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <p style={{ marginBottom: '0px', color: '#A2A1A7' }}><s>$ {(products.price.toLocaleString('en'))}</s></p>
+                            <p style={{ marginBottom: '0px' }}>$ {(products.price - products.discount).toLocaleString('en')}</p>
+                          </div>
                         </>
                       )}
                     </div>
@@ -475,7 +536,7 @@ function DetailCart({ setCantCart }) {
                     {/* <div className="caracteristicaCostoEnvio">
                       ${costoEnvio.toLocaleString('en')}
                     </div> */}
-                    <a href="#" onClick={() => deleteOne(products.id)}>
+                    <a href="#" onClick={() => deleteOne(products.id, products.name, products.price, products.discount, products.discount_tag, products.quantity)}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                       </svg>
@@ -506,7 +567,7 @@ function DetailCart({ setCantCart }) {
               <Card>
                 <div className="subtotal">
                   <p>Subtotal</p>
-                  <p>${subtotal.toLocaleString('en')}</p>
+                  <p>${subtotalWithoutDiscount.toLocaleString('en')}</p>
                 </div>
                 <div className="impuesto">
                   <p>Impuesto</p>
@@ -530,7 +591,7 @@ function DetailCart({ setCantCart }) {
                     <p>{discountCoupon.discount}</p>
 
                   ) : (
-                    <p>$0</p>
+                    <p>${discountedProducts.toLocaleString('en')}</p>
                   )}
                 </div>
                 <div className="cupon">
