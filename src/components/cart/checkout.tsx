@@ -154,8 +154,36 @@ function AddressCart() {
 
   /* Redireccion a compra exitosa */
   const handleFinishPurchase = () => {
-       console.log("handlefinishpurchase");
-       history.push("/congrats");
+    console.log("handlefinishpurchase");
+    // Utilizar map para transformar "productsCart" en la estructura deseada para la llamada a gtag
+    var mappedItems = productsCart.map(function (product) {
+
+      return {
+        item_id: product.id,
+        item_name: product.name,
+        coupon: cupon,
+        discount: discountedProducts,
+        affiliation: "Egoi",
+        item_brand:"",
+        item_category: "",
+        item_variant: product.variant,
+        price: product.unit_price,
+        currency: "COP",
+        quantity: product.quantity
+      };
+    });
+    gtag('event', 'purchase', {
+      affiliation: 'Egoi',
+      coupon: cupon,
+      currency: 'COP',
+      items: mappedItems,
+      transaction_id: 'T_12345',
+      shipping: 0,
+      value: subtotal,
+      tax: 0
+    })
+
+    history.push("/congrats");
   }
 
 
@@ -298,7 +326,7 @@ function AddressCart() {
     }
     const precioTotalaPagar = subtotal + costoEnvio;
     return `$${precioTotalaPagar.toLocaleString('en')}`;
-    
+
     // const subtotalNumber = parseInt(subtotal.replace(',', ''), 10);
   }
 
@@ -1101,7 +1129,7 @@ function AddressCart() {
               ReactDOM.render(
                 <div style={containerStyles}>
                   <PDFViewer style={viewerStyles}>
-                    <PDFContent  dataRefEfecty={newDataRef}
+                    <PDFContent dataRefEfecty={newDataRef}
                       totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
                       description={descriptionOrder} />
                   </PDFViewer>
@@ -1670,7 +1698,7 @@ function AddressCart() {
                       <>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                           <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                        <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
+                          <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
                         </div>
                       </>
                     )}
@@ -1678,7 +1706,7 @@ function AddressCart() {
                       <>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                           <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                        <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
+                          <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
                         </div>
                       </>
                     )}
@@ -1969,8 +1997,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-md"
         toggle={() => closeAddressCheckoutModal()}
         isOpen={modalAddressCheckout}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => closeAddressCheckoutModal()}></ModalHeader>
         <ModalBody>
@@ -1982,8 +2010,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-md"
         toggle={() => setModalAddressUpdate(false)}
         isOpen={modalAddressUpdate}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalAddressUpdate(false)}></ModalHeader>
         <ModalBody>
@@ -2000,8 +2028,8 @@ function AddressCart() {
         id='modalCredito'
         toggle={() => setModalTarjetaCredito(false)}
         isOpen={modalTarjetaCredito}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalTarjetaCredito(false)}></ModalHeader>
         <ModalBody>
@@ -2032,8 +2060,8 @@ function AddressCart() {
         id='modalDebito'
         toggle={() => setModalTarjetaDebito(false)}
         isOpen={modalTarjetaDebito}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalTarjetaDebito(false)}></ModalHeader>
         <ModalBody>
@@ -2061,8 +2089,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-sm"
         // toggle={() => closeModalEfecty()}
         isOpen={modalEfecty}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         {/* <ModalHeader toggle={() => closeModalEfecty()}></ModalHeader> */}
         <ModalBody>
@@ -2083,8 +2111,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-sm"
         toggle={() => setModalMantenimientoPSE(false)}
         isOpen={modalMantenimientoPSE}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <ModalNoPse
@@ -2099,8 +2127,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-sm"
         toggle={() => setModalPse(false)}
         isOpen={modalPse}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalPse(false)}></ModalHeader>
         <ModalBody>
@@ -2128,8 +2156,8 @@ function AddressCart() {
         className="modal-dialog-centered modal-sm"
         toggle={() => setModalOTP(false)}
         isOpen={modalOTP}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalHeader toggle={() => setModalOTP(false)}></ModalHeader>
         <ModalBody>
@@ -2148,8 +2176,8 @@ function AddressCart() {
       <Modal
         className="modal-dialog-centered modal-md"
         isOpen={modalSuccessPurchase}
-        // onOpened={() => setIsScrollModalEnabled(false)}
-        // onClosed={() => setIsScrollModalEnabled(true)}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
       >
         <ModalBody>
           <SuccessPurchase />
