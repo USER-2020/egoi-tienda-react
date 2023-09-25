@@ -87,7 +87,12 @@ const Header = ({ cantCart }) => {
       // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       // history.push(`/products/${prevSearchProducts}`);
       // console.log(categoriesSearch[0].id);
-      history.push(`/categories/${categoriesSearch[0].name}/${categoriesSearch[0].name}/${categoriesSearch[0].id}`);
+      
+      if(categoriesSearch.length === 0){
+        history.push(`/products/${prevSearchProducts}`);
+      }else{
+        history.push(`/categories/${categoriesSearch[0].name}/${categoriesSearch[0].name}/${categoriesSearch[0].id}`);
+      }
       setShowResults(false);
     }
   }

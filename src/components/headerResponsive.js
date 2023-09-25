@@ -96,7 +96,11 @@ function HeaderResponsive({ canCart }) {
       setPrevSearchProducts(prevSearchProducts);
       // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       // history.push(`/products/${prevSearchProducts}`);
-      history.push(`/categories/${categoriesSearch[0].name}/${categoriesSearch[0].name}/${categoriesSearch[0].id}`);
+      if (categoriesSearch.length === 0) {
+        history.push(`/products/${prevSearchProducts}`);
+      } else {
+        history.push(`/categories/${categoriesSearch[0].name}/${categoriesSearch[0].name}/${categoriesSearch[0].id}`);
+      }
       setShowResults(false);
     }
   }
