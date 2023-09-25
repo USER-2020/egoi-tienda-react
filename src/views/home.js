@@ -39,6 +39,8 @@ import AddRecents from "../components/home/addRecents";
 import { getPopup } from '../services/banners';
 import { getCurrentUser } from './../helpers/Utils';
 import { allProductsCart } from "../services/cart";
+import { getOfferOfDay } from "../services/ofertas";
+import OfertaDia from "../components/home/ofertaDia";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +50,7 @@ const Home = (props) => {
   const [bannersInfo, setBannersInfo] = useState([]);
 
   const [datosPopup, setDatosPopup] = useState('');
+  const [dataOfferDay, setDataOfferDay ] = useState([]);
 
   const currenUser = getCurrentUser();
 
@@ -109,11 +112,19 @@ const Home = (props) => {
       }).catch((err) => console.log(err));
   }
 
+  // const offerDay = () => {
+  //   getOfferOfDay()
+  //   .then((res)=>{
+  //     console.log("Oferta del dia ",res.data);
+  //     setDataOfferDay(res.data);
+  //   }).catch((err)=>console.log(err));
+  // }
+
   useEffect(() => {
     getAllBanners();
     getPrincipalPopup();
     getCantCart();
-    
+    // offerDay();
   }, []);
 
 
@@ -126,6 +137,7 @@ const Home = (props) => {
       <Header cantCart={cantProductsOnCart}/>
       <HeaderResponsive canCart={cantProductsOnCart}/>
       <Banner />
+      <OfertaDia />
       <Recientes bannersInfo={bannersInfo} className="w-100" />
       <Promociones bannersInfo={bannersInfo} />
       <Vendidos bannersInfo={bannersInfo} />
