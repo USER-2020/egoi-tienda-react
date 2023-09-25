@@ -139,14 +139,14 @@ function DetailCart({ setCantCart }) {
           confirmButtonColor: '#fc5241',
         });
         let discount = 0;
-        if(discountF > 0){
+        if (discountF > 0) {
           discount = discountF;
         }
-        if(discountT > 0){
+        if (discountT > 0) {
           discount = discountT;
         }
-        if(discountF === 0 && discountT === 0){
-          discount= 0;
+        if (discountF === 0 && discountT === 0) {
+          discount = 0;
         }
         gtag('event', 'remove_from_cart', {
           currency: 'COP',
@@ -216,7 +216,7 @@ function DetailCart({ setCantCart }) {
 
   const sumWithoutDiscount = (productsCart) => {
     let totalWithoutDiscount = 0;
-    productsCart.map((product)=>{
+    productsCart.map((product) => {
       const precioTotalWithoutDiscount = (product.price) * product.quantity;
       totalWithoutDiscount += precioTotalWithoutDiscount;
     })
@@ -225,9 +225,9 @@ function DetailCart({ setCantCart }) {
 
   const discountWhithTags = (productsCart) => {
     let totalDiscounts = 0;
-    productsCart.map((product)=> {
+    productsCart.map((product) => {
       const descuentosTotales = (product.discount);
-      totalDiscounts+=descuentosTotales;
+      totalDiscounts += descuentosTotales;
     })
     return totalDiscounts;
   }
@@ -397,18 +397,18 @@ function DetailCart({ setCantCart }) {
                         )}
                         {products.discount > 0 && (
                           <>
-                            <div style={{display:'flex', flexDirection:'column', gap:'5px'}}>
-                              <h5 style={{color:'#A2A1A7', fontSize:'12px'}}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                            <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                              <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
+                              <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
                             </div>
                           </>
                         )}
                         {products.discount_tag > 0 && (
                           <>
-                          <div style={{display:'flex', flexDirection:'column', gap:'5px'}}>
-                            <h5 style={{color:'#A2A1A7', fontSize:'12px'}}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                            <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
-                          </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                              <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
+                              <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
+                            </div>
                           </>
                         )}
                         <div className="cant">
@@ -625,7 +625,11 @@ function DetailCart({ setCantCart }) {
                     value={cupon}
                     onChange={(event) => setCupon(event.target.value)}
                   />
-                  <a href="#" onClick={() => aplicarCupon()}>Aplicar cupón</a>
+                  {discountedProducts === 0 ? (
+                    <a href="#" onClick={(e) => { e.preventDefault(); aplicarCupon() }}>Aplicar cupón</a>
+                  ) : (
+                    <a href="#" style={{pointerEvents: 'none', backgroundColor:'gray'}}>Aplicar cupón</a>
+                  )}
                 </div>
                 <div className="totalCash">
                   <h6>Total a pagar</h6>
@@ -679,8 +683,8 @@ function DetailCart({ setCantCart }) {
                 <>
                   <div className="toPay">
                     {/* <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
-                      {/* <Link to={checkout}> */}
-                      <a href={`/checkout`} >Ir a pagar</a>
+                    {/* <Link to={checkout}> */}
+                    <a href={`/checkout`} >Ir a pagar</a>
                     {/* </Link> */}
                   </div>
                   <div className="awaitShopping">
@@ -726,7 +730,7 @@ function DetailCart({ setCantCart }) {
                 </div>
                 <div className="awaitShopping">
                   {/* <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
-                    <a href={`/checkout`}>Continuar compra</a>
+                  <a href={`/checkout`}>Continuar compra</a>
                   {/* </Link> */}
                 </div>
               </>

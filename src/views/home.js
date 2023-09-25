@@ -17,7 +17,7 @@ import {
   InputGroupAddon,
   Input,
   Button,
-  Modal, ModalBody, 
+  Modal, ModalBody,
   ModalHeader
 } from "reactstrap";
 import styles from "../styles/navbar.css";
@@ -39,6 +39,10 @@ import AddRecents from "../components/home/addRecents";
 import { getPopup } from '../services/banners';
 import { getCurrentUser } from './../helpers/Utils';
 import { allProductsCart } from "../services/cart";
+import { getOfferHigligth, getOfferOfDay } from "../services/ofertas";
+import OfertaDia from "../components/home/ofertaDia";
+import OfertaDestacada from "../components/home/ofertaDestacada";
+import OfertaFlash from "../components/home/ofertaFlash";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +52,7 @@ const Home = (props) => {
   const [bannersInfo, setBannersInfo] = useState([]);
 
   const [datosPopup, setDatosPopup] = useState('');
+  
 
   const currenUser = getCurrentUser();
 
@@ -109,11 +114,28 @@ const Home = (props) => {
       }).catch((err) => console.log(err));
   }
 
+  // const offerDay = () => {
+  //   getOfferOfDay()
+  //   .then((res)=>{
+  //     console.log("Oferta del dia ",res.data);
+  //     setDataOfferDay(res.data);
+  //   }).catch((err)=>console.log(err));
+  // }
+
+  // const getOfferDestacada = () => {
+  //   getOfferHigligth()
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setIdDestacado(res.data.id);
+  //     }).catch((err) => console.log(err));
+  // }
+
   useEffect(() => {
     getAllBanners();
     getPrincipalPopup();
     getCantCart();
-    
+    // getOfferDestacada();
+    // offerDay();
   }, []);
 
 
@@ -123,9 +145,12 @@ const Home = (props) => {
     // <Nav/>
     <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header cantCart={cantProductsOnCart}/>
-      <HeaderResponsive canCart={cantProductsOnCart}/>
+      <Header cantCart={cantProductsOnCart} />
+      <HeaderResponsive canCart={cantProductsOnCart} />
       <Banner />
+      <OfertaDia />
+      <OfertaDestacada/>
+      <OfertaFlash/>
       <Recientes bannersInfo={bannersInfo} className="w-100" />
       <Promociones bannersInfo={bannersInfo} />
       <Vendidos bannersInfo={bannersInfo} />
@@ -139,9 +164,9 @@ const Home = (props) => {
         isOpen={modalPopup}
 
       >
-        <ModalHeader toggle={()=>setModalPopup(false)}></ModalHeader>
+        <ModalHeader toggle={() => setModalPopup(false)}></ModalHeader>
         <ModalBody>
-          <Popup handleModalData={handleModalData} datosPopup={datosPopup} closeModalPopup={()=>setModalPopup(false)}/>
+          <Popup handleModalData={handleModalData} datosPopup={datosPopup} closeModalPopup={() => setModalPopup(false)} />
         </ModalBody>
       </Modal>
     </div>
