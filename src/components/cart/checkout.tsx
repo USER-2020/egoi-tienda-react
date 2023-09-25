@@ -164,7 +164,7 @@ function AddressCart() {
         coupon: cupon,
         discount: discountedProducts,
         affiliation: "Egoi",
-        item_brand:"",
+        item_brand: "",
         item_category: "",
         item_variant: product.variant,
         price: product.unit_price,
@@ -1572,7 +1572,11 @@ function AddressCart() {
                   value={cupon}
                   onChange={(event) => setCupon(event.target.value)}
                 />
-                <a href="#" onClick={() => aplicarCupon()}>Aplicar cupón</a>
+                {discountedProducts === 0 ? (
+                  <a href="#" onClick={(e) => { e.preventDefault(); aplicarCupon() }}>Aplicar cupón</a>
+                ) : (
+                  <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray' }}>Aplicar cupón</a>
+                )}
               </div>
               <div className="totalCash">
                 <h6>Total a pagar</h6>
@@ -1722,6 +1726,7 @@ function AddressCart() {
               </div>
             </Card>
           ))}
+          {discountedProducts === 0 && (          
           <div className="containerCupon">
             <input type="text"
               placeholder='¿Tienes un cupón?'
@@ -1731,6 +1736,7 @@ function AddressCart() {
               <a href="#" onClick={() => aplicarCupon()}>Aplicar cupón</a>
             </div>
           </div>
+          )}
           <div className="factura">
             <p className='title'>Factura</p>
             <span className="subtotal">
