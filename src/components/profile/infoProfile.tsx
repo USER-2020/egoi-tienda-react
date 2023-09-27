@@ -185,12 +185,14 @@ function InfoProfile() {
             }}>
               <button type='submit' style={{
                 textDecoration: 'none',
+                alignContent:'center',
+                justifyContent:'center',
                 color: 'white',
+                textAlign:'center',
                 alignSelf: 'center',
                 backgroundColor: '#FC5241',
                 width: '100%',
                 height: '48px',
-                padding: '16px',
                 cursor: 'pointer',
                 borderRadius: '32px',
                 border: 'none'
