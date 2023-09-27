@@ -124,7 +124,7 @@ function TicketSuport({ closemodalAndOpenOtherModal, setIdTicket, setPriorityTic
         </div>
       </div>
       <div className="opcionTicketSupportAddNew">
-        <a href="#" onClick={() => setModalAddNewTicket(true)}>Añadir nuevo ticket</a>
+        <a href="#" onClick={(e) => {e.preventDefault(); setModalAddNewTicket(true)}}>Añadir nuevo ticket</a>
       </div>
       {/* Modal de cancelar ticket de soporte */}
       <Modal

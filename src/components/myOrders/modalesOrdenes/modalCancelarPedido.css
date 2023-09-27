@@ -50,4 +50,6 @@
     padding: 10px;
     justify-content: center;
     align-self: center;
+    text-wrap: nowrap;
+    white-space: nowrap; /* Evita saltos de línea en el texto */
 }
