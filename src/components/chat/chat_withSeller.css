@@ -1,0 +1,19 @@
+.noChatListado {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.noChatListadoParrafo p {
+    color: #FC5241;
+    font-weight: 600;
+}
+
+.noChatListado .noChatListadoParrafo {
+    width: 200px;
+}
