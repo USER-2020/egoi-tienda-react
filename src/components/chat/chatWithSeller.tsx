@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Input } from 'reactstrap';
 import { addMessage, allChatsSellers, getSellerChatByStoreId } from '../../services/ordenes';
 import { getCurrentUser } from './../../helpers/Utils';
+import './chat_withSeller.css';
 
 function ChatWithSeller() {
   const currentUser = getCurrentUser();
@@ -64,27 +65,54 @@ function ChatWithSeller() {
     if (statusMessage === 'Sent') {
       // showChatById(dataChatById); // Comentado ya que no es necesario llamar a la función aquí
     }
+
+    // console.log(dataChats);
   }, [dataChatById, statusMessage]);
 
   return (
     <>
       <div className="listContactsProveedores">
+
         <Card>
-          <h2>Chats</h2>
-          <ul>
-            {dataChats.unique_shops &&
-              dataChats.unique_shops.map((item, index) => (
-                <li key={index}
-                  className={index === activeIndex ? 'active' : ''}
-                  onClick={() => handleItemClick(index)}>
-                  <img src={baseUrlImage + item.shop.image} alt={item.shop.image} width={30} style={{ borderRadius: '10px' }} />
-                  <a href="#" onClick={() => showChatById(item.shop.id)}>
-                    {item.shop.name}
-                  </a>
-                </li>
-              ))}
-          </ul>
+
+          {dataChats.unique_shops && dataChats.unique_shops.length > 0 ? (
+            <>
+              <h2>Chats</h2>
+              <ul>
+                {dataChats.unique_shops &&
+                  dataChats.unique_shops.map((item, index) => (
+                    <li key={index}
+                      className={index === activeIndex ? 'active' : ''}
+                      onClick={() => handleItemClick(index)}>
+                      <img src={baseUrlImage + item.shop.image} alt={item.shop.image} width={30} style={{ borderRadius: '10px' }} />
+                      <a href="#" onClick={(e) => { e.preventDefault(); showChatById(item.shop.id) }}>
+                        {item.shop.name}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </>
+          ) : (
+            <>
+
+              <div className='noChatListado'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="#FC5241" className="bi bi-chat-left-dots" viewBox="0 0 16 16">
+                  <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                  <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                </svg>
+                <div className="noChatListadoParrafo">
+                  <p>No tienes ninguna conversación pendiente
+                  </p>
+                </div>
+              </div>
+
+
+            </>
+
+          )}
+
         </Card>
+
       </div>
 
       {showChat && Array.isArray(dataChatById) && (

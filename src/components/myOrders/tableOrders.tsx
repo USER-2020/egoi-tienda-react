@@ -43,6 +43,8 @@ function TableOrders({ setOrderDetalleId }) {
                 return 'bg-success'; // Clase de Bootstrap para el color verde
             case 'canceled':
                 return 'bg-danger'; // Clase de Bootstrap para el color rojo
+            case 'failed':
+                return 'bg-danger'; // Clase de Bootstrap para el color rojo
             case 'pending':
                 return 'bg-warning'; // Clase de Bootstrap para el color amarillo
             case 'processing':
@@ -60,7 +62,7 @@ function TableOrders({ setOrderDetalleId }) {
     useEffect(() => {
         if (token) {
             getAllPedidos();
-
+            // console.log(token);
         }
 
     }, [token])
@@ -91,13 +93,14 @@ function TableOrders({ setOrderDetalleId }) {
                                         fill={
                                             item.order_status === 'confirmed' ? 'green' :
                                                 item.order_status === 'canceled' ? 'red' :
-                                                    item.order_status === 'pending' ? 'yellow' :
-                                                        item.order_status === 'processing' ? '#009ddd' :
-                                                            item.order_status === 'returned' ? '#ff0048' :
-                                                                item.order_status === 'failed' ? 'red' :
-                                                                    item.order_status === 'delivered' ? 'green' :
-                                                                        item.order_status === 'out_for_delivery' ? 'green' :
-                                                                            'white'
+                                                    item.order_status === 'failed' ? 'red' :
+                                                        item.order_status === 'pending' ? 'yellow' :
+                                                            item.order_status === 'processing' ? '#009ddd' :
+                                                                item.order_status === 'returned' ? '#ff0048' :
+                                                                    item.order_status === 'failed' ? 'red' :
+                                                                        item.order_status === 'delivered' ? 'green' :
+                                                                            item.order_status === 'out_for_delivery' ? 'green' :
+                                                                                'white'
                                         }
 
                                     />
@@ -105,10 +108,11 @@ function TableOrders({ setOrderDetalleId }) {
                                     {
                                         item.order_status === 'confirmed' ? 'Confirmado' : '' ||
                                             item.order_status === 'canceled' ? 'Cancelado' : '' ||
-                                                item.order_status === 'pending' ? 'Pendiente' : '' ||
-                                                    item.order_status === 'processing' ? 'Procesando' : '' ||
-                                                        item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
-                                                            item.order_status === 'delivered' ? 'Enviado' : ''
+                                                item.order_status === 'failed' ? 'Cancelado' : '' ||
+                                                    item.order_status === 'pending' ? 'Pendiente' : '' ||
+                                                        item.order_status === 'processing' ? 'Procesando' : '' ||
+                                                            item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
+                                                                item.order_status === 'delivered' ? 'Enviado' : ''
                                     }
                                 </td>
                                 <td>${item.order_amount.toLocaleString()}</td>
@@ -158,10 +162,11 @@ function TableOrders({ setOrderDetalleId }) {
                                         {
                                             item.order_status === 'confirmed' ? 'Confirmado' : '' ||
                                                 item.order_status === 'canceled' ? 'Cancelado' : '' ||
-                                                    item.order_status === 'pending' ? 'Pendiente' : '' ||
-                                                        item.order_status === 'processing' ? 'Procesando' : '' ||
-                                                            item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
-                                                                item.order_status === 'delivered' ? 'Enviado' : ''
+                                                    item.order_status === 'failed' ? 'Cancelado' : '' ||
+                                                        item.order_status === 'pending' ? 'Pendiente' : '' ||
+                                                            item.order_status === 'processing' ? 'Procesando' : '' ||
+                                                                item.order_status === 'out_for_delivery' ? 'Enviando' : '' ||
+                                                                    item.order_status === 'delivered' ? 'Enviado' : ''
                                         }</span>
                                 </td>
                                 <td>${item.order_amount.toLocaleString()}</td>
@@ -211,7 +216,7 @@ function TableOrders({ setOrderDetalleId }) {
                 isOpen={modalCancelOrder}
             >
                 <ModalBody>
-                    <ModalCancelarPedido setModalCancelarPedido={closeModalCancelOrder}/>
+                    <ModalCancelarPedido setModalCancelarPedido={closeModalCancelOrder} />
                 </ModalBody>
 
             </Modal >

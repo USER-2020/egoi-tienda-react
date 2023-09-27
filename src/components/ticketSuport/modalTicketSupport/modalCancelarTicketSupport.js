@@ -40,8 +40,8 @@ function ModalCancelarTicketSupport({ idTicket, closeModalCancelarTicket, getAll
             </div>
 
             <div className='contenedorOpcionesCancelarPedido'>
-                <a href='#' className='si' onClick={()=>deleteTicket(idTicket)}>Sí, deseo cancelar</a>
-                <a href='#' className='no'onClick={()=>closeModalCancelarTicket()}>No, deseo regresar</a>
+                <a href='#' className='si' onClick={(e)=>{e.preventDefault(); deleteTicket(idTicket)}}>Sí, deseo cancelar</a>
+                <a href='#' className='no'onClick={(e)=>{e.preventDefault(); closeModalCancelarTicket()}}>No, deseo regresar</a>
             </div>
         </div>
     )
