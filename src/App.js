@@ -33,6 +33,8 @@ const ViewMantenince = React.lazy(() => import(/* webpackChunkName: "views" */  
 const ViewAllBrands = React.lazy(() => import(/* webpackChunkName: "views" */ './views/allBrands'));
 const ViewAllCategories = React.lazy(() => import(/* webpackChunkName: "views" */ './views/allCategories'));
 const ViewThankYouForPay = React.lazy(() => import(/* webpackChunkName: "views" */ './views/thankyouforpay'));
+const ViewRecoveryPassword = React.lazy(() => import(/* webpackChunkName: "views" */ './views/passwordRecovery'));
+const ViewRecoveryPasswordNew = React.lazy(() => import(/* webpackChunkName: "views" */ './views/passwordNewPassword'));
 
 
 function DynamicTitle() {
@@ -120,6 +122,9 @@ const App = (props) => {
               <Route path="/" exact render={(props) => <ViewHome {...props} />} />
               {/* <Route path="/" exact render={(props) => <ViewMantenince {...props} />} /> */}
               <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
+              <Route path="/recovery" exact render={(props) => <ViewRecoveryPassword {...props} />} />
+              <Route path="/recoverypassword/:email/:token" exact render={(props) => <ViewRecoveryPasswordNew {...props} />} />
+              {/* <Route path="/recoverypassword" exact render={(props) => <ViewRecoveryPasswordNew {...props} />} /> */}
               <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/:category/:subcategory/:id/:tag" exact render={(props) => <ViewCategory {...props} />} />
               <Route path="/categories/products/:subcategory/:id/:subcate/:subsubcate" exact render={(props) => <ViewCategory {...props} />} />
