@@ -132,13 +132,26 @@
     width: 70%;
 }
 
-.datosPrincipales,
+/* .datosPrincipales, */
 .direccionesPedido {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
+}
+
+.datosPrincipales .cardsProductosDescripcion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.datosPrincipales .fechaPedidoNro{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .datosPrincipales .fechaPedido h6,
@@ -169,12 +182,14 @@
 
 .productoDetail {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 15px;
     border: 1px solid #A2A1A729;
     align-items: center;
     padding: 16px;
     border-radius: 24px;
+    width: 200px;
+    
 }
 
 .productoDetail .description {
@@ -1460,6 +1475,18 @@ input[placeholder="Describe tu problema...  "]::placeholder {
         border-radius: 8px;
         font-size: 10px;
         /* Para que el badge tenga bordes redondeados */
+    }
+
+    .productoDetail {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        border: 1px solid #A2A1A729;
+        align-items: center;
+        padding: 16px;
+        border-radius: 24px;
+        width: 100%;
+        
     }
 
 }

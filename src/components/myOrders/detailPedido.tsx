@@ -3,11 +3,13 @@ import '../../styles/myOrders.css';
 import { Card } from 'reactstrap';
 import { getFacturaById, getOrdenDetalleById } from '../../services/ordenes';
 import { getCurrentUser } from '../../helpers/Utils';
+import { getOrdenByGroupId } from './../../services/ordenes';
 function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
 
     const [detailOrden, setDetailOrden] = useState('');
 
     const [detalleOrden, setDetalleOrden] = useState([]);
+    const [detalleOrdenV2, setDetalleOrdenV2] = useState([]);
 
     /* Imagenes */
     const baseUrlImageThumbnail = "https://egoi.xyz/storage/app/public/product/thumbnail/";
@@ -27,6 +29,18 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
             }).catch((err) => console.log(err));
     }
 
+    const getDetalleByIdV2 = () => {
+        getOrdenByGroupId(token, orderDetalleId)
+            .then((res) => {
+
+                console.log(res.data);
+                console.log(res.data.productos);
+                console.log(res.data.id_orden[0]);
+
+                setDetalleOrdenV2(res.data);
+            }).catch((err) => console.log(err));
+    }
+
     const generateFacture = () => {
         getFacturaById(token, orderDetalleId)
             .then((res) => {
@@ -41,11 +55,68 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
             .catch((err) => console.log(err));
     };
 
+    // Calcular la suma de los precios de los productos
+    const calcularTotalPrecio = () => {
+        if (detalleOrdenV2.productos && detalleOrdenV2.productos.length > 0) {
+            // Utiliza reduce para sumar los precios de todos los productos
+            const total = detalleOrdenV2.productos.reduce((accumulator, itemP) => {
+                if (itemP.price) {
+                    // Sumar el precio del producto actual al acumulador
+                    return accumulator + itemP.price;
+                } else {
+                    return accumulator; // No hacer nada si el precio no está definido
+                }
+            }, 0); // El segundo argumento de reduce es el valor inicial del acumulador (0 en este caso)
+            return total;
+        } else {
+            return 0; // Devuelve 0 si no hay productos
+        }
+    }
+
+    //Caluclar costo de envio
+    const costoEnvio = 9900;
+
+    //Caluclar descuento
+    const calDiscount = () => {
+        if (detalleOrdenV2 && detalleOrdenV2.productos) {
+            const totalDescuento = detalleOrdenV2.productos.reduce((accumulator, item) => {
+                // Verificar si el producto tiene un descuento antes de sumarlo
+                if (item.discount && item.discount > 0) {
+                    return accumulator + item.discount;
+                } else if(item.discount_tag_valor && item.discount_tag_valor > 0 ){
+                    return accumulator + item.discount_tag_valor;
+                }else{
+                    return accumulator; // No hay descuento o no es un número
+                }
+            }, 0);
+
+            // Devolver el total de descuentos calculado
+            return totalDescuento;
+        }
+        return 0; // Devolver 0 si no hay datos disponibles
+    }
+
+    //Calcular total a pagar 
+    const calculatePayableAmount = () => {
+        let costoEnvio = 0;
+        let totalPagado = calcularTotalPrecio() - calDiscount();
+      
+        if (calcularTotalPrecio() >= 39990 && calcularTotalPrecio() <= 79990) {
+          costoEnvio = 9900;
+          totalPagado += costoEnvio;
+        }
+      
+        return totalPagado.toLocaleString('en');
+      }
+      
+
 
     useEffect(() => {
         if (token) {
             // console.log("Este es el id de la orden", orderDetalleId);
-            getDetailPedido();
+            // getDetailPedido();
+            getDetalleByIdV2();
+            console.log(orderDetalleId);
         }
     }, [])
 
@@ -55,101 +126,117 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
 
 
                 <div className="containerPedidoIzq" >
-                    {detalleOrden && detalleOrden.map((item, index) => (
-                        <>
-                            <div className="datosPrincipales">
+                    {detalleOrdenV2 && detalleOrdenV2.productos && detalleOrdenV2.productos.length > 0 && (
+                        <div className="datosPrincipales">
+                            <div className="fechaPedidoNro">
                                 <div className="nroPedido">
                                     <h6>Número de pedido</h6>
-                                    <p>{item.order_id}</p>
+                                    <p>{detalleOrdenV2.id_orden[0]}</p>
                                 </div>
 
                                 <div className="fechaPedido">
                                     <h6>Fecha de pedido</h6>
-                                    {item.created_at && (
-                                        <p>{new Date(item.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                                    {detalleOrdenV2.created_at && (
+                                        <p>{new Date(detalleOrdenV2.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                                     )}
                                 </div>
                             </div>
+
                             <div className="direccionesPedido">
                                 <div className="direccionEnv">
                                     <h6>Dirección  de envío</h6>
                                     <p>
-                                        {item.shipping_address_data.address}, {item.shipping_address_data.city}, {item.shipping_address_data.zip}
+                                        {detalleOrdenV2.shipping_address_data.address}, {detalleOrdenV2.shipping_address_data.city}, {detalleOrdenV2.shipping_address_data.zip}
                                     </p>
                                 </div>
                                 <div className="direccionCompra">
                                     <h6>Dirección de compra</h6>
-                                    <p>Calle 10 # 10 - 20,
-                                        Medellín, Antioquia
-                                    </p>
+                                    <p>Calle 10 # 10 - 20, Medellín, Antioquia</p>
                                 </div>
                             </div>
-                            <div className="productoDetail">
-                                <div className="img">
-                                    <img src={baseUrlImageThumbnail + item.product_details.thumbnail} style={{
-                                        borderRadius: '20px',
-                                        width: '175px'
-                                    }} />
 
-                                </div>
-                                <div className="description">
-                                    <h6>{item.product_details.name}
-                                    </h6>
-                                    <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: 0, color: '#171523' }}>${item.product_details.unit_price.toLocaleString('en')}</p>
-                                    <p style={{ color: '#74737B', fontSize: '16px' }}>Cantidad: {item.qty}</p>
-                                </div>
+                            <div className="cardsProductosDescripcion">
+                                {detalleOrdenV2 && detalleOrdenV2.productos && detalleOrdenV2.productos.length > 0 && detalleOrdenV2.productos.map((itemP, index) => (
+                                    <div className="productoDetail" key={index}>
+                                        <div className="img">
+                                            <img src={baseUrlImageThumbnail + itemP.detalle.thumbnail} style={{
+                                                borderRadius: '20px',
+                                                width: '175px'
+                                            }} />
+                                        </div>
+                                        <div className="description">
+                                            <h6>{itemP.detalle.name}</h6>
+                                            <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: 0, color: '#171523' }}>${itemP.price.toLocaleString('en')}</p>
+                                            <p style={{ color: '#74737B', fontSize: '16px' }}>Cantidad: {itemP.qty}</p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        </>
-                    ))}
+
+                        </div>
+                    )}
+
+
                 </div>
                 <div className="containerCardDatos">
                     <Card>
-                        {detalleOrden &&
-                            detalleOrden.map((item, index) => (
-                                <div key={index}>
-                                    <div className="articulosPedidos">
-                                        <p>Artículos</p>
-                                        <p>1</p>
-                                    </div>
-                                    <div className="subtotal">
-                                        <p>Subtotal</p>
-                                        <p>${item.price.toLocaleString('en')}</p>
-                                    </div>
-                                    <div className="impuesto">
-                                        <p>Impuesto</p>
-                                        <p>$0</p>
-                                        {/* 0 a menos que se cobre */}
-                                    </div>
-                                    <div className="Envio">
-                                        <p>Envío</p>
-                                        {item.price <= 79900 ? (
-                                            <p>{item.product_details.shipping_cost.toLocaleString('en')}</p>
-                                        ) : (
-                                            <p>$0</p>
-                                        )}
-                                        {/* Es 0 si es <= 79900 */}
-                                    </div>
-                                    <div className="descuentoProducto">
-                                        <p>Descuento</p>
-                                        <p>${item.discount.toLocaleString('en')}</p>
-                                    </div>
-                                    <div className="cuponDescuento">
-                                        <p>Cupón Descuento</p>
-                                        <p>$0</p>
-                                    </div>
-                                    <div className="totalAPagar">
-                                        <h6>Total a pagar</h6>
-                                        {item.price > 0 && item.discount > 0 && item.product_details.shipping_cost > 0 ? (
-                                            <h5>${(item.price + item.discount + item.product_details.shipping_cost).toLocaleString('en')}</h5>
-                                        ) : item.price > 0 ? (
-                                            <h5>${item.price.toLocaleString('en')}</h5>
-                                        ) : null}
-                                    </div>
-                                </div>
-                            ))}
+                        {/* {detalleOrdenV2.productos && detalleOrdenV2.productos.length > 0 &&
+                            detalleOrdenV2.productos.map((item, index) => ( */}
+                        <div >
+                            <div className="articulosPedidos">
+                                <p>Artículos</p>
+                                <p>{detalleOrdenV2 && detalleOrdenV2.productos && detalleOrdenV2.productos.length}</p>
+                            </div>
+                            <div className="subtotal">
+                                <p>Subtotal</p>
+                                <p>${calcularTotalPrecio().toLocaleString('en')}</p>
+
+                            </div>
+                            <div className="impuesto">
+                                <p>Impuesto</p>
+                                <p>$0</p>
+                                {/* 0 a menos que se cobre */}
+                            </div>
+                            <div className="Envio">
+                                <p>Envío</p>
+                                {calcularTotalPrecio() <= 79990 && calcularTotalPrecio() >= 39990 ? (
+                                    <p>${costoEnvio.toLocaleString('en')}</p>
+                                ) : (
+                                    <p>$0</p>
+                                )}
+                                {calcularTotalPrecio() <= 39990 && (
+                                    <span className='badge text-bg-success'>Paga el cliente</span>
+                                )}
+                                {/* {item.price <= 79900 && item.price >= 39990 ? (
+                                    <p>$9,900</p>
+                                ) : (
+                                    <p>$0</p>
+                               
+                                {/* Es 0 si es <= 79900 */}
+                            </div>
+                            <div className="descuentoProducto">
+                                <p>Descuento</p>
+                                {/* <p>${item.discount.toLocaleString('en')}</p> */}
+                                <p>${calDiscount().toLocaleString('en')}</p>
+                            </div>
+                            <div className="cuponDescuento">
+                                <p>Cupón Descuento</p>
+                                <p>$0</p>
+                            </div>
+                            <div className="totalAPagar">
+                                <h6>Total a pagar</h6>
+                                {/* {item.price > 0 && item.discount > 0 && item.price >= 39900 && item.price <= 79990 ? (
+                                    <h5>${(item.price + item.discount + 9900).toLocaleString('en')}</h5>
+                                ) : item.price > 0 ? (
+                                    <h5>${item.price.toLocaleString('en')}</h5>
+                                ) : null} */}
+                                <h5>${calculatePayableAmount()}</h5>
+                            </div>
+                        </div>
+                        {/* // ))} */}
                     </Card>
 
-                    
+
                     <div className="opcionesRastreoOrFacturar">
                         <a href="#" className='btn rastrear' onClick={() => handleChangueTrack()}>
                             <svg width="24" height="24" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">

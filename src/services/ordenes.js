@@ -11,6 +11,24 @@ export const getOrdenes = (token) =>
         }
     });
 
+//Traer las ordenes v2
+export const getOrdenesV2 = (token) =>
+    axios.get(`${urlBase}/customer/order/list_v2`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+//Obtener detalle de la orden por id de grupo
+export const getOrdenByGroupId = (token, idGroup) =>
+    axios.get(`${urlBase}/customer/order/list_group/${idGroup}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    })
+
 //Obtener detalles de pedido por id
 export const getOrdenDetalleById = (token, idOrden) =>
     axios.get(`${urlBase}/customer/order/details?order_id=${idOrden}`, {

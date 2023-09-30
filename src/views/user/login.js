@@ -166,6 +166,10 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               </InputGroup>
             </FormGroup>
 
+            <div style={{width:'100%', justifyContent:'center', marginBottom:'10px', display:'flex'}}>
+              <a href="/recovery"style={{textAlign:'center', alignSelf:'center', justifyContent:'center', textDecoration:'none', color:'gray'}} >¿Olvidaste tu contraseña?</a>
+            </div>
+
             <div style={{ display: "flex", flexDirection: "column"}}>
               <Button
                 style={{

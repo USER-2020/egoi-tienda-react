@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, ModalBody, Table } from 'reactstrap'
 import ModalCancelarPedido from './modalesOrdenes/modalCancelarPedido';
-import { getOrdenes } from '../../services/ordenes';
+import { getOrdenes, getOrdenesV2 } from '../../services/ordenes';
 import { getCurrentUser } from '../../helpers/Utils';
 
 /* Styles */
@@ -11,6 +11,7 @@ import './table_styles.css';
 function TableOrders({ setOrderDetalleId }) {
 
     const [ordenes, setOrdenes] = useState([]);
+    const [ordenesV2, setOrdenesV2] = useState([]);
 
 
     const currenUser = getCurrentUser();
@@ -21,6 +22,14 @@ function TableOrders({ setOrderDetalleId }) {
             .then((res) => {
                 // console.log("Estas son las ordenes", res.data);
                 setOrdenes(res.data);
+            }).catch((err) => console.log(err));
+    }
+
+    const getAllPedidosV2 = () => {
+        getOrdenesV2(token)
+            .then((res) => {
+                console.log("Estas son las ordenes", res.data);
+                setOrdenesV2(res.data);
             }).catch((err) => console.log(err));
     }
 
@@ -62,6 +71,7 @@ function TableOrders({ setOrderDetalleId }) {
     useEffect(() => {
         if (token) {
             getAllPedidos();
+            getAllPedidosV2();
             // console.log(token);
         }
 
@@ -81,10 +91,10 @@ function TableOrders({ setOrderDetalleId }) {
                         </tr>
                     </thead>
                     <tbody className='tbodyTableDesktop'>
-                        {ordenes && ordenes.slice().reverse().map((item, index) => (
+                        {ordenesV2 && ordenesV2.slice().reverse().map((item, index) => (
                             <tr key={index}>
-                                <td>{item.id}</td>
-                                <td>{new Date(item.updated_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
+                                <td>nro de pedido</td>
+                                <td>{new Date(item.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
                                 <td><svg width="20" height="20">
                                     <circle
                                         cx="8"
@@ -115,10 +125,16 @@ function TableOrders({ setOrderDetalleId }) {
                                                                 item.order_status === 'delivered' ? 'Enviado' : ''
                                     }
                                 </td>
-                                <td>${item.order_amount.toLocaleString()}</td>
+                                <td>
+                                    ${(item.total <= 79990 && item.total >= 39990) ?
+                                        (item.total + (item.total <= 79990 && item.total >= 39990 ? parseInt(item.envio) : 0)).toLocaleString() :
+                                        item.total.toLocaleString()}
+                                </td>
+
+
                                 <td>
                                     <div className="opcionesDetallePedido">
-                                        <a href="#" className=" btn btnVerDetallesPedido" onClick={() => sendId(item.id)}>
+                                        <a href="#" className=" btn btnVerDetallesPedido" onClick={(e) => { e.preventDefault(); sendId(item.order_group_id) }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
                                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
                                                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
@@ -133,7 +149,7 @@ function TableOrders({ setOrderDetalleId }) {
                                         </a>
                                     </div>
                                     <div className="opcionesDetallePedidoResponsive">
-                                        <a href="#" className=" btn btnVerDetallesPedido" onClick={() => sendId(item.id)}>
+                                        <a href="#" className=" btn btnVerDetallesPedido" onClick={(e) => { e.preventDefault(); sendId(item.order_group_id) }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-fill" viewBox="0 0 16 16">
                                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
                                                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
@@ -153,10 +169,10 @@ function TableOrders({ setOrderDetalleId }) {
                         ))}
                     </tbody>
                     <tbody className='tbodyTableResponsive'>
-                        {ordenes && ordenes.slice().reverse().map((item, index) => (
+                        {ordenesV2 && ordenesV2.slice().reverse().map((item, index) => (
                             <tr key={index}>
                                 <td>{item.id}</td>
-                                <td>{new Date(item.updated_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
+                                <td>{new Date(item.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
                                 <td>
                                     <span className={`badge text-${getStatusColorClass(item.order_status)}`}>
                                         {
@@ -169,7 +185,13 @@ function TableOrders({ setOrderDetalleId }) {
                                                                     item.order_status === 'delivered' ? 'Enviado' : ''
                                         }</span>
                                 </td>
-                                <td>${item.order_amount.toLocaleString()}</td>
+                                <td>
+                                    ${(item.total <= 79990 && item.total >= 39990) ?
+                                        (item.total + (item.total <= 79990 && item.total >= 39990 ? parseInt(item.envio) : 0)).toLocaleString() :
+                                        item.total.toLocaleString()}
+                                </td>
+
+
                                 <td>
                                     <div className="opcionesDetallePedido">
                                         <a href="#" className=" btn btnVerDetallesPedido" onClick={() => sendId(item.id)}>
