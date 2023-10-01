@@ -61,7 +61,7 @@ const PasswordNewPasswordComponent = () => {
     }
 
     const onSubmit = (data) => {
-        console.log(data);
+        console.log("Estos don los datos que se van a subir", data);
         resetPassword(email, token, password, confirmPassword)
             .then((res) => {
                 console.log(res);
