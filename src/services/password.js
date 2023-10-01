@@ -14,7 +14,7 @@ export const forgetPassword = (email) =>
     });
 
 //Enviar nuevas contrasenias
-export const resetPassword = ({email, token, password, password2 }) =>
+export const resetPassword = (email, token, password, password2 ) =>
     axios.put(`${baseUrl}/auth/reset-password`, {
         email:email,
         token: token,
