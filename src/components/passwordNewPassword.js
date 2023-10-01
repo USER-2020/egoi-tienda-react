@@ -4,7 +4,7 @@ import { Eye, EyeSlash, X } from "react-bootstrap-icons";
 import PhoneInput from 'react-phone-input-2'
 import es from "react-phone-input-2/lang/es.json";
 import Swal from 'sweetalert2';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { resetPassword } from '../services/password';
 
 
@@ -17,6 +17,8 @@ const PasswordNewPasswordComponent = () => {
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const history = useHistory();
 
     const toggleShowPassword = () => {
         setShowPassword((prevState) => !prevState);
@@ -70,6 +72,10 @@ const PasswordNewPasswordComponent = () => {
                     title: 'Actualización exitosa',
                     text: 'Has actualizado correctamente tu contraseña, ya puedes iniciar sesión de nuevo',
                     confirmButtonColor: '#fc5241',
+                    willClose: () => {
+                        // Redirige a la página deseada después de que se cierre el modal
+                        history.push('/') // Reemplaza con la URL que desees
+                    }
                 });
                 limpiarCampos();
                 
