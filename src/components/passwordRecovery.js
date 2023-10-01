@@ -38,19 +38,19 @@ const PasswordRecoveryComponent = () => {
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-10">
                     <h2 class="h3 mb-4" style={{ fontSize: '40px' }}>¿Olvidaste tú contraseña?</h2>
-                    <p class="font-size-md" style={{ fontSize: '20px' }}>Cambia tu contraseña en tres sencillos pasos. Esto le ayudará a mantener segura su nueva contraseña.
+                    <p class="font-size-md" style={{ fontSize: '20px' }}>Cambia tú contraseña en tres sencillos pasos. Esto te ayudará a mantener segura tú nueva contraseña.
                         .</p>
                     <ol class="list-unstyled font-size-md">
                         <li style={{ fontSize: '20px' }}><span
-                            class="text-primary mr-2" style={{ fontSize: '20px' }}>1.</span >Introduzca su dirección de correo electrónico
+                            class="text-primary mr-2" style={{ fontSize: '20px' }}>1.</span >Introduce tú dirección de correo electrónico
                             .
                         </li>
                         <li style={{ fontSize: '20px' }}><span
-                            class="text-primary mr-2" style={{ fontSize: '20px' }}>2.</span >Le enviaremos por correo electrónico un código temporal
+                            class="text-primary mr-2" style={{ fontSize: '20px' }}>2.</span >Te enviaremos por correo electrónico un código temporal
                             .
                         </li>
                         <li style={{ fontSize: '20px' }}><span
-                            class="text-primary mr-2" style={{ fontSize: '20px' }}>3.</span >Utilice el código para cambiar su contraseña en nuestro sitio web seguro
+                            class="text-primary mr-2" style={{ fontSize: '20px' }}>3.</span >Utiliza el código para cambiar tú contraseña en nuestro sitio web seguro
                             .
                         </li>
                     </ol>
@@ -60,7 +60,7 @@ const PasswordRecoveryComponent = () => {
                             method="post">
                             <input type="hidden" name="_token" value="opXWES6poIfNipFAiBxrZkxVqr4gXSrrbLSJm2q6" />
                             <div class="form-group">
-                                <label for="recover-email">Introduzca su dirección de correo electrónico</label>
+                                <label for="recover-email">Introduce tú dirección de correo electrónico</label>
                                 <input class="form-control"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -69,7 +69,7 @@ const PasswordRecoveryComponent = () => {
                                     id="recover-email"
                                     required style={{ borderRadius: '32px' }} />
                                 <div
-                                    class="invalid-feedback">Indique una dirección de correo electrónico válida
+                                    class="invalid-feedback">Indica una dirección de correo electrónico válida
                                     .
                                 </div>
                             </div>
