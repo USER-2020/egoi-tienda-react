@@ -38,20 +38,16 @@ const PasswordRecoveryComponent = () => {
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-10">
                     <h2 class="h3 mb-4" style={{ fontSize: '40px' }}>¿Olvidaste tú contraseña?</h2>
-                    <p class="font-size-md" style={{ fontSize: '20px' }}>Cambia tú contraseña en tres sencillos pasos. Esto te ayudará a mantener segura tú nueva contraseña.
-                        .</p>
+                    <p class="font-size-md" style={{ fontSize: '20px' }}>Cambia tú contraseña en tres sencillos pasos. Esto te ayudará a mantener segura tú nueva contraseña.</p>
                     <ol class="list-unstyled font-size-md">
                         <li style={{ fontSize: '20px' }}><span
-                            class="text-primary mr-2" style={{ fontSize: '20px' }}>1.</span >Introduce tú dirección de correo electrónico
-                            .
+                            class="text-primary mr-2" style={{ fontSize: '20px' }}></span ><strong>1. </strong> Introduce tú dirección de correo electrónico.
                         </li>
                         <li style={{ fontSize: '20px' }}><span
-                            class="text-primary mr-2" style={{ fontSize: '20px' }}>2.</span >Te enviaremos por correo electrónico un código temporal
-                            .
+                            class="text-primary mr-2" style={{ fontSize: '20px' }}></span ><strong>2. </strong> Te enviaremos por correo electrónico un código temporal.
                         </li>
                         <li style={{ fontSize: '20px' }}><span
-                            class="text-primary mr-2" style={{ fontSize: '20px' }}>3.</span >Utiliza el código para cambiar tú contraseña en nuestro sitio web seguro
-                            .
+                            class="text-primary mr-2" style={{ fontSize: '20px' }}></span ><strong>3. </strong> Utiliza el código para cambiar tú contraseña en nuestro sitio web seguro.
                         </li>
                     </ol>
                     <div class="card py-2 mt-4">
