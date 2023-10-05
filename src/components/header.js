@@ -252,7 +252,7 @@ const Header = ({ cantCart }) => {
 
 
   const handleAdminUser = () => {
-    history.push(`${myorders}`);
+    history.push(`${myorders}?activeOption=MisPedidos&selectedOption=Mis%20pedidos`);
   }
 
   const handleLogout = () => {

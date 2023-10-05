@@ -4,6 +4,8 @@ import { Card } from 'reactstrap';
 import { getFacturaById, getOrdenDetalleById } from '../../services/ordenes';
 import { getCurrentUser } from '../../helpers/Utils';
 import { getOrdenByGroupId } from './../../services/ordenes';
+import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
 
     const [detailOrden, setDetailOrden] = useState('');
@@ -18,8 +20,18 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
     const currenUSer = getCurrentUser();
     const token = currenUSer.token;
 
+    const history = useHistory();
+    const location = useLocation();
+   
+
     const handleChangueTrack = () => {
         // e.preventDefault();
+        const searchParams = new URLSearchParams(location.search);
+        const activeOption = searchParams.get('activeOption');
+        const selectedOption = searchParams.get('selectedOption');
+
+        // Cambiar el pathname y agregar parámetros a la ruta
+        // history.push(`/myOrders?activeOption=RastreaPedido&selectedOption=Rastrear%20pedido`);
         closeDetailOpenTrack();
     }
     const getDetailPedido = () => {
@@ -118,8 +130,13 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
             // getDetailPedido();
             getDetalleByIdV2();
             console.log(orderDetalleId);
+
         }
-    }, [])
+    }, []);
+
+
+
+
 
     return (
         <div className='containerDetalleAndCard'>
