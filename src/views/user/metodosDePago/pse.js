@@ -8,6 +8,7 @@ import { makePay } from '../../../services/metodosDePago';
 import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 import ModalProcesandoPago from './modalProcesandoPago';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose}) {
 
@@ -21,6 +22,8 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
 
     //Manejo de modal procesando pago
     const [succesfulPayment, setSuccesfulPayment] = useState(false);
+
+    const history = useHistory();
 
     
 
@@ -74,7 +77,10 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     }
 
     const openWindowPSExternal = (direccion_url_pse) => {
-        window.open(direccion_url_pse, "_blank");
+        // window.open(direccion_url_pse, "_blank");
+        // window.open(direccion_url_pse);
+        window.location.href = direccion_url_pse;
+        // history.push(direccion_url_pse);
     }
 
     const handleSubmitOrderPaymentCard = () => {
@@ -171,12 +177,14 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                 amount: numericValue, //valor de la compra
                 ipAddress: ipAddress, //ip del cliente
                 description: descriptionOrder, //Descripción del producto adquirido, el motivo del pago. Ej. - "Celular Xiaomi Redmi Note 11S 128gb 6gb Ram Original Global Blue Version" (descripción de un producto en el marketplace).
-                callback_url: "https://egoi.xyz/admin/auth/login", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
+                callback_url: "https://egoi.com.co/congrats", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
                 address_id: idAddress, // id de la direccion
                 billing_address_id: idAddress, // id de la direccion
                 coupon_code: cuponCode, //codigo del cupon
                 coupon_discount: cuponOffSale, //el decuento que te da el cupon 
-                order_note: dataOrderAddress[0].local_description// como llegar infor traida de la direccion seleccionada por Id
+                order_note: dataOrderAddress[0].local_description,// como llegar infor traida de la direccion seleccionada por Id
+                plataforma: 'Web',//Plataforma desde que se hace la transaccion
+                tipo_pago: 'PSE' //tipo de pago registrado
             }
 
 
@@ -234,12 +242,12 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                 let direccion_url_pse = res.data.data.MpTransactionId.responsePayMp.transaction_details.external_resource_url;
                 if (direccion_url_pse !== null) {
                     openWindowPSExternal(direccion_url_pse);
+                    console.log("El pago se registro");
+                    // succesfulPayment = true;
+                    setModalProcesoPagoClose();
+                    // setModalPurchaseSuccess();
+                    setOk();
                 }
-                console.log("El pago se registro");
-                // succesfulPayment = true;
-                setModalProcesoPagoClose();
-                setModalPurchaseSuccess();
-                setOk();
 
             }).catch((err) => {
                 console.log(err);
@@ -352,7 +360,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                                 </FormGroup>
                                 <FormGroup>
                                     <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "60%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={handleSubmitOrderPaymentCard}>Registrar pago</a>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "60%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={(e)=> {e.preventDefault(); handleSubmitOrderPaymentCard()}}>Registrar pago</a>
                                     </div>
                                 </FormGroup>
 

@@ -21,7 +21,7 @@ function SuccessPurchase() {
             </div>
             <div className='containerSuccessOptions'>
                 <a href='/' className='btn btnIrhome'>Ir a comprar</a>
-                <a href='/myOrders' className='btn btnIrpedidos'>Comprobar los pedidos</a>
+                <a href='/myorders?activeOption=MisPedidos&selectedOption=Mis%20pedidos' className='btn btnIrpedidos'>Comprobar los pedidos</a>
             </div>
         </div>
     )

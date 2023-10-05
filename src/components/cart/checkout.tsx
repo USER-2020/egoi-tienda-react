@@ -537,17 +537,17 @@ function AddressCart() {
       }
       if (index === 2) {
         // console.log(index);
-        // setModalPse(true);
+        setModalPse(true);
         // setModalMantenimientoPSE(true);
         // setBotonDeshabilitado(true);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Estamos presentando fallos en los pagos por PSE, por favor intenta con otro medio de pago',
-          confirmButtonColor: '#FC5241',
-          confirmButtonText: 'Cancelar'
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Oops...',
+        //   text: 'Estamos presentando fallos en los pagos por PSE, por favor intenta con otro medio de pago',
+        //   confirmButtonColor: '#FC5241',
+        //   confirmButtonText: 'Cancelar'
 
-        });
+        // });
       }
       if (index === 3) {
         // console.log(index);

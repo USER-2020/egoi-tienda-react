@@ -8,7 +8,7 @@ export const searchPath = `${adminRoot}/#`;
 export const addCart = '/detailCart';
 export const thankYouForPay = '/congrats';
 export const checkout = '/checkout';
-export const myorders = '/myOrders';
+export const myorders = '/myorders';
 
 // export const currentUser = {
 //     id: 1,
