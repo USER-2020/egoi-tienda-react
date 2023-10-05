@@ -72,8 +72,9 @@ function TableOrders({ setOrderDetalleId }) {
         if (token) {
             getAllPedidos();
             getAllPedidosV2();
-            // console.log(token);
+            console.log(token);
         }
+    
 
     }, [token])
     return (
