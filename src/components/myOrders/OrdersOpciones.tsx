@@ -515,7 +515,7 @@ function Orders(props) {
                                     <DetailTicketSupport idTicket={idTicket} status={statusTicket} priority={priorityTicket} />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
-                                    <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
+                                    <a href="#" onClick={(e) => {e.preventDefault(); setModalMenuOrders(true)}}>Menú de opciones</a>
                                 </div>
                             </div>
                         )}
