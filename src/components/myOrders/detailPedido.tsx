@@ -221,7 +221,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                     <p>${costoEnvio.toLocaleString('en')}</p>
                                 )}
                                 {calcularTotalPrecio() < 39990 && (
-                                    <span className='badge text-bg-success'>Paga el cliente</span>
+                                    <span className='badge text-bg-success' style={{height: '20px', alignSelf:'center', justifyItems:'center', marginBottom:'10px'}}>Paga el cliente</span>
                                 )}
                                 {calcularTotalPrecio() >= 79990 && calcularTotalPrecio() <= 1999000 && (
                                     <p>${(costoEnvio - 9900).toLocaleString('en')}</p>
