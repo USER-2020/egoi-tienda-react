@@ -75,7 +75,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
             const total = detalleOrdenV2.productos.reduce((accumulator, itemP) => {
                 if (itemP.price) {
                     // Sumar el precio del producto actual al acumulador
-                    return accumulator + itemP.price;
+                    return accumulator + (itemP.price * itemP.qty);
                 } else {
                     return accumulator; // No hacer nada si el precio no está definido
                 }
