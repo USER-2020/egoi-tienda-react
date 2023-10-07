@@ -716,7 +716,7 @@ input[type="checkbox"]:checked {
   .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant {
     display: flex;
     flex-direction: row;
-    width: 250px;
+    width: 230px;
     background-color: #A2A1A729;
     border-radius: 32px;
     margin-bottom: 10px;
@@ -733,7 +733,6 @@ input[type="checkbox"]:checked {
 
     border: none;
     margin-left: 0px;
-    width: 20px;
     font-weight: 700;
     margin-bottom: 0;
     align-self: center;
