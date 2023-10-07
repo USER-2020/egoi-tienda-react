@@ -30,6 +30,20 @@ export const addProductsCart = (id, quantity, token) =>
         }
     });
 
+//Update quantity
+export const updateQuantityCart = (qty, id, token) => 
+    axios.put(`${baseUrl}/cart/update`, {
+        
+        key: id,
+        quantity: qty
+    },{
+
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+
 //Eliminar item del carrito de compra
 export const deleteItemCart = (key, token) => 
     axios.delete(`${baseUrl}/cart/remove`, {

@@ -24,6 +24,36 @@
   align-items: center;
 }
 
+.cant {
+  display: flex;
+  background-color: rgba(162, 161, 167, 0.16);
+  width: 300px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 28px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 32px;
+}
+
+.cant button {
+  border: none;
+  background-color: transparent;
+}
+
+.cant button svg path {
+  fill: #FC5241;
+}
+
+.cant input[type="number"] {
+  width: 40px;
+  background-color: transparent;
+  border: none;
+  border-radius: 32px;
+}
+
 .containerTableProducts .noProductsOnCart {
   display: flex;
   flex-direction: column;
@@ -85,18 +115,43 @@
   text-align: end;
   display: flex;
   justify-content: end;
+  background-color: #A2A1A729;
+  border-radius: 16px;
 
+}
+
+.caracteristicaCantidad button {
+  border: none;
+  background-color: transparent;
+}
+
+.caracteristicaCantidad button svg path {
+  fill: #FC5241;
+}
+
+.caracteristicaCantidad input[type="number"] {
+  width: 40px;
+  background-color: transparent;
+  border: none;
+  border-radius: 32px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
 }
 
 .containerTableProducts .card .caracteristicaCantidad input {
   width: 40px;
   border: none;
   border-radius: 32px;
-  background-color: #A2A1A729;
-  text-align: end;
+  background-color: transparent;
+  text-align: center;
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: center;
 
 
 }
@@ -613,6 +668,7 @@ input[type="checkbox"]:checked {
     display: flex;
     flex-direction: row;
     width: 30%;
+    height: 10px;
     justify-content: end;
     padding: 5px;
   }
@@ -660,7 +716,7 @@ input[type="checkbox"]:checked {
   .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant {
     display: flex;
     flex-direction: row;
-    width: 150px;
+    width: 250px;
     background-color: #A2A1A729;
     border-radius: 32px;
     margin-bottom: 10px;
