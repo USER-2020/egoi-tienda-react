@@ -15,6 +15,8 @@ import start from '../../assets/egoi_icons/star-fill.svg';
 import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
 import { aplyCupon } from '../../services/cupon';
 import { ThreeCircles } from 'react-loader-spinner';
+import axios from 'axios';
+import { updateQuantityCart } from './../../services/cart';
 function DetailCart({ setCantCart }) {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,6 +30,7 @@ function DetailCart({ setCantCart }) {
   const [productsCart, setProductsCart] = useState([]);
   const [costoEnvio, setCostoEnvio] = useState(0);
   const [totalAPagar, setTotalAPagar] = useState("");
+  const [quantity, setQuantity] = useState();
 
   const [cupon, setCupon] = useState("");
   const [discountCoupon, setDiscountCoupon] = useState("");
@@ -84,6 +87,58 @@ function DetailCart({ setCantCart }) {
     }
 
   };
+
+  /* Buttons of the quantity */
+
+  // Función asincrónica para actualizar la cantidad en el carrito utilizando Axios
+  async function updateQuantity(productId, newQuantity, token) {
+    updateQuantityCart(productId, newQuantity, token)
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => console.log(err));
+    // try {
+    //   // Realiza una solicitud PUT para actualizar la cantidad en el servidor
+    //   const response = await axios.put(`/api/cart/${productId}`, { quantity: newQuantity });
+
+    //   // Verifica si la solicitud se completó con éxito (código de estado 200)
+    //   if (response.status === 200) {
+    //     // La actualización se completó con éxito, puedes manejar la respuesta si es necesario
+    //     console.log(`Actualización exitosa para el producto ${productId} en el carrito`);
+    //   } else {
+    //     // Manejo de errores si la solicitud no devuelve el código de estado esperado
+    //     console.error('Error en la solicitud de actualización:', response.statusText);
+    //   }
+    // } catch (error) {
+    //   // Manejo de errores si ocurre algún problema en la solicitud
+    //   console.error('Error al realizar la solicitud de actualización:', error);
+    //   throw error; // Puedes relanzar el error para manejarlo en un nivel superior si es necesario
+    // }
+  }
+
+  const handleIncrement = (quantityUPD, idCant) => {
+    setQuantity(quantityUPD + 1);
+    // updateQuantity(quantity, idCant, token);
+    updateQuantityCart(quantityUPD + 1, idCant, token);
+    // getAllProductsByCart();
+  };
+
+  const handleDecrement = (quantityUPD, idCant) => {
+    if (quantityUPD > 0) {
+      setQuantity(quantityUPD - 1);
+      // updateQuantity(quantity, idCant, token);
+      updateQuantityCart(quantityUPD - 1, idCant, token);
+      // getAllProductsByCart();
+    }
+  }
+
+  const handleQuantity = (e) => {
+    const value = (e.target.value);
+    // getAllProductsByCart();
+    setQuantity(value);
+
+    // console.log("quantity: ", value);
+  }
+  /*  */
 
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
@@ -334,7 +389,9 @@ function DetailCart({ setCantCart }) {
 
     getAllProductsByCart();
 
-  }, []);
+  }, [quantity]);
+
+
 
   return (
     <>
@@ -414,7 +471,22 @@ function DetailCart({ setCantCart }) {
                         <div className="cant">
                           <p>Cantidad:</p>
                           {/* <input type="number" value={products.quantity} disabled /> */}
+                          {products.quantity >= 2 && (
+
+                            <button className='btnIzq' onClick={() => { setQuantity(products.quantity); handleDecrement(products.quantity, products.id); getAllProductsByCart() }}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-dash" viewBox="0 0 16 16">
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                              </svg>
+                            </button>
+                          )}
                           <h5>{products.quantity}</h5>
+
+                          <button className='btnDer' onClick={() => { setQuantity(products.quantity); handleIncrement(products.quantity, products.id); getAllProductsByCart() }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                            </svg>
+                          </button>
+
                         </div>
                       </div>
                     </div>
@@ -514,7 +586,26 @@ function DetailCart({ setCantCart }) {
                       )}
                     </div>
                     <div className="caracteristicaCantidad">
-                      <input type="number" value={products.quantity} disabled />
+                      {products.quantity >= 2 && (
+
+                        <button className='btnIzq' onClick={() => { setQuantity(products.quantity); handleDecrement(products.quantity, products.id); getAllProductsByCart() }}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-dash" viewBox="0 0 16 16">
+                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                          </svg>
+                        </button>
+                      )}
+
+                      <input type="number"
+                        value={products.quantity}
+                        onChange={(e) => handleQuantity(e.target.value)}
+                        inputMode="none" // Esto desactivará los botones de incremento y decremento
+                        disabled />
+
+                      <button className='btnDer' onClick={() => { setQuantity(products.quantity); handleIncrement(products.quantity, products.id); getAllProductsByCart() }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                        </svg>
+                      </button>
                     </div>
                     <div className="caracteristicaPrecioTotal">
                       {products.discount === 0 && products.discount_tag === 0 && (
@@ -628,7 +719,7 @@ function DetailCart({ setCantCart }) {
                   {discountedProducts === 0 ? (
                     <a href="#" onClick={(e) => { e.preventDefault(); aplicarCupon() }}>Aplicar cupón</a>
                   ) : (
-                    <a href="#" style={{pointerEvents: 'none', backgroundColor:'gray'}}>Aplicar cupón</a>
+                    <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray' }}>Aplicar cupón</a>
                   )}
                 </div>
                 <div className="totalCash">
