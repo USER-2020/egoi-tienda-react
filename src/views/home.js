@@ -43,6 +43,7 @@ import { getOfferHigligth, getOfferOfDay } from "../services/ofertas";
 import OfertaDia from "../components/home/ofertaDia";
 import OfertaDestacada from "../components/home/ofertaDestacada";
 import OfertaFlash from "../components/home/ofertaFlash";
+import { getUserProfileInfo } from "../services/ordenes";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +53,7 @@ const Home = (props) => {
   const [bannersInfo, setBannersInfo] = useState([]);
 
   const [datosPopup, setDatosPopup] = useState('');
-  
+
 
   const currenUser = getCurrentUser();
 
@@ -60,6 +61,8 @@ const Home = (props) => {
 
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+  //Info de perfil
+  const [detailInfoProfile, setDetailInfoProfile] = useState('');
 
 
   const toggleLogin = () => {
@@ -109,8 +112,17 @@ const Home = (props) => {
         const numberOfProducts = productsOncart.length;
         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
         setCantProductsOnCart(numberOfProducts);
+        getAllInfoPerfil();
 
+      }).catch((err) => console.log(err));
 
+  }
+
+  const getAllInfoPerfil = () => {
+    getUserProfileInfo(token)
+      .then((res) => {
+        console.log("Info del cliente", res.data.f_name);
+        setDetailInfoProfile(res.data);
       }).catch((err) => console.log(err));
   }
 
@@ -145,12 +157,12 @@ const Home = (props) => {
     // <Nav/>
     <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header cantCart={cantProductsOnCart} />
-      <HeaderResponsive canCart={cantProductsOnCart} />
+      <Header cantCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile}/>
+      <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile}/>
       <Banner />
       <OfertaDia />
-      <OfertaDestacada/>
-      <OfertaFlash/>
+      <OfertaDestacada />
+      <OfertaFlash />
       <Recientes bannersInfo={bannersInfo} className="w-100" />
       <Promociones bannersInfo={bannersInfo} />
       <Vendidos bannersInfo={bannersInfo} />

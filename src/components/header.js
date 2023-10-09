@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams } from 'react-router-dom';
 import {
   InputGroup,
@@ -29,8 +29,9 @@ import { useContext } from 'react';
 import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
+import { getUserProfileInfo } from "../services/ordenes";
 
-const Header = ({ cantCart }) => {
+const Header = ({ cantCart, detailInfoProfile }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -53,14 +54,16 @@ const Header = ({ cantCart }) => {
   // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
 
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-  
-  
+
+
+
+
   const { id } = useParams();
-  
+
   const currenUser = getCurrentUser();
   // const token = currenUser.token;
-  
-  
+
+
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
   const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad del menú de resultados
   const resultsContainerRef = useRef(null);
@@ -87,10 +90,10 @@ const Header = ({ cantCart }) => {
       // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       // history.push(`/products/${prevSearchProducts}`);
       // console.log(categoriesSearch[0].id);
-      
-      if(categoriesSearch.length === 0){
+
+      if (categoriesSearch.length === 0) {
         history.push(`/products/${prevSearchProducts}`);
-      }else{
+      } else {
         history.push(`/categories/${categoriesSearch[0].name}/${categoriesSearch[0].name}/${categoriesSearch[0].id}`);
       }
       setShowResults(false);
@@ -305,6 +308,7 @@ const Header = ({ cantCart }) => {
   // }, [subSubCategory]);
 
 
+
   useEffect(() => {
     //   if(isLoggedIn){
 
@@ -349,8 +353,14 @@ const Header = ({ cantCart }) => {
 
 
 
-  }, [currenUser, isLoggedIn, cantCart]);
 
+  }, [currenUser, isLoggedIn, cantCart, detailInfoProfile]);
+
+  // useEffect(()=>{
+  //   if(currenUser) {
+
+  //   }
+  // },[]);
 
   // useEffect(() => {
   //   getCantCart();
@@ -377,7 +387,7 @@ const Header = ({ cantCart }) => {
     allBrands();
   }, []);
 
-  
+
   useEffect(() => {
     // Agregar un detector de clics fuera de los resultados cuando los resultados están visibles
     if (showResults) {
@@ -429,47 +439,58 @@ const Header = ({ cantCart }) => {
 
             />
             {/* Contenedor para mostrar los resultados de búsqueda */}
-            
-              {showResults && (
-                <div className={`searchResultsContainer`} ref={resultsContainerRef}>
-                  {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
-                    <div>
-                      {products.length > 0 && (
-                        <h3>Productos</h3>
-                      )}
-                      <ul className="resultsList">
-                        {products.map((result, index) => (
-                          <li key={index} className="searchResultItem">
-                            <a href="" onClick={() => handleClickResultProduct(result.id, result.slug)}>{result.name}</a>
-                          </li>
-                        ))}
-                      </ul>
-                      {categoriesSearch.length > 0 && (
-                        <>
-                          <hr />
-                          <h3>Categorías</h3>
-                        </>
-                      )}
-                      <ul className="resultsList">
-                        {categoriesSearch.map((result, index) => (
-                          <li key={index} className="searchResultItem">
-                            <a href="" onClick={() => handleClickResultCategorie(result.name, result.id)}>{result.name}</a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : (
-                    <p>No se encontraron resultados.</p>
-                  )}
-                </div>
 
-              )}
-            
+            {showResults && (
+              <div className={`searchResultsContainer`} ref={resultsContainerRef}>
+                {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
+                  <div>
+                    {products.length > 0 && (
+                      <h3>Productos</h3>
+                    )}
+                    <ul className="resultsList">
+                      {products.map((result, index) => (
+                        <li key={index} className="searchResultItem">
+                          <a href="" onClick={() => handleClickResultProduct(result.id, result.slug)}>{result.name}</a>
+                        </li>
+                      ))}
+                    </ul>
+                    {categoriesSearch.length > 0 && (
+                      <>
+                        <hr />
+                        <h3>Categorías</h3>
+                      </>
+                    )}
+                    <ul className="resultsList">
+                      {categoriesSearch.map((result, index) => (
+                        <li key={index} className="searchResultItem">
+                          <a href="" onClick={() => handleClickResultCategorie(result.name, result.id)}>{result.name}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p>No se encontraron resultados.</p>
+                )}
+              </div>
+
+            )}
+
 
           </InputGroup>
 
         </div>
         <div className="userInteraction">
+
+          {/* Nombre de usuario */}
+          {isLoggedIn && (
+            <div style={{ marginRight: '20px' }}>
+              {detailInfoProfile && (
+                <p style={{ marginBottom: '0' }}>¡Hola, {detailInfoProfile.f_name}!</p>
+
+              )}
+
+            </div>
+          )}
           {/* Usuario Icono  */}
 
           <div className="dropdown">
@@ -559,20 +580,9 @@ const Header = ({ cantCart }) => {
           {/* Carrito de compras  */}
           <div className="dropdown">
             <button onClick={() => { goToDetailCart() }}
-              style={{ textDecoration: 'none', color: 'black', border: 'none', backgroundColor: 'inherit' }}>
-              <svg
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M16.3462 10.2956C16.7352 10.6877 16.7328 11.3208 16.3407 11.7098L13.7003 14.3299H26.2997L23.6593 11.7098C23.2672 11.3208 23.2648 10.6877 23.6538 10.2956C24.0428 9.90361 24.676 9.90115 25.068 10.2902L29.1392 14.3299H32C32.5523 14.3299 33 14.7776 33 15.3299C33 15.8822 32.5523 16.3299 32 16.3299H8C7.44772 16.3299 7 15.8822 7 15.3299C7 14.7776 7.44772 14.3299 8 14.3299H10.8608L14.932 10.2902C15.324 9.90115 15.9572 9.90361 16.3462 10.2956ZM12.3313 17.0103H27.6686C28.1494 17.0103 28.5593 17.0103 28.8977 17.0332C29.2524 17.0572 29.6004 17.1096 29.9423 17.2502C30.7207 17.5701 31.3416 18.1848 31.6658 18.9615C31.8085 19.3034 31.8616 19.6512 31.8859 20.0046C31.9091 20.3411 31.9091 20.7486 31.909 21.2251V21.295C31.9091 22.7765 31.9091 23.9399 31.8444 24.88C31.7786 25.8372 31.6424 26.6362 31.3336 27.3758C30.5665 29.2135 29.0962 30.6711 27.2486 31.4305C26.5057 31.7359 25.703 31.8707 24.7398 31.9359C23.7932 32 22.6214 32 21.1277 32H18.8722C17.3785 32 16.2068 32 15.2601 31.9359C14.2969 31.8707 13.4942 31.7359 12.7513 31.4305C10.9037 30.6711 9.43341 29.2135 8.66629 27.3758C8.35751 26.6362 8.22132 25.8372 8.1555 24.88C8.09086 23.9399 8.09086 22.7766 8.09087 21.295L8.09087 21.225C8.09085 20.7485 8.09084 20.3411 8.11398 20.0046C8.13828 19.6512 8.19143 19.3034 8.33412 18.9615C8.65836 18.1848 9.2792 17.5701 10.0576 17.2502C10.3995 17.1096 10.7475 17.0572 11.1023 17.0332C11.4406 17.0103 11.8505 17.0103 12.3313 17.0103ZM11.2373 19.0286C10.9835 19.0458 10.877 19.0757 10.8179 19.1C10.5271 19.2195 10.2984 19.4478 10.1798 19.732C10.1564 19.788 10.1265 19.8912 10.1093 20.1418C10.0914 20.4014 10.0909 20.7396 10.0909 21.2577C10.0909 22.7846 10.0914 23.8793 10.1508 24.7428C10.2095 25.5972 10.3225 26.1515 10.5119 26.6054C11.0735 27.9506 12.1516 29.0217 13.5116 29.5807C13.9717 29.7698 14.5328 29.8821 15.3952 29.9405C16.2664 29.9995 17.3706 30 18.909 30H21.0909C22.6293 30 23.7335 29.9995 24.6047 29.9405C25.4671 29.8821 26.0283 29.7698 26.4883 29.5807C27.8483 29.0217 28.9265 27.9506 29.488 26.6054C29.6775 26.1515 29.7904 25.5972 29.8491 24.7428C29.9085 23.8793 29.909 22.7846 29.909 21.2577C29.909 20.7396 29.9085 20.4014 29.8906 20.1418C29.8734 19.8912 29.8435 19.788 29.8201 19.732C29.7015 19.4478 29.4728 19.2195 29.182 19.1C29.123 19.0757 29.0164 19.0458 28.7626 19.0286C28.4999 19.0108 28.1582 19.0103 27.6363 19.0103H12.3636C11.8417 19.0103 11.5 19.0108 11.2373 19.0286ZM17.2727 21.3402C17.825 21.3402 18.2727 21.7879 18.2727 22.3402V26.6701C18.2727 27.2224 17.825 27.6701 17.2727 27.6701C16.7204 27.6701 16.2727 27.2224 16.2727 26.6701V22.3402C16.2727 21.7879 16.7204 21.3402 17.2727 21.3402ZM22.7272 21.3402C23.2795 21.3402 23.7272 21.7879 23.7272 22.3402V26.6701C23.7272 27.2224 23.2795 27.6701 22.7272 27.6701C22.1749 27.6701 21.7272 27.2224 21.7272 26.6701V22.3402C21.7272 21.7879 22.1749 21.3402 22.7272 21.3402Z"
-                  fill="#171523"
-                />
+              style={{ textDecoration: 'none', color: 'black', border: 'none', backgroundColor: 'inherit', transform: 'translate(16x, 15px)' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-cart2" viewBox="0 0 35 35">
+                <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
               </svg>
               {currenUser && cantCart !== undefined && cantCart >= 1 ? (
                 <span className="cart-products"><p >{cantCart}</p></span>
