@@ -109,8 +109,8 @@ function AddRecents() {
                         {products.map((product, index) => (
 
                             <a href='#' className='containerCard' key={index}>
-                                <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
-                                    <Card className='cardProducto1' style={{ height: "330px" }}  >
+                                <Card className='cardProducto1' style={{ height: "380px" }}  >
+                                    <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
                                         <CardImg top width="80%" src={baseUrlImage + product.images[0]} alt={product.name} />
                                         <CardBody>
                                             <div className='starts'>
@@ -139,7 +139,7 @@ function AddRecents() {
                                             </CardSubtitle>
                                             <CardTitle tag="h5">
                                                 {product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
-                                                    <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf:'center'}}>
+                                                    <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf: 'center' }}>
                                                         <h5>${product.discount_valor && product.discount_valor.toLocaleString('en') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('en')}</h5>
                                                         <h5 id='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                                     </div>
@@ -149,8 +149,29 @@ function AddRecents() {
                                                 )}
                                             </CardTitle>
                                         </CardBody>
-                                    </Card>
-                                </Link>
+                                    </Link>
+                                    <Button
+                                        style={{
+                                            position: "absolute",
+                                            bottom: "15px", // Ajusta esto según tu preferencia
+                                            margin: "0 auto", // Centra horizontalmente el botón
+                                            left: "0",
+                                            right: "0",
+                                            backgroundColor: '#FC5241',
+                                            border: 'none',
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            height: 'auto',
+                                            alignItems: 'center',
+                                            width: '80%'
+                                        }}
+                                    >
+                                        <p style={{ marginBottom: '0' }}>Añadir al carrito</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+                                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                                        </svg>
+                                    </Button>
+                                </Card>
                             </a>
                         ))}
                     </div>

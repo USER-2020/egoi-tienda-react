@@ -255,7 +255,7 @@ const ProductsCategories = () => {
         })
         .catch((err) => console.log(err));
     }
-   else if (selectedFilters === 'L-H') {
+    else if (selectedFilters === 'L-H') {
       filterProductsLow_High(id, offset)
         .then((res) => {
           // console.log(res);
@@ -285,9 +285,9 @@ const ProductsCategories = () => {
         })
         .catch((err) => console.log(err));
     }
-    else if(selectedFilters === 'price'){
+    else if (selectedFilters === 'price') {
       handleApplyFilters();
-    }else {
+    } else {
       subcategorieById(id, offset, tag, subcate, subsubcateArray)
         .then((res) => {
           console.log(res);
@@ -314,7 +314,7 @@ const ProductsCategories = () => {
     console.log(event.target.value);
   };
 
-  const handleApplyFiltersPrice =()=> {
+  const handleApplyFiltersPrice = () => {
     setSelectedFilters('price');
   }
 
@@ -457,7 +457,7 @@ const ProductsCategories = () => {
 
   useEffect(() => {
 
-    if(selectedFilters){
+    if (selectedFilters) {
       console.log(selectedFilters);
     }
 
@@ -520,7 +520,7 @@ const ProductsCategories = () => {
       // Realizar acciones basadas en los valores de la ruta aquí
     }
 
-  }, [id, brandId, name, isDiscountedProducts, subcate, subsubcate, selectedFilters ,currentPage, offset]);
+  }, [id, brandId, name, isDiscountedProducts, subcate, subsubcate, selectedFilters, currentPage, offset]);
 
 
 
@@ -612,8 +612,8 @@ const ProductsCategories = () => {
                 {isRecentlyProducts && uniqueProducts && uniqueProducts.map((product, index) => (
                   <div key={product.id} className="col-md-3 col-6 mb-4" >
                     <a href="#" className='containerCard2  '  >
-                      <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index} onClick={() => agregarProductoVisto(product)}>
-                        <Card className='cardProducto1' style={{ height: isDiscountedProducts || isPromotionsProducts ? '400px' : '390px' }} >
+                      <Card className='cardProducto1' style={{ height: isDiscountedProducts || isPromotionsProducts ? '400px' : '460px' }} >
+                        <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index} onClick={() => agregarProductoVisto(product)}>
                           {isDiscountedProducts && product.discount_type === 'flat' && (
                             <span className='tagDiscounted'>$ {product.discount.toLocaleString('en')} off</span>
                           )}
@@ -679,8 +679,29 @@ const ProductsCategories = () => {
                               <span className='tagPromotions'>Oferta del día</span>
                             )}
                           </CardBody>
-                        </Card>
-                      </Link>
+                        </Link>
+                        <Button
+                          style={{
+                            position: "absolute",
+                            bottom: "15px", // Ajusta esto según tu preferencia
+                            margin: "0 auto", // Centra horizontalmente el botón
+                            left: "0",
+                            right: "0",
+                            backgroundColor: '#FC5241',
+                            border: 'none',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            height: 'auto',
+                            alignItems: 'center',
+                            width: '80%'
+                          }}
+                        >
+                          <p style={{ marginBottom: '0' }}>Añadir al carrito</p>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                          </svg>
+                        </Button>
+                      </Card>
                     </a>
                   </div>
                 ))}
@@ -690,8 +711,8 @@ const ProductsCategories = () => {
                   products && products.products && products.products.map((product, index) => (
                     <div key={product.id} className="col-md-3 col-6 mb-4" >
                       <a href="#" className='containerCard2  '  >
-                        <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index} onClick={() => agregarProductoVisto(product)}>
-                          <Card className='cardProducto1' style={{ height: isDiscountedProducts || isPromotionsProducts ? '430px' : '390px' }} >
+                        <Card className='cardProducto1' style={{ height: isDiscountedProducts || isPromotionsProducts ? '460px' : '460px' }} >
+                          <Link to={`/detailsProduct/${product.id}/${product.slug}`} key={index} onClick={() => agregarProductoVisto(product)}>
                             {isDiscountedProducts && product.discount_type === 'flat' && (
                               <span className='tagDiscounted'>$ {product.discount.toLocaleString('en')} Off</span>
                             )}
@@ -768,8 +789,29 @@ const ProductsCategories = () => {
                                 <span className='tagPromotions'>Oferta del día</span>
                               )}
                             </CardBody>
-                          </Card>
-                        </Link>
+                          </Link>
+                          <Button
+                            style={{
+                              position: "absolute",
+                              bottom: "15px", // Ajusta esto según tu preferencia
+                              margin: "0 auto", // Centra horizontalmente el botón
+                              left: "0",
+                              right: "0",
+                              backgroundColor: '#FC5241',
+                              border: 'none',
+                              display: 'flex',
+                              flexDirection: 'row',
+                              height: 'auto',
+                              alignItems: 'center',
+                              width: '80%'
+                            }}
+                          >
+                            <p style={{ marginBottom: '0' }}>Añadir al carrito</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+                              <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                            </svg>
+                          </Button>
+                        </Card>
                       </a>
                     </div>
                   ))
