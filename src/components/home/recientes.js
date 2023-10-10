@@ -237,8 +237,8 @@ const Recientes = ({ bannersInfo }) => {
                             <div className="cardContainer">
                                 {uniqueProducts.map((product, index) => (
                                     <a href='#' className='containerCard' key={index}>
-                                        <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
-                                            <Card className='cardProducto1' style={{ height: "330px" }}  >
+                                        <Card className='cardProducto1' style={{ height: "380px", zIndex: "998" }}>
+                                            <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
                                                 {product.current_stock <= 0 && (
                                                     <span className="agotadoTag">Agotado</span>
                                                 )}
@@ -274,14 +274,37 @@ const Recientes = ({ bannersInfo }) => {
                                                                 <h5>${product.discount_valor && product.discount_valor.toLocaleString('en') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('en')}</h5>
                                                                 <h5 id='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
                                                             </div>
-
                                                         ) : (
                                                             <h5>${product.unit_price && product.unit_price.toLocaleString('en')}</h5>
                                                         )}
                                                     </CardTitle>
                                                 </CardBody>
-                                            </Card>
-                                        </Link>
+                                            </Link>
+                                            <Button
+                                                
+                                                style={{
+                                                    position: "absolute",
+                                                    bottom: "15px", // Ajusta esto según tu preferencia
+                                                    margin: "0 auto", // Centra horizontalmente el botón
+                                                    left: "0",
+                                                    right: "0",
+                                                    backgroundColor: '#FC5241',
+                                                    border: 'none',
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    height: 'auto',
+                                                    alignItems: 'center',
+                                                    width: '80%',
+                                                    zIndex: '999'
+                                                }}
+                                            >
+                                                <p style={{ marginBottom: '0' }}>Añadir al carrito</p>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+                                                    <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                                                </svg>
+                                            </Button>
+                                        </Card>
+
                                     </a>
                                 ))}
                             </div>
@@ -322,11 +345,10 @@ const Recientes = ({ bannersInfo }) => {
                                                     <div className="tavtImage">
                                                         <a
                                                             href="#"
-                                                            onClick={(e) =>
-                                                                {
-                                                                    e.preventDefault();
-                                                                    showRutes(banner.id_filtro, banner.tipo_filtro, banner.id_tag, banner.ids_filtro_sub, banner.ids_filtro_s_sub)
-                                                                }
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                showRutes(banner.id_filtro, banner.tipo_filtro, banner.id_tag, banner.ids_filtro_sub, banner.ids_filtro_s_sub)
+                                                            }
                                                             }
                                                         >
                                                             <img
@@ -396,7 +418,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='catImage'>
-                                                <a href='#' onClick={(e) => {e.preventDefault(); showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}}>
+                                                <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub) }}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen} alt={itemBanner.banner_data[0].imagen} />
                                                 </a>
                                             </div>
@@ -415,7 +437,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='cvtImage'>
-                                                <a href='#' onClick={(e) => {e.preventDefault();showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub)}}>
+                                                <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub) }}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen} alt={itemBanner.banner_data[1].imagen} />
                                                 </a>
                                             </div>
@@ -437,7 +459,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='tavtImage'>
-                                                <a href='#' onClick={(e) => {e.preventDefault();showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub)}}>
+                                                <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub) }}>
                                                     < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen} alt={itemBanner.banner_data[2].imagen} />
                                                 </a>
                                             </div>
@@ -456,7 +478,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     <a href="#">Ver categoría</a>
                                                 </div> */}
                                             <div className='cvt2Image'>
-                                                <a href='#'onClick={(e) => {e.preventDefault();showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub)}}>
+                                                <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub) }}>
                                                     <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen} alt={itemBanner.banner_data[3].imagen} />
                                                 </a>
                                             </div>
