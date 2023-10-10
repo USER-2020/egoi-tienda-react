@@ -7,6 +7,8 @@
 
 }
 
+
+
 .containerProductsIndex {
     display: flex;
     gap: 30px;
@@ -117,6 +119,14 @@
 
 }
 
+#buttonDesktopAddToCart{
+    display: flex !important;
+}
+
+#buttonMovilAddToCart{
+    display: none !important;
+}
+
 
 
 input[type="radio"]:checked {
@@ -195,6 +205,14 @@ input[type="radio"]:checked {
     .cardProducto1 {
         height: 24rem !important;
 
+    }
+
+    #buttonDesktopAddToCart{
+        display: none !important;
+    }
+
+    #buttonMovilAddToCart{
+        display: flex !important;
     }
 
 
