@@ -666,20 +666,21 @@ input[type="checkbox"]:checked {
 
   .caracteristicasDetalleDelProductoResponsive .deleteProduct {
     display: flex;
-    flex-direction: row;    
+    flex-direction: row;
+    width: 30%;
     height: 10px;
-    justify-content: start;
-    
+    justify-content: end;
+    padding: 5px;
   }
 
   .caracteristicasDetalleDelProductoResponsive a {
     text-decoration: none;
-    color: #171523;  
-    margin-right: 2px;
+    color: #171523;
+    right: 0;
   }
 
   .caracteristicasDetalleDelProductoResponsive .info {
-    width: 60%;
+    width: 45%;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -715,29 +716,24 @@ input[type="checkbox"]:checked {
   .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 250px;
     background-color: #A2A1A729;
     border-radius: 32px;
     margin-bottom: 10px;
-    padding: 15px;
-    justify-content: space-between;
+    padding: 10px;
+    justify-content: space-around;
   }
 
   .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant p {
-    margin: 0;    
-  }
-
-  .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant .cantCant{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    margin: 0;
+    margin-right: 0;
   }
 
   .caracteristicasDetalleDelProductoResponsive .info .productInfo .cant h5 {
 
     border: none;
     margin-left: 0px;
+    width: 20px;
     font-weight: 700;
     margin-bottom: 0;
     align-self: center;

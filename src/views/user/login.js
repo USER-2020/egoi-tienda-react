@@ -1,28 +1,13 @@
 /* eslint-disable no-unused-vars */
 import "../../styles/login.css";
 import React, { useState } from 'react';
-import { Row, Card, CardTitle, CardBody, Col, Form, FormGroup, Input, Button, InputGroup, InputGroupText, Modal, ModalBody } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+import { Row, Col, Form, FormGroup, Input, Button, InputGroup, InputGroupText } from 'reactstrap';
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
 
-
-
-import { connect } from 'react-redux';
-import { registerUser } from '../../redux/actions';
-
-import IntlMessages from '../../helpers/IntlMessages';
-import { Colxx } from '../../components/common/CustomBootstrap';
-
-import Registro from '../../components/formularios/registro';
-
+import { setCurrentUser } from "../../helpers/Utils";
 import log from '../../services/login';
-import Register from './register';
-import { getCurrentUser, setCurrentUser } from "../../helpers/Utils";
-import { getUserProfileInfo } from "../../services/ordenes";
-
-
 
 const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeFormLogin }) => {
   const setUserActivacion = (data) => {
@@ -34,13 +19,18 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
     // put(loginUserSuccess(item));
   };
 
-
-  
-
   const onSubmit = (data) => {
     setLoading(true);
     log(data, window.location.origin.toString())
       .then((res) => {
+        // Enviando un evento de inicio de sesión a Google Analytics
+        /* eslint-disable */
+        // Tu código aquí
+        gtag("event", "login", {
+          method: "Google"
+        });
+        /* eslint-enable */
+
         setUserActivacion(res.data);
         Swal.fire({
           icon: 'success',
@@ -51,7 +41,6 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
         setLoading(false);
         closeModalLogin();
         handleLogin();
-
       })
       .catch(() => {
         Swal.fire({
@@ -63,10 +52,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
         setLoading(false);
       });
     reset();
-
-
   };
-
 
   const {
     reset,
@@ -77,20 +63,13 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-
-
 
   const limpiarCampos = () => {
-
     setEmail("");
     setPassword("");
   };
 
-
   const handleSubmitPersonaLogin = (event) => {
-    console.log("hola");
-    console.log(event);
     event.preventDefault();
 
     const data = {
@@ -99,17 +78,12 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
     };
     onSubmit(data);
 
-
     limpiarCampos();
-
-
-
   };
 
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
-
 
   return (
     <Row>
@@ -126,8 +100,6 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
           </div>
 
           <Form onSubmit={handleSubmitPersonaLogin}>
-
-
             <FormGroup controlId="formBasicEmail">
               <InputGroup style={{ borderRadius: "50px" }}>
                 <Input
@@ -136,7 +108,8 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                     borderRadius: "50px",
                   }}
                   placeholder="Email"
-                  value={email} onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </InputGroup>
             </FormGroup>
@@ -145,21 +118,19 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               <InputGroup style={{ borderRadius: "50px" }}>
                 <Input
                   style={{
-
                     borderTopLeftRadius: "50px",
                     borderBottomLeftRadius: "50px",
                   }}
                   type={showPassword ? "text" : "password"}
                   placeholder="Contraseña"
-                  value={password} onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <InputGroupText
                   style={{
                     borderTopRightRadius: "50px",
                     borderBottomRightRadius: "50px",
-
                     width: "45px",
-                    borderRight: "none !important",
                     backgroundColor: "white",
                   }}
                   onClick={toggleShowPassword}
@@ -171,7 +142,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
             </FormGroup>
 
             <div style={{ width: '100%', justifyContent: 'center', marginBottom: '10px', display: 'flex' }}>
-              <a href="/recovery" style={{ textAlign: 'center', alignSelf: 'center', justifyContent: 'center', textDecoration: 'none', color: 'gray' }} >¿Olvidaste tu contraseña?</a>
+              <a href="/recovery" style={{ textAlign: 'center', alignSelf: 'center', justifyContent: 'center', textDecoration: 'none', color: 'gray' }}>¿Olvidaste tu contraseña?</a>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -181,7 +152,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   borderColor: "#fc5241",
                   borderRadius: "50px",
                   width: '285px',
-                  alignSelf: 'center'
+                  alignSelf: 'center',
                 }}
                 type="submit"
               >
@@ -206,9 +177,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               >
                 No tengo cuenta, deseo registrarme
               </Button>
-
             </div>
-
           </Form>
         </div>
       </Col>

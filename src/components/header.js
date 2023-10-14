@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Link, useParams } from 'react-router-dom';
 import {
   InputGroup,
@@ -29,9 +29,8 @@ import { useContext } from 'react';
 import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
-import { getUserProfileInfo } from "../services/ordenes";
 
-const Header = ({ cantCart, detailInfoProfile }) => {
+const Header = ({ cantCart }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -54,16 +53,14 @@ const Header = ({ cantCart, detailInfoProfile }) => {
   // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
 
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-
-
-
-
+  
+  
   const { id } = useParams();
-
+  
   const currenUser = getCurrentUser();
   // const token = currenUser.token;
-
-
+  
+  
   const [prevSearchProducts, setPrevSearchProducts] = useState('');
   const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad del menú de resultados
   const resultsContainerRef = useRef(null);
@@ -90,10 +87,10 @@ const Header = ({ cantCart, detailInfoProfile }) => {
       // console.log("Este es el valor guardado en el search: ", prevSearchProducts);
       // history.push(`/products/${prevSearchProducts}`);
       // console.log(categoriesSearch[0].id);
-
-      if (categoriesSearch.length === 0) {
+      
+      if(categoriesSearch.length === 0){
         history.push(`/products/${prevSearchProducts}`);
-      } else {
+      }else{
         history.push(`/categories/${categoriesSearch[0].name}/${categoriesSearch[0].name}/${categoriesSearch[0].id}`);
       }
       setShowResults(false);
@@ -308,7 +305,6 @@ const Header = ({ cantCart, detailInfoProfile }) => {
   // }, [subSubCategory]);
 
 
-
   useEffect(() => {
     //   if(isLoggedIn){
 
@@ -353,14 +349,8 @@ const Header = ({ cantCart, detailInfoProfile }) => {
 
 
 
+  }, [currenUser, isLoggedIn, cantCart]);
 
-  }, [currenUser, isLoggedIn, cantCart, detailInfoProfile]);
-
-  // useEffect(()=>{
-  //   if(currenUser) {
-
-  //   }
-  // },[]);
 
   // useEffect(() => {
   //   getCantCart();
@@ -387,7 +377,7 @@ const Header = ({ cantCart, detailInfoProfile }) => {
     allBrands();
   }, []);
 
-
+  
   useEffect(() => {
     // Agregar un detector de clics fuera de los resultados cuando los resultados están visibles
     if (showResults) {
@@ -439,58 +429,47 @@ const Header = ({ cantCart, detailInfoProfile }) => {
 
             />
             {/* Contenedor para mostrar los resultados de búsqueda */}
+            
+              {showResults && (
+                <div className={`searchResultsContainer`} ref={resultsContainerRef}>
+                  {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
+                    <div>
+                      {products.length > 0 && (
+                        <h3>Productos</h3>
+                      )}
+                      <ul className="resultsList">
+                        {products.map((result, index) => (
+                          <li key={index} className="searchResultItem">
+                            <a href="" onClick={() => handleClickResultProduct(result.id, result.slug)}>{result.name}</a>
+                          </li>
+                        ))}
+                      </ul>
+                      {categoriesSearch.length > 0 && (
+                        <>
+                          <hr />
+                          <h3>Categorías</h3>
+                        </>
+                      )}
+                      <ul className="resultsList">
+                        {categoriesSearch.map((result, index) => (
+                          <li key={index} className="searchResultItem">
+                            <a href="" onClick={() => handleClickResultCategorie(result.name, result.id)}>{result.name}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p>No se encontraron resultados.</p>
+                  )}
+                </div>
 
-            {showResults && (
-              <div className={`searchResultsContainer`} ref={resultsContainerRef}>
-                {products && products.length > 0 || categoriesSearch && categoriesSearch.length > 0 ? (
-                  <div>
-                    {products.length > 0 && (
-                      <h3>Productos</h3>
-                    )}
-                    <ul className="resultsList">
-                      {products.map((result, index) => (
-                        <li key={index} className="searchResultItem">
-                          <a href="" onClick={() => handleClickResultProduct(result.id, result.slug)}>{result.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                    {categoriesSearch.length > 0 && (
-                      <>
-                        <hr />
-                        <h3>Categorías</h3>
-                      </>
-                    )}
-                    <ul className="resultsList">
-                      {categoriesSearch.map((result, index) => (
-                        <li key={index} className="searchResultItem">
-                          <a href="" onClick={() => handleClickResultCategorie(result.name, result.id)}>{result.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p>No se encontraron resultados.</p>
-                )}
-              </div>
-
-            )}
-
+              )}
+            
 
           </InputGroup>
 
         </div>
         <div className="userInteraction">
-
-          {/* Nombre de usuario */}
-          {isLoggedIn && (
-            <div style={{ marginRight: '20px' }}>
-              {detailInfoProfile && (
-                <p style={{ marginBottom: '0' }}>¡Hola, {detailInfoProfile.f_name}!</p>
-
-              )}
-
-            </div>
-          )}
           {/* Usuario Icono  */}
 
           <div className="dropdown">
