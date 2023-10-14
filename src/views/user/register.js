@@ -13,12 +13,7 @@ import Registro from '../../services/registro';
 import TermsAndConditions from "./TermsAndConditions";
 import Login from "./login.js";
 
-
-
-
-
-const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
-
+const Register = ({ closeModalRegistro, handleChangeFormRegister }) => {
   const {
     reset,
     formState: { errors },
@@ -27,7 +22,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  // const [cellphone, setCellphone] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState();
   const [password, setPassword] = useState("");
@@ -36,30 +30,12 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
   const [loading, setLoading] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [secondModalOpen, setSecondModalOpen] = useState(false);
-  // const [showLoginForm, setShowLoginForm] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
-  // const toggleModalViewLogin = () => {
-  //   setModalViewLogin(!modalViewLogin);
-    
-  //   console.log("Toggle modal view login");
-  // };
-
- 
-
-
-  const handleLogin = () => {
-    // Code to handle user login, such as storing session storage, etc.
-    setIsLoggedIn(true);
-  };
-
   const toggleSecondModal = () => {
-    console.log("Toggle second modal");
     setSecondModalOpen(!secondModalOpen);
   };
-
 
   const handleCheckboxChange = () => {
     setTermsAccepted(!termsAccepted);
@@ -72,7 +48,11 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
   const onSubmit = (data) => {
     setLoading(true);
     Registro(data, window.location.origin.toString())
-      .then(() => {
+    .then(() => {
+      // Enviando un evento de inicio de sesión a Google Analytics
+        gtag("event", "sign_up", {
+            method: "Google"
+          });
         Swal.fire({
           icon: 'success',
           title: '¡Registro exitoso!',
@@ -88,16 +68,15 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: '¡El usuario ya está creado, revisalo!',
+          text: '¡El usuario ya está creado, revísalo!',
           confirmButtonColor: '#dc3545',
         });
         setLoading(false);
-      })
+      });
     reset();
   };
 
   const handleSubmitPersona = (event) => {
-    console.log(event);
     event.preventDefault();
 
     // Validar que el nombre y apellido solo contengan letras y espacios
@@ -106,7 +85,7 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingrese un nombre y apellido válido. Solo se permiten letras y espacios.",
+        text: "Por favor, ingrese un nombre y apellido válidos. Solo se permiten letras y espacios.",
         confirmButtonColor: "#0d6efd",
       });
       return;
@@ -118,7 +97,7 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingrese un correo electrónico válido. debe contener @ y .",
+        text: "Por favor, ingrese un correo electrónico válido. Debe contener @ y .",
         confirmButtonColor: "#0d6efd",
       });
       return;
@@ -156,19 +135,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
       return;
     }
 
-    // Validar que el número de teléfono tenga un formato válido
-    // const phoneRegex = /^\d{13}$/;
-    // if (!phoneRegex.test(phoneNumber)) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: "Por favor, ingrese un número de teléfono válido. Debe contener minimo 10 dígitos. Mas el indicativo del país.",
-    //     confirmButtonColor: "#0d6efd",
-    //   });
-    //   return;
-    // }
-
-
     const data = {};
 
     data.f_name = name;
@@ -181,8 +147,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
     limpiarCampos();
   };
 
-
-
   const limpiarCampos = () => {
     setName("");
     setLastName("");
@@ -190,7 +154,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
     setPassword("");
     setConfirmPassword("");
     setPhoneNumber("");
-    // setCellphone("");
   };
 
   return (
@@ -208,7 +171,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
               <h5 style={{ color: "#fc5241" }}>Registro</h5>
             </div>
             <Form onSubmit={handleSubmitPersona}>
-
               <FormGroup controlId="formBasicName">
                 <Input addon={true}
                   name="name"
@@ -219,9 +181,7 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                   placeholder="Nombre"
                   value={name} onChange={(event) => setName(event.target.value)}
                 />
-
               </FormGroup>
-
               <FormGroup controlId="formBasicLastName">
                 <Input
                   style={{
@@ -231,7 +191,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                   value={lastName} onChange={(event) => setLastName(event.target.value)}
                 />
               </FormGroup>
-
               <FormGroup controlId="formBasicEmail">
                 <InputGroup style={{ borderRadius: "50px" }}>
                   <Input
@@ -244,7 +203,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                   />
                 </InputGroup>
               </FormGroup>
-
               <FormGroup controlId="formBasicCellphone">
                 <PhoneInput
                   localization={es}
@@ -262,12 +220,10 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                   }}
                 />
               </FormGroup>
-
               <FormGroup controlId="formBasicPassword">
                 <InputGroup style={{ borderRadius: "50px" }}>
                   <Input
                     style={{
-
                       borderTopLeftRadius: "50px",
                       borderBottomLeftRadius: "50px",
                     }}
@@ -279,7 +235,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                     style={{
                       borderTopRightRadius: "50px",
                       borderBottomRightRadius: "50px",
-
                       width: "45px",
                       borderRight: "none !important",
                       backgroundColor: "white",
@@ -291,7 +246,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                   </InputGroupText>
                 </InputGroup>
               </FormGroup>
-
               <FormGroup controlId="formBasicConfirmPassword">
                 <InputGroup style={{ borderRadius: "50px" }}>
                   <Input
@@ -308,7 +262,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                       cursor: "pointer",
                       borderTopRightRadius: "50px",
                       borderBottomRightRadius: "50px",
-
                       width: "45px",
                       borderRight: "none !important",
                       backgroundColor: "white",
@@ -319,9 +272,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                   </InputGroupText>
                 </InputGroup>
               </FormGroup>
-
-
-
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div>
                     <Input
@@ -344,9 +294,7 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                     <TermsAndConditions />
                   </ModalBody>
                   <ModalFooter style={{ display: "flex" }}>
-
                     <Button
-
                       style={{
                         backgroundColor: "white",
                         borderColor: "#fc5241",
@@ -369,8 +317,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                         setTermsAccepted(true);
                         toggleSecondModal();
                       }}> Aceptar </Button>
-
-
                   </ModalFooter>
                 </Modal>
                 <Button
@@ -407,17 +353,6 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister } ) => {
                 >
                   Ya tengo cuenta
                 </Button>
-
-                {/* <Modal
-                  className="modal-dialog-centered"
-                  toggle={() => setModalViewLogin(false)}
-                  isOpen={modalViewLogin}
-                >
-                  <ModalBody>
-                    <Login closeModalRegistro={closeModalRegistro} handleLogin={handleLogin} />
-                  </ModalBody>
-                </Modal> */}
-
               </div>
             </Form>
           </div>
