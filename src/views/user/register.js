@@ -48,11 +48,15 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister }) => {
   const onSubmit = (data) => {
     setLoading(true);
     Registro(data, window.location.origin.toString())
-    .then(() => {
-      // Enviando un evento de inicio de sesión a Google Analytics
+      .then(() => {
+        // Enviando un evento de inicio de sesión a Google Analytics
+        /* eslint-disable */
+        // Tu código aquí
         gtag("event", "sign_up", {
-            method: "Google"
-          });
+          method: "Google"
+        });
+        /* eslint-enable */
+
         Swal.fire({
           icon: 'success',
           title: '¡Registro exitoso!',
@@ -274,19 +278,19 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister }) => {
               </FormGroup>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div>
-                    <Input
-                      className="custom-input"
-                      cssModule={{ color: "red" }}
-                      type="checkbox"
-                      name="terms"
-                      id="terms"
-                      value="true"
-                      checked={termsAccepted}
-                      onClick={!termsAccepted ? toggleSecondModal : null}
-                      onChange={handleCheckboxChange}
-                      style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
-                    />
-                    <span style={{ marginRight: "10px" }}>Aceptar términos y condiciones</span>
+                  <Input
+                    className="custom-input"
+                    cssModule={{ color: "red" }}
+                    type="checkbox"
+                    name="terms"
+                    id="terms"
+                    value="true"
+                    checked={termsAccepted}
+                    onClick={!termsAccepted ? toggleSecondModal : null}
+                    onChange={handleCheckboxChange}
+                    style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                  />
+                  <span style={{ marginRight: "10px" }}>Aceptar términos y condiciones</span>
                 </div>
                 <Modal size='xl' isOpen={secondModalOpen} >
                   <ModalHeader style={{ color: '#fc5241' }}>Términos y condiciones</ModalHeader>
@@ -325,8 +329,8 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister }) => {
                     borderColor: "#fc5241",
                     borderRadius: "50px",
                     marginTop: "10px",
-                    width:'285px',
-                    alignSelf:'center'
+                    width: '285px',
+                    alignSelf: 'center'
                   }}
                   type="submit"
                   disabled={!termsAccepted || loading}
@@ -340,9 +344,9 @@ const Register = ({ closeModalRegistro, handleChangeFormRegister }) => {
                     borderColor: "#fc5241",
                     color: "#fc5241",
                     borderRadius: "50px",
-                    width:'285px',
-                    alignSelf:'center',
-                    marginTop:'-15px'
+                    width: '285px',
+                    alignSelf: 'center',
+                    marginTop: '-15px'
                   }}
                   onClick={() => {
                     limpiarCampos();

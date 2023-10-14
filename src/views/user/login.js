@@ -24,9 +24,13 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
     log(data, window.location.origin.toString())
       .then((res) => {
         // Enviando un evento de inicio de sesión a Google Analytics
+        /* eslint-disable */
+        // Tu código aquí
         gtag("event", "login", {
           method: "Google"
         });
+        /* eslint-enable */
+
         setUserActivacion(res.data);
         Swal.fire({
           icon: 'success',
