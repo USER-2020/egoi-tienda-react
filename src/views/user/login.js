@@ -19,8 +19,7 @@ import Registro from '../../components/formularios/registro';
 
 import log from '../../services/login';
 import Register from './register';
-import { getCurrentUser, setCurrentUser } from "../../helpers/Utils";
-import { getUserProfileInfo } from "../../services/ordenes";
+import { setCurrentUser } from "../../helpers/Utils";
 
 
 
@@ -29,13 +28,11 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
     const item = {
       token: data.token,
       email: email,
+
     };
     setCurrentUser(item);
     // put(loginUserSuccess(item));
   };
-
-
-  
 
   const onSubmit = (data) => {
     setLoading(true);
@@ -77,7 +74,6 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
 
 
 
@@ -170,18 +166,18 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               </InputGroup>
             </FormGroup>
 
-            <div style={{ width: '100%', justifyContent: 'center', marginBottom: '10px', display: 'flex' }}>
-              <a href="/recovery" style={{ textAlign: 'center', alignSelf: 'center', justifyContent: 'center', textDecoration: 'none', color: 'gray' }} >¿Olvidaste tu contraseña?</a>
+            <div style={{width:'100%', justifyContent:'center', marginBottom:'10px', display:'flex'}}>
+              <a href="/recovery"style={{textAlign:'center', alignSelf:'center', justifyContent:'center', textDecoration:'none', color:'gray'}} >¿Olvidaste tu contraseña?</a>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", flexDirection: "column"}}>
               <Button
                 style={{
                   backgroundColor: "#fc5241",
                   borderColor: "#fc5241",
                   borderRadius: "50px",
-                  width: '285px',
-                  alignSelf: 'center'
+                  width:'285px',
+                  alignSelf:'center'
                 }}
                 type="submit"
               >
@@ -194,9 +190,9 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   borderColor: "#fc5241",
                   color: "#fc5241",
                   borderRadius: "50px",
-                  width: '285px',
-                  alignSelf: 'center',
-                  marginTop: '-15px'
+                  width:'285px',
+                  alignSelf:'center',
+                  marginTop:'-15px'
                 }}
                 className="text-nowrap"
                 onClick={() => {
