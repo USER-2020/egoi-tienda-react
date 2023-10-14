@@ -41,7 +41,6 @@ import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { getProductsBySearch } from "../services/filtros";
-import { getUserProfileInfo } from '../services/ordenes';
 
 
 
@@ -409,6 +408,7 @@ function HeaderResponsive({ canCart, detailInfoProfile }) {
 
           <div ref={offcanvasRef} class={`offcanvas offcanvas-end ${isOffcanvasVisible ? 'show' : ''}`} tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
+              {/* <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5> */}
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onClick={closeModalLogin}></button>
               {currenUser && detailInfoProfile && (
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">¡Hola, {detailInfoProfile.f_name + ' ' + detailInfoProfile.l_name}!</h5>
