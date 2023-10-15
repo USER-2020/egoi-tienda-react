@@ -295,7 +295,8 @@ const Recientes = ({ bannersInfo }) => {
                                                     height: 'auto',
                                                     alignItems: 'center',
                                                     width: '80%',
-                                                    zIndex: '999'
+                                                    zIndex: '999',
+                                                    justifyContent:'space-around'
                                                 }}
                                             >
                                                 <p style={{ marginBottom: '0' }}>Añadir al carrito</p>

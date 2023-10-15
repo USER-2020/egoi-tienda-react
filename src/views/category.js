@@ -6,15 +6,17 @@ import HeaderResponsive from "../components/headerResponsive";
 import ProductsCategories from "../components/categories/productsCategories.tsx";
 import { allProductsCart } from "../services/cart";
 import { getCurrentUser } from './../helpers/Utils';
+import { getUserProfileInfo } from "../services/ordenes";
 
 function Category(){
   const currenUser = getCurrentUser();
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+  const [detailInfoProfile, setDetailInfoProfile] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currentUser sea null
 
   const getCantCart = () => {
-    const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currentUser sea null
     allProductsCart(token)
       .then((res) => {
         const productsOncart = res.data;
@@ -38,10 +40,22 @@ function Category(){
     }
   }, [currenUser, isLoggedIn]);
 
+  const getAllInfoPerfil = () => {
+    getUserProfileInfo(token)
+      .then((res) => {
+        // console.log(res.data);
+        setDetailInfoProfile(res.data);
+      }).catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    getAllInfoPerfil();
+  },[token])
+
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} handleLoggedIn={isLoggedIn}/>
-      <HeaderResponsive canCart={cantProductsOnCart} handleLoggedIn={isLoggedIn}/>
+      <Header cantCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile}/>
+      <HeaderResponsive canCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile}/>
       {/* <HeaderCategories/> */}
       {/* <HeaderResponsiveCategorie/> */}
       <ProductsCategories />

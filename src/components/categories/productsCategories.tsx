@@ -695,7 +695,8 @@ const ProductsCategories = () => {
                               flexDirection: 'row',
                               height: 'auto',
                               alignItems: 'center',
-                              width: '80%'
+                              width: '80%',
+                              justifyContent:'space-around'
                             }}
                           >
                             <p style={{ marginBottom: '0' }}>Añadir al carrito</p>
@@ -831,7 +832,8 @@ const ProductsCategories = () => {
                               flexDirection: 'row',
                               height: 'auto',
                               alignItems: 'center',
-                              width: '80%'
+                              width: '80%',
+                              justifyContent:'space-around'
                             }}
                           >
                             <p style={{ marginBottom: '0' }}>Añadir al carrito</p>

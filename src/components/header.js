@@ -30,7 +30,7 @@ import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
 
-const Header = ({ cantCart }) => {
+const Header = ({ cantCart, detailInfoPerfil }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -349,7 +349,7 @@ const Header = ({ cantCart }) => {
 
 
 
-  }, [currenUser, isLoggedIn, cantCart]);
+  }, [currenUser, isLoggedIn, cantCart, detailInfoPerfil]);
 
 
   // useEffect(() => {
@@ -469,6 +469,11 @@ const Header = ({ cantCart }) => {
           </InputGroup>
 
         </div>
+        {currenUser &&(
+        <div>
+          <p style={{marginBottom: 0, }}>¡Hola!, {detailInfoPerfil.f_name}</p>
+        </div>
+        )}
         <div className="userInteraction">
           {/* Usuario Icono  */}
 
