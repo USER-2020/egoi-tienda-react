@@ -43,6 +43,7 @@ import { getOfferHigligth, getOfferOfDay } from "../services/ofertas";
 import OfertaDia from "../components/home/ofertaDia";
 import OfertaDestacada from "../components/home/ofertaDestacada";
 import OfertaFlash from "../components/home/ofertaFlash";
+import { getUserProfileInfo } from "../services/ordenes";
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,6 +53,7 @@ const Home = (props) => {
   const [bannersInfo, setBannersInfo] = useState([]);
 
   const [datosPopup, setDatosPopup] = useState('');
+  const [detailInfoProfile, setDetailInfoProfile] = useState([]);
   
 
   const currenUser = getCurrentUser();
@@ -114,6 +116,14 @@ const Home = (props) => {
       }).catch((err) => console.log(err));
   }
 
+  const getAllInfoPerfil = () => {
+    getUserProfileInfo(token)
+      .then((res) => {
+        // console.log(res.data);
+        setDetailInfoProfile(res.data);
+      }).catch((err) => console.log(err));
+  }
+
   // const offerDay = () => {
   //   getOfferOfDay()
   //   .then((res)=>{
@@ -134,19 +144,23 @@ const Home = (props) => {
     getAllBanners();
     getPrincipalPopup();
     getCantCart();
+    
     // getOfferDestacada();
     // offerDay();
   }, []);
 
 
+  useEffect(() => {
+    getAllInfoPerfil();
+  },[token])
 
   return (
 
     // <Nav/>
     <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header cantCart={cantProductsOnCart} />
-      <HeaderResponsive canCart={cantProductsOnCart} />
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
+      <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile}/>
       <Banner />
       <OfertaDia />
       <OfertaDestacada/>
