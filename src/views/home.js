@@ -152,7 +152,7 @@ const Home = (props) => {
 
   useEffect(() => {
     getAllInfoPerfil();
-  },[token])
+  },[currenUser, token])
 
   return (
 
