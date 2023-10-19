@@ -106,7 +106,7 @@ function TableOrders({ setOrderDetalleId }) {
                     <tbody className='tbodyTableDesktop'>
                         {ordenesV2 && ordenesV2.slice().reverse().map((item, index) => (
                             <tr key={index}>
-                                <td>nro de pedido</td>
+                                <td>{item.id_orden}</td>
                                 <td>{new Date(item.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
                                 <td><svg width="20" height="20">
                                     <circle
@@ -184,7 +184,7 @@ function TableOrders({ setOrderDetalleId }) {
                     <tbody className='tbodyTableResponsive'>
                         {ordenesV2 && ordenesV2.slice().reverse().map((item, index) => (
                             <tr key={index}>
-                                <td>{item.id}</td>
+                                <td>{item.id_orden}</td>
                                 <td>{new Date(item.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }).replace(/\//g, '-')}</td>
                                 <td>
                                     <span className={`badge text-${getStatusColorClass(item.order_status)}`}>

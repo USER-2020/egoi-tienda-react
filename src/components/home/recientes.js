@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import "../../styles/recientes.css";
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    CardTitle, CardSubtitle, Button, Modal, ModalBody
 } from 'reactstrap';
 import celRecent from '../../assets/celularReciente.png';
 import start from '../../assets/egoi_icons/star-fill.svg';
@@ -19,20 +19,71 @@ import { allCategories, subcategorieById } from '../../services/categories';
 import { detailProductById } from '../../services/detailProduct';
 import { getProductsByIdBrand } from '../../services/brands';
 import AddRecents from './addRecents';
+import { addProductsCart } from '../../services/cart';
+import Login from '../../views/user/login';
+import Register from '../../views/user/register';
+import { getCurrentUser } from '../../helpers/Utils';
 
 
-const Recientes = ({ bannersInfo }) => {
+const Recientes = ({ bannersInfo, updateCantProducts}) => {
     const [products, setProducts] = useState([]);
 
     const containerRef = useRef(null);
 
     const history = useHistory();
+    const currenUser = getCurrentUser();
 
     /* Flujo de trabajo */
     // const [bannersInfo, setBannersInfo] = useState([]);
     const [offset, setOffset] = useState([]);
     const [bannerFiltro6, setBannerFiltro6] = useState('');
     const [tipoFiltro, setTipoFiltro] = useState('');
+
+    /* Modales */
+    const [modalViewRegistro, setModalViewRegistro] = useState(false);
+    const [modalViewLogin, setModalViewLogin] = useState(false);
+    const [changeFormLogin, setChangeFormLogin] = useState(false);
+    const [changeFormRegister, setChangeFormRegister] = useState(false);
+    const [quantity, setQuantity] = useState(1);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const closeModalRegistro = () => {
+        setModalViewRegistro(false);
+    };
+
+    const closeModalLogin = () => {
+        setModalViewLogin(false);
+    };
+
+    const handleChangeFormLogin = () => {
+
+        if (modalViewLogin === true) {
+            setModalViewRegistro(true);
+        }
+
+    };
+
+    const handleChangeFormRegister = () => {
+
+        if (modalViewRegistro === true) {
+            setModalViewLogin(true);
+        }
+
+    };
+
+    const handleLogin = () => {
+        // Code to handle user login, such as storing session storage, etc.
+        if (currenUser) {
+            setIsLoggedIn(true);
+            // handleLogged(true);
+            // console.log("Estas logueado")
+
+        } else {
+            setIsLoggedIn(false);
+        }
+
+    };
+
 
 
     /* Banner 3 */
@@ -202,6 +253,58 @@ const Recientes = ({ bannersInfo }) => {
         }, 300);
     };
 
+    //Add To Cart
+    const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+    const addToCart = ({id, name, discount_tag_valor, unit_price, discount_valor, brand_id}) => {
+        console.log("Producto agregado al carrito");
+        if (currenUser) {
+            // setModalViewCart(true);
+            addProductsCart(id, quantity, token)
+                .then((res) => {
+                    // setCantCart();
+                    let discount = 0;
+                    if (discount_valor > 0) {
+                        discount = unit_price - discount_valor;
+                    }
+                    if (discount_tag_valor > 0) {
+                        discount = discount_tag_valor;
+                    }
+                    if (discount_valor === 0 && discount_tag_valor === 0) {
+                        discount = 0;
+                    }
+                    /* eslint-disable */
+                    gtag('event', 'add_to_cart', {
+                        currency: 'USD',
+                        items: [{
+                            item_id: id,
+                            item_name: name,
+                            coupon: '',
+                            discount: discount,
+                            affiliation: 'Egoi',
+                            item_brand: brand_id,
+                            item_category: '',
+                            item_variant: '',
+                            price: unit_price,
+                            currency: 'COP',
+                            quantity: quantity
+                        }],
+                        value: unit_price
+                    });
+                    /* eslint-enable */
+                    // console.log("Producto enviado", res.data);
+                    // console.log(token);
+                })
+                .catch((err) => console.log(err));
+            // console.log("producto agregado");
+            // console.log(token);
+        } else {
+
+            setModalViewLogin(true);
+
+        }
+
+    }
+
     useEffect(() => {
         ProductosRecientesVistas();
 
@@ -281,7 +384,7 @@ const Recientes = ({ bannersInfo }) => {
                                                 </CardBody>
                                             </Link>
                                             <Button
-                                                
+                                                onClick={(e)=> {e.preventDefault(); addToCart(product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id)}}
                                                 style={{
                                                     position: "absolute",
                                                     bottom: "15px", // Ajusta esto según tu preferencia
@@ -296,7 +399,7 @@ const Recientes = ({ bannersInfo }) => {
                                                     alignItems: 'center',
                                                     width: '80%',
                                                     zIndex: '999',
-                                                    justifyContent:'space-around'
+                                                    justifyContent: 'space-around'
                                                 }}
                                             >
                                                 <p style={{ marginBottom: '0' }}>Añadir al carrito</p>
@@ -493,6 +596,30 @@ const Recientes = ({ bannersInfo }) => {
 
 
             </div>
+
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalViewLogin(false)}
+                isOpen={modalViewLogin && !changeFormLogin}
+                // onOpened={() => setIsScrollModalEnabled(false)}
+                // onClosed={() => setIsScrollModalEnabled(true)}
+            >
+                <ModalBody>
+                    <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
+                </ModalBody>
+            </Modal>
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalViewRegistro(false)}
+                isOpen={modalViewRegistro && !changeFormRegister}
+                // onOpened={() => setIsScrollModalEnabled(false)}
+                // onClosed={() => setIsScrollModalEnabled(true)}
+            >
+                <ModalBody>
+                    <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                </ModalBody>
+            </Modal>
+
         </>
 
 

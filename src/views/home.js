@@ -151,8 +151,11 @@ const Home = (props) => {
 
 
   useEffect(() => {
-    getAllInfoPerfil();
-  },[currenUser, token])
+    
+      getAllInfoPerfil();
+      console.log("si hay usuario logueado")
+    
+  },[token])
 
   return (
 
@@ -165,7 +168,7 @@ const Home = (props) => {
       <OfertaDia />
       <OfertaDestacada/>
       <OfertaFlash/>
-      <Recientes bannersInfo={bannersInfo} className="w-100" />
+      <Recientes bannersInfo={bannersInfo} updateCantProducts={getCantCart} className="w-100" />
       <Promociones bannersInfo={bannersInfo} />
       <Vendidos bannersInfo={bannersInfo} />
       {/* <Populares /> */}
