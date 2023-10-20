@@ -13,6 +13,7 @@ const TermsAndConditionsPage = () => {
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
@@ -39,14 +40,16 @@ const TermsAndConditionsPage = () => {
 
 
   useEffect(() => {
-    getCantCart();
-    getAllInfoPerfil();
-  }, [currenUser]);
+    if (isLoggedIn) {
+      getCantCart();
+      getAllInfoPerfil();
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile}/>
-      <HeaderResponsive cantCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile}/>
+      <Header cantCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <HeaderResponsive cantCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
       <TermsAndConditionsComponent />
       <Footer />
     </div>

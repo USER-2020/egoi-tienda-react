@@ -13,6 +13,7 @@ const PoliticaPrivacidad = () => {
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
@@ -40,14 +41,16 @@ const PoliticaPrivacidad = () => {
 
 
   useEffect(() => {
-    getCantCart();
-    getAllInfoPerfil();
-  }, [currenUser]);
+    if (isLoggedIn) {
+      getCantCart();
+      getAllInfoPerfil();
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
-      <HeaderResponsive cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <HeaderResponsive cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
       <PoliticaPrivacidadComponent />
       <Footer />
     </div>

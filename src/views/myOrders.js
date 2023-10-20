@@ -13,6 +13,7 @@ function MyOrders(props) {
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
@@ -39,14 +40,16 @@ function MyOrders(props) {
 
 
   useEffect(() => {
-    getCantCart();
-    getAllInfoPerfil();
-  }, [currenUser]);
+    if (isLoggedIn) {
+      getCantCart();
+      getAllInfoPerfil();
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
-      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
+      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
       <Orders />
       <Footer />
     </div>

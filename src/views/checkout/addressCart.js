@@ -13,6 +13,7 @@ function DressCart() {
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const getCantCart = () => {
     const token = currenUser.token;
@@ -38,16 +39,18 @@ function DressCart() {
   }
 
   useEffect(() => {
-    getCantCart();
-    getAllInfoPerfil();
-  }, [currenUser]);
+    if (isLoggedIn) {
+      getCantCart();
+      getAllInfoPerfil();
+    }
+  }, [isLoggedIn]);
 
-  
+
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
-      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
+      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
       <AddressCart />
       <Footer />
     </div>

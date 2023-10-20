@@ -24,13 +24,13 @@ function TrackSearch({ handleChangueTrackOrder }) {
         <div className='searchContainerCard'>
             <Card className='searchCardInputs'>
                 <div className="trackSearchHeader">
-                    <h5 style={{ color: '#FC5241', fontSize: '18px' }}>Seguir tu pedido</h5>
+                    {/* <h5 style={{ color: '#FC5241', fontSize: '18px' }}>Seguir tu pedido</h5> */}
                 </div>
                 <div className="trackSearchInputs">
                     <Form>
                         <FormGroup style={{ display: 'flex', flexDirection: 'row', gap: '20px', marginTop: '20px' }}>
                             <InputGroup style={{ display: 'flex', flexDirection: 'column' }}>
-                                <Label style={{ fontSize: '14px' }}>Número de pedido</Label>
+                                {/* <Label style={{ fontSize: '14px' }}>Número de pedido</Label> */}
                                 <Input
                                     addon={true}
                                     name="anioExpiracion"
