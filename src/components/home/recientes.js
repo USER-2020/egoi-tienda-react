@@ -23,9 +23,10 @@ import { addProductsCart } from '../../services/cart';
 import Login from '../../views/user/login';
 import Register from '../../views/user/register';
 import { getCurrentUser } from '../../helpers/Utils';
+import toast, { Toaster } from 'react-hot-toast';
 
 
-const Recientes = ({ bannersInfo, updateCantProducts}) => {
+const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) => {
     const [products, setProducts] = useState([]);
 
     const containerRef = useRef(null);
@@ -75,6 +76,7 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
         // Code to handle user login, such as storing session storage, etc.
         if (currenUser) {
             setIsLoggedIn(true);
+            setIsLoggedInPartner(true);
             // handleLogged(true);
             // console.log("Estas logueado")
 
@@ -257,14 +259,16 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
     const addToCart = (id, name, discount_tag_valor, unit_price, discount_valor, brand_id) => {
         console.log("Producto agregado al carrito");
-        console.log("estos son los valores enviados desde el producto",[
-            id,name,discount_tag_valor, unit_price, discount_valor, brand_id
+        console.log("estos son los valores enviados desde el producto", [
+            id, name, discount_tag_valor, unit_price, discount_valor, brand_id
         ]);
         if (currenUser) {
             // setModalViewCart(true);
             addProductsCart(id, quantity, token)
                 .then(() => {
                     updateCantProducts();
+                    setIsLoggedInPartner(true);
+                    toast.success('Producto agregado con éxito!');
                     let discount = 0;
                     if (discount_valor > 0) {
                         discount = unit_price - discount_valor;
@@ -314,9 +318,14 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
         // console.log("Desde el modal del banner de recientes ", bannersInfo);
     }, [bannersInfo]);
 
+    useEffect(() => {
+        handleLogin();
+    }, [currenUser])
+
 
     return (
         <>
+            <Toaster toastOptions={{ duration: 4000 }} />
             <div className="container">
                 <div className="containerRecents">
                     {uniqueProducts && uniqueProducts.length > 0 ? (
@@ -387,7 +396,7 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
                                                 </CardBody>
                                             </Link>
                                             <Button
-                                                onClick={(e)=> {e.preventDefault(); addToCart(product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id)}}
+                                                onClick={(e) => { e.preventDefault(); addToCart(product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id) }}
                                                 style={{
                                                     position: "absolute",
                                                     bottom: "15px", // Ajusta esto según tu preferencia
@@ -426,7 +435,7 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
                         )}
 
                     </div>
-                    <AddRecents updateCantProducts={updateCantProducts}/>
+                    <AddRecents updateCantProducts={updateCantProducts} setIsLoggedInPartner={setIsLoggedInPartner} />
 
 
                     {/* ---------------------CAROUSEL RESPONSIVE----------------------------  */}
@@ -604,8 +613,8 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
                 className="modal-dialog-centered modal-md"
                 toggle={() => setModalViewLogin(false)}
                 isOpen={modalViewLogin && !changeFormLogin}
-                // onOpened={() => setIsScrollModalEnabled(false)}
-                // onClosed={() => setIsScrollModalEnabled(true)}
+            // onOpened={() => setIsScrollModalEnabled(false)}
+            // onClosed={() => setIsScrollModalEnabled(true)}
             >
                 <ModalBody>
                     <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
@@ -615,8 +624,8 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
                 className="modal-dialog-centered modal-md"
                 toggle={() => setModalViewRegistro(false)}
                 isOpen={modalViewRegistro && !changeFormRegister}
-                // onOpened={() => setIsScrollModalEnabled(false)}
-                // onClosed={() => setIsScrollModalEnabled(true)}
+            // onOpened={() => setIsScrollModalEnabled(false)}
+            // onClosed={() => setIsScrollModalEnabled(true)}
             >
                 <ModalBody>
                     <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />

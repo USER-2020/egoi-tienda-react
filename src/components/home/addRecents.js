@@ -22,8 +22,9 @@ import { getCurrentUser } from '../../helpers/Utils';
 import { addProductsCart } from '../../services/cart';
 import Login from '../../views/user/login';
 import Register from '../../views/user/register';
+import toast, { Toaster } from 'react-hot-toast';
 
-function AddRecents({updateCantProducts}) {
+function AddRecents({ updateCantProducts, setIsLoggedInPartner }) {
 
     const [products, setProducts] = useState([]);
 
@@ -72,6 +73,7 @@ function AddRecents({updateCantProducts}) {
         // Code to handle user login, such as storing session storage, etc.
         if (currenUser) {
             setIsLoggedIn(true);
+            setIsLoggedInPartner(true);
             // handleLogged(true);
             // console.log("Estas logueado")
 
@@ -81,6 +83,7 @@ function AddRecents({updateCantProducts}) {
 
     };
 
+    useEffect(() => { handleLogin() }, [currenUser])
 
     const ProductosRecientesVistas = () => {
         ProductosRecientes()
@@ -131,15 +134,17 @@ function AddRecents({updateCantProducts}) {
     };
     //Add To Cart
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
-    const addToCart = ( id, name, discount_tag_valor, unit_price, discount_valor, brand_id ) => {
+    const addToCart = (id, name, discount_tag_valor, unit_price, discount_valor, brand_id) => {
         console.log("Producto agregado al carrito");
         if (currenUser) {
             // setModalViewCart(true);
-            
+
             addProductsCart(id, quantity, token)
                 .then((res) => {
                     // setCantCart();
                     updateCantProducts();
+                    setIsLoggedInPartner(true);
+                    toast.success('Producto agregado con éxito!');
                     let discount = 0;
                     if (discount_valor > 0) {
                         discount = unit_price - discount_valor;
@@ -188,6 +193,7 @@ function AddRecents({updateCantProducts}) {
     }, [])
     return (
         <>
+            <Toaster toastOptions={{ duration: 4000 }} />
             <div className='container'>
                 <div className='containerRecents'>
                     <div className='spanRecent' style={{

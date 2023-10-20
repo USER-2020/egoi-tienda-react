@@ -44,7 +44,7 @@ import { getProductsBySearch } from "../services/filtros";
 
 
 
-function HeaderResponsive({ canCart, detailInfoProfile }) {
+function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner }) {
 
   /* global bootstrap */
 
@@ -199,6 +199,7 @@ function HeaderResponsive({ canCart, detailInfoProfile }) {
     // Code to handle user login, such as storing session storage, etc.
     if (currenUser) {
       setIsLoggedIn(true);
+      setIsLoggedInPartner(true);
     } else {
       setIsLoggedIn(false);
     }
