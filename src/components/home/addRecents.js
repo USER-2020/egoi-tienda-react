@@ -23,7 +23,7 @@ import { addProductsCart } from '../../services/cart';
 import Login from '../../views/user/login';
 import Register from '../../views/user/register';
 
-function AddRecents() {
+function AddRecents({updateCantProducts}) {
 
     const [products, setProducts] = useState([]);
 
@@ -131,13 +131,15 @@ function AddRecents() {
     };
     //Add To Cart
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
-    const addToCart = ({ id, name, discount_tag_valor, unit_price, discount_valor, brand_id }) => {
+    const addToCart = ( id, name, discount_tag_valor, unit_price, discount_valor, brand_id ) => {
         console.log("Producto agregado al carrito");
         if (currenUser) {
             // setModalViewCart(true);
+            
             addProductsCart(id, quantity, token)
                 .then((res) => {
                     // setCantCart();
+                    updateCantProducts();
                     let discount = 0;
                     if (discount_valor > 0) {
                         discount = unit_price - discount_valor;

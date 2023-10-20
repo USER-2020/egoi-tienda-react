@@ -255,13 +255,16 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
 
     //Add To Cart
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
-    const addToCart = ({id, name, discount_tag_valor, unit_price, discount_valor, brand_id}) => {
+    const addToCart = (id, name, discount_tag_valor, unit_price, discount_valor, brand_id) => {
         console.log("Producto agregado al carrito");
+        console.log("estos son los valores enviados desde el producto",[
+            id,name,discount_tag_valor, unit_price, discount_valor, brand_id
+        ]);
         if (currenUser) {
             // setModalViewCart(true);
             addProductsCart(id, quantity, token)
-                .then((res) => {
-                    // setCantCart();
+                .then(() => {
+                    updateCantProducts();
                     let discount = 0;
                     if (discount_valor > 0) {
                         discount = unit_price - discount_valor;
@@ -423,7 +426,7 @@ const Recientes = ({ bannersInfo, updateCantProducts}) => {
                         )}
 
                     </div>
-                    <AddRecents />
+                    <AddRecents updateCantProducts={updateCantProducts}/>
 
 
                     {/* ---------------------CAROUSEL RESPONSIVE----------------------------  */}
