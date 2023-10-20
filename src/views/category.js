@@ -8,7 +8,7 @@ import { allProductsCart } from "../services/cart";
 import { getCurrentUser } from './../helpers/Utils';
 import { getUserProfileInfo } from "../services/ordenes";
 
-function Category(){
+function Category() {
   const currenUser = getCurrentUser();
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
@@ -50,15 +50,25 @@ function Category(){
 
   useEffect(() => {
     getAllInfoPerfil();
-  },[token])
+  }, [token])
+
+  useEffect(() => {
+
+    if (isLoggedIn) {
+      getAllInfoPerfil();
+      console.log("si hay usuario logueado");
+      getCantCart();
+    }
+
+  }, [isLoggedIn])
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile}/>
-      <HeaderResponsive canCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile}/>
+      <Header cantCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <HeaderResponsive canCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
       {/* <HeaderCategories/> */}
       {/* <HeaderResponsiveCategorie/> */}
-      <ProductsCategories />
+      <ProductsCategories updateCantProducts={() => { getCantCart() }} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
       {/* <ProductsResponsiveCategorie/> */}
       <Footer />
     </div>

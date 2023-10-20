@@ -54,7 +54,7 @@ const Home = (props) => {
 
   const [datosPopup, setDatosPopup] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
-  
+
 
   const currenUser = getCurrentUser();
 
@@ -104,6 +104,7 @@ const Home = (props) => {
   };
 
   const getCantCart = () => {
+    
     allProductsCart(token)
       .then((res) => {
         const productsOncart = res.data;
@@ -144,33 +145,36 @@ const Home = (props) => {
     getAllBanners();
     getPrincipalPopup();
     getCantCart();
-    
+
     // getOfferDestacada();
     // offerDay();
   }, []);
 
 
   useEffect(() => {
-    
+
+    if (isLoggedIn) {
       getAllInfoPerfil();
-      console.log("si hay usuario logueado")
-    
-  },[token])
+      console.log("si hay usuario logueado");
+      getCantCart();
+    }
+
+  }, [isLoggedIn])
 
   return (
 
     // <Nav/>
     <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
-      <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile}/>
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
       <Banner />
       <OfertaDia />
-      <OfertaDestacada/>
-      <OfertaFlash/>
-      <Recientes bannersInfo={bannersInfo} updateCantProducts={getCantCart} className="w-100" />
-      <Promociones bannersInfo={bannersInfo} />
-      <Vendidos bannersInfo={bannersInfo} />
+      <OfertaDestacada />
+      <OfertaFlash />
+      <Recientes bannersInfo={bannersInfo} updateCantProducts={()=>{getCantCart()}} setIsLoggedInPartner={()=>setIsLoggedIn(true)} className="w-100" />
+      <Promociones bannersInfo={bannersInfo} updateCantProducts={()=>{getCantCart()}} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <Vendidos bannersInfo={bannersInfo} updateCantProducts={()=>{getCantCart()}} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
       {/* <Populares /> */}
       <Bannerdown bannersInfo={bannersInfo} />
       <Footer />
