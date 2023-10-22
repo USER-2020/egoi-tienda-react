@@ -537,8 +537,8 @@ function DetailCart({ setCantCart }) {
 
             productsCart.length > 0 ? (
               <div className="containerTableProducts">
-                <Table>
-                  <thead>
+                <Table  >
+                  <thead >
                     <tr>
                       <th>SL#</th>
                       <th>Detalles del producto</th>

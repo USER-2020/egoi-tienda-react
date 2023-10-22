@@ -535,7 +535,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                 </div> */}
                                             <div className='catImage'>
                                                 <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub) }}>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen_desk} alt={itemBanner.banner_data[0].imagen} />
+                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen_desk} alt={itemBanner.banner_data[0].imagen} width={438} height={260}/>
                                                 </a>
                                             </div>
 
@@ -554,7 +554,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                 </div> */}
                                             <div className='cvtImage'>
                                                 <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub) }}>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen_desk} alt={itemBanner.banner_data[1].imagen_desk} />
+                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen_desk} alt={itemBanner.banner_data[1].imagen_desk}  height={260}/>
                                                 </a>
                                             </div>
 
@@ -576,7 +576,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                 </div> */}
                                             <div className='tavtImage'>
                                                 <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub) }}>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen_desk} alt={itemBanner.banner_data[2].imagen_desk} />
+                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen_desk} alt={itemBanner.banner_data[2].imagen_desk} width={900} height={260}/>
                                                 </a>
                                             </div>
 
@@ -595,7 +595,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                 </div> */}
                                             <div className='cvt2Image'>
                                                 <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub) }}>
-                                                    <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen_desk} alt={itemBanner.banner_data[3].imagen_desk} />
+                                                    <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen_desk} alt={itemBanner.banner_data[3].imagen_desk} width={438} height={260}/>
                                                 </a>
                                             </div>
 

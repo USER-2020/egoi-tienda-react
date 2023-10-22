@@ -9,7 +9,7 @@ import { getCurrentUser } from '../../helpers/Utils';
 import './detailCartOffCanvas.css';
 import Swal from 'sweetalert2';
 
-const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart }) => {
+const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart, onclose}) => {
 
     const [quantity, setQuantity] = useState();
     const [costoEnvio, setCostoEnvio] = useState(0);
@@ -305,7 +305,7 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
 
                 <div className="btns">
                     <button onClick={(e) => { e.preventDefault(); history.push(`/detailCart`) }}>Ir a mi carrito </button>
-                    <a href='#' onClick={(e) => { e.preventDefault(); history.push(`/`) }}>Seguir comprando</a>
+                    <a href='#' onClick={(e) => { e.preventDefault(); onclose() }}>Seguir comprando</a>
                 </div>
             </div>
         </div>

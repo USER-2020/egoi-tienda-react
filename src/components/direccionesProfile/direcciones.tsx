@@ -147,7 +147,7 @@ function DireccionesPerfil() {
 
         <>
           <Modal
-            className="modal-dialog-centered modal-lg"
+            className="modal-dialog-centered modal-md"
             toggle={() => closeAddressCheckoutModal()}
             isOpen={modalAddressCheckout}
 
@@ -158,7 +158,7 @@ function DireccionesPerfil() {
           </Modal>
 
           <Modal
-            className="modal-dialog-centered modal-lg"
+            className="modal-dialog-centered modal-md"
             toggle={() => setModalAddressUpdate(false)}
             isOpen={modalAddressUpdate}
 

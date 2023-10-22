@@ -36,7 +36,7 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import DetailCartOffCanvas from "./cart/detailCartOffCanvas.tsx";
 
-const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart}) => {
+const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -528,12 +528,13 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
             </InputGroup>
 
           </div>
-          {isLoggedIn && (
-            <div>
-              <p style={{ marginBottom: 0, }}>¡Hola!, {detailInfoPerfil.f_name}</p>
-            </div>
-          )}
+
           <div className="userInteraction">
+            {isLoggedIn && (
+              <div style={{transform:'translate(-20px)'}}>
+                <p style={{ marginBottom: 0 }}>¡Hola!, {detailInfoPerfil.f_name}</p>
+              </div>
+            )}
             {/* Usuario Icono  */}
 
             <div className="dropdown">
@@ -869,7 +870,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
             {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart}/>
+            <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart} onclose={handleClose}/>
           </Offcanvas.Body>
         </Offcanvas>
 
