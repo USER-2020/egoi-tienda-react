@@ -191,7 +191,7 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
                             <Card key={index}>
                                 <div className="caracteristicasDetalle">
                                     <div className="img">
-                                        <img src={baseUrlImageThumbnail + products.thumbnail} alt={products.name} style={{ width: '50px', height: '50px' }} />
+                                        <img src={baseUrlImageThumbnail + products.thumbnail} alt={products.name} style={{ width: '50px', height: '50px', marginRight:'16px' }} />
                                     </div>
                                     <div className="info">
                                         <div className="starts">
