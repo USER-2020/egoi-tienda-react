@@ -1,0 +1,152 @@
+.offCanvasDetailCart .header {
+    display: flex;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+}
+
+.offCanvasDetailCart .body {
+    overflow-y: scroll;
+    height: 60vh;
+
+}
+
+.offCanvasDetailCart .body .noProductsOnCart svg {
+    text-align: center;
+    justify-content: center;
+    /* align-self: center; */
+}
+
+.offCanvasDetailCart .body .noProductsOnCart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Centrar verticalmente */
+    align-items: center;
+    /* Centrar horizontalmente */
+    text-align: center;
+    color: #FC5241;
+}
+
+.offCanvasDetailCart .body .noProductsOnCart a {
+    text-decoration: none;
+    color: white;
+    background-color: #FC5241;
+    font-weight: 700;
+    padding: 12px;
+    border-radius: 32px;
+}
+
+/* Estilos para navegadores basados en WebKit, como Chrome y Safari */
+.offCanvasDetailCart .body::-webkit-scrollbar {
+    width: 8px;
+    /* Ancho de la barra de desplazamiento */
+}
+
+.offCanvasDetailCart .body::-webkit-scrollbar-thumb {
+    background-color: #999;
+    /* Color del "pulgarcito" de la barra de desplazamiento */
+    border-radius: 4px;
+    /* Borde redondeado del "pulgarcito" */
+}
+
+.offCanvasDetailCart .body::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    /* Color de fondo de la barra de desplazamiento */
+}
+
+.offCanvasDetailCart .body .card {
+    border: none;
+    margin-bottom: 12px;
+
+}
+
+.offCanvasDetailCart .body .caracteristicasDetalle {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.offCanvasDetailCart .body .caracteristicasDetalle .info {
+    width: 100%;
+}
+
+
+.offCanvasDetailCart .body .caracteristicasDetalle .cutEnvio {
+    display: flex;
+    color: #089705;
+    align-self: center;
+    flex-direction: row;
+    font-size: 12px;
+    gap: 2px;
+}
+
+.offCanvasDetailCart .body .caracteristicasDetalle .cutEnvio p {
+    margin-bottom: 0;
+    align-self: center;
+}
+
+.offCanvasDetailCart .body .caracteristicasDetalle .productInfo h5 {
+    margin-bottom: 0;
+}
+
+.offCanvasDetailCart .body .caracteristicasDetalle .cant {
+    width: 100%;
+}
+
+.offCanvasDetailCart .body .caracteristicasDetalle .cant p {
+    margin-bottom: 0;
+}
+
+.offCanvasDetailCart .body .caracteristicasDetalle .img {
+    align-self: center;
+}
+
+.offCanvasDetailCart .body .caracteristicasDetalle .deleteProduct a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.offCanvasDetailCart .footer {
+    margin-top: 12px;
+}
+
+.offCanvasDetailCart .subtotal,
+.offCanvasDetailCart .descuentos,
+.offCanvasDetailCart .totalAPagar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.offCanvasDetailCart .footer .btns {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+
+}
+
+.offCanvasDetailCart .footer .btns button {
+    width: 160px;
+    justify-content: center;
+    align-self: center;
+    border: none;
+    border-radius: 32px;
+    padding: 10px;
+    color: white;
+    background-color: #FC5241;
+}
+
+.offCanvasDetailCart .footer .btns a {
+    text-decoration: none;
+    color: black;
+}
+
+.offCanvasDetailCart .footer .btns a:hover {
+    color: #FC5241;
+}

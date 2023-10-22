@@ -13,6 +13,7 @@ function Category() {
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+  const [productsCart, setProductsCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currentUser sea null
 
@@ -24,6 +25,7 @@ function Category() {
         const numberOfProducts = productsOncart.length;
         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
         setCantProductsOnCart(numberOfProducts);
+        setProductsCart(res.data);
 
 
       }).catch((err) => console.log(err));
@@ -64,8 +66,8 @@ function Category() {
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
-      <HeaderResponsive canCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart}/>
+      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
       {/* <HeaderCategories/> */}
       {/* <HeaderResponsiveCategorie/> */}
       <ProductsCategories updateCantProducts={() => { getCantCart() }} setIsLoggedInPartner={() => setIsLoggedIn(true)} />

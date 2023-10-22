@@ -12,6 +12,8 @@ const Thankyouforpay = () => {
     const currenUser = getCurrentUser();
     const [cantProductsOnCart, setCantProductsOnCart] = useState('');
     const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+    const [productsCart, setProductsCart] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
 
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
@@ -21,6 +23,7 @@ const Thankyouforpay = () => {
                 const productsOncart = res.data;
                 const numberOfProducts = productsOncart.length;
                 setCantProductsOnCart(numberOfProducts);
+                setProductsCart(res.data);
             })
             .catch((err) => console.log(err));
     };
@@ -34,17 +37,19 @@ const Thankyouforpay = () => {
     }
 
     useEffect(() => {
-        getCantCart();
-        // Ajusta la posición del scroll a la parte superior cuando la vista se carga
-        window.scrollTo(0, 0);
-        getAllInfoPerfil();
-    }, [currenUser]);
+        if (isLoggedIn) {
+            getCantCart();
+            // Ajusta la posición del scroll a la parte superior cuando la vista se carga
+            window.scrollTo(0, 0);
+            getAllInfoPerfil();
+        }
+    }, [isLoggedIn]);
 
 
     return (
         <div className="w-100 d-flex flex-column align-items-center">
-            <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
-            <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile}/>
+            <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart} />
+            <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
             <SuccessPurchase />
             <Footer />
         </div>

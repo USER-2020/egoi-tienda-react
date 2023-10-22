@@ -559,6 +559,19 @@ footer>.containerFooter {
 
 }
 
+footer > .containerFooter .row .mercadoPago{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-self: center;
+  gap: 5px;
+}
+
+footer > .containerFooter .row .mercadoPago h6{
+  align-self: center;
+  margin-bottom: 0;
+  color: #74737B;
+}
 footer .containerFooter .row {
   /* border: 1px solid gray;ç */
   padding: 30px 0;
@@ -749,6 +762,8 @@ div.filaMedia {
     padding: 10px 0;
   }
 
+
+
   .izqIconsMedia {
     /* Estilos generales del contenido izquierdo de redes sociales */
     display: flex;
@@ -812,6 +827,14 @@ div.filaMedia {
     margin-left: calc((100% - 115vw) / 2) !important;
   }
 
+
+  footer > .containerFooter .row .mercadoPago{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    gap: 5px;
+  }
   /* Puedes agregar estilos adicionales según tus necesidades */
 
   /* footer {
