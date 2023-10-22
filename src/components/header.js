@@ -6,7 +6,6 @@ import {
   Input,
   Modal,
   ModalBody,
-  Offcanvas,
   OffcanvasHeader,
   OffcanvasBody,
 } from "reactstrap";
@@ -33,7 +32,11 @@ import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
 
-const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import DetailCartOffCanvas from "./cart/detailCartOffCanvas.tsx";
+
+const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart}) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +56,13 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
   const [categoriesSearch, setCategoriesSearch] = useState([]);
   const [currentSubcategoryId, setCurrentSubcategoryId] = useState(null);
   const [offcanvasOpen, setOffcanvasOpen] = useState(false);
+  const [offcanvasOpenCart, setOffcanvasOpenCart] = useState(false);
   const [prevCantCart, setPrevCantCart] = useState(cantCart);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
 
@@ -70,6 +79,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
   const [showResults, setShowResults] = useState(false); // Estado para controlar la visibilidad del menú de resultados
   const resultsContainerRef = useRef(null);
   const offcanvasRef = useRef(null);
+  const offcanvasCartRef = useRef(null);
 
   const history = useHistory();
 
@@ -181,6 +191,13 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
     }
   };
 
+  const handleOutsideOffcanvasCart = (event) => {
+    if (offcanvasCartRef.current && !offcanvasCartRef.current.contains(event.target)) {
+      // Clic fuera del área del Offcanvas, ocultar el Offcanvas
+      setOffcanvasOpenCart(false);
+    }
+  };
+
 
   /**
    * The function "mostrarSubcategorias" logs the selected category and sets the subcategories based on
@@ -234,8 +251,16 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
     }
 
   };
+
+  const toggleOffcanvasCart = () => {
+    setOffcanvasOpenCart((prev) => !prev);
+  };
   const closeOffcanvas = () => {
     setOffcanvasOpen(false);
+  };
+
+  const closeOffcanvasCart = () => {
+    setOffcanvasOpenCart(false);
   };
 
   const closeModalRegistro = () => {
@@ -248,7 +273,12 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
 
   const goToDetailCart = () => {
     if (currenUser) {
-      history.push(`/detailCart`)
+      // history.push(`/detailCart`)
+      // console.log(currenUser.token)
+      // setOffcanvasOpen(true);
+      // setOffcanvasOpenCart(true);
+      // toggleOffcanvasCart();
+      handleShow();
     }
     else {
       setModalViewLogin(true);
@@ -280,16 +310,6 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
     history.push(`/`);
   };
 
-  // const handleFavList = () => {
-  //   if (currenUser) {
-  //       history.push({
-  //       pathname: `${myorders}`,
-  //       state: {activeOption: 'ListaDeseos', selectedOption: 'Lista Deseos'}
-  //     });
-  //   } else {
-  //     setModalViewLogin(true);
-  //   }
-  // }
 
   const handleFavList = () => {
     if (currenUser) {
@@ -363,36 +383,14 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
 
     // }
     handleLogin();
-    console.log(detailInfoPerfil);
+    // console.log(detailInfoPerfil);
 
 
   }, [currenUser]);
 
-
-  // useEffect(() => {
-  //   getCantCart();
-  // }, [currenUser,cantProductsOnCart]);
-
-  // useEffect(() => {
-  //   if (setCarrito) {
-  //     const token = currenUser.token;
-  //     allProductsCart(token)
-  //       .then((res) => {
-  //         const productsOncart = res.data;
-  //         // console.log("Respuesta de productos del carrito de compras desde el responsive", productsOncart);
-  //         const numberOfProducts = productsOncart.length;
-  //         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
-  //         setCantProductsOnCart(numberOfProducts);
-  //         resetCardProduct();
-
-  //       }).catch((err) => console.log(err));
-  //   }
-  // }, []);
-
   useEffect(() => {
     allCategoriesPromise();
     allBrands();
-    setOffcanvasOpen(false);
   }, []);
 
 
@@ -410,17 +408,40 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
     };
   }, [showResults]);
 
+  // useEffect(() => {
+  //   // Agregar un detector de clics fuera del Offcanvas cuando el Offcanvas está visible
+  //   console.log("Cambio de visibilidad", offcanvasOpenCart)
+  //   if (offcanvasOpenCart) {
+  //     document.addEventListener('click', handleOutsideOffcanvasCart);
+  //   } else {
+  //     document.removeEventListener('click', handleOutsideOffcanvasCart);
+  //   }
+  //   return () => {
+  //     document.removeEventListener('click', handleOutsideOffcanvasCart);
+  //   };
+
+
+  // }, [offcanvasOpenCart]);
+
   useEffect(() => {
-    document.addEventListener('click', handleOutsideOffcanvas);
+    // Agregar un detector de clics fuera del Offcanvas cuando el Offcanvas está visible
+    console.log("Cambio de visibilidad", offcanvasOpen)
+    if (offcanvasOpen) {
+      document.addEventListener('click', handleOutsideOffcanvas);
+    } else {
+      document.removeEventListener('click', handleOutsideOffcanvas);
+    }
+    // Limpiar el detector de clics cuando el componente se desmonta
     return () => {
       document.removeEventListener('click', handleOutsideOffcanvas);
     };
-  }, []);
+
+  }, [offcanvasOpen]);
 
   useEffect(() => {
     // Verifica si cantCart ha aumentado en 1 desde el valor anterior
     if (cantCart === prevCantCart + 1) {
-      setOffcanvasOpen(true);
+      handleShow();
     }
 
     // Actualiza el valor previo de cantCart
@@ -601,7 +622,8 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
 
             {/* Carrito de compras  */}
             <div className="dropdown">
-              <button onClick={() => { goToDetailCart() }}
+              <button
+                onClick={(e) => { e.preventDefault(); goToDetailCart() }}
                 style={{ textDecoration: 'none', color: 'black', border: 'none', backgroundColor: 'inherit', transform: 'translate(15px, 14px)' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-cart2" viewBox="0 0 35 35">
                   <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
@@ -842,49 +864,16 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner }) => {
       </nav>
       <div>
 
+        <Offcanvas show={show} onHide={handleClose} placement="end">
+          <Offcanvas.Header closeButton>
+            {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart}/>
+          </Offcanvas.Body>
+        </Offcanvas>
 
 
-
-        <div
-          className={`offcanvas offcanvas-end ${offcanvasOpen ? 'show' : ''}`}
-          data-bs-scroll="true"
-          tabIndex="-1"
-          id="offcanvasWithBothOptions"
-          aria-labelledby="offcanvasWithBothOptionsLabel"
-          ref={offcanvasRef}
-        >
-          <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasWithBothOptionsLabel">
-              Backdrop with scrolling
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
-              onClick={closeOffcanvas}
-            ></button>
-          </div>
-          <div className="offcanvas-body">
-            <p>Try scrolling the rest of the page to see this option in action.</p>
-          </div>
-        </div>
-
-
-
-        {/* <Offcanvas
-          direction="end"
-          fade={false}
-          show={offcanvasOpen}
-          onHide={() => setOffcanvasOpen(false)}
-        >
-          <OffcanvasHeader toggle={() => setOffcanvasOpen(false)}>
-            Offcanvas
-          </OffcanvasHeader>
-          <OffcanvasBody>
-            <strong>This is the Offcanvas body.</strong>
-          </OffcanvasBody>
-        </Offcanvas> */}
       </div >
     </>
   );

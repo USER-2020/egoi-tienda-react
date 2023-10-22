@@ -12,6 +12,8 @@ const PasswordRecovery = () => {
 
     const [cantProductsOnCart, setCantProductsOnCart] = useState('');
     const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+    const [productsCart, setProductsCart] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
 
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
@@ -23,6 +25,7 @@ const PasswordRecovery = () => {
                 const numberOfProducts = productsOncart.length;
                 // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
                 setCantProductsOnCart(numberOfProducts);
+                setProductsCart(res.data);
 
 
             }).catch((err) => console.log(err));
@@ -37,13 +40,16 @@ const PasswordRecovery = () => {
     }
 
     useEffect(() => {
-        getCantCart();
-        getAllInfoPerfil();
-    }, [currenUser]);
+        if (isLoggedIn) {
+            getAllInfoPerfil();
+            console.log("si hay usuario logueado");
+            getCantCart();
+        }
+    }, [isLoggedIn]);
     return (
         <div className="w-100 d-flex flex-column align-items-center">
-            <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile}/>
-            <HeaderResponsive cantCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile}/>
+            <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart} />
+            <HeaderResponsive cantCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
             <PasswordRecoveryComponent />
             <Footer />
         </div>

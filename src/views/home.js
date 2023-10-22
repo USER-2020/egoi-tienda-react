@@ -51,6 +51,7 @@ const Home = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
   const [modalPopup, setModalPopup] = useState(false);
   const [bannersInfo, setBannersInfo] = useState([]);
+  const [productsCart, setProductsCart] = useState([]);
 
   const [datosPopup, setDatosPopup] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
@@ -112,6 +113,7 @@ const Home = (props) => {
         const numberOfProducts = productsOncart.length;
         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
         setCantProductsOnCart(numberOfProducts);
+        setProductsCart(res.data);
 
 
       }).catch((err) => console.log(err));
@@ -166,7 +168,7 @@ const Home = (props) => {
     // <Nav/>
     <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart}/>
       <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
       <Banner />
       <OfertaDia />

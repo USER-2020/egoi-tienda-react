@@ -13,6 +13,7 @@ function DressCart() {
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+  const [productsCart, setProductsCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const getCantCart = () => {
@@ -24,6 +25,7 @@ function DressCart() {
         const numberOfProducts = productsOncart.length;
         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
         setCantProductsOnCart(numberOfProducts);
+        setProductsCart(res.data);
 
 
       }).catch((err) => console.log(err));
@@ -49,7 +51,7 @@ function DressCart() {
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart}/>
       <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
       <AddressCart />
       <Footer />

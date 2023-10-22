@@ -6,6 +6,7 @@ import pse from "../assets/mastercard-8 3.png";
 import visa from "../assets/mastercard-8 2.png";
 import mastercard from "../assets/mastercard-8 1.png";
 import americanexpress from "../assets/mastercard-8 5.png";
+import mercadoPago from "../assets/mercadopago-logo-png-gris-2.png";
 // import playstore from "../assets/image 1.png";
 // import appstore from "../assets/image 2.png";
 // import superintendencia from "../assets/LogoSuperintendencia.png";
@@ -116,10 +117,10 @@ const Footer = (props) => {
     /* Ticket de soporte */
     const handleTicketSupport = (e) => {
         e.preventDefault();
-        if(currenUser){
+        if (currenUser) {
             const url = `/myorders?activeOption=Ticket&selectedOption=Crear%20un%20ticket`;
             window.location.href = url;
-        }else{
+        } else {
             setModalViewLogin(true);
         }
     }
@@ -128,6 +129,10 @@ const Footer = (props) => {
         <footer className="container">
             <div className="containerFooter containerFooterResponsive w-100">
                 <div className="row">
+                    <div className="mercadoPago">
+                        <h6>Compra segura con </h6>
+                        <img src={mercadoPago} alt="logo" className={styles.logo} width={'100px'} height={'60px'} />
+                    </div>
                     <div className="footerLogo">
                         <div className="izq">
                             <a href="/">

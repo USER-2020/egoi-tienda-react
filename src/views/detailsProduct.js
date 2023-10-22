@@ -14,7 +14,9 @@ function DetailsProduct() {
 
   const [cantProductsOnCart, setCantProductsOnCart] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
+  const [productsCart, setProductsCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   const getCantCart = () => {
     allProductsCart(token)
@@ -22,6 +24,7 @@ function DetailsProduct() {
         const productsOncart = res.data;
         const numberOfProducts = productsOncart.length;
         setCantProductsOnCart(numberOfProducts);
+        setProductsCart(res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -48,8 +51,8 @@ function DetailsProduct() {
 
   return (
     <div className="w-100 d-flex flex-column align-items-center justify-content-between">
-      <Header cantCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile}/>
-      <HeaderResponsive canCart={cantProductsOnCart} handleLoggedIn={isLoggedIn} detailInfoPerfil={detailInfoProfile}/>
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart}/>
+      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
       <DetailProduct setCantCart={getCantCart} handleLogged={() => setIsLoggedIn(true)}/>
       <SimilarProduct />
       <Footer />
