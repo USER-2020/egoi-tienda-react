@@ -103,9 +103,9 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
             addProductsCart(id, quantity, currenUser.token)
                 .then((res) => {
     
-                    setIsLoggedInPartner(true);
+                    // setIsLoggedInPartner(true);
                     setCantCart();
-                    toast.success('Producto agregado con éxito!');
+                    // toast.success('Producto agregado con éxito!');
                     let discount = 0;
                     if (detailProducts.discount_valor > 0) {
                         discount = detailProducts.unit_price - detailProducts.discount_valor;
@@ -133,6 +133,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                         }],
                         value: detailProducts.unit_price
                     });
+                    history.push('/detailCart');
                     // console.log("Producto enviado", res.data);
                     // console.log(token);
                 })
@@ -507,7 +508,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
 
     return (
         <div>
-            <Toaster toastOptions={{ duration: 4000 }} />
+            {/* <Toaster toastOptions={{ duration: 4000 }} /> */}
 
             {isLoading ? (
                 <>

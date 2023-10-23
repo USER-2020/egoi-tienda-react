@@ -10,7 +10,17 @@ import { typePayment, allBanksById, makePay } from '../../../services/metodosDeP
 import { ThreeDots } from 'react-loader-spinner';
 import ReactDOM from 'react-dom';
 
-
+const ERROR_MESSAGES = {
+    emptyCardNumber: 'El número de la tarjeta es obligatorio',
+    invalidCardNumber: 'El número de la tarjeta es inválido',
+    emptyExpiryDate: 'La fecha de expiración es inválida',
+    monthOutOfRange: 'El mes de expiración debe estar entre 01 y 12',
+    yearOutOfRange: 'El año de expiración no puede estar en el pasado',
+    dateOutOfRange: 'La fecha de expiración no puede estar en el pasado',
+    invalidExpiryDate: 'La fecha de expiración es inválida',
+    emptyCVC: 'El código de seguridad es inválido',
+    invalidCVC: 'El código de seguridad es inválido'
+  };
 function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose }) {
 
     // const [typeCard, setTypeCard] = useState("");
@@ -37,7 +47,7 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
         getCardNumberProps,
         getExpiryDateProps,
         getCVCProps
-    } = usePaymentInputs();
+    } = usePaymentInputs({ errorMessages: ERROR_MESSAGES });
 
     /* Manejo de errores */
     const [cvcError, setCvcError] = useState(false);
