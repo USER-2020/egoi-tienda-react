@@ -51,7 +51,7 @@ function DetailsProduct() {
     <div className="w-100 d-flex flex-column align-items-center justify-content-between">
       <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart} />
       <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
-      <DetailProduct setCantCart={getCantCart} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
+      <DetailProduct setCantCart={getCantCart}  />
       <SimilarProduct />
       <Footer />
     </div>

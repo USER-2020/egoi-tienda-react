@@ -1143,12 +1143,12 @@ function AddressCart() {
             }, 1000); // Ajusta el tiempo de espera según tus necesidades
 
           }
-          }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-              // console.log('I was closed by the timer');
-            }
-          });
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            // console.log('I was closed by the timer');
+          }
+        });
       })
       .catch((err) => console.log(err));
   }
@@ -1635,21 +1635,18 @@ function AddressCart() {
             {activeStep < 3 && (
               <>
                 <div className="toPay">
-                  <a href="/detailCart">Ir al carrito</a>
-                </div>
-                <div className="awaitShopping">
                   <a href="#" onClick={() => handleProcederCompra()} type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Proceder con la compra</a>
+
+                </div>
+                <div className="awaitShopping">
+                  <a href="/detailCart">Ir al carrito</a>
                 </div>
               </>
 
             )}
             {activeStep >= 3 && (
               <>
-                <div className="turnCheckout">
-                  <a href="#" onClick={() => handleStepClick(2, 50)} type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Regresar al checkout</a>
-                </div>
                 {botonDeshabilitado && okPurchase ? (
                   <div className="toPay">
                     <a href="#" onClick={() => handlePurchaseSucces()}>Finalizar compra</a>
@@ -1664,6 +1661,11 @@ function AddressCart() {
                     >Finalizar compra</a>
                   </div>
                 )}
+                <div className="turnCheckout">
+                  <a href="#" onClick={() => handleStepClick(2, 50)} type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Regresar al checkout</a>
+                </div>
+
 
               </>
             )}
