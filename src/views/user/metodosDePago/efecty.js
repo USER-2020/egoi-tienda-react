@@ -84,7 +84,7 @@ function EfectyModal({ totalAmount, dataRef, addressId, descriptionOrder, cupon,
                 </div>
                 <div >
                   <h2 style={{ fontSize: "14px" }}>Total a pagar</h2>
-                  <h5>{totalAmount}</h5>
+                  <h5>{totalAmount.toLocaleString('es')}</h5>
                 </div>
               </div>
               <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>

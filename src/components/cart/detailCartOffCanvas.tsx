@@ -9,7 +9,7 @@ import { getCurrentUser } from '../../helpers/Utils';
 import './detailCartOffCanvas.css';
 import Swal from 'sweetalert2';
 
-const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart }) => {
+const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart, onclose}) => {
 
     const [quantity, setQuantity] = useState();
     const [costoEnvio, setCostoEnvio] = useState(0);
@@ -123,10 +123,10 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
 
         if (subtotal <= 39900) {
             const precioTotalaPagar = subtotal + 0;
-            return `$${precioTotalaPagar.toLocaleString('en')}`;
+            return `$${precioTotalaPagar.toLocaleString('es')}`;
         }
         const precioTotalaPagar = subtotal + costoEnvio;
-        return `$${precioTotalaPagar.toLocaleString('en')}`;
+        return `$${precioTotalaPagar.toLocaleString('es')}`;
 
     }
 
@@ -217,22 +217,22 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
                                             )}
                                             {products.discount === 0 && products.discount_tag === 0 && (
                                                 <>
-                                                    <h5> ${((products.price) * products.quantity).toLocaleString('en')}</h5>
+                                                    <h5> ${((products.price) * products.quantity).toLocaleString('es')}</h5>
                                                 </>
                                             )}
                                             {products.discount > 0 && (
                                                 <>
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                        <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                                                        <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
+                                                        <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('es')}</s></h5>
+                                                        <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('es')}</h5>
                                                     </div>
                                                 </>
                                             )}
                                             {products.discount_tag > 0 && (
                                                 <>
                                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                        <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                                                        <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
+                                                        <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('es')}</s></h5>
+                                                        <h5>${(products.discount_tag * products.quantity).toLocaleString('es')}</h5>
                                                     </div>
                                                 </>
                                             )}
@@ -285,7 +285,7 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
             <div className="footer">
                 <div className="subtotal">
                     <p>Subtotal</p>
-                    <p>${subtotalWithoutDiscount.toLocaleString('en')}</p>
+                    <p>${subtotalWithoutDiscount.toLocaleString('es')}</p>
 
                 </div>
                 <div className="descuentos">
@@ -294,7 +294,7 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
                         <p>{discountCoupon.discount}</p>
 
                     ) : (
-                        <p>${discountedProducts.toLocaleString('en')}</p>
+                        <p>${discountedProducts.toLocaleString('es')}</p>
                     )}
 
                 </div>
@@ -305,7 +305,7 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
 
                 <div className="btns">
                     <button onClick={(e) => { e.preventDefault(); history.push(`/detailCart`) }}>Ir a mi carrito </button>
-                    <a href='#' onClick={(e) => { e.preventDefault(); history.push(`/`) }}>Seguir comprando</a>
+                    <a href='#' onClick={(e) => { e.preventDefault(); onclose() }}>Seguir comprando</a>
                 </div>
             </div>
         </div>

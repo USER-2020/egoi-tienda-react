@@ -48,6 +48,7 @@ function Orders(props) {
     const [showTableOrder, setShowTableOrder] = useState(true);
     const [showDetailOrder, setShowDetailOrder] = useState(false);
     const [showTrackOrder, setShowTrackOrder] = useState(false);
+    const [idDetailPedido, setIdDetailPedido]= useState(null);
 
     /* Flujo de componetnes sigue tu pedido */
     const [sigueTuPedido, setSigueTuPedido] = useState(false);
@@ -371,10 +372,10 @@ function Orders(props) {
                                         <TableOrders setOrderDetalleId={handleOrderClick} />
                                     )}
                                     {showDetailOrder && (
-                                        <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} />
+                                        <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} sendIdOrder={setIdDetailPedido}/>
                                     )}
                                     {showTrackOrder && (
-                                        <TrackOrder orderDetalleId={orderDetalleId} />
+                                        <TrackOrder orderDetalleId={idDetailPedido}/>
                                     )}
                                 </div>
                             )}
@@ -442,10 +443,10 @@ function Orders(props) {
                                     <TableOrders setOrderDetalleId={handleOrderClick} />
                                 )}
                                 {showDetailOrder && (
-                                    <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} />
+                                    <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} sendIdOrder={setIdDetailPedido}/>
                                 )}
                                 {showTrackOrder && (
-                                    <TrackOrder orderDetalleId={orderDetalleId} />
+                                    <TrackOrder orderDetalleId={idDetailPedido} />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>

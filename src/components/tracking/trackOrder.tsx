@@ -4,7 +4,7 @@ import ModalDetallePedido from './modalDetalle.tsx'
 import { getCurrentUser } from '../../helpers/Utils.js';
 import { trackerOrder } from '../../services/tracking.js';
 
-function TrackOrder({ orderDetalleId }) {
+function TrackOrder({ orderDetalleId}) {
 
     const [modalDetallePedido, setModalDetallePedido] = useState(false);
     const [infoOrderTrack, setInfoOrderTrack] = useState('');
@@ -35,6 +35,7 @@ function TrackOrder({ orderDetalleId }) {
     useEffect(() => {
         if (token) {
             detailsOrderTrack();
+            
         }
     }, []);
 

@@ -38,22 +38,20 @@ function DetailsProduct() {
   }
 
   useEffect(() => {
-    getCantCart();
-    if (currentUser && isLoggedIn) {
-      setIsLoggedIn(true);
-      console.log(isLoggedIn)
-    } else {
-      setIsLoggedIn(false);
-      console.log(isLoggedIn);
+
+    if (isLoggedIn) {
+      getAllInfoPerfil();
+      console.log("si hay usuario logueado");
+      getCantCart();
     }
-    getAllInfoPerfil();
-  }, [currentUser, isLoggedIn]);
+
+  }, [isLoggedIn])
 
   return (
     <div className="w-100 d-flex flex-column align-items-center justify-content-between">
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart}/>
-      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
-      <DetailProduct setCantCart={getCantCart} handleLogged={() => setIsLoggedIn(true)}/>
+      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart} />
+      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
+      <DetailProduct setCantCart={getCantCart} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
       <SimilarProduct />
       <Footer />
     </div>
