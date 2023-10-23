@@ -33,8 +33,9 @@ import { addFavoriteProduct } from '../../services/ordenes';
 import parse from 'html-react-parser';
 import { ThreeCircles } from 'react-loader-spinner';
 import SimilarProduct from './similarProduct.tsx';
+import toast, { Toaster } from 'react-hot-toast';
 
-function DetailProduct({ setCantCart, handleLogged }) {
+function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
     const { slug } = useParams();
     const [detailProducts, setDetailProducts] = useState([]);
     const [currentImg, setCurrentImage] = useState('');
@@ -97,10 +98,14 @@ function DetailProduct({ setCantCart, handleLogged }) {
 
     const addToCart = () => {
         if (currenUser) {
-            setModalViewCart(true);
+            // setModalViewCart(true);
+            
             addProductsCart(id, quantity, currenUser.token)
                 .then((res) => {
+    
+                    setIsLoggedInPartner(true);
                     setCantCart();
+                    toast.success('Producto agregado con éxito!');
                     let discount = 0;
                     if (detailProducts.discount_valor > 0) {
                         discount = detailProducts.unit_price - detailProducts.discount_valor;
@@ -252,7 +257,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
         // Code to handle user login, such as storing session storage, etc.
         if (currenUser) {
             setIsLoggedIn(true);
-            handleLogged(true);
+            // handleLogged(true);
             // console.log("Estas logueado")
 
         } else {
@@ -432,7 +437,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
 
 
         // history.push(history.location.pathname);
-    }, [currenUser, handleLogged]);
+    }, [currenUser]);
 
 
 
@@ -502,7 +507,7 @@ function DetailProduct({ setCantCart, handleLogged }) {
 
     return (
         <div>
-
+            <Toaster toastOptions={{ duration: 4000 }} />
 
             {isLoading ? (
                 <>
