@@ -322,10 +322,10 @@ function AddressCart() {
 
     if (subtotal <= 39900) {
       const precioTotalaPagar = subtotal + 0;
-      return `$${precioTotalaPagar.toLocaleString('en')}`;
+      return `$${precioTotalaPagar.toLocaleString('es')}`;
     }
     const precioTotalaPagar = subtotal + costoEnvio;
-    return `$${precioTotalaPagar.toLocaleString('en')}`;
+    return `$${precioTotalaPagar.toLocaleString('es')}`;
 
     // const subtotalNumber = parseInt(subtotal.replace(',', ''), 10);
   }
@@ -368,7 +368,7 @@ function AddressCart() {
   /* CAmbio de precio subtotal */
 
   /* Cambio de precio en total */
-  const totalNumber = parseInt(totalaPagar.replace(/[\$,]/g, ''), 10);
+  const totalNumber = parseInt(totalaPagar.replace(/[\$.]/g, ''), 10);
 
   let formattedDiscount = '';
   let formattedTotal = '';
@@ -1108,42 +1108,47 @@ function AddressCart() {
             setTimeout(() => {
               const newWindow = window.open('', '_blank', 'width=600,height=400');
 
-              // Establece los estilos CSS para el contenedor
-              const containerStyles = {
-                width: '100vw',
-                height: '100vh',
-                margin: 0,
-                padding: 0,
-                overflow: 'hidden',
-              };
+              if (newWindow && newWindow.document && newWindow.document.body) {
+                // Establece los estilos CSS para el contenedor
+                const containerStyles = {
+                  width: '100vw',
+                  height: '100vh',
+                  margin: 0,
+                  padding: 0,
+                  overflow: 'hidden',
+                };
 
-              // Establece los estilos CSS para el PDFViewer
-              const viewerStyles = {
-                width: '100%',
-                height: '100%',
-              };
+                // Establece los estilos CSS para el PDFViewer
+                const viewerStyles = {
+                  width: '100%',
+                  height: '100%',
+                };
 
-
-
-              // Renderiza el componente PDFViewer en la nueva ventana
-              ReactDOM.render(
-                <div style={containerStyles}>
-                  <PDFViewer style={viewerStyles}>
-                    <PDFContent dataRefEfecty={newDataRef}
-                      totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
-                      description={descriptionOrder} />
-                  </PDFViewer>
-                </div>,
-                newWindow.document.body
-              );
+                // Renderiza el componente PDFViewer en la nueva ventana
+                ReactDOM.render(
+                  <div style={containerStyles}>
+                    <PDFViewer style={viewerStyles}>
+                      <PDFContent
+                        dataRefEfecty={newDataRef}
+                        totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
+                        description={descriptionOrder}
+                      />
+                    </PDFViewer>
+                  </div>,
+                  newWindow.document.body
+                );
+              } else {
+                console.error('No se pudo encontrar el contenedor DOM en la nueva ventana.');
+              }
             }, 1000); // Ajusta el tiempo de espera según tus necesidades
-          },
-        }).then((result) => {
-          /* Read more about handling dismissals below */
-          if (result.dismiss === Swal.DismissReason.timer) {
-            // console.log('I was closed by the timer');
+
           }
-        });
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              // console.log('I was closed by the timer');
+            }
+          });
       })
       .catch((err) => console.log(err));
   }
@@ -1522,7 +1527,7 @@ function AddressCart() {
                   <p>$0</p>
                 ) : (
 
-                  <p>${subtotalWithoutDiscount.toLocaleString('en')}</p>
+                  <p>${subtotalWithoutDiscount.toLocaleString('es')}</p>
                 )}
               </div>
               <div className="impuesto">
@@ -1542,7 +1547,7 @@ function AddressCart() {
                   subtotal && subtotal <= 39900 ? (
                     <span className='badge text-bg-success'>Paga el cliente</span>
                   ) : (
-                    <p>${costoEnvio.toLocaleString('en')}</p>
+                    <p>${costoEnvio.toLocaleString('es')}</p>
                   )
                 )}
               </div>
@@ -1554,7 +1559,7 @@ function AddressCart() {
                   discountCoupon && discountCoupon.total !== undefined ? (
                     <p>{discountCoupon.discount}</p>
                   ) : (
-                    <p>${discountedProducts.toLocaleString('en')}</p>
+                    <p>${discountedProducts.toLocaleString('es')}</p>
                   )
                 )}
               </div>
@@ -1695,22 +1700,22 @@ function AddressCart() {
                     )}
                     {products.discount === 0 && products.discount_tag === 0 && (
                       <>
-                        <h5> ${((products.price) * products.quantity).toLocaleString('en')}</h5>
+                        <h5> ${((products.price) * products.quantity).toLocaleString('es')}</h5>
                       </>
                     )}
                     {products.discount > 0 && (
                       <>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                          <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                          <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
+                          <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('es')}</s></h5>
+                          <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('es')}</h5>
                         </div>
                       </>
                     )}
                     {products.discount_tag > 0 && (
                       <>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                          <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                          <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
+                          <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('es')}</s></h5>
+                          <h5>${(products.discount_tag * products.quantity).toLocaleString('es')}</h5>
                         </div>
                       </>
                     )}
@@ -1726,16 +1731,16 @@ function AddressCart() {
               </div>
             </Card>
           ))}
-          {discountedProducts === 0 && (          
-          <div className="containerCupon">
-            <input type="text"
-              placeholder='¿Tienes un cupón?'
-              value={cupon}
-              onChange={(e) => setCupon(e.target.value)} />
-            <div className="btnCupon">
-              <a href="#" onClick={() => aplicarCupon()}>Aplicar cupón</a>
+          {discountedProducts === 0 && (
+            <div className="containerCupon">
+              <input type="text"
+                placeholder='¿Tienes un cupón?'
+                value={cupon}
+                onChange={(e) => setCupon(e.target.value)} />
+              <div className="btnCupon">
+                <a href="#" onClick={() => aplicarCupon()}>Aplicar cupón</a>
+              </div>
             </div>
-          </div>
           )}
           <div className="factura">
             <p className='title'>Factura</p>
@@ -1743,7 +1748,7 @@ function AddressCart() {
               <p className="def">En productos</p>
               {isResetOk ? (
                 <p>$0</p>
-              ) : (<p className="precio">$ {subtotalWithoutDiscount.toLocaleString('en')}</p>)}
+              ) : (<p className="precio">$ {subtotalWithoutDiscount.toLocaleString('es')}</p>)}
             </span>
             <span className="costoEnvio">
               <p className="def">Costo de envío</p>
@@ -1754,7 +1759,7 @@ function AddressCart() {
                 subtotal && subtotal <= 39900 ? (
                   <span className='badge text-bg-success' id='spanPago'>Paga el cliente</span>
                 ) : (
-                  <p className="precio">$ {costoEnvio.toLocaleString('en')}</p>
+                  <p className="precio">$ {costoEnvio.toLocaleString('es')}</p>
                 )
 
               )}
@@ -1766,7 +1771,7 @@ function AddressCart() {
                 <p>$0</p>
               ) : (
                 <p className='precio'>
-                  ${discountedProducts.toLocaleString('en')}
+                  ${discountedProducts.toLocaleString('es')}
                 </p>
 
 

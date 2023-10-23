@@ -316,10 +316,10 @@ function DetailCart({ setCantCart }) {
 
     if (subtotal <= 39900) {
       const precioTotalaPagar = subtotal + 0;
-      return `$${precioTotalaPagar.toLocaleString('en')}`;
+      return `$${precioTotalaPagar.toLocaleString('es')}`;
     }
     const precioTotalaPagar = subtotal + costoEnvio;
-    return `$${precioTotalaPagar.toLocaleString('en')}`;
+    return `$${precioTotalaPagar.toLocaleString('es')}`;
 
   }
 
@@ -449,22 +449,22 @@ function DetailCart({ setCantCart }) {
                         )}
                         {products.discount === 0 && products.discount_tag === 0 && (
                           <>
-                            <h5> ${((products.price) * products.quantity).toLocaleString('en')}</h5>
+                            <h5> ${((products.price) * products.quantity).toLocaleString('es')}</h5>
                           </>
                         )}
                         {products.discount > 0 && (
                           <>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                              <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                              <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('en')}</h5>
+                              <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('es')}</s></h5>
+                              <h5> ${((products.price - products.discount) * products.quantity).toLocaleString('es')}</h5>
                             </div>
                           </>
                         )}
                         {products.discount_tag > 0 && (
                           <>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                              <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('en')}</s></h5>
-                              <h5>${(products.discount_tag * products.quantity).toLocaleString('en')}</h5>
+                              <h5 style={{ color: '#A2A1A7', fontSize: '12px' }}><s>${((products.price) * products.quantity).toLocaleString('es')}</s></h5>
+                              <h5>${(products.discount_tag * products.quantity).toLocaleString('es')}</h5>
                             </div>
                           </>
                         )}
@@ -565,22 +565,22 @@ function DetailCart({ setCantCart }) {
                     <div className="caracteristicaPrecio">
                       {products.discount === 0 && products.discount_tag === 0 && (
                         <>
-                          ${products.price.toLocaleString('en')}
+                          ${products.price.toLocaleString('es')}
                         </>
                       )}
                       {products.discount_tag > 0 && (
                         <>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                            <p style={{ marginBottom: '0px', color: '#A2A1A7' }}><s>$ {(products.price.toLocaleString('en'))}</s></p>
-                            <p style={{ marginBottom: '0px' }}>$ {(products.discount_tag).toLocaleString('en')}</p>
+                            <p style={{ marginBottom: '0px', color: '#A2A1A7' }}><s>$ {(products.price.toLocaleString('es'))}</s></p>
+                            <p style={{ marginBottom: '0px' }}>$ {(products.discount_tag).toLocaleString('es')}</p>
                           </div>
                         </>
                       )}
                       {products.discount > 0 && (
                         <>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                            <p style={{ marginBottom: '0px', color: '#A2A1A7' }}><s>$ {(products.price.toLocaleString('en'))}</s></p>
-                            <p style={{ marginBottom: '0px' }}>$ {(products.price - products.discount).toLocaleString('en')}</p>
+                            <p style={{ marginBottom: '0px', color: '#A2A1A7' }}><s>$ {(products.price.toLocaleString('es'))}</s></p>
+                            <p style={{ marginBottom: '0px' }}>$ {(products.price - products.discount).toLocaleString('es')}</p>
                           </div>
                         </>
                       )}
@@ -610,22 +610,22 @@ function DetailCart({ setCantCart }) {
                     <div className="caracteristicaPrecioTotal">
                       {products.discount === 0 && products.discount_tag === 0 && (
                         <>
-                          ${((products.price) * products.quantity).toLocaleString('en')}
+                          ${((products.price) * products.quantity).toLocaleString('es')}
                         </>
                       )}
                       {products.discount > 0 && (
                         <>
-                          $ {((products.price - products.discount) * products.quantity).toLocaleString('en')}
+                          $ {((products.price - products.discount) * products.quantity).toLocaleString('es')}
                         </>
                       )}
                       {products.discount_tag > 0 && (
                         <>
-                          {(products.discount_tag * products.quantity).toLocaleString('en')}
+                          {(products.discount_tag * products.quantity).toLocaleString('es')}
                         </>
                       )}
                     </div>
                     {/* <div className="caracteristicaCostoEnvio">
-                      ${costoEnvio.toLocaleString('en')}
+                      ${costoEnvio.toLocaleString('es')}
                     </div> */}
                     <a href="#" onClick={() => deleteOne(products.id, products.name, products.price, products.discount, products.discount_tag, products.quantity)}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -658,7 +658,7 @@ function DetailCart({ setCantCart }) {
               <Card>
                 <div className="subtotal">
                   <p>Subtotal</p>
-                  <p>${subtotalWithoutDiscount.toLocaleString('en')}</p>
+                  <p>${subtotalWithoutDiscount.toLocaleString('es')}</p>
                 </div>
                 <div className="impuesto">
                   <p>Impuesto</p>
@@ -672,7 +672,7 @@ function DetailCart({ setCantCart }) {
                     subtotal <= 39900 ? (
                       <span className='badge text-bg-success'>Paga el cliente</span>
                     ) : (
-                      <p>${costoEnvio.toLocaleString('en')}</p>
+                      <p>${costoEnvio.toLocaleString('es')}</p>
                     )
                   )}
                 </div>
@@ -682,7 +682,7 @@ function DetailCart({ setCantCart }) {
                     <p>{discountCoupon.discount}</p>
 
                   ) : (
-                    <p>${discountedProducts.toLocaleString('en')}</p>
+                    <p>${discountedProducts.toLocaleString('es')}</p>
                   )}
                 </div>
                 <div className="cupon">
@@ -773,7 +773,7 @@ function DetailCart({ setCantCart }) {
               {productsCart.length > 0 ? (
                 <>
                   <div className="toPay">
-                    {/* <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
+                    {/* <Link to={`/checkout/${subtotal.toLocaleString('es')}/${costoEnvio.toLocaleString('es')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
                     {/* <Link to={checkout}> */}
                     <a href={`/checkout`} >Ir a pagar</a>
                     {/* </Link> */}
@@ -804,7 +804,7 @@ function DetailCart({ setCantCart }) {
                   subtotal <= 39900 ? (
                     <span className='badge text-bg-success'>Paga el cliente</span>
                   ) : (
-                    <p>${costoEnvio.toLocaleString('en')}</p>
+                    <p>${costoEnvio.toLocaleString('es')}</p>
                   )
                 )}</p>
             </div>
@@ -815,7 +815,7 @@ function DetailCart({ setCantCart }) {
             {productsCart.length > 0 ? (
               <>
                 <div className="awaitShopping">
-                  {/* <Link to={`/checkout/${subtotal.toLocaleString('en')}/${costoEnvio.toLocaleString('en')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
+                  {/* <Link to={`/checkout/${subtotal.toLocaleString('es')}/${costoEnvio.toLocaleString('es')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
                   <a href={`/checkout`}>Continuar compra</a>
                   {/* </Link> */}
                 </div>

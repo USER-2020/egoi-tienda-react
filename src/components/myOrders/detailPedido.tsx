@@ -6,7 +6,7 @@ import { getCurrentUser } from '../../helpers/Utils';
 import { getOrdenByGroupId } from './../../services/ordenes';
 import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
+function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder}) {
 
     const [detailOrden, setDetailOrden] = useState('');
 
@@ -24,7 +24,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
     const location = useLocation();
    
 
-    const handleChangueTrack = () => {
+    const handleChangueTrack = (idPedido) => {
         // e.preventDefault();
         const searchParams = new URLSearchParams(location.search);
         const activeOption = searchParams.get('activeOption');
@@ -33,6 +33,10 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
         // Cambiar el pathname y agregar parámetros a la ruta
         // history.push(`/myOrders?activeOption=RastreaPedido&selectedOption=Rastrear%20pedido`);
         closeDetailOpenTrack();
+        sendIdOrder(idPedido);
+
+        
+        
     }
     const getDetailPedido = () => {
         getOrdenDetalleById(token, orderDetalleId)
@@ -48,14 +52,15 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
 
                 console.log(res.data);
                 console.log(res.data.productos);
-                console.log(res.data.id_orden[0]);
+                console.log(res.data.id_orden);
 
+                // sendIdOrder(res.data.id_orden);
                 setDetalleOrdenV2(res.data);
             }).catch((err) => console.log(err));
     }
 
     const generateFacture = () => {
-        getFacturaById(token, orderDetalleId)
+        getFacturaById(token, detalleOrdenV2.id_orden)
             .then((res) => {
 
                 const pdfData = res.data; // Decodificar el string base64
@@ -119,7 +124,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
             totalPagado += costoEnvio;
         }
 
-        return totalPagado.toLocaleString('en');
+        return totalPagado.toLocaleString('es');
     }
 
 
@@ -149,7 +154,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                             <div className="fechaPedidoNro">
                                 <div className="nroPedido">
                                     <h6>Número de pedido</h6>
-                                    <p>{detalleOrdenV2.id_orden[0]}</p>
+                                    <p>{detalleOrdenV2.id_orden}</p>
                                 </div>
 
                                 <div className="fechaPedido">
@@ -184,7 +189,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                                         </div>
                                         <div className="description">
                                             <h6>{itemP.detalle.name}</h6>
-                                            <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: 0, color: '#171523' }}>${itemP.price.toLocaleString('en')}</p>
+                                            <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: 0, color: '#171523' }}>${itemP.price.toLocaleString('es')}</p>
                                             <p style={{ color: '#74737B', fontSize: '16px' }}>Cantidad: {itemP.qty}</p>
                                         </div>
                                     </div>
@@ -207,7 +212,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                             </div>
                             <div className="subtotal">
                                 <p>Subtotal</p>
-                                <p>${calcularTotalPrecio().toLocaleString('en')}</p>
+                                <p>${calcularTotalPrecio().toLocaleString('es')}</p>
 
                             </div>
                             <div className="impuesto">
@@ -218,13 +223,13 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                             <div className="Envio">
                                 <p>Envío</p>
                                 {calcularTotalPrecio() >= 39990 && calcularTotalPrecio() <= 79990 && (
-                                    <p>${costoEnvio.toLocaleString('en')}</p>
+                                    <p>${costoEnvio.toLocaleString('es')}</p>
                                 )}
                                 {calcularTotalPrecio() < 39990 && (
                                     <span className='badge text-bg-success' style={{height: '20px', alignSelf:'center', justifyItems:'center', marginBottom:'10px'}}>Paga el cliente</span>
                                 )}
                                 {calcularTotalPrecio() >= 79990 && calcularTotalPrecio() <= 1999000 && (
-                                    <p>${(costoEnvio - 9900).toLocaleString('en')}</p>
+                                    <p>${(costoEnvio - 9900).toLocaleString('es')}</p>
                                 )}
 
                                 {/* {item.price <= 79900 && item.price >= 39990 ? (
@@ -236,8 +241,8 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                             </div>
                             <div className="descuentoProducto">
                                 <p>Descuento</p>
-                                {/* <p>${item.discount.toLocaleString('en')}</p> */}
-                                <p>${calDiscount().toLocaleString('en')}</p>
+                                {/* <p>${item.discount.toLocaleString('es')}</p> */}
+                                <p>${calDiscount().toLocaleString('es')}</p>
                             </div>
                             <div className="cuponDescuento">
                                 <p>Cupón Descuento</p>
@@ -246,9 +251,9 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
                             <div className="totalAPagar">
                                 <h6>Total a pagar</h6>
                                 {/* {item.price > 0 && item.discount > 0 && item.price >= 39900 && item.price <= 79990 ? (
-                                    <h5>${(item.price + item.discount + 9900).toLocaleString('en')}</h5>
+                                    <h5>${(item.price + item.discount + 9900).toLocaleString('es')}</h5>
                                 ) : item.price > 0 ? (
-                                    <h5>${item.price.toLocaleString('en')}</h5>
+                                    <h5>${item.price.toLocaleString('es')}</h5>
                                 ) : null} */}
                                 <h5>${calculatePayableAmount()}</h5>
                             </div>
@@ -258,7 +263,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId }) {
 
 
                     <div className="opcionesRastreoOrFacturar">
-                        <a href="#" className='btn rastrear' onClick={(e) => { e.preventDefault(); handleChangueTrack() }}>
+                        <a href="#" className='btn rastrear' onClick={(e) => { e.preventDefault(); handleChangueTrack(detalleOrdenV2.id_orden) }}>
                             <svg width="24" height="24" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16.5 13C16.5 14.6569 15.1569 16 13.5 16C11.8431 16 10.5 14.6569 10.5 13C10.5 11.3431 11.8431 10 13.5 10C15.1569 10 16.5 11.3431 16.5 13Z" fill="white" />
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 2C7.42487 2 2.5 6.92487 2.5 13C2.5 19.0751 7.42487 24 13.5 24C19.5751 24 24.5 19.0751 24.5 13C24.5 6.92487 19.5751 2 13.5 2ZM0.5 13C0.5 5.8203 6.3203 0 13.5 0C20.6797 0 26.5 5.8203 26.5 13C26.5 20.1797 20.6797 26 13.5 26C6.3203 26 0.5 20.1797 0.5 13Z" fill="white" />

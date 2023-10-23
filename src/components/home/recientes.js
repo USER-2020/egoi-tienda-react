@@ -169,7 +169,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
         const maxItems = 15;
         const limitedList = updatedRecentlyViewed.slice(0, maxItems);
 
-        // Almacena la lista actualizada en el almacenamiento local
+        // Almacena la lista actualizada es el almacenamiento local
         localStorage.setItem('recentlyViewed', JSON.stringify(limitedList));
     }
 
@@ -183,15 +183,15 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
     const filteredProducts = storedProducts.filter(product => {
         if (!uniqueIds.has(product.id)) {
             uniqueIds.add(product.id);
-            return true; // Mantener este producto en la lista final
+            return true; // Mantener este producto es la lista final
         }
         return false; // Descartar productos duplicados
     });
 
-    // Paso 4: Convertir el conjunto en un array de ids únicos
+    // Paso 4: Convertir el conjunto es un array de ids únicos
     const uniqueIdsArray = Array.from(uniqueIds);
 
-    // Paso 5: Crear un nuevo array de productos filtrados basados en los ids únicos
+    // Paso 5: Crear un nuevo array de productos filtrados basados es los ids únicos
     const uniqueProducts = uniqueIdsArray.map(id => {
         return filteredProducts.find(product => product.id === id);
     });
@@ -205,19 +205,19 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
             if (tag !== '' && subcate !== '' && subsubcate !== []) {
                 // Todas las variables tienen valores, construir la URL con todas ellas
                 const subsubcateStr = JSON.stringify(subsubcate);
-                console.log("Entré en la primera validación de subcategorías, subsubcategorías e idTag");
+                console.log("Entré es la primera validación de subcategorías, subsubcategorías e idTag");
                 history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
             } else if (subcate !== '' && subsubcate !== []) {
                 // idtag está vacío, pero subcate y subsubcate tienen valores, construir la URL sin idtag
                 const subsubcateStr = JSON.stringify(subsubcate);
-                console.log("Entré en la segunda validación cuando idTag es vacío");
+                console.log("Entré es la segunda validación cuando idTag es vacío");
                 history.push(`/categories/products/Precios%20especiales/${itemId}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
             } else if (tag !== '') {
                 // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
-                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                console.log("Entré es la tercera validación es donde solo se manda es la ruta idTag");
                 history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
             } else {
-                console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+                console.log("Entré es la tercera validación es donde solo se manda es la ruta idTag");
                 history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
             }
         }
@@ -256,7 +256,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
     };
 
     //Add To Cart
-    const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+    const token = currenUser ? currenUser.token : null; // Manejo de seguridad es caso de que currenUser sea null
     const addToCart = (id, name, discount_tag_valor, unit_price, discount_valor, brand_id) => {
         console.log("Producto agregado al carrito");
         console.log("estos son los valores enviados desde el producto", [
@@ -386,11 +386,11 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                     <CardTitle tag="h5">
                                                         {product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
                                                             <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf: 'center' }}>
-                                                                <h5>${product.discount_valor && product.discount_valor.toLocaleString('en') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('en')}</h5>
-                                                                <h5 id='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('en')}</s></h5>
+                                                                <h5>${product.discount_valor && product.discount_valor.toLocaleString('es') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('es')}</h5>
+                                                                <h5 id='tachado'><s>${product.unit_price && product.unit_price.toLocaleString('es')}</s></h5>
                                                             </div>
                                                         ) : (
-                                                            <h5>${product.unit_price && product.unit_price.toLocaleString('en')}</h5>
+                                                            <h5>${product.unit_price && product.unit_price.toLocaleString('es')}</h5>
                                                         )}
                                                     </CardTitle>
                                                 </CardBody>
@@ -528,7 +528,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                     </div>
 
                                                     <div>
-                                                        <h2>Hasta 50% descuento en</h2>
+                                                        <h2>Hasta 50% descuento es</h2>
                                                         <h1>Celulares y Accesorios</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
@@ -547,7 +547,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                         CyberDays
                                                     </div>
                                                     <div>
-                                                        <h2>Hasta 20% descuento en</h2>
+                                                        <h2>Hasta 20% descuento es</h2>
                                                         <h1>Consolas y Videojuegos</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
@@ -569,7 +569,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                         CyberDays
                                                     </div>
                                                     <div>
-                                                        <h2>Hasta 40% descuento en</h2>
+                                                        <h2>Hasta 40% descuento es</h2>
                                                         <h1>TV, Audio y Vídeo</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
@@ -588,7 +588,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                         CyberDays
                                                     </div>
                                                     <div>
-                                                        <h2>Hasta 20% descuento en</h2>
+                                                        <h2>Hasta 20% descuento es</h2>
                                                         <h1>Consolas y Videojuegos</h1>
                                                     </div>
                                                     <a href="#">Ver categoría</a>
