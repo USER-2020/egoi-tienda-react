@@ -21,7 +21,7 @@
     align-self: start;
 }
 
-#tachadoProductsCardDiscounted{
+#tachadoProductsCardDiscounted {
     color: red;
     font-size: 15px;
     align-self: start;
@@ -53,12 +53,36 @@
 .containerProductsIndex .menuBusqueda {
     display: block;
     width: 25%;
+    height: 100%;
 }
 
 .containerProductsIndex .menuBusqueda .filtros {
     display: flex;
 
 }
+
+.bannerIzqLateral {
+    width: 100%;
+    margin-top: 20px;
+    
+    
+    
+    /* Asegúrate de que el ancho sea del 100% o como necesites */
+}
+
+
+
+/* .bannerIzqLateral.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    width: 25%;
+    padding: 20px;
+   
+    /* Puedes ajustar el índice z según sea necesario */
+/* } */ 
 
 .agotadoTag {
     background-color: #FC5241;
@@ -119,12 +143,12 @@
 
 }
 
-#buttonDesktopAddToCart{
+#buttonDesktopAddToCart {
     display: flex !important;
-    
+
 }
 
-#buttonMovilAddToCart{
+#buttonMovilAddToCart {
     display: none !important;
 }
 
@@ -160,13 +184,13 @@ input[type="radio"]:checked {
 
 /* .pagination-container {
     text-align: center; /* Centra el contenido horizontalmente en dispositivos de escritorio */
-  /* } */
+/* } */
 
 @media (max-width: 768px) {
-    
+
     /* .pagination-container {
         text-align: left; /* Cambia la alineación a la izquierda en dispositivos móviles si es necesario */
-      /* } */
+    /* } */
     /* .containerProductCategorie{
         display: none;
     } */
@@ -208,11 +232,11 @@ input[type="radio"]:checked {
 
     }
 
-    #buttonDesktopAddToCart{
+    #buttonDesktopAddToCart {
         display: none !important;
     }
 
-    #buttonMovilAddToCart{
+    #buttonMovilAddToCart {
         display: flex !important;
     }
 

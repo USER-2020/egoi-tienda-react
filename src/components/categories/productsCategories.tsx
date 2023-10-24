@@ -39,9 +39,12 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 
-const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner }) => {
+const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersInfo }) => {
 
   const { category, subcategory, id, brandId, name, tag, subcate, subsubcate } = useParams();
+
+  const history = useHistory();
+  const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
 
   // Decodifica el valor subsubcate de la URL en un array
   const subsubcateArray = JSON.parse(decodeURIComponent(subsubcate || '[]'));
@@ -61,6 +64,9 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner }) => {
   const [priceEnd, setPriceEnd] = useState("");
   const [offset, setOffset] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  //Manejo de banner lateral
+  const [isBannerFixed, setIsBannerFixed] = useState(false);
+  const [showOtherOptions, setShowOtherOptions] = useState(true);
   // const [totalPages, setTotalPages] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
@@ -92,6 +98,40 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner }) => {
   const [changeFormRegister, setChangeFormRegister] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const showRutes = (itemId, filtro, tag, subcate, subsubcate) => {
+    console.log("este el id elegido para pasar por rutas", itemId);
+    if (filtro === 'category') {
+      if (tag !== '' && subcate !== '' && subsubcate !== []) {
+        // Todas las variables tienen valores, construir la URL con todas ellas
+        const subsubcateStr = JSON.stringify(subsubcate);
+        console.log("Entré en la primera validación de subcategorías, subsubcategorías e idTag");
+        history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+      } else if (subcate !== '' && subsubcate !== []) {
+        // idtag está vacío, pero subcate y subsubcate tienen valores, construir la URL sin idtag
+        const subsubcateStr = JSON.stringify(subsubcate);
+        console.log("Entré en la segunda validación cuando idTag es vacío");
+        history.push(`/categories/products/Precios%20especiales/${itemId}/${encodeURIComponent(subcate)}/${encodeURIComponent(subsubcateStr)}`);
+      } else if (tag !== '') {
+        // idtag tiene valor, pero subcate y subsubcate están vacíos, construir la URL solo con idtag
+        console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+        history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+      } else {
+        console.log("Entré en la tercera validación en donde solo se manda en la ruta idTag");
+        history.push(`/categories/products/Precios%20especiales/${itemId}/${tag}`);
+      }
+    }
+
+
+
+    if (filtro === 'product') {
+      history.push(`/detailsProduct/${itemId}/slug/${tag}`);
+    }
+    if (filtro === 'brand') {
+      history.push(`/brand/Descuento/${itemId}/${tag}`);
+    }
+
+  }
 
   const closeModalRegistro = () => {
     setModalViewRegistro(false);
@@ -561,6 +601,34 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner }) => {
     return filteredProducts.find(product => product.id === id);
   });
 
+  // Agrega un evento de desplazamiento para controlar la posición del elemento
+  useEffect(() => {
+    const handleScroll = () => {
+      const bannerElement = document.querySelector('.bannerIzqLateral');
+      if (bannerElement) {
+        const bannerRect = bannerElement.getBoundingClientRect();
+        const shouldFix = bannerRect.top <= 0;
+        setIsBannerFixed(shouldFix);
+
+        // Aquí puedes ajustar la lógica según tus necesidades exactas
+        // En este ejemplo, se muestra `showOtherOptions` cuando se desplaza hacia arriba
+        if (shouldFix) {
+          setShowOtherOptions(false);
+        } else if (window.scrollY <= 0) {
+          setShowOtherOptions(true);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+
+
   // Ahora `uniqueProducts` contiene los productos filtrados sin duplicados por id
 
   useEffect(() => {
@@ -685,34 +753,55 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner }) => {
           <div className='container'>
             <div className="containerProductsIndex  d-flex ">
               <div className="menuBusqueda w-30">
-                <div className="filtros">
-                  <input
-                    type="radio"
-                    className="form-check-input"
-                    name="filterOption"
-                    onClick={productsWithFilterMostSold}
-                  />
-                  Productos más vendidos
-                </div>
-                <div className="filtros">
-                  <input
-                    type="radio"
-                    className="form-check-input"
-                    name="filterOption"
-                    onClick={productsWithFilterBestRated}
-                  />
-                  Mejor calificados
-                </div>
-                <div className="filtros">
-                  <input
-                    type="radio"
-                    className="form-check-input"
-                    name="filterOption"
-                    onClick={productsWithFilterFeaturePrefer}
-                  />
-                  Los más preferidos
+                {/* {showOtherOptions && ( */}
+                  <div>
+                    <div className="filtros">
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="filterOption"
+                        onClick={productsWithFilterMostSold}
+                      />
+                      Productos más vendidos
+                    </div>
+                    <div className="filtros">
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="filterOption"
+                        onClick={productsWithFilterBestRated}
+                      />
+                      Mejor calificados
+                    </div>
+                    <div className="filtros">
+                      <input
+                        type="radio"
+                        className="form-check-input"
+                        name="filterOption"
+                        onClick={productsWithFilterFeaturePrefer}
+                      />
+                      Los más preferidos
+                    </div>
+                  </div>
+                {/* // )} */}
+
+                {/* <div className={`bannerIzqLateral${isBannerFixed ? ' fixed' : ''}`}> */}
+                <div className='bannerIzqLateral'>
+                  <div style={{ width: '100%', height: '100%' }}>
+                    {bannersInfo && bannersInfo.map((item, index) => (
+                      <div key={index} style={{display:'flex', flexDirection:'column', gap:'10px', height:'100%'}}>
+                        <a onClick={() => showRutes(item.banner_data[0].id_filtro, item.banner_data[0].tipo_filtro, item.banner_data[0].id_tag, item.banner_data[0].ids_filtro_sub, item.banner_data[0].ids_filtro_s_sub)} style={{cursor:'pointer'}}>
+                          <img src={baseUrlImageBanners + item.banner_data[0].imagen_desk} width={'100%'} height={'100%'} style={{borderRadius:'16px'}}alt="Banner Desktop" />
+                        </a>
+                        {/* <a onClick={() => showRutes(item.banner_data[1].id_filtro, item.banner_data[1].tipo_filtro, item.banner_data[1].id_tag, item.banner_data[1].ids_filtro_sub, item.banner_data[1].ids_filtro_s_sub)} style={{cursor:'pointer'}}>
+                          <img src={baseUrlImageBanners + item.banner_data[1].imagen_desk} width={'100%'} height={'100%'} style={{borderRadius:'32px'}}alt="Banner Desktop" />
+                        </a> */}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
+
 
               {/* { products.length > 0 ? ( */}
 
