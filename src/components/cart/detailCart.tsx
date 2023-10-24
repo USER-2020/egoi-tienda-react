@@ -17,7 +17,7 @@ import { aplyCupon } from '../../services/cupon';
 import { ThreeCircles } from 'react-loader-spinner';
 import axios from 'axios';
 import { updateQuantityCart } from './../../services/cart';
-function DetailCart({ setCantCart }) {
+function DetailCart({ setCantCart,  setIsLoggedInPartner, productsCart }) {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +27,7 @@ function DetailCart({ setCantCart }) {
   const [modalViewCart, setModalViewCart] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
-  const [productsCart, setProductsCart] = useState([]);
+  // const [productsCart, setProductsCart] = useState([]);
   const [costoEnvio, setCostoEnvio] = useState(0);
   const [totalAPagar, setTotalAPagar] = useState("");
   const [quantity, setQuantity] = useState();
@@ -169,19 +169,19 @@ function DetailCart({ setCantCart }) {
 
   // }
 
-  const getAllProductsByCart = async () => {
-    if (token) {
-      // console.log(token);
-      try {
-        const res = await allProductsCart(token);
-        setProductsCart(res.data);
-        setIsLoading(false);
-        // Ahora puedes mostrar el resultado aquí, ya que esta parte del código se ejecutará después de que se resuelva la promesa
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  }
+  // const getAllProductsByCart = async () => {
+  //   if (token) {
+  //     // console.log(token);
+  //     try {
+  //       const res = await allProductsCart(token);
+  //       setProductsCart(res.data);
+  //       setIsLoading(false);
+  //       // Ahora puedes mostrar el resultado aquí, ya que esta parte del código se ejecutará después de que se resuelva la promesa
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // }
 
   const deleteOne = (key, nameProduct, price, discountF, discountT, quantity) => {
     deleteItemCart(key, token)
@@ -220,8 +220,9 @@ function DetailCart({ setCantCart }) {
           }],
           value: price
         });
-        getAllProductsByCart();
+        
         setCantCart();
+        setIsLoggedInPartner(true);
       })
       .catch((err) => console.log(err));
   }
@@ -385,9 +386,18 @@ function DetailCart({ setCantCart }) {
 
   }, [token, subtotal, discountCoupon]);
 
+  useEffect(()=>{
+    setCantCart();
+    if(productsCart){
+      setIsLoading(false);
+    }
+    console.log(productsCart)
+  },[])
+
   useEffect(() => {
 
-    getAllProductsByCart();
+    // getAllProductsByCart();
+    setCantCart();
 
   }, [quantity]);
 
@@ -588,7 +598,7 @@ function DetailCart({ setCantCart }) {
                     <div className="caracteristicaCantidad">
                       {products.quantity >= 2 && (
 
-                        <button className='btnIzq' onClick={() => { setQuantity(products.quantity); handleDecrement(products.quantity, products.id); getAllProductsByCart() }}>
+                        <button className='btnIzq' onClick={() => { setQuantity(products.quantity); handleDecrement(products.quantity, products.id) }}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-dash" viewBox="0 0 16 16">
                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                           </svg>
@@ -601,7 +611,7 @@ function DetailCart({ setCantCart }) {
                         inputMode="none" // Esto desactivará los botones de incremento y decremento
                         disabled />
 
-                      <button className='btnDer' onClick={() => { setQuantity(products.quantity); handleIncrement(products.quantity, products.id); getAllProductsByCart() }}>
+                      <button className='btnDer' onClick={() => { setQuantity(products.quantity); handleIncrement(products.quantity, products.id) }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                           <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                         </svg>
@@ -766,7 +776,7 @@ function DetailCart({ setCantCart }) {
                       <path d="M15 11.9999C15 11.6685 15.2686 11.3999 15.6 11.3999H16.2C16.5314 11.3999 16.8 11.6685 16.8 11.9999C16.8 12.3313 16.5314 12.5999 16.2 12.5999H15.6C15.2686 12.5999 15 12.3313 15 11.9999Z" fill="#089705" />
                       <path d="M6.59961 8.3998C6.59961 8.06843 6.86824 7.7998 7.19961 7.7998H10.7996C11.131 7.7998 11.3996 8.06843 11.3996 8.3998C11.3996 8.73118 11.131 8.9998 10.7996 8.9998H7.19961C6.86824 8.9998 6.59961 8.73118 6.59961 8.3998Z" fill="#089705" />
                     </svg>
-                    <p>Pago auténtico</p>
+                    <p>Pago seguro</p>
                   </div>
                 </div>
               </Card>

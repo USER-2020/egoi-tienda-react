@@ -40,6 +40,12 @@ function CartShopping() {
       }).catch((err) => console.log(err));
   }
 
+
+  useEffect(() => {
+    getCantCart();
+    getAllInfoPerfil();
+  }, []);
+
   useEffect(() => {
     getCantCart();
     getAllInfoPerfil();
@@ -49,7 +55,7 @@ function CartShopping() {
     <div className="w-100 d-flex flex-column align-items-center">
       <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart}/>
       <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
-      <DetailCart setCantCart={() => getCantCart()} />
+      <DetailCart setCantCart={() => getCantCart()} setIsLoggedInPartner={()=>setIsLoggedIn(true)} productsCart={productsCart}/>
       <Footer />
     </div>
   )

@@ -23,5 +23,16 @@ export const getPopup = () =>
         }
     });
 
+//Traer modal lateral
+export const getLateralBanner = () =>
+    axios.get(`${urlBase}/banners/banner_lateral`, {
+        params: {
+            option: "web"
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
 
 
