@@ -44,6 +44,7 @@ const Banner = (args) => {
     /* Banner 2 */
     const [tipoFiltro2, setTipoFiltro2] = useState('');
     const [bannerFiltro2, setBannerFiltro2] = useState('');
+    const [nextButtonActivated, setNextButtonActivated] = useState(false);
 
     const [tag, setTag] = useState("");
 
@@ -70,6 +71,8 @@ const Banner = (args) => {
         setActiveIndex(newIndex);
     }
 
+
+
     const getAllBanners = () => {
         getBanners()
             .then((res) => {
@@ -79,6 +82,15 @@ const Banner = (args) => {
                 // console.log(res.data[2]);
                 setBannersInfo(res.data);
                 getAllCategoriesByBanner(res.data);
+                setNextButtonActivated(true);
+                const firstCarouselNextButton = document.getElementById('nextButton');
+
+                // Si se encuentra el botón, haz clic en él y marca el botón como activado
+                if (firstCarouselNextButton) {
+                    firstCarouselNextButton.click();
+                    setNextButtonActivated(true);
+                }
+
                 // getInfoByBanner2(res.data);
             }).catch((err) => console.log(err));
     }
@@ -273,6 +285,24 @@ const Banner = (args) => {
     }
 
 
+    // useEffect(() => {
+
+    //         if (nextButtonActivated) {
+    //             // Encuentra el botón "Next" del primer carrusel por su atributo data-bs-slide="next"
+    //             const firstCarouselNextButton = document.getElementById('nextButton');
+
+    //             // Si se encuentra el botón, haz clic en él y marca el botón como activado
+    //             if (firstCarouselNextButton) {
+    //                 firstCarouselNextButton.click();
+    //                 setNextButtonActivated(true);
+    //             }
+    //         }
+
+
+    //     // Llama a nextBanner cuando se carga el componente
+
+    // }, [nextButtonActivated]);
+
 
     useEffect(() => {
         getAllBanners();
@@ -288,6 +318,7 @@ const Banner = (args) => {
         // if (bannerFiltro2) {
         //     console.log("banner Filtro 2", bannerFiltro2);
         // }
+
 
     }, [bannerFiltro1, bannerFiltro2, tipoFiltro2]);
 
@@ -331,11 +362,11 @@ const Banner = (args) => {
                                     <div className="carousel-inner">
                                         {itemBanner.banner_data.map((item, i) => (
                                             <div className={`carousel-item ${i === 0 ? "active" : ""}`} key={i}>
-                                                <a href='#' onClick={(e) => {e.preventDefault();showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)}} className='desktopView'>
-                                                    <img src={baseUrlImageBanners + item.imagen_desk} className="d-block w-100" alt="..." style={{height:'426px'}}/>
+                                                <a href='#' onClick={(e) => { e.preventDefault(); showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub) }} className='desktopView'>
+                                                    <img src={baseUrlImageBanners + item.imagen_desk} className="d-block w-100" alt="..." style={{ height: '426px' }} />
 
                                                 </a>
-                                                <a href='#' onClick={(e) => {e.preventDefault();showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub)}} className='movilView'>
+                                                <a href='#' onClick={(e) => { e.preventDefault(); showRutes(item.id_filtro, item.tipo_filtro, item.id_tag, item.ids_filtro_sub, item.ids_filtro_s_sub) }} className='movilView'>
                                                     <img src={baseUrlImageBanners + item.imagen} className="d-block w-100" alt="..." />
 
                                                 </a>
@@ -347,7 +378,7 @@ const Banner = (args) => {
                                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span className="visually-hidden">Previous</span>
                                     </button>
-                                    <button className="carousel-control-next" type="button" data-bs-target={`#carouselExampleAutoplaying-${index}`} data-bs-slide="next">
+                                    <button className="carousel-control-next" type="button" data-bs-target={`#carouselExampleAutoplaying-${index}`} data-bs-slide="next" id='nextButton'>
                                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span className="visually-hidden">Next</span>
                                     </button>
