@@ -101,6 +101,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                 setProducts(res.data.products);
                 // console.log("vistos recientementes", products);
 
+
             })
             .catch((err) => console.log(err));
     };
@@ -314,6 +315,16 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
 
     useEffect(() => {
         ProductosRecientesVistas();
+        if (bannersInfo) {
+            console.log("encontre El flujo ")
+            const firstCarouselNextButton = document.getElementById('nextButton');
+
+            // Si se encuentra el botón, haz clic en él y marca el botón como activado
+            if (firstCarouselNextButton) {
+                firstCarouselNextButton.click();
+                // setNextButtonActivated(true);
+            }
+        }
 
         // console.log("Desde el modal del banner de recientes ", bannersInfo);
     }, [bannersInfo]);
@@ -450,6 +461,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                         id={`carouselExample-${index}`}
                                         className="carousel slide carousel_responsive"
                                         data-bs-ride="carousel"
+                                        data-bs-interval="3000"
                                     >
                                         <div className="carousel-inner">
                                             {itemBanner.banner_data.map((banner, i) => (
@@ -491,6 +503,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                             type="button"
                                             data-bs-target={`#carouselExample-${index}`}
                                             data-bs-slide="next"
+                                            id='nextButton'
                                         >
                                             <span className="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span className="visually-hidden">Next</span>
@@ -535,7 +548,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                 </div> */}
                                             <div className='catImage'>
                                                 <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[0].id_filtro, itemBanner.banner_data[0].tipo_filtro, itemBanner.banner_data[0].id_tag, itemBanner.banner_data[0].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub) }}>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen_desk} alt={itemBanner.banner_data[0].imagen} width={438} height={260}/>
+                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[0].imagen_desk} alt={itemBanner.banner_data[0].imagen} width={438} height={260} />
                                                 </a>
                                             </div>
 
@@ -554,7 +567,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                 </div> */}
                                             <div className='cvtImage'>
                                                 <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[1].id_filtro, itemBanner.banner_data[1].tipo_filtro, itemBanner.banner_data[1].id_tag, itemBanner.banner_data[1].ids_filtro_sub, itemBanner.banner_data[1].ids_filtro_s_sub) }}>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen_desk} alt={itemBanner.banner_data[1].imagen_desk}  height={260}/>
+                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[1].imagen_desk} alt={itemBanner.banner_data[1].imagen_desk} height={260} />
                                                 </a>
                                             </div>
 
@@ -576,7 +589,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                 </div> */}
                                             <div className='tavtImage'>
                                                 <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[2].id_filtro, itemBanner.banner_data[2].tipo_filtro, itemBanner.banner_data[2].id_tag, itemBanner.banner_data[2].ids_filtro_sub, itemBanner.banner_data[0].ids_filtro_s_sub) }}>
-                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen_desk} alt={itemBanner.banner_data[2].imagen_desk} width={900} height={260}/>
+                                                    < img src={baseUrlImageBanners + itemBanner.banner_data[2].imagen_desk} alt={itemBanner.banner_data[2].imagen_desk} width={900} height={260} />
                                                 </a>
                                             </div>
 
@@ -595,7 +608,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner }) =>
                                                 </div> */}
                                             <div className='cvt2Image'>
                                                 <a href='#' onClick={(e) => { e.preventDefault(); showRutes(itemBanner.banner_data[3].id_filtro, itemBanner.banner_data[3].tipo_filtro, itemBanner.banner_data[3].id_tag, itemBanner.banner_data[3].ids_filtro_sub, itemBanner.banner_data[3].ids_filtro_s_sub) }}>
-                                                    <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen_desk} alt={itemBanner.banner_data[3].imagen_desk} width={438} height={260}/>
+                                                    <img src={baseUrlImageBanners + itemBanner.banner_data[3].imagen_desk} alt={itemBanner.banner_data[3].imagen_desk} width={438} height={260} />
                                                 </a>
                                             </div>
 

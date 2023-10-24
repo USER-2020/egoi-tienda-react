@@ -88,7 +88,7 @@ const Banner = (args) => {
                 // Si se encuentra el botón, haz clic en él y marca el botón como activado
                 if (firstCarouselNextButton) {
                     firstCarouselNextButton.click();
-                    setNextButtonActivated(true);
+                    // setNextButtonActivated(true);
                 }
 
                 // getInfoByBanner2(res.data);
