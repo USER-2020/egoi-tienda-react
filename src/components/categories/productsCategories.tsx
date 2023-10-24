@@ -754,52 +754,59 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
             <div className="containerProductsIndex  d-flex ">
               <div className="menuBusqueda w-30">
                 {/* {showOtherOptions && ( */}
-                  <div>
-                    <div className="filtros">
-                      <input
-                        type="radio"
-                        className="form-check-input"
-                        name="filterOption"
-                        onClick={productsWithFilterMostSold}
-                      />
-                      Productos más vendidos
-                    </div>
-                    <div className="filtros">
-                      <input
-                        type="radio"
-                        className="form-check-input"
-                        name="filterOption"
-                        onClick={productsWithFilterBestRated}
-                      />
-                      Mejor calificados
-                    </div>
-                    <div className="filtros">
-                      <input
-                        type="radio"
-                        className="form-check-input"
-                        name="filterOption"
-                        onClick={productsWithFilterFeaturePrefer}
-                      />
-                      Los más preferidos
-                    </div>
+                <div>
+                  <div className="filtros">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      name="filterOption"
+                      onClick={productsWithFilterMostSold}
+                    />
+                    Productos más vendidos
                   </div>
+                  <div className="filtros">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      name="filterOption"
+                      onClick={productsWithFilterBestRated}
+                    />
+                    Mejor calificados
+                  </div>
+                  <div className="filtros">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      name="filterOption"
+                      onClick={productsWithFilterFeaturePrefer}
+                    />
+                    Los más preferidos
+                  </div>
+                </div>
                 {/* // )} */}
 
                 {/* <div className={`bannerIzqLateral${isBannerFixed ? ' fixed' : ''}`}> */}
-                <div className='bannerIzqLateral'>
-                  <div style={{ width: '100%', height: '100%' }}>
-                    {bannersInfo && bannersInfo.map((item, index) => (
-                      <div key={index} style={{display:'flex', flexDirection:'column', gap:'10px', height:'100%'}}>
-                        <a onClick={() => showRutes(item.banner_data[0].id_filtro, item.banner_data[0].tipo_filtro, item.banner_data[0].id_tag, item.banner_data[0].ids_filtro_sub, item.banner_data[0].ids_filtro_s_sub)} style={{cursor:'pointer'}}>
-                          <img src={baseUrlImageBanners + item.banner_data[0].imagen_desk} width={'100%'} height={'100%'} style={{borderRadius:'16px'}}alt="Banner Desktop" />
-                        </a>
-                        {/* <a onClick={() => showRutes(item.banner_data[1].id_filtro, item.banner_data[1].tipo_filtro, item.banner_data[1].id_tag, item.banner_data[1].ids_filtro_sub, item.banner_data[1].ids_filtro_s_sub)} style={{cursor:'pointer'}}>
+                
+                  <div className='bannerIzqLateral'>
+                    {products && products.products && products.products.length > 10 ?(
+
+                    <div style={{ width: '100%', height: '100%' }}>
+                      {bannersInfo && bannersInfo.map((item, index) => (
+                        <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: '100%' }}>
+                          <a onClick={() => showRutes(item.banner_data[0].id_filtro, item.banner_data[0].tipo_filtro, item.banner_data[0].id_tag, item.banner_data[0].ids_filtro_sub, item.banner_data[0].ids_filtro_s_sub)} style={{ cursor: 'pointer' }}>
+                            <img src={baseUrlImageBanners + item.banner_data[0].imagen_desk} width={'100%'} height={'100%'} style={{ borderRadius: '16px' }} alt="Banner Desktop" />
+                          </a>
+                          {/* <a onClick={() => showRutes(item.banner_data[1].id_filtro, item.banner_data[1].tipo_filtro, item.banner_data[1].id_tag, item.banner_data[1].ids_filtro_sub, item.banner_data[1].ids_filtro_s_sub)} style={{cursor:'pointer'}}>
                           <img src={baseUrlImageBanners + item.banner_data[1].imagen_desk} width={'100%'} height={'100%'} style={{borderRadius:'32px'}}alt="Banner Desktop" />
                         </a> */}
-                      </div>
-                    ))}
+                        </div>
+                      ))}
+                    </div>
+                    ):(
+                      null
+                    )}
                   </div>
-                </div>
+                
               </div>
 
 

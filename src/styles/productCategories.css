@@ -53,7 +53,7 @@
 .containerProductsIndex .menuBusqueda {
     display: block;
     width: 25%;
-    height: 100%;
+    height: auto;
 }
 
 .containerProductsIndex .menuBusqueda .filtros {
