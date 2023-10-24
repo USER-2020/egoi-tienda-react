@@ -140,8 +140,8 @@ function TableOrders({ setOrderDetalleId }) {
                                 </td>
                                 <td>
                                     ${(item.total <= 79990 && item.total >= 39990) ?
-                                        (item.total + (item.total <= 79990 && item.total >= 39990 ? parseInt(item.envio) : 0)).toLocaleString() :
-                                        item.total.toLocaleString()}
+                                        (item.total + (item.total <= 79990 && item.total >= 39990 ? parseInt(item.envio) : 0)).toLocaleString('es') :
+                                        item.total.toLocaleString('es')}
                                 </td>
 
 
@@ -200,8 +200,8 @@ function TableOrders({ setOrderDetalleId }) {
                                 </td>
                                 <td>
                                     ${(item.total <= 79990 && item.total >= 39990) ?
-                                        (item.total + (item.total <= 79990 && item.total >= 39990 ? parseInt(item.envio) : 0)).toLocaleString() :
-                                        item.total.toLocaleString()}
+                                        (item.total + (item.total <= 79990 && item.total >= 39990 ? parseInt(item.envio) : 0)).toLocaleString('es') :
+                                        item.total.toLocaleString('es')}
                                 </td>
 
 
