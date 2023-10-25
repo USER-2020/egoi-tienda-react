@@ -9,7 +9,7 @@ import { getCurrentUser } from '../../helpers/Utils';
 import './detailCartOffCanvas.css';
 import Swal from 'sweetalert2';
 
-const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart, onclose}) => {
+const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart, onclose }) => {
 
     const [quantity, setQuantity] = useState();
     const [costoEnvio, setCostoEnvio] = useState(0);
@@ -191,7 +191,7 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
                             <Card key={index}>
                                 <div className="caracteristicasDetalle">
                                     <div className="img">
-                                        <img src={baseUrlImageThumbnail + products.thumbnail} alt={products.name} style={{ width: '50px', height: '50px', marginRight:'16px' }} />
+                                        <img src={baseUrlImageThumbnail + products.thumbnail} alt={products.name} style={{ width: '50px', height: '50px', marginRight: '16px' }} />
                                     </div>
                                     <div className="info">
                                         <div className="starts">
@@ -259,7 +259,7 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
                                         </div>
                                     </div>
                                     <div className="deleteProduct">
-                                        <a href="#" onClick={(e) => {e.preventDefault(); deleteOne(products.id, products.name, products.price, products.discount, products.discount_tag, products.quantity)}}>
+                                        <a href="#" onClick={(e) => { e.preventDefault(); deleteOne(products.id, products.name, products.price, products.discount, products.discount_tag, products.quantity) }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
                                                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                                             </svg>
@@ -282,32 +282,34 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
                     </div>
                 )}
             </div>
-            <div className="footer">
-                <div className="subtotal">
-                    <p>Subtotal</p>
-                    <p>${subtotalWithoutDiscount.toLocaleString('es')}</p>
+            {productsInCart.length > 0 && (
+                <div className="footer">
+                    <div className="subtotal">
+                        <p>Subtotal</p>
+                        <p>${subtotalWithoutDiscount.toLocaleString('es')}</p>
 
-                </div>
-                <div className="descuentos">
-                    <p>Descuentos</p>
-                    {discountCoupon && discountCoupon.total !== undefined ? (
-                        <p>{discountCoupon.discount}</p>
+                    </div>
+                    <div className="descuentos">
+                        <p>Descuentos</p>
+                        {discountCoupon && discountCoupon.total !== undefined ? (
+                            <p>{discountCoupon.discount}</p>
 
-                    ) : (
-                        <p>${discountedProducts.toLocaleString('es')}</p>
-                    )}
+                        ) : (
+                            <p>${discountedProducts.toLocaleString('es')}</p>
+                        )}
 
-                </div>
-                <div className="totalAPagar">
-                    <h5>Total</h5>
-                    <p><strong>{totalaPagar}</strong></p>
-                </div>
+                    </div>
+                    <div className="totalAPagar">
+                        <h5>Total</h5>
+                        <p><strong>{totalaPagar}</strong></p>
+                    </div>
 
-                <div className="btns">
-                    <button onClick={(e) => { e.preventDefault(); history.push(`/detailCart`) }}>Ir a mi carrito </button>
-                    <a href='#' onClick={(e) => { e.preventDefault(); onclose() }}>Seguir comprando</a>
+                    <div className="btns">
+                        <button onClick={(e) => { e.preventDefault(); history.push(`/detailCart`) }}>Ir a mi carrito </button>
+                        <a href='#' onClick={(e) => { e.preventDefault(); onclose() }}>Seguir comprando</a>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 }

@@ -8,6 +8,8 @@
 .offCanvasDetailCart .body {
     overflow-y: scroll;
     height: 60vh;
+    justify-content: center;
+    display: flex;
 
 }
 
@@ -26,6 +28,9 @@
     /* Centrar horizontalmente */
     text-align: center;
     color: #FC5241;
+    height: 100%;
+    justify-items: center;
+
 }
 
 .offCanvasDetailCart .body .noProductsOnCart a {
