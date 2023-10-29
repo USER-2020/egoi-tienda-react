@@ -35,8 +35,9 @@ import { allProductsCart } from "../services/cart";
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import DetailCartOffCanvas from "./cart/detailCartOffCanvas.tsx";
+import DetailCartOffCanvasNoToken from "./cart/detailCartOffCanvasNoToken.tsx";
 
-const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart }) => {
+const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -60,6 +61,13 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const [prevCantCart, setPrevCantCart] = useState(cantCart);
 
   const [show, setShow] = useState(false);
+
+  /* Mostrar carrito carrito con token  */
+  const [showTokenOffcanvas, setShowTOkenOffCanvas] = useState(false);
+
+  /* Mostrar carrito si ntoken si nusuario registrado */
+  const [showOffcanvasWithoutToken, setShowOffcanvasWithoutToken] = useState(false);
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -278,10 +286,14 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       // setOffcanvasOpen(true);
       // setOffcanvasOpenCart(true);
       // toggleOffcanvasCart();
+      setShowOffcanvasWithoutToken(false);
       handleShow();
+
     }
     else {
-      setModalViewLogin(true);
+      setShowOffcanvasWithoutToken(true);
+      setShowTOkenOffCanvas(false);
+      handleShow();
     }
   }
 
@@ -384,6 +396,13 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     // }
     handleLogin();
     // console.log(detailInfoPerfil);
+    if (currenUser) {
+      setShowTOkenOffCanvas(true);
+      setShowOffcanvasWithoutToken(false);
+    } else {
+      setShowOffcanvasWithoutToken(true);
+      setShowTOkenOffCanvas(false);
+    }
 
 
   }, [currenUser]);
@@ -531,7 +550,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
           <div className="userInteraction">
             {isLoggedIn && (
-              <div style={{transform:'translate(-20px)'}}>
+              <div style={{ transform: 'translate(-20px)' }}>
                 <p style={{ marginBottom: 0 }}>¡Hola!, {detailInfoPerfil.f_name}</p>
               </div>
             )}
@@ -629,7 +648,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-cart2" viewBox="0 0 35 35">
                   <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                 </svg>
-                {isLoggedIn && currenUser && cantCart !== undefined && cantCart >= 1 ? (
+                {cantCart !== undefined && cantCart >= 1 ? (
                   <span className="cart-products"><p >{cantCart}</p></span>
                 ) : (<i></i>)}
 
@@ -865,14 +884,27 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       </nav>
       <div>
 
-        <Offcanvas show={show} onHide={handleClose} placement="end">
-          <Offcanvas.Header closeButton>
-            {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart} onclose={handleClose}/>
-          </Offcanvas.Body>
-        </Offcanvas>
+        {showTokenOffcanvas && (
+          <Offcanvas show={show} onHide={handleClose} placement="end">
+            <Offcanvas.Header closeButton>
+              {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart} onclose={handleClose} />
+            </Offcanvas.Body>
+          </Offcanvas>
+        )}
+
+        {showOffcanvasWithoutToken && (
+          <Offcanvas show={show} onHide={handleClose} placement="end">
+            <Offcanvas.Header closeButton>
+              {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <DetailCartOffCanvasNoToken productsInCart={productsInCart} getAllProductsByCartNotoken={getAllProductsByCartNotoken} />
+            </Offcanvas.Body>
+          </Offcanvas>
+        )}
 
 
       </div >
