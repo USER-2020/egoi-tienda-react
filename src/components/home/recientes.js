@@ -75,14 +75,14 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
     const handleLogin = () => {
         // Code to handle user login, such as storing session storage, etc.
         if (currenUser) {
-            setIsLoggedIn(true);
+            // setIsLoggedIn(true);
             setIsLoggedInPartner(true);
-            setIsntLoggedInPartner(false);
+            
             // handleLogged(true);
             // console.log("Estas logueado")
 
         } else {
-            setIsLoggedIn(false);
+            // setIsLoggedIn(false);
             setIsntLoggedInPartner(true);
         }
 

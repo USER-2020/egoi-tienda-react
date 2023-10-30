@@ -142,6 +142,18 @@ const Home = (props) => {
     }
   }
 
+  const funcionValidation = () => {
+    if (isLoggedIn) {
+      getAllInfoPerfil();
+      console.log("si hay usuario logueado");
+      getCantCart();
+    }
+    else{
+      console.log("no hay usuario logueado");
+      getCantCartWhithoutToken();
+    }
+  }
+
 
   const getAllInfoPerfil = () => {
     getUserProfileInfo(token)
@@ -171,24 +183,14 @@ const Home = (props) => {
     getAllBanners();
     getPrincipalPopup();
     getCantCart();
-
+    funcionValidation();
     // getOfferDestacada();
     // offerDay();
   }, []);
 
 
   useEffect(() => {
-
-    if (isLoggedIn) {
-      getAllInfoPerfil();
-      console.log("si hay usuario logueado");
-      getCantCart();
-    }
-    if (isLoggedIn === false) {
-      console.log("no hay usuario logueado");
-      getCantCartWhithoutToken();
-    }
-
+    funcionValidation();
   }, [isLoggedIn])
 
   return (
@@ -196,18 +198,29 @@ const Home = (props) => {
     // <Nav/>
     <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart} getAllProductsByCartNotoken={getCantCartWhithoutToken}/>
-      <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
+      <Header 
+      cantCart={cantProductsOnCart} 
+      detailInfoPerfil={detailInfoProfile} 
+      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      productsInCart={productsCart} 
+      getAllProductsByCart={getCantCart} 
+      getAllProductsByCartNotoken={funcionValidation} 
+      />
+      <HeaderResponsive 
+      canCart={cantProductsOnCart} 
+      detailInfoProfile={detailInfoProfile} 
+      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      />
       <Banner />
       <OfertaDia />
       <OfertaDestacada />
       <OfertaFlash />
-      <Recientes bannersInfo={bannersInfo} 
-      updateCantProducts={() => { getCantCart() }} 
-      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
-      setIsntLoggedInPartner={() => setIsLoggedIn(false)} 
-      updateCantProductsWithouthToken={getCantCartWhithoutToken} 
-      className="w-100" />
+      <Recientes bannersInfo={bannersInfo}
+        updateCantProducts={() => { getCantCart() }}
+        setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        setIsntLoggedInPartner={() => setIsLoggedIn(false)}
+        updateCantProductsWithouthToken={getCantCartWhithoutToken}
+        className="w-100" />
       <Promociones bannersInfo={bannersInfo} updateCantProducts={() => { getCantCart() }} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
       <Vendidos bannersInfo={bannersInfo} updateCantProducts={() => { getCantCart() }} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
       {/* <Populares /> */}

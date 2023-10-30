@@ -1329,7 +1329,7 @@ function AddressCart() {
                     1
                   </button>
                   <div className="step-title">
-                    Inicia sesión / Registro
+                    Datos del cliente
                   </div>
                 </div>
                 <div className={`step-item ${activeStep >= 2 ? 'active' : ''}`} >

@@ -286,6 +286,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       // setOffcanvasOpen(true);
       // setOffcanvasOpenCart(true);
       // toggleOffcanvasCart();
+      setShowTOkenOffCanvas(true);
       setShowOffcanvasWithoutToken(false);
       handleShow();
 
@@ -302,8 +303,12 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     if (currenUser) {
       setIsLoggedIn(true);
       setIsLoggedInPartner(true);
+      setShowTOkenOffCanvas(true);
+      setShowOffcanvasWithoutToken(false);
     } else {
       setIsLoggedIn(false);
+      setShowOffcanvasWithoutToken(true);
+      setShowTOkenOffCanvas(false);
     }
 
   };
@@ -396,13 +401,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     // }
     handleLogin();
     // console.log(detailInfoPerfil);
-    if (currenUser) {
-      setShowTOkenOffCanvas(true);
-      setShowOffcanvasWithoutToken(false);
-    } else {
-      setShowOffcanvasWithoutToken(true);
-      setShowTOkenOffCanvas(false);
-    }
+
 
 
   }, [currenUser]);
@@ -410,6 +409,8 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   useEffect(() => {
     allCategoriesPromise();
     allBrands();
+    setShowOffcanvasWithoutToken(false);
+    setShowTOkenOffCanvas(false);
   }, []);
 
 
@@ -442,20 +443,20 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
   // }, [offcanvasOpenCart]);
 
-  useEffect(() => {
-    // Agregar un detector de clics fuera del Offcanvas cuando el Offcanvas está visible
-    console.log("Cambio de visibilidad", offcanvasOpen)
-    if (offcanvasOpen) {
-      document.addEventListener('click', handleOutsideOffcanvas);
-    } else {
-      document.removeEventListener('click', handleOutsideOffcanvas);
-    }
-    // Limpiar el detector de clics cuando el componente se desmonta
-    return () => {
-      document.removeEventListener('click', handleOutsideOffcanvas);
-    };
+  // useEffect(() => {
+  //   // Agregar un detector de clics fuera del Offcanvas cuando el Offcanvas está visible
+  //   console.log("Cambio de visibilidad", offcanvasOpen)
+  //   if (offcanvasOpen) {
+  //     document.addEventListener('click', handleOutsideOffcanvas);
+  //   } else {
+  //     document.removeEventListener('click', handleOutsideOffcanvas);
+  //   }
+  //   // Limpiar el detector de clics cuando el componente se desmonta
+  //   return () => {
+  //     document.removeEventListener('click', handleOutsideOffcanvas);
+  //   };
 
-  }, [offcanvasOpen]);
+  // }, [offcanvasOpen]);
 
   useEffect(() => {
     // Verifica si cantCart ha aumentado en 1 desde el valor anterior
@@ -884,27 +885,22 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       </nav>
       <div>
 
-        {showTokenOffcanvas && (
-          <Offcanvas show={show} onHide={handleClose} placement="end">
-            <Offcanvas.Header closeButton>
-              {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-              <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart} onclose={handleClose} />
-            </Offcanvas.Body>
-          </Offcanvas>
-        )}
 
-        {showOffcanvasWithoutToken && (
-          <Offcanvas show={show} onHide={handleClose} placement="end">
-            <Offcanvas.Header closeButton>
-              {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-              <DetailCartOffCanvasNoToken productsInCart={productsInCart} getAllProductsByCartNotoken={getAllProductsByCartNotoken} />
-            </Offcanvas.Body>
-          </Offcanvas>
-        )}
+
+        <Offcanvas show={show} onHide={handleClose} placement="end">
+          <Offcanvas.Header closeButton>
+            {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            {showTokenOffcanvas && (
+              <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart} onclose={handleClose} />
+            )}
+            {showOffcanvasWithoutToken && (
+              <DetailCartOffCanvasNoToken productsInCart={productsInCart} getAllProductsByCartNotoken={getAllProductsByCartNotoken} onclose={handleClose} />
+            )}
+          </Offcanvas.Body>
+        </Offcanvas>
+
 
 
       </div >
