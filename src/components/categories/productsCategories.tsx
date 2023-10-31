@@ -39,7 +39,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 
-const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersInfo }) => {
+const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersInfo, setIsntLoggedInPartner, updateCantProductsWithouthToken }) => {
 
   const { category, subcategory, id, brandId, name, tag, subcate, subsubcate } = useParams();
 
@@ -228,45 +228,45 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
 
   //Add To Cart
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
-  const addToCart = (id, name, discount_tag_valor, unit_price, discount_valor, brand_id) => {
+  const addToCart = (product) => {
     console.log("Producto agregado al carrito");
     console.log("estos son los valores enviados desde el producto", [
-      id, name, discount_tag_valor, unit_price, discount_valor, brand_id
+      product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id
     ]);
     if (currenUser) {
       // setModalViewCart(true);
-      addProductsCart(id, quantity, token)
+      addProductsCart(product.id, quantity, token)
         .then(() => {
           updateCantProducts();
           setIsLoggedInPartner(true);
           toast.success('Producto agregado con éxito!');
           let discount = 0;
-          if (discount_valor > 0) {
-            discount = unit_price - discount_valor;
+          if (product.discount_valor > 0) {
+            discount = product.unit_price - product.discount_valor;
           }
-          if (discount_tag_valor > 0) {
-            discount = discount_tag_valor;
+          if (product.discount_tag_valor > 0) {
+            discount = product.discount_tag_valor;
           }
-          if (discount_valor === 0 && discount_tag_valor === 0) {
+          if (product.discount_valor === 0 && product.discount_tag_valor === 0) {
             discount = 0;
           }
           /* eslint-disable */
           gtag('event', 'add_to_cart', {
             currency: 'USD',
             items: [{
-              item_id: id,
-              item_name: name,
+              item_id: product.id,
+              item_name: product.name,
               coupon: '',
               discount: discount,
               affiliation: 'Egoi',
-              item_brand: brand_id,
+              item_brand: product.brand_id,
               item_category: '',
               item_variant: '',
-              price: unit_price,
+              price: product.unit_price,
               currency: 'COP',
               quantity: quantity
             }],
-            value: unit_price
+            value: product.unit_price
           });
           /* eslint-enable */
           // console.log("Producto enviado", res.data);
@@ -277,7 +277,49 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
       // console.log(token);
     } else {
 
-      setModalViewLogin(true);
+
+      // Obtener el carrito actual del localStorage (si existe)
+      let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
+
+      // Agregar el nuevo producto al carrito actual
+      productsCart[product.id] = product;
+
+      // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage
+      localStorage.setItem('productsCart', JSON.stringify(productsCart));
+      setIsntLoggedInPartner(false);
+      updateCantProductsWithouthToken();
+      toast.success('Producto agregado con éxito!');
+
+      let discount = 0;
+      if (product.discount_valor > 0) {
+        discount = product.unit_price - product.discount_valor;
+      }
+      if (product.discount_tag_valor > 0) {
+        discount = product.discount_tag_valor;
+      }
+      if (product.discount_valor === 0 && product.discount_tag_valor === 0) {
+        discount = 0;
+      }
+      /* eslint-disable */
+      gtag('event', 'add_to_cart', {
+        currency: 'USD',
+        items: [{
+          item_id: product.id,
+          item_name: product.name,
+          coupon: '',
+          discount: discount,
+          affiliation: 'Egoi',
+          item_brand: product.brand_id,
+          item_category: '',
+          item_variant: '',
+          price: product.unit_price,
+          currency: 'COP',
+          quantity: quantity
+        }],
+        value: product.unit_price
+      });
+      /* eslint-enable */
+
 
     }
 
@@ -786,9 +828,9 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                 {/* // )} */}
 
                 {/* <div className={`bannerIzqLateral${isBannerFixed ? ' fixed' : ''}`}> */}
-                
-                  <div className='bannerIzqLateral'>
-                    {products && products.products && products.products.length > 10 ?(
+
+                <div className='bannerIzqLateral'>
+                  {products && products.products && products.products.length > 10 ? (
 
                     <div style={{ width: '100%', height: '100%' }}>
                       {bannersInfo && bannersInfo.map((item, index) => (
@@ -802,11 +844,11 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                         </div>
                       ))}
                     </div>
-                    ):(
-                      null
-                    )}
-                  </div>
-                
+                  ) : (
+                    null
+                  )}
+                </div>
+
               </div>
 
 
@@ -887,7 +929,7 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                             </CardBody>
                           </Link>
                           <Button
-                            onClick={(e) => { e.preventDefault(); addToCart(product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id) }}
+                            onClick={(e) => { e.preventDefault(); addToCart(product) }}
                             id='buttonDesktopAddToCart'
                             style={{
                               position: "absolute",
@@ -911,7 +953,7 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                             </svg>
                           </Button>
                           <Button
-                            onClick={(e) => { e.preventDefault(); addToCart(product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id) }}
+                            onClick={(e) => { e.preventDefault(); addToCart(product) }}
                             id='buttonMovilAddToCart'
                             style={{
                               position: "absolute",
@@ -1024,7 +1066,7 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                               </CardBody>
                             </Link>
                             <Button
-                              onClick={(e) => { e.preventDefault(); addToCart(product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id) }}
+                              onClick={(e) => { e.preventDefault(); addToCart(product) }}
                               id='buttonDesktopAddToCart'
                               style={{
                                 position: "absolute",
@@ -1048,7 +1090,7 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                               </svg>
                             </Button>
                             <Button
-                              onClick={(e) => { e.preventDefault(); addToCart(product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id) }}
+                              onClick={(e) => { e.preventDefault(); addToCart(product) }}
                               id='buttonMovilAddToCart'
                               style={{
                                 position: "absolute",

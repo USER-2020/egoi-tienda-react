@@ -1314,7 +1314,6 @@ function AddressCart() {
 
   return (
     <>
-
       <div className='container'>
         <h5 style={{ color: '#74737B', fontSize: '16px' }}>Dirección de envío y facturación</h5>
         <div className="containerCheckoutSteps">
@@ -1329,7 +1328,7 @@ function AddressCart() {
                     1
                   </button>
                   <div className="step-title">
-                    Inicia sesión / Registro
+                    Datos del cliente
                   </div>
                 </div>
                 <div className={`step-item ${activeStep >= 2 ? 'active' : ''}`} >

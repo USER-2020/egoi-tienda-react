@@ -42,7 +42,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
 
   const currenUser = getCurrentUser();
   const history = useHistory();
-  const token = currenUser.token;
+  const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currentUser sea null
 
   const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
   const baseUrlImageThumbnail = "https://egoi.xyz/storage/app/public/product/thumbnail/";
@@ -375,6 +375,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
     if (!token) {
       history.goBack();
       setModalViewLogin(true);
+      // console.log("No hay token");
 
     } else {
       // history.push(`/detailsProduct/${id}/${slug}`);

@@ -36,7 +36,7 @@ function Category() {
   const getAllBanners = () => {
     getLateralBanner()
       .then((res) => {
-        console.log("BannerLa",res.data);
+        console.log("BannerLa", res.data);
         setBannersInfo(res.data);
       }).catch((err) => console.log(err));
   }
@@ -52,6 +52,41 @@ function Category() {
   //   }
   // }, [currenUser, isLoggedIn]);
 
+  const getCantCartWhithoutToken = () => {
+    let productsCartWhithoutToken = localStorage.getItem('productsCart');
+    if (productsCartWhithoutToken) {
+      // Si 'productsCartWhithoutToken' no es nulo ni indefinido, entonces hay datos en el localStorage.
+
+      // Parsea los datos del localStorage de nuevo a un objeto (suponiendo que los datos son un objeto JSON).
+      let productsCartData = JSON.parse(productsCartWhithoutToken);
+
+      // Convierte los datos en una matriz de objetos y agrega un índice único a cada producto
+      let productsInCart = Object.values(productsCartData).map((product, index) => ({ ...product, index }));
+
+      // Obtiene el tamaño de la matriz (número de elementos) y actualiza el estado "cantProductsOnCart"
+      let numProducts = productsInCart.length;
+      setCantProductsOnCart(numProducts);
+      setProductsCart(productsInCart);
+
+      console.log('Número de productos en el carrito:', numProducts);
+    } else {
+      // Si 'productsCartWhithoutToken' es nulo o indefinido, no hay datos en el localStorage.
+      console.log('El carrito está vacío.');
+    }
+  }
+
+  const funcionValidation = () => {
+    if (isLoggedIn) {
+      getAllInfoPerfil();
+      console.log("si hay usuario logueado");
+      getCantCart();
+    }
+    else {
+      console.log("no hay usuario logueado");
+      getCantCartWhithoutToken();
+    }
+  }
+
   const getAllInfoPerfil = () => {
     getUserProfileInfo(token)
       .then((res) => {
@@ -60,30 +95,39 @@ function Category() {
       }).catch((err) => console.log(err));
   }
 
-  useEffect(()=>{
-    getAllBanners();
-    getAllInfoPerfil();
-    getCantCart();
-  },[])
-
-  
   useEffect(() => {
+    getAllBanners();
+    funcionValidation();
+  }, [])
 
-    if (isLoggedIn) {
-      getAllInfoPerfil();
-      console.log("si hay usuario logueado");
-      getCantCart();
-    }
 
+  useEffect(() => {
+    funcionValidation();
   }, [isLoggedIn])
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart} />
-      <HeaderResponsive canCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
+      <Header
+        cantCart={cantProductsOnCart}
+        detailInfoPerfil={detailInfoProfile}
+        setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        productsInCart={productsCart}
+        getAllProductsByCart={getCantCart}
+        getAllProductsByCartNotoken={funcionValidation}
+      />
+      <HeaderResponsive
+        canCart={cantProductsOnCart}
+        detailInfoProfile={detailInfoProfile}
+        setIsLoggedInPartner={() => setIsLoggedIn(true)}
+      />
       {/* <HeaderCategories/> */}
       {/* <HeaderResponsiveCategorie/> */}
-      <ProductsCategories updateCantProducts={() => { getCantCart() }} setIsLoggedInPartner={() => setIsLoggedIn(true)} bannersInfo={bannersInfo}/>
+      <ProductsCategories updateCantProducts={() => { getCantCart() }}
+        setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        bannersInfo={bannersInfo}
+        setIsntLoggedInPartner={() => setIsLoggedIn(false)}
+        updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      />
       {/* <ProductsResponsiveCategorie/> */}
       <Footer />
     </div>

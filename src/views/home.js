@@ -105,7 +105,7 @@ const Home = (props) => {
   };
 
   const getCantCart = () => {
-    
+
     allProductsCart(token)
       .then((res) => {
         const productsOncart = res.data;
@@ -118,6 +118,42 @@ const Home = (props) => {
 
       }).catch((err) => console.log(err));
   }
+
+  const getCantCartWhithoutToken = () => {
+    let productsCartWhithoutToken = localStorage.getItem('productsCart');
+    if (productsCartWhithoutToken) {
+      // Si 'productsCartWhithoutToken' no es nulo ni indefinido, entonces hay datos en el localStorage.
+
+      // Parsea los datos del localStorage de nuevo a un objeto (suponiendo que los datos son un objeto JSON).
+      let productsCartData = JSON.parse(productsCartWhithoutToken);
+
+      // Convierte los datos en una matriz de objetos y agrega un índice único a cada producto
+      let productsInCart = Object.values(productsCartData).map((product, index) => ({ ...product, index }));
+
+      // Obtiene el tamaño de la matriz (número de elementos) y actualiza el estado "cantProductsOnCart"
+      let numProducts = productsInCart.length;
+      setCantProductsOnCart(numProducts);
+      setProductsCart(productsInCart);
+
+      console.log('Número de productos en el carrito:', numProducts);
+    } else {
+      // Si 'productsCartWhithoutToken' es nulo o indefinido, no hay datos en el localStorage.
+      console.log('El carrito está vacío.');
+    }
+  }
+
+  const funcionValidation = () => {
+    if (isLoggedIn) {
+      getAllInfoPerfil();
+      console.log("si hay usuario logueado");
+      getCantCart();
+    }
+    else{
+      console.log("no hay usuario logueado");
+      getCantCartWhithoutToken();
+    }
+  }
+
 
   const getAllInfoPerfil = () => {
     getUserProfileInfo(token)
@@ -147,20 +183,14 @@ const Home = (props) => {
     getAllBanners();
     getPrincipalPopup();
     getCantCart();
-
+    funcionValidation();
     // getOfferDestacada();
     // offerDay();
   }, []);
 
 
   useEffect(() => {
-
-    if (isLoggedIn) {
-      getAllInfoPerfil();
-      console.log("si hay usuario logueado");
-      getCantCart();
-    }
-
+    funcionValidation();
   }, [isLoggedIn])
 
   return (
@@ -168,15 +198,45 @@ const Home = (props) => {
     // <Nav/>
     <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header cantCart={cantProductsOnCart} detailInfoPerfil={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)} productsInCart={productsCart} getAllProductsByCart={getCantCart}/>
-      <HeaderResponsive canCart={cantProductsOnCart} detailInfoProfile={detailInfoProfile} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <Header 
+      cantCart={cantProductsOnCart} 
+      detailInfoPerfil={detailInfoProfile} 
+      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      productsInCart={productsCart} 
+      getAllProductsByCart={getCantCart} 
+      getAllProductsByCartNotoken={funcionValidation} 
+      />
+      <HeaderResponsive 
+      canCart={cantProductsOnCart} 
+      detailInfoProfile={detailInfoProfile} 
+      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      />
       <Banner />
       <OfertaDia />
       <OfertaDestacada />
       <OfertaFlash />
-      <Recientes bannersInfo={bannersInfo} updateCantProducts={()=>{getCantCart()}} setIsLoggedInPartner={()=>setIsLoggedIn(true)} className="w-100" />
-      <Promociones bannersInfo={bannersInfo} updateCantProducts={()=>{getCantCart()}} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
-      <Vendidos bannersInfo={bannersInfo} updateCantProducts={()=>{getCantCart()}} setIsLoggedInPartner={()=>setIsLoggedIn(true)}/>
+      <Recientes 
+      bannersInfo={bannersInfo}
+      updateCantProducts={() => { getCantCart() }}
+      setIsLoggedInPartner={() => setIsLoggedIn(true)}
+      setIsntLoggedInPartner={() => setIsLoggedIn(false)}
+      updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      className="w-100" 
+      />
+      <Promociones 
+      bannersInfo={bannersInfo} 
+      updateCantProducts={() => { getCantCart() }} 
+      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      setIsntLoggedInPartner={()=>setIsLoggedIn(false)}
+      updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      />
+      <Vendidos 
+      bannersInfo={bannersInfo} 
+      updateCantProducts={() => { getCantCart() }} 
+      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      setIsntLoggedInPartner={()=>setIsLoggedIn(false)}
+      updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      />
       {/* <Populares /> */}
       <Bannerdown bannersInfo={bannersInfo} />
       <Footer />
