@@ -892,12 +892,16 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
             {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
           </Offcanvas.Header>
           <Offcanvas.Body>
-            {showTokenOffcanvas && (
+            {currenUser && isLoggedIn ? (
+
               <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart} onclose={handleClose} />
-            )}
-            {showOffcanvasWithoutToken && (
+            ):(
+
               <DetailCartOffCanvasNoToken productsInCart={productsInCart} getAllProductsByCartNotoken={getAllProductsByCartNotoken} onclose={handleClose} />
             )}
+            
+            
+            
           </Offcanvas.Body>
         </Offcanvas>
 

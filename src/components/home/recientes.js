@@ -373,9 +373,9 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
         // console.log("Desde el modal del banner de recientes ", bannersInfo);
     }, [bannersInfo]);
 
-    useEffect(() => {
-        handleLogin();
-    }, [currenUser])
+    // useEffect(() => {
+    //     handleLogin();
+    // }, [currenUser])
 
 
     return (
@@ -490,7 +490,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                         )}
 
                     </div>
-                    <AddRecents updateCantProducts={updateCantProducts} setIsLoggedInPartner={setIsLoggedInPartner} />
+                    <AddRecents updateCantProducts={updateCantProducts} setIsLoggedInPartner={setIsLoggedInPartner} setIsntLoggedInPartner={setIsntLoggedInPartner} updateCantProductsWithouthToken={updateCantProductsWithouthToken}/>
 
 
                     {/* ---------------------CAROUSEL RESPONSIVE----------------------------  */}

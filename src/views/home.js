@@ -215,14 +215,28 @@ const Home = (props) => {
       <OfertaDia />
       <OfertaDestacada />
       <OfertaFlash />
-      <Recientes bannersInfo={bannersInfo}
-        updateCantProducts={() => { getCantCart() }}
-        setIsLoggedInPartner={() => setIsLoggedIn(true)}
-        setIsntLoggedInPartner={() => setIsLoggedIn(false)}
-        updateCantProductsWithouthToken={getCantCartWhithoutToken}
-        className="w-100" />
-      <Promociones bannersInfo={bannersInfo} updateCantProducts={() => { getCantCart() }} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
-      <Vendidos bannersInfo={bannersInfo} updateCantProducts={() => { getCantCart() }} setIsLoggedInPartner={() => setIsLoggedIn(true)} />
+      <Recientes 
+      bannersInfo={bannersInfo}
+      updateCantProducts={() => { getCantCart() }}
+      setIsLoggedInPartner={() => setIsLoggedIn(true)}
+      setIsntLoggedInPartner={() => setIsLoggedIn(false)}
+      updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      className="w-100" 
+      />
+      <Promociones 
+      bannersInfo={bannersInfo} 
+      updateCantProducts={() => { getCantCart() }} 
+      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      setIsntLoggedInPartner={()=>setIsLoggedIn(false)}
+      updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      />
+      <Vendidos 
+      bannersInfo={bannersInfo} 
+      updateCantProducts={() => { getCantCart() }} 
+      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      setIsntLoggedInPartner={()=>setIsLoggedIn(false)}
+      updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      />
       {/* <Populares /> */}
       <Bannerdown bannersInfo={bannersInfo} />
       <Footer />

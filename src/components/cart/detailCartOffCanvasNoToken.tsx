@@ -182,6 +182,7 @@ const DetailCartOffCanvasNoToken = ({ productsInCart, getAllProductsByCartNotoke
 
   useEffect(() => {
     console.log("Productos del carrito en el offcanvas", productsInCart);
+    getAllProductsByCartNotoken();
   }, []);
   return (
     <>
@@ -248,7 +249,7 @@ const DetailCartOffCanvasNoToken = ({ productsInCart, getAllProductsByCartNotoke
                           {/* <input type="number" value={products.quantity} disabled /> */}
                           {products.min_qty >= 2 && (
 
-                            <button className='btnIzq' onClick={() => { setQuantity(products.min_qty); handleDecrement(products.quantity, products.id); getAllProductsByCartNotoken() }}>
+                            <button className='btnIzq' onClick={() => { setQuantity(products.min_qty); handleDecrement(products.min_qty, products.id); getAllProductsByCartNotoken() }}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-dash" viewBox="0 0 16 16">
                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                               </svg>
