@@ -33,7 +33,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 
-const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIsntLoggedInPartner, updateCantProductsWithouthToken}) => {
+const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) => {
   const [productos, setProductos] = useState([]);
 
   const containerRef = useRef(null);
@@ -271,7 +271,7 @@ const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, se
     console.log("Producto agregado al carrito");
     console.log("estos son los valores enviados desde el producto", [
       product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id
-  ]);
+    ]);
     if (currenUser) {
       // setModalViewCart(true);
       addProductsCart(product.id, quantity, token)
@@ -320,7 +320,18 @@ const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, se
       let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
 
       // Agregar el nuevo producto al carrito actual
-      productsCart[product.id] = product;
+      // productsCart[product.id] = product;
+
+      if (productsCart[product.id]) {
+        // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
+        productsCart[product.id].min_qty += 1;
+        setMinQty();
+      } else {
+        // El producto no existe en el carrito, así que agrégalo con cantidad 1
+        product.min_qty = 1;
+        productsCart[product.id] = product;
+        setMinQty();
+      }
 
       // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage
       localStorage.setItem('productsCart', JSON.stringify(productsCart));

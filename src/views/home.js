@@ -52,6 +52,7 @@ const Home = (props) => {
   const [modalPopup, setModalPopup] = useState(false);
   const [bannersInfo, setBannersInfo] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
+  const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
 
   const [datosPopup, setDatosPopup] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
@@ -184,6 +185,7 @@ const Home = (props) => {
     getPrincipalPopup();
     getCantCart();
     funcionValidation();
+    setMinQty(1);
     // getOfferDestacada();
     // offerDay();
   }, []);
@@ -205,6 +207,7 @@ const Home = (props) => {
       productsInCart={productsCart} 
       getAllProductsByCart={getCantCart} 
       getAllProductsByCartNotoken={funcionValidation} 
+      minQty={minQty}
       />
       <HeaderResponsive 
       canCart={cantProductsOnCart} 
@@ -221,6 +224,7 @@ const Home = (props) => {
       setIsLoggedInPartner={() => setIsLoggedIn(true)}
       setIsntLoggedInPartner={() => setIsLoggedIn(false)}
       updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      setMinQty={()=>setMinQty(minQty+1)}
       className="w-100" 
       />
       <Promociones 
@@ -229,6 +233,7 @@ const Home = (props) => {
       setIsLoggedInPartner={() => setIsLoggedIn(true)} 
       setIsntLoggedInPartner={()=>setIsLoggedIn(false)}
       updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      setMinQty={()=>setMinQty(minQty+1)}
       />
       <Vendidos 
       bannersInfo={bannersInfo} 
@@ -236,6 +241,7 @@ const Home = (props) => {
       setIsLoggedInPartner={() => setIsLoggedIn(true)} 
       setIsntLoggedInPartner={()=>setIsLoggedIn(false)}
       updateCantProductsWithouthToken={getCantCartWhithoutToken}
+      setMinQty={()=>setMinQty(minQty+1)}
       />
       {/* <Populares /> */}
       <Bannerdown bannersInfo={bannersInfo} />

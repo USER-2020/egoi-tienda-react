@@ -37,7 +37,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import DetailCartOffCanvas from "./cart/detailCartOffCanvas.tsx";
 import DetailCartOffCanvasNoToken from "./cart/detailCartOffCanvasNoToken.tsx";
 
-const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken }) => {
+const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +59,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const [offcanvasOpen, setOffcanvasOpen] = useState(false);
   const [offcanvasOpenCart, setOffcanvasOpenCart] = useState(false);
   const [prevCantCart, setPrevCantCart] = useState(cantCart);
+  const [prevMinQty, setPrevMinQty] = useState({});
 
   const [show, setShow] = useState(false);
 
@@ -460,13 +461,31 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
   useEffect(() => {
     // Verifica si cantCart ha aumentado en 1 desde el valor anterior
+    console.log("changuess preCantCart", prevCantCart);
     if (cantCart === prevCantCart + 1) {
       handleShow();
     }
 
+    // if(productsInCart.min_qty === prevMinQty + 1){
+    //   handleShow();
+    // }
     // Actualiza el valor previo de cantCart
     setPrevCantCart(cantCart);
+    // setPrevMinQty(productsInCart.min_qty);
   }, [cantCart, prevCantCart]);
+
+
+  useEffect(() => {
+    console.log("changuess prevMinQty", prevMinQty);
+    console.log("PropminQTY", minQty);
+    if (minQty === 1) {
+      handleClose();
+    } else {
+      handleShow();
+
+    }
+
+  }, [minQty]);
 
 
 
@@ -895,13 +914,13 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
             {currenUser && isLoggedIn ? (
 
               <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart} onclose={handleClose} />
-            ):(
+            ) : (
 
               <DetailCartOffCanvasNoToken productsInCart={productsInCart} getAllProductsByCartNotoken={getAllProductsByCartNotoken} onclose={handleClose} />
             )}
-            
-            
-            
+
+
+
           </Offcanvas.Body>
         </Offcanvas>
 

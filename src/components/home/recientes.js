@@ -26,7 +26,7 @@ import { getCurrentUser } from '../../helpers/Utils';
 import toast, { Toaster } from 'react-hot-toast';
 
 
-const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken}) => {
+const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty}) => {
     const [products, setProducts] = useState([]);
 
     const containerRef = useRef(null);
@@ -77,7 +77,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
         if (currenUser) {
             // setIsLoggedIn(true);
             setIsLoggedInPartner(true);
-            
+
             // handleLogged(true);
             // console.log("Estas logueado")
 
@@ -309,12 +309,23 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
             // console.log(token);
         } else {
 
-            
+
             // Obtener el carrito actual del localStorage (si existe)
             let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
 
-            // Agregar el nuevo producto al carrito actual
-            productsCart[product.id] = product;
+            // // Agregar el nuevo producto al carrito actual
+            // productsCart[product.id] = product;
+
+            if (productsCart[product.id]) {
+                // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
+                productsCart[product.id].min_qty += 1;
+                setMinQty();
+            } else {
+                // El producto no existe en el carrito, así que agrégalo con cantidad 1
+                product.min_qty = 1;
+                productsCart[product.id] = product;
+                setMinQty();
+            }
 
             // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage
             localStorage.setItem('productsCart', JSON.stringify(productsCart));
@@ -351,7 +362,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                 value: product.unit_price
             });
             /* eslint-enable */
-            
+
 
         }
 
@@ -490,7 +501,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                         )}
 
                     </div>
-                    <AddRecents updateCantProducts={updateCantProducts} setIsLoggedInPartner={setIsLoggedInPartner} setIsntLoggedInPartner={setIsntLoggedInPartner} updateCantProductsWithouthToken={updateCantProductsWithouthToken}/>
+                    <AddRecents updateCantProducts={updateCantProducts} setIsLoggedInPartner={setIsLoggedInPartner} setIsntLoggedInPartner={setIsntLoggedInPartner} updateCantProductsWithouthToken={updateCantProductsWithouthToken} setMinQty={setMinQty}/>
 
 
                     {/* ---------------------CAROUSEL RESPONSIVE----------------------------  */}
