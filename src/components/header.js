@@ -410,8 +410,10 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   useEffect(() => {
     allCategoriesPromise();
     allBrands();
-    setShowOffcanvasWithoutToken(false);
-    setShowTOkenOffCanvas(false);
+   
+    // handleClose();
+    // setShowOffcanvasWithoutToken(false);
+    // setShowTOkenOffCanvas(false);
   }, []);
 
 
@@ -480,11 +482,10 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     console.log("PropminQTY", minQty);
     if (minQty === 1) {
       handleClose();
-    } else {
-      handleShow();
-
     }
-
+    if (minQty !== 1){
+      handleShow();
+    }
   }, [minQty]);
 
 

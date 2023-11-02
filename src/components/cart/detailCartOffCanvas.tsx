@@ -305,7 +305,7 @@ const DetailCartOffCanvas = ({ productsInCart, getAllProductsByCart, setCantCart
                     </div>
 
                     <div className="btns">
-                        <button onClick={(e) => { e.preventDefault(); history.push(`/detailCart`) }}>Ir a mi carrito </button>
+                        <button onClick={(e) => { e.preventDefault(); history.push(`/detailCart`); onclose() }}>Ir a mi carrito </button>
                         <a href='#' onClick={(e) => { e.preventDefault(); onclose() }}>Seguir comprando</a>
                     </div>
                 </div>
