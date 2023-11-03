@@ -44,7 +44,7 @@ import { getProductsBySearch } from "../services/filtros";
 
 
 
-function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner }) {
+function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, handleShowOffCanvas }) {
 
   /* global bootstrap */
 
@@ -141,11 +141,13 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner }) 
 
   const goToDetailCart = () => {
     if (currenUser) {
-      history.push(`/detailCart`)
+      handleShowOffCanvas();
+      console.log("Qup putas");
+      // history.push(`/detailCart`)
     }
     else {
       setIsOffcanvasVisible(false);
-      setModalViewLogin(true);
+      handleShowOffCanvas();
     }
   }
 

@@ -53,6 +53,8 @@ const Home = (props) => {
   const [bannersInfo, setBannersInfo] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
+  const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
+  
 
   const [datosPopup, setDatosPopup] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
@@ -186,6 +188,8 @@ const Home = (props) => {
     getCantCart();
     funcionValidation();
     setMinQty(1);
+    
+    // setQtyToken(1);
     // getOfferDestacada();
     // offerDay();
   }, []);
@@ -208,11 +212,15 @@ const Home = (props) => {
       getAllProductsByCart={getCantCart} 
       getAllProductsByCartNotoken={funcionValidation} 
       minQty={minQty}
+      handleShowOffCanvas= {handleShowOffCanvas}
+      handleShowOffCanvasClose={()=>setHandleShowOffCanvas(false)}
+      
       />
       <HeaderResponsive 
       canCart={cantProductsOnCart} 
       detailInfoProfile={detailInfoProfile} 
       setIsLoggedInPartner={() => setIsLoggedIn(true)} 
+      handleShowOffCanvas={()=>setHandleShowOffCanvas(true)}
       />
       <Banner />
       <OfertaDia />

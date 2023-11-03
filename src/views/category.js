@@ -18,6 +18,7 @@ function Category() {
   const [bannersInfo, setBannersInfo] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
+  const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currentUser sea null
 
   const getCantCart = () => {
@@ -117,11 +118,14 @@ function Category() {
         getAllProductsByCart={getCantCart}
         getAllProductsByCartNotoken={funcionValidation}
         minQty={minQty}
+        handleShowOffCanvas={handleShowOffCanvas}
+        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
       <HeaderResponsive
         canCart={cantProductsOnCart}
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
       />
       {/* <HeaderCategories/> */}
       {/* <HeaderResponsiveCategorie/> */}
@@ -130,7 +134,7 @@ function Category() {
         bannersInfo={bannersInfo}
         setIsntLoggedInPartner={() => setIsLoggedIn(false)}
         updateCantProductsWithouthToken={getCantCartWhithoutToken}
-        setMinQty={()=>setMinQty(minQty+1)}
+        setMinQty={() => setMinQty(minQty + 1)}
       />
       {/* <ProductsResponsiveCategorie/> */}
       <Footer />

@@ -36,7 +36,7 @@ import SimilarProduct from './similarProduct.tsx';
 import toast, { Toaster } from 'react-hot-toast';
 import checkout from '../cart/checkout.tsx';
 
-function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
+function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) {
     const { slug } = useParams();
     const [detailProducts, setDetailProducts] = useState([]);
     const [currentImg, setCurrentImage] = useState('');
@@ -135,9 +135,10 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                             currency: 'COP',
                             quantity: quantity
                         }],
-                        value: detailProducts.unit_price
-                    });
+                        value: detailProducts.unit_price,
 
+                    });
+                    history.push('/detailCart')
                     // console.log("Producto enviado", res.data);
                     // console.log(token);
                 })
@@ -146,7 +147,62 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
             // console.log(token);
         } else {
 
-            setModalViewLogin(true);
+            // setModalViewLogin(true);
+            // Obtener el carrito actual del localStorage (si existe)
+            let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
+
+            // // Agregar el nuevo producto al carrito actual
+            // productsCart[product.id] = product;
+
+            if (productsCart[detailProducts.id]) {
+                // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
+                console.log("Quantyty plus", quantity)
+                productsCart[detailProducts.id].min_qty += quantity;
+                setMinQty();
+            } else {
+                // El producto no existe en el carrito, así que agrégalo con cantidad 1
+                detailProducts.min_qty = quantity;
+                productsCart[detailProducts.id] = detailProducts;
+                setMinQty();
+            }
+
+            // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage
+            localStorage.setItem('productsCart', JSON.stringify(productsCart));
+            setIsntLoggedInPartner(false);
+            updateCantProductsWithouthToken();
+            toast.success('Producto agregado con éxito!');
+
+            let discount = 0;
+            if (detailProducts.discount_valor > 0) {
+                discount = detailProducts.unit_price - detailProducts.discount_valor;
+            }
+            if (detailProducts.discount_tag_valor > 0) {
+                discount = detailProducts.discount_tag_valor;
+            }
+            if (detailProducts.discount_valor === 0 && detailProducts.discount_tag_valor === 0) {
+                discount = 0;
+            }
+            /* eslint-disable */
+            gtag('event', 'add_to_cart', {
+                currency: 'USD',
+                items: [{
+                    item_id: id,
+                    item_name: detailProducts.name,
+                    coupon: '',
+                    discount: discount,
+                    affiliation: 'Egoi',
+                    item_brand: detailProducts.brand_id,
+                    item_category: '',
+                    item_variant: '',
+                    price: detailProducts.unit_price,
+                    currency: 'COP',
+                    quantity: quantity
+                }],
+                value: detailProducts.unit_price,
+
+            });
+            /* eslint-enable */
+
 
         }
 
@@ -544,9 +600,9 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
         <div>
             {/* <Toaster toastOptions={{ duration: 4000 }} /> */}
 
+            <Toaster toastOptions={{ duration: 4000 }} />
             {isLoading ? (
                 <>
-
                     <div className="loadingDiv">
                         <ThreeCircles
                             height="100"
@@ -966,7 +1022,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                                         ) : (
                                             <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center' }}>Comprar ahora</p></a>
                                         )}
-                                        <a href="#" className='addCart' onClick={(e) => { addToCart(); history.push('/detailCart'); e.preventDefault() }}>
+                                        <a href="#" className='addCart' onClick={(e) => { addToCart(); e.preventDefault() }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FC5241" className="bi bi-cart3" viewBox="0 0 16 16">
                                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                                             </svg>

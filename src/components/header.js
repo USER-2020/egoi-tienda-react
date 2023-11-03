@@ -30,14 +30,15 @@ import { useContext } from 'react';
 
 import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
-import { allProductsCart } from "../services/cart";
+import { addProductsCart, allProductsCart } from "../services/cart";
 
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import DetailCartOffCanvas from "./cart/detailCartOffCanvas.tsx";
 import DetailCartOffCanvasNoToken from "./cart/detailCartOffCanvasNoToken.tsx";
+import { addCartProductsOfLocalStorage } from "../helpers/productsLocalStorage.js";
 
-const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty }) => {
+const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty, handleShowOffCanvas, handleShowOffCanvasClose}) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -70,7 +71,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const [showOffcanvasWithoutToken, setShowOffcanvasWithoutToken] = useState(false);
 
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {setShow(false); handleShowOffCanvasClose()};
   const handleShow = () => setShow(true);
 
   // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
@@ -306,6 +307,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       setIsLoggedInPartner(true);
       setShowTOkenOffCanvas(true);
       setShowOffcanvasWithoutToken(false);
+
     } else {
       setIsLoggedIn(false);
       setShowOffcanvasWithoutToken(true);
@@ -337,6 +339,11 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       setModalViewLogin(true);
     }
   }
+
+
+
+
+
 
   // const getCantCart = () => {
   //   const token = currenUser.token;
@@ -401,6 +408,9 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
     // }
     handleLogin();
+
+
+
     // console.log(detailInfoPerfil);
 
 
@@ -410,11 +420,17 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   useEffect(() => {
     allCategoriesPromise();
     allBrands();
-   
+
     // handleClose();
     // setShowOffcanvasWithoutToken(false);
     // setShowTOkenOffCanvas(false);
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      addCartProductsOfLocalStorage();
+    }
+  }, [isLoggedIn])
 
 
   useEffect(() => {
@@ -461,20 +477,26 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
   // }, [offcanvasOpen]);
 
-  useEffect(() => {
-    // Verifica si cantCart ha aumentado en 1 desde el valor anterior
-    console.log("changuess preCantCart", prevCantCart);
-    if (cantCart === prevCantCart + 1) {
-      handleShow();
-    }
+  // useEffect(() => {
+  //   // Verifica si cantCart ha aumentado en 1 desde el valor anterior
+  //   console.log("changuess preCantCart", prevCantCart);
+  //   // if (cantCart === prevCantCart + 1) {
+  //   //   handleShow();
+  //   // }
+  //   if (minQty === 1) {
+  //     handleClose();
+  //   }
+  //   if (minQty !== 1) {
+  //     handleShow();
+  //   }
 
-    // if(productsInCart.min_qty === prevMinQty + 1){
-    //   handleShow();
-    // }
-    // Actualiza el valor previo de cantCart
-    setPrevCantCart(cantCart);
-    // setPrevMinQty(productsInCart.min_qty);
-  }, [cantCart, prevCantCart]);
+  //   // if(productsInCart.min_qty === prevMinQty + 1){
+  //   //   handleShow();
+  //   // }
+  //   // Actualiza el valor previo de cantCart
+  //   setPrevCantCart(cantCart);
+  //   // setPrevMinQty(productsInCart.min_qty);
+  // }, [prevCantCart]);
 
 
   useEffect(() => {
@@ -483,10 +505,18 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     if (minQty === 1) {
       handleClose();
     }
-    if (minQty !== 1){
+    if (minQty !== 1) {
       handleShow();
     }
   }, [minQty]);
+
+
+  useEffect(()=>{
+    if(handleShowOffCanvas){
+      handleShow();
+      console.log(handleShowOffCanvas);
+    }
+  },[handleShowOffCanvas]);
 
 
 
