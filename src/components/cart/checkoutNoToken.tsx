@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom';
-import { getCurrentUser } from '../../helpers/Utils';
+import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
 import toast, { Toaster } from 'react-hot-toast';
 import '../../styles/detailsCart.css';
-import { Card, Form, FormGroup, Input } from 'reactstrap';
+import { Card, Form, FormGroup, Input, Button } from 'reactstrap';
 import start from '../../assets/egoi_icons/star-fill.svg';
 import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
 import PhoneInput from 'react-phone-input-2';
 import es from "react-phone-input-2/lang/es.json";
+import Swal from 'sweetalert2';
+import { TailSpin } from 'react-loader-spinner';
+import { firstLogin } from '../../services/extraLogin';
+
 
 const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -97,6 +101,13 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
     // const token = currenUser.token;
 
     // const userEmail = currenUser.email;
+
+    const [email, setEmail] = useState();
+    const [f_name, setF_name] = useState();
+    const [l_name, setL_name] = useState();
+    const [phone, setPhone] = useState();
+    const [loading, setLoading] = useState(false);
+
 
     const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
     const baseUrlImageThumbnail = "https://egoi.xyz/storage/app/public/product/thumbnail/";
@@ -285,6 +296,66 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
         prevScrollPos = currentScrollPos;
     });
 
+
+    const addCartProductsOfLocalStorage = () => {
+        let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
+        if(productsCart.length > 0){
+            productsCart.forEach(element => {
+                
+            });
+        }
+        
+    }
+
+    const onSubmit = (data) => {
+        setLoading(true);
+        if (!f_name || !l_name || !email || !phone) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Por favor, complete todos los campos. ",
+                confirmButtonColor: "#0d6efd",
+            });
+            setLoading(false);
+
+
+        } else {
+            setLoading(true);
+            firstLogin(f_name, l_name, email, phone)
+                .then((res) => {
+                    console.log(res);
+                    const item = {
+                        token: res.data.token,
+                        email: email,
+                    }
+                    setCurrentUser(item);
+                    addCartProductsOfLocalStorage();
+                    window.location.reload();
+                    // put(loginUserSuccess(item));
+
+                }).catch((err) => {
+                    // console.log(err.response.data.errors[0].code);
+                    if (err.response.data.errors[0].code === 'email') {
+                        console.log("Tu email ya esta registrado");
+                    }
+                });
+
+        }
+
+    }
+
+    const handleSubmitInfo = (event) => {
+        event.preventDefault();
+        const data = {
+            email: email,
+            f_name: f_name,
+            l_name: l_name,
+            phone: phone
+        };
+        console.log(data);
+        onSubmit(data);
+    }
+
     useEffect(() => {
         console.log("Productos del carrito en el checkout sin token ", productsInCart);
         costoDeENvio();
@@ -369,7 +440,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                         <div className="card-body card1">
                                             <Card style={{ padding: 20, backgroundColor: 'transparent' }}>
                                                 <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
-                                                <Form>
+                                                <Form onSubmit={handleSubmitInfo}>
                                                     <FormGroup controlId="formBasicEmail">
                                                         <Input addon={true}
                                                             name="email"
@@ -378,8 +449,8 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                                                 borderRadius: "50px",
                                                             }}
                                                             placeholder="Email"
-                                                        // value=""
-                                                        // onChange={(event) => setContactPersonName(event.target.value)}
+                                                            value={email}
+                                                            onChange={(event) => setEmail(event.target.value)}
                                                         />
 
                                                     </FormGroup>
@@ -391,8 +462,8 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                                                 borderRadius: "50px",
                                                             }}
                                                             placeholder="Nombre del contacto"
-                                                        // value=""
-                                                        // onChange={(event) => setContactPersonName(event.target.value)}
+                                                            value={f_name}
+                                                            onChange={(event) => setF_name(event.target.value)}
                                                         />
 
                                                         <Input addon={true}
@@ -402,13 +473,13 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                                                 borderRadius: "50px",
                                                             }}
                                                             placeholder="Apellido del contacto"
-                                                        // value=""
-                                                        // onChange={(event) => setContactPersonName(event.target.value)}
+                                                            value={l_name}
+                                                            onChange={(event) => setL_name(event.target.value)}
                                                         />
 
                                                     </FormGroup>
                                                     <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                                        <Input addon={true}
+                                                        {/* <Input addon={true}
                                                             name="contactPersonName"
                                                             classNanme="form-control"
                                                             style={{
@@ -417,15 +488,15 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                                             placeholder="Ciudad"
                                                         // value=""
                                                         // onChange={(event) => setContactPersonName(event.target.value)}
-                                                        />
+                                                        /> */}
 
                                                         <PhoneInput
                                                             localization={es}
                                                             country={"co"}
-                                                            // value={phone}
-                                                            // onChange={setphone}
+                                                            value={phone}
+                                                            onChange={setPhone}
                                                             inputStyle={{
-                                                                width: "100%",
+                                                                width: "50%",
                                                                 height: "10px",
                                                                 borderRadius: "50px",
                                                                 outline: "none",
@@ -435,7 +506,26 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                                             }}
                                                         />
 
+
                                                     </FormGroup>
+                                                    <div className="form-group" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '30px', height: 48 }}>
+                                                        <a href="#" style={{ backgroundColor: '#FC5241', color: 'white', textDecoration: 'none', padding: '12px', borderRadius: '32px', display: 'flex', width: '300px', textAlign: 'center', justifyContent: 'center' }} onClick={handleSubmitInfo}>
+                                                            {loading &&
+                                                                <TailSpin
+                                                                    height="20"
+                                                                    width="20"
+                                                                    color="white"
+                                                                    ariaLabel="tail-spin-loading"
+                                                                    radius="1"
+                                                                    wrapperStyle={{ marginRight: '20px' }}
+                                                                    wrapperClass=""
+                                                                    visible={true}
+                                                                />
+                                                            }
+                                                            Continuar con datos de envío
+                                                        </a>
+                                                    </div>
+
                                                 </Form>
                                             </Card>
                                         </div>
@@ -703,43 +793,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                 </div>
                             </div>
                         </Card>
-                        {/* {activeStep < 3 && (
-              <>
-                <div className="toPay">
-                  <a href="#" onClick={() => handleProcederCompra()} type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Proceder con la compra</a>
 
-                </div>
-                <div className="awaitShopping">
-                  <a href="/detailCart">Ir al carrito</a>
-                </div>
-              </>
-
-            )}
-            {activeStep >= 3 && (
-              <>
-                {botonDeshabilitado && okPurchase ? (
-                  <div className="toPay">
-                    <a href="#" onClick={() => handlePurchaseSucces()}>Finalizar compra</a>
-                  </div>
-
-                ) : (
-                  <div className="toPay">
-                    <a href="#" onClick={() => handlePurchaseSucces()}
-                      style={{
-
-                      }}
-                    >Finalizar compra</a>
-                  </div>
-                )}
-                <div className="turnCheckout">
-                  <a href="#" onClick={() => handleStepClick(2, 50)} type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Regresar al checkout</a>
-                </div>
-
-
-              </>
-            )} */}
                     </div>
                 </div>
                 <div className="containerCheckoutResponsive">

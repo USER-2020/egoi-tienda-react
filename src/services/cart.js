@@ -19,10 +19,13 @@ export const allProductsCart = (token) =>
     });
 
 //Agregar productos al carrito
-export const addProductsCart = (id, quantity, token) =>
+export const addProductsCart = (id, quantity, token, variant, choice1, choice2) =>
     axios.post(`${baseUrl}/cart/add` , {
             id: id,
-            quantity: quantity
+            quantity: quantity,
+            variant: variant || '',
+            choice_1: choice1 || '',
+            choice_2: choice2 || '',
         },{
         headers:{
             'Content-Type': 'application/json',

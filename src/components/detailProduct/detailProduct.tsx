@@ -36,7 +36,7 @@ import SimilarProduct from './similarProduct.tsx';
 import toast, { Toaster } from 'react-hot-toast';
 import checkout from '../cart/checkout.tsx';
 
-function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
+function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) {
     const { slug } = useParams();
     const [detailProducts, setDetailProducts] = useState([]);
     const [currentImg, setCurrentImage] = useState('');
@@ -50,6 +50,9 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
     const [changeFormRegister, setChangeFormRegister] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
+    const [selectedColor, setSelectedColor] = useState('');
+    const [variant, setVariant] = useState('');
+
 
     const [productsCart, setProductsCart] = useState([]);
     // const [costoEnvio, setCostoEnvio] = useState(0);
@@ -100,10 +103,10 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
     const addToCart = () => {
         if (currenUser) {
             // setModalViewCart(true);
-            
-            addProductsCart(id, quantity, currenUser.token)
+
+            addProductsCart(id, quantity, currenUser.token, variant, selectedColor, selectedOption)
                 .then((res) => {
-    
+
                     // setIsLoggedInPartner(true);
                     setCantCart();
                     // toast.success('Producto agregado con éxito!');
@@ -132,9 +135,10 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                             currency: 'COP',
                             quantity: quantity
                         }],
-                        value: detailProducts.unit_price
+                        value: detailProducts.unit_price,
+
                     });
-                    
+                    history.push('/detailCart')
                     // console.log("Producto enviado", res.data);
                     // console.log(token);
                 })
@@ -143,7 +147,62 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
             // console.log(token);
         } else {
 
-            setModalViewLogin(true);
+            // setModalViewLogin(true);
+            // Obtener el carrito actual del localStorage (si existe)
+            let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
+
+            // // Agregar el nuevo producto al carrito actual
+            // productsCart[product.id] = product;
+
+            if (productsCart[detailProducts.id]) {
+                // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
+                console.log("Quantyty plus", quantity)
+                productsCart[detailProducts.id].min_qty += quantity;
+                setMinQty();
+            } else {
+                // El producto no existe en el carrito, así que agrégalo con cantidad 1
+                detailProducts.min_qty = quantity;
+                productsCart[detailProducts.id] = detailProducts;
+                setMinQty();
+            }
+
+            // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage
+            localStorage.setItem('productsCart', JSON.stringify(productsCart));
+            setIsntLoggedInPartner(false);
+            updateCantProductsWithouthToken();
+            toast.success('Producto agregado con éxito!');
+
+            let discount = 0;
+            if (detailProducts.discount_valor > 0) {
+                discount = detailProducts.unit_price - detailProducts.discount_valor;
+            }
+            if (detailProducts.discount_tag_valor > 0) {
+                discount = detailProducts.discount_tag_valor;
+            }
+            if (detailProducts.discount_valor === 0 && detailProducts.discount_tag_valor === 0) {
+                discount = 0;
+            }
+            /* eslint-disable */
+            gtag('event', 'add_to_cart', {
+                currency: 'USD',
+                items: [{
+                    item_id: id,
+                    item_name: detailProducts.name,
+                    coupon: '',
+                    discount: discount,
+                    affiliation: 'Egoi',
+                    item_brand: detailProducts.brand_id,
+                    item_category: '',
+                    item_variant: '',
+                    price: detailProducts.unit_price,
+                    currency: 'COP',
+                    quantity: quantity
+                }],
+                value: detailProducts.unit_price,
+
+            });
+            /* eslint-enable */
+
 
         }
 
@@ -214,7 +273,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
             addToCart();
             history.push('/checkout');
             // Redirigir al usuario a la página de pago con los datos calculados
-            
+
         } else {
             // Si el usuario no está autenticado, mostrar un modal de inicio de sesión
             setModalViewLogin(true);
@@ -234,6 +293,11 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
 
     const closeModalCart = () => {
         setModalViewCart(false);
+    };
+
+    const handleSelectChangeColor = (event) => {
+        setSelectedColor(event.target.value);
+        console.log(selectedColor);
     };
 
     const handleSelectChange = (event) => {
@@ -508,13 +572,37 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
 
     }, [detailProducts]);
 
+    useEffect(() => {
+        console.log("Color elegido: ", selectedColor);
+    }, [selectedColor]);
+
+    useEffect(() => {
+        console.log("Talla elegida: ", selectedOption);
+    }, [selectedOption]);
+
+    useEffect(() => {
+        if (selectedColor && selectedOption) {
+            const concat = selectedColor + '-' + selectedOption;
+            console.log("Variacion completa lista para envio", concat);
+            setVariant(concat);
+        }
+        if (selectedColor === '' && selectedOption) {
+            console.log("estoy validando solamente una talla ");
+            setVariant(selectedOption);
+        }
+        if (selectedColor && selectedOption === '') {
+            console.log("estoy validando solamente un color");
+            setVariant(selectedColor);
+        }
+    }, [selectedColor, selectedOption])
+
     return (
         <div>
             {/* <Toaster toastOptions={{ duration: 4000 }} /> */}
 
+            <Toaster toastOptions={{ duration: 4000 }} />
             {isLoading ? (
                 <>
-
                     <div className="loadingDiv">
                         <ThreeCircles
                             height="100"
@@ -651,18 +739,84 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                                         <div className='characteristicResponsive'>{detailProducts && detailProducts.count_orden} Pedidos</div>
                                         <div className='characteristicResponsive'>{detailProducts && detailProducts.count_wishlist} Favoritos</div>
                                     </div>
-                                    {detailProducts && detailProducts.variation && detailProducts.variation.length > 0 ? (
+                                    {detailProducts && detailProducts.choice_options && detailProducts.choice_options.length > 0 && (
+                                        <div>
+                                            {detailProducts.choice_options.some(variations => variations.title === 'Colores') && (
+                                                <div className="containerVariacionesResponsiveColores">
+                                                    <p>Colores: </p>
+                                                    {detailProducts.choice_options
+                                                        .filter(variations => variations.title === 'Colores')
+                                                        .map((coloresVariation, index) => (
+                                                            <div key={index}>
+                                                                {coloresVariation.options.length > 3 ? (
+                                                                    <Input type="select" onChange={handleSelectChangeColor} value={selectedColor} className='inputStyleVariation'>
+                                                                        <option value="">Seleccionar</option>
+                                                                        {coloresVariation.options.map((color, indexColor) => (
+                                                                            <option key={indexColor} value={color}>
+                                                                                {color}
+                                                                            </option>
+                                                                        ))}
+                                                                    </Input>
+                                                                ) : (
+                                                                    <>
+                                                                        <div className="clasnameVariationColor">
+                                                                            {coloresVariation.options.map((color, colorIndex) => (
+                                                                                <a href="#" key={colorIndex} onClick={(e) => { e.preventDefault(); setSelectedColor(color) }}>
+                                                                                    {color}
+                                                                                </a>
+                                                                            ))}
+                                                                        </div>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            )}
+                                            {detailProducts.choice_options.some(variations => variations.title === 'Tallas') && (
+                                                <div className="containerVariacionesResponsiveColores" style={{ marginTop: '15px' }}>
+                                                    <p>Tallas: </p>
+                                                    {detailProducts.choice_options
+                                                        .filter(variations => variations.title === 'Tallas')
+                                                        .map((tallasVariation, index) => (
+                                                            <div key={index}>
+                                                                {tallasVariation.options.length > 3 ? (
+                                                                    <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>
+                                                                        <option value="">Seleccionar</option>
+                                                                        {tallasVariation.options.map((talla, indexTalla) => (
+                                                                            <option key={indexTalla} value={talla}>
+                                                                                {talla}
+                                                                            </option>
+                                                                        ))}
+                                                                    </Input>
+                                                                ) : (
+                                                                    <>
+                                                                        <div className="clasnameVariationColor">
+                                                                            {tallasVariation.options.map((talla, indexTalla) => (
+                                                                                <a href="#" key={indexTalla} onClick={(e) => { e.preventDefault(); setSelectedOption(talla) }}>
+                                                                                    {talla}
+                                                                                </a>
+                                                                            ))}
+                                                                        </div>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                    {/* {detailProducts && detailProducts.variation && detailProducts.variation.length > 0 ? (
                                         <div className="containerVariacionesResponsiveColores">
                                             {detailProducts && detailProducts.choice_options[0] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Colores' && (
                                                 <p>Colores</p>
                                             )}
 
 
-                                            {detailProducts && detailProducts.choice_options[0] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Tallas' && (
+                                            {detailProducts && detailProducts.choice_options[1] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Tallas' && (
                                                 <p>Tallas</p>
                                             )}
 
-                                            {detailProducts && detailProducts.variation?.length > 3 ? (
+                                            {detailProducts && detailProducts.choice_options[0].length > 3 ? (
                                                 <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>
                                                     <option value="">Seleccionar</option>
                                                     {detailProducts.variation.map((colors, index) => (
@@ -679,7 +833,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                                                 ))
                                             )}
                                         </div>
-                                    ) : (null)}
+                                    ) : (null)} */}
                                     <div className="containerResponsiveDescription">
                                         <h6>Descripción</h6>
                                         <p>{detailProducts && typeof detailProducts.details === 'string' ? parse(detailProducts.details) : null}
@@ -740,29 +894,98 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                                         </div>
 
                                     </div>
-                                    {detailProducts && detailProducts.variation?.length > 0 ? (
+                                    {detailProducts && detailProducts.choice_options && detailProducts.choice_options.length > 0 && (
+                                        <div>
+                                            {detailProducts.choice_options.some(variations => variations.title === 'Colores') && (
+                                                <div className="containerColorsProduct">
+                                                    <p>Colores: </p>
+                                                    {detailProducts.choice_options
+                                                        .filter(variations => variations.title === 'Colores')
+                                                        .map((coloresVariation, index) => (
+                                                            <div key={index}>
+                                                                {coloresVariation.options.length > 3 ? (
+                                                                    <Input type="select" onChange={handleSelectChangeColor} value={selectedColor} className='inputStyleVariation'>
+                                                                        <option value="">Seleccionar</option>
+                                                                        {coloresVariation.options.map((color, indexColor) => (
+                                                                            <option key={indexColor} value={color}>
+                                                                                {color}
+                                                                            </option>
+                                                                        ))}
+                                                                    </Input>
+                                                                ) : (
+                                                                    <>
+                                                                        <div className="clasnameVariationColor">
+                                                                            {coloresVariation.options.map((color, colorIndex) => (
+                                                                                <a href="#" key={colorIndex} onClick={(e) => { e.preventDefault(); setSelectedColor(color) }}>
+                                                                                    {color}
+                                                                                </a>
+                                                                            ))}
+                                                                        </div>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            )}
+                                            {detailProducts.choice_options.some(variations => variations.title === 'Tallas') && (
+                                                <div className="containerColorsProduct" style={{ marginTop: '15px' }}>
+                                                    <p>Tallas: </p>
+                                                    {detailProducts.choice_options
+                                                        .filter(variations => variations.title === 'Tallas')
+                                                        .map((tallasVariation, index) => (
+                                                            <div key={index}>
+                                                                {tallasVariation.options.length > 3 ? (
+                                                                    <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>
+                                                                        <option value="">Seleccionar</option>
+                                                                        {tallasVariation.options.map((talla, indexTalla) => (
+                                                                            <option key={indexTalla} value={talla}>
+                                                                                {talla}
+                                                                            </option>
+                                                                        ))}
+                                                                    </Input>
+                                                                ) : (
+                                                                    <>
+                                                                        <div className="clasnameVariationColor">
+                                                                            {tallasVariation.options.map((talla, indexTalla) => (
+                                                                                <a href="#" key={indexTalla} onClick={(e) => { e.preventDefault(); setSelectedOption(talla) }}>
+                                                                                    {talla}
+                                                                                </a>
+                                                                            ))}
+                                                                        </div>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+
+
+                                    {/* {detailProducts && detailProducts.choice_options && detailProducts.choice_options.options.length > 0 ? (
                                         <div className="containerColorsProduct">
                                             {detailProducts && detailProducts.choice_options[0] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Colores' && (
                                                 <p>Colores</p>
                                             )}
 
 
-                                            {detailProducts && detailProducts.choice_options[0] && typeof detailProducts.choice_options[0].title === 'string' && detailProducts.choice_options[0].title === 'Tallas' && (
+                                            {detailProducts && detailProducts.choice_options[1] && typeof detailProducts.choice_options[1].title === 'string' && detailProducts.choice_options[1].title === 'Tallas' && (
                                                 <p>Tallas</p>
                                             )}
 
 
-                                            {detailProducts && detailProducts.variation?.length > 3 ? (
+                                            {detailProducts && detailProducts.choice_option && detailProducts.choice_option[0].options.length > 3 ? (
                                                 <Input type="select" onChange={handleSelectChange} value={selectedOption} className='inputStyleVariation'>
                                                     <option value="">Seleccionar</option>
-                                                    {detailProducts.variation.map((colors, index) => (
+                                                    {detailProducts.choice_option[0].options.map((colors, index) => (
                                                         <option key={index} value={colors.type}>
                                                             {colors.type}
                                                         </option>
                                                     ))}
                                                 </Input>
                                             ) : (
-                                                detailProducts && detailProducts.variation?.map((colors, index) => (
+                                                detailProducts && detailProducts.choice_option[0].options.map((colors, index) => (
                                                     <a href="#" key={index}>
                                                         {colors.type}
                                                     </a>
@@ -770,9 +993,9 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                                             )}
                                         </div>
 
-                                    ) : (null)}
+                                    ) : (null)} */}
                                     <div className="cant">
-                                        <p>Cantidad</p>
+                                        <p>Cantidad: </p>
                                         {quantity >= 2 && (
 
                                             <button className='btnIzq' onClick={handleDecrement}>
@@ -799,7 +1022,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                                         ) : (
                                             <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center' }}>Comprar ahora</p></a>
                                         )}
-                                        <a href="#" className='addCart' onClick={(e)=>{addToCart(); history.push('/detailCart'); e.preventDefault()}}>
+                                        <a href="#" className='addCart' onClick={(e) => { addToCart(); e.preventDefault() }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FC5241" className="bi bi-cart3" viewBox="0 0 16 16">
                                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                                             </svg>
@@ -1024,7 +1247,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                                             </div>
                                             <div className="anadiralcarrito">
 
-                                                <a href="#" onClick={(e)=>{addToCart(); history.push('/detailCart'); e.preventDefault()}}>
+                                                <a href="#" onClick={(e) => { addToCart(); history.push('/detailCart'); e.preventDefault() }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" className="bi bi-cart3 svgCart" viewBox="0 0 16 16">
                                                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                                                     </svg>
@@ -1043,7 +1266,8 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner }) {
                 )
 
 
-            )}
+            )
+            }
         </div >
     )
 }

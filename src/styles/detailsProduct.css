@@ -147,6 +147,15 @@ la imagen seleccionda */
     outline: none;
 }
 
+.clasnameVariationColor{
+    display: flex;
+    flex-direction: row;
+    /* gap: 5px; */
+    justify-content: space-around;
+    width: 200px;
+    
+}
+
 .containerColorsProduct p,
 .cant p,
 .opciones a p {

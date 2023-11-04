@@ -16,6 +16,8 @@ function DetailsProduct() {
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
+  const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
 
 
   const getCantCart = () => {
@@ -38,6 +40,12 @@ function DetailsProduct() {
   }
 
   const getCantCartWhithoutToken = () => {
+
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth' // Para obtener un desplazamiento suave
+    // });
+
     let productsCartWhithoutToken = localStorage.getItem('productsCart');
     if (productsCartWhithoutToken) {
       // Si 'productsCartWhithoutToken' no es nulo ni indefinido, entonces hay datos en el localStorage.
@@ -73,6 +81,10 @@ function DetailsProduct() {
   }
 
   useEffect(() => {
+    setMinQty(1);
+  }, [])
+
+  useEffect(() => {
     funcionValidation();
   }, [isLoggedIn])
 
@@ -85,13 +97,23 @@ function DetailsProduct() {
         productsInCart={productsCart}
         getAllProductsByCart={getCantCart}
         getAllProductsByCartNotoken={funcionValidation}
+        minQty={minQty}
+        handleShowOffCanvas={handleShowOffCanvas}
+        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
       <HeaderResponsive
         canCart={cantProductsOnCart}
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
       />
-      <DetailProduct setCantCart={getCantCart} />
+      <DetailProduct
+        setCantCart={getCantCart}
+        setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        setIsntLoggedInPartner={() => setIsLoggedIn(false)}
+        updateCantProductsWithouthToken={getCantCartWhithoutToken}
+        setMinQty={() => setMinQty(minQty + 1)}
+      />
       <SimilarProduct />
       <Footer />
     </div>

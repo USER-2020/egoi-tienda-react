@@ -30,14 +30,15 @@ import { useContext } from 'react';
 
 import { getProductsBySearch } from "../services/filtros";
 import { myorders } from "../constants/defaultValues";
-import { allProductsCart } from "../services/cart";
+import { addProductsCart, allProductsCart } from "../services/cart";
 
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import DetailCartOffCanvas from "./cart/detailCartOffCanvas.tsx";
 import DetailCartOffCanvasNoToken from "./cart/detailCartOffCanvasNoToken.tsx";
+import { addCartProductsOfLocalStorage } from "../helpers/productsLocalStorage.js";
 
-const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken }) => {
+const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty, handleShowOffCanvas, handleShowOffCanvasClose}) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +60,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const [offcanvasOpen, setOffcanvasOpen] = useState(false);
   const [offcanvasOpenCart, setOffcanvasOpenCart] = useState(false);
   const [prevCantCart, setPrevCantCart] = useState(cantCart);
+  const [prevMinQty, setPrevMinQty] = useState({});
 
   const [show, setShow] = useState(false);
 
@@ -69,7 +71,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const [showOffcanvasWithoutToken, setShowOffcanvasWithoutToken] = useState(false);
 
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {setShow(false); handleShowOffCanvasClose()};
   const handleShow = () => setShow(true);
 
   // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
@@ -305,6 +307,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       setIsLoggedInPartner(true);
       setShowTOkenOffCanvas(true);
       setShowOffcanvasWithoutToken(false);
+
     } else {
       setIsLoggedIn(false);
       setShowOffcanvasWithoutToken(true);
@@ -336,6 +339,11 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       setModalViewLogin(true);
     }
   }
+
+
+
+
+
 
   // const getCantCart = () => {
   //   const token = currenUser.token;
@@ -400,6 +408,9 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
     // }
     handleLogin();
+
+
+
     // console.log(detailInfoPerfil);
 
 
@@ -409,9 +420,17 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   useEffect(() => {
     allCategoriesPromise();
     allBrands();
-    setShowOffcanvasWithoutToken(false);
-    setShowTOkenOffCanvas(false);
+
+    // handleClose();
+    // setShowOffcanvasWithoutToken(false);
+    // setShowTOkenOffCanvas(false);
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      addCartProductsOfLocalStorage();
+    }
+  }, [isLoggedIn])
 
 
   useEffect(() => {
@@ -458,15 +477,46 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
   // }, [offcanvasOpen]);
 
+  // useEffect(() => {
+  //   // Verifica si cantCart ha aumentado en 1 desde el valor anterior
+  //   console.log("changuess preCantCart", prevCantCart);
+  //   // if (cantCart === prevCantCart + 1) {
+  //   //   handleShow();
+  //   // }
+  //   if (minQty === 1) {
+  //     handleClose();
+  //   }
+  //   if (minQty !== 1) {
+  //     handleShow();
+  //   }
+
+  //   // if(productsInCart.min_qty === prevMinQty + 1){
+  //   //   handleShow();
+  //   // }
+  //   // Actualiza el valor previo de cantCart
+  //   setPrevCantCart(cantCart);
+  //   // setPrevMinQty(productsInCart.min_qty);
+  // }, [prevCantCart]);
+
+
   useEffect(() => {
-    // Verifica si cantCart ha aumentado en 1 desde el valor anterior
-    if (cantCart === prevCantCart + 1) {
+    console.log("changuess prevMinQty", prevMinQty);
+    console.log("PropminQTY", minQty);
+    if (minQty === 1) {
+      handleClose();
+    }
+    if (minQty !== 1) {
       handleShow();
     }
+  }, [minQty]);
 
-    // Actualiza el valor previo de cantCart
-    setPrevCantCart(cantCart);
-  }, [cantCart, prevCantCart]);
+
+  useEffect(()=>{
+    if(handleShowOffCanvas){
+      handleShow();
+      console.log(handleShowOffCanvas);
+    }
+  },[handleShowOffCanvas]);
 
 
 
@@ -895,13 +945,13 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
             {currenUser && isLoggedIn ? (
 
               <DetailCartOffCanvas productsInCart={productsInCart} getAllProductsByCart={getAllProductsByCart} setCantCart={cantCart} onclose={handleClose} />
-            ):(
+            ) : (
 
               <DetailCartOffCanvasNoToken productsInCart={productsInCart} getAllProductsByCartNotoken={getAllProductsByCartNotoken} onclose={handleClose} />
             )}
-            
-            
-            
+
+
+
           </Offcanvas.Body>
         </Offcanvas>
 

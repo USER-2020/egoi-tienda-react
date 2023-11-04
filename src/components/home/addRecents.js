@@ -19,12 +19,12 @@ import { allCategories, subcategorieById } from '../../services/categories';
 import { detailProductById } from '../../services/detailProduct';
 import { getProductsByIdBrand } from '../../services/brands';
 import { getCurrentUser } from '../../helpers/Utils';
-import { addProductsCart } from '../../services/cart';
+import { addProductsCart, allProductsCart, updateQuantityCart } from '../../services/cart';
 import Login from '../../views/user/login';
 import Register from '../../views/user/register';
 import toast, { Toaster } from 'react-hot-toast';
 
-function AddRecents({ updateCantProducts, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken }) {
+function AddRecents({ updateCantProducts, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) {
 
     const [products, setProducts] = useState([]);
 
@@ -136,56 +136,125 @@ function AddRecents({ updateCantProducts, setIsLoggedInPartner, setIsntLoggedInP
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
     const addToCart = (product) => {
         console.log("Producto agregado al carrito");
+        console.log("estos son los valores enviados desde el producto", [
+            product.id, product.name, product.discount_tag_valor, product.unit_price, product.discount_valor, product.brand_id
+        ]);
         if (currenUser) {
             // setModalViewCart(true);
+            allProductsCart(token)
+                .then((res) => {
+                    let idProductWithFilter = res.data.filter(prod => prod.product_id === product.id);
+                    console.log(idProductWithFilter);
+                    if (idProductWithFilter.length > 0) {
+                        idProductWithFilter.map((product) => {
+                            console.log(product.id)
+                            console.log(product.customer_id)
+                            console.log(quantity)
+                            let quantityChangue = product.quantity;
+                            // console.log(quantityChangue);
+                            updateQuantityCart(quantityChangue + 1, product.id, token)
+                                .then((res) => {
+                                    // console.log(quantityChangue);
+                                    updateCantProducts();
+                                    setIsLoggedInPartner(true);
+                                    toast.success('Producto agregado con éxito!');
+                                }).catch((err) => console.log(err));
+                            let discount = 0;
+                            if (product.discount_valor > 0) {
+                                discount = product.unit_price - product.discount_valor;
+                            }
+                            if (product.discount_tag_valor > 0) {
+                                discount = product.discount_tag_valor;
+                            }
+                            if (product.discount_valor === 0 && product.discount_tag_valor === 0) {
+                                discount = 0;
+                            }
+                            /* eslint-disable */
+                            gtag('event', 'add_to_cart', {
+                                currency: 'USD',
+                                items: [{
+                                    item_id: product.id,
+                                    item_name: product.name,
+                                    coupon: '',
+                                    discount: discount,
+                                    affiliation: 'Egoi',
+                                    item_brand: product.brand_id,
+                                    item_category: '',
+                                    item_variant: '',
+                                    price: product.unit_price,
+                                    currency: 'COP',
+                                    quantity: quantity
+                                }],
+                                value: product.unit_price
+                            });
+                            setMinQty();
+                            /* eslint-enable */
 
-            addProductsCart(product.id, quantity, token)
-                .then(() => {
-                    updateCantProducts();
-                    setIsLoggedInPartner(true);
-                    toast.success('Producto agregado con éxito!');
-                    let discount = 0;
-                    if (product.discount_valor > 0) {
-                        discount = product.unit_price - product.discount_valor;
+                        })
+                    } else {
+
+                        addProductsCart(product.id, quantity, token)
+                            .then(() => {
+                                updateCantProducts();
+                                setIsLoggedInPartner(true);
+                                toast.success('Producto agregado con éxito!');
+                                let discount = 0;
+                                if (product.discount_valor > 0) {
+                                    discount = product.unit_price - product.discount_valor;
+                                }
+                                if (product.discount_tag_valor > 0) {
+                                    discount = product.discount_tag_valor;
+                                }
+                                if (product.discount_valor === 0 && product.discount_tag_valor === 0) {
+                                    discount = 0;
+                                }
+                                /* eslint-disable */
+                                gtag('event', 'add_to_cart', {
+                                    currency: 'USD',
+                                    items: [{
+                                        item_id: product.id,
+                                        item_name: product.name,
+                                        coupon: '',
+                                        discount: discount,
+                                        affiliation: 'Egoi',
+                                        item_brand: product.brand_id,
+                                        item_category: '',
+                                        item_variant: '',
+                                        price: product.unit_price,
+                                        currency: 'COP',
+                                        quantity: quantity
+                                    }],
+                                    value: product.unit_price
+                                });
+                                setMinQty();
+                                /* eslint-enable */
+                                // console.log("Producto enviado", res.data);
+                                // console.log(token);
+                            })
+                            .catch((err) => console.log(err));
                     }
-                    if (product.discount_tag_valor > 0) {
-                        discount = product.discount_tag_valor;
-                    }
-                    if (product.discount_valor === 0 && product.discount_tag_valor === 0) {
-                        discount = 0;
-                    }
-                    /* eslint-disable */
-                    gtag('event', 'add_to_cart', {
-                        currency: 'USD',
-                        items: [{
-                            item_id: product.id,
-                            item_name: product.name,
-                            coupon: '',
-                            discount: discount,
-                            affiliation: 'Egoi',
-                            item_brand: product.brand_id,
-                            item_category: '',
-                            item_variant: '',
-                            price: product.unit_price,
-                            currency: 'COP',
-                            quantity: quantity
-                        }],
-                        value: product.unit_price
-                    });
-                    /* eslint-enable */
-                    // console.log("Producto enviado", res.data);
-                    // console.log(token);
-                })
-                .catch((err) => console.log(err));
+                }).catch((err) => console.log(err));
             // console.log("producto agregado");
             // console.log(token);
         } else {
 
+
             // Obtener el carrito actual del localStorage (si existe)
             let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
 
-            // Agregar el nuevo producto al carrito actual
-            productsCart[product.id] = product;
+            // // Agregar el nuevo producto al carrito actual
+            // productsCart[product.id] = product;
+
+            if (productsCart[product.id]) {
+                // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
+                productsCart[product.id].min_qty += 1;
+                setMinQty();
+            } else {
+                // El producto no existe en el carrito, así que agrégalo con cantidad 1
+                product.min_qty = 1;
+                productsCart[product.id] = product;
+                setMinQty();
+            }
 
             // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage
             localStorage.setItem('productsCart', JSON.stringify(productsCart));

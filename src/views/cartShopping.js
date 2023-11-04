@@ -17,6 +17,8 @@ function CartShopping() {
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
+  const [minQty, setMinQty] = useState(1); // Estado para rastrear min_qty
+  const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
 
   const getCantCart = () => {
     // const token = currenUser.token;
@@ -77,6 +79,9 @@ function CartShopping() {
       }).catch((err) => console.log(err));
   }
 
+  useEffect(() => {
+    setMinQty(1);
+  }, []);
 
   useEffect(() => {
     funcionValidation();
@@ -91,16 +96,20 @@ function CartShopping() {
         productsInCart={productsCart}
         getAllProductsByCart={getCantCart}
         getAllProductsByCartNotoken={funcionValidation}
+        minQty={minQty}
+        handleShowOffCanvas={handleShowOffCanvas}
+        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
       <HeaderResponsive
         canCart={cantProductsOnCart}
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
       />
       {token && currenUser ? (
         <DetailCart setCantCart={() => getCantCart()} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsCart={productsCart} />
       ) : (
-        <DetailCartNoToken  productsInCart={productsCart} getAllProductsByCartNotoken={getCantCartWhithoutToken} />
+        <DetailCartNoToken productsInCart={productsCart} getAllProductsByCartNotoken={getCantCartWhithoutToken} />
       )}
       <Footer />
     </div>

@@ -9,3 +9,4 @@ const login = (body) => axios.post(`${baseUrl}/auth/login`, body);
 //   axios.get(`${baseUrl}/auth/activacion?token=${token}`);
 
 export default login;
+
