@@ -62,7 +62,7 @@
 
 .offCanvasDetailCart .body .card {
     border: none;
-    margin-bottom: 12px;   
+    margin-bottom: 12px;
 
 }
 
@@ -154,4 +154,15 @@
 
 .offCanvasDetailCart .footer .btns a:hover {
     color: #FC5241;
+}
+
+@media (max-width: 768px) {
+
+    .offCanvasDetailCart .body .caracteristicasDetalle .cant {
+        width: 100%;
+    }
+
+    .offCanvasDetailCart .body .caracteristicasDetalle .cant p {
+        margin-bottom: 0;
+    }
 }
