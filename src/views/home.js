@@ -44,6 +44,11 @@ import OfertaDia from "../components/home/ofertaDia";
 import OfertaDestacada from "../components/home/ofertaDestacada";
 import OfertaFlash from "../components/home/ofertaFlash";
 import { getUserProfileInfo } from "../services/ordenes";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import LoginGoogle from "../components/extraLogin/loginGoogle.tsx";
+import { CLIENT_ID_GOOGLE } from "../constants/defaultValues";
+import { gapi } from "gapi-script";
+// import { useGoogleOneTapLogin } from '@react-oauth/google';
 
 const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +59,7 @@ const Home = (props) => {
   const [productsCart, setProductsCart] = useState([]);
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
-  
+
 
   const [datosPopup, setDatosPopup] = useState('');
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
@@ -151,7 +156,7 @@ const Home = (props) => {
       console.log("si hay usuario logueado");
       getCantCart();
     }
-    else{
+    else {
       console.log("no hay usuario logueado");
       getCantCartWhithoutToken();
     }
@@ -188,7 +193,22 @@ const Home = (props) => {
     getCantCart();
     funcionValidation();
     setMinQty(1);
-    
+    const start= ()=>{
+      gapi.client.init({
+        clientId: CLIENT_ID_GOOGLE,
+        scope:""
+      })
+    };
+    gapi.load('client: auth2', start);
+    // useGoogleOneTapLogin({
+    //   onSuccess: credentialResponse => {
+    //     console.log(credentialResponse);
+    //   },
+    //   onError: () => {
+    //     console.log('Login Failed');
+    //   },
+    // });
+
     // setQtyToken(1);
     // getOfferDestacada();
     // offerDay();
@@ -202,71 +222,77 @@ const Home = (props) => {
   return (
 
     // <Nav/>
-    <div className="w-100 d-flex flex-column align-items-center">
+    <>
+      {/* <GoogleOAuthProvider clientId={CLIENT_ID_GOOGLE}> */}
+      <div className="w-100 d-flex flex-column align-items-center">
 
-      <Header 
-      cantCart={cantProductsOnCart} 
-      detailInfoPerfil={detailInfoProfile} 
-      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
-      productsInCart={productsCart} 
-      getAllProductsByCart={getCantCart} 
-      getAllProductsByCartNotoken={funcionValidation} 
-      minQty={minQty}
-      handleShowOffCanvas= {handleShowOffCanvas}
-      handleShowOffCanvasClose={()=>setHandleShowOffCanvas(false)}
-      
-      />
-      <HeaderResponsive 
-      canCart={cantProductsOnCart} 
-      detailInfoProfile={detailInfoProfile} 
-      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
-      handleShowOffCanvas={()=>setHandleShowOffCanvas(true)}
-      />
-      <Banner />
-      <OfertaDia />
-      <OfertaDestacada />
-      <OfertaFlash />
-      <Recientes 
-      bannersInfo={bannersInfo}
-      updateCantProducts={() => { getCantCart() }}
-      setIsLoggedInPartner={() => setIsLoggedIn(true)}
-      setIsntLoggedInPartner={() => setIsLoggedIn(false)}
-      updateCantProductsWithouthToken={getCantCartWhithoutToken}
-      setMinQty={()=>setMinQty(minQty+1)}
-      className="w-100" 
-      />
-      <Promociones 
-      bannersInfo={bannersInfo} 
-      updateCantProducts={() => { getCantCart() }} 
-      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
-      setIsntLoggedInPartner={()=>setIsLoggedIn(false)}
-      updateCantProductsWithouthToken={getCantCartWhithoutToken}
-      setMinQty={()=>setMinQty(minQty+1)}
-      />
-      <Vendidos 
-      bannersInfo={bannersInfo} 
-      updateCantProducts={() => { getCantCart() }} 
-      setIsLoggedInPartner={() => setIsLoggedIn(true)} 
-      setIsntLoggedInPartner={()=>setIsLoggedIn(false)}
-      updateCantProductsWithouthToken={getCantCartWhithoutToken}
-      setMinQty={()=>setMinQty(minQty+1)}
-      />
-      {/* <Populares /> */}
-      <Bannerdown bannersInfo={bannersInfo} />
-      <Footer />
-      {/* Modal popup */}
-      <Modal
-        className="modal-dialog-centered modal-lg"
-        toggle={() => setModalPopup(false)}
-        isOpen={modalPopup}
 
-      >
-        <ModalHeader toggle={() => setModalPopup(false)}></ModalHeader>
-        <ModalBody>
-          <Popup handleModalData={handleModalData} datosPopup={datosPopup} closeModalPopup={() => setModalPopup(false)} />
-        </ModalBody>
-      </Modal>
-    </div>
+
+        <Header
+          cantCart={cantProductsOnCart}
+          detailInfoPerfil={detailInfoProfile}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          productsInCart={productsCart}
+          getAllProductsByCart={getCantCart}
+          getAllProductsByCartNotoken={funcionValidation}
+          minQty={minQty}
+          handleShowOffCanvas={handleShowOffCanvas}
+          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+
+        />
+        <HeaderResponsive
+          canCart={cantProductsOnCart}
+          detailInfoProfile={detailInfoProfile}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+        />
+        <Banner />
+        <OfertaDia />
+        <OfertaDestacada />
+        <OfertaFlash />
+        <Recientes
+          bannersInfo={bannersInfo}
+          updateCantProducts={() => { getCantCart() }}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          setIsntLoggedInPartner={() => setIsLoggedIn(false)}
+          updateCantProductsWithouthToken={getCantCartWhithoutToken}
+          setMinQty={() => setMinQty(minQty + 1)}
+          className="w-100"
+        />
+        <Promociones
+          bannersInfo={bannersInfo}
+          updateCantProducts={() => { getCantCart() }}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          setIsntLoggedInPartner={() => setIsLoggedIn(false)}
+          updateCantProductsWithouthToken={getCantCartWhithoutToken}
+          setMinQty={() => setMinQty(minQty + 1)}
+        />
+        <Vendidos
+          bannersInfo={bannersInfo}
+          updateCantProducts={() => { getCantCart() }}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          setIsntLoggedInPartner={() => setIsLoggedIn(false)}
+          updateCantProductsWithouthToken={getCantCartWhithoutToken}
+          setMinQty={() => setMinQty(minQty + 1)}
+        />
+        {/* <Populares /> */}
+        <Bannerdown bannersInfo={bannersInfo} />
+        <Footer />
+        {/* Modal popup */}
+        <Modal
+          className="modal-dialog-centered modal-lg"
+          toggle={() => setModalPopup(false)}
+          isOpen={modalPopup}
+
+        >
+          <ModalHeader toggle={() => setModalPopup(false)}></ModalHeader>
+          <ModalBody>
+            <Popup handleModalData={handleModalData} datosPopup={datosPopup} closeModalPopup={() => setModalPopup(false)} />
+          </ModalBody>
+        </Modal>
+      </div>
+      {/* </GoogleOAuthProvider> */}
+    </>
     // <h1>Home</h1>
 
   );
