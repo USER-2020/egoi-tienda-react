@@ -10,7 +10,7 @@ import PhoneInput from 'react-phone-input-2';
 import es from "react-phone-input-2/lang/es.json";
 import Swal from 'sweetalert2';
 import { TailSpin } from 'react-loader-spinner';
-import { firstLogin } from '../../services/extraLogin';
+import { firstLogin, validateEmail } from '../../services/extraLogin';
 
 
 const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
@@ -299,12 +299,12 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
 
     const addCartProductsOfLocalStorage = () => {
         let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
-        if(productsCart.length > 0){
+        if (productsCart.length > 0) {
             productsCart.forEach(element => {
-                
+
             });
         }
-        
+
     }
 
     const onSubmit = (data) => {
@@ -321,25 +321,39 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
 
         } else {
             setLoading(true);
-            firstLogin(f_name, l_name, email, phone)
+            validateEmail(email)
                 .then((res) => {
-                    console.log(res);
-                    const item = {
-                        token: res.data.token,
-                        email: email,
-                    }
-                    setCurrentUser(item);
-                    addCartProductsOfLocalStorage();
-                    window.location.reload();
-                    // put(loginUserSuccess(item));
+                    console.log("Respuesta de validacion", res);
+                    if (res.data.status === 'ok') {
+                        console.log("El usuario ya existe valide su login");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Este correo ya está registrado, loguéate para terminar la compra!',
+                            confirmButtonColor: '#FC5241', // Set the desired color here
+                            confirmButtonText: 'Ok', // Optionally change the button's text
+                            // footer: '<a href="">Que significa esto?</a>'
+                        });
+                        
+                    } else {
+                        console.log("El usuario puede funcionar como el logueo ");
+                        firstLogin(f_name, l_name, email, phone)
+                            .then((res) => {
+                                console.log(res);
+                                const item = {
+                                    token: res.data.token,
+                                    email: email,
+                                }
+                                setCurrentUser(item);
+                                addCartProductsOfLocalStorage();
+                                window.location.reload();
+                                // put(loginUserSuccess(item));
 
-                }).catch((err) => {
-                    // console.log(err.response.data.errors[0].code);
-                    if (err.response.data.errors[0].code === 'email') {
-                        console.log("Tu email ya esta registrado");
+                            }).catch((err) => {
+                                console.log(err);
+                            });
                     }
-                });
-
+                }).catch((err) => console.log(err));
         }
 
     }
@@ -381,6 +395,8 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
         // getAllProductsByCart();
         getAllProductsByCartNotoken();
     }, []);
+
+
 
 
     return (
@@ -451,6 +467,8 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                                             placeholder="Email"
                                                             value={email}
                                                             onChange={(event) => setEmail(event.target.value)}
+
+
                                                         />
 
                                                     </FormGroup>
@@ -797,63 +815,56 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                     </div>
                 </div>
                 <div className="containerCheckoutResponsive">
-                    <Card>
-                        <h2><strong>Hola, ya estas logueado, sigue con el checkout!</strong></h2>
-                        <Form>
+                    <Card style={{ padding: 20, backgroundColor: 'transparent' }}>
+                        <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
+                        <Form onSubmit={handleSubmitInfo}>
+                            <FormGroup controlId="formBasicEmail">
+                                <Input
+                                    addon={true}
+                                    name="email"
+                                    className="form-control" // Correct the typo here
+                                    style={{
+                                        borderRadius: "50px",
+                                    }}
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(event) => setEmail(event.target.value)}
+                                />
+                            </FormGroup>
                             <FormGroup controlId="formBasicName">
-                                <Input addon={true}
+                                {/* <div className="d-flex flex-row gap-2"> */}
+                                <Input
+                                    addon={true}
                                     name="contactPersonName"
-                                    classNanme="form-control"
+                                    className="form-control"
                                     style={{
                                         borderRadius: "50px",
                                     }}
                                     placeholder="Nombre del contacto"
-                                // value=""
-                                // onChange={(event) => setContactPersonName(event.target.value)}
+                                    value={f_name}
+                                    onChange={(event) => setF_name(event.target.value)}
                                 />
-
+                            </FormGroup>
+                            <FormGroup controlId="formBasicName">
+                                <Input
+                                    addon={true}
+                                    name="contactPersonName"
+                                    className="form-control"
+                                    style={{
+                                        borderRadius: "50px",
+                                    }}
+                                    placeholder="Apellido del contacto"
+                                    value={l_name}
+                                    onChange={(event) => setL_name(event.target.value)}
+                                />
+                                {/* </div> */}
                             </FormGroup>
                             <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                <Input addon={true}
-                                    name="contactPersonName"
-                                    classNanme="form-control"
-                                    style={{
-                                        borderRadius: "50px",
-                                    }}
-                                    placeholder="Nombre del contacto"
-                                // value=""
-                                // onChange={(event) => setContactPersonName(event.target.value)}
-                                />
-
-                                <Input addon={true}
-                                    name="contactPersonName"
-                                    classNanme="form-control"
-                                    style={{
-                                        borderRadius: "50px",
-                                    }}
-                                    placeholder="Nombre del contacto"
-                                // value=""
-                                // onChange={(event) => setContactPersonName(event.target.value)}
-                                />
-
-                            </FormGroup>
-                            <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                <Input addon={true}
-                                    name="contactPersonName"
-                                    classNanme="form-control"
-                                    style={{
-                                        borderRadius: "50px",
-                                    }}
-                                    placeholder="Nombre del contacto"
-                                // value=""
-                                // onChange={(event) => setContactPersonName(event.target.value)}
-                                />
-
                                 <PhoneInput
                                     localization={es}
                                     country={"co"}
-                                    // value={phone}
-                                    // onChange={setphone}
+                                    value={phone}
+                                    onChange={setPhone}
                                     inputStyle={{
                                         width: "100%",
                                         height: "10px",
@@ -865,7 +876,26 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                     }}
                                 />
 
+
                             </FormGroup>
+                            <div className="form-group" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '30px', height: 48 }}>
+                                <a href="#" style={{ backgroundColor: '#FC5241', color: 'white', textDecoration: 'none', padding: '12px', borderRadius: '32px', display: 'flex', width: '300px', textAlign: 'center', justifyContent: 'center' }} onClick={handleSubmitInfo}>
+                                    {loading &&
+                                        <TailSpin
+                                            height="20"
+                                            width="20"
+                                            color="white"
+                                            ariaLabel="tail-spin-loading"
+                                            radius="1"
+                                            wrapperStyle={{ marginRight: '20px' }}
+                                            wrapperClass=""
+                                            visible={true}
+                                        />
+                                    }
+                                    Continuar con datos de envío
+                                </a>
+                            </div>
+
                         </Form>
                     </Card>
                     {discountedProducts === 0 && (
@@ -1104,7 +1134,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
 
 
                 </div>
-            </div>
+            </div >
         </>
     )
 }

@@ -5,9 +5,11 @@ import { Row, Col, Form, FormGroup, Input, Button, InputGroup, InputGroupText } 
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { useForm } from 'react-hook-form';
 import Swal from "sweetalert2";
+// import { useGoogleOneTapLogin } from '@react-oauth/google';
 
 import { setCurrentUser } from "../../helpers/Utils";
 import log from '../../services/login';
+import LoginGoogle from "../../components/extraLogin/loginGoogle.tsx";
 
 const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeFormLogin }) => {
   const setUserActivacion = (data) => {
@@ -84,6 +86,15 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  // useGoogleOneTapLogin({
+  //   onSuccess: credentialResponse => {
+  //     console.log(credentialResponse);
+  //   },
+  //   onError: () => {
+  //     console.log('Login Failed');
+  //   },
+  // });
 
   return (
     <Row>
@@ -179,6 +190,11 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               </Button>
             </div>
           </Form>
+        </div>
+        <div style={{ width: '100%', marginTop: "15px", display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+          <LoginGoogle/>
+          <Button style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color:'black' }}>Inicia sesión con Google</Button>
+          <Button style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color:'black' }}>Inicia sesión por código</Button>
         </div>
       </Col>
     </Row>

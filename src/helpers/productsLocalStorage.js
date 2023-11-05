@@ -19,7 +19,7 @@ export const addCartProductsOfLocalStorage = async () => {
         const product = productsInCart[i];
         // Haz algo con el producto, por ejemplo:
         console.log(`Producto ${i + 1}: ${product.name}`);
-        addProductsCart(product.id, product.min_qty, currenUser.token)
+        addProductsCart(product.id, product.min_qty, token)
             .then((res) => {
                 console.table(res)
                 // Elimina el producto del localStorage

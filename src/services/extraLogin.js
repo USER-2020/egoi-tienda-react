@@ -8,14 +8,24 @@ const baseUrl = urlBase;
 /* Loguro con email, apeliido, email y celular */
 export const firstLogin = (fname, lname, email, phone) =>
     axios.post(`${baseUrl}/auth/register_google`, {
-        f_name:fname,
-        l_name:lname,
-        email:email,
-        phone:phone || '',
-    },{
-        headers:{
-            'Content-Type': 'application/json',            
+        f_name: fname,
+        l_name: lname,
+        email: email,
+        phone: phone || '',
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
         }
     });
 
+
+/* Validacion de email en DB */
+export const validateEmail = (email) =>
+    axios.post(`${baseUrl}/auth/valite_email`, {
+        email: email,
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
 
