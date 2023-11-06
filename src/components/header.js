@@ -430,6 +430,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
   useEffect(() => {
     if (isLoggedIn) {
+      
       addCartProductsOfLocalStorage();
     }
   }, [isLoggedIn])

@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { setCurrentUser } from "../../helpers/Utils";
 import log from '../../services/login';
 import LoginGoogle from "../../components/extraLogin/loginGoogle.tsx";
+import { addCartProductsOfLocalStorage } from "../../helpers/productsLocalStorage.js";
 
 const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeFormLogin, handleCodeLogin }) => {
   const setUserActivacion = (data) => {
@@ -18,10 +19,12 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
       email: email,
     };
     setCurrentUser(item);
+    
     // put(loginUserSuccess(item));
   };
 
   const onSubmit = (data) => {
+    
     setLoading(true);
     log(data, window.location.origin.toString())
       .then((res) => {
@@ -43,6 +46,8 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
         setLoading(false);
         closeModalLogin();
         handleLogin();
+        // addCartProductsOfLocalStorage();
+        window.location.reload();
       })
       .catch(() => {
         Swal.fire({
