@@ -7,7 +7,7 @@ import { addCartProductsOfLocalStorage } from '../../helpers/productsLocalStorag
 import { TailSpin } from 'react-loader-spinner';
 import Swal from 'sweetalert2';
 
-const CodeLogin = ({ closeModalCodeLogin }) => {
+const CodeLogin = ({ closeModalCodeLogin, handleLogin }) => {
 
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
@@ -42,9 +42,12 @@ const CodeLogin = ({ closeModalCodeLogin }) => {
                     email: email,
                 }
                 setCurrentUser(item);
-                addCartProductsOfLocalStorage();
+                handleLogin();
+                // addCartProductsOfLocalStorage();
                 setLoading(false);
                 closeModalCodeLogin();
+                window.location.reload();
+
                 // window.location.reload();
                 // Swal.fire({
                 //     icon: 'success',
@@ -91,7 +94,7 @@ const CodeLogin = ({ closeModalCodeLogin }) => {
                                 <InputGroup style={{ borderRadius: "50px" }}>
                                     {showInputEmail && (
                                         <Input
-                                            type="text"
+                                            type="email"
                                             style={{
                                                 borderRadius: "50px",
                                             }}
@@ -102,7 +105,7 @@ const CodeLogin = ({ closeModalCodeLogin }) => {
                                     )}
                                     {showInputCode && (
                                         <Input
-                                            type="email"
+                                            type="text"
                                             style={{
                                                 borderRadius: "50px",
                                             }}

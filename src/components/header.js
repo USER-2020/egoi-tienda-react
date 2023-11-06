@@ -309,6 +309,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       setIsLoggedInPartner(true);
       setShowTOkenOffCanvas(true);
       setShowOffcanvasWithoutToken(false);
+      addCartProductsOfLocalStorage();
 
     } else {
       setIsLoggedIn(false);
@@ -428,12 +429,12 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     // setShowTOkenOffCanvas(false);
   }, []);
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-      
-  //     addCartProductsOfLocalStorage();
-  //   }
-  // }, [isLoggedIn])
+  useEffect(() => {
+    if (isLoggedIn) {
+
+      addCartProductsOfLocalStorage();
+    }
+  }, [isLoggedIn])
 
 
   useEffect(() => {
