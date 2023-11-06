@@ -193,13 +193,13 @@ const Home = (props) => {
     getCantCart();
     funcionValidation();
     setMinQty(1);
-    const start= ()=>{
-      gapi.client.init({
-        clientId: CLIENT_ID_GOOGLE,
-        scope:""
-      })
-    };
-    gapi.load('client: auth2', start);
+    // const start= ()=>{
+    //   gapi.client.init({
+    //     clientId: CLIENT_ID_GOOGLE,
+    //     scope:""
+    //   })
+    // };
+    // gapi.load('client: auth2', start);
     // useGoogleOneTapLogin({
     //   onSuccess: credentialResponse => {
     //     console.log(credentialResponse);
@@ -246,6 +246,7 @@ const Home = (props) => {
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
         />
+        
         <Banner />
         <OfertaDia />
         <OfertaDestacada />

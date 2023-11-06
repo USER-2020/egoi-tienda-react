@@ -1,7 +1,7 @@
 export const UserRole = {
-    Admin: 'SUPER',
-    Editor: 'USER',
-  };
+  Admin: 'SUPER',
+  Editor: 'USER',
+};
 export const CLIENT_ID_GOOGLE = '159632966624-fcl92oe5q2dukshr7ep06k87mmcs1pqq.apps.googleusercontent.com';
 export const adminRoot = '/app';
 export const searchPath = `${adminRoot}/#`;
@@ -21,4 +21,4 @@ export const isAuthGuardActive = true;
 
 
 export const urlBase = 'https://egoi.xyz/api/v1';
-export const urlBase2= 'https://egoi.xyz/api/v2';
+export const urlBase2 = 'https://egoi.xyz/api/v2';

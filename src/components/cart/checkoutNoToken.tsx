@@ -334,7 +334,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                             confirmButtonText: 'Ok', // Optionally change the button's text
                             // footer: '<a href="">Que significa esto?</a>'
                         });
-                        
+
                     } else {
                         console.log("El usuario puede funcionar como el logueo ");
                         firstLogin(f_name, l_name, email, phone)
@@ -346,7 +346,19 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                 }
                                 setCurrentUser(item);
                                 addCartProductsOfLocalStorage();
-                                window.location.reload();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Bienvenido',
+                                    text: 'Has iniciado sesión correctamente',
+                                    confirmButtonColor: '#fc5241',
+                                    html:
+                                    '<p>Por favor, revisa nuestros <a href="/termsAndConditions">Términos y Condiciones</a> y <a href="/privacyPolicy">Política de Privacidad</a>.</p>'
+                                }).then((result) => {
+                                    if (result.isConfirmed || !result.isDismissed) {
+                                        // El usuario hizo clic en el botón "Ok" o hizo clic fuera de la ventana
+                                        window.location.reload(); // Recargar la página
+                                    }
+                                });
                                 // put(loginUserSuccess(item));
 
                             }).catch((err) => {

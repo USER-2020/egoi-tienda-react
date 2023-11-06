@@ -37,14 +37,16 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import DetailCartOffCanvas from "./cart/detailCartOffCanvas.tsx";
 import DetailCartOffCanvasNoToken from "./cart/detailCartOffCanvasNoToken.tsx";
 import { addCartProductsOfLocalStorage } from "../helpers/productsLocalStorage.js";
+import CodeLogin from "../views/user/codeLogin.js";
 
-const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty, handleShowOffCanvas, handleShowOffCanvasClose}) => {
+const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty, handleShowOffCanvas, handleShowOffCanvasClose }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
+  const [modalViewCodeLogin, setModalViewCodeLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
@@ -71,7 +73,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const [showOffcanvasWithoutToken, setShowOffcanvasWithoutToken] = useState(false);
 
 
-  const handleClose = () => {setShow(false); handleShowOffCanvasClose()};
+  const handleClose = () => { setShow(false); handleShowOffCanvasClose() };
   const handleShow = () => setShow(true);
 
   // const [cantProductsOnCart, setCantProductsOnCart] = useState('');
@@ -511,12 +513,12 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   }, [minQty]);
 
 
-  useEffect(()=>{
-    if(handleShowOffCanvas){
+  useEffect(() => {
+    if (handleShowOffCanvas) {
       handleShow();
       console.log(handleShowOffCanvas);
     }
-  },[handleShowOffCanvas]);
+  }, [handleShowOffCanvas]);
 
 
 
@@ -649,7 +651,16 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
                       isOpen={modalViewLogin && !changeFormLogin}
                     >
                       <ModalBody>
-                        <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} />
+                        <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} handleCodeLogin={() => setModalViewCodeLogin(true)} />
+                      </ModalBody>
+                    </Modal>
+                    <Modal
+                      className="modal-dialog-centered modal-sm"
+                      // toggle={() => setModalViewCodeLogin(false)}
+                      isOpen={modalViewCodeLogin}
+                    >
+                      <ModalBody>
+                        <CodeLogin closeModalCodeLogin={() => setModalViewCodeLogin(false)} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} />
                       </ModalBody>
                     </Modal>
                     <button onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
