@@ -428,12 +428,12 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     // setShowTOkenOffCanvas(false);
   }, []);
 
-  useEffect(() => {
-    if (isLoggedIn) {
+  // useEffect(() => {
+  //   if (isLoggedIn) {
       
-      addCartProductsOfLocalStorage();
-    }
-  }, [isLoggedIn])
+  //     addCartProductsOfLocalStorage();
+  //   }
+  // }, [isLoggedIn])
 
 
   useEffect(() => {
