@@ -11,6 +11,7 @@ import { setCurrentUser } from "../../helpers/Utils";
 import log from '../../services/login';
 import LoginGoogle from "../../components/extraLogin/loginGoogle.tsx";
 import { addCartProductsOfLocalStorage } from "../../helpers/productsLocalStorage.js";
+import FacebookLoginComponent from "../../components/extraLogin/facebookLogin.tsx";
 
 const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeFormLogin, handleCodeLogin }) => {
   const setUserActivacion = (data) => {
@@ -198,6 +199,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
         </div>
         <div style={{ width: '100%', marginTop: "15px", display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
           <LoginGoogle />
+          <FacebookLoginComponent />
           {/* <Button style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color:'black' }}>Inicia sesión con Google</Button> */}
           <Button
             style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color: 'black' }}
