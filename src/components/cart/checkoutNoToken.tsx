@@ -349,13 +349,33 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Bienvenido',
-                                    text: 'Has iniciado sesión correctamente',
+                                    // text: 'Has iniciado sesión correctamente',
                                     confirmButtonColor: '#fc5241',
-                                    html:
-                                    '<p>Por favor, revisa nuestros <a href="/termsAndConditions">Términos y Condiciones</a> y <a href="/privacyPolicy">Política de Privacidad</a>.</p>'
+                                    html: `
+                                      <p>Por favor, revisa nuestros <a href="/termsAndConditions">Términos y Condiciones</a> y <a href="/privacyPolicy">Política de Privacidad</a>.</p>
+                                      <label for="aceptar">Acepto los Términos y Condiciones:</label>
+                                      <input type="checkbox" id="aceptar">
+                                    `,
+                                    preConfirm: () => {
+                                        const aceptado = document.getElementById('aceptar').checked;
+                                        if (!aceptado) {
+                                            Swal.showValidationMessage('Debes aceptar los Términos y Condiciones para continuar.');
+                                        }
+                                    },
                                 }).then((result) => {
-                                    if (result.isConfirmed || !result.isDismissed) {
-                                        // El usuario hizo clic en el botón "Ok" o hizo clic fuera de la ventana
+                                    if (result.isConfirmed) {
+                                        // El usuario marcó el cuadro de aceptación y confirmó
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Bienvenido',
+                                            text: 'Has iniciado sesión correctamente',
+                                            confirmButtonColor: '#fc5241',
+                                        });
+                                        addCartProductsOfLocalStorage();
+                                        window.location.reload();
+                                    } else if (result.isDismissed) {
+                                        // El usuario hizo clic fuera de la ventana
+                                        addCartProductsOfLocalStorage();
                                         window.location.reload(); // Recargar la página
                                     }
                                 });
