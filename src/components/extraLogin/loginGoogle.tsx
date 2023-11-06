@@ -57,9 +57,11 @@ const LoginGoogle = () => {
                                 text: 'Has iniciado sesión correctamente',
                                 confirmButtonColor: '#fc5241',
                             });
+                            addCartProductsOfLocalStorage();
                             window.location.reload();
                         } else if (result.isDismissed) {
                             // El usuario hizo clic fuera de la ventana
+                            addCartProductsOfLocalStorage();
                             window.location.reload(); // Recargar la página
                         }
                     });
@@ -74,7 +76,7 @@ const LoginGoogle = () => {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Este correo ya está registrado, ingresa!',
+                            text: 'Este correo ya está registrado, ingresa o recupera tu contraseña!',
                             confirmButtonColor: '#FC5241', // Set the desired color here
                             confirmButtonText: 'Ok', // Optionally change the button's text
                             // footer: '<a href="">Que significa esto?</a>'
@@ -87,12 +89,14 @@ const LoginGoogle = () => {
     }
 
     return (
-        <GoogleLogin
-            onSuccess={handleSuccess}
-            onError={handleError}
-            state_cookie_domain={'single_host_origin'}
-            useOneTap
-        />
+        <div className="mybutton" style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color: 'black' }}>
+            <GoogleLogin
+                onSuccess={handleSuccess}
+                onError={handleError}
+                state_cookie_domain={'single_host_origin'}
+                useOneTap
+            />
+        </div>
     )
 }
 
