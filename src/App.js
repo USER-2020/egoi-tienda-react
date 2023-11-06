@@ -10,6 +10,9 @@ import ProtectedRoute from './helpers/authHelper';
 import { getCurrentUser } from './helpers/Utils';
 import { ModalBody, Modal } from 'reactstrap';
 import Login from "./views/user/login.js";
+import { CredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { CLIENT_ID_GOOGLE } from './constants/defaultValues.js';
+
 
 
 
@@ -106,51 +109,53 @@ const App = (props) => {
 
   return (
     <div className="h-100">
-      <Suspense fallback={<div className="loading" />}>
-        <IntlProvider locale={locale} messages={AppLocale[locale]}>
-          <Router basename={process.env.PUBLIC_URL}>
-            <Route component={DynamicTitle} />
-            <Switch>
-              {/* <Route path="/user/login" exact render={(props)=> <ViewLogin {...props} />}/> */}
-              <Route path="/error" exact render={(props) => <ViewError {...props} />} />
-              <Route path="/unauthorized" exact render={(props) => <ViewUnauthorized {...props} />} />
-              <Route path="/termsAndConditions" exact render={(props) => <ViewTerminosCondiciones {...props} />} />
-              <Route path="/privacyPolicy" exact render={(props) => <ViewPoliticasPrivacidad {...props} />} />
-              <Route path="/faq" exact render={(props) => <ViewFAQ {...props} />} />
-              <Route path="/aboutUs" exact render={(props) => <ViewSobreNosotros {...props} />} />
-              <Route path="/contactUs" exact render={(props) => <ViewContactanos {...props} />} />
-              <Route path="/" exact render={(props) => <ViewHome {...props} />} />
-              {/* <Route path="/" exact render={(props) => <ViewMantenince {...props} />} /> */}
-              <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/recovery" exact render={(props) => <ViewRecoveryPassword {...props} />} />
-              <Route path="/recoverypassword/:email/:token" exact render={(props) => <ViewRecoveryPasswordNew {...props} />} />
-              {/* <Route path="/recoverypassword" exact render={(props) => <ViewRecoveryPasswordNew {...props} />} /> */}
-              <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/categories/:category/:subcategory/:id/:tag" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/categories/products/:subcategory/:id/:subcate/:subsubcate" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/categories/products/:subcategory/:id/:tag/:subcate/:subsubcate" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/discountedProducts" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/recentlySeen" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/addRecently" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/promotions" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/bestSellers" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/topRated" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/topFeatured" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/allBrands" exact render={(props) => <ViewAllBrands {...props} />} />
-              <Route path="/allCategories" exact render={(props) => <ViewAllCategories {...props} />} />
-              <Route path="/brand/:brand/:brandId" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/brand/:brand/:brandId/:tag" exact render={(props) => <ViewCategory {...props} />} />
-              <Route path="/detailsProduct/:id/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
-              <Route path="/detailsProduct/:id/:slug/:tag" exact render={(props) => <ViewDetailProduct {...props} />} />
-              <Route path={addCart} exact render={(props) => <ViewDetailCart {...props} />} />
-              <Route path={checkout} exact render ={(props) => <ViewDetailCartAddress {...props}/>}/>
-              <ProtectedRoute path={myorders} viewComponent={ViewMyOrders} />
-              <ProtectedRoute path={thankYouForPay} viewComponent={ViewThankYouForPay} />
-              <Redirect to="/error" />
-            </Switch>
-          </Router>
-        </IntlProvider>
-      </Suspense>
+      <GoogleOAuthProvider clientId={CLIENT_ID_GOOGLE}>
+        <Suspense fallback={<div className="loading" />}>
+          <IntlProvider locale={locale} messages={AppLocale[locale]}>
+            <Router basename={process.env.PUBLIC_URL}>
+              <Route component={DynamicTitle} />
+              <Switch>
+                {/* <Route path="/user/login" exact render={(props)=> <ViewLogin {...props} />}/> */}
+                <Route path="/error" exact render={(props) => <ViewError {...props} />} />
+                <Route path="/unauthorized" exact render={(props) => <ViewUnauthorized {...props} />} />
+                <Route path="/termsAndConditions" exact render={(props) => <ViewTerminosCondiciones {...props} />} />
+                <Route path="/privacyPolicy" exact render={(props) => <ViewPoliticasPrivacidad {...props} />} />
+                <Route path="/faq" exact render={(props) => <ViewFAQ {...props} />} />
+                <Route path="/aboutUs" exact render={(props) => <ViewSobreNosotros {...props} />} />
+                <Route path="/contactUs" exact render={(props) => <ViewContactanos {...props} />} />
+                <Route path="/" exact render={(props) => <ViewHome {...props} />} />
+                {/* <Route path="/" exact render={(props) => <ViewMantenince {...props} />} /> */}
+                <Route path="/products/:name" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/recovery" exact render={(props) => <ViewRecoveryPassword {...props} />} />
+                <Route path="/recoverypassword/:email/:token" exact render={(props) => <ViewRecoveryPasswordNew {...props} />} />
+                {/* <Route path="/recoverypassword" exact render={(props) => <ViewRecoveryPasswordNew {...props} />} /> */}
+                <Route path="/categories/:category/:subcategory/:id" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/categories/:category/:subcategory/:id/:tag" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/categories/products/:subcategory/:id/:subcate/:subsubcate" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/categories/products/:subcategory/:id/:tag/:subcate/:subsubcate" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/discountedProducts" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/recentlySeen" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/addRecently" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/promotions" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/bestSellers" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/topRated" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/topFeatured" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/allBrands" exact render={(props) => <ViewAllBrands {...props} />} />
+                <Route path="/allCategories" exact render={(props) => <ViewAllCategories {...props} />} />
+                <Route path="/brand/:brand/:brandId" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/brand/:brand/:brandId/:tag" exact render={(props) => <ViewCategory {...props} />} />
+                <Route path="/detailsProduct/:id/:slug" exact render={(props) => <ViewDetailProduct {...props} />} />
+                <Route path="/detailsProduct/:id/:slug/:tag" exact render={(props) => <ViewDetailProduct {...props} />} />
+                <Route path={addCart} exact render={(props) => <ViewDetailCart {...props} />} />
+                <Route path={checkout} exact render={(props) => <ViewDetailCartAddress {...props} />} />
+                <ProtectedRoute path={myorders} viewComponent={ViewMyOrders} />
+                <ProtectedRoute path={thankYouForPay} viewComponent={ViewThankYouForPay} />
+                <Redirect to="/error" />
+              </Switch>
+            </Router>
+          </IntlProvider>
+        </Suspense>
+      </GoogleOAuthProvider>
     </div>
   );
 };

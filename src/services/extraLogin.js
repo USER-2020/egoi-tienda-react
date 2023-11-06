@@ -29,3 +29,23 @@ export const validateEmail = (email) =>
         }
     });
 
+/*Enviar codigo de logueo*/
+export const codeLogin = (email) =>
+    axios.post(`${baseUrl}/auth/code-email`, {
+        email: email,
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+/* Validacion de codigo de logueo  */
+export const verifyCodeLogin = (email, code) =>
+    axios.post(`${baseUrl}/auth/login_code`, {
+        email: email,
+        code: code,
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });

@@ -14,12 +14,12 @@
 }
 
 .containerTableProducts {
-  
+
   width: 65%;
 }
 
-.containerTableProducts .loadingDiv{
-  display:flex ;
+.containerTableProducts .loadingDiv {
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
@@ -80,10 +80,10 @@
 
 
 
-.containerTableProducts .table thead{
+.containerTableProducts .table thead {
   font-size: 12px;
-  color: #A2A1A7;  
-  
+  color: #A2A1A7;
+
 }
 
 /* Tabla de productos */
@@ -142,9 +142,9 @@
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
 .containerTableProducts .card .caracteristicaCantidad input {
@@ -322,6 +322,7 @@ input[type="number"]::-webkit-outer-spin-button {
   --placeholder-icon-cellphone: url('../assets/egoi_icons/Device.svg');
   --placeholder-icon-map: url('../assets/egoi_icons/Map\ Point.svg');
   --placeholder-icon-promocion: url('../assets/egoi_icons/Sale.svg');
+  --placeholder-icon-code: url('../assets/egoi_icons/Warning.svg');
 
 
 }
@@ -370,7 +371,7 @@ input[type="number"]::-webkit-outer-spin-button {
   height: 10px;
   margin-left: 61px;
   margin-bottom: 18px;
-  
+
 }
 
 /* to customize progress bar */
@@ -413,7 +414,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: var(--body-gray);
   border: none;
   border-radius: none;
-  
+
 
 
 }
@@ -504,6 +505,13 @@ input[placeholder="Dirección"]::placeholder {
   background-image: var(--placeholder-icon-map);
 }
 
+input[placeholder="Código"]::placeholder {
+  background-image: var(--placeholder-icon-code);
+  /* Establece el margen izquierdo del placeholder a 0 */
+  /* Agrega otros estilos que desees para el placeholder */
+}
+
+
 input[placeholder="Pais"]::placeholder,
 input[placeholder="Ciudad"]::placeholder,
 input[placeholder="Departamento"]::placeholder,
@@ -525,6 +533,8 @@ input[type="checkbox"]:checked {
   background-color: var(--prm-color);
   border-color: var(--prm-color);
 }
+
+
 
 #collapseTwo .cards .addNewAddress {
   margin-top: 10px;
@@ -608,9 +618,10 @@ input[type="checkbox"]:checked {
 
 /* Modal Perzonalizado */
 
-  .personalizado {
-    min-width: 600px; /* Cambia esto según tus necesidades */
-  }
+.personalizado {
+  min-width: 600px;
+  /* Cambia esto según tus necesidades */
+}
 
 
 @media (max-width: 768px) {
@@ -624,8 +635,8 @@ input[type="checkbox"]:checked {
     flex-direction: column;
     gap: 10px;
   }
-  
-  .containerProductsAndDetailpurchaseResponsive .loadingDiv{
+
+  .containerProductsAndDetailpurchaseResponsive .loadingDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -769,7 +780,7 @@ input[type="checkbox"]:checked {
     align-items: center;
   }
 
-  #spanPago{
+  #spanPago {
     height: 22px;
   }
 
@@ -917,7 +928,7 @@ input[type="checkbox"]:checked {
     width: 30%;
     background-color: var(--prm-color);
     border-radius: 32px;
-    
+
 
 
   }
