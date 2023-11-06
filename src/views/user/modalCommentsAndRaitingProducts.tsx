@@ -47,7 +47,15 @@ const ModalCommentsAndRaitingProducts = ({ closeModal, productInfo }) => {
                     },
                 });
                 closeModal();
-            }).catch((err) => console.log(err));
+            }).catch((err) => {
+                console.log(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Se ha producido un error durante la calificación. Por favor, inténtelo de nuevo.',
+                    confirmButtonColor: '#FC5241',
+                });
+            });
     }
 
     const handleChangueOnSubmit = (event) => {
