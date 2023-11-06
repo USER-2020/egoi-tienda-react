@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/myOrders.css';
-import { Card } from 'reactstrap';
+import { Card, Modal, ModalBody } from 'reactstrap';
 import { getFacturaById, getOrdenDetalleById } from '../../services/ordenes';
 import { getCurrentUser } from '../../helpers/Utils';
 import { getOrdenByGroupId } from './../../services/ordenes';
 import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder}) {
+import { sendCalificarProducto } from '../../services/calificarProducto';
+import ModalCommentsAndRaitingProducts from '../../views/user/modalCommentsAndRaitingProducts.tsx';
+function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder }) {
 
     const [detailOrden, setDetailOrden] = useState('');
 
@@ -16,13 +18,17 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder}) {
     /* Imagenes */
     const baseUrlImageThumbnail = "https://egoi.xyz/storage/app/public/product/thumbnail/";
 
+    const [modalViewRaitingAndCommentProduct, setModalViewRaitingAndCommentProduct] = useState(false);
+
+    const [infoProductById, setInfoProductById] = useState([]);
+
 
     const currenUSer = getCurrentUser();
     const token = currenUSer.token;
 
     const history = useHistory();
     const location = useLocation();
-   
+
 
     const handleChangueTrack = (idPedido) => {
         // e.preventDefault();
@@ -35,8 +41,8 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder}) {
         closeDetailOpenTrack();
         sendIdOrder(idPedido);
 
-        
-        
+
+
     }
     const getDetailPedido = () => {
         getOrdenDetalleById(token, orderDetalleId)
@@ -114,6 +120,17 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder}) {
         return 0; // Devolver 0 si no hay datos disponibles
     }
 
+    const calificarProducto = (item) => {
+        console.log("Datos del producto: ", item);
+        if (item) {
+            setInfoProductById(item);
+            if (infoProductById) {
+                setModalViewRaitingAndCommentProduct(true);
+            }
+            // sendCalificarProducto(item.id_producto, )
+        }
+    }
+
     //Calcular total a pagar 
     const calculatePayableAmount = () => {
         let costoEnvio = 0;
@@ -181,17 +198,21 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder}) {
                             <div className="cardsProductosDescripcion">
                                 {detalleOrdenV2 && detalleOrdenV2.productos && detalleOrdenV2.productos.length > 0 && detalleOrdenV2.productos.map((itemP, index) => (
                                     <div className="productoDetail" key={index}>
-                                        <div className="img">
-                                            <img src={baseUrlImageThumbnail + itemP.detalle.thumbnail} style={{
-                                                borderRadius: '20px',
-                                                width: '175px'
-                                            }} />
-                                        </div>
-                                        <div className="description">
-                                            <h6>{itemP.detalle.name}</h6>
-                                            <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: 0, color: '#171523' }}>${itemP.price.toLocaleString('es')}</p>
-                                            <p style={{ color: '#74737B', fontSize: '16px' }}>Cantidad: {itemP.qty}</p>
-                                        </div>
+                                        <a href="#" style={{ textDecoration: 'none', color: 'inherit' }}
+                                            onClick={(e) => { e.preventDefault(); calificarProducto(itemP) }}
+                                        >
+                                            <div className="img">
+                                                <img src={baseUrlImageThumbnail + itemP.detalle.thumbnail} style={{
+                                                    borderRadius: '20px',
+                                                    width: '175px'
+                                                }} />
+                                            </div>
+                                            <div className="description">
+                                                <h6>{itemP.detalle.name}</h6>
+                                                <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: 0, color: '#171523' }}>${itemP.price.toLocaleString('es')}</p>
+                                                <p style={{ color: '#74737B', fontSize: '16px' }}>Cantidad: {itemP.qty}</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 ))}
                             </div>
@@ -226,7 +247,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder}) {
                                     <p>${costoEnvio.toLocaleString('es')}</p>
                                 )}
                                 {calcularTotalPrecio() < 39990 && (
-                                    <span className='badge text-bg-success' style={{height: '20px', alignSelf:'center', justifyItems:'center', marginBottom:'10px'}}>Paga el cliente</span>
+                                    <span className='badge text-bg-success' style={{ height: '20px', alignSelf: 'center', justifyItems: 'center', marginBottom: '10px' }}>Paga el cliente</span>
                                 )}
                                 {calcularTotalPrecio() >= 79990 && calcularTotalPrecio() <= 1999000 && (
                                     <p>${(costoEnvio - 9900).toLocaleString('es')}</p>
@@ -281,7 +302,15 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder}) {
                         </a>
                     </div>
                 </div>
-
+                <Modal
+                    className="modal-dialog-centered modal-md"
+                    toggle={() => setModalViewRaitingAndCommentProduct(false)}
+                    isOpen={modalViewRaitingAndCommentProduct}
+                >
+                    <ModalBody>
+                        <ModalCommentsAndRaitingProducts closeModal={() => setModalViewRaitingAndCommentProduct(false)} productInfo={infoProductById} />
+                    </ModalBody>
+                </Modal>
             </>
         </div>
     )

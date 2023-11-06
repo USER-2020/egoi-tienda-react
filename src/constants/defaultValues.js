@@ -3,6 +3,7 @@ export const UserRole = {
   Editor: 'USER',
 };
 export const CLIENT_ID_GOOGLE = '159632966624-fcl92oe5q2dukshr7ep06k87mmcs1pqq.apps.googleusercontent.com';
+export const APP_ID_FACEBOOK = '1397712557481530';
 export const adminRoot = '/app';
 export const searchPath = `${adminRoot}/#`;
 export const addCart = '/detailCart';

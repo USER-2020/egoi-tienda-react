@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Col, Form, FormGroup, Input, InputGroup, Row } from 'reactstrap'
-import { codeLogin, verifyCodeLogin } from '../../services/extraLogin';
+import { codeLogin, validateEmail, verifyCodeLogin } from '../../services/extraLogin';
 import toast, { Toaster } from 'react-hot-toast';
 import { setCurrentUser } from '../../helpers/Utils';
 import { addCartProductsOfLocalStorage } from '../../helpers/productsLocalStorage';
@@ -17,7 +17,23 @@ const CodeLogin = ({ closeModalCodeLogin, handleLogin }) => {
 
     const handleChangueEmail = (data) => {
         if (email !== '') {
-            onSubmit(data)
+            validateEmail(email).then((res) => {
+                console.log("Email validation: ", res.data);
+                if (res.data.status === 'ok') {
+                    onSubmit(data);
+                }
+                if (res.data.status === 'error') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'El correo que ingresaste no está registrado, intentalo de nuevo o registrate!',
+                        confirmButtonColor: '#FC5241', // Set the desired color here
+                        confirmButtonText: 'Ok', // Optionally change the button's text
+                        // footer: '<a href="">Que significa esto?</a>'
+                    });
+                    setLoading(false);
+                }
+            })
         }
     }
 
@@ -55,7 +71,18 @@ const CodeLogin = ({ closeModalCodeLogin, handleLogin }) => {
                 //     text: 'Has iniciado sesión correctamente',
                 //     confirmButtonColor: '#fc5241',
                 // });
-            }).catch((err) => console.log(err));
+            }).catch((err) => {
+                console.log(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ha ocurrido algo, intentalo de nuevo, verifica que el código que ingresaste es correcto',
+                    confirmButtonColor: '#FC5241', // Set the desired color here
+                    confirmButtonText: 'Ok', // Optionally change the button's text
+                    // footer: '<a href="">Que significa esto?</a>'
+                });
+                setLoading(false);
+            });
     }
 
     const handleSubmitPersonaLogin = (event) => {
