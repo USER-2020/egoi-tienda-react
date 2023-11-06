@@ -19,7 +19,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
       email: email,
     };
     setCurrentUser(item);
-
+    // addCartProductsOfLocalStorage();
     // put(loginUserSuccess(item));
   };
 
@@ -37,12 +37,12 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
         /* eslint-enable */
 
         setUserActivacion(res.data);
-        // Swal.fire({
-        //   icon: 'success',
-        //   title: 'Bienvenido',
-        //   text: 'Has iniciado sesión correctamente',
-        //   confirmButtonColor: '#fc5241',
-        // });
+        Swal.fire({
+          icon: 'success',
+          title: 'Bienvenido',
+          text: 'Has iniciado sesión correctamente',
+          confirmButtonColor: '#fc5241',
+        });
         setLoading(false);
         closeModalLogin();
         handleLogin();

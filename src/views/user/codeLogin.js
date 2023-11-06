@@ -45,12 +45,13 @@ const CodeLogin = ({ closeModalCodeLogin }) => {
                 addCartProductsOfLocalStorage();
                 setLoading(false);
                 closeModalCodeLogin();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Bienvenido',
-                    text: 'Has iniciado sesión correctamente',
-                    confirmButtonColor: '#fc5241',
-                });
+                // window.location.reload();
+                // Swal.fire({
+                //     icon: 'success',
+                //     title: 'Bienvenido',
+                //     text: 'Has iniciado sesión correctamente',
+                //     confirmButtonColor: '#fc5241',
+                // });
             }).catch((err) => console.log(err));
     }
 
@@ -90,7 +91,7 @@ const CodeLogin = ({ closeModalCodeLogin }) => {
                                 <InputGroup style={{ borderRadius: "50px" }}>
                                     {showInputEmail && (
                                         <Input
-                                            type="email"
+                                            type="text"
                                             style={{
                                                 borderRadius: "50px",
                                             }}
