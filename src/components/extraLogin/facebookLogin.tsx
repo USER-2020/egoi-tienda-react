@@ -14,7 +14,10 @@ const FacebookLoginComponent = () => {
                 padding: '12px 24px',
                 border: 'none',
                 borderRadius: '50px',
-                width: '285px'
+                width: '285px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
             }}
             onSuccess={(response) => {
                 console.log('Login Success!', response);
@@ -25,8 +28,10 @@ const FacebookLoginComponent = () => {
             onProfileSuccess={(response) => {
                 console.log('Get Profile Success!', response);
             }}
+        >
+            Iniciar sesión con Facebook
+        </FacebookLogin>
 
-        />
     )
 }
 
