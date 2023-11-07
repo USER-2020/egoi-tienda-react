@@ -35,6 +35,7 @@ import { ThreeCircles } from 'react-loader-spinner';
 import SimilarProduct from './similarProduct.tsx';
 import toast, { Toaster } from 'react-hot-toast';
 import checkout from '../cart/checkout.tsx';
+import { allCommentsAndOpinionsByIdProduct } from '../../services/calificarProducto.js';
 
 function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) {
     const { slug } = useParams();
@@ -52,6 +53,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
     const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
     const [selectedColor, setSelectedColor] = useState('');
     const [variant, setVariant] = useState('');
+    const [commentsAndOpinionsProducts, setCommentsAndOpinionsProducts] = useState([]);
 
 
     const [productsCart, setProductsCart] = useState([]);
@@ -466,6 +468,51 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
     };
 
 
+    const allCommentsAndRaitingbyIdProduct = (idProduct) => {
+        allCommentsAndOpinionsByIdProduct(idProduct)
+            .then((res) => {
+                console.log("Respuesta de comentarios a los productos", res.data);
+                setCommentsAndOpinionsProducts(res.data);
+            }).catch((err) => console.log(err));
+    }
+
+
+    const formatearFecha = (fechaOriginal) => {
+        const fecha = new Date(fechaOriginal);
+
+        const dia = fecha.getDate().toString().padStart(2, '0');
+        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+        const anio = fecha.getFullYear();
+
+        return `${dia}/${mes}/${anio}`;
+    }
+
+    const formatedCoutingRaiting = () => {
+        if (commentsAndOpinionsProducts && commentsAndOpinionsProducts.length > 0) {
+            // Calcular el promedio de las calificaciones
+            const totalRatings = commentsAndOpinionsProducts.reduce((total, item) => total + item.rating, 0);
+            const averageRating = totalRatings / commentsAndOpinionsProducts.length;
+
+            return averageRating; // Esto te dará el promedio de las calificaciones
+        }
+
+        return 0; // Valor predeterminado si no hay calificaciones
+    }
+
+    function generateStarRating(averageRating) {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            if (i <= averageRating) {
+                stars.push(<img key={i} src={start} alt="" />);
+            } else {
+                stars.push(<img key={i} src={startEmpty} alt="" />);
+            }
+        }
+        return stars;
+    }
+
+    const averageRating = formatedCoutingRaiting();
+
 
     useEffect(() => {
 
@@ -476,12 +523,15 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
         }
 
         if (id) {
+            allCommentsAndRaitingbyIdProduct(id);
             detailProductByIdProduct(id);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setCurrentImage(0);
         }
         // history.push(history.location.pathname);   
     }, [slug, id]);
+
+
 
     useEffect(() => {
         if (currenUser) {
@@ -1091,20 +1141,20 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                         <div className="raitingTop">
                                             <Card className='cardRaiting'>
                                                 <CardBody>
-                                                    <h2>5,0</h2>
+                                                    <h2>{formatedCoutingRaiting()}</h2>
                                                 </CardBody>
                                             </Card>
                                         </div>
                                         <div className="raitingStarts">
                                             <div className="starts">
-                                                <img src={start} alt="" />
-                                                <img src={start} alt="" />
-                                                <img src={start} alt="" />
-                                                <img src={start} alt="" />
-                                                <img src={start} alt="" />
+                                                {generateStarRating(averageRating)}
                                             </div>
                                             <div className="nrOpinions">
-                                                <h6>10 Opiniones</h6>
+                                                {commentsAndOpinionsProducts && commentsAndOpinionsProducts.length > 0 ? (
+                                                    <h6>{commentsAndOpinionsProducts.length} opiniones</h6>
+                                                ) : (
+                                                    <h6>0 opiniones</h6>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -1153,74 +1203,33 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                 </div>
 
                                 <div className="comments">
-                                    <div className="comment">
-                                        <div className="comment_index">
-                                            <h6>Juan Antonio R</h6>
-                                            <div className="starts">
-                                                <h5>15/09/2016</h5>
-                                                <div className="starts_comments">
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
+                                    {commentsAndOpinionsProducts && commentsAndOpinionsProducts.length > 0 && commentsAndOpinionsProducts.map((item, index) => (
+                                        <div className="comment" key={index}>
+                                            <div className="comment_index">
+                                                <h6>{item.customer.f_name + ' ' + item.customer.l_name}</h6>
+                                                <div className="starts">
+                                                    <h5>{formatearFecha(item.updated_at)}</h5>
+                                                    <div className="starts_comments">
+                                                        {[...Array(5)].map((_, index) => (
+                                                            <img
+                                                                key={index}
+                                                                src={index < item.rating ? start : startEmpty}
+                                                                alt=""
+                                                            />
+                                                        ))}
+                                                    </div>
                                                 </div>
+
                                             </div>
+                                            <div className="dateComment">
+                                                <p>
+                                                    {item.comment}
+                                                </p>
 
-                                        </div>
-                                        <div className="dateComment">
-                                            <p>
-                                                Excelente producto, llego tal como lo esperaba.
-
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                    <div className="comment">
-                                        <div className="comment_index">
-                                            <h6>Juan Antonio R</h6>
-                                            <div className="starts">
-                                                <h5>15/09/2016</h5>
-                                                <div className="starts_comments">
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                </div>
                                             </div>
-
                                         </div>
-                                        <div className="dateComment">
-                                            <p>
-                                                Excelente producto, llego tal como lo esperaba.
+                                    ))}
 
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                    <div className="comment">
-                                        <div className="comment_index">
-                                            <h6>Juan Antonio R</h6>
-                                            <div className="starts">
-                                                <h5>15/09/2016</h5>
-                                                <div className="starts_comments">
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                    <img src={start} alt="" />
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div className="dateComment">
-                                            <p>
-                                                Excelente producto, llego tal como lo esperaba.
-                                            </p>
-
-                                        </div>
-                                    </div>
                                     <div className="btnMoreOpinions">
                                         <a href="#">Ver todas las opiniones</a>
                                     </div>

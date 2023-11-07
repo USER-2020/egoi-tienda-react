@@ -15,3 +15,12 @@ export const sendCalificarProducto = (idProduct, comment, rating, token) =>
             'Authorization': `Bearer ${token}`
         }
     });
+
+
+/* Traer todas las opiniones por id del producto */
+export const allCommentsAndOpinionsByIdProduct = (idProduct) =>
+    axios.get(`${baseUrl}/products/reviews/${idProduct}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
