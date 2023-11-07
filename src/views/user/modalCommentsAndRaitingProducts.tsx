@@ -61,7 +61,7 @@ const ModalCommentsAndRaitingProducts = ({ closeModal, productInfo }) => {
     const handleChangueOnSubmit = (event) => {
         event.preventDefault();
         const data = {
-            product_id: productInfo.id_producto,
+            product_id: productInfo.detalle.id,
             comment: comment,
             rating: valueStart
         }
