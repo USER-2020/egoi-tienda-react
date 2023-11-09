@@ -41,6 +41,8 @@ import { myorders } from "../constants/defaultValues";
 import { allProductsCart } from "../services/cart";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { getProductsBySearch } from "../services/filtros";
+import RegisterCode from '../views/user/registerCode.tsx';
+import OpcionesLogin from '../views/user/opcionesLogin.tsx';
 
 
 
@@ -52,6 +54,7 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
   const toggle = () => setIsOpen(!isOpen);
   const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
+  const [modalOpcionesLogin, setModalOpcionesLogin] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
@@ -196,6 +199,10 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
   //   setModalViewLogin(false);
   // };
 
+  const handleCorreoContrasena = () => {
+    setModalOpcionesLogin(false);
+    setModalViewLogin(true);
+  }
 
   const handleLogin = () => {
     // Code to handle user login, such as storing session storage, etc.
@@ -694,7 +701,7 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
                         onClick={(e) => {
                           e.preventDefault();
                           setIsOffcanvasVisible(false);
-                          setModalViewLogin(true);
+                          setModalOpcionesLogin(true)
 
 
                           // const offcanvasElement = document.querySelector('.offcanvas');
@@ -706,7 +713,7 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
                           //   }
                         }}
                       >
-                        <FontAwesomeIcon icon={faUser} /> Inicia sesión
+                        <FontAwesomeIcon icon={faUser} /> Ingresar
                       </a>
                       <Modal
                         className="modal-dialog-centered modal-lg"
@@ -718,7 +725,17 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
                         </ModalBody>
                       </Modal>
 
-                      <a href='#'
+                      <Modal
+                        className="modal-dialog-centered modal-md"
+                        toggle={() => setModalOpcionesLogin(false)}
+                        isOpen={modalOpcionesLogin}
+                      >
+                        <ModalBody>
+                          <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} />
+                        </ModalBody>
+                      </Modal>
+
+                      {/* <a href='#'
                         onClick={(e) => {
                           e.preventDefault();
                           setIsOffcanvasVisible(false);
@@ -726,14 +743,15 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
                         }}
                         className='btn btnPersonalizadosR'>
                         <FontAwesomeIcon icon={faUserPlus} /> Regístrate
-                      </a>
+                      </a> */}
                       <Modal
                         className="modal-dialog-centered modal-lg"
                         toggle={() => setModalViewRegistro(false)}
                         isOpen={modalViewRegistro && !changeFormRegister}
                       >
                         <ModalBody>
-                          <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                          {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
+                          <RegisterCode />
                         </ModalBody>
                       </Modal>
                     </>
