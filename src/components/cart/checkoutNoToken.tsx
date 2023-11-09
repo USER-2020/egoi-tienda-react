@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
 import toast, { Toaster } from 'react-hot-toast';
 import '../../styles/detailsCart.css';
-import { Card, Form, FormGroup, Input, Button } from 'reactstrap';
+import { Card, Form, FormGroup, Input, Button, Modal, ModalBody } from 'reactstrap';
 import start from '../../assets/egoi_icons/star-fill.svg';
 import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
 import PhoneInput from 'react-phone-input-2';
@@ -11,6 +11,10 @@ import es from "react-phone-input-2/lang/es.json";
 import Swal from 'sweetalert2';
 import { TailSpin } from 'react-loader-spinner';
 import { firstLogin, validateEmail } from '../../services/extraLogin';
+import Login from '../../views/user/login';
+import CodeLogin from '../../views/user/codeLogin';
+import RegisterCode from '../../views/user/registerCode.tsx';
+import OpcionesLogin from '../../views/user/opcionesLogin.tsx';
 
 
 const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
@@ -23,6 +27,10 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
     const [productsCart, setProductsCart] = useState([]);
     const [modalViewRegistro, setModalViewRegistro] = useState(false);
     const [modalViewLogin, setModalViewLogin] = useState(false);
+    const [modalViewCodeLogin, setModalViewCodeLogin] = useState(false);
+    const [modalOpcionesLogin, setModalOpcionesLogin] = useState(false);
+    const [changeFormLogin, setChangeFormLogin] = useState(false);
+    const [changeFormRegister, setChangeFormRegister] = useState(false);
     const [modalAddressCheckout, setModalAddressCheckout] = useState(false);
     const [modalAddressUpdate, setModalAddressUpdate] = useState(false);
     const [modalTarjetaCredito, setModalTarjetaCredito] = useState(false);
@@ -238,6 +246,45 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
             setCostoEnvio(0);
         }
     };
+    const handleCorreoContrasena = () => {
+        setModalOpcionesLogin(false);
+        setModalViewLogin(true);
+    }
+
+    const closeModalLogin = () => {
+        setModalViewLogin(false);
+    };
+
+    const handleLogin = () => {
+        // Code to handle user login, such as storing session storage, etc.
+        if (currenUser) {
+            // setIsLoggedIn(true);
+            // setIsLoggedInPartner(true);
+            // setShowTOkenOffCanvas(true);
+            // setShowOffcanvasWithoutToken(false);
+            addCartProductsOfLocalStorage();
+
+        } else {
+            // setIsLoggedIn(false);
+            // setShowOffcanvasWithoutToken(true);
+            // setShowTOkenOffCanvas(false);
+        }
+
+    };
+
+    const handleChangeFormLogin = () => {
+
+        if (modalViewLogin === true) {
+            setModalViewRegistro(true);
+        }
+
+    };
+
+    const closeModalRegistro = () => {
+        setModalViewRegistro(false);
+    };
+
+   
 
     // const handleDecrement = (quantityUPD, idProd) => {
     //     const productIdToDecrement = idProd;
@@ -330,9 +377,16 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Este correo ya está registrado, loguéate para terminar la compra!',
-                            confirmButtonColor: '#FC5241', // Set the desired color here
-                            confirmButtonText: 'Ok', // Optionally change the button's text
-                            // footer: '<a href="">Que significa esto?</a>'
+                            confirmButtonColor: '#FC5241',
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Cierra el Swal
+                                Swal.close();
+
+                                // Abre el modal de opciones
+                                setModalOpcionesLogin(true);
+                            }
                         });
 
                     } else {
@@ -1167,6 +1221,49 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
 
                 </div>
             </div >
+
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalViewLogin(false)}
+                isOpen={modalViewLogin && !changeFormLogin}
+            >
+                <ModalBody>
+                    <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} handleCodeLogin={() => setModalViewCodeLogin(true)} />
+                </ModalBody>
+            </Modal>
+            <Modal
+                className="modal-dialog-centered modal-sm"
+                // toggle={() => setModalViewCodeLogin(false)}
+                isOpen={modalViewCodeLogin}
+            >
+                <ModalBody>
+                    <CodeLogin closeModalCodeLogin={() => setModalViewCodeLogin(false)} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} />
+                </ModalBody>
+            </Modal>
+            {/* <button onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
+                      <FontAwesomeIcon icon={faUserPlus} />
+                      Regístrate
+                    </button> */}
+            <Modal
+                className="modal-dialog-centered modal-sm"
+                toggle={() => setModalViewRegistro(false)}
+                isOpen={modalViewRegistro && !changeFormRegister}
+            >
+                <ModalBody>
+                    {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
+                    <RegisterCode />
+
+                </ModalBody>
+            </Modal>
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalOpcionesLogin(false)}
+                isOpen={modalOpcionesLogin}
+            >
+                <ModalBody>
+                    <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} />
+                </ModalBody>
+            </Modal>
         </>
     )
 }

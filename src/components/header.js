@@ -38,6 +38,8 @@ import DetailCartOffCanvas from "./cart/detailCartOffCanvas.tsx";
 import DetailCartOffCanvasNoToken from "./cart/detailCartOffCanvasNoToken.tsx";
 import { addCartProductsOfLocalStorage } from "../helpers/productsLocalStorage.js";
 import CodeLogin from "../views/user/codeLogin.js";
+import OpcionesLogin from "../views/user/opcionesLogin.tsx";
+import RegisterCode from "../views/user/registerCode.tsx";
 
 const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty, handleShowOffCanvas, handleShowOffCanvasClose }) => {
 
@@ -47,6 +49,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
   const [modalViewCodeLogin, setModalViewCodeLogin] = useState(false);
+  const [modalOpcionesLogin, setModalOpcionesLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [changeFormLogin, setChangeFormLogin] = useState(false);
   const [changeFormRegister, setChangeFormRegister] = useState(false);
@@ -333,6 +336,10 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     history.push(`/`);
   };
 
+  const handleCorreoContrasena = () => {
+    setModalOpcionesLogin(false);
+    setModalViewLogin(true);
+  }
 
   const handleFavList = () => {
     if (currenUser) {
@@ -643,9 +650,9 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
                 ) : (
                   <>
-                    <button onClick={() => setModalViewLogin(true)}>
+                    <button onClick={() => setModalOpcionesLogin(true)}>
                       <FontAwesomeIcon icon={faUser} />
-                      Inicia sesión
+                      Ingresa
                     </button>
                     <Modal
                       className="modal-dialog-centered modal-md"
@@ -665,17 +672,28 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
                         <CodeLogin closeModalCodeLogin={() => setModalViewCodeLogin(false)} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} />
                       </ModalBody>
                     </Modal>
-                    <button onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
+                    {/* <button onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
                       <FontAwesomeIcon icon={faUserPlus} />
                       Regístrate
-                    </button>
+                    </button> */}
                     <Modal
-                      className="modal-dialog-centered modal-md"
+                      className="modal-dialog-centered modal-sm"
                       toggle={() => setModalViewRegistro(false)}
                       isOpen={modalViewRegistro && !changeFormRegister}
                     >
                       <ModalBody>
-                        <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} />
+                        {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
+                        <RegisterCode />
+
+                      </ModalBody>
+                    </Modal>
+                    <Modal
+                      className="modal-dialog-centered modal-md"
+                      toggle={() => setModalOpcionesLogin(false)}
+                      isOpen={modalOpcionesLogin}
+                    >
+                      <ModalBody>
+                        <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} />
                       </ModalBody>
                     </Modal>
                   </>
