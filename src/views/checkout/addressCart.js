@@ -80,9 +80,10 @@ function DressCart() {
     }
   }
 
-  useEffect(() => {
+
+  useEffect(()=>{
     setMinQty(1);
-  }, [])
+  },[])
 
 
   useEffect(() => {
@@ -112,13 +113,13 @@ function DressCart() {
       />
       {token && currenUser ? (
         <AddressCart
-          offcanvasValidate={() => setHandleShowOffCanvas(true)}
+          offcanvasValidate={() => setHandleShowOffCanvas(false)}
         />
       ) : (
         <CheckoutNoToken
           productsInCart={productsCart}
           getAllProductsByCartNotoken={getCantCartWhithoutToken}
-          offcanvasValidate={() => setHandleShowOffCanvas(true)}
+          offcanvasValidate={() => setHandleShowOffCanvas(false)}
         />
       )}
       <Footer />
