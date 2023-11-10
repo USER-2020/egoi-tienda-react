@@ -198,12 +198,12 @@ const OpcionesLogin = ({ closeModalLogin, handleLogin, closeModalRegistro, handl
         // //   </Form>*/}
                     <div style={{ width: '100%', marginTop: "15px", display: 'flex', flexDirection: 'column', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
                         <Button
-                            style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color: 'black' }}
+                            style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color: 'black', height:46, alignSelf:'center' }}
                             onClick={() => { handleCodeLogin(); closeModalLogin() }}
                         >Inicia sesión por código
                         </Button>
                         <Button
-                            style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color: 'black' }}
+                            style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color: 'black', height:46, alignSelf:'center'}}
                             onClick={() => { handleLoginCorreoContrasena() }}
                         >Inicia sesión por correo y contraseña
                         </Button>
