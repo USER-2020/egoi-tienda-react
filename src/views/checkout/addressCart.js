@@ -111,12 +111,14 @@ function DressCart() {
         handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
       />
       {token && currenUser ? (
-        <AddressCart />
+        <AddressCart
+          offcanvasValidate={() => setHandleShowOffCanvas(true)}
+        />
       ) : (
         <CheckoutNoToken
           productsInCart={productsCart}
           getAllProductsByCartNotoken={getCantCartWhithoutToken}
-          offcanvasValidate={() => setHandleShowOffCanvas(false)}
+          offcanvasValidate={() => setHandleShowOffCanvas(true)}
         />
       )}
       <Footer />
