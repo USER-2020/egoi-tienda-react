@@ -244,7 +244,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
 
     const buyNow = () => {
         // Verificar si el usuario está autenticado
-        if (currenUser) {
+        // if (currenUser) {
             // Calcular el precio del producto según descuentos (si los hay)
             // let buyNowProduct;
             // if (detailProducts && (detailProducts.discount_tag_valor > 0 || detailProducts.discount_valor > 0)) {
@@ -276,10 +276,10 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
             history.push('/checkout');
             // Redirigir al usuario a la página de pago con los datos calculados
 
-        } else {
-            // Si el usuario no está autenticado, mostrar un modal de inicio de sesión
-            setModalViewLogin(true);
-        }
+        // } else {
+        //     // Si el usuario no está autenticado, mostrar un modal de inicio de sesión
+        //     setModalViewLogin(true);
+        // }
     };
 
 
