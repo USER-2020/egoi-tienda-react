@@ -132,7 +132,7 @@ const CodeLogin = ({ closeModalCodeLogin, handleLogin }) => {
                                     )}
                                     {showInputCode && (
                                         <Input
-                                            type="text"
+                                            type="number"
                                             style={{
                                                 borderRadius: "50px",
                                             }}

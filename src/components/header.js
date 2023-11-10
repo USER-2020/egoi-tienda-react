@@ -669,7 +669,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
                       isOpen={modalViewCodeLogin}
                     >
                       <ModalBody>
-                        <CodeLogin closeModalCodeLogin={() => setModalViewCodeLogin(false)} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} />
+                        <CodeLogin closeModalCodeLogin={() => setModalViewCodeLogin(false)} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} handleCodeLogin />
                       </ModalBody>
                     </Modal>
                     {/* <button onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
@@ -683,7 +683,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
                     >
                       <ModalBody>
                         {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
-                        <RegisterCode />
+                        <RegisterCode closeModalRegister={() => setModalViewRegistro(false)} />
 
                       </ModalBody>
                     </Modal>
@@ -693,7 +693,7 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
                       isOpen={modalOpcionesLogin}
                     >
                       <ModalBody>
-                        <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} />
+                        <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} handleCodeLogin={() => setModalViewCodeLogin(true)} />
                       </ModalBody>
                     </Modal>
                   </>

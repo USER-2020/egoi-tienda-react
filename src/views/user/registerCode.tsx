@@ -1,16 +1,22 @@
 import React, { useState } from 'react'
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast';
 import { TailSpin } from 'react-loader-spinner';
 import { Button, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap'
 import TermsAndConditions from './TermsAndConditions';
+import { auth_register_with_code, code_email_register } from '../../services/extraLogin';
+import Swal from 'sweetalert2';
+import { setCurrentUser } from '../../helpers/Utils';
+import { addCartProductsOfLocalStorage } from '../../helpers/productsLocalStorage';
 
-const RegisterCode = () => {
+const RegisterCode = ({ closeModalRegister }) => {
 
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [secondModalOpen, setSecondModalOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [f_name, setF_Name] = useState('');
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [password, setPassword] = useState('');
@@ -32,7 +38,38 @@ const RegisterCode = () => {
   }
 
   const validateLogin = () => {
-
+    setLoading(true);
+    if (password === confirmPassword) {
+      console.log("Las contraseñas coinicden");
+      auth_register_with_code(code, name, f_name, email, password)
+        .then((res) => {
+          console.log(res);
+          const item = {
+            token: res.data.token,
+            email: email,
+          };
+          setCurrentUser(item);
+          addCartProductsOfLocalStorage();
+          Swal.fire({
+            icon: 'success',
+            title: 'Bienvenido',
+            text: 'Has iniciado sesión correctamente',
+            confirmButtonColor: '#fc5241',
+          });
+          closeModalRegister();
+          setLoading(false);
+          window.location.reload(); // Recargar la página
+        }).catch((err) => console.log(err));
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Las constraseñas no coinciden',
+        confirmButtonColor: '#FC5241', // Set the desired color here
+        confirmButtonText: 'Ok', // Optionally change the button's text
+        // footer: '<a href="">Que significa esto?</a>'
+      });
+    }
   }
 
   const toggleShowPassword = () => {
@@ -42,7 +79,13 @@ const RegisterCode = () => {
   const handleSubmitPersonaLogin = (event) => {
     event.preventDefault();
     setLoading(true);
-    handleChangueEmail();
+    code_email_register(email)
+      .then((res) => {
+        console.log(res);
+        toast.success("Código enviado con exitó!");
+        handleChangueEmail();
+        setLoading(false);
+      }).catch((err) => console.log(err));
     // onSubmit(data);
 
     // limpiarCampos();
@@ -92,13 +135,41 @@ const RegisterCode = () => {
                   <FormGroup controlId="formBasicEmail">
                     <InputGroup style={{ borderRadius: "50px" }}>
                       <Input
-                        type="text"
+                        type="number"
                         style={{
                           borderRadius: "50px",
                         }}
                         placeholder="Código"
                         value={code}
                         onChange={(e) => setCode(e.target.value)}
+                      />
+                    </InputGroup>
+                  </FormGroup>
+
+                  <FormGroup controlId="formBasicEmail">
+                    <InputGroup style={{ borderRadius: "50px" }}>
+                      <Input
+                        type="text"
+                        style={{
+                          borderRadius: "50px",
+                        }}
+                        placeholder="Nombre"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </InputGroup>
+                  </FormGroup>
+
+                  <FormGroup controlId="formBasicEmail">
+                    <InputGroup style={{ borderRadius: "50px" }}>
+                      <Input
+                        type="text"
+                        style={{
+                          borderRadius: "50px",
+                        }}
+                        placeholder="Apellido"
+                        value={f_name}
+                        onChange={(e) => setF_Name(e.target.value)}
                       />
                     </InputGroup>
                   </FormGroup>
@@ -138,7 +209,7 @@ const RegisterCode = () => {
                           borderBottomLeftRadius: "50px",
                         }}
                         type={showPassword ? "text" : "password"}
-                        placeholder="Contraseña"
+                        placeholder="Confirmar contraseña"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                       />
@@ -206,7 +277,7 @@ const RegisterCode = () => {
                       onChange={handleCheckboxChange}
                       style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
                     />
-                    <span style={{ marginRight: "10px", alignSelf: 'center'}}>Aceptar términos y condiciones</span>
+                    <span style={{ marginRight: "10px", alignSelf: 'center' }}>Aceptar términos y condiciones</span>
                   </div>
                   <Modal size='xl' isOpen={secondModalOpen} >
                     <ModalHeader style={{ color: '#fc5241' }}>Términos y condiciones</ModalHeader>
