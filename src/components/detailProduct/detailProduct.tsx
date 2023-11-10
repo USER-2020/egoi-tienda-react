@@ -37,7 +37,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import checkout from '../cart/checkout.tsx';
 import { allCommentsAndOpinionsByIdProduct } from '../../services/calificarProducto.js';
 
-function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) {
+function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty, offcanvasValidate }) {
     const { slug } = useParams();
     const [detailProducts, setDetailProducts] = useState([]);
     const [currentImg, setCurrentImage] = useState('');
@@ -140,7 +140,11 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                         value: detailProducts.unit_price,
 
                     });
-                    history.push('/detailCart')
+                    setMinQty();
+                    setIsntLoggedInPartner(false);
+                    updateCantProductsWithouthToken();
+                    toast.success('Producto agregado con éxito!');
+                    // history.push('/checkout')
                     // console.log("Producto enviado", res.data);
                     // console.log(token);
                 })
@@ -245,36 +249,36 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
     const buyNow = () => {
         // Verificar si el usuario está autenticado
         // if (currenUser) {
-            // Calcular el precio del producto según descuentos (si los hay)
-            // let buyNowProduct;
-            // if (detailProducts && (detailProducts.discount_tag_valor > 0 || detailProducts.discount_valor > 0)) {
-            //     buyNowProduct = detailProducts.discount_tag_valor || detailProducts.discount_valor;
-            // } else {
-            //     buyNowProduct = detailProducts.unit_price * quantity;
-            // }
+        // Calcular el precio del producto según descuentos (si los hay)
+        // let buyNowProduct;
+        // if (detailProducts && (detailProducts.discount_tag_valor > 0 || detailProducts.discount_valor > 0)) {
+        //     buyNowProduct = detailProducts.discount_tag_valor || detailProducts.discount_valor;
+        // } else {
+        //     buyNowProduct = detailProducts.unit_price * quantity;
+        // }
 
-            // // Actualizar el estado del precio del producto
-            // setPrecioProduct(buyNowProduct);
+        // // Actualizar el estado del precio del producto
+        // setPrecioProduct(buyNowProduct);
 
-            // // Calcular el costo de envío
-            // let costoEnvio = 0;
-            // const costoDeEnvio = () => {
-            //     if (buyNowProduct <= 79990 && buyNowProduct >= 39990) {
-            //         costoEnvio = 9900;
-            //     } else {
-            //         costoEnvio = 0;
-            //     }
-            // };
-            // costoDeEnvio();
+        // // Calcular el costo de envío
+        // let costoEnvio = 0;
+        // const costoDeEnvio = () => {
+        //     if (buyNowProduct <= 79990 && buyNowProduct >= 39990) {
+        //         costoEnvio = 9900;
+        //     } else {
+        //         costoEnvio = 0;
+        //     }
+        // };
+        // costoDeEnvio();
 
-            // // Calcular el total a pagar
-            // const totalAPagar = buyNowProduct + costoEnvio;
+        // // Calcular el total a pagar
+        // const totalAPagar = buyNowProduct + costoEnvio;
 
-            // // Actualizar el estado del total a pagar
-            // setTotalAPagar(totalAPagar);
-            addToCart();
-            history.push('/checkout');
-            // Redirigir al usuario a la página de pago con los datos calculados
+        // // Actualizar el estado del total a pagar
+        // setTotalAPagar(totalAPagar);
+        addToCart();
+        history.push('/checkout');
+        // Redirigir al usuario a la página de pago con los datos calculados
 
         // } else {
         //     // Si el usuario no está autenticado, mostrar un modal de inicio de sesión
@@ -512,6 +516,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
     }
 
     const averageRating = formatedCoutingRaiting();
+
 
 
     useEffect(() => {

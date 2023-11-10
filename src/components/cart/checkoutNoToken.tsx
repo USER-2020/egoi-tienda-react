@@ -17,7 +17,7 @@ import RegisterCode from '../../views/user/registerCode.tsx';
 import OpcionesLogin from '../../views/user/opcionesLogin.tsx';
 
 
-const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
+const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart, offcanvasValidate }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [quantity, setQuantity] = useState();
     const toggle = () => setIsOpen(!isOpen);
@@ -480,6 +480,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
     useEffect(() => {
         // getAllProductsByCart();
         getAllProductsByCartNotoken();
+        offcanvasValidate();
     }, []);
 
 

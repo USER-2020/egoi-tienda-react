@@ -112,7 +112,7 @@ function DetailsProduct() {
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
         setIsntLoggedInPartner={() => setIsLoggedIn(false)}
         updateCantProductsWithouthToken={getCantCartWhithoutToken}
-        setMinQty={() => setMinQty(minQty + 1)}
+        setMinQty={() => setMinQty(minQty + 1)}       
       />
       <SimilarProduct />
       <Footer />

@@ -115,7 +115,9 @@ function DressCart() {
       ) : (
         <CheckoutNoToken
           productsInCart={productsCart}
-          getAllProductsByCartNotoken={getCantCartWhithoutToken} />
+          getAllProductsByCartNotoken={getCantCartWhithoutToken}
+          offcanvasValidate={() => setHandleShowOffCanvas(false)}
+        />
       )}
       <Footer />
     </div>
