@@ -205,7 +205,7 @@ const OpcionesLogin = ({ closeModalLogin, handleLogin, closeModalRegistro, handl
                         <Button
                             style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color: 'black', height:46, alignSelf:'center'}}
                             onClick={() => { handleLoginCorreoContrasena() }}
-                        >Inicia sesión por correo y contraseña
+                        >Inicia sesión por correo
                         </Button>
 
                         <LoginGoogle />
