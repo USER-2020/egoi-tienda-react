@@ -284,7 +284,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
         setModalViewRegistro(false);
     };
 
-   
+
 
     // const handleDecrement = (quantityUPD, idProd) => {
     //     const productIdToDecrement = idProd;
@@ -1251,7 +1251,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
             >
                 <ModalBody>
                     {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
-                    <RegisterCode />
+                    <RegisterCode closeModalRegister={() => setModalViewRegistro(false)} />
 
                 </ModalBody>
             </Modal>
@@ -1261,7 +1261,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart }) => {
                 isOpen={modalOpcionesLogin}
             >
                 <ModalBody>
-                    <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} />
+                    <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} handleCodeLogin={() => setModalViewCodeLogin(true)} />
                 </ModalBody>
             </Modal>
         </>

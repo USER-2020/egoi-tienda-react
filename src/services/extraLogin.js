@@ -59,3 +59,27 @@ export const login_Email_Face = (email) =>
             'Content-Type': 'application/json',
         }
     });
+
+/* Enviar codigo de inicio de sesion  */
+export const code_email_register = (email) =>
+    axios.post(`${baseUrl}/auth/code_email_register`, {
+        email: email,
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+/* Auth register with code  */
+export const auth_register_with_code = (code, f_name, l_name, email, password) =>
+    axios.post(`${baseUrl}/auth/register`, {
+        code: code,
+        f_name: f_name,
+        l_name: l_name,
+        email: email,
+        password: password,
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });  
