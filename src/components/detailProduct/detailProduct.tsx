@@ -277,7 +277,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
         // // Actualizar el estado del total a pagar
         // setTotalAPagar(totalAPagar);
         addToCart();
-        history.push('/checkout');
+        window.location.href= "/checkout";
         // Redirigir al usuario a la página de pago con los datos calculados
 
         // } else {

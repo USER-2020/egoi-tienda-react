@@ -480,7 +480,7 @@ const CheckoutNoToken = ({ getAllProductsByCartNotoken, productsInCart, offcanva
     useEffect(() => {
         // getAllProductsByCart();
         getAllProductsByCartNotoken();
-        offcanvasValidate(false);
+        offcanvasValidate();
     }, []);
 
 
