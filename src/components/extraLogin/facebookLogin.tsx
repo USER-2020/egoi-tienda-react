@@ -23,30 +23,30 @@ const FacebookLoginButton = () => {
 
     return (
         <FacebookLogin
-            appId="TU_APP_ID_DE_FACEBOOK"
-            autoLoad={false}
-            fields="name,email,picture"
-            callback={responseFacebook}
-            render={renderProps => (
-                <button
-                    onClick={renderProps.onClick}
-                    style={{
-                        backgroundColor: '#4267b2',
-                        color: '#fff',
-                        fontSize: '16px',
-                        padding: '12px 24px',
-                        border: 'none',
-                        borderRadius: '50px',
-                        width: '285px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
-                    Iniciar sesión con Facebook
-                </button>
-            )}
-        />
+            appId="1397712557481530"
+            style={{
+                backgroundColor: '#4267b2',
+                color: '#fff',
+                fontSize: '16px',
+                padding: '12px 24px',
+                border: 'none',
+                borderRadius: '50px',
+                width: '285px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+            onSuccess={(response) => {
+                responseFacebook(response);
+                console.log('Login Success!', response);
+            }}
+            onFail={(error) => {
+                console.log('Login Failed!', error);
+            }}
+            onProfileSuccess={(response) => {
+                console.log('Get Profile Success!', response);
+            }}
+        >Inicia sesión con Facebook </FacebookLogin>
     );
 };
 
