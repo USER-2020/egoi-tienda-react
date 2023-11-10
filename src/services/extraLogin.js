@@ -49,3 +49,13 @@ export const verifyCodeLogin = (email, code) =>
             'Content-Type': 'application/json',
         }
     });
+
+//Login cuando el correo existe con ggooglr y facebook 
+export const login_Email_Face = (email) =>
+    axios.post(`${baseUrl}/auth/login_email_face`, {
+        email: email,
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });

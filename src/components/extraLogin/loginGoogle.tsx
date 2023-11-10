@@ -1,103 +1,118 @@
-import { CredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
-import React, { useState } from 'react'
-import { CLIENT_ID_GOOGLE } from '../../constants/defaultValues';
-import { decodeJwt, setCurrentUser } from '../../helpers/Utils';
-import { firstLogin } from '../../services/extraLogin';
-import { addCartProductsOfLocalStorage } from '../../helpers/productsLocalStorage';
+import React from 'react';
 import Swal from 'sweetalert2';
+import { setCurrentUser } from '../../helpers/Utils';
+import { firstLogin, login_Email_Face } from '../../services/extraLogin';
+import { addCartProductsOfLocalStorage } from '../../helpers/productsLocalStorage';
+import MyCustomButton from './myCustomButton.tsx';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const LoginGoogle = () => {
-    const handleError = () => {
-        console.log('Login failed');
-    }
+    const login = useGoogleLogin({
+        onSuccess: tokenResponse => handleSuccess(tokenResponse),
+    });
 
-    const handleSuccess = (credentialsResponse: CredentialResponse) => {
-        console.log("credetialResppnse", credentialsResponse);
-        if (credentialsResponse.credential) {
-            const { payload } = decodeJwt(credentialsResponse.credential);
-            // console.log("Credenciales payload user", payload);
-            console.log(payload.given_name);
-            // setF_name(payload.given_name);
-            console.log(payload.family_name);
-            // setL_name(payload.family_name);
-            console.log(payload.email);
-            // setEmail(payload.email);
-            firstLogin(payload.given_name, payload.family_name, payload.email)
-                .then((res) => {
-                    console.log(res);
+    const handleSuccess = (credentialsResponse) => {
+        console.log("credentialsResponse", credentialsResponse);
 
-                    const item = {
-                        token: res.data.token,
-                        email: payload.email,
-                    }
-                    setCurrentUser(item);
-                    addCartProductsOfLocalStorage();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Bienvenido',
-                        // text: 'Has iniciado sesión correctamente',
-                        confirmButtonColor: '#fc5241',
-                        html: `
-                          <p>Por favor, revisa nuestros <a href="/termsAndConditions">Términos y Condiciones</a> y <a href="/privacyPolicy">Política de Privacidad</a>.</p>
-                          <label for="aceptar">Acepto los Términos y Condiciones:</label>
-                          <input type="checkbox" id="aceptar">
-                        `,
-                        preConfirm: () => {
-                            const aceptado = document.getElementById('aceptar').checked;
-                            if (!aceptado) {
-                                Swal.showValidationMessage('Debes aceptar los Términos y Condiciones para continuar.');
-                            }
-                        },
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // El usuario marcó el cuadro de aceptación y confirmó
+        if (credentialsResponse) {
+            const accessToken = credentialsResponse.access_token;
+
+            // Obtener información del perfil del usuario desde la API de Google
+            fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Información del usuario:', data);
+
+                    const { given_name, family_name, email } = data;
+
+                    firstLogin(given_name, family_name, email)
+                        .then((res) => {
+                            console.log(res);
+
+                            const item = {
+                                token: res.data.token,
+                                email: email,
+                            };
+
+                            setCurrentUser(item);
+                            addCartProductsOfLocalStorage();
+
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Bienvenido',
-                                text: 'Has iniciado sesión correctamente',
                                 confirmButtonColor: '#fc5241',
+                                html: `
+                                <p>Por favor, revisa nuestros <a href="/termsAndConditions">Términos y Condiciones</a> y <a href="/privacyPolicy">Política de Privacidad</a>.</p>
+                                <label for="aceptar">Acepto los Términos y Condiciones:</label>
+                                <input type="checkbox" id="aceptar">
+                            `,
+                                preConfirm: () => {
+                                    const aceptado = document.getElementById('aceptar').checked;
+                                    if (!aceptado) {
+                                        Swal.showValidationMessage('Debes aceptar los Términos y Condiciones para continuar.');
+                                    }
+                                },
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // El usuario marcó el cuadro de aceptación y confirmó
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Bienvenido',
+                                        text: 'Has iniciado sesión correctamente',
+                                        confirmButtonColor: '#fc5241',
+                                    });
+
+                                    addCartProductsOfLocalStorage();
+                                    window.location.reload();
+                                } else if (result.isDismissed) {
+                                    // El usuario hizo clic fuera de la ventana
+                                    addCartProductsOfLocalStorage();
+                                    window.location.reload(); // Recargar la página
+                                }
                             });
-                            addCartProductsOfLocalStorage();
-                            window.location.reload();
-                        } else if (result.isDismissed) {
-                            // El usuario hizo clic fuera de la ventana
-                            addCartProductsOfLocalStorage();
-                            window.location.reload(); // Recargar la página
-                        }
-                    });
+                        })
+                        .catch((err) => {
+                            console.log(err);
 
+                            if (err.response && err.response.data && err.response.data.status === 'ok') {
+                                login_Email_Face(email)
+                                    .then((res) => {
+                                        const item = {
+                                            token: res.data.token,
+                                            email: email,
+                                        };
 
-
-
-                }).catch((err) => {
-                    console.log(err);
-                    console.log(err.response.data.status);
-                    if (err.response.data.status === 'ok') {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Este correo ya está registrado, ingresa o recupera tu contraseña!',
-                            confirmButtonColor: '#FC5241', // Set the desired color here
-                            confirmButtonText: 'Ok', // Optionally change the button's text
-                            // footer: '<a href="">Que significa esto?</a>'
+                                        setCurrentUser(item);
+                                        addCartProductsOfLocalStorage();
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Bienvenido',
+                                            text: 'Has iniciado sesión correctamente',
+                                            confirmButtonColor: '#fc5241',
+                                        });
+                                        window.location.reload(); // Recargar la página
+                                    })
+                                    .catch((error) => {
+                                        console.log("Error en login_Email_Face", error);
+                                    });
+                            }
                         });
-
-                    }
-
-                });
+                })
+                .catch(error => console.error('Error al obtener información del usuario', error));
         }
-    }
+    };
 
     return (
-        <div className="mybutton" style={{ width: '285px', borderRadius: '50px', display: 'flex', justifyContent: 'space-around', backgroundColor: 'transparent', color: 'black' }}>
-            <GoogleLogin
-                onSuccess={handleSuccess}
-                onError={handleError}
-                state_cookie_domain={'single_host_origin'}
-                useOneTap
-            />
-        </div>
-    )
-}
 
-export default LoginGoogle
+        <MyCustomButton onClick={() => login()}>
+            Iniciar sesión con Google {' '}
+        </MyCustomButton>
+
+    );
+};
+
+export default LoginGoogle;
