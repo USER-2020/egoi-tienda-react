@@ -39,7 +39,7 @@ import ModalNoPse from '../../views/user/metodosDePago/modalNoPse.tsx';
 
 
 
-function AddressCart() {
+function AddressCart({offcanvasValidate}) {
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -1199,6 +1199,10 @@ function AddressCart() {
     }
   }
 
+
+  useEffect(() => {
+    offcanvasValidate();
+  }, []);
 
 
 
