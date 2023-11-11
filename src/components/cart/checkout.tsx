@@ -732,6 +732,22 @@ function AddressCart({ offcanvasValidate }) {
 
   const closeModalUpdate = () => {
     setModalAddressUpdate(false);
+    window.location.reload();
+    document.addEventListener('DOMContentLoaded', function () {
+      // Obten el elemento con el ID específico
+      var miDiv = document.getElementById('DireccionesCards');
+
+      // Verifica si el elemento existe
+      if (miDiv) {
+        // Usa el método scrollIntoView para desplazar la página al elemento
+        miDiv.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Si el elemento no existe, simplemente desplázate al inicio
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+
   }
 
   const closeModalEfecty = () => {
@@ -1822,7 +1838,7 @@ function AddressCart({ offcanvasValidate }) {
             {/* elegir direccion Responsive */}
             <p className="title" style={{ marginTop: '30px' }}>Dirección de entrega
             </p>
-            <div className="card-body direcciones">
+            <div className="card-body direcciones" id='DireccionesCards'>
               <Card>
                 <ul>
 
@@ -1846,7 +1862,7 @@ function AddressCart({ offcanvasValidate }) {
                         <p>{addr.address}</p>
                       </div>
                       <div className="opciones">
-                        <a href="#" className='updateDireccion' onClick={() => updateBtn(addr.id)}>
+                        <a href="#" className='updateDireccion' onClick={(e) => { e.preventDefault(); updateBtn(addr.id) }}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -1862,7 +1878,7 @@ function AddressCart({ offcanvasValidate }) {
                   ))}
                 </ul>
                 <div className="btnAdd">
-                  <a href="#" onClick={() => setModalAddressCheckout(true)}>Agregar nueva dirección</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); setModalAddressCheckout(true) }}>Agregar nueva dirección</a>
                 </div>
               </Card>
             </div>
@@ -2033,7 +2049,7 @@ function AddressCart({ offcanvasValidate }) {
         <ModalHeader toggle={() => setModalAddressUpdate(false)}></ModalHeader>
         <ModalBody>
           <UpdateAddress closeModalUpdate={closeModalUpdate} deptos={deptos} refreshAddress={refreshAddress}
-            idAddress={idAddress} dataAddress={dataAddressUpdate} />
+            idAddress={idAddress} />
         </ModalBody>
       </Modal>
 

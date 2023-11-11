@@ -133,14 +133,15 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
 
             updateAddress(idAddress, data, token)
                 .then(() => {
+                    closeModalUpdate();
                     Swal.fire({
                         icon: 'success',
                         title: '¡Actualización exitosa!',
                         text: 'La dirección ha sido actualizada exitosamente.',
                         confirmButtonColor: '#0d6efd',
                     });
-                    closeModalUpdate();
                     refreshAddress();
+                    setLoading(false);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -213,7 +214,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
 
             <Row>
                 <Col id='modalAddress'>
-                    <div style={{ paddingLeft: "2%", paddingRight: "2%", marginBottom: '10px', textAlign:'center' }}>
+                    <div style={{ paddingLeft: "2%", paddingRight: "2%", marginBottom: '10px', textAlign: 'center' }}>
                         <div
                             style={{
                                 display: "flex",
@@ -224,7 +225,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                             <h5 style={{ color: "#fc5241", marginBottom: "20px" }}>Actualizar la dirección de entrega</h5>
                         </div>
                         {isLoading ? (
-                            <div className="loadingDiv" style={{ display:'flex'}}>
+                            <div className="loadingDiv" style={{ display: 'flex' }}>
                                 <ThreeCircles
                                     height="100"
                                     width="100"
@@ -253,7 +254,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                             textAlign: 'center',
                                             borderRadius: '12px',
                                         }}
-                                            onClick={() => handleLinkClick('home')}
+                                            onClick={(e) => { e.preventDefault(); handleLinkClick('home') }}
                                         >
                                             Hogar
                                         </a>
@@ -266,7 +267,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                             textAlign: 'center',
                                             borderRadius: '12px',
                                         }}
-                                            onClick={() => handleLinkClick('permanent')}
+                                            onClick={(e) => { e.preventDefault(); handleLinkClick('permanent') }}
                                         >
                                             Trabajo
                                         </a>
@@ -279,7 +280,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                                             textAlign: 'center',
                                             borderRadius: '12px',
                                         }}
-                                            onClick={() => handleLinkClick('others')}
+                                            onClick={(e) => { e.preventDefault(); handleLinkClick('others') }}
                                         >
                                             Otro
                                         </a>

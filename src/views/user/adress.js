@@ -84,38 +84,39 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
         setLoading(true);
         if (!contactPersonName || !contactPersonLastName || !address || !selectedDepto || !selectedCiudad || !phone || !phone2 || !barrio || !localDescription) {
             Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Por favor, complete todos los campos. ",
-              confirmButtonColor: "#0d6efd",
+                icon: "error",
+                title: "Oops...",
+                text: "Por favor, complete todos los campos. ",
+                confirmButtonColor: "#0d6efd",
             });
             setLoading(false);
-            
-            
-          }else{
 
-              saveAddress(data, token)
-                  .then(() => {
-                      Swal.fire({
-                          icon: 'success',
-                          title: '¡Registro exitoso!',
-                          text: 'La dirección ha sido registrada exitosamente.',
-                          confirmButtonColor: '#0d6efd',
-                      });
-                      closeModalAddress();
-                      refreshAddress();
-                  })
-                  .catch((err) => {
-                      console.log(err);
-                      Swal.fire({
-                          icon: 'error',
-                          title: 'Error',
-                          text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
-                          confirmButtonColor: '#dc3545',
-                      });
-                      setLoading(false);
-                  })
-          }
+
+        } else {
+
+            saveAddress(data, token)
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Registro exitoso!',
+                        text: 'La dirección ha sido registrada exitosamente.',
+                        confirmButtonColor: '#0d6efd',
+                    });
+                    closeModalAddress();
+                    refreshAddress();
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+                        confirmButtonColor: '#dc3545',
+                    });
+                    setLoading(false);
+                })
+        }
     }
 
     const handleSubmitAddress = (e) => {
@@ -125,7 +126,7 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
             address_type: selectedLink,
             contact_person_name: contactPersonFullName,
             f_name: contactPersonName,
-            l_name:contactPersonLastName,
+            l_name: contactPersonLastName,
             address: address,
             country: country,
             zip: selectedDepto,
@@ -156,11 +157,11 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
 
         const fullName = contactPersonName + " " + contactPersonLastName;
         setContactPersonFullName(fullName);
-        
-        if(contactPersonFullName){
+
+        if (contactPersonFullName) {
             console.log(contactPersonFullName);
         }
-    }, [selectedZip, token, selectedDepto,contactPersonName, contactPersonLastName, contactPersonFullName])
+    }, [selectedZip, token, selectedDepto, contactPersonName, contactPersonLastName, contactPersonFullName])
 
     return (
         <>
@@ -425,9 +426,6 @@ function AdressCheckout({ closeModalAddress, deptos, refreshAddress }) {
                                     </Button>
 
                                 </div>
-
-
-
                             </Form>
                         </Card>
                     </div>
