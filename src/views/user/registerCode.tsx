@@ -49,7 +49,9 @@ const RegisterCode = ({ closeModalRegister }) => {
             email: email,
           };
           setCurrentUser(item);
-          addCartProductsOfLocalStorage();
+          setTimeout(function () {
+            addCartProductsOfLocalStorage();
+          }, 3000);
           Swal.fire({
             icon: 'success',
             title: 'Bienvenido',

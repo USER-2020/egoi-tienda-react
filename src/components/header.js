@@ -312,7 +312,9 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
       setIsLoggedInPartner(true);
       setShowTOkenOffCanvas(true);
       setShowOffcanvasWithoutToken(false);
-      addCartProductsOfLocalStorage();
+      setTimeout(function () {
+        addCartProductsOfLocalStorage();
+      }, 3000);
 
     } else {
       setIsLoggedIn(false);

@@ -39,7 +39,10 @@ const LoginGoogle = () => {
                             };
 
                             setCurrentUser(item);
-                            addCartProductsOfLocalStorage();
+
+                            setTimeout(function () {
+                                addCartProductsOfLocalStorage();
+                            }, 3000);
 
                             Swal.fire({
                                 icon: 'success',
@@ -87,7 +90,10 @@ const LoginGoogle = () => {
                                         };
 
                                         setCurrentUser(item);
-                                        addCartProductsOfLocalStorage();
+
+                                        setTimeout(function () {
+                                            addCartProductsOfLocalStorage();
+                                        }, 3000);
                                         Swal.fire({
                                             icon: 'success',
                                             title: 'Bienvenido',
