@@ -1013,8 +1013,10 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                               height: 'auto',
                               alignItems: 'center',
                               width: '80%',
-                              justifyContent: 'space-around'
+                              justifyContent: 'space-around',
+                              // pointerEvents: product.current_stock <= 0 ? 'none' : 'auto'
                             }}
+                            disabled={product.current_stock <= 0}
                           >
                             <p style={{ marginBottom: '0' }}>Añadir al carrito</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
@@ -1037,8 +1039,10 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                               height: 'auto',
                               alignItems: 'center',
                               width: '80%',
-                              justifyContent: 'space-around'
+                              justifyContent: 'space-around',
+                              // pointerEvents: product.current_stock <= 0 ? 'none' : 'auto'
                             }}
+                            disabled={product.current_stock <= 0}
                           >
                             <p style={{ marginBottom: '0' }}>Añadir</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
@@ -1150,8 +1154,10 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                                 height: 'auto',
                                 alignItems: 'center',
                                 width: '80%',
-                                justifyContent: 'space-around'
+                                justifyContent: 'space-around',
+                                // pointerEvents: product.current_stock <= 0 ? 'none' : 'auto'
                               }}
+                              disabled={product.current_stock <= 0}
                             >
                               <p style={{ marginBottom: '0' }}>Añadir al carrito</p>
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
@@ -1174,8 +1180,10 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
                                 height: 'auto',
                                 alignItems: 'center',
                                 width: '80%',
-                                justifyContent: 'space-around'
+                                justifyContent: 'space-around',
+                                // pointerEvents: product.current_stock <= 0 ? 'none' : 'auto'
                               }}
+                              disabled={product.current_stock <= 0}
                             >
                               <p style={{ marginBottom: '0' }}>Añadir</p>
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
