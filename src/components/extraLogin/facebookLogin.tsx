@@ -25,7 +25,9 @@ const FacebookLoginButton = () => {
                 };
 
                 setCurrentUser(item);
-                addCartProductsOfLocalStorage();
+                setTimeout(function () {
+                    addCartProductsOfLocalStorage();
+                }, 3000);
 
                 Swal.fire({
                     icon: 'success',
@@ -56,7 +58,9 @@ const FacebookLoginButton = () => {
                         window.location.reload();
                     } else if (result.isDismissed) {
                         // El usuario hizo clic fuera de la ventana
-                        addCartProductsOfLocalStorage();
+                        setTimeout(function () {
+                            addCartProductsOfLocalStorage();
+                        }, 3000);
                         window.location.reload(); // Recargar la página
                     }
                 });
@@ -71,7 +75,9 @@ const FacebookLoginButton = () => {
                             };
 
                             setCurrentUser(item);
-                            addCartProductsOfLocalStorage();
+                            setTimeout(function () {
+                                addCartProductsOfLocalStorage();
+                            }, 3000);
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Bienvenido',
