@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
 import '../../styles/detailsCart.css';
-import { Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
+import { Button, Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { getCurrentUser } from '../../helpers/Utils';
 import { allProductsCart } from '../../services/cart';
@@ -71,6 +71,8 @@ function AddressCart({ offcanvasValidate }) {
   const [modalDataTarjetas, setModalDataTarjetas] = useState("");
 
   const [modalMantenimientoPSE, setModalMantenimientoPSE] = useState(false);
+
+  const [modalUpdateModal, setModalUpdateModal] = useState(false);
 
 
   //Modal de pedido exitoso
@@ -733,19 +735,19 @@ function AddressCart({ offcanvasValidate }) {
   const closeModalUpdate = () => {
     setModalAddressUpdate(false);
     window.location.reload();
-    document.addEventListener('DOMContentLoaded', function () {
-      // Obten el elemento con el ID específico
-      var miDiv = document.getElementById('DireccionesCards');
+    // document.addEventListener('DOMContentLoaded', function () {
+    //   // Obten el elemento con el ID específico
+    //   var miDiv = document.getElementById('DireccionesCards');
 
-      // Verifica si el elemento existe
-      if (miDiv) {
-        // Usa el método scrollIntoView para desplazar la página al elemento
-        miDiv.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // Si el elemento no existe, simplemente desplázate al inicio
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
+    //   // Verifica si el elemento existe
+    //   if (miDiv) {
+    //     // Usa el método scrollIntoView para desplazar la página al elemento
+    //     miDiv.scrollIntoView({ behavior: 'smooth' });
+    //   } else {
+    //     // Si el elemento no existe, simplemente desplázate al inicio
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+    //   }
+    // });
 
 
   }
@@ -823,42 +825,45 @@ function AddressCart({ offcanvasValidate }) {
 
   const updateBtn = (addrId) => {
     if (token) {
-      swalWithBootstrapButtons.fire({
-        title: '¿Quieres eliminar o actualizar esta dirección?',
-        text: "Esto no es reversible",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Actualizar',
-        cancelButtonText: 'Eliminar',
-        reverseButtons: true,
-        didOpen: () => {
-          const confirmButton = document.querySelector('.swal2-confirm');
-          confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
+      setModalUpdateModal(true);
+      setIdAddress(addrId);
+      // swalWithBootstrapButtons.fire({
+      //   title: '¿Quieres eliminar o actualizar esta dirección?',
+      //   text: "Esto no es reversible",
+      //   icon: 'warning',
+      //   showCancelButton: true,
+      //   confirmButtonText: 'Actualizar',
+      //   cancelButtonText: 'Eliminar',
+      //   reverseButtons: true,
+      //   didOpen: () => {
+      //     const confirmButton = document.querySelector('.swal2-confirm');
+      //     confirmButton.style.marginLeft = '8px'; // Agrega margen izquierdo al botón de confirmación
+      //   }
+      // }).then((result) => {
+      //   if (result.isConfirmed) {
 
-          setIdAddress(addrId);
+      //     setIdAddress(addrId);
 
-          setModalAddressUpdate(true);
+      //     setModalAddressUpdate(true);
 
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
+      //   } else if (
+      //     /* Read more about handling dismissals below */
+      //     result.dismiss === Swal.DismissReason.cancel
 
-        ) {
-          swalWithBootstrapButtons.fire(
-            'Eliminado',
-            'Tu direccion fue eliminada',
-            'error'
-          );
-          console.log(addrId);
-          eliminarDireccion(addrId);
+      //   ) {
+      //     swalWithBootstrapButtons.fire(
+      //       'Eliminado',
+      //       'Tu direccion fue eliminada',
+      //       'error'
+      //     );
+      //     console.log(addrId);
+      //     eliminarDireccion(addrId);
 
 
 
-        }
-      })
+      //   }
+      // })
+
 
 
     }
@@ -1417,7 +1422,7 @@ function AddressCart({ offcanvasValidate }) {
                           </div>
                         </div>
                         <div className="opcionesUpdateOrDelete">
-                          <a href="#" onClick={() => updateBtn(addr.id)}>
+                          <a href="#" onClick={(e) => { e.preventDefault(); updateBtn(addr.id) }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FC5241" className="bi bi-pencil-square" viewBox="0 0 16 16">
                               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                               <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -2041,6 +2046,7 @@ function AddressCart({ offcanvasValidate }) {
 
       <Modal
         className="modal-dialog-centered modal-md"
+        // toggle={() => closeModalUpdate()}
         toggle={() => setModalAddressUpdate(false)}
         isOpen={modalAddressUpdate}
       // onOpened={() => setIsScrollModalEnabled(false)}
@@ -2231,6 +2237,67 @@ function AddressCart({ offcanvasValidate }) {
         </ModalBody>
       </Modal>
 
+      <Modal
+        className="modal-dialog-centered modal-md"
+        toggle={() => setModalUpdateModal(false)}
+        isOpen={modalUpdateModal}
+      // onOpened={() => setIsScrollModalEnabled(false)}
+      // onClosed={() => setIsScrollModalEnabled(true)}
+      >
+        <ModalBody>
+          {/* <ModalProcesandoPago /> */}
+          <>
+            <div className="d-flex flex-column align-items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#FC5241" class="bi bi-exclamation-octagon" viewBox="0 0 16 16">
+                <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z" />
+                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+              </svg>
+              <h5 style={{ color: '#FC5241' }}>¿Quieres eliminar o actualizar esta dirección?</h5>
+              <div className="d-flex justify-content-center gap-3">
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    eliminarDireccion(idAddress);
+                    setModalUpdateModal(false);
+                  }}
+                  className="btn btn-outline-dark"
+                  style={{
+                    backgroundColor: 'transparent',
+                    borderColor: 'transparent',
+                    color: 'black',
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.color = '#FC5241';
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor = 'transparent';
+                    e.target.style.borderColor = 'transparent';
+                    e.target.style.color = 'black';
+                  }}
+                >
+                  Eliminar
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIdAddress(idAddress);
+                    setModalUpdateModal(false);
+                    setModalAddressUpdate(true);
+                  }}
+                  style={{
+                    backgroundColor: '#FC5241',
+                    color: 'white',
+                    border: 'none'
+                  }}
+                >
+                  Actualizar
+                </Button>
+              </div>
+
+            </div>
+          </>
+        </ModalBody>
+      </Modal>
 
     </>
   )
