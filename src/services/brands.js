@@ -8,10 +8,11 @@ export const getAllBrands = () =>
     axios.get(`${baseUrl}/brands`);
 
 //Productos por categoria
-export const getProductsByIdBrand = (id) =>
+export const getProductsByIdBrand = (id, offset) =>
     axios.get(`${baseUrl}/brands/products/${id}`, {
         params:{
-            limit:12
+            limit:12,
+            offset: offset,
         },
         headers:{
             'Content-Type': 'application/json'

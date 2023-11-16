@@ -589,10 +589,12 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
 
 
   const productsByBrand = (brandId) => {
-    getProductsByIdBrand(brandId)
+    getProductsByIdBrand(brandId, offset)
       .then((res) => {
         // console.log(res);
         setProducts(res.data);
+        setTotalResults(res.data.total_size);
+        console.log(res.data.total_size);
         // console.log("Productos por marca", res.data.products);
 
       })
@@ -605,6 +607,7 @@ const ProductsCategories = ({ updateCantProducts, setIsLoggedInPartner, bannersI
         .then((res) => {
           // console.log(res);
           setProducts(res.data);
+          setTotalResults(res.data.total_size);
           // console.log("Respuesta de los productos por busqueda", res.data.products);
         })
     }
