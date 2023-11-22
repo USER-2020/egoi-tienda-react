@@ -7,6 +7,7 @@ import { allProductsCart } from "../../services/cart";
 import { getCurrentUser } from './../../helpers/Utils';
 import { getUserProfileInfo } from '../../services/ordenes';
 import CheckoutNoToken from '../../components/cart/checkoutNoToken.tsx';
+import Checkout_V2 from '../../components/cart/checkout_V2.tsx';
 
 function DressCart() {
 
@@ -81,9 +82,9 @@ function DressCart() {
   }
 
 
-  useEffect(()=>{
+  useEffect(() => {
     setMinQty(1);
-  },[])
+  }, [])
 
 
   useEffect(() => {
@@ -116,7 +117,12 @@ function DressCart() {
           offcanvasValidate={() => setHandleShowOffCanvas(false)}
         />
       ) : (
-        <CheckoutNoToken
+        // <CheckoutNoToken
+        //   productsInCart={productsCart}
+        //   getAllProductsByCartNotoken={getCantCartWhithoutToken}
+        //   offcanvasValidate={() => setHandleShowOffCanvas(false)}
+        // />
+        <Checkout_V2
           productsInCart={productsCart}
           getAllProductsByCartNotoken={getCantCartWhithoutToken}
           offcanvasValidate={() => setHandleShowOffCanvas(false)}
