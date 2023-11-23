@@ -21,7 +21,7 @@ const ERROR_MESSAGES = {
     invalidExpiryDate: 'La fecha de expiración es inválida',
     emptyCVC: 'El código de seguridad es inválido',
     invalidCVC: 'El código de seguridad es inválido'
-  };
+};
 
 function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose }) {
 
@@ -108,8 +108,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     }
 
     const currenUser = getCurrentUser();
-    const token = currenUser.token;
-    const userEmail = currenUser.email;
+    const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+    const userEmail = currenUser ? currenUser.email : null;
 
 
     const handleSelectChangeTypeCard = (e) => {
@@ -190,8 +190,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                     confirmButtonText: 'Aceptar',
                     customClass: {
                         confirmButton: 'background-color: #FC5241; color: white;', // Reemplaza 'mi-clase-de-estilo' con tu clase personalizada
-                      },
-                    
+                    },
+
                 })
             } else {
                 /* The code is assigning a default value to the variable `amountValue` which is equal to the
@@ -432,14 +432,14 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
 
                                         <input {...getCardNumberProps({
                                             onChange: (e) => setCardNumber(e.target.value),
-                                           
+
 
                                         })}
 
                                             value={cardNumber}
                                             placeholder="0000 0000 0000 0000"
                                             style={{ width: '100%', marginRight: '5px', transform: "translateX(-5%)" }}
-                                           
+
                                         // className="card-number-input"
 
                                         />

@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import ModalProcesandoPago from './modalProcesandoPago';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose}) {
+function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose }) {
 
     const [pseDocument, setPseDocument] = useState("");
     const [pseTypeDocument, setPseTypeDocument] = useState("");
@@ -25,10 +25,11 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
 
     const history = useHistory();
 
-    
+
 
     const currenUSer = getCurrentUser();
-    const token = currenUSer.token;
+    const token = currenUSer ? currenUSer.token : null; // Manejo de seguridad en caso de que currenUser sea null
+    const userEmail = currenUSer ? currenUSer.email : null;
 
     const typeDis = {
         "C.C": "C.C",
@@ -73,7 +74,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
             .then((res) => {
                 console.log(res.data.data);
                 setPseBank(res.data.data);
-            })
+            }).catch((err) => console.log(err));
     }
 
     const openWindowPSExternal = (direccion_url_pse) => {
@@ -86,7 +87,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     const handleSubmitOrderPaymentCard = () => {
         if (token) {
             console.log("Envio de orden por pse");
-            
+
             /* The code is assigning a default value to the variable `amountValue` which is equal to the
             value of `total`. Then, it checks if there is a `discountCoupon` object and if the `total`
             property of that object is defined. If it is defined, the code assigns the value of
@@ -360,7 +361,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                                 </FormGroup>
                                 <FormGroup>
                                     <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "60%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={(e)=> {e.preventDefault(); handleSubmitOrderPaymentCard()}}>Registrar pago</a>
+                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "60%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</a>
                                     </div>
                                 </FormGroup>
 
@@ -370,7 +371,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                 </Col>
             </Row>
 
-            
+
         </>
     )
 }

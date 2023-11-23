@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { TailSpin } from 'react-loader-spinner';
 import PhoneInput from 'react-phone-input-2'
-import { AccordionBody, AccordionHeader, AccordionItem, Card, Form, FormGroup, Input, UncontrolledAccordion } from 'reactstrap'
+import { AccordionBody, AccordionHeader, AccordionItem, Card, Form, FormGroup, Input, Modal, ModalBody, UncontrolledAccordion } from 'reactstrap'
 import { firstLogin, validateEmail } from '../../services/extraLogin';
 import Swal from 'sweetalert2';
 import '../../styles/detailsCart.css';
 import es from "react-phone-input-2/lang/es.json";
-import { setCurrentUser } from '../../helpers/Utils';
+import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
 import { addCartProductsOfLocalStorage } from '../../helpers/productsLocalStorage';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { allCitysByIdDepto, allDeptos } from '../../services/address';
+import TarjetaDebitoModal from '../../views/user/metodosDePago/tarjetaDebito';
+import axios from 'axios';
+import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoPago';
+import TarjetaCreditoModal from '../../views/user/metodosDePago/tarjetaCredito';
+import PseModal from '../../views/user/metodosDePago/pse';
+import { PDFViewer } from '@react-pdf/renderer';
+import PDFContent from '../PDF/PDFContent';
+import { referenciaPago } from '../../services/metodosDePago';
+import EfectyModal from '../../views/user/metodosDePago/efecty';
+import CashDeliveryOTP from '../../views/user/metodosDePago/cashDeliveryOTP';
 
 const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasValidate }) => {
 
@@ -29,6 +39,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const [modalAddressCheckout, setModalAddressCheckout] = useState(false);
     const [modalAddressUpdate, setModalAddressUpdate] = useState(false);
     const [modalTarjetaCredito, setModalTarjetaCredito] = useState(false);
+    const [modalTarjetaDebito, setModalTarjetaDebito] = useState(false);
     const [modalEfecty, setModalEfecty] = useState(false);
     const [modalPse, setModalPse] = useState(false);
     const [modalOTP, setModalOTP] = useState(false);
@@ -45,6 +56,13 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const [discountCoupon, setDiscountCoupon] = useState("");
     /* Reseteo de tarjeta */
     const [isResetOk, setIsResetOk] = useState(false);
+    /* Estado para la IP */
+    const [ipAddress, setIpAddress] = useState('');
+
+    /* Modal procesando pago */
+    const [modalProcesandoPago, setModalProcesoPago] = useState(false);
+
+    const history = useHistory();
 
     const location = useLocation();
 
@@ -60,6 +78,21 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const [selectedCiudad, setSelectedCiudad] = useState();
     const [selectedDepto, setSelectedDepto] = useState();
     const [acordeonAbierto, setAcordeonAbierto] = useState('1');
+    const [dataRef, setDataRef] = useState([]);
+    const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+
+
+
+    /* Boton deshabilitado */
+    const [botonDeshabilitado, setBotonDeshabilitado] = useState(true);
+    const [okPurchase, setOkPurchase] = useState(false);
+
+    const currenUser = getCurrentUser();
+
+    const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+    const userEmail = currenUser ? currenUser.email : null;
+
+    const shouldOpenAccordion = !!token ? '2' : '1';
 
     const handleSelectChangeZip = (e) => {
         const valorSeleccionadoZip = (e.target.value);
@@ -183,6 +216,162 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
     }
 
+    const closeModalTarjetaCredito = () => {
+        setModalTarjetaCredito(false);
+    }
+
+    const closeModalTarjetaDebito = () => {
+        setModalTarjetaDebito(false);
+    }
+
+    const closeModalPse = () => {
+        setModalPse(false);
+    }
+
+    const closeModalOTP = () => {
+        setModalOTP(false);
+
+    }
+
+    /* Redireccion a compra exitosa */
+    const handleFinishPurchase = () => {
+        console.log("handlefinishpurchase");
+        // Utilizar map para transformar "productsCart" en la estructura deseada para la llamada a gtag
+        var mappedItems = productsCart.map(function (product) {
+
+            return {
+                item_id: product.id,
+                item_name: product.name,
+                coupon: cupon,
+                discount: discountedProducts,
+                affiliation: "Egoi",
+                item_brand: "",
+                item_category: "",
+                item_variant: product.variant,
+                price: product.unit_price,
+                currency: "COP",
+                quantity: product.quantity
+            };
+        });
+        gtag('event', 'purchase', {
+            affiliation: 'Egoi',
+            coupon: cupon,
+            currency: 'COP',
+            items: mappedItems,
+            transaction_id: 'T_12345',
+            shipping: 0,
+            value: subtotal,
+            tax: 0
+        })
+
+        history.push("/congrats");
+    }
+
+    /* Reseteo de tarjeta */
+    const resetProductCardDetail = () => {
+        setIsResetOk(true);
+        setCantProductsOnCart(0);
+
+    }
+
+    const generateEfectyREF = (data, descriptionOrder) => {
+        referenciaPago(data, token)
+            .then((res) => {
+                // console.log(res.data);
+                const newDataRef = res.data;
+                setDataRef(newDataRef);
+                let timerInterval;
+                Swal.fire({
+                    title: 'Generando ticket!',
+                    html: 'Generando<b></b>',
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        makePlaceOrder(newDataRef.id);
+                        sendCopyForTwilio(newDataRef.id);
+                        Swal.showLoading();
+                        const b = Swal.getHtmlContainer().querySelector('b');
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft();
+                        }, 100);
+                    },
+                    didClose: () => {
+                        clearInterval(timerInterval);
+                        // setModalEfecty(true);
+                        // Actualizar el estado para mostrar el PDF
+                        // setShowPDF(true);
+
+                        // Abre la ventana emergente y renderiza el PDF después de cerrar el Swal
+                        setTimeout(() => {
+                            const newWindow = window.open('', '_blank', 'width=600,height=400');
+
+                            if (newWindow && newWindow.document && newWindow.document.body) {
+                                // Establece los estilos CSS para el contenedor
+                                const containerStyles = {
+                                    width: '100vw',
+                                    height: '100vh',
+                                    margin: 0,
+                                    padding: 0,
+                                    overflow: 'hidden',
+                                };
+
+                                // Establece los estilos CSS para el PDFViewer
+                                const viewerStyles = {
+                                    width: '100%',
+                                    height: '100%',
+                                };
+
+                                // Renderiza el componente PDFViewer en la nueva ventana
+                                ReactDOM.render(
+                                    <div style={containerStyles}>
+                                        <PDFViewer style={viewerStyles}>
+                                            <PDFContent
+                                                dataRefEfecty={newDataRef}
+                                                totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                                description={descriptionOrder}
+                                            />
+                                        </PDFViewer>
+                                    </div>,
+                                    newWindow.document.body
+                                );
+                            } else {
+                                console.error('No se pudo encontrar el contenedor DOM en la nueva ventana.');
+                            }
+                        }, 1000); // Ajusta el tiempo de espera según tus necesidades
+
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        // console.log('I was closed by the timer');
+                    }
+                });
+            })
+            .catch((err) => console.log(err));
+    }
+
+    const handleSubmitOrderEfecty = () => {
+        if (token) {
+            // console.log("Envio de orden por efecty");
+            // console.log(formattedTotal);
+
+            let amountValue = formattedTotal !== '' ? formattedTotal : totalNumber; // Valor por defecto, en caso de que no haya cupón aplicado
+
+            const unformattedValue = amountValue ? amountValue.toString().replace(/[,]/g, '') : '';
+            // Eliminar el símbolo "$" y convertir a número
+            const numericValue = unformattedValue ? Number(unformattedValue.replace("$", "")) : 0;
+
+            const dataOrder = {
+                transaction_amount: numericValue, // Monto total validado si es con cupón o no
+                description: descriptionOrder, // Descripción concatenada de los productos del carrito de compras
+                payment_method_id: "efecty", // Id del método de pago seleccionado
+                email: userEmail // Email del usuario //userEmail
+            }
+
+            generateEfectyREF(dataOrder, descriptionOrder);
+        }
+    }
+
     const handleSubmitInfo = (event) => {
         event.preventDefault();
         const data = {
@@ -222,6 +411,8 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
         return total;
     };
+
+
 
     const sumWithoutDiscount = (productsCart) => {
         let totalWithoutDiscount = 0;
@@ -274,6 +465,16 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
             setCostoEnvio(0);
         }
     };
+
+    const totalNumber = parseInt(totalaPagar.replace(/[\$.]/g, ''), 10);
+
+    let formattedDiscount = '';
+    let formattedTotal = '';
+
+    if (discountCoupon && discountCoupon.total !== undefined) {
+        formattedDiscount = discountCoupon.discount.toString().replace(',', '.');
+        formattedTotal = discountCoupon.total.toString().replace(',', '.');
+    }
     /* Fin calculo de precios */
 
     const getAllDeptos = () => {
@@ -282,9 +483,43 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                 .then((res) => {
                     // console.log(res.data);
                     setDeptos(res.data);
-                })
+                }).catch((err) => console.log(err));
         }
     }
+
+    /* Estado para obtener IP del usuario */
+    useEffect(() => {
+        const fetchIp = async () => {
+            try {
+                const response = await axios.get('https://api.ipify.org?format=json');
+                const data = response.data.ip;
+                // console.log(data);
+                setIpAddress(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchIp();
+    }, []);
+
+    useEffect(() => {
+        if (selectedZip) {
+            allCitysByIdDepto(selectedZip, token)
+                .then((res) => {
+                    console.log(res.data);
+                    setCity(res.data);
+                }).catch((err) => console.log(err));
+        }
+    }, [selectedZip, token]);
+
+    useEffect(() => {
+
+        getAllDeptos();
+
+
+
+    }, [token, currenUser]);
 
     // useEffect(() => {
     //     if (selectedZip) {
@@ -303,7 +538,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                 <div className="containerCheckoutSteps">
                     <div className="containerProgressBar">
                         {/* Acorrdion  */}
-                        <UncontrolledAccordion defaultOpen="1">
+                        <UncontrolledAccordion defaultOpen={shouldOpenAccordion}>
                             {/* Acorddion item perfil */}
                             <AccordionItem>
                                 <AccordionHeader targetId='1' >
@@ -465,18 +700,50 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                     <UncontrolledAccordion>
                                         <AccordionItem>
                                             <AccordionHeader targetId='4'>
-                                                <h3>Tarjeta debito</h3>
+                                                <h3>Tarjeta débito</h3>
                                             </AccordionHeader>
                                             <AccordionBody accordionId='4'>
-                                                Campos tarjeta debito
+
+                                                <TarjetaDebitoModal
+                                                    closeModalTarjetaDebito={closeModalTarjetaDebito}
+                                                    dataOrderAddress={dataAddress}
+                                                    total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                                    discountCoupon={discountCoupon}
+                                                    cupon={cupon}
+                                                    ipAddress={ipAddress}
+                                                    idAddress={selectedAddressId}
+                                                    descriptionOrder={descriptionOrder}
+                                                    // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                                    // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                                    setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                                    setOk={() => setOkPurchase(true)}
+                                                    setModalProcesoPago={() => setModalProcesoPago(true)}
+                                                    setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                                />
                                             </AccordionBody>
                                         </AccordionItem>
                                         <AccordionItem>
                                             <AccordionHeader targetId='5'>
-                                                <h3>Tarjeta credito</h3>
+                                                <h3>Tarjeta crédito</h3>
                                             </AccordionHeader>
                                             <AccordionBody accordionId='5'>
-                                                Campos tarjeta credito
+                                                <TarjetaCreditoModal
+                                                    // handleModalData={handleModalData} 
+                                                    closeModalTarjetaCredito={closeModalTarjetaCredito}
+                                                    dataOrderAddress={dataAddress}
+                                                    total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                                    discountCoupon={discountCoupon}
+                                                    cupon={cupon}
+                                                    ipAddress={ipAddress}
+                                                    idAddress={selectedAddressId}
+                                                    descriptionOrder={descriptionOrder}
+                                                    // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                                    // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                                    setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                                    setOk={() => setOkPurchase(true)}
+                                                    setModalProcesoPago={() => setModalProcesoPago(true)}
+                                                    setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                                />
                                             </AccordionBody>
                                         </AccordionItem>
                                         <AccordionItem>
@@ -484,7 +751,22 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                                 <h3>PSE</h3>
                                             </AccordionHeader>
                                             <AccordionBody accordionId='6'>
-                                                Campos pago PSE
+                                                <PseModal
+                                                    closeModalPse={closeModalPse}
+                                                    dataOrderAddress={dataAddress}
+                                                    total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                                    discountCoupon={discountCoupon}
+                                                    cupon={cupon}
+                                                    ipAddress={ipAddress}
+                                                    idAddress={selectedAddressId}
+                                                    descriptionOrder={descriptionOrder}
+                                                    // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                                    // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                                    setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                                    setOk={() => setOkPurchase(true)}
+                                                    setModalProcesoPago={() => setModalProcesoPago(true)}
+                                                    setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                                />
                                             </AccordionBody>
                                         </AccordionItem>
                                         <AccordionItem>
@@ -492,7 +774,15 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                                 <h3>Efecty</h3>
                                             </AccordionHeader>
                                             <AccordionBody accordionId='7'>
-                                                Campos Efecty
+                                                <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                                    // closeEfectyModal={() => closeModalEfecty()}
+                                                    dataRef={dataRef}
+                                                    addressId={selectedAddressId}
+                                                    descriptionOrder={descriptionOrder}
+                                                    cupon={cupon}
+                                                    // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                                    setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                                    setOk={() => setOkPurchase(true)} />
                                             </AccordionBody>
                                         </AccordionItem>
                                         <AccordionItem>
@@ -500,8 +790,14 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                                 <h3>OTP</h3>
                                             </AccordionHeader>
                                             <AccordionBody accordionId='8'>
-                                                Campos verificacion
-                                                OTP
+                                                <CashDeliveryOTP phone={dataAddress[0]?.phone}
+                                                    closeModalOTP={closeModalOTP}
+                                                    addressId={selectedAddressId}
+                                                    descriptionOrder={descriptionOrder}
+                                                    cupon={cupon}
+                                                    // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                                    setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                                    setOk={() => setOkPurchase(true)} />
                                             </AccordionBody>
                                         </AccordionItem>
                                     </UncontrolledAccordion>
@@ -629,6 +925,19 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                     </div>
                 </div>
             </div >
+
+            {/* Modal procesando Pago */}
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalProcesoPago(false)}
+                isOpen={modalProcesandoPago}
+            // onOpened={() => setIsScrollModalEnabled(false)}
+            // onClosed={() => setIsScrollModalEnabled(true)}
+            >
+                <ModalBody>
+                    <ModalProcesandoPago />
+                </ModalBody>
+            </Modal>
         </>
     )
 }

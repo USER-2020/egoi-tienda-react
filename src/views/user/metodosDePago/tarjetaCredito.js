@@ -127,8 +127,8 @@ function TarjetaCreditoModal({ closeModalTarjetaCredito, descriptionOrder, dataO
     }
 
     const currenUser = getCurrentUser();
-    const token = currenUser.token;
-    const userEmail = currenUser.email;
+    const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+    const userEmail = currenUser ? currenUser.email : null;
 
     const handleSelectChangeTypeCard = (e) => {
         const valorSeleccionadoTypeCard = e.target.value;

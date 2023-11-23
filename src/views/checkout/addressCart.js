@@ -112,7 +112,12 @@ function DressCart() {
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
         handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
       />
-      {token && currenUser ? (
+      <Checkout_V2
+        productsInCart={productsCart}
+        getAllProductsByCartNotoken={getCantCartWhithoutToken}
+        offcanvasValidate={() => setHandleShowOffCanvas(false)}
+      />
+      {/* {token && currenUser ? (
         <AddressCart
           offcanvasValidate={() => setHandleShowOffCanvas(false)}
         />
@@ -127,7 +132,7 @@ function DressCart() {
           getAllProductsByCartNotoken={getCantCartWhithoutToken}
           offcanvasValidate={() => setHandleShowOffCanvas(false)}
         />
-      )}
+      )} */}
       <Footer />
     </div>
   )
