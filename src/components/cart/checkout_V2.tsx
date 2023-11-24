@@ -674,11 +674,11 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                             </AccordionItem>
                             {/* Fin acorrdion item perfil */}
                             {/* Incio accordion Direccion */}
-                            <AccordionItem>
+                            {/* <AccordionItem > */}
                                 <AccordionHeader targetId='2' >
                                     <h2>2. DATOS DEL ENVÍO Y FACTURACIÓN </h2>
                                 </AccordionHeader>
-                                <AccordionBody accordionId='2'>
+                                {/* <AccordionBody accordionId='2'>
                                     <Form>
                                         <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
 
@@ -719,15 +719,15 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
                                         </FormGroup>
                                     </Form>
-                                </AccordionBody>
-                            </AccordionItem>
+                                </AccordionBody> */}
+                            {/* </AccordionItem> */}
                             {/* Fin accordion direccion */}
                             {/* Inicio acorrdion item pago */}
-                            <AccordionItem>
+                            {/* <AccordionItem> */}
                                 <AccordionHeader targetId='3' >
                                     <h1>3. MÉTODO DE PAGO </h1>
                                 </AccordionHeader>
-                                <AccordionBody accordionId='3'>
+                                {/* <AccordionBody accordionId='3'>
                                     <UncontrolledAccordion>
                                         <AccordionItem>
                                             <AccordionHeader targetId='4'>
@@ -832,8 +832,8 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                             </AccordionBody>
                                         </AccordionItem>
                                     </UncontrolledAccordion>
-                                </AccordionBody>
-                            </AccordionItem>
+                                </AccordionBody> */}
+                            {/* </AccordionItem> */}
                             {/* Fin acorrdion item pago */}
                         </UncontrolledAccordion>
                         {/* Fin accordion  */}
