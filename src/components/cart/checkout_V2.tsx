@@ -20,6 +20,7 @@ import PDFContent from '../PDF/PDFContent';
 import { referenciaPago } from '../../services/metodosDePago';
 import EfectyModal from '../../views/user/metodosDePago/efecty';
 import CashDeliveryOTP from '../../views/user/metodosDePago/cashDeliveryOTP';
+import { allProductsCart } from '../../services/cart';
 
 const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasValidate }) => {
 
@@ -93,6 +94,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const userEmail = currenUser ? currenUser.email : null;
 
     const shouldOpenAccordion = !!token ? '2' : '1';
+    // const shouldOpenAccordion = '1';
 
     const handleSelectChangeZip = (e) => {
         const valorSeleccionadoZip = (e.target.value);
@@ -271,6 +273,31 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const resetProductCardDetail = () => {
         setIsResetOk(true);
         setCantProductsOnCart(0);
+
+    }
+
+    /* Carrito y detalle de compra */
+    const getAllProductsByCart = () => {
+        if (token) {
+            allProductsCart(token)
+                .then((res) => {
+                    // console.log(res);
+                    setProductsCart(res.data);
+                    // console.log("traer todos los producstos del carrito", productsCart);
+
+                    // Obtener los nombres de los productos del carrito
+                    const productNames = res.data.map((product) => product.name);
+                    // console.log(productNames);
+                    // Concatenar los nombres de los productos separados por comas
+                    const concatenatedNames = productNames.join(', ');
+
+                    // console.log("Traer todos los productos del carrito", res.data);
+                    // console.log("Nombres de los productos concatenados:", concatenatedNames);
+                    setDescriptionOrder(concatenatedNames);
+
+                })
+                .catch((err) => console.log(err));
+        }
 
     }
 
@@ -511,15 +538,19 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                     setCity(res.data);
                 }).catch((err) => console.log(err));
         }
-    }, [selectedZip, token]);
+    }, [selectedZip]);
 
     useEffect(() => {
 
+
         getAllDeptos();
+        getAllProductsByCart();
 
 
 
-    }, [token, currenUser]);
+    }, [currenUser]);
+
+   
 
     // useEffect(() => {
     //     if (selectedZip) {

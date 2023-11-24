@@ -8,6 +8,7 @@ import { getCurrentUser } from './../../helpers/Utils';
 import { getUserProfileInfo } from '../../services/ordenes';
 import CheckoutNoToken from '../../components/cart/checkoutNoToken.tsx';
 import Checkout_V2 from '../../components/cart/checkout_V2.tsx';
+import Checkout_V2_token from '../../components/cart/checkout_V2_token.tsx';
 
 function DressCart() {
 
@@ -112,11 +113,17 @@ function DressCart() {
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
         handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
       />
-      <Checkout_V2
-        productsInCart={productsCart}
-        getAllProductsByCartNotoken={getCantCartWhithoutToken}
-        offcanvasValidate={() => setHandleShowOffCanvas(false)}
-      />
+
+      {token && currenUser ? (
+        <Checkout_V2_token offcanvasValidate={() => setHandleShowOffCanvas(false)} />
+      ) : (
+        <Checkout_V2
+          productsInCart={productsCart}
+          getAllProductsByCartNotoken={getCantCartWhithoutToken}
+          offcanvasValidate={() => setHandleShowOffCanvas(false)}
+        />
+      )}
+
       {/* {token && currenUser ? (
         <AddressCart
           offcanvasValidate={() => setHandleShowOffCanvas(false)}
