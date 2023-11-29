@@ -452,6 +452,24 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-bottom: 0;
 }
 
+#cardsAddress .card1 .contenedorP {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+
+#cardsAddress .card1 .contenido {
+  display: flex;
+  flex-direction: column;
+  margin-left: 23px;
+  color: #45444F;
+}
+
+#cardsAddress .card1 .contenido p {
+  margin-bottom: 0;
+}
+
 #collapseTwo .cards .card1 .contenedorP {
   display: flex;
   flex-direction: column;
@@ -460,7 +478,7 @@ input[type="number"]::-webkit-outer-spin-button {
 #collapseTwo .cards .card1 .contenido {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
   margin-left: 23px;
   color: #45444F;
 }
@@ -543,6 +561,37 @@ input[type="checkbox"]:checked {
   flex-direction: row;
   padding-left: 5px;
   margin-bottom: 10px;
+}
+
+#cardsAddress .addNewAddress {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+  margin-bottom: 10px;
+}
+
+#cardsAddress .addNewAddress a {
+  text-decoration: none;
+  color: var(--prm-color);
+  background-color: transparent;
+  border: 1px solid var(--prm-color);
+  padding: 10px;
+  border-radius: 32px;
+  gap: 3px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+#cardsAddress .addNewAddress a:hover {
+  color: var(--prm-color);
+  background-color: transparent;
+  border: 1px solid var(--prm-color);
 }
 
 #collapseTwo .cards .addNewAddress a {

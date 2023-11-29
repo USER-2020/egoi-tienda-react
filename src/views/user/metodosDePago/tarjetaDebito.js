@@ -40,6 +40,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     const [banks, setBanks] = useState([]);
     const [banksById, setBanksById] = useState([]);
     const [modalData, setModalData] = useState(null);
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const {
         wrapperProps,
@@ -658,8 +660,22 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</a>
+                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column' }}>
+                                        <div>
+                                            <Input
+                                                className="custom-input"
+                                                cssModule={{ color: "red" }}
+                                                type="checkbox"
+                                                name="terms"
+                                                id="terms"
+                                                value="true"
+                                                checked={termsAccepted}
+                                                onClick={() => setTermsAccepted(!termsAccepted)}
+                                                style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                                            />
+                                            <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
+                                        </div>
+                                        <Button disabled={!termsAccepted || loading} style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px", cursor: !termsAccepted ? "not-allowed" : "pointer" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</Button>
                                     </div>
                                 </FormGroup>
 

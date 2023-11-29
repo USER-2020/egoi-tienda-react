@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TailSpin } from 'react-loader-spinner';
 import PhoneInput from 'react-phone-input-2'
 import { AccordionBody, AccordionHeader, AccordionItem, Card, Form, FormGroup, Input, Modal, ModalBody, UncontrolledAccordion } from 'reactstrap'
-import { firstLogin, validateEmail } from '../../services/extraLogin';
+import { firstLogin, login_Email_Face, validateEmail } from '../../services/extraLogin';
 import Swal from 'sweetalert2';
 import '../../styles/detailsCart.css';
 import es from "react-phone-input-2/lang/es.json";
@@ -21,6 +21,10 @@ import { referenciaPago } from '../../services/metodosDePago';
 import EfectyModal from '../../views/user/metodosDePago/efecty';
 import CashDeliveryOTP from '../../views/user/metodosDePago/cashDeliveryOTP';
 import { allProductsCart } from '../../services/cart';
+import OpcionesLogin from '../../views/user/opcionesLogin.tsx';
+import RegisterCode from '../../views/user/registerCode.tsx';
+import CodeLogin from '../../views/user/codeLogin';
+import Login from '../../views/user/login';
 
 const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasValidate }) => {
 
@@ -55,6 +59,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const [costoEnvio, setCostoEnvio] = useState(0);
     const [cupon, setCupon] = useState("");
     const [discountCoupon, setDiscountCoupon] = useState("");
+    const [valorAccordion, setValorAccordion] = useState("");
     /* Reseteo de tarjeta */
     const [isResetOk, setIsResetOk] = useState(false);
     /* Estado para la IP */
@@ -150,16 +155,28 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Este correo ya está registrado, loguéate para terminar la compra!',
+                            text: '¡Este correo ya está registrado, te loguearemos y completareamos la información!',
                             confirmButtonColor: '#FC5241',
-                            confirmButtonText: 'Ok',
+                            confirmButtonText: 'Continuar compra',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 // Cierra el Swal
                                 Swal.close();
 
                                 // Abre el modal de opciones
-                                setModalOpcionesLogin(true);
+                                // setModalOpcionesLogin(true);
+                                login_Email_Face(email)
+                                    .then((res) => {
+                                        console.log("El usuario ya esta en la base de datos", res.data);
+                                        const item = {
+                                            token: res.data.token,
+                                            email: email,
+                                        }
+                                        setCurrentUser(item);
+                                        addCartProductsOfLocalStorage();
+                                        window.location.reload();
+
+                                    }).catch((err) => console.log(err));
                             }
                         });
 
@@ -234,6 +251,35 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
         setModalOTP(false);
 
     }
+
+    const handleLogin = () => {
+        // Code to handle user login, such as storing session storage, etc.
+        if (currenUser) {
+            // setIsLoggedIn(true);
+            // setIsLoggedInPartner(true);
+            // setShowTOkenOffCanvas(true);
+            // setShowOffcanvasWithoutToken(false);
+            addCartProductsOfLocalStorage();
+
+        } else {
+            // setIsLoggedIn(false);
+            // setShowOffcanvasWithoutToken(true);
+            // setShowTOkenOffCanvas(false);
+        }
+
+    };
+
+    const handleChangeFormLogin = () => {
+
+        if (modalViewLogin === true) {
+            setModalViewRegistro(true);
+        }
+
+    };
+
+    const closeModalRegistro = () => {
+        setModalViewRegistro(false);
+    };
 
     /* Redireccion a compra exitosa */
     const handleFinishPurchase = () => {
@@ -493,6 +539,15 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
         }
     };
 
+    const handleCorreoContrasena = () => {
+        setModalOpcionesLogin(false);
+        setModalViewLogin(true);
+    }
+
+    const closeModalLogin = () => {
+        setModalViewLogin(false);
+    };
+
     const totalNumber = parseInt(totalaPagar.replace(/[\$.]/g, ''), 10);
 
     let formattedDiscount = '';
@@ -550,7 +605,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
     }, [currenUser]);
 
-   
+
 
     // useEffect(() => {
     //     if (selectedZip) {
@@ -573,7 +628,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                             {/* Acorddion item perfil */}
                             <AccordionItem>
                                 <AccordionHeader targetId='1' >
-                                    <h1>1. INFORMACIÓN DEL PERFIL</h1>
+                                    <h5>1. PERFIL</h5>
                                 </AccordionHeader>
                                 <AccordionBody accordionId='1'>
                                     <div className="card-body card1">
@@ -675,10 +730,10 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                             {/* Fin acorrdion item perfil */}
                             {/* Incio accordion Direccion */}
                             {/* <AccordionItem > */}
-                                <AccordionHeader targetId='2' >
-                                    <h2>2. DATOS DEL ENVÍO Y FACTURACIÓN </h2>
-                                </AccordionHeader>
-                                {/* <AccordionBody accordionId='2'>
+                            <AccordionHeader targetId='2' >
+                                <h5>2. ENVÍO </h5>
+                            </AccordionHeader>
+                            {/* <AccordionBody accordionId='2'>
                                     <Form>
                                         <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
 
@@ -724,10 +779,10 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                             {/* Fin accordion direccion */}
                             {/* Inicio acorrdion item pago */}
                             {/* <AccordionItem> */}
-                                <AccordionHeader targetId='3' >
-                                    <h1>3. MÉTODO DE PAGO </h1>
-                                </AccordionHeader>
-                                {/* <AccordionBody accordionId='3'>
+                            <AccordionHeader targetId='3' >
+                                <h5>3. PAGO </h5>
+                            </AccordionHeader>
+                            {/* <AccordionBody accordionId='3'>
                                     <UncontrolledAccordion>
                                         <AccordionItem>
                                             <AccordionHeader targetId='4'>
@@ -967,6 +1022,50 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
             >
                 <ModalBody>
                     <ModalProcesandoPago />
+                </ModalBody>
+            </Modal>
+
+            {/* Modal Opciones registro */}
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalViewLogin(false)}
+                isOpen={modalViewLogin && !changeFormLogin}
+            >
+                <ModalBody>
+                    <Login closeModalLogin={closeModalLogin} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} changeFormRegister={changeFormRegister} handleCodeLogin={() => setModalViewCodeLogin(true)} />
+                </ModalBody>
+            </Modal>
+            <Modal
+                className="modal-dialog-centered modal-sm"
+                // toggle={() => setModalViewCodeLogin(false)}
+                isOpen={modalViewCodeLogin}
+            >
+                <ModalBody>
+                    <CodeLogin closeModalCodeLogin={() => setModalViewCodeLogin(false)} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} />
+                </ModalBody>
+            </Modal>
+            {/* <button onClick={() => setModalViewRegistro(true)} style={{ gap: '15px' }}>
+                      <FontAwesomeIcon icon={faUserPlus} />
+                      Regístrate
+                    </button> */}
+            <Modal
+                className="modal-dialog-centered modal-sm"
+                toggle={() => setModalViewRegistro(false)}
+                isOpen={modalViewRegistro && !changeFormRegister}
+            >
+                <ModalBody>
+                    {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
+                    <RegisterCode closeModalRegister={() => setModalViewRegistro(false)} />
+
+                </ModalBody>
+            </Modal>
+            <Modal
+                className="modal-dialog-centered modal-md"
+                toggle={() => setModalOpcionesLogin(false)}
+                isOpen={modalOpcionesLogin}
+            >
+                <ModalBody>
+                    <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} handleCodeLogin={() => setModalViewCodeLogin(true)} />
                 </ModalBody>
             </Modal>
         </>
