@@ -1389,7 +1389,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
         console.log("Datos del formulario de dirección, selectedCiudad", selectedCiudad);
         console.log("Datos del formulario de dirección, phone", phone);
         console.log("Datos del formulario de dirección, localDescription", localDescription);
-        if (!contactPersonName || !contactPersonLastName || !addressForm || !selectedDepto || !selectedCiudad || !localDescription || !phone) {
+        if (!contactPersonName || !contactPersonLastName || !addressForm || !selectedDepto || !selectedCiudad || !phone) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
