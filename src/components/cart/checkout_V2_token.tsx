@@ -2031,34 +2031,35 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                 />
                                             </AccordionBody>
                                         </AccordionItem>
-                                        <AccordionItem>
-                                            <AccordionHeader targetId='7'>
-                                                <h6>Efecty</h6>
-                                            </AccordionHeader>
-                                            <AccordionBody accordionId='7'>
-                                                <div className="d-flex flex-column align-items-center">
-                                                    <img src={efectyLogo} style={{ width: 100 }} />
-                                                    <p>Pago por consignación genera tu ticket acá</p>
-                                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column', marginBottom: '20px' }}>
-                                                        <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-                                                            <Input
-                                                                className="custom-input"
-                                                                cssModule={{ color: "red" }}
-                                                                type="checkbox"
-                                                                name="terms"
-                                                                id="terms"
-                                                                value="true"
-                                                                checked={termsAccepted}
-                                                                onClick={() => setTermsAccepted(!termsAccepted)}
-                                                                style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
-                                                            />
-                                                            <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
+                                        {totalNumber >= 5000 && (
+                                            <AccordionItem>
+                                                <AccordionHeader targetId='7'>
+                                                    <h6>Efecty</h6>
+                                                </AccordionHeader>
+                                                <AccordionBody accordionId='7'>
+                                                    <div className="d-flex flex-column align-items-center">
+                                                        <img src={efectyLogo} style={{ width: 100 }} />
+                                                        <p>Pago por consignación genera tu ticket acá</p>
+                                                        <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column', marginBottom: '20px' }}>
+                                                            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+                                                                <Input
+                                                                    className="custom-input"
+                                                                    cssModule={{ color: "red" }}
+                                                                    type="checkbox"
+                                                                    name="terms"
+                                                                    id="terms"
+                                                                    value="true"
+                                                                    checked={termsAccepted}
+                                                                    onClick={() => setTermsAccepted(!termsAccepted)}
+                                                                    style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                                                                />
+                                                                <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
+                                                            </div>
+                                                            <Button disabled={!termsAccepted || loading} style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px", cursor: !termsAccepted ? "not-allowed" : "pointer" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
                                                         </div>
-                                                        <Button disabled={!termsAccepted || loading} style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px", cursor: !termsAccepted ? "not-allowed" : "pointer" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
-                                                    </div>
 
-                                                </div>
-                                                {/* <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                                    </div>
+                                                    {/* <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
                                                     // closeEfectyModal={() => closeModalEfecty()}
                                                     dataRef={dataRef}
                                                     addressId={selectedAddressId}
@@ -2067,8 +2068,9 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                     // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
                                                     setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
                                                     setOk={() => setOkPurchase(true)} /> */}
-                                            </AccordionBody>
-                                        </AccordionItem>
+                                                </AccordionBody>
+                                            </AccordionItem>
+                                        )}
                                         {totalNumber >= 39990 && totalNumber <= 1999000 && (
                                             <AccordionItem>
                                                 <AccordionHeader targetId='8'>
