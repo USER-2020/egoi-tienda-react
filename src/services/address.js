@@ -4,6 +4,15 @@ import axios from 'axios';
 
 const baseUrl = urlBase;
 
+//traer unica direccion
+export const uniqueAddress = (token) =>
+    axios.get(`${baseUrl}/customer/address/unique`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
 //traer todas las direcciones
 export const allAddress = (token) =>
     axios.get(`${baseUrl}/customer/address/list`, {

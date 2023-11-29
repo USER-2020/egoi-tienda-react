@@ -21,7 +21,7 @@ const ERROR_MESSAGES = {
     invalidExpiryDate: 'La fecha de expiración es inválida',
     emptyCVC: 'El código de seguridad es inválido',
     invalidCVC: 'El código de seguridad es inválido'
-  };
+};
 
 function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrderAddress, discountCoupon, total, cupon, ipAddress, idAddress, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose }) {
 
@@ -40,6 +40,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     const [banks, setBanks] = useState([]);
     const [banksById, setBanksById] = useState([]);
     const [modalData, setModalData] = useState(null);
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const {
         wrapperProps,
@@ -108,8 +110,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
     }
 
     const currenUser = getCurrentUser();
-    const token = currenUser.token;
-    const userEmail = currenUser.email;
+    const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+    const userEmail = currenUser ? currenUser.email : null;
 
 
     const handleSelectChangeTypeCard = (e) => {
@@ -190,8 +192,8 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                     confirmButtonText: 'Aceptar',
                     customClass: {
                         confirmButton: 'background-color: #FC5241; color: white;', // Reemplaza 'mi-clase-de-estilo' con tu clase personalizada
-                      },
-                    
+                    },
+
                 })
             } else {
                 /* The code is assigning a default value to the variable `amountValue` which is equal to the
@@ -432,14 +434,14 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
 
                                         <input {...getCardNumberProps({
                                             onChange: (e) => setCardNumber(e.target.value),
-                                           
+
 
                                         })}
 
                                             value={cardNumber}
                                             placeholder="0000 0000 0000 0000"
                                             style={{ width: '100%', marginRight: '5px', transform: "translateX(-5%)" }}
-                                           
+
                                         // className="card-number-input"
 
                                         />
@@ -658,8 +660,22 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</a>
+                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column' }}>
+                                        <div>
+                                            <Input
+                                                className="custom-input"
+                                                cssModule={{ color: "red" }}
+                                                type="checkbox"
+                                                name="terms"
+                                                id="terms"
+                                                value="true"
+                                                checked={termsAccepted}
+                                                onClick={() => setTermsAccepted(!termsAccepted)}
+                                                style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                                            />
+                                            <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
+                                        </div>
+                                        <Button disabled={!termsAccepted || loading} style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px", cursor: !termsAccepted ? "not-allowed" : "pointer" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</Button>
                                     </div>
                                 </FormGroup>
 

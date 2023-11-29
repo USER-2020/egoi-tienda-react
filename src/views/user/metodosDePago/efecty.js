@@ -13,7 +13,8 @@ function EfectyModal({ totalAmount, dataRef, addressId, descriptionOrder, cupon,
   const [loading, setLoading] = useState(false);
 
   const currenUser = getCurrentUser();
-  const token = currenUser.token;
+  const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+  const userEmail = currenUser ? currenUser.email : null;
 
 
   const makePlaceOrder = () => {
@@ -88,7 +89,7 @@ function EfectyModal({ totalAmount, dataRef, addressId, descriptionOrder, cupon,
                 </div>
               </div>
               <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", backgroundColor: "#FC5241", borderRadius: "32px", marginTop: "20px" }}>
-                <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={(e)=>{e.preventDefault(); orderPlaceEfecty()}}>
+                <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "100%", justifyContent: "center" }} onClick={(e) => { e.preventDefault(); orderPlaceEfecty() }}>
                   {loading &&
                     <TailSpin
                       height="20"

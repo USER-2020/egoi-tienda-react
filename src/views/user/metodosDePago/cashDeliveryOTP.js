@@ -13,7 +13,7 @@ import { placeOrder } from '../../../services/metodosDePago';
 import { getCurrentUser } from './../../../helpers/Utils';
 
 
-function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder,setModalPurchaseSuccess, setOk }) {
+function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder, setModalPurchaseSuccess, setOk }) {
   const [otp, setOTP] = useState('');
   const [loading, setLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
@@ -27,7 +27,8 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
 
 
   const currenUser = getCurrentUser();
-  const token = currenUser.token;
+  const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+  const userEmail = currenUser ? currenUser.email : null;
 
   const onCaptchaVerify = () => {
     if (!window.RecaptchaVerifier) {
@@ -79,11 +80,11 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
       cuponLimpio = cupon;
     }
     console.log(cuponLimpio);
-    placeOrder(addressId, cuponLimpio, descriptionOrder,0, token)
+    placeOrder(addressId, cuponLimpio, descriptionOrder, 0, token)
       .then((res) => {
         console.log("Orden enviada por OTP");
         console.log(res);
-        
+
       })
       .catch((err) => console.log(err));
   }
@@ -99,7 +100,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
       closeModalOTP();
       setModalPurchaseSuccess();
       setOk();
-      
+
     }).catch((error) => {
       console.log(error);
       setLoading(false);
@@ -133,7 +134,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
       console.log("Descripcion", descriptionOrder);
     }
 
-  },[])
+  }, [])
 
   return (
     <>
@@ -193,8 +194,8 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
                       <input {...props} style={{ width: '100%', marginRight: '10px', borderRadius: '12px', height: '40px', textAlign: 'center', borderColor: 'rgba(162, 161, 167, 0.16)' }} maxLength={1} key={index} />
                     )}
                   />
-                  <p><a href='#' onClick={(e) => {e.preventDefault();onSignUp()}}>Reenviar mensaje</a></p>
-                  <a href='#' className="verficationOTP" onClick={(e)=> {e.preventDefault();onOTPVerify()}}>
+                  <p><a href='#' onClick={(e) => { e.preventDefault(); onSignUp() }}>Reenviar mensaje</a></p>
+                  <a href='#' className="verficationOTP" onClick={(e) => { e.preventDefault(); onOTPVerify() }}>
                     {loading &&
                       <TailSpin
                         height="20"
@@ -212,8 +213,8 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
                 </>
               ) : (
                 <>
-                  <PhoneInput country={"co"} value={phoneUser} onChange={(value)=>setPhoneUser(value)} inputStyle={{ width: '100%' }} />
-                  <a href="#" onClick={(e) => {e.preventDefault();onSignUp()}} className="verficationOTP">
+                  <PhoneInput country={"co"} value={phoneUser} onChange={(value) => setPhoneUser(value)} inputStyle={{ width: '100%' }} />
+                  <a href="#" onClick={(e) => { e.preventDefault(); onSignUp() }} className="verficationOTP">
                     {loading &&
                       <TailSpin
                         height="20"

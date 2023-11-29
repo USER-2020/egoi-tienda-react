@@ -185,7 +185,7 @@ function UpdateAddress({ closeModalUpdate, deptos, refreshAddress, idAddress }) 
                 .then((res) => {
                     console.log(res.data);
                     setCity(res.data);
-                })
+                }).catch((err) => console.log(err));
         }
         // getAddressById();
         const fullName = contactPersonName + " " + contactPersonLastName;

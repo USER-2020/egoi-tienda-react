@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import ModalProcesandoPago from './modalProcesandoPago';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose}) {
+function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose }) {
 
     const [pseDocument, setPseDocument] = useState("");
     const [pseTypeDocument, setPseTypeDocument] = useState("");
@@ -19,16 +19,18 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     const [selectTypeCard, setSelectTypeCard] = useState("");
     const [identificationType, setIdentificationType] = useState("");
     const [valueBank, setValueBank] = useState();
-
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [loading, setLoading] = useState(false);
     //Manejo de modal procesando pago
     const [succesfulPayment, setSuccesfulPayment] = useState(false);
 
     const history = useHistory();
 
-    
+
 
     const currenUSer = getCurrentUser();
-    const token = currenUSer.token;
+    const token = currenUSer ? currenUSer.token : null; // Manejo de seguridad en caso de que currenUser sea null
+    const userEmail = currenUSer ? currenUSer.email : null;
 
     const typeDis = {
         "C.C": "C.C",
@@ -73,7 +75,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
             .then((res) => {
                 console.log(res.data.data);
                 setPseBank(res.data.data);
-            })
+            }).catch((err) => console.log(err));
     }
 
     const openWindowPSExternal = (direccion_url_pse) => {
@@ -86,7 +88,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     const handleSubmitOrderPaymentCard = () => {
         if (token) {
             console.log("Envio de orden por pse");
-            
+
             /* The code is assigning a default value to the variable `amountValue` which is equal to the
             value of `total`. Then, it checks if there is a `discountCoupon` object and if the `total`
             property of that object is defined. If it is defined, the code assigns the value of
@@ -359,8 +361,22 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
-                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                        <a href='#' style={{ display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "60%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px" }} onClick={(e)=> {e.preventDefault(); handleSubmitOrderPaymentCard()}}>Registrar pago</a>
+                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column' }}>
+                                        <div>
+                                            <Input
+                                                className="custom-input"
+                                                cssModule={{ color: "red" }}
+                                                type="checkbox"
+                                                name="terms"
+                                                id="terms"
+                                                value="true"
+                                                checked={termsAccepted}
+                                                onClick={() => setTermsAccepted(!termsAccepted)}
+                                                style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                                            />
+                                            <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
+                                        </div>
+                                        <Button disabled={!termsAccepted || loading} style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px", cursor: !termsAccepted ? "not-allowed" : "pointer" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</Button>
                                     </div>
                                 </FormGroup>
 
@@ -370,7 +386,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                 </Col>
             </Row>
 
-            
+
         </>
     )
 }
