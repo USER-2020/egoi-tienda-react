@@ -279,9 +279,9 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: '¡Este correo ya está registrado, te loguearemos y completareamos la información!',
+                            text: '¡Completaremos la información para procesar la compra!',
                             confirmButtonColor: '#FC5241',
-                            confirmButtonText: 'Continuar compra',
+                            confirmButtonText: 'Continuar',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 // Cierra el Swal
