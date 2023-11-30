@@ -434,7 +434,7 @@ input[type="number"]::-webkit-outer-spin-button {
   border: 1px solid #A2A1A7;
   border-radius: 24px;
   justify-content: space-between;
-  padding: 20px;
+  padding: 0px;
 
 }
 
@@ -448,6 +448,8 @@ input[type="number"]::-webkit-outer-spin-button {
 
 }
 
+
+
 #collapseTwo .cards .card1 .seleccion p {
   margin-bottom: 0;
 }
@@ -457,6 +459,7 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: row;
   gap: 10px;
   width: 100%;
+  padding: 20px
 }
 
 #cardsAddress .card1 .contenido {
@@ -748,6 +751,14 @@ input[type="checkbox"]:checked {
     display: flex;
     flex-direction: column;
     gap: 5px;
+  }
+
+  .card-body {
+    padding: 0;
+  }
+
+  #collapseTwo .cards .card1 {
+    padding: 0;
   }
 
   .caracteristicasDetalleDelProductoResponsive .info .productInfo {

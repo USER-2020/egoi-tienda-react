@@ -1757,7 +1757,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                         {/* Incio accordion Direccion */}
                         {/* <AccordionItem> */}
                         {/* <AccordionHeader targetId='2' > */}
-                        <div className="d-flex flex-column ">
+                        <div className="d-flex flex-column card-body card1">
                             <h5>2. ENVÍO </h5>
                             {/* {address && address.map((addr, index) => (
                                 <>
