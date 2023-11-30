@@ -832,7 +832,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         <h5>1. PERFIL</h5>
                         {/* </AccordionHeader> */}
                         {/* <AccordionBody accordionId='1'> */}
-                        <div className="card-body card1" style={{ backgroundColor: 'transparent' }}>
+                        <div className="card-body card1" style={{ backgroundColor: 'transparent' }} id='infoPerfil'>
                             {/* <Card > */}
                             <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
                             <Form onSubmit={handleSubmitInfo}>

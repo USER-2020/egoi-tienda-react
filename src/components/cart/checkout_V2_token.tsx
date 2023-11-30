@@ -1620,7 +1620,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                         {/* <AccordionHeader targetId='1' > */}
                         <div className="d-flex flex-column ">
                             <h5>1. PERFIL</h5>
-                            <div className="card-body card1" style={{ backgroundColor: 'transparent' }}>
+                            <div className="card-body card1" style={{ backgroundColor: 'transparent' }} id='infoPerfil'>
                                 {/* <Card > */}
                                 <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
                                 <Form onSubmit={handleSubmitInfo}>
