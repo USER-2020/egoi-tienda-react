@@ -318,36 +318,20 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Bienvenido',
-                                    // text: 'Has iniciado sesión correctamente',
+                                    text: 'Has iniciado sesión correctamente',
                                     confirmButtonColor: '#fc5241',
-                                    html: `
-                                      <p>Por favor, revisa nuestros <a href="/termsAndConditions">Términos y Condiciones</a> y <a href="/privacyPolicy">Política de Privacidad</a>.</p>
-                                      <label for="aceptar">Acepto los Términos y Condiciones:</label>
-                                      <input type="checkbox" id="aceptar">
-                                    `,
-                                    preConfirm: () => {
-                                        const aceptado = document.getElementById('aceptar').checked;
-                                        if (!aceptado) {
-                                            Swal.showValidationMessage('Debes aceptar los Términos y Condiciones para continuar.');
-                                        }
-                                    },
                                 }).then((result) => {
+                                    // El usuario hizo clic en "OK"
                                     if (result.isConfirmed) {
-                                        // El usuario marcó el cuadro de aceptación y confirmó
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Bienvenido',
-                                            text: 'Has iniciado sesión correctamente',
-                                            confirmButtonColor: '#fc5241',
-                                        });
                                         addCartProductsOfLocalStorage();
                                         window.location.reload();
-                                    } else if (result.isDismissed) {
+                                    } else {
                                         // El usuario hizo clic fuera de la ventana
                                         addCartProductsOfLocalStorage();
                                         window.location.reload(); // Recargar la página
                                     }
                                 });
+
                                 // put(loginUserSuccess(item));
 
                             }).catch((err) => {
@@ -845,7 +829,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         <h5>1. PERFIL</h5>
                         {/* </AccordionHeader> */}
                         {/* <AccordionBody accordionId='1'> */}
-                        <div className="card-body card1" style={{ padding: 20, backgroundColor: 'transparent' }}>
+                        <div className="card-body card1" style={{backgroundColor: 'transparent' }}>
                             {/* <Card > */}
                             <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
                             <Form onSubmit={handleSubmitInfo}>

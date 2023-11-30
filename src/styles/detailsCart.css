@@ -902,7 +902,20 @@ input[type="checkbox"]:checked {
   }
 
   .containerCheckoutSteps {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .containerProgressBar {
+    width: 100%;
+  }
+
+  .containerDetailpurchase {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
   }
 
   .scroll-modal-content .containerToPayResponsive {

@@ -1617,7 +1617,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                         {/* <AccordionHeader targetId='1' > */}
                         <div className="d-flex flex-column ">
                             <h5>1. PERFIL</h5>
-                            <div className="card-body card1" style={{ padding: 20, backgroundColor: 'transparent' }}>
+                            <div className="card-body card1" style={{ backgroundColor: 'transparent' }}>
                                 {/* <Card > */}
                                 <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
                                 <Form onSubmit={handleSubmitInfo}>
@@ -1691,8 +1691,8 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
 
                                     </FormGroup>
-                                    <div className="form-group" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '30px', height: 48 }}>
-                                        {/* <div>
+                                    {/* <div className="form-group" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '30px', height: 48 }}> */}
+                                    {/* <div>
                                             <Input
                                                 className="custom-input"
                                                 cssModule={{ color: "red" }}
@@ -1711,7 +1711,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             />
                                             <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
                                         </div> */}
-                                        {/* <a href="#" style={{ backgroundColor: '#FC5241', color: 'white', textDecoration: 'none', padding: '12px', borderRadius: '32px', display: 'flex', width: '300px', textAlign: 'center', justifyContent: 'center' }} onClick={handleSubmitInfo}>
+                                    {/* <a href="#" style={{ backgroundColor: '#FC5241', color: 'white', textDecoration: 'none', padding: '12px', borderRadius: '32px', display: 'flex', width: '300px', textAlign: 'center', justifyContent: 'center' }} onClick={handleSubmitInfo}>
                                         {loading &&
                                             <TailSpin
                                                 height="20"
@@ -1726,7 +1726,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                         }
                                         Continuar con datos de envío
                                     </a> */}
-                                    </div>
+                                    {/* </div> */}
 
                                 </Form>
                                 {/* </Card> */}
@@ -1895,7 +1895,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                 onChange={(event) => setLocalDescription(event.target.value)}
                                             />
                                         </FormGroup>
-
+                                        {/* 
                                         <div style={{ display: 'flex', flexDirection: 'column' }}>
 
                                             <Button
@@ -1911,7 +1911,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                 {loading ? 'Cargando...' : 'Registrar dirección'}
                                             </Button>
 
-                                        </div>
+                                        </div> */}
                                     </Form>
 
 
