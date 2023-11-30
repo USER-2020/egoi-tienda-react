@@ -114,7 +114,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const userEmail = currenUser ? currenUser.email : null;
 
     const isSmallScreen = window.innerWidth <= 768;
-    const buttonWidth = isSmallScreen ? '55%' : '50%';
+    const buttonWidth = isSmallScreen ? '80%' : '50%';
 
     const shouldOpenAccordion = !!token ? '2' : '1';
     // const shouldOpenAccordion = '1';
