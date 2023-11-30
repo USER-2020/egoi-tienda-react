@@ -157,7 +157,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     const [valorAccordion, setValorAccordion] = useState("");
 
     const isSmallScreen = window.innerWidth <= 768;
-    const buttonWidth = isSmallScreen ? '55%' : '40%';
+    const buttonWidth = isSmallScreen ? '80%' : '40%';
 
 
     /* Twilio */
