@@ -156,6 +156,9 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     const [driveAddress, setDriveAddress] = useState(true);
     const [valorAccordion, setValorAccordion] = useState("");
 
+    const isSmallScreen = window.innerWidth <= 768;
+    const buttonWidth = isSmallScreen ? '55%' : '40%';
+
 
     /* Twilio */
 
@@ -1401,12 +1404,12 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
             saveAddress(data, token)
                 .then(() => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Registro exitoso!',
-                        text: 'La dirección ha sido registrada exitosamente.',
-                        confirmButtonColor: '#0d6efd',
-                    });
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     title: '¡Registro exitoso!',
+                    //     text: 'La dirección ha sido registrada exitosamente.',
+                    //     confirmButtonColor: '#0d6efd',
+                    // });
                     closeModalAddress();
                     refreshAddress();
                     setLoading(false);
@@ -1416,7 +1419,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+                        text: 'Se ha producido un error durante el registro de la dirección. Por favor, inténtelo de nuevo.',
                         confirmButtonColor: '#dc3545',
                     });
                     setLoading(false);
@@ -1679,7 +1682,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             value={infoPerfil.phone}
                                             onChange={setPhone}
                                             inputStyle={{
-                                                width: "50%",
+                                                width: buttonWidth,
                                                 height: "10px",
                                                 borderRadius: "50px",
                                                 outline: "none",
@@ -1890,7 +1893,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                 style={{
                                                     borderRadius: "50px",
                                                 }}
-                                                placeholder="¿Cómo llegar?"
+                                                placeholder="¿Cómo llegar?(OPCIONAL)"
                                                 value={localDescription}
                                                 onChange={(event) => setLocalDescription(event.target.value)}
                                             />
@@ -2048,7 +2051,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             style={{
                                                 borderRadius: "50px",
                                             }}
-                                            placeholder="¿Cómo llegar?"
+                                            placeholder="¿Cómo llegar?(OPCIONAL)"
                                             value={localDescription}
                                             onChange={(event) => setLocalDescription(event.target.value)}
                                         />

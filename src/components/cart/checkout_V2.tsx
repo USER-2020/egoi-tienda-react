@@ -113,6 +113,9 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
     const userEmail = currenUser ? currenUser.email : null;
 
+    const isSmallScreen = window.innerWidth <= 768;
+    const buttonWidth = isSmallScreen ? '55%' : '50%';
+
     const shouldOpenAccordion = !!token ? '2' : '1';
     // const shouldOpenAccordion = '1';
 
@@ -350,11 +353,11 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                 if (res.data.status === 'ok') {
                     console.log("El usuario ya existe valide su login");
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: '¡Este correo ya está registrado, te loguearemos y completareamos la información!',
+                        icon: 'info',
+                        title: '¡Hola de nuevo!',
+                        text: '¡Completaremos la información para procesar la compra!',
                         confirmButtonColor: '#FC5241',
-                        confirmButtonText: 'Continuar compra',
+                        confirmButtonText: 'Continuar',
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Cierra el Swal
@@ -829,7 +832,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         <h5>1. PERFIL</h5>
                         {/* </AccordionHeader> */}
                         {/* <AccordionBody accordionId='1'> */}
-                        <div className="card-body card1" style={{backgroundColor: 'transparent' }}>
+                        <div className="card-body card1" style={{ backgroundColor: 'transparent' }}>
                             {/* <Card > */}
                             <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
                             <Form onSubmit={handleSubmitInfo}>
@@ -891,7 +894,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                         value={phone}
                                         onChange={setPhone}
                                         inputStyle={{
-                                            width: "50%",
+                                            width: buttonWidth,
                                             height: "10px",
                                             borderRadius: "50px",
                                             outline: "none",
@@ -1110,7 +1113,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         {/* Inicio acorrdion item pago */}
                         {/* <AccordionItem> */}
                         {/* <AccordionHeader targetId='3' > */}
-                        <h5>3. PAGO </h5>
+                        {/* <h5>3. PAGO </h5>  */}
                         {/* </AccordionHeader> */}
                         {/* <AccordionBody accordionId='3'>
                                     <UncontrolledAccordion>
