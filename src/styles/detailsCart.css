@@ -448,7 +448,9 @@ input[type="number"]::-webkit-outer-spin-button {
 
 }
 
-
+#infoPerfil {
+  padding: 0 0;
+}
 
 #collapseTwo .cards .card1 .seleccion p {
   margin-bottom: 0;
