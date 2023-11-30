@@ -113,6 +113,9 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
     const userEmail = currenUser ? currenUser.email : null;
 
+    const isSmallScreen = window.innerWidth <= 768;
+    const buttonWidth = isSmallScreen ? '55%' : '50%';
+
     const shouldOpenAccordion = !!token ? '2' : '1';
     // const shouldOpenAccordion = '1';
 
@@ -829,7 +832,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         <h5>1. PERFIL</h5>
                         {/* </AccordionHeader> */}
                         {/* <AccordionBody accordionId='1'> */}
-                        <div className="card-body card1" style={{backgroundColor: 'transparent' }}>
+                        <div className="card-body card1" style={{ backgroundColor: 'transparent' }}>
                             {/* <Card > */}
                             <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
                             <Form onSubmit={handleSubmitInfo}>
@@ -891,7 +894,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                         value={phone}
                                         onChange={setPhone}
                                         inputStyle={{
-                                            width: "50%",
+                                            width: buttonWidth,
                                             height: "10px",
                                             borderRadius: "50px",
                                             outline: "none",

@@ -156,6 +156,9 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     const [driveAddress, setDriveAddress] = useState(true);
     const [valorAccordion, setValorAccordion] = useState("");
 
+    const isSmallScreen = window.innerWidth <= 768;
+    const buttonWidth = isSmallScreen ? '55%' : '40%';
+
 
     /* Twilio */
 
@@ -1679,7 +1682,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             value={infoPerfil.phone}
                                             onChange={setPhone}
                                             inputStyle={{
-                                                width: "50%",
+                                                width: buttonWidth,
                                                 height: "10px",
                                                 borderRadius: "50px",
                                                 outline: "none",
@@ -1890,7 +1893,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                 style={{
                                                     borderRadius: "50px",
                                                 }}
-                                                placeholder="¿Cómo llegar?"
+                                                placeholder="¿Cómo llegar?(OPCIONAL)"
                                                 value={localDescription}
                                                 onChange={(event) => setLocalDescription(event.target.value)}
                                             />
@@ -2048,7 +2051,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             style={{
                                                 borderRadius: "50px",
                                             }}
-                                            placeholder="¿Cómo llegar?"
+                                            placeholder="¿Cómo llegar?(OPCIONAL)"
                                             value={localDescription}
                                             onChange={(event) => setLocalDescription(event.target.value)}
                                         />
