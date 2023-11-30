@@ -25,7 +25,7 @@ import { getCurrentUser, setCurrentUser } from "../helpers/Utils";
 import Swal from "sweetalert2";
 import { getAllBrands } from "../services/brands";
 import { getProductsByIdBrand } from "../services/brands";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useContext } from 'react';
 
 import { getProductsBySearch } from "../services/filtros";
@@ -75,6 +75,8 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   /* Mostrar carrito si ntoken si nusuario registrado */
   const [showOffcanvasWithoutToken, setShowOffcanvasWithoutToken] = useState(false);
 
+  const [showOffCanvas, setShowOffCanvas] = useState(true);
+
 
   const handleClose = () => { setShow(false); handleShowOffCanvasClose() };
   const handleShow = () => setShow(true);
@@ -87,6 +89,8 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const { id } = useParams();
 
   const currenUser = getCurrentUser();
+
+  const location = useLocation();
   // const token = currenUser.token;
 
 
@@ -97,6 +101,9 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
   const offcanvasCartRef = useRef(null);
 
   const history = useHistory();
+
+
+  const shouldBtnCart = location.pathname === '/checkout';
 
 
 
@@ -460,6 +467,11 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
     };
   }, [showResults]);
 
+
+  // useEffect(() => {
+  //   // Verificar si la ruta actual es '/checkout'
+  //   setShow(location.pathname !== '/checkout');
+  // }, [location.pathname]);
   // useEffect(() => {
   //   // Agregar un detector de clics fuera del Offcanvas cuando el Offcanvas está visible
   //   console.log("Cambio de visibilidad", offcanvasOpenCart)
@@ -727,8 +739,13 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
             {/* Carrito de compras  */}
             <div className="dropdown">
               <button
-                onClick={(e) => { e.preventDefault(); goToDetailCart() }}
-                style={{ textDecoration: 'none', color: 'black', border: 'none', backgroundColor: 'inherit', transform: 'translate(15px, 14px)' }}>
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (!shouldBtnCart) {
+                    goToDetailCart();
+                  }
+                }}
+                style={{ textDecoration: 'none', color: 'black', border: 'none', backgroundColor: 'inherit', transform: 'translate(15px, 14px)', pointerEvents: shouldBtnCart ? 'none' : 'auto'}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-cart2" viewBox="0 0 35 35">
                   <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                 </svg>

@@ -1401,12 +1401,12 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
             saveAddress(data, token)
                 .then(() => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Registro exitoso!',
-                        text: 'La dirección ha sido registrada exitosamente.',
-                        confirmButtonColor: '#0d6efd',
-                    });
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     title: '¡Registro exitoso!',
+                    //     text: 'La dirección ha sido registrada exitosamente.',
+                    //     confirmButtonColor: '#0d6efd',
+                    // });
                     closeModalAddress();
                     refreshAddress();
                     setLoading(false);
@@ -1416,7 +1416,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+                        text: 'Se ha producido un error durante el registro de la dirección. Por favor, inténtelo de nuevo.',
                         confirmButtonColor: '#dc3545',
                     });
                     setLoading(false);
