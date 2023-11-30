@@ -13,7 +13,7 @@ import { placeOrder } from '../../../services/metodosDePago';
 import { getCurrentUser } from './../../../helpers/Utils';
 
 
-function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder, setModalPurchaseSuccess, setOk }) {
+function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder, setModalPurchaseSuccess, setOk, updateAddress}) {
   const [otp, setOTP] = useState('');
   const [loading, setLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
@@ -92,6 +92,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
 
   const onOTPVerify = () => {
     // e.preventDefautl();
+    updateAddress();
     setLoading(true);
     window.confirmationResult.confirm(otp).then(async (res) => {
       console.log(res);
@@ -120,7 +121,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
   useEffect(() => {
     if (phone) {
 
-      console.log(phone);
+      console.log("Numero de celular: ", phone);
       setPhoneUser(phone);
     }
 

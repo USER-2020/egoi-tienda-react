@@ -69,13 +69,16 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     const [longitude, setLongitude] = useState("4321");
     const [localDescription, setLocalDescription] = useState("");
     const [barrio, setBarrio] = useState("");
-    const [phone, setphone] = useState("");
     const [phone2, setphone2] = useState("");
     const [addressForm, setAddressForm] = useState("");
     const [addressType, setAddressType] = useState("");
     const [zip, setZip] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
+    const [email, setEmail] = useState();
+    const [f_name, setF_name] = useState();
+    const [l_name, setL_name] = useState();
+    const [phone, setPhone] = useState();
 
 
     const [contactPersonName, setContactPersonName] = useState("");
@@ -150,7 +153,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     const [acordeonAbierto, setAcordeonAbierto] = useState('1');
 
     /* Manejo de formulario de envio de direccion */
-    const [driveAddress, setDriveAddress] = useState(false);
+    const [driveAddress, setDriveAddress] = useState(true);
     const [valorAccordion, setValorAccordion] = useState("");
 
 
@@ -212,17 +215,12 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
     const shouldOpenAccordion = () => {
         if (token) {
-            if (address.length > 0) {
-                console.log("Estoy validando la direccionb")
-                setValorAccordion('3');
-            } else {
-                console.log("Estoy validando el token ")
-                setValorAccordion('2');
-            }
+            console.log("Estoy validando el token ")
+            return '2'
         }
 
         if (!token) {
-            setValorAccordion('1');
+            return '1'
         }
     }
 
@@ -275,11 +273,11 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
     /* Twilio */
     const sendCopyForTwilio = (idRefEfecty) => {
-        console.log(dataAddress[0].phone);
+        console.log(address[0].phone);
         const accountSid = 'AC8b58947dd886254c3e214afb4251a7b8'; // Reemplaza con tu Account SID
         const authToken = 'fcfeff21e6d0073421be3ba23feece15';   // Reemplaza con tu Auth Token
         const fromPhoneNumber = 'whatsapp:+14155238886'; // Reemplaza con el número de teléfono de Twilio configurado en el WhatsApp Sandbox
-        const toPhoneNumber = `whatsapp:+${dataAddress && dataAddress[0].phone}`;   // Reemplaza con el número de teléfono del destinatario en formato internacional
+        const toPhoneNumber = `whatsapp:+${address && address[0].phone}`;   // Reemplaza con el número de teléfono del destinatario en formato internacional
 
         const messageBody = `Hola, esta es tu referencia de pago *${idRefEfecty}* y el número de convenio es *110757*.`;
         // Define tus encabezados personalizados aquí
@@ -940,7 +938,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                 setAddressForm(res.data[0].address || '');
                 setZip(res.data[0].zip || '');
                 setSelectedCiudad(res.data[0].city || ''); // Asumiendo que city es un objeto
-                setphone(res.data[0].phone || '');
+                setPhone(res.data[0].phone || '');
                 setphone2(res.data[0].phone_2 || '');
                 setCountry(res.data[0].country || 'Colombia');
                 setLocalDescription(res.data[0].local_description || '');
@@ -1389,7 +1387,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
         console.log("Datos del formulario de dirección, selectedCiudad", selectedCiudad);
         console.log("Datos del formulario de dirección, phone", phone);
         console.log("Datos del formulario de dirección, localDescription", localDescription);
-        if (!contactPersonName || !contactPersonLastName || !addressForm || !selectedDepto || !selectedCiudad || !localDescription || !phone) {
+        if (!contactPersonName || !contactPersonLastName || !addressForm || !selectedDepto || !selectedCiudad || !phone) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -1426,8 +1424,20 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
         }
     }
 
-    const handleSubmitAddress = (e) => {
-        e.preventDefault();
+    const handleSubmitInfo = () => {
+        // event.preventDefault();
+        const data = {
+            email: email,
+            f_name: f_name,
+            l_name: l_name,
+            phone: phone
+        };
+        console.log(data);
+        onSubmit(data);
+    }
+
+    const handleSubmitAddress = () => {
+
 
         const data = {
             address_type: "home",
@@ -1448,7 +1458,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
         };
         setContactPersonName(infoPerfil.f_name);
         setContactPersonLastName(infoPerfil.l_name);
-        setphone(infoPerfil.phone);
+        setPhone(infoPerfil.phone);
         changuevisibility();
         onSubmit(data);
     }
@@ -1481,7 +1491,11 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     // }, [shouldShowCollapseThree]);
 
 
-
+    useEffect(() => {
+        if (address.length > 0) {
+            setShowUpdateAdressContainer(true);
+        }
+    }, [address]);
 
     useEffect(() => {
 
@@ -1511,7 +1525,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
         // }
 
         if (selectedAddressId) {
-            getAddressById();
+            getAddressById(selectedAddressId);
         }
 
         console.log(totalNumber);
@@ -1569,9 +1583,9 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
         if (address && address.length > 0) {
             setSelectedAddressId(address[0].id); // Asigna el id del primer elemento del array 'data' o ajusta según tus necesidades
             console.log("Valor de el id de la direccion: ", address[0].id);
-
+            setDataAddress(address[0]);
         }
-        shouldOpenAccordion();
+
     }, [address]);
 
     // useEffect(() => {
@@ -1597,51 +1611,162 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                 <div className="containerCheckoutSteps">
                     <div className="containerProgressBar">
                         {/* Acorrdion  */}
-                        <UncontrolledAccordion defaultOpen={valorAccordion}>
-                            {/* Acorddion item perfil */}
-                            <AccordionItem>
-                                <AccordionHeader targetId='1' >
-                                    <div className="d-flex flex-column ">
-                                        <h5>1. PERFIL</h5>
-                                        <p style={{ marginBottom: 0 }}>{infoPerfil && infoPerfil.email}</p>
-                                        <p style={{ marginBottom: 0 }}>Nombre: {infoPerfil && infoPerfil.f_name + " " + infoPerfil.l_name}</p>
-                                        <p style={{ marginBottom: 0 }}>Teléfono: {"+" + infoPerfil && infoPerfil.phone}</p>
+                        {/* <UncontrolledAccordion defaultOpen={shouldOpenAccordion()}> */}
+                        {/* Acorddion item perfil */}
+                        {/* <AccordionItem> */}
+                        {/* <AccordionHeader targetId='1' > */}
+                        <div className="d-flex flex-column ">
+                            <h5>1. PERFIL</h5>
+                            <div className="card-body card1" style={{ padding: 20, backgroundColor: 'transparent' }}>
+                                {/* <Card > */}
+                                <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
+                                <Form onSubmit={handleSubmitInfo}>
+                                    <FormGroup controlId="formBasicEmail">
+                                        <Input addon={true}
+                                            name="email"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                            }}
+                                            placeholder="Email"
+                                            value={infoPerfil.email}
+                                            // onBlur={validateEMailInput}
+                                            onChange={(event) => setEmail(event.target.value)}
+
+
+                                        />
+
+                                    </FormGroup>
+                                    <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                                        <Input addon={true}
+                                            name="contactPersonName"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                            }}
+                                            placeholder="Nombre del contacto"
+                                            value={infoPerfil.f_name}
+                                            onChange={(event) => setF_name(event.target.value)}
+                                        />
+
+                                        <Input addon={true}
+                                            name="contactPersonName"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                            }}
+                                            placeholder="Apellido del contacto"
+                                            value={infoPerfil.l_name}
+                                            onChange={(event) => setL_name(event.target.value)}
+                                        />
+
+                                    </FormGroup>
+                                    <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                                        {/* <Input addon={true}
+                                                            name="contactPersonName"
+                                                            classNanme="form-control"
+                                                            style={{
+                                                                borderRadius: "50px",
+                                                            }}
+                                                            placeholder="Ciudad"
+                                                        // value=""
+                                                        // onChange={(event) => setContactPersonName(event.target.value)}
+                                                        /> */}
+
+                                        <PhoneInput
+                                            localization={es}
+                                            country={"co"}
+                                            value={infoPerfil.phone}
+                                            onChange={setPhone}
+                                            inputStyle={{
+                                                width: "50%",
+                                                height: "10px",
+                                                borderRadius: "50px",
+                                                outline: "none",
+                                                ":focus": {
+                                                    borderRadius: "50px",
+                                                },
+                                            }}
+                                        />
+
+
+                                    </FormGroup>
+                                    <div className="form-group" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '30px', height: 48 }}>
+                                        {/* <div>
+                                            <Input
+                                                className="custom-input"
+                                                cssModule={{ color: "red" }}
+                                                type="checkbox"
+                                                name="terms"
+                                                id="terms"
+                                                value="true"
+                                                checked={termsAccepted}
+                                                onClick={() => {
+                                                    setTermsAccepted(!termsAccepted);
+                                                    if (!termsAccepted) {
+                                                        handleSubmitInfo();
+                                                    }
+                                                }}
+                                                style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                                            />
+                                            <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
+                                        </div> */}
+                                        {/* <a href="#" style={{ backgroundColor: '#FC5241', color: 'white', textDecoration: 'none', padding: '12px', borderRadius: '32px', display: 'flex', width: '300px', textAlign: 'center', justifyContent: 'center' }} onClick={handleSubmitInfo}>
+                                        {loading &&
+                                            <TailSpin
+                                                height="20"
+                                                width="20"
+                                                color="white"
+                                                ariaLabel="tail-spin-loading"
+                                                radius="1"
+                                                wrapperStyle={{ marginRight: '20px' }}
+                                                wrapperClass=""
+                                                visible={true}
+                                            />
+                                        }
+                                        Continuar con datos de envío
+                                    </a> */}
                                     </div>
 
-                                </AccordionHeader>
-                                <AccordionBody accordionId='1'>
-                                    <div className="card-body card1">
-                                        {/* <Card style={{ padding: 20, backgroundColor: 'transparent' }}>
+                                </Form>
+                                {/* </Card> */}
+                            </div>
+                        </div>
+
+                        {/* </AccordionHeader> */}
+                        {/* <AccordionBody accordionId='1'> */}
+                        <div className="card-body card1">
+                            {/* <Card style={{ padding: 20, backgroundColor: 'transparent' }}>
                                         </Card> */}
-                                        <div className="opcionesUpdateOrDelete d-flex justify-content-center">
-                                            <a href="#" onClick={(e) => { e.preventDefault(); removeTokenAndReload() }} className='d-flex justify-content-start' style={{ textDecoration: 'none', color: '#FC5241', gap: '3px', alignItems: 'center' }} >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FC5241" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
-                                                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
-                                                </svg>
-                                                No soy yo, cerrar sesión
-                                            </a>
-                                        </div>
-                                    </div>
-                                </AccordionBody>
-                            </AccordionItem>
-                            {/* Fin acorrdion item perfil */}
-                            {/* Incio accordion Direccion */}
-                            <AccordionItem>
-                                <AccordionHeader targetId='2' >
-                                    <div className="d-flex flex-column ">
-                                        <h5>2. ENVÍO </h5>
-                                        {address && address.map((addr, index) => (
-                                            <>
-                                                <p style={{ marginBottom: 0 }}>{addr.address.toUpperCase()}</p>
-                                                <p style={{ marginBottom: 0 }} >{addr.city + " " + addr.zip.toUpperCase()}</p>
-                                                <p style={{ marginBottom: 0 }}>{addr.country}</p>
-                                            </>
-                                        ))}
-                                    </div>
-                                </AccordionHeader>
-                                <AccordionBody accordionId='2'>
-                                    {/* <Form>
+                            {/* <div className="opcionesUpdateOrDelete d-flex justify-content-center">
+                                <a href="#" onClick={(e) => { e.preventDefault(); removeTokenAndReload() }} className='d-flex justify-content-start' style={{ textDecoration: 'none', color: '#FC5241', gap: '3px', alignItems: 'center' }} >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FC5241" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
+                                        <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                                    </svg>
+                                    No soy yo, cerrar sesión
+                                </a>
+                            </div> */}
+                        </div>
+                        {/* </AccordionBody> */}
+                        {/* </AccordionItem> */}
+                        {/* Fin acorrdion item perfil */}
+                        {/* Incio accordion Direccion */}
+                        {/* <AccordionItem> */}
+                        {/* <AccordionHeader targetId='2' > */}
+                        <div className="d-flex flex-column ">
+                            <h5>2. ENVÍO </h5>
+                            {/* {address && address.map((addr, index) => (
+                                <>
+                                    <p style={{ marginBottom: 0 }}>{addr.address.toUpperCase()}</p>
+                                    <p style={{ marginBottom: 0 }} >{addr.city + " " + addr.zip.toUpperCase()}</p>
+                                    <p style={{ marginBottom: 0 }}>{addr.country}</p>
+                                </>
+                            ))} */}
+                        </div>
+                        {/* </AccordionHeader> */}
+                        {/* <AccordionBody accordionId='2'> */}
+                        {/* <Form>
                                         <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
 
                                             <Input addon={true}
@@ -1681,66 +1806,66 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
                                         </FormGroup>
                                     </Form> */}
-                                    {showInfoAddress && (
+                        {showInfoAddress && (
 
-                                        driveAddress ? (
-                                            <div className="cards" id="cardsAddress" >
-                                                <Form onSubmit={handleSubmitAddress}>
-                                                    <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                            driveAddress && (
+                                <div className="cards" id="cardsAddress" >
+                                    <Form onSubmit={handleSubmitAddress}>
+                                        <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
 
-                                                        <Input addon={true}
-                                                            name="zip"
-                                                            classNanme="form-control"
-                                                            style={{
-                                                                borderRadius: "50px",
-                                                            }}
-                                                            value={selectedZip}
-                                                            type='select'
-                                                            onChange={handleSelectChangeZip}
+                                            <Input addon={true}
+                                                name="zip"
+                                                classNanme="form-control"
+                                                style={{
+                                                    borderRadius: "50px",
+                                                }}
+                                                value={selectedZip}
+                                                type='select'
+                                                onChange={handleSelectChangeZip}
 
-                                                        >
-                                                            <option value="">Departamento</option>
-                                                            {deptos && deptos.map((depto, index) => (
-                                                                <option value={depto.id_departamento} key={index}>{depto.departamento}</option>
-                                                            ))}
-                                                        </Input>
+                                            >
+                                                <option value="">Departamento</option>
+                                                {deptos && deptos.map((depto, index) => (
+                                                    <option value={depto.id_departamento} key={index}>{depto.departamento}</option>
+                                                ))}
+                                            </Input>
 
-                                                        <Input addon={true}
-                                                            name="city"
-                                                            classNanme="form-control"
-                                                            style={{
-                                                                borderRadius: "50px",
-                                                            }}
-                                                            placeholder="Ciudad"
-                                                            value={selectedCity}
-                                                            type='select'
-                                                            onChange={handleSelectChangeCity}
-                                                        >
-                                                            <option value="">Ciudad</option>
-                                                            {city && city.map((city, index) => (
-                                                                <option value={city.id} key={index}>{city.nombre}</option>
-                                                            ))}
-                                                        </Input>
-
-
-                                                    </FormGroup>
+                                            <Input addon={true}
+                                                name="city"
+                                                classNanme="form-control"
+                                                style={{
+                                                    borderRadius: "50px",
+                                                }}
+                                                placeholder="Ciudad"
+                                                value={selectedCity}
+                                                type='select'
+                                                onChange={handleSelectChangeCity}
+                                            >
+                                                <option value="">Ciudad</option>
+                                                {city && city.map((city, index) => (
+                                                    <option value={city.id} key={index}>{city.nombre}</option>
+                                                ))}
+                                            </Input>
 
 
-                                                    <FormGroup controlId="formBasicDireccion">
-                                                        <Input addon={true}
-                                                            name="address"
-                                                            classNanme="form-control"
-                                                            style={{
-                                                                borderRadius: "50px",
-                                                            }}
-                                                            placeholder="Dirección"
-                                                            value={addressForm}
-                                                            onChange={(event) => setAddressForm(event.target.value)}
-                                                        />
+                                        </FormGroup>
 
-                                                    </FormGroup>
 
-                                                    {/* <FormGroup controlId="formBasicDescripcionandBarrio" >
+                                        <FormGroup controlId="formBasicDireccion">
+                                            <Input addon={true}
+                                                name="address"
+                                                classNanme="form-control"
+                                                style={{
+                                                    borderRadius: "50px",
+                                                }}
+                                                placeholder="Dirección"
+                                                value={addressForm}
+                                                onChange={(event) => setAddressForm(event.target.value)}
+                                            />
+
+                                        </FormGroup>
+
+                                        {/* <FormGroup controlId="formBasicDescripcionandBarrio" >
                                                         <Input addon={true}
                                                             name="barrio"
                                                             classNanme="form-control"
@@ -1757,147 +1882,148 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                     </FormGroup> */}
 
 
-                                                    <FormGroup>
-                                                        <Input addon={true}
-                                                            type="textarea"
-                                                            name="local_description"
-                                                            classNanme="form-control"
-                                                            style={{
-                                                                borderRadius: "50px",
-                                                            }}
-                                                            placeholder="¿Cómo llegar?"
-                                                            value={localDescription}
-                                                            onChange={(event) => setLocalDescription(event.target.value)}
-                                                        />
-                                                    </FormGroup>
+                                        <FormGroup>
+                                            <Input addon={true}
+                                                type="textarea"
+                                                name="local_description"
+                                                classNanme="form-control"
+                                                style={{
+                                                    borderRadius: "50px",
+                                                }}
+                                                placeholder="¿Cómo llegar?"
+                                                value={localDescription}
+                                                onChange={(event) => setLocalDescription(event.target.value)}
+                                            />
+                                        </FormGroup>
 
-                                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
 
-                                                        <Button
-                                                            style={{
-                                                                backgroundColor: "#fc5241",
-                                                                borderColor: "#fc5241",
-                                                                borderRadius: "50px",
-                                                                marginTop: "10px"
-                                                            }}
-                                                            type="submit"
-                                                            disabled={loading}
-                                                        >
-                                                            {loading ? 'Cargando...' : 'Registrar dirección'}
-                                                        </Button>
+                                            <Button
+                                                style={{
+                                                    backgroundColor: "#fc5241",
+                                                    borderColor: "#fc5241",
+                                                    borderRadius: "50px",
+                                                    marginTop: "10px"
+                                                }}
+                                                type="submit"
+                                                disabled={loading}
+                                            >
+                                                {loading ? 'Cargando...' : 'Registrar dirección'}
+                                            </Button>
 
-                                                    </div>
-                                                </Form>
-
-
-                                            </div>
-                                        ) : (
-                                            <div className="cards" id="cardsAddress">
-                                                {address && address.map((addr, index) => (
-
-                                                    <div className="card-body card1" key={index}>
-                                                        <div className="contenedorP">
-                                                            <div className="seleccion">
-                                                                <Input type="checkbox" name="" id={addr.id}
-                                                                    checked={selectedAddressIndex === index}
-                                                                    onChange={() => checkboxChange(index, addr.id)} />
-
-                                                            </div>
-                                                            <div className="contenido">
-                                                                {/* <p>{addr.address_type === "home" ? "Hogar" : addr.address_type && addr.address_type === "permanent" ? "Trabajo" : addr.address_type && addr.address_type === "others" ? "Otro" : addr.address_type}</p> */}
-                                                                <p>{addr.address.toUpperCase()}</p>
-                                                                <p >{addr.city + " " + addr.zip.toUpperCase()}</p>
-                                                                <p >{addr.country}</p>
-                                                                {/* <p>
-                                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M7.46399 3.79261C7.03626 3.23986 6.28321 3.05281 5.63801 3.32126C5.54774 3.35882 5.45344 3.41223 5.32375 3.48569L5.31028 3.49332L5.30288 3.49751L5.29566 3.50201C5.00861 3.68109 4.82023 3.95405 4.69556 4.2289C4.57038 4.50491 4.49755 4.8085 4.45538 5.08768C4.37743 5.60368 4.39469 6.107 4.42814 6.31578C4.42878 6.32507 4.42964 6.33573 4.4308 6.34777C4.43434 6.38486 4.44065 6.43506 4.45185 6.49892C4.47423 6.62664 4.51613 6.809 4.59449 7.05051C4.75112 7.53321 5.05395 8.25386 5.64003 9.24952C6.2264 10.2457 6.74008 10.912 7.11324 11.3338C7.29979 11.5446 7.45108 11.6942 7.55859 11.7932C7.61234 11.8427 7.65512 11.8795 7.68586 11.905C7.70123 11.9177 7.71358 11.9276 7.72279 11.9349L7.73265 11.9425C8.00181 12.1592 8.45179 12.4476 8.9564 12.6281C9.4537 12.806 10.0856 12.9072 10.6471 12.62L10.6547 12.6161L10.6621 12.6119L10.6814 12.601C10.8074 12.5297 10.901 12.4767 10.9784 12.4195C11.5423 12.0025 11.7563 11.2599 11.4798 10.6149C11.442 10.5267 11.3879 10.4347 11.3165 10.3136L11.3051 10.2941L11.1821 10.0852L11.1723 10.0685C11.0482 9.85764 10.949 9.68917 10.8532 9.56178C10.7271 9.39402 10.5591 9.29629 10.4304 9.23454C10.2527 9.14925 10.0549 9.11514 9.87898 9.0991C9.70021 9.08282 9.51069 9.08282 9.34048 9.08362L9.29644 9.08384C9.13673 9.08467 8.99414 9.0854 8.86305 9.07739C8.71793 9.06852 8.61986 9.05025 8.5575 9.02624C8.52407 9.01336 8.49098 8.99816 8.45836 8.98064C8.42394 8.96216 8.40425 8.94866 8.39188 8.93821C8.28826 8.85067 8.0171 8.59839 7.76503 8.17016C7.47008 7.66907 7.42997 7.31682 7.42685 7.28477C7.42182 7.1909 7.43098 7.09725 7.45341 7.0059C7.4707 6.93552 7.51126 6.83979 7.57954 6.71111C7.62692 6.6218 7.67846 6.53305 7.73473 6.43616C7.75991 6.39279 7.78605 6.34779 7.81317 6.30038C7.8961 6.15546 7.98481 5.99375 8.05212 5.83081C8.1183 5.67061 8.17652 5.47988 8.1735 5.28005C8.17216 5.19117 8.16407 5.06448 8.11427 4.9331C8.05058 4.76509 7.94017 4.57761 7.80031 4.34009L7.78253 4.3099L7.65944 4.10109L7.64614 4.07848C7.57599 3.95922 7.52232 3.86798 7.46399 3.79261Z" fill="#171523" />
-                                                                </svg>
-                                                                +{addr.phone}
-                                                            </p> */}
-
-                                                            </div>
-                                                        </div>
-                                                        <div className="opcionesUpdateOrDelete d-flex justify-content-center">
-                                                            <a href="#" onClick={(e) => { e.preventDefault(); updateBtn(addr.id) }} className='d-flex justify-content-start' style={{ textDecoration: 'none', color: '#FC5241', gap: '3px' }} >
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FC5241" className="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                                </svg>
-                                                                Modificar dirección
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                                {/* <div className="addNewAddress d-flex justify-content-center"  >
-                                                <a href="#" onClick={() => setModalAddressCheckout(true)} >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FC5241" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
-                                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-                                                        <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4" />
-                                                    </svg>
-                                                    Agregar dirección</a>
-                                            </div> */}
-                                            </div>
-
-                                        )
-                                    )}
-                                    {showUpdateAddressContainer && (
-                                        <div className="cards" id="cardsAddress" >
-                                            <Form onSubmit={handleSubmitAddress}>
-                                                <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-
-                                                    <Input addon={true}
-                                                        name="zip"
-                                                        classNanme="form-control"
-                                                        style={{
-                                                            borderRadius: "50px",
-                                                        }}
-                                                        value={selectedZip}
-                                                        type='select'
-                                                        onChange={handleSelectChangeZip}
-
-                                                    >
-                                                        <option value="">{selectedZip}</option>
-                                                        {deptos && deptos.map((depto, index) => (
-                                                            <option value={depto.id_departamento} key={index}>{depto.departamento}</option>
-                                                        ))}
-                                                    </Input>
-
-                                                    <Input addon={true}
-                                                        name="city"
-                                                        classNanme="form-control"
-                                                        style={{
-                                                            borderRadius: "50px",
-                                                        }}
-                                                        placeholder="Ciudad"
-                                                        value={selectedCity}
-                                                        type='select'
-                                                        onChange={handleSelectChangeCity}
-                                                    >
-                                                        <option value="">{selectedCiudad}</option>
-                                                        {city && city.map((city, index) => (
-                                                            <option value={city.id} key={index}>{city.nombre}</option>
-                                                        ))}
-                                                    </Input>
+                                        </div>
+                                    </Form>
 
 
-                                                </FormGroup>
+                                </div>
+                            )
+                            // : (
+                            //     <div className="cards" id="cardsAddress">
+                            //         {address && address.map((addr, index) => (
+
+                            //             <div className="card-body card1" key={index}>
+                            //                 <div className="contenedorP">
+                            //                     <div className="seleccion">
+                            //                         <Input type="checkbox" name="" id={addr.id}
+                            //                             checked={selectedAddressIndex === index}
+                            //                             onChange={() => checkboxChange(index, addr.id)} />
+
+                            //                     </div>
+                            //                     <div className="contenido">
+                            //                         {/* <p>{addr.address_type === "home" ? "Hogar" : addr.address_type && addr.address_type === "permanent" ? "Trabajo" : addr.address_type && addr.address_type === "others" ? "Otro" : addr.address_type}</p> */}
+                            //                         <p>{addr.address.toUpperCase()}</p>
+                            //                         <p >{addr.city + " " + addr.zip.toUpperCase()}</p>
+                            //                         <p >{addr.country}</p>
+                            //                         {/* <p>
+                            //                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            //                                         <path d="M7.46399 3.79261C7.03626 3.23986 6.28321 3.05281 5.63801 3.32126C5.54774 3.35882 5.45344 3.41223 5.32375 3.48569L5.31028 3.49332L5.30288 3.49751L5.29566 3.50201C5.00861 3.68109 4.82023 3.95405 4.69556 4.2289C4.57038 4.50491 4.49755 4.8085 4.45538 5.08768C4.37743 5.60368 4.39469 6.107 4.42814 6.31578C4.42878 6.32507 4.42964 6.33573 4.4308 6.34777C4.43434 6.38486 4.44065 6.43506 4.45185 6.49892C4.47423 6.62664 4.51613 6.809 4.59449 7.05051C4.75112 7.53321 5.05395 8.25386 5.64003 9.24952C6.2264 10.2457 6.74008 10.912 7.11324 11.3338C7.29979 11.5446 7.45108 11.6942 7.55859 11.7932C7.61234 11.8427 7.65512 11.8795 7.68586 11.905C7.70123 11.9177 7.71358 11.9276 7.72279 11.9349L7.73265 11.9425C8.00181 12.1592 8.45179 12.4476 8.9564 12.6281C9.4537 12.806 10.0856 12.9072 10.6471 12.62L10.6547 12.6161L10.6621 12.6119L10.6814 12.601C10.8074 12.5297 10.901 12.4767 10.9784 12.4195C11.5423 12.0025 11.7563 11.2599 11.4798 10.6149C11.442 10.5267 11.3879 10.4347 11.3165 10.3136L11.3051 10.2941L11.1821 10.0852L11.1723 10.0685C11.0482 9.85764 10.949 9.68917 10.8532 9.56178C10.7271 9.39402 10.5591 9.29629 10.4304 9.23454C10.2527 9.14925 10.0549 9.11514 9.87898 9.0991C9.70021 9.08282 9.51069 9.08282 9.34048 9.08362L9.29644 9.08384C9.13673 9.08467 8.99414 9.0854 8.86305 9.07739C8.71793 9.06852 8.61986 9.05025 8.5575 9.02624C8.52407 9.01336 8.49098 8.99816 8.45836 8.98064C8.42394 8.96216 8.40425 8.94866 8.39188 8.93821C8.28826 8.85067 8.0171 8.59839 7.76503 8.17016C7.47008 7.66907 7.42997 7.31682 7.42685 7.28477C7.42182 7.1909 7.43098 7.09725 7.45341 7.0059C7.4707 6.93552 7.51126 6.83979 7.57954 6.71111C7.62692 6.6218 7.67846 6.53305 7.73473 6.43616C7.75991 6.39279 7.78605 6.34779 7.81317 6.30038C7.8961 6.15546 7.98481 5.99375 8.05212 5.83081C8.1183 5.67061 8.17652 5.47988 8.1735 5.28005C8.17216 5.19117 8.16407 5.06448 8.11427 4.9331C8.05058 4.76509 7.94017 4.57761 7.80031 4.34009L7.78253 4.3099L7.65944 4.10109L7.64614 4.07848C7.57599 3.95922 7.52232 3.86798 7.46399 3.79261Z" fill="#171523" />
+                            //                                     </svg>
+                            //                                     +{addr.phone}
+                            //                                 </p> */}
+
+                            //                     </div>
+                            //                 </div>
+                            //                 <div className="opcionesUpdateOrDelete d-flex justify-content-center">
+                            //                     <a href="#" onClick={(e) => { e.preventDefault(); updateBtn(addr.id) }} className='d-flex justify-content-start' style={{ textDecoration: 'none', color: '#FC5241', gap: '3px' }} >
+                            //                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FC5241" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                            //                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            //                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            //                         </svg>
+                            //                         Modificar dirección
+                            //                     </a>
+                            //                 </div>
+                            //             </div>
+                            //         ))}
+                            //         {/* <div className="addNewAddress d-flex justify-content-center"  >
+                            //                     <a href="#" onClick={() => setModalAddressCheckout(true)} >
+                            //                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FC5241" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                            //                             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+                            //                             <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4" />
+                            //                         </svg>
+                            //                         Agregar dirección</a>
+                            //                 </div> */}
+                            //     </div>
+
+                            // )
+                        )}
+                        {showUpdateAddressContainer && (
+                            <div className="cards" id="cardsAddress" >
+                                <Form onSubmit={handleSubmitAddress}>
+                                    <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+
+                                        <Input addon={true}
+                                            name="zip"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                            }}
+                                            value={selectedZip}
+                                            type='select'
+                                            onChange={handleSelectChangeZip}
+
+                                        >
+                                            <option value="">{selectedZip}</option>
+                                            {deptos && deptos.map((depto, index) => (
+                                                <option value={depto.id_departamento} key={index}>{depto.departamento}</option>
+                                            ))}
+                                        </Input>
+
+                                        <Input addon={true}
+                                            name="city"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                            }}
+                                            placeholder="Ciudad"
+                                            value={selectedCity}
+                                            type='select'
+                                            onChange={handleSelectChangeCity}
+                                        >
+                                            <option value="">{selectedCiudad}</option>
+                                            {city && city.map((city, index) => (
+                                                <option value={city.id} key={index}>{city.nombre}</option>
+                                            ))}
+                                        </Input>
 
 
-                                                <FormGroup controlId="formBasicDireccion">
-                                                    <Input addon={true}
-                                                        name="address"
-                                                        classNanme="form-control"
-                                                        style={{
-                                                            borderRadius: "50px",
-                                                        }}
-                                                        placeholder="Dirección"
-                                                        value={addressForm}
-                                                        onChange={(event) => setAddressForm(event.target.value)}
-                                                    />
+                                    </FormGroup>
 
-                                                </FormGroup>
 
-                                                {/* <FormGroup controlId="formBasicDescripcionandBarrio" >
+                                    <FormGroup controlId="formBasicDireccion">
+                                        <Input addon={true}
+                                            name="address"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                            }}
+                                            placeholder="Dirección"
+                                            value={addressForm}
+                                            onChange={(event) => setAddressForm(event.target.value)}
+                                        />
+
+                                    </FormGroup>
+
+                                    {/* <FormGroup controlId="formBasicDescripcionandBarrio" >
                                                 <Input addon={true}
                                                     name="barrio"
                                                     classNanme="form-control"
@@ -1914,151 +2040,156 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             </FormGroup> */}
 
 
-                                                <FormGroup>
-                                                    <Input addon={true}
-                                                        type="textarea"
-                                                        name="local_description"
-                                                        classNanme="form-control"
-                                                        style={{
-                                                            borderRadius: "50px",
-                                                        }}
-                                                        placeholder="¿Cómo llegar?"
-                                                        value={localDescription}
-                                                        onChange={(event) => setLocalDescription(event.target.value)}
-                                                    />
-                                                </FormGroup>
+                                    <FormGroup>
+                                        <Input addon={true}
+                                            type="textarea"
+                                            name="local_description"
+                                            classNanme="form-control"
+                                            style={{
+                                                borderRadius: "50px",
+                                            }}
+                                            placeholder="¿Cómo llegar?"
+                                            value={localDescription}
+                                            onChange={(event) => setLocalDescription(event.target.value)}
+                                        />
+                                    </FormGroup>
 
-                                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
 
-                                                    <Button
-                                                        style={{
-                                                            backgroundColor: "#fc5241",
-                                                            borderColor: "#fc5241",
-                                                            borderRadius: "50px",
-                                                            marginTop: "10px"
-                                                        }}
-                                                        type="submit"
-                                                        disabled={loading}
+                                        {/* <Button
+                                            style={{
+                                                backgroundColor: "#fc5241",
+                                                borderColor: "#fc5241",
+                                                borderRadius: "50px",
+                                                marginTop: "10px"
+                                            }}
+                                            type="submit"
+                                            disabled={loading}
 
-                                                    >
-                                                        {loading ? 'Cargando...' : 'Actualizar dirección'}
-                                                    </Button>
+                                        >
+                                            {loading ? 'Cargando...' : 'Actualizar dirección'}
+                                        </Button> */}
 
+                                    </div>
+                                </Form>
+
+
+                            </div>
+                        )}
+                        {/* </AccordionBody> */}
+                        {/* </AccordionItem> */}
+                        {/* Fin accordion direccion */}
+                        {/* Inicio acorrdion item pago */}
+                        {/* <AccordionItem> */}
+                        {/* <AccordionHeader targetId='3' > */}
+                        <div className="container">
+                            <h5>3. PAGO </h5>
+                            {/* </AccordionHeader> */}
+                            {/* <AccordionBody accordionId='3'> */}
+                            <UncontrolledAccordion>
+                                <AccordionItem>
+                                    <AccordionHeader targetId='4'>
+                                        <h6>Tarjeta débito</h6>
+                                    </AccordionHeader>
+                                    <AccordionBody accordionId='4'>
+
+                                        <TarjetaDebitoModal
+                                            closeModalTarjetaDebito={closeModalTarjetaDebito}
+                                            dataOrderAddress={dataAddress}
+                                            total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                            discountCoupon={discountCoupon}
+                                            cupon={cupon}
+                                            ipAddress={ipAddress}
+                                            idAddress={selectedAddressId}
+                                            descriptionOrder={descriptionOrder}
+                                            // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                            setOk={() => setOkPurchase(true)}
+                                            setModalProcesoPago={() => setModalProcesoPago(true)}
+                                            setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                            updateAddress={handleSubmitAddress}
+                                        />
+                                    </AccordionBody>
+                                </AccordionItem>
+                                <AccordionItem>
+                                    <AccordionHeader targetId='5'>
+                                        <h6>Tarjeta crédito</h6>
+                                    </AccordionHeader>
+                                    <AccordionBody accordionId='5'>
+                                        <TarjetaCreditoModal
+                                            // handleModalData={handleModalData} 
+                                            closeModalTarjetaCredito={closeModalTarjetaCredito}
+                                            dataOrderAddress={dataAddress}
+                                            total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                            discountCoupon={discountCoupon}
+                                            cupon={cupon}
+                                            ipAddress={ipAddress}
+                                            idAddress={selectedAddressId}
+                                            descriptionOrder={descriptionOrder}
+                                            // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                            setOk={() => setOkPurchase(true)}
+                                            setModalProcesoPago={() => setModalProcesoPago(true)}
+                                            setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                            updateAddress={handleSubmitAddress}
+                                        />
+                                    </AccordionBody>
+                                </AccordionItem>
+                                <AccordionItem>
+                                    <AccordionHeader targetId='6'>
+                                        <h6>PSE</h6>
+                                    </AccordionHeader>
+                                    <AccordionBody accordionId='6'>
+                                        <PseModal
+                                            closeModalPse={closeModalPse}
+                                            dataOrderAddress={dataAddress}
+                                            total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                            discountCoupon={discountCoupon}
+                                            cupon={cupon}
+                                            ipAddress={ipAddress}
+                                            idAddress={selectedAddressId}
+                                            descriptionOrder={descriptionOrder}
+                                            // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                            setOk={() => setOkPurchase(true)}
+                                            setModalProcesoPago={() => setModalProcesoPago(true)}
+                                            setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                            updateAddress={handleSubmitAddress}
+                                        />
+                                    </AccordionBody>
+                                </AccordionItem>
+                                {totalNumber >= 5000 && (
+                                    <AccordionItem>
+                                        <AccordionHeader targetId='7'>
+                                            <h6>Efecty</h6>
+                                        </AccordionHeader>
+                                        <AccordionBody accordionId='7'>
+                                            <div className="d-flex flex-column align-items-center">
+                                                <img src={efectyLogo} style={{ width: 100 }} />
+                                                <p>Pago por consignación genera tu ticket acá</p>
+                                                <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column', marginBottom: '20px' }}>
+                                                    {/* <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+                                                        <Input
+                                                            className="custom-input"
+                                                            cssModule={{ color: "red" }}
+                                                            type="checkbox"
+                                                            name="terms"
+                                                            id="terms"
+                                                            value="true"
+                                                            checked={termsAccepted}
+                                                            onClick={() => setTermsAccepted(!termsAccepted)}
+                                                            style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                                                        />
+                                                        <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
+                                                    </div> */}
+                                                    <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitAddress(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
                                                 </div>
-                                            </Form>
 
-
-                                        </div>
-                                    )}
-                                </AccordionBody>
-                            </AccordionItem>
-                            {/* Fin accordion direccion */}
-                            {/* Inicio acorrdion item pago */}
-                            <AccordionItem>
-                                <AccordionHeader targetId='3' >
-                                    <h5>3. PAGO </h5>
-                                </AccordionHeader>
-                                <AccordionBody accordionId='3'>
-                                    <UncontrolledAccordion>
-                                        <AccordionItem>
-                                            <AccordionHeader targetId='4'>
-                                                <h6>Tarjeta débito</h6>
-                                            </AccordionHeader>
-                                            <AccordionBody accordionId='4'>
-
-                                                <TarjetaDebitoModal
-                                                    closeModalTarjetaDebito={closeModalTarjetaDebito}
-                                                    dataOrderAddress={dataAddress}
-                                                    total={formattedTotal !== '' ? formattedTotal : totalNumber}
-                                                    discountCoupon={discountCoupon}
-                                                    cupon={cupon}
-                                                    ipAddress={ipAddress}
-                                                    idAddress={selectedAddressId}
-                                                    descriptionOrder={descriptionOrder}
-                                                    // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-                                                    // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
-                                                    setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
-                                                    setOk={() => setOkPurchase(true)}
-                                                    setModalProcesoPago={() => setModalProcesoPago(true)}
-                                                    setModalProcesoPagoClose={() => setModalProcesoPago(false)}
-                                                />
-                                            </AccordionBody>
-                                        </AccordionItem>
-                                        <AccordionItem>
-                                            <AccordionHeader targetId='5'>
-                                                <h6>Tarjeta crédito</h6>
-                                            </AccordionHeader>
-                                            <AccordionBody accordionId='5'>
-                                                <TarjetaCreditoModal
-                                                    // handleModalData={handleModalData} 
-                                                    closeModalTarjetaCredito={closeModalTarjetaCredito}
-                                                    dataOrderAddress={dataAddress}
-                                                    total={formattedTotal !== '' ? formattedTotal : totalNumber}
-                                                    discountCoupon={discountCoupon}
-                                                    cupon={cupon}
-                                                    ipAddress={ipAddress}
-                                                    idAddress={selectedAddressId}
-                                                    descriptionOrder={descriptionOrder}
-                                                    // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-                                                    // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
-                                                    setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
-                                                    setOk={() => setOkPurchase(true)}
-                                                    setModalProcesoPago={() => setModalProcesoPago(true)}
-                                                    setModalProcesoPagoClose={() => setModalProcesoPago(false)}
-                                                />
-                                            </AccordionBody>
-                                        </AccordionItem>
-                                        <AccordionItem>
-                                            <AccordionHeader targetId='6'>
-                                                <h6>PSE</h6>
-                                            </AccordionHeader>
-                                            <AccordionBody accordionId='6'>
-                                                <PseModal
-                                                    closeModalPse={closeModalPse}
-                                                    dataOrderAddress={dataAddress}
-                                                    total={formattedTotal !== '' ? formattedTotal : totalNumber}
-                                                    discountCoupon={discountCoupon}
-                                                    cupon={cupon}
-                                                    ipAddress={ipAddress}
-                                                    idAddress={selectedAddressId}
-                                                    descriptionOrder={descriptionOrder}
-                                                    // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
-                                                    // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
-                                                    setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
-                                                    setOk={() => setOkPurchase(true)}
-                                                    setModalProcesoPago={() => setModalProcesoPago(true)}
-                                                    setModalProcesoPagoClose={() => setModalProcesoPago(false)}
-                                                />
-                                            </AccordionBody>
-                                        </AccordionItem>
-                                        <AccordionItem>
-                                            <AccordionHeader targetId='7'>
-                                                <h6>Efecty</h6>
-                                            </AccordionHeader>
-                                            <AccordionBody accordionId='7'>
-                                                <div className="d-flex flex-column align-items-center">
-                                                    <img src={efectyLogo} style={{ width: 100 }} />
-                                                    <p>Pago por consignación genera tu ticket acá</p>
-                                                    <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column', marginBottom: '20px' }}>
-                                                        <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-                                                            <Input
-                                                                className="custom-input"
-                                                                cssModule={{ color: "red" }}
-                                                                type="checkbox"
-                                                                name="terms"
-                                                                id="terms"
-                                                                value="true"
-                                                                checked={termsAccepted}
-                                                                onClick={() => setTermsAccepted(!termsAccepted)}
-                                                                style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
-                                                            />
-                                                            <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
-                                                        </div>
-                                                        <Button disabled={!termsAccepted || loading} style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px", cursor: !termsAccepted ? "not-allowed" : "pointer" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
-                                                    </div>
-
-                                                </div>
-                                                {/* <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                            </div>
+                                            {/* <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
                                                     // closeEfectyModal={() => closeModalEfecty()}
                                                     dataRef={dataRef}
                                                     addressId={selectedAddressId}
@@ -2067,33 +2198,37 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                     // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
                                                     setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
                                                     setOk={() => setOkPurchase(true)} /> */}
-                                            </AccordionBody>
-                                        </AccordionItem>
-                                        {totalNumber >= 39990 && totalNumber <= 1999000 && (
-                                            <AccordionItem>
-                                                <AccordionHeader targetId='8'>
-                                                    <h6>Pago contra entrega</h6>
-                                                </AccordionHeader>
-                                                <AccordionBody accordionId='8'>
-                                                    <CashDeliveryOTP phone={dataAddress[0]?.phone}
-                                                        closeModalOTP={closeModalOTP}
-                                                        addressId={selectedAddressId}
-                                                        descriptionOrder={descriptionOrder}
-                                                        cupon={cupon}
-                                                        // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
-                                                        setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
-                                                        setOk={() => setOkPurchase(true)} />
-                                                </AccordionBody>
-                                            </AccordionItem>
-                                        )}
-                                    </UncontrolledAccordion>
-                                </AccordionBody>
-                            </AccordionItem>
-                            {/* Fin acorrdion item pago */}
-                        </UncontrolledAccordion>
+                                        </AccordionBody>
+                                    </AccordionItem>
+                                )}
+                                {totalNumber >= 39990 && totalNumber <= 1999000 && (
+                                    <AccordionItem>
+                                        <AccordionHeader targetId='8'>
+                                            <h6>Pago contra entrega</h6>
+                                        </AccordionHeader>
+                                        <AccordionBody accordionId='8'>
+                                            <CashDeliveryOTP phone={dataAddress?.phone}
+                                                closeModalOTP={closeModalOTP}
+                                                addressId={selectedAddressId}
+                                                descriptionOrder={descriptionOrder}
+                                                cupon={cupon}
+                                                // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                                setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                                setOk={() => setOkPurchase(true)}
+                                                updateAddress={handleSubmitAddress}
+                                            />
+                                        </AccordionBody>
+                                    </AccordionItem>
+                                )}
+                            </UncontrolledAccordion>
+                        </div>
+                        {/* </AccordionBody> */}
+                        {/* </AccordionItem> */}
+                        {/* Fin acorrdion item pago */}
+                        {/* </UncontrolledAccordion> */}
                         {/* Fin accordion  */}
 
-                    </div>
+                    </div >
                     <div className="containerDetailpurchase">
                         <Card>
                             <div className="subtotal">
@@ -2245,7 +2380,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                             </>
                         )} */}
                     </div>
-                </div>
+                </div >
             </div >
             {/* Modal checkout efecty */}
             < Modal

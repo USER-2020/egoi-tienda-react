@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import ModalProcesandoPago from './modalProcesandoPago';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose }) {
+function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupon, ipAddress, idAddress, descriptionOrder, setModalPurchaseSuccess, setOk, setModalProcesoPago, setModalProcesoPagoClose, updateAddress }) {
 
     const [pseDocument, setPseDocument] = useState("");
     const [pseTypeDocument, setPseTypeDocument] = useState("");
@@ -86,6 +86,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     }
 
     const handleSubmitOrderPaymentCard = () => {
+        updateAddress();
         if (token) {
             console.log("Envio de orden por pse");
 
@@ -362,7 +363,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                                 </FormGroup>
                                 <FormGroup>
                                     <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column' }}>
-                                        <div>
+                                        {/* <div>
                                             <Input
                                                 className="custom-input"
                                                 cssModule={{ color: "red" }}
@@ -375,8 +376,8 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                                                 style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
                                             />
                                             <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
-                                        </div>
-                                        <Button disabled={!termsAccepted || loading} style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px", cursor: !termsAccepted ? "not-allowed" : "pointer" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</Button>
+                                        </div> */}
+                                        <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px", border:'none' }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</Button>
                                     </div>
                                 </FormGroup>
 

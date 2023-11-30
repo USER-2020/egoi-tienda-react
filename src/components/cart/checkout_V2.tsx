@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { TailSpin } from 'react-loader-spinner';
 import PhoneInput from 'react-phone-input-2'
-import { AccordionBody, AccordionHeader, AccordionItem, Card, Form, FormGroup, Input, Modal, ModalBody, UncontrolledAccordion } from 'reactstrap'
+import { AccordionBody, AccordionHeader, AccordionItem, Button, Card, Form, FormGroup, Input, Modal, ModalBody, UncontrolledAccordion } from 'reactstrap'
 import { firstLogin, login_Email_Face, validateEmail } from '../../services/extraLogin';
 import Swal from 'sweetalert2';
 import '../../styles/detailsCart.css';
@@ -9,7 +9,7 @@ import es from "react-phone-input-2/lang/es.json";
 import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
 import { addCartProductsOfLocalStorage } from '../../helpers/productsLocalStorage';
 import { useHistory, useLocation } from 'react-router-dom';
-import { allCitysByIdDepto, allDeptos } from '../../services/address';
+import { allCitysByIdDepto, allDeptos, saveAddress, uniqueAddress } from '../../services/address';
 import TarjetaDebitoModal from '../../views/user/metodosDePago/tarjetaDebito';
 import axios from 'axios';
 import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoPago';
@@ -81,11 +81,26 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const [city, setCity] = useState("");
     const [selectedZip, setSelectedZip] = useState();
     const [selectedCity, setSelectedCity] = useState();
+    const [addressForm, setAddressForm] = useState("");
     const [selectedCiudad, setSelectedCiudad] = useState();
     const [selectedDepto, setSelectedDepto] = useState();
     const [acordeonAbierto, setAcordeonAbierto] = useState('1');
     const [dataRef, setDataRef] = useState([]);
     const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+    const [contactPersonName, setContactPersonName] = useState("");
+    const [contactPersonLastName, setContactPersonLastName] = useState("");
+    const [contactPersonFullName, setContactPersonFullName] = useState("");
+    const [localDescription, setLocalDescription] = useState("");
+    const [infoPerfil, setInfoPerfil] = useState('');
+    const [country, setCountry] = useState("Colombia");
+    const [latitude, setLatitude] = useState("1234");
+    const [longitude, setLongitude] = useState("4321");
+    const [barrio, setBarrio] = useState("");
+    const [termsAccepted, setTermsAccepted] = useState(false);
+
+
+    const [showUpdateAddressContainer, setShowUpdateAdressContainer] = useState(false);
+    const [showInfoAddress, setShowInfoAddress] = useState(true);
 
 
 
@@ -132,6 +147,115 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
         // return valorSeleccionadoTalla;
         // Realizar otras acciones con el valor seleccionado
     };
+
+    const getAllAddress = () => {
+        if (token) {
+            uniqueAddress(token)
+                .then((res) => {
+                    console.log("Esta es la unica direccion registrada", res.data);
+                    setAddress(res.data);
+
+                }).catch((err) => console.log(err));
+            // allAddress(token)
+            //     .then((res) => {
+            //         // console.log(res.data);
+            //         setAddress(res.data);
+            //         console.log("Estas son las direcciones", address);
+
+            //     }).catch((err) => console.log(err));
+        }
+    }
+
+    const closeModalAddress = () => {
+        setModalAddressCheckout(false);
+    }
+
+    const refreshAddress = () => {
+        if (token) {
+            getAllAddress();
+        }
+    }
+
+
+    const changuevisibility = () => {
+        setShowUpdateAdressContainer(false);
+        setShowInfoAddress(true);
+        getAllAddress();
+    }
+
+    const onSubmitAdressForm = (data) => {
+        setLoading(true);
+        console.log("Datos del formulario de dirección", data);
+        console.log("Datos del formulario de dirección, contactPersonName", contactPersonName);
+        console.log("Datos del formulario de dirección, contactPersonLastName", contactPersonLastName);
+        console.log("Datos del formulario de dirección, addressForm", addressForm);
+        console.log("Datos del formulario de dirección, selectedDepto", selectedDepto);
+        console.log("Datos del formulario de dirección, selectedCiudad", selectedCiudad);
+        console.log("Datos del formulario de dirección, phone", phone);
+        console.log("Datos del formulario de dirección, localDescription", localDescription);
+        if (!contactPersonName || !contactPersonLastName || !addressForm || !selectedDepto || !selectedCiudad || !phone) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Por favor, complete todos los campos. ",
+                confirmButtonColor: "#0d6efd",
+            });
+            setLoading(false);
+
+
+        } else {
+
+            saveAddress(data, token)
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Registro exitoso!',
+                        text: 'La dirección ha sido registrada exitosamente.',
+                        confirmButtonColor: '#0d6efd',
+                    });
+                    closeModalAddress();
+                    refreshAddress();
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Se ha producido un error durante el registro. Por favor, inténtelo de nuevo.',
+                        confirmButtonColor: '#dc3545',
+                    });
+                    setLoading(false);
+                })
+        }
+    }
+
+    const handleSubmitAddress = (e) => {
+        e.preventDefault();
+
+        const data = {
+            address_type: "home",
+            contact_person_name: infoPerfil.f_name + " " + infoPerfil.l_name,
+            f_name: infoPerfil.f_name,
+            l_name: infoPerfil.l_name,
+            address: addressForm,
+            country: country,
+            zip: selectedDepto,
+            city: selectedCiudad,
+            phone: infoPerfil.phone,
+            phone_2: "",
+            latitude: latitude,
+            longitude: longitude,
+            barrio: barrio,
+            local_description: localDescription,
+            is_billing: 'ppp'
+        };
+        setContactPersonName(infoPerfil.f_name);
+        setContactPersonLastName(infoPerfil.l_name);
+        setPhone(infoPerfil.phone);
+        changuevisibility();
+        onSubmitAdressForm(data);
+    }
 
     const onSubmit = (data) => {
         setLoading(true);
@@ -233,6 +357,94 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                 }).catch((err) => console.log(err));
         }
 
+    }
+
+    const validateEMailInput = () => {
+        validateEmail(email)
+            .then((res) => {
+                console.log("Respuesta de validacion", res);
+                if (res.data.status === 'ok') {
+                    console.log("El usuario ya existe valide su login");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '¡Este correo ya está registrado, te loguearemos y completareamos la información!',
+                        confirmButtonColor: '#FC5241',
+                        confirmButtonText: 'Continuar compra',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Cierra el Swal
+                            Swal.close();
+
+                            // Abre el modal de opciones
+                            // setModalOpcionesLogin(true);
+                            login_Email_Face(email)
+                                .then((res) => {
+                                    console.log("El usuario ya esta en la base de datos", res.data);
+                                    const item = {
+                                        token: res.data.token,
+                                        email: email,
+                                    }
+                                    setCurrentUser(item);
+                                    addCartProductsOfLocalStorage();
+                                    window.location.reload();
+
+                                }).catch((err) => console.log(err));
+                        }
+                    });
+
+                }
+                // else {
+                //     console.log("El usuario puede funcionar como el logueo ");
+                //     firstLogin(f_name, l_name, email, phone)
+                //         .then((res) => {
+                //             console.log(res);
+                //             const item = {
+                //                 token: res.data.token,
+                //                 email: email,
+                //             }
+                //             setCurrentUser(item);
+                //             addCartProductsOfLocalStorage();
+                //             Swal.fire({
+                //                 icon: 'success',
+                //                 title: 'Bienvenido',
+                //                 // text: 'Has iniciado sesión correctamente',
+                //                 confirmButtonColor: '#fc5241',
+                //                 html: `
+                //               <p>Por favor, revisa nuestros <a href="/termsAndConditions">Términos y Condiciones</a> y <a href="/privacyPolicy">Política de Privacidad</a>.</p>
+                //               <label for="aceptar">Acepto los Términos y Condiciones:</label>
+                //               <input type="checkbox" id="aceptar">
+                //             `,
+                //                 preConfirm: () => {
+                //                     const aceptado = document.getElementById('aceptar').checked;
+                //                     if (!aceptado) {
+                //                         Swal.showValidationMessage('Debes aceptar los Términos y Condiciones para continuar.');
+                //                     }
+                //                 },
+                //             }).then((result) => {
+                //                 if (result.isConfirmed) {
+                //                     // El usuario marcó el cuadro de aceptación y confirmó
+                //                     Swal.fire({
+                //                         icon: 'success',
+                //                         title: 'Bienvenido',
+                //                         text: 'Has iniciado sesión correctamente',
+                //                         confirmButtonColor: '#fc5241',
+                //                     });
+                //                     addCartProductsOfLocalStorage();
+                //                     window.location.reload();
+                //                 } else if (result.isDismissed) {
+                //                     // El usuario hizo clic fuera de la ventana
+                //                     addCartProductsOfLocalStorage();
+                //                     window.location.reload(); // Recargar la página
+                //                 }
+                //             });
+                //             // put(loginUserSuccess(item));
+
+                //         }).catch((err) => {
+                //             console.log(err);
+                //         });
+                // }
+            }).catch((err) => console.log(err));
     }
 
     const closeModalTarjetaCredito = () => {
@@ -445,8 +657,8 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
         }
     }
 
-    const handleSubmitInfo = (event) => {
-        event.preventDefault();
+    const handleSubmitInfo = () => {
+        // event.preventDefault();
         const data = {
             email: email,
             f_name: f_name,
@@ -607,6 +819,8 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
 
 
+
+
     // useEffect(() => {
     //     if (selectedZip) {
     //         allCitysByIdDepto(selectedZip, token)
@@ -624,58 +838,59 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                 <div className="containerCheckoutSteps">
                     <div className="containerProgressBar">
                         {/* Acorrdion  */}
-                        <UncontrolledAccordion defaultOpen={shouldOpenAccordion}>
-                            {/* Acorddion item perfil */}
-                            <AccordionItem>
-                                <AccordionHeader targetId='1' >
-                                    <h5>1. PERFIL</h5>
-                                </AccordionHeader>
-                                <AccordionBody accordionId='1'>
-                                    <div className="card-body card1">
-                                        <Card style={{ padding: 20, backgroundColor: 'transparent' }}>
-                                            <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
-                                            <Form onSubmit={handleSubmitInfo}>
-                                                <FormGroup controlId="formBasicEmail">
-                                                    <Input addon={true}
-                                                        name="email"
-                                                        classNanme="form-control"
-                                                        style={{
-                                                            borderRadius: "50px",
-                                                        }}
-                                                        placeholder="Email"
-                                                        value={email}
-                                                        onChange={(event) => setEmail(event.target.value)}
+                        {/* <UncontrolledAccordion defaultOpen={shouldOpenAccordion}> */}
+                        {/* Acorddion item perfil */}
+                        {/* <AccordionItem> */}
+                        {/* <AccordionHeader targetId='1' > */}
+                        <h5>1. PERFIL</h5>
+                        {/* </AccordionHeader> */}
+                        {/* <AccordionBody accordionId='1'> */}
+                        <div className="card-body card1" style={{ padding: 20, backgroundColor: 'transparent' }}>
+                            {/* <Card > */}
+                            <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
+                            <Form onSubmit={handleSubmitInfo}>
+                                <FormGroup controlId="formBasicEmail">
+                                    <Input addon={true}
+                                        name="email"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="Email"
+                                        value={email}
+                                        onBlur={validateEMailInput}
+                                        onChange={(event) => setEmail(event.target.value)}
 
 
-                                                    />
+                                    />
 
-                                                </FormGroup>
-                                                <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                                    <Input addon={true}
-                                                        name="contactPersonName"
-                                                        classNanme="form-control"
-                                                        style={{
-                                                            borderRadius: "50px",
-                                                        }}
-                                                        placeholder="Nombre del contacto"
-                                                        value={f_name}
-                                                        onChange={(event) => setF_name(event.target.value)}
-                                                    />
+                                </FormGroup>
+                                <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                                    <Input addon={true}
+                                        name="contactPersonName"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="Nombre del contacto"
+                                        value={f_name}
+                                        onChange={(event) => setF_name(event.target.value)}
+                                    />
 
-                                                    <Input addon={true}
-                                                        name="contactPersonName"
-                                                        classNanme="form-control"
-                                                        style={{
-                                                            borderRadius: "50px",
-                                                        }}
-                                                        placeholder="Apellido del contacto"
-                                                        value={l_name}
-                                                        onChange={(event) => setL_name(event.target.value)}
-                                                    />
+                                    <Input addon={true}
+                                        name="contactPersonName"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="Apellido del contacto"
+                                        value={l_name}
+                                        onChange={(event) => setL_name(event.target.value)}
+                                    />
 
-                                                </FormGroup>
-                                                <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-                                                    {/* <Input addon={true}
+                                </FormGroup>
+                                <FormGroup controlId="formBasicName" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                                    {/* <Input addon={true}
                                                             name="contactPersonName"
                                                             classNanme="form-control"
                                                             style={{
@@ -686,54 +901,185 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                                         // onChange={(event) => setContactPersonName(event.target.value)}
                                                         /> */}
 
-                                                    <PhoneInput
-                                                        localization={es}
-                                                        country={"co"}
-                                                        value={phone}
-                                                        onChange={setPhone}
-                                                        inputStyle={{
-                                                            width: "50%",
-                                                            height: "10px",
-                                                            borderRadius: "50px",
-                                                            outline: "none",
-                                                            ":focus": {
-                                                                borderRadius: "50px",
-                                                            },
-                                                        }}
-                                                    />
+                                    <PhoneInput
+                                        localization={es}
+                                        country={"co"}
+                                        value={phone}
+                                        onChange={setPhone}
+                                        inputStyle={{
+                                            width: "50%",
+                                            height: "10px",
+                                            borderRadius: "50px",
+                                            outline: "none",
+                                            ":focus": {
+                                                borderRadius: "50px",
+                                            },
+                                        }}
+                                    />
 
 
-                                                </FormGroup>
-                                                <div className="form-group" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '30px', height: 48 }}>
-                                                    <a href="#" style={{ backgroundColor: '#FC5241', color: 'white', textDecoration: 'none', padding: '12px', borderRadius: '32px', display: 'flex', width: '300px', textAlign: 'center', justifyContent: 'center' }} onClick={handleSubmitInfo}>
-                                                        {loading &&
-                                                            <TailSpin
-                                                                height="20"
-                                                                width="20"
-                                                                color="white"
-                                                                ariaLabel="tail-spin-loading"
-                                                                radius="1"
-                                                                wrapperStyle={{ marginRight: '20px' }}
-                                                                wrapperClass=""
-                                                                visible={true}
-                                                            />
-                                                        }
-                                                        Continuar con datos de envío
-                                                    </a>
-                                                </div>
-
-                                            </Form>
-                                        </Card>
+                                </FormGroup>
+                                <div className="form-group" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '30px', height: 48 }}>
+                                    <div>
+                                        <Input
+                                            className="custom-input"
+                                            cssModule={{ color: "red" }}
+                                            type="checkbox"
+                                            name="terms"
+                                            id="terms"
+                                            value="true"
+                                            checked={termsAccepted}
+                                            onClick={() => {
+                                                setTermsAccepted(!termsAccepted);
+                                                if (!termsAccepted) {
+                                                    handleSubmitInfo();
+                                                }
+                                            }}
+                                            style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                                        />
+                                        <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
                                     </div>
-                                </AccordionBody>
-                            </AccordionItem>
-                            {/* Fin acorrdion item perfil */}
-                            {/* Incio accordion Direccion */}
-                            {/* <AccordionItem > */}
-                            <AccordionHeader targetId='2' >
-                                <h5>2. ENVÍO </h5>
-                            </AccordionHeader>
-                            {/* <AccordionBody accordionId='2'>
+                                    {/* <a href="#" style={{ backgroundColor: '#FC5241', color: 'white', textDecoration: 'none', padding: '12px', borderRadius: '32px', display: 'flex', width: '300px', textAlign: 'center', justifyContent: 'center' }} onClick={handleSubmitInfo}>
+                                        {loading &&
+                                            <TailSpin
+                                                height="20"
+                                                width="20"
+                                                color="white"
+                                                ariaLabel="tail-spin-loading"
+                                                radius="1"
+                                                wrapperStyle={{ marginRight: '20px' }}
+                                                wrapperClass=""
+                                                visible={true}
+                                            />
+                                        }
+                                        Continuar con datos de envío
+                                    </a> */}
+                                </div>
+
+                            </Form>
+                            {/* </Card> */}
+                        </div>
+                        {/* </AccordionBody> */}
+                        {/* </AccordionItem> */}
+                        {/* Fin acorrdion item perfil */}
+                        {/* Incio accordion Direccion */}
+                        {/* <AccordionItem > */}
+                        {/* <AccordionHeader targetId='2' > */}
+                        <h5>2. ENVÍO </h5>
+                        <div className="cards" id="cardsAddress" >
+                            <Form onSubmit={handleSubmitAddress}>
+                                <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+
+                                    <Input addon={true}
+                                        name="zip"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        value={selectedZip}
+                                        type='select'
+                                        onChange={handleSelectChangeZip}
+                                        disabled
+
+                                    >
+                                        <option value="">{selectedZip}</option>
+                                        {deptos && deptos.map((depto, index) => (
+                                            <option value={depto.id_departamento} key={index}>{depto.departamento}</option>
+                                        ))}
+                                    </Input>
+
+                                    <Input addon={true}
+                                        name="city"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="Ciudad"
+                                        value={selectedCity}
+                                        type='select'
+                                        onChange={handleSelectChangeCity}
+                                        disabled
+                                    >
+                                        <option value="">{selectedCiudad}</option>
+                                        {city && city.map((city, index) => (
+                                            <option value={city.id} key={index}>{city.nombre}</option>
+                                        ))}
+                                    </Input>
+
+
+                                </FormGroup>
+
+
+                                <FormGroup controlId="formBasicDireccion">
+                                    <Input addon={true}
+                                        name="address"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="Dirección"
+                                        value={addressForm}
+                                        onChange={(event) => setAddressForm(event.target.value)}
+                                        disabled
+                                    />
+
+                                </FormGroup>
+
+                                {/* <FormGroup controlId="formBasicDescripcionandBarrio" >
+                                                <Input addon={true}
+                                                    name="barrio"
+                                                    classNanme="form-control"
+                                                    style={{
+                                                        borderRadius: "50px",
+                                                    }}
+                                                    placeholder="Barrio"
+                                                    value={barrio}
+                                                    onChange={(event) => setBarrio(event.target.value)}
+                                                />
+
+
+
+                                            </FormGroup> */}
+
+
+                                <FormGroup>
+                                    <Input addon={true}
+                                        type="textarea"
+                                        name="local_description"
+                                        classNanme="form-control"
+                                        style={{
+                                            borderRadius: "50px",
+                                        }}
+                                        placeholder="¿Cómo llegar?"
+                                        value={localDescription}
+                                        onChange={(event) => setLocalDescription(event.target.value)}
+                                        disabled
+                                    />
+                                </FormGroup>
+
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+
+                                    {/* <Button
+                                        style={{
+                                            backgroundColor: "#fc5241",
+                                            borderColor: "#fc5241",
+                                            borderRadius: "50px",
+                                            marginTop: "10px"
+                                        }}
+                                        type="submit"
+                                        disabled={loading}
+
+                                    >
+                                        {loading ? 'Cargando...' : 'Actualizar dirección'}
+                                    </Button> */}
+
+                                </div>
+                            </Form>
+
+
+                        </div>
+                        {/* </AccordionHeader> */}
+                        {/* <AccordionBody accordionId='2'>
                                     <Form>
                                         <FormGroup controlId="countryAndZip" style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
 
@@ -775,14 +1121,14 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                         </FormGroup>
                                     </Form>
                                 </AccordionBody> */}
-                            {/* </AccordionItem> */}
-                            {/* Fin accordion direccion */}
-                            {/* Inicio acorrdion item pago */}
-                            {/* <AccordionItem> */}
-                            <AccordionHeader targetId='3' >
-                                <h5>3. PAGO </h5>
-                            </AccordionHeader>
-                            {/* <AccordionBody accordionId='3'>
+                        {/* </AccordionItem> */}
+                        {/* Fin accordion direccion */}
+                        {/* Inicio acorrdion item pago */}
+                        {/* <AccordionItem> */}
+                        {/* <AccordionHeader targetId='3' > */}
+                        <h5>3. PAGO </h5>
+                        {/* </AccordionHeader> */}
+                        {/* <AccordionBody accordionId='3'>
                                     <UncontrolledAccordion>
                                         <AccordionItem>
                                             <AccordionHeader targetId='4'>
@@ -888,9 +1234,9 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                         </AccordionItem>
                                     </UncontrolledAccordion>
                                 </AccordionBody> */}
-                            {/* </AccordionItem> */}
-                            {/* Fin acorrdion item pago */}
-                        </UncontrolledAccordion>
+                        {/* </AccordionItem> */}
+                        {/* Fin acorrdion item pago */}
+                        {/* </UncontrolledAccordion> */}
                         {/* Fin accordion  */}
 
                     </div>
