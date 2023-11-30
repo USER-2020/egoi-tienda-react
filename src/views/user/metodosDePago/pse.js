@@ -32,6 +32,9 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     const token = currenUSer ? currenUSer.token : null; // Manejo de seguridad en caso de que currenUser sea null
     const userEmail = currenUSer ? currenUSer.email : null;
 
+    const isSmallScreen = window.innerWidth <= 768;
+    const buttonWidth = isSmallScreen ? '90%' : '40%';
+
     const typeDis = {
         "C.C": "C.C",
         "NIT": "NIT"
@@ -377,7 +380,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                                             />
                                             <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
                                         </div> */}
-                                        <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px", border:'none' }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</Button>
+                                        <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: buttonWidth, height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", borderRadius: "32px", border: 'none' }} onClick={(e) => { e.preventDefault(); handleSubmitOrderPaymentCard() }}>Registrar pago</Button>
                                     </div>
                                 </FormGroup>
 
