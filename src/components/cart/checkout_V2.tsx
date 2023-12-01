@@ -284,9 +284,9 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                     }
                     setCurrentUser(item);
                     addCartProductsOfLocalStorage();
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 3000);
+                    // setTimeout(function () {
+                    //     window.location.reload();
+                    // }, 3000);
                     // Swal.fire({
                     //     icon: 'success',
                     //     title: 'Bienvenido',
@@ -334,9 +334,9 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                             }
                             setCurrentUser(item);
                             addCartProductsOfLocalStorage();
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 3000);
+                            // setTimeout(function () {
+                            //     window.location.reload();
+                            // }, 3000);
 
 
                         }).catch((err) => console.log(err));

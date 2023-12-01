@@ -24,6 +24,9 @@ export const addCartProductsOfLocalStorage = async () => {
                 console.table(res)
                 // Elimina el producto del localStorage
                 removeProductFromLocalStorage(product.id);
+                setTimeout(function () {
+                    window.location.reload();
+                }, 3000);
             }).catch((err) => console.log(err));
     }
 
