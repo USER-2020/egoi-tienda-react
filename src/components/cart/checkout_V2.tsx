@@ -775,7 +775,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        placeholder="Nombre del contacto"
+                                        placeholder="Nombre"
                                         value={f_name}
                                         onChange={(event) => setF_name(event.target.value)}
                                     />
@@ -786,7 +786,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                         style={{
                                             borderRadius: "50px",
                                         }}
-                                        placeholder="Apellido del contacto"
+                                        placeholder="Apellido"
                                         value={l_name}
                                         onChange={(event) => setL_name(event.target.value)}
                                     />
