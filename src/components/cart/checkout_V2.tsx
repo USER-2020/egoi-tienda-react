@@ -283,10 +283,10 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         email: email,
                     }
                     setCurrentUser(item);
-                    addCartProductsOfLocalStorage();
-                    // setTimeout(function () {
-                    //     window.location.reload();
-                    // }, 3000);
+                    setTimeout(function () {
+                        addCartProductsOfLocalStorage();
+                        window.location.reload();
+                    }, 3000);
                     // Swal.fire({
                     //     icon: 'success',
                     //     title: 'Bienvenido',
@@ -333,7 +333,11 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                 email: email,
                             }
                             setCurrentUser(item);
-                            addCartProductsOfLocalStorage();
+                            setTimeout(function () {
+                                addCartProductsOfLocalStorage();
+                                window.location.reload();
+                            }, 3000);
+
                             // setTimeout(function () {
                             //     window.location.reload();
                             // }, 3000);
