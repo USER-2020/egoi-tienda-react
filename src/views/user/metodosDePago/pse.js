@@ -89,6 +89,9 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
     }
 
     const handleSubmitOrderPaymentCard = () => {
+        console.log("Pse info: ");
+        
+        console.log(dataOrderAddress);
         updateAddress();
         if (token) {
             console.log("Envio de orden por pse");
@@ -171,10 +174,11 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
 
             const dataOrder = {
 
-                firstname: dataOrderAddress[0].contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
+
+                firstname: dataOrderAddress.contact_person_name, //nombre del usuario traido odesde el id de la direccion seleccionada
                 lastname: "", //apellido del usuario traido desde el id de la direccion seleccionada
-                email: "juanfernandozuluaga2014310@gmail.com", // correo del usuario userEmail
-                numberPhone: dataOrderAddress[0].phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
+                email: userEmail, // correo del usuario userEmail
+                numberPhone: dataOrderAddress.phone, //numero de celular del usuario traido desde el id de la direccion seleccionada
                 type: "pse", //medio de pago traido del id del metodo de pago selesccionado
                 issuer_id: "1037",  // id de banco traido del modal de pago seleccionado solo para pse !!
                 installments: "1",//cuotas de tarjeta
@@ -188,7 +192,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                 billing_address_id: idAddress, // id de la direccion
                 coupon_code: cuponCode, //codigo del cupon
                 coupon_discount: cuponOffSale, //el decuento que te da el cupon 
-                order_note: dataOrderAddress[0].local_description,// como llegar infor traida de la direccion seleccionada por Id
+                order_note: dataOrderAddress.local_description,// como llegar infor traida de la direccion seleccionada por Id
                 plataforma: 'Web',//Plataforma desde que se hace la transaccion
                 tipo_pago: 'PSE' //tipo de pago registrado
             }

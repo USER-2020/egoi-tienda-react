@@ -834,7 +834,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                         {/* <AccordionBody accordionId='1'> */}
                         <div className="card-body card1" style={{ backgroundColor: 'transparent' }} id='infoPerfil'>
                             {/* <Card > */}
-                            <p>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
+                            <p style={{ marginLeft: '10px' }}>Solicitamos únicamente la información esencial para la finalización de la compra.</p>
                             <Form onSubmit={handleSubmitInfo}>
                                 <FormGroup controlId="formBasicEmail">
                                     <Input addon={true}
