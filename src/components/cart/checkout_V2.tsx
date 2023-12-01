@@ -358,21 +358,26 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
         validateEmail(email)
             .then((res) => {
                 console.log("Respuesta de validacion", res);
-                login_Email_Face(email)
-                .then((res) => {
-                    console.log("El usuario ya esta en la base de datos", res.data);
-                    const item = {
-                        token: res.data.token,
-                        email: email,
-                    }
-                    setCurrentUser(item);
-                    addCartProductsOfLocalStorage();
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 3000);
-                    
+                if (res.data.status === 'ok') {
 
-                }).catch((err) => console.log(err));
+                    login_Email_Face(email)
+                        .then((res) => {
+                            console.log("El usuario ya esta en la base de datos", res.data);
+                            const item = {
+                                token: res.data.token,
+                                email: email,
+                            }
+                            setCurrentUser(item);
+                            addCartProductsOfLocalStorage();
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 3000);
+
+
+                        }).catch((err) => console.log(err));
+                } else {
+                    console.log("Esperando datos... ... ...");
+                }
             }).catch((err) => console.log(err));
     }
 
