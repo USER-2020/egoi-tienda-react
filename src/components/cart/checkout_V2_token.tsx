@@ -1649,7 +1649,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             style={{
                                                 borderRadius: "50px",
                                             }}
-                                            placeholder="Nombre del contacto"
+                                            placeholder="Nombre"
                                             value={infoPerfil.f_name}
                                             onChange={(event) => setF_name(event.target.value)}
                                         />
@@ -1660,7 +1660,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             style={{
                                                 borderRadius: "50px",
                                             }}
-                                            placeholder="Apellido del contacto"
+                                            placeholder="Apellido"
                                             value={infoPerfil.l_name}
                                             onChange={(event) => setL_name(event.target.value)}
                                         />

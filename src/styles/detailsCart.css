@@ -515,8 +515,8 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: 23px;
 }
 
-input[placeholder="Nombre del contacto"]::placeholder,
-input[placeholder="Apellido del contacto"]::placeholder {
+input[placeholder="Nombre"]::placeholder,
+input[placeholder="Apellido"]::placeholder {
   background-image: var(--placeholder-icon-nombre);
 }
 
