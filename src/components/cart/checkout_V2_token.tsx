@@ -1488,6 +1488,8 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     useEffect(() => {
         offcanvasValidate();
         getInfoPerfil();
+        getAllProductsByCart();
+
     }, [])
     // useEffect(() => {
     //   console.log(shouldShowCollapseThree);
