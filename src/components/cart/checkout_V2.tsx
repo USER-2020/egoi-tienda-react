@@ -273,94 +273,11 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
 
         } else {
-            setLoading(true);
-            validateEmail(email)
+
+            console.log("El usuario puede funcionar como el logueo ");
+            firstLogin(f_name, l_name, email, phone)
                 .then((res) => {
-                    console.log("Respuesta de validacion", res);
-                    if (res.data.status === 'ok') {
-                        console.log("El usuario ya existe valide su login");
-                        // Swal.fire({
-                        //     icon: 'error',
-                        //     title: 'Oops...',
-                        //     text: '¡Completaremos la información para procesar la compra!',
-                        //     confirmButtonColor: '#FC5241',
-                        //     confirmButtonText: 'Continuar',
-                        // }).then((result) => {
-                        //     if (result.isConfirmed) {
-                        // Cierra el Swal
-                        // Swal.close();
-
-                        // Abre el modal de opciones
-                        // setModalOpcionesLogin(true);
-                        login_Email_Face(email)
-                            .then((res) => {
-                                console.log("El usuario ya esta en la base de datos", res.data);
-                                const item = {
-                                    token: res.data.token,
-                                    email: email,
-                                }
-                                setCurrentUser(item);
-                                setTimeout(function () {
-                                    addCartProductsOfLocalStorage();
-                                }, 3000);
-                                window.location.reload();
-
-                            }).catch((err) => console.log(err));
-                        // }
-                        // });
-
-                    } else {
-                        console.log("El usuario puede funcionar como el logueo ");
-                        firstLogin(f_name, l_name, email, phone)
-                            .then((res) => {
-                                console.log(res);
-                                const item = {
-                                    token: res.data.token,
-                                    email: email,
-                                }
-                                setCurrentUser(item);
-                                setTimeout(function () {
-                                    addCartProductsOfLocalStorage();
-                                }, 3000);
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Bienvenido',
-                                    text: 'Has iniciado sesión correctamente',
-                                    confirmButtonColor: '#fc5241',
-                                }).then((result) => {
-                                    // El usuario hizo clic en "OK"
-                                    if (result.isConfirmed) {
-                                        setTimeout(function () {
-                                            addCartProductsOfLocalStorage();
-                                        }, 3000);
-                                        window.location.reload();
-                                    } else {
-                                        // El usuario hizo clic fuera de la ventana
-                                        setTimeout(function () {
-                                            addCartProductsOfLocalStorage();
-                                        }, 3000);
-                                        window.location.reload(); // Recargar la página
-                                    }
-                                });
-
-                                // put(loginUserSuccess(item));
-
-                            }).catch((err) => {
-                                console.log(err);
-                            });
-                    }
-                }).catch((err) => console.log(err));
-        }
-
-    }
-
-    const validateEMailInput = () => {
-        validateEmail(email)
-            .then((res) => {
-                console.log("Respuesta de validacion", res);
-                login_Email_Face(email)
-                .then((res) => {
-                    console.log("El usuario ya esta en la base de datos", res.data);
+                    console.log(res);
                     const item = {
                         token: res.data.token,
                         email: email,
@@ -370,9 +287,62 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                     setTimeout(function () {
                         window.location.reload();
                     }, 3000);
-                    
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     title: 'Bienvenido',
+                    //     text: 'Has iniciado sesión correctamente',
+                    //     confirmButtonColor: '#fc5241',
+                    // }).then((result) => {
+                    //     // El usuario hizo clic en "OK"
+                    //     if (result.isConfirmed) {
+                    //         setTimeout(function () {
+                    //             addCartProductsOfLocalStorage();
+                    //         }, 3000);
+                    //         window.location.reload();
+                    //     } else {
+                    //         // El usuario hizo clic fuera de la ventana
+                    //         setTimeout(function () {
+                    //             addCartProductsOfLocalStorage();
+                    //         }, 3000);
+                    //         window.location.reload(); // Recargar la página
+                    //     }
+                    // });
 
-                }).catch((err) => console.log(err));
+                    // put(loginUserSuccess(item));
+
+                }).catch((err) => {
+                    console.log(err);
+                });
+        }
+        // }).catch((err) => console.log(err));
+
+
+    }
+
+    const validateEMailInput = () => {
+        validateEmail(email)
+            .then((res) => {
+                console.log("Respuesta de validacion", res);
+                if (res.data.status === 'ok') {
+
+                    login_Email_Face(email)
+                        .then((res) => {
+                            console.log("El usuario ya esta en la base de datos", res.data);
+                            const item = {
+                                token: res.data.token,
+                                email: email,
+                            }
+                            setCurrentUser(item);
+                            addCartProductsOfLocalStorage();
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 3000);
+
+
+                        }).catch((err) => console.log(err));
+                } else {
+                    console.log("Esperando datos... ... ...");
+                }
             }).catch((err) => console.log(err));
     }
 
