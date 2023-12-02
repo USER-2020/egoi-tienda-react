@@ -25,6 +25,46 @@ import OpcionesLogin from '../../views/user/opcionesLogin.tsx';
 import RegisterCode from '../../views/user/registerCode.tsx';
 import CodeLogin from '../../views/user/codeLogin';
 import Login from '../../views/user/login';
+import { ThreeCircles } from 'react-loader-spinner';
+
+
+/* The above code is defining a functional component called LoaderOverlay. This component is used to
+display a loading overlay on the screen. It creates a semi-transparent background with a fixed
+position and covers the entire screen. Inside the overlay, it displays three rotating circles and a
+"Cargando..." (Loading...) text. The LoaderOverlay component is likely used to indicate that some
+content is being loaded or processed in the background. */
+const LoaderOverlay = () => {
+    return (
+        <div
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semi-transparente
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999, // Asegura que esté encima de otros elementos
+            }}
+        >
+            <div style={{ textAlign: 'center', color: '#FC5241' }}>
+                <ThreeCircles
+                    height={100}
+                    width={100}
+                    color="#FC5241"
+                    visible={true}
+                    ariaLabel="three-circles-rotating"
+                    outerCircleColor=""
+                    innerCircleColor=""
+                    middleCircleColor=""
+                />
+                <h2>Cargando...</h2>
+            </div>
+        </div>
+    );
+};
 
 const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasValidate }) => {
 
@@ -118,6 +158,10 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
     const shouldOpenAccordion = !!token ? '2' : '1';
     // const shouldOpenAccordion = '1';
+
+    /* The above code is defining a functional component called LoaderOverlay. This component is used
+    to display a loading overlay on the screen. */
+
 
     const handleSelectChangeZip = (e) => {
         const valorSeleccionadoZip = (e.target.value);
@@ -736,6 +780,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     // }, [selectedZip])
     return (
         <>
+        {loading && <LoaderOverlay />}
             <div className="container">
 
                 <div className="containerCheckoutSteps">
