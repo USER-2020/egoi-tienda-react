@@ -33,8 +33,41 @@ import efectyLogo from '../../assets/egoi_icons/logo_efecty.svg';
 import pseLogo from '../../assets/egoi_icons/logo_pse.svg';
 import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoPago';
 import ModalNoPse from '../../views/user/metodosDePago/modalNoPse.tsx';
-import { TailSpin } from 'react-loader-spinner';
+import { TailSpin, ThreeCircles } from 'react-loader-spinner';
 import { getUserProfileInfo } from '../../services/ordenes.js';
+
+const LoaderOverlay = () => {
+    return (
+        <div
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semi-transparente
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999, // Asegura que esté encima de otros elementos
+            }}
+        >
+            <div style={{ textAlign: 'center', color: '#FC5241' }}>
+                <ThreeCircles
+                    height={100}
+                    width={100}
+                    color="#FC5241"
+                    visible={true}
+                    ariaLabel="three-circles-rotating"
+                    outerCircleColor=""
+                    innerCircleColor=""
+                    middleCircleColor=""
+                />
+                <h2>Cargando...</h2>
+            </div>
+        </div>
+    );
+};
 
 const Checkout_V2_token = ({ offcanvasValidate }) => {
 
@@ -472,6 +505,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                 .then((res) => {
                     console.log("Esta es la unica direccion registrada", res.data);
                     setAddress(res.data);
+                    // setSelectedAddressId(res.data.id);
 
                 }).catch((err) => console.log(err));
             // allAddress(token)
@@ -1216,7 +1250,8 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
     /* Realizar order */
     const makePlaceOrder = (newDataRefId) => {
-
+        console.log("Quiero mi dataRefId");
+        console.log(newDataRefId);
         let cuponOffSale = "$0";
         if (discountCoupon && discountCoupon.discount !== undefined) {
             cuponOffSale = discountCoupon.discount;
@@ -1226,6 +1261,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
         console.log(cuponDescuentoLimpio);
         console.log(newDataRefId);
+        console.log("Muestrame id de direccion: ", selectedAddressId);
         placeOrderEfecty(selectedAddressId, cuponDescuentoLimpio, descriptionOrder, 1, token, newDataRefId)
             .then((res) => {
                 console.log("Orden enviada por Efecty");
@@ -1244,14 +1280,14 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     const generateEfectyREF = (data, descriptionOrder) => {
         referenciaPago(data, token)
             .then((res) => {
-                // console.log(res.data);
+                console.log("Haciendo compora por efecty: ", res.data);
                 const newDataRef = res.data;
                 setDataRef(newDataRef);
                 let timerInterval;
                 Swal.fire({
                     title: 'Generando ticket!',
                     html: 'Generando<b></b>',
-                    timer: 3000,
+                    timer: 4000,
                     timerProgressBar: true,
                     didOpen: () => {
                         makePlaceOrder(newDataRef.id);
@@ -1326,6 +1362,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
 
     const handleSubmitOrderEfecty = () => {
+        handleSubmitAddress();
         if (token) {
             // console.log("Envio de orden por efecty");
             // console.log(formattedTotal);
@@ -1345,6 +1382,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
             generateEfectyREF(dataOrder, descriptionOrder);
         }
+
     }
 
 
@@ -1375,12 +1413,18 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                 .then((res) => {
                     console.log("Informacion del perfil", res.data);
                     setInfoPerfil(res.data);
+                    setContactPersonName(res.data.f_name);
+                    setContactPersonLastName(res.data.l_name);
+                    setPhone(res.data.phone);
                 }).catch((err) => console.log(err));
 
         }
     }
 
     const onSubmit = (data) => {
+        // if(address && address.length === 0 ){
+        //     getAllAddress();
+        // }
         setLoading(true);
         console.log("Datos del formulario de dirección", data);
         console.log("Datos del formulario de dirección, contactPersonName", contactPersonName);
@@ -1410,8 +1454,14 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                     //     text: 'La dirección ha sido registrada exitosamente.',
                     //     confirmButtonColor: '#0d6efd',
                     // });
+                    console.log("Guarde la direccion");
+
+                    setTimeout(() => {
+                        getAllAddress();
+                    }, 3000);
+
                     closeModalAddress();
-                    refreshAddress();
+                    // refreshAddress();
                     setLoading(false);
                 })
                 .catch((err) => {
@@ -1459,11 +1509,14 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
             local_description: localDescription,
             is_billing: 'ppp'
         };
-        setContactPersonName(infoPerfil.f_name);
-        setContactPersonLastName(infoPerfil.l_name);
-        setPhone(infoPerfil.phone);
+        // setContactPersonName(infoPerfil && infoPerfil.f_name);
+        // setContactPersonLastName(infoPerfil && infoPerfil.l_name);
+        // setPhone(infoPerfil && infoPerfil.phone);
+        // console.log(infoPerfil.phone);
         changuevisibility();
+        // setTimeout(() => {
         onSubmit(data);
+        // }, 2000);
     }
 
 
@@ -1505,7 +1558,11 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
     useEffect(() => {
 
         if (token) {
-            getAllProductsByCart();
+            setTimeout(() => {
+                getAllProductsByCart();
+
+
+            }, 3000)
             getAllAddress();
             getAllDeptos();
             // toast.success('Código enviado con éxito!');
@@ -1612,6 +1669,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
     return (
         <>
+            {loading && <LoaderOverlay />}
             <div className="container">
                 <div className="containerCheckoutSteps">
                     <div className="containerProgressBar">
@@ -1865,6 +1923,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                 }}
                                                 placeholder="Dirección"
                                                 value={addressForm}
+                                                onBlur={handleSubmitAddress}
                                                 onChange={(event) => setAddressForm(event.target.value)}
                                             />
 
@@ -1897,6 +1956,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                 }}
                                                 placeholder="¿Cómo llegar?(OPCIONAL)"
                                                 value={localDescription}
+                                                onBlur={handleSubmitAddress}
                                                 onChange={(event) => setLocalDescription(event.target.value)}
                                             />
                                         </FormGroup>
@@ -2023,6 +2083,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             }}
                                             placeholder="Dirección"
                                             value={addressForm}
+                                            onBlur={handleSubmitAddress}
                                             onChange={(event) => setAddressForm(event.target.value)}
                                         />
 
@@ -2053,8 +2114,9 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             style={{
                                                 borderRadius: "50px",
                                             }}
-                                            placeholder="¿Cómo llegar?(OPCIONAL)"
+                                            placeholder="¿Cómo llegar? (Opcional)"
                                             value={localDescription}
+                                            onBlur={handleSubmitAddress}
                                             onChange={(event) => setLocalDescription(event.target.value)}
                                         />
                                     </FormGroup>
@@ -2190,7 +2252,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                                         />
                                                         <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
                                                     </div> */}
-                                                <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitAddress(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
+                                                <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
                                             </div>
 
                                         </div>
@@ -2212,7 +2274,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                         <h6>Pago contra entrega</h6>
                                     </AccordionHeader>
                                     <AccordionBody accordionId='8'>
-                                        <CashDeliveryOTP phone={dataAddress?.phone}
+                                        <CashDeliveryOTP phone={infoPerfil.phone}
                                             closeModalOTP={closeModalOTP}
                                             addressId={selectedAddressId}
                                             descriptionOrder={descriptionOrder}
@@ -2397,7 +2459,8 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
             >
                 {/* <ModalHeader toggle={() => closeModalEfecty()}></ModalHeader> */}
                 < ModalBody >
-                    <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
+                    <EfectyModal
+                        totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
                         // closeEfectyModal={() => closeModalEfecty()}
                         dataRef={dataRef}
                         addressId={selectedAddressId}
