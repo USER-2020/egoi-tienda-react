@@ -278,13 +278,13 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                             console.log(quantity)
                             let quantityChangue = product.quantity;
                             // console.log(quantityChangue);
-                            updateQuantityCart(quantityChangue +1 , product.id, token)
+                            updateQuantityCart(quantityChangue + 1, product.id, token)
                                 .then((res) => {
                                     // console.log(quantityChangue);
                                     updateCantProducts();
                                     setIsLoggedInPartner(true);
                                     toast.success('Producto agregado con éxito!');
-                                }).catch((err)=>console.log(err));
+                                }).catch((err) => console.log(err));
                             let discount = 0;
                             if (product.discount_valor > 0) {
                                 discount = product.unit_price - product.discount_valor;
@@ -366,19 +366,22 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
 
 
             // Obtener el carrito actual del localStorage (si existe)
-            let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
+            let productsCart = JSON.parse(localStorage.getItem('productsCart')) || [];
 
             // // Agregar el nuevo producto al carrito actual
             // productsCart[product.id] = product;
 
-            if (productsCart[product.id]) {
+            const existingProduct = productsCart.find(item => item.id === product.id);
+
+
+            if (existingProduct) {
                 // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
-                productsCart[product.id].min_qty += 1;
+                existingProduct.min_qty += 1;
                 setMinQty();
             } else {
                 // El producto no existe en el carrito, así que agrégalo con cantidad 1
-                product.min_qty = 1;
-                productsCart[product.id] = product;
+                // product.min_qty = 1;°
+                productsCart.push({ ...product, min_qty: 1 });
                 setMinQty();
             }
 

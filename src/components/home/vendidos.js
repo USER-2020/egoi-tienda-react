@@ -298,19 +298,22 @@ const Vendidos = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIs
 
 
             // Obtener el carrito actual del localStorage (si existe)
-            let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
+            let productsCart = JSON.parse(localStorage.getItem('productsCart')) || [];
 
             // // Agregar el nuevo producto al carrito actual
             // productsCart[product.id] = product;
 
-            if (productsCart[product.id]) {
+            const existingProduct = productsCart.find(item => item.id === product.id);
+
+
+            if (existingProduct) {
                 // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
-                productsCart[product.id].min_qty += 1;
+                existingProduct.min_qty += 1;
                 setMinQty();
             } else {
                 // El producto no existe en el carrito, así que agrégalo con cantidad 1
-                product.min_qty = 1;
-                productsCart[product.id] = product;
+                // product.min_qty = 1;°
+                productsCart.push({ ...product, min_qty: 1 });
                 setMinQty();
             }
 

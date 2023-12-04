@@ -8,7 +8,7 @@ import '../../styles/detailsCart.css';
 import es from "react-phone-input-2/lang/es.json";
 import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
 import { addCartProductsOfLocalStorage } from '../../helpers/productsLocalStorage';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { allCitysByIdDepto, allDeptos, saveAddress, uniqueAddress } from '../../services/address';
 import TarjetaDebitoModal from '../../views/user/metodosDePago/tarjetaDebito';
 import axios from 'axios';
@@ -67,6 +67,8 @@ const LoaderOverlay = () => {
 };
 
 const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasValidate }) => {
+
+    const { emailverificaion } = useParams();
 
     const [isOpen, setIsOpen] = useState(false);
     const [quantity, setQuantity] = useState();
@@ -766,6 +768,23 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
 
 
+    /* USE: parameter emailVerification for load all info for client */
+    useEffect(() => {
+        if (emailverificaion) {
+            setLoading(true);
+            login_Email_Face(emailverificaion)
+                .then((res) => {
+                    const item = {
+                        token: res.data.token,
+                        email: emailverificaion,
+                    }
+                    setCurrentUser(item);
+                    window.location.href = '/checkout';
+                    // window.location.reload();
+                }).catch((err) => console.log(err));
+        }
+    }, [])
+
 
 
     // useEffect(() => {
@@ -780,7 +799,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     // }, [selectedZip])
     return (
         <>
-        {loading && <LoaderOverlay />}
+            {loading && <LoaderOverlay />}
             <div className="container">
 
                 <div className="containerCheckoutSteps">

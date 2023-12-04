@@ -48,6 +48,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import LoginGoogle from "../components/extraLogin/loginGoogle.tsx";
 import { CLIENT_ID_GOOGLE } from "../constants/defaultValues";
 import { gapi } from "gapi-script";
+import ProductsInCart from "../components/home/productsInCart.js";
 // import { useGoogleOneTapLogin } from '@react-oauth/google';
 
 const Home = (props) => {
@@ -121,6 +122,7 @@ const Home = (props) => {
         const numberOfProducts = productsOncart.length;
         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
         setCantProductsOnCart(numberOfProducts);
+        console.log("Numero de productos en el carrito: ", numberOfProducts);
         setProductsCart(res.data);
 
 
@@ -143,7 +145,7 @@ const Home = (props) => {
       setCantProductsOnCart(numProducts);
       setProductsCart(productsInCart);
 
-      console.log('Número de productos en el carrito:', numProducts);
+      console.log('Número de productos en el carrito localStorage:', numProducts);
     } else {
       // Si 'productsCartWhithoutToken' es nulo o indefinido, no hay datos en el localStorage.
       console.log('El carrito está vacío.');
@@ -215,6 +217,8 @@ const Home = (props) => {
   }, []);
 
 
+
+
   useEffect(() => {
     funcionValidation();
   }, [isLoggedIn])
@@ -246,8 +250,9 @@ const Home = (props) => {
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
         />
-        
+
         <Banner />
+        <ProductsInCart />
         <OfertaDia />
         <OfertaDestacada />
         <OfertaFlash />
