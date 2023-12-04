@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import '../../styles/detailsCart.css';
 import { AccordionBody, AccordionHeader, AccordionItem, Button, Card, Col, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalHeader, Row, UncontrolledAccordion } from 'reactstrap';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import { getCurrentUser } from '../../helpers/Utils';
+import { getCurrentUser, setCurrentUser } from '../../helpers/Utils';
 import { allProductsCart } from '../../services/cart';
 import start from '../../assets/egoi_icons/star-fill.svg';
 import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
@@ -35,6 +35,7 @@ import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoP
 import ModalNoPse from '../../views/user/metodosDePago/modalNoPse.tsx';
 import { TailSpin, ThreeCircles } from 'react-loader-spinner';
 import { getUserProfileInfo } from '../../services/ordenes.js';
+import { login_Email_Face } from '../../services/extraLogin.js';
 
 const LoaderOverlay = () => {
     return (
@@ -70,6 +71,8 @@ const LoaderOverlay = () => {
 };
 
 const Checkout_V2_token = ({ offcanvasValidate }) => {
+
+    const { emailverificaion } = useParams();
 
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
@@ -1650,6 +1653,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
     }, [address]);
 
+
     // useEffect(() => {
     //   // Obtener la URL actual
     //   const currentPath = window.location.pathname;
@@ -2288,7 +2292,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                         </AccordionBody>
                                     </AccordionItem>
                                 )}
-                            </UncontrolledAccordion>    
+                            </UncontrolledAccordion>
                         )}
                         {/* </div> */}
                         {/* </AccordionBody> */}

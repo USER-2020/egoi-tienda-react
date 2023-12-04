@@ -155,20 +155,22 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
 
             // setModalViewLogin(true);
             // Obtener el carrito actual del localStorage (si existe)
-            let productsCart = JSON.parse(localStorage.getItem('productsCart')) || {};
+            let productsCart = JSON.parse(localStorage.getItem('productsCart')) || [];
 
             // // Agregar el nuevo producto al carrito actual
             // productsCart[product.id] = product;
 
-            if (productsCart[detailProducts.id]) {
+            const existingProduct = productsCart.find(item => item.id === product.id);
+
+
+            if (existingProduct) {
                 // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
-                console.log("Quantyty plus", quantity)
-                productsCart[detailProducts.id].min_qty += quantity;
+                existingProduct.min_qty += 1;
                 setMinQty();
             } else {
                 // El producto no existe en el carrito, así que agrégalo con cantidad 1
-                detailProducts.min_qty = quantity;
-                productsCart[detailProducts.id] = detailProducts;
+                // product.min_qty = 1;°
+                productsCart.push({ ...product, min_qty: 1 });
                 setMinQty();
             }
 
@@ -277,7 +279,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
         // // Actualizar el estado del total a pagar
         // setTotalAPagar(totalAPagar);
         addToCart();
-        window.location.href= "/checkout";
+        window.location.href = "/checkout";
         // Redirigir al usuario a la página de pago con los datos calculados
 
         // } else {

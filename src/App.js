@@ -102,6 +102,8 @@ const App = (props) => {
 
   };
 
+ 
+
   // useEffect(() => {
   //   document.title = `React App - ${routeName}`;
   // }, [routeName]);
@@ -148,6 +150,7 @@ const App = (props) => {
                 <Route path="/detailsProduct/:id/:slug/:tag" exact render={(props) => <ViewDetailProduct {...props} />} />
                 <Route path={addCart} exact render={(props) => <ViewDetailCart {...props} />} />
                 <Route path={checkout} exact render={(props) => <ViewDetailCartAddress {...props} />} />
+                <Route path="/checkout/:emailverificaion" exact render={(props) => <ViewDetailCartAddress {...props} />} />
                 <ProtectedRoute path={myorders} viewComponent={ViewMyOrders} />
                 <ProtectedRoute path={thankYouForPay} viewComponent={ViewThankYouForPay} />
                 <Redirect to="/error" />
