@@ -132,7 +132,7 @@ const ProductsInCart = () => {
                                 <div className="cardContainer">
                                     {products && products.map((product, index) => (
                                         <a href='#' className='containerCard' key={index}>
-                                            <Card className='cardProducto1' style={{ height: "380px" }}>
+                                            <Card className='cardProducto1' style={{ height: "380px", left:22}}>
                                                 <Link to={`/detailsProduct/${product.id}/${product.slug}`} >
                                                     {product.current_stock <= 0 && (
                                                         <span className="agotadoTag">Agotado</span>

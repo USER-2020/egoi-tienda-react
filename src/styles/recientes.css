@@ -73,7 +73,7 @@
     overflow-y: hidden;
     margin-bottom: 20px;
     position: relative;
-    width: 100%;
+    width: 102%;
     height: 400px;
     scroll-behavior: smooth;
     left: -18px;
@@ -885,6 +885,23 @@ h4 {
 }
 
 @media (max-width: 768px) {
+
+    .containerProductos1 {
+        display: flex;
+        gap: 25px;
+        overflow-x: scroll;
+        white-space: nowrap;
+        overflow-y: hidden;
+        margin-bottom: 20px;
+        position: relative;
+        width: 100%;
+        height: 400px;
+        scroll-behavior: smooth;
+        left: 0;
+    
+        /* padding-left: 30px; */
+        /* Ajustar el espacio a la izquierda para el botón de "left" */
+    }
 
     .cardContainer {
         display: flex;
