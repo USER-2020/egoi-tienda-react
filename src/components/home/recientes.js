@@ -466,7 +466,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                             </Link>
                         </div>
                     ) : (null)}
-                    <div className={uniqueProducts.length > 0 ? 'containerProductos1' : 'containerProductos2'} ref={containerRef}>
+                    <div className={uniqueProducts.length > 0 ? 'containerProductos1' : 'containerProductos2'} ref={containerRef} style={{ left: uniqueProducts.length > 0 && uniqueProducts.length < 5 ? 8 : 0 }}>
                         {((uniqueProducts && uniqueProducts.length >= 5)) && (
                             <button className="scroll-button left" onClick={handleScrollLeft} onMouseOver={handleScrollLeft}>
                                 &#8249;
