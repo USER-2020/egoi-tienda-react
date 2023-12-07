@@ -102,7 +102,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
 
     // }
 
-    const addToCart = () => {
+    const addToCart = (product) => {
         if (currenUser) {
             // setModalViewCart(true);
 
@@ -248,7 +248,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
 
     const descuento = "$0";
 
-    const buyNow = () => {
+    const buyNow = (product) => {
         // Verificar si el usuario está autenticado
         // if (currenUser) {
         // Calcular el precio del producto según descuentos (si los hay)
@@ -278,7 +278,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
 
         // // Actualizar el estado del total a pagar
         // setTotalAPagar(totalAPagar);
-        addToCart();
+        addToCart(product);
         window.location.href = "/checkout";
         // Redirigir al usuario a la página de pago con los datos calculados
 
@@ -1073,13 +1073,13 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                     <div className="opciones">
                                         {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
-                                            <a href="#" className='buyNow' onClick={(e) => { e.preventDefault(); buyNow() }}>
+                                            <a href="#" className='buyNow' onClick={(e) => { e.preventDefault(); buyNow(detailProducts) }}>
                                                 <p>Comprar ahora</p>
                                             </a>
                                         ) : (
                                             <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center' }}>Comprar ahora</p></a>
                                         )}
-                                        <a href="#" className='addCart' onClick={(e) => { addToCart(); e.preventDefault() }}>
+                                        <a href="#" className='addCart' onClick={(e) => { addToCart(detailProducts); e.preventDefault() }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FC5241" className="bi bi-cart3" viewBox="0 0 16 16">
                                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                                             </svg>
@@ -1256,14 +1256,14 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                             <div className="buyNowResponsive">
                                                 {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
-                                                    <a href="#" onClick={(e) => { e.preventDefault(); buyNow() }} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>Comprar ahora</a>
+                                                    <a href="#" onClick={(e) => { e.preventDefault(); buyNow(detailProducts) }} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>Comprar ahora</a>
                                                 ) : (
                                                     <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center', marginBottom: '0' }}>Comprar ahora</p></a>
                                                 )}
                                             </div>
                                             <div className="anadiralcarrito">
 
-                                                <a href="#" onClick={(e) => { addToCart(); history.push('/detailCart'); e.preventDefault() }}>
+                                                <a href="#" onClick={(e) => { addToCart(detailProducts); e.preventDefault() }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" className="bi bi-cart3 svgCart" viewBox="0 0 16 16">
                                                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                                                     </svg>
