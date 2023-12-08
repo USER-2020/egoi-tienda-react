@@ -13,6 +13,7 @@ import {
     UncontrolledCarousel,
     Input
 } from 'reactstrap';
+import { Loader, TailSpin } from 'react-loader-spinner';
 import iphone from '../../assets/iphoneMuestra.png';
 import start from '../../assets/egoi_icons/star-fill.svg';
 import startEmpty from '../../assets/egoi_icons/star-fill-gray.svg';
@@ -54,6 +55,8 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
     const [selectedColor, setSelectedColor] = useState('');
     const [variant, setVariant] = useState('');
     const [commentsAndOpinionsProducts, setCommentsAndOpinionsProducts] = useState([]);
+    const [loadingBuyNow, setLoadingBuyNow] = useState(false);
+    const [loadingAdd, setLoadingAdd] = useState(false);
 
 
     const [productsCart, setProductsCart] = useState([]);
@@ -105,7 +108,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
     const addToCart = (product) => {
         if (currenUser) {
             // setModalViewCart(true);
-
+            setLoadingAdd(true);
             addProductsCart(id, quantity, currenUser.token, variant, selectedColor, selectedOption)
                 .then((res) => {
 
@@ -153,6 +156,8 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
             // console.log(token);
         } else {
 
+            setLoadingAdd(true);
+
             // setModalViewLogin(true);
             // Obtener el carrito actual del localStorage (si existe)
             let productsCart = JSON.parse(localStorage.getItem('productsCart')) || [];
@@ -171,7 +176,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                 // El producto no existe en el carrito, así que agrégalo con cantidad 1
                 // product.min_qty = 1;°
                 productsCart.push({ ...product, min_qty: 1 });
-                
+
                 // setMinQty();
             }
 
@@ -279,10 +284,11 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
 
         // // Actualizar el estado del total a pagar
         // setTotalAPagar(totalAPagar);
+        setLoadingBuyNow(true);
         addToCart(product);
         setTimeout(() => {
             window.location.href = "/checkout";
-        },1000);
+        }, 1000);
         // Redirigir al usuario a la página de pago con los datos calculados
 
         // } else {
@@ -1077,15 +1083,41 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                         {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
                                             <a href="#" className='buyNow' onClick={(e) => { e.preventDefault(); buyNow(detailProducts) }}>
+                                                {loadingBuyNow &&
+                                                    <TailSpin
+                                                        height="20"
+                                                        width="20"
+                                                        color="white"
+                                                        ariaLabel="tail-spin-loading"
+                                                        radius="1"
+                                                        wrapperStyle={{ marginRight: '20px' }}
+                                                        wrapperClass=""
+                                                        visible={true}
+                                                    />
+                                                }
                                                 <p>Comprar ahora</p>
                                             </a>
                                         ) : (
                                             <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center' }}>Comprar ahora</p></a>
                                         )}
-                                        <a href="#" className='addCart' onClick={(e) => { addToCart(detailProducts); setTimeout(()=>{window.location.href = "/detailCart"},1000);e.preventDefault() }}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FC5241" className="bi bi-cart3" viewBox="0 0 16 16">
-                                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                            </svg>
+                                        <a href="#" className='addCart' onClick={(e) => { addToCart(detailProducts); setTimeout(() => { window.location.href = "/detailCart" }, 1000); e.preventDefault() }}>
+                                            {loadingAdd ? (
+                                                <TailSpin
+                                                    height="20"
+                                                    width="20"
+                                                    color="#FC5241"
+                                                    ariaLabel="tail-spin-loading"
+                                                    radius="1"
+                                                    wrapperStyle={{ marginRight: '20px' }}
+                                                    wrapperClass=""
+                                                    visible={true}
+                                                />
+                                            ) : (
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FC5241" className="bi bi-cart3" viewBox="0 0 16 16">
+                                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                                </svg>
+
+                                            )}
                                             <p>Añadir al carrito</p>
                                         </a>
 
@@ -1259,17 +1291,45 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                             <div className="buyNowResponsive">
                                                 {detailProducts && detailProducts.current_stock && detailProducts.current_stock > 0 ? (
 
-                                                    <a href="#" onClick={(e) => { e.preventDefault(); buyNow(detailProducts) }} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>Comprar ahora</a>
+                                                    <a href="#" onClick={(e) => { e.preventDefault(); buyNow(detailProducts) }} style={{ border: '1px solid #FC5241', borderRadius: '32px' }}>
+                                                        {loadingBuyNow &&
+                                                            <TailSpin
+                                                                height="20"
+                                                                width="20"
+                                                                color="white"
+                                                                ariaLabel="tail-spin-loading"
+                                                                radius="1"
+                                                                wrapperStyle={{ marginRight: '20px' }}
+                                                                wrapperClass=""
+                                                                visible={true}
+                                                            />
+                                                        }
+                                                        Comprar ahora
+                                                    </a>
                                                 ) : (
                                                     <a href="#" style={{ pointerEvents: 'none', backgroundColor: 'gray', borderRadius: '32px', textDecoration: 'none', color: 'white', textAlign: 'center', justifyContent: 'center', fontWeight: 700 }}><p style={{ textAlign: 'center', marginBottom: '0' }}>Comprar ahora</p></a>
                                                 )}
                                             </div>
                                             <div className="anadiralcarrito">
 
-                                                <a href="#" onClick={(e) => { addToCart(detailProducts); setTimeout(()=>{window.location.href = "/detailCart"},1000);e.preventDefault() }}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" className="bi bi-cart3 svgCart" viewBox="0 0 16 16">
-                                                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                                    </svg>
+                                                <a href="#" onClick={(e) => { addToCart(detailProducts); setTimeout(() => { window.location.href = "/detailCart" }, 1000); e.preventDefault() }}>
+                                                    {loadingAdd ? (
+                                                        <TailSpin
+                                                            height="20"
+                                                            width="20"
+                                                            color="#FC5241"
+                                                            ariaLabel="tail-spin-loading"
+                                                            radius="1"
+                                                            wrapperStyle={{ marginRight: '20px' }}
+                                                            wrapperClass=""
+                                                            visible={true}
+                                                        />
+                                                    ) : (
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FC5241" className="bi bi-cart3" viewBox="0 0 16 16">
+                                                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                                        </svg>
+
+                                                    )}
                                                     Añadir al carrito
                                                 </a>
                                             </div>
