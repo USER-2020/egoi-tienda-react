@@ -1296,7 +1296,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                                             <TailSpin
                                                                 height="20"
                                                                 width="20"
-                                                                color="white"
+                                                                color="#FC5241"
                                                                 ariaLabel="tail-spin-loading"
                                                                 radius="1"
                                                                 wrapperStyle={{ marginRight: '20px' }}
@@ -1317,7 +1317,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                                         <TailSpin
                                                             height="20"
                                                             width="20"
-                                                            color="#FC5241"
+                                                            color="white"
                                                             ariaLabel="tail-spin-loading"
                                                             radius="1"
                                                             wrapperStyle={{ marginRight: '20px' }}
