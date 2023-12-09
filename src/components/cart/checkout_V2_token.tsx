@@ -298,6 +298,9 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
         });
         gtag('event', 'purchase', {
             affiliation: 'Egoi',
+            nombre_cliente:infoPerfil.f_name,
+            email_cliente:infoPerfil.email,
+            numero_telefono:infoPerfil.phone,
             coupon: cupon,
             currency: 'COP',
             items: mappedItems,
@@ -2296,7 +2299,143 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                     </AccordionItem>
                                 )}
                             </UncontrolledAccordion>
-                        ) : (null)}
+                        ) : (
+                            <UncontrolledAccordion>
+                                <AccordionItem>
+                                    <AccordionHeader targetId='4'>
+                                        <h6>Tarjeta débito</h6>
+                                    </AccordionHeader>
+                                    {/* <AccordionBody accordionId='4'> */}
+
+                                    {/* <TarjetaDebitoModal
+                                        closeModalTarjetaDebito={closeModalTarjetaDebito}
+                                        dataOrderAddress={dataAddress}
+                                        total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                        discountCoupon={discountCoupon}
+                                        cupon={cupon}
+                                        ipAddress={ipAddress}
+                                        idAddress={selectedAddressId}
+                                        descriptionOrder={descriptionOrder}
+                                        // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                        // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                        setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                        setOk={() => setOkPurchase(true)}
+                                        setModalProcesoPago={() => setModalProcesoPago(true)}
+                                        setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                        updateAddress={handleSubmitAddress}
+                                    /> */}
+                                    {/* </AccordionBody> */}
+                                </AccordionItem>
+                                <AccordionItem>
+                                    <AccordionHeader targetId='5'>
+                                        <h6>Tarjeta crédito</h6>
+                                    </AccordionHeader>
+                                    {/* <AccordionBody accordionId='5'> */}
+                                    {/* <TarjetaCreditoModal
+                                        // handleModalData={handleModalData} 
+                                        closeModalTarjetaCredito={closeModalTarjetaCredito}
+                                        dataOrderAddress={dataAddress}
+                                        total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                        discountCoupon={discountCoupon}
+                                        cupon={cupon}
+                                        ipAddress={ipAddress}
+                                        idAddress={selectedAddressId}
+                                        descriptionOrder={descriptionOrder}
+                                        // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                        // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                        setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                        setOk={() => setOkPurchase(true)}
+                                        setModalProcesoPago={() => setModalProcesoPago(true)}
+                                        setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                        updateAddress={handleSubmitAddress}
+                                    /> */}
+                                    {/* </AccordionBody> */}
+                                </AccordionItem>
+                                <AccordionItem>
+                                    <AccordionHeader targetId='6'>
+                                        <h6>PSE</h6>
+                                    </AccordionHeader>
+                                    {/* <AccordionBody accordionId='6'> */}
+                                    {/* <PseModal
+                                        closeModalPse={closeModalPse}
+                                        dataOrderAddress={dataAddress}
+                                        total={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                        discountCoupon={discountCoupon}
+                                        cupon={cupon}
+                                        ipAddress={ipAddress}
+                                        idAddress={selectedAddressId}
+                                        descriptionOrder={descriptionOrder}
+                                        // setBtnFinalizarCompra={() => setModalSuccessPurchase(true)}
+                                        // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                        setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                        setOk={() => setOkPurchase(true)}
+                                        setModalProcesoPago={() => setModalProcesoPago(true)}
+                                        setModalProcesoPagoClose={() => setModalProcesoPago(false)}
+                                        updateAddress={handleSubmitAddress}
+                                    /> */}
+                                    {/* </AccordionBody> */}
+                                </AccordionItem>
+                                {totalNumber >= 5000 && (
+                                    <AccordionItem>
+                                        <AccordionHeader targetId='7'>
+                                            <h6>Efecty</h6>
+                                        </AccordionHeader>
+                                        {/* <AccordionBody accordionId='7'> */}
+                                        {/* <div className="d-flex flex-column align-items-center">
+                                            <img src={efectyLogo} style={{ width: 100 }} />
+                                            <p>Pago por consignación genera tu ticket acá</p>
+                                            <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column', marginBottom: '20px' }}>
+                                                {/* <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+                                                    <Input
+                                                        className="custom-input"
+                                                        cssModule={{ color: "red" }}
+                                                        type="checkbox"
+                                                        name="terms"
+                                                        id="terms"
+                                                        value="true"
+                                                        checked={termsAccepted}
+                                                        onClick={() => setTermsAccepted(!termsAccepted)}
+                                                        style={{ marginRight: "10px", borderRadius: "50%", border: "1px solid black" }}
+                                                    />
+                                                    <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
+                                                </div> */}
+                                        {/* <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
+                                            </div>
+
+                                        </div>  */}
+                                        {/* <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                                // closeEfectyModal={() => closeModalEfecty()}
+                                                dataRef={dataRef}
+                                                addressId={selectedAddressId}
+                                                descriptionOrder={descriptionOrder}
+                                                cupon={cupon}
+                                                // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                                setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                                setOk={() => setOkPurchase(true)} /> */}
+                                        {/* </AccordionBody> */}
+                                    </AccordionItem>
+                                )}
+                                {totalNumber >= 39990 && totalNumber <= 1999000 && (
+                                    <AccordionItem>
+                                        <AccordionHeader targetId='8'>
+                                            <h6>Pago contra entrega</h6>
+                                        </AccordionHeader>
+                                        {/* <AccordionBody accordionId='8'> */}
+                                        {/* <CashDeliveryOTP phone={infoPerfil.phone}
+                                            closeModalOTP={closeModalOTP}
+                                            addressId={selectedAddressId}
+                                            descriptionOrder={descriptionOrder}
+                                            cupon={cupon}
+                                            // setModalPurchaseSuccess={() => { setModalSuccessPurchase(true); resetProductCardDetail() }}
+                                            setModalPurchaseSuccess={() => { handleFinishPurchase(); resetProductCardDetail() }}
+                                            setOk={() => setOkPurchase(true)}
+                                            updateAddress={handleSubmitAddress}
+                                        /> */}
+                                        {/* </AccordionBody> */}
+                                    </AccordionItem>
+                                )}
+                            </UncontrolledAccordion>
+                        )}
                         {/* </div> */}
                         {/* </AccordionBody> */}
                         {/* </AccordionItem> */}
