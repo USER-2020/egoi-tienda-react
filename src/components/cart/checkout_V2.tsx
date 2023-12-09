@@ -27,6 +27,7 @@ import CodeLogin from '../../views/user/codeLogin';
 import Login from '../../views/user/login';
 import efectyLogo from '../../assets/egoi_icons/logo_efecty.svg';
 import { ThreeCircles } from 'react-loader-spinner';
+import ModalFillAll from '../../views/user/modalFillAll.js';
 
 
 /* The above code is defining a functional component called LoaderOverlay. This component is used to
@@ -84,6 +85,7 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
     const [modalOpcionesLogin, setModalOpcionesLogin] = useState(false);
     const [changeFormLogin, setChangeFormLogin] = useState(false);
     const [changeFormRegister, setChangeFormRegister] = useState(false);
+    const [modalVisibleFillAll, setModalVisibleFillAll] = useState(false);
     const [modalAddressCheckout, setModalAddressCheckout] = useState(false);
     const [modalAddressUpdate, setModalAddressUpdate] = useState(false);
     const [modalTarjetaCredito, setModalTarjetaCredito] = useState(false);
@@ -225,6 +227,17 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
             getAllAddress();
         }
     }
+
+    // Function to handle accordion item click
+    const handleAccordionItemClick = () => {
+        // Check conditions for !name, !apellido, and !telefono
+        if (!f_name || !l_name || !phone) {
+            // Show the modal
+            setModalVisibleFillAll(true);
+            // alert("Llne todos loc campos primero");
+        }
+        // You can add additional logic or actions here if needed
+    };
 
 
     const changuevisibility = () => {
@@ -1049,13 +1062,13 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
 
                         <h5>3. PAGO</h5>
                         <UncontrolledAccordion>
-                            <AccordionItem>
+                            <AccordionItem onClick={handleAccordionItemClick}>
                                 <AccordionHeader targetId='4'>
                                     <h6>Tarjeta débito</h6>
                                 </AccordionHeader>
                                 {/* <AccordionBody accordionId='4'> */}
 
-                                    {/* <TarjetaDebitoModal
+                                {/* <TarjetaDebitoModal
                                         closeModalTarjetaDebito={closeModalTarjetaDebito}
                                         dataOrderAddress={dataAddress}
                                         total={formattedTotal !== '' ? formattedTotal : totalNumber}
@@ -1074,12 +1087,12 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                     /> */}
                                 {/* </AccordionBody> */}
                             </AccordionItem>
-                            <AccordionItem>
+                            <AccordionItem onClick={handleAccordionItemClick}>
                                 <AccordionHeader targetId='5'>
                                     <h6>Tarjeta crédito</h6>
                                 </AccordionHeader>
                                 {/* <AccordionBody accordionId='5'> */}
-                                    {/* <TarjetaCreditoModal
+                                {/* <TarjetaCreditoModal
                                         // handleModalData={handleModalData} 
                                         closeModalTarjetaCredito={closeModalTarjetaCredito}
                                         dataOrderAddress={dataAddress}
@@ -1099,12 +1112,12 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                     /> */}
                                 {/* </AccordionBody> */}
                             </AccordionItem>
-                            <AccordionItem>
+                            <AccordionItem onClick={handleAccordionItemClick}>
                                 <AccordionHeader targetId='6'>
                                     <h6>PSE</h6>
                                 </AccordionHeader>
                                 {/* <AccordionBody accordionId='6'> */}
-                                    {/* <PseModal
+                                {/* <PseModal
                                         closeModalPse={closeModalPse}
                                         dataOrderAddress={dataAddress}
                                         total={formattedTotal !== '' ? formattedTotal : totalNumber}
@@ -1124,12 +1137,12 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                 {/* </AccordionBody> */}
                             </AccordionItem>
                             {totalNumber >= 5000 && (
-                                <AccordionItem>
+                                <AccordionItem onClick={handleAccordionItemClick}>
                                     <AccordionHeader targetId='7'>
                                         <h6>Efecty</h6>
                                     </AccordionHeader>
                                     {/* <AccordionBody accordionId='7'> */}
-                                        {/* <div className="d-flex flex-column align-items-center">
+                                    {/* <div className="d-flex flex-column align-items-center">
                                             <img src={efectyLogo} style={{ width: 100 }} />
                                             <p>Pago por consignación genera tu ticket acá</p>
                                             <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column', marginBottom: '20px' }}>
@@ -1147,11 +1160,11 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                                     />
                                                     <span style={{ marginTop: '20px', marginRight: "10px" }}>Acepto <a href='/termsAndConditions' style={{ textDecoration: 'none', color: '#FC5241', textAlign: 'center' }}>términos y condiciones</a> y autorizo tratamiento de datos.</span>
                                                 </div> */}
-                                                {/* <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
+                                    {/* <Button style={{ marginTop: '10px', display: "flex", alignSelf: "center", textDecoration: "none", color: "white", width: "40%", height: "48px", justifyContent: "center", backgroundColor: "#FC5241", alignItems: "center", border: 'none', borderRadius: "32px" }} onClick={(e) => { e.preventDefault(); handleSubmitOrderEfecty() }}>Generar ticket</Button>
                                             </div>
 
                                         </div>  */}
-                                        {/* <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
+                                    {/* <EfectyModal totalAmount={formattedTotal !== '' ? formattedTotal : totalNumber}
                                                 // closeEfectyModal={() => closeModalEfecty()}
                                                 dataRef={dataRef}
                                                 addressId={selectedAddressId}
@@ -1164,12 +1177,12 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                                 </AccordionItem>
                             )}
                             {totalNumber >= 39990 && totalNumber <= 1999000 && (
-                                <AccordionItem>
+                                <AccordionItem onClick={handleAccordionItemClick}>
                                     <AccordionHeader targetId='8'>
                                         <h6>Pago contra entrega</h6>
                                     </AccordionHeader>
                                     {/* <AccordionBody accordionId='8'> */}
-                                        {/* <CashDeliveryOTP phone={infoPerfil.phone}
+                                    {/* <CashDeliveryOTP phone={infoPerfil.phone}
                                             closeModalOTP={closeModalOTP}
                                             addressId={selectedAddressId}
                                             descriptionOrder={descriptionOrder}
@@ -1462,6 +1475,18 @@ const Checkout_V2 = ({ getAllProductsByCartNotoken, productsInCart, offcanvasVal
                     </div>
                 </div>
             </div >
+            {/* Modal llene todos los campos */}
+            <Modal
+                className="modal-dialog-centered modal-sm"
+                toggle={() => setModalVisibleFillAll(false)}
+                isOpen={modalVisibleFillAll}
+            // onOpened={() => setIsScrollModalEnabled(false)}
+            // onClosed={() => setIsScrollModalEnabled(true)}
+            >
+                <ModalBody>
+                    <ModalFillAll />
+                </ModalBody>
+            </Modal>
 
             {/* Modal procesando Pago */}
             <Modal
