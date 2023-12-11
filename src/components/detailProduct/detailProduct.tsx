@@ -508,16 +508,32 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
             const totalRatings = commentsAndOpinionsProducts.reduce((total, item) => total + item.rating, 0);
             const averageRating = totalRatings / commentsAndOpinionsProducts.length;
 
-            return averageRating; // Esto te dará el promedio de las calificaciones
+            // Contar la cantidad de opiniones para cada número de estrellas
+            const starCounts = Array.from({ length: 5 }, (_, index) => {
+                const starRating = (index + 1).toString();
+                return {
+                    stars: starRating,
+                    count: commentsAndOpinionsProducts.filter(item => item.rating.toFixed(0) === starRating).length,
+                };
+            });
+
+            return {
+                averageRating: averageRating.toFixed(1),
+                starCounts: starCounts,
+            };
         }
 
-        return 0; // Valor predeterminado si no hay calificaciones
-    }
+        return {
+            averageRating: 0,
+            starCounts: Array.from({ length: 5 }, (_, index) => ({ stars: (index + 1).toString(), count: 0 })),
+        };
+    };
 
-    function generateStarRating(averageRating) {
+
+    function generateStarRating(ratingStats) {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
-            if (i <= averageRating) {
+            if (i <= ratingStats) {
                 stars.push(<img key={i} src={start} alt="" />);
             } else {
                 stars.push(<img key={i} src={startEmpty} alt="" />);
@@ -526,8 +542,17 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
         return stars;
     }
 
-    const averageRating = formatedCoutingRaiting();
+    const ratingStats = formatedCoutingRaiting();
 
+    // Estados para almacenar las estadísticas
+    const [averageRating, setAverageRating] = useState(ratingStats.averageRating);
+    const [starCounts, setStarCounts] = useState(ratingStats.starCounts);
+
+    // Actualiza las estadísticas cuando cambian
+    useEffect(() => {
+        setAverageRating(ratingStats.averageRating);
+        setStarCounts(ratingStats.starCounts);
+    }, [ratingStats]);
 
 
     useEffect(() => {
@@ -1183,7 +1208,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                         <div className="raitingTop">
                                             <Card className='cardRaiting'>
                                                 <CardBody>
-                                                    <h2>{formatedCoutingRaiting()}</h2>
+                                                    <h2>{averageRating}</h2>
                                                 </CardBody>
                                             </Card>
                                         </div>
@@ -1201,7 +1226,8 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                         </div>
                                     </div>
                                     <div className="stats">
-                                        <div className="stats_raiting">
+
+                                        {/* <div className="stats_raiting">
                                             <img src={start} alt="" />
                                             <h5>5</h5>
                                             <div className="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -1240,7 +1266,17 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                                 <div className="progress-bar" style={{ width: '100%' }}></div>
                                             </div>
                                             <h6>0</h6>
-                                        </div>
+                                        </div> */}
+                                        {ratingStats.starCounts.reverse().map(({ stars, count }) => (
+                                            <div className={count > 0 ? "stats_raiting" : "stats_raiting_gray"} key={stars}>
+                                                <img src={start} alt="" />
+                                                <h5>{stars}</h5>
+                                                <div className="progress" role="progressbar" aria-label="Basic example" aria-valuenow={count} aria-valuemin="0" aria-valuemax="100">
+                                                    <div className="progress-bar" style={{ width: `${count * 20}%` }}></div>
+                                                </div>
+                                                <h6>{count}</h6>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
 
@@ -1273,7 +1309,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                                     ))}
 
                                     <div className="btnMoreOpinions">
-                                        <a href="#">Ver todas las opiniones</a>
+                                        <a href="#" onClick={(e) => { e.preventDefault() }}>Ver todas las opiniones</a>
                                     </div>
                                 </div>
                             </div>
