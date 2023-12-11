@@ -88,7 +88,7 @@ const ModalCommentsAndRaitingProducts = ({ closeModal, productInfo }) => {
                         }}
                     >
                         <h5 style={{ color: "#fc5241" }}>Califica nuestros productos</h5>
-                        <p>Cuéntanos que te pareció el producto</p>
+                        <p>Cuéntanos cómo te pareció el producto</p>
                         <div className="d-flex p-2 gap-3">
                             <img src={baseUrlImageThumbnail + productInfo.detalle.thumbnail} style={{
                                 borderRadius: '20px',
