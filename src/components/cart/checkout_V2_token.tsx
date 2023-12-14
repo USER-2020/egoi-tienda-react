@@ -2247,7 +2247,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                         <AccordionBody accordionId='7'>
                                             <div className="d-flex flex-column align-items-center">
                                                 <img src={efectyLogo} style={{ width: 100 }} />
-                                                <p>Pago por consignación genera tu ticket acá</p>
+                                                <p>Pago por consignación, genera tu ticket acá</p>
                                                 <div style={{ width: "100%", height: "48px", display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: 'column', marginBottom: '20px' }}>
                                                     {/* <div style={{ justifyContent: 'center', textAlign: 'center' }}>
                                                     <Input
