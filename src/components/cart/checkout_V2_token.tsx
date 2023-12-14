@@ -34,7 +34,7 @@ import pseLogo from '../../assets/egoi_icons/logo_pse.svg';
 import ModalProcesandoPago from '../../views/user/metodosDePago/modalProcesandoPago';
 import ModalNoPse from '../../views/user/metodosDePago/modalNoPse.tsx';
 import { TailSpin, ThreeCircles } from 'react-loader-spinner';
-import { getUserProfileInfo } from '../../services/ordenes.js';
+import { getUserProfileInfo, updateInfoProfile } from '../../services/ordenes.js';
 import { login_Email_Face } from '../../services/extraLogin.js';
 
 const LoaderOverlay = () => {
@@ -298,9 +298,9 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
         });
         gtag('event', 'purchase', {
             affiliation: 'Egoi',
-            nombre_cliente:infoPerfil.f_name,
-            email_cliente:infoPerfil.email,
-            numero_telefono:infoPerfil.phone,
+            nombre_cliente: infoPerfil.f_name,
+            email_cliente: infoPerfil.email,
+            numero_telefono: infoPerfil.phone,
             coupon: cupon,
             currency: 'COP',
             items: mappedItems,
@@ -1368,6 +1368,39 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
     }
 
+    const onSubmitInfoProfile = (data) => {
+        setLoading(true);
+        if (!phone) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Por favor ingresa un número de teléfono válido. ",
+                confirmButtonColor: "#0d6efd",
+            });
+            setLoading(false);
+        } else {
+            updateInfoProfile(token, data)
+                .then((res) => {
+                    console.log("Guardar info de perfil");
+                    getInfoPerfil();
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 2000)
+                }).catch((err) => console.log(err));
+        }
+    }
+
+    const handleSubmitInfoProfile = () => {
+        const data = {
+            email: email,
+            f_name: infoPerfil.f_name,
+            l_name: infoPerfil.l_name,
+            phone: phone
+        };
+        console.log(data);
+        onSubmitInfoProfile(data);
+    }
+
 
     const handleSubmitOrderEfecty = () => {
         handleSubmitAddress();
@@ -1703,6 +1736,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             }}
                                             placeholder="Email"
                                             value={infoPerfil.email}
+                                            onBlur={handleSubmitInfoProfile}
                                             // onBlur={validateEMailInput}
                                             onChange={(event) => setEmail(event.target.value)}
 
@@ -1719,6 +1753,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             }}
                                             placeholder="Nombre"
                                             value={infoPerfil.f_name}
+                                            onBlur={handleSubmitInfoProfile}
                                             onChange={(event) => setF_name(event.target.value)}
                                         />
 
@@ -1730,6 +1765,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             }}
                                             placeholder="Apellido"
                                             value={infoPerfil.l_name}
+                                            onBlur={handleSubmitInfoProfile}
                                             onChange={(event) => setL_name(event.target.value)}
                                         />
 
@@ -1750,6 +1786,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             localization={es}
                                             country={"co"}
                                             value={infoPerfil.phone}
+                                            onBlur={handleSubmitInfoProfile}
                                             onChange={setPhone}
                                             inputStyle={{
                                                 width: buttonWidth,
@@ -2285,7 +2322,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                                             <h6>Pago contra entrega</h6>
                                         </AccordionHeader>
                                         <AccordionBody accordionId='8'>
-                                            <CashDeliveryOTP phone={infoPerfil.phone}
+                                            <CashDeliveryOTP phone={phone}
                                                 closeModalOTP={closeModalOTP}
                                                 addressId={selectedAddressId}
                                                 descriptionOrder={descriptionOrder}
