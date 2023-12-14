@@ -444,7 +444,7 @@ function TarjetaDebitoModal({ closeModalTarjetaDebito, descriptionOrder, dataOrd
 
                                             value={cardNumber}
                                             placeholder="0000 0000 0000 0000"
-                                            style={{ width: '100%', marginRight: '5px', transform: "translateX(-5%)" }}
+                                            style={{ width: '100%', marginRight: '0', transform: "translateX(0)" }}
 
                                         // className="card-number-input"
 
