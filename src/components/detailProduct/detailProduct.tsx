@@ -170,12 +170,12 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
 
             if (existingProduct) {
                 // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
-                existingProduct.min_qty += 1;
+                existingProduct.min_qty = quantity + 1 ;
                 // setMinQty();
             } else {
                 // El producto no existe en el carrito, así que agrégalo con cantidad 1
                 // product.min_qty = 1;°
-                productsCart.push({ ...product, min_qty: 1 });
+                productsCart.push({ ...product, min_qty: quantity });
 
                 // setMinQty();
             }

@@ -142,36 +142,55 @@ const DetailCartNoToken = ({ productsInCart, getAllProductsByCartNotoken, setIsL
     };
 
     const handleDecrement = (quantityUPD, idProd) => {
-        const productIdToDecrement = idProd;
+        console.log("entre en decrement");
 
         // Obtiene los datos actuales del carrito desde el localStorage
-        let productsCartWhithoutToken = JSON.parse(localStorage.getItem('productsCart'));
+        let productsCartWithoutToken = JSON.parse(localStorage.getItem('productsCart'));
 
-        if (productsCartWhithoutToken && productsCartWhithoutToken[productIdToDecrement]) {
-            // Verifica si el producto existe en el carrito en el localStorage
-            // y si es así, incrementa la cantidad deseada (por ejemplo, en 1)
-            productsCartWhithoutToken[productIdToDecrement].min_qty -= 1;
+        // Encuentra el producto en el carrito
+        const existingProductIndex = productsCartWithoutToken.findIndex(item => item.id === idProd);
 
-            // Actualiza los datos del producto en el carrito
+        console.log("Productos", existingProductIndex);
+
+        // Verifica si el producto existe en el carrito en el localStorage
+        if (productsCartWithoutToken && existingProductIndex !== -1) {
+            // Decrementa la cantidad deseada (por ejemplo, en 1)
+            productsCartWithoutToken[existingProductIndex].min_qty -= 1;
+
+            // Verifica si la cantidad mínima llega a 0 y elimina el producto si es el caso
+            if (productsCartWithoutToken[existingProductIndex].min_qty <= 0) {
+                productsCartWithoutToken.splice(existingProductIndex, 1);
+            }
+
             // Actualiza los datos del carrito en el localStorage
-            localStorage.setItem('productsCart', JSON.stringify(productsCartWhithoutToken));
+            localStorage.setItem('productsCart', JSON.stringify(productsCartWithoutToken));
         }
-    }
+    };
+
     const handleIncrement = (quantityUPD, idProd) => {
         // Supongamos que tienes el ID del producto que deseas incrementar
-        const productIdToIncrement = idProd;
+        console.log("entre increment");
 
         // Obtiene los datos actuales del carrito desde el localStorage
-        let productsCartWhithoutToken = JSON.parse(localStorage.getItem('productsCart'));
+        let productsCartWithoutToken = JSON.parse(localStorage.getItem('productsCart'));
 
-        if (productsCartWhithoutToken && productsCartWhithoutToken[productIdToIncrement]) {
-            // Verifica si el producto existe en el carrito en el localStorage
-            // y si es así, incrementa la cantidad deseada (por ejemplo, en 1)
-            productsCartWhithoutToken[productIdToIncrement].min_qty += 1;
+        // Encuentra el producto en el carrito
+        const existingProductIndex = productsCartWithoutToken.findIndex(item => item.id === idProd);
 
-            // Actualiza los datos del producto en el carrito
+        console.log("Productos", existingProductIndex);
+
+        // Verifica si el producto existe en el carrito en el localStorage
+        if (productsCartWithoutToken && existingProductIndex !== -1) {
+            // Decrementa la cantidad deseada (por ejemplo, en 1)
+            productsCartWithoutToken[existingProductIndex].min_qty += 1;
+
+            // Verifica si la cantidad mínima llega a 0 y elimina el producto si es el caso
+            if (productsCartWithoutToken[existingProductIndex].min_qty <= 0) {
+                productsCartWithoutToken.splice(existingProductIndex, 1);
+            }
+
             // Actualiza los datos del carrito en el localStorage
-            localStorage.setItem('productsCart', JSON.stringify(productsCartWhithoutToken));
+            localStorage.setItem('productsCart', JSON.stringify(productsCartWithoutToken));
         }
 
         // Realiza otras acciones necesarias después de incrementar la cantidad
@@ -324,7 +343,7 @@ const DetailCartNoToken = ({ productsInCart, getAllProductsByCartNotoken, setIsL
                                             </div>
                                         </div>
                                         <div className="deleteProduct">
-                                            <a href="#" onClick={(e) => {e.preventDefault(); deleteOne(products)}}>
+                                            <a href="#" onClick={(e) => { e.preventDefault(); deleteOne(products) }}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                                                 </svg>
@@ -460,7 +479,7 @@ const DetailCartNoToken = ({ productsInCart, getAllProductsByCartNotoken, setIsL
                                         {/* <div className="caracteristicaCostoEnvio">
                       ${costoEnvio.toLocaleString('es')}
                     </div> */}
-                                        <a href="#" onClick={(e) => {e.preventDefault(); deleteOne(products)}}>
+                                        <a href="#" onClick={(e) => { e.preventDefault(); deleteOne(products) }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                                             </svg>

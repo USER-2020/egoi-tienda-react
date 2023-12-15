@@ -1274,7 +1274,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
             .then((res) => {
                 console.log("Orden enviada por Efecty");
                 console.log(res);
-                setModalEfecty(true);
+                // setModalEfecty(true);
                 // sendCopyForTwilio();
                 // setModalSuccessPurchase(true);
                 // setModalEfecty(false);
@@ -1308,7 +1308,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
                     },
                     didClose: () => {
                         clearInterval(timerInterval);
-                        // setModalEfecty(true);
+                        setModalEfecty(true);
                         // Actualizar el estado para mostrar el PDF
                         // setShowPDF(true);
 
@@ -1403,7 +1403,7 @@ const Checkout_V2_token = ({ offcanvasValidate }) => {
 
 
     const handleSubmitOrderEfecty = () => {
-        handleSubmitAddress();
+        // handleSubmitAddress();
         if (token) {
             // console.log("Envio de orden por efecty");
             // console.log(formattedTotal);

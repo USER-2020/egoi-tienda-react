@@ -138,36 +138,55 @@ const DetailCartOffCanvasNoToken = ({ productsInCart, getAllProductsByCartNotoke
 
 
   const handleDecrement = (quantityUPD, idProd) => {
-    const productIdToDecrement = idProd;
+    console.log("entre en decrement");
 
     // Obtiene los datos actuales del carrito desde el localStorage
-    let productsCartWhithoutToken = JSON.parse(localStorage.getItem('productsCart'));
+    let productsCartWithoutToken = JSON.parse(localStorage.getItem('productsCart'));
 
-    if (productsCartWhithoutToken && productsCartWhithoutToken[productIdToDecrement]) {
-      // Verifica si el producto existe en el carrito en el localStorage
-      // y si es así, incrementa la cantidad deseada (por ejemplo, en 1)
-      productsCartWhithoutToken[productIdToDecrement].min_qty -= 1;
+    // Encuentra el producto en el carrito
+    const existingProductIndex = productsCartWithoutToken.findIndex(item => item.id === idProd);
 
-      // Actualiza los datos del producto en el carrito
+    console.log("Productos", existingProductIndex);
+
+    // Verifica si el producto existe en el carrito en el localStorage
+    if (productsCartWithoutToken && existingProductIndex !== -1) {
+      // Decrementa la cantidad deseada (por ejemplo, en 1)
+      productsCartWithoutToken[existingProductIndex].min_qty -= 1;
+
+      // Verifica si la cantidad mínima llega a 0 y elimina el producto si es el caso
+      if (productsCartWithoutToken[existingProductIndex].min_qty <= 0) {
+        productsCartWithoutToken.splice(existingProductIndex, 1);
+      }
+
       // Actualiza los datos del carrito en el localStorage
-      localStorage.setItem('productsCart', JSON.stringify(productsCartWhithoutToken));
+      localStorage.setItem('productsCart', JSON.stringify(productsCartWithoutToken));
     }
-  }
+  };
+
   const handleIncrement = (quantityUPD, idProd) => {
     // Supongamos que tienes el ID del producto que deseas incrementar
-    const productIdToIncrement = idProd;
+    console.log("entre increment");
 
     // Obtiene los datos actuales del carrito desde el localStorage
-    let productsCartWhithoutToken = JSON.parse(localStorage.getItem('productsCart'));
+    let productsCartWithoutToken = JSON.parse(localStorage.getItem('productsCart'));
 
-    if (productsCartWhithoutToken && productsCartWhithoutToken[productIdToIncrement]) {
-      // Verifica si el producto existe en el carrito en el localStorage
-      // y si es así, incrementa la cantidad deseada (por ejemplo, en 1)
-      productsCartWhithoutToken[productIdToIncrement].min_qty += 1;
+    // Encuentra el producto en el carrito
+    const existingProductIndex = productsCartWithoutToken.findIndex(item => item.id === idProd);
 
-      // Actualiza los datos del producto en el carrito
+    console.log("Productos", existingProductIndex);
+
+    // Verifica si el producto existe en el carrito en el localStorage
+    if (productsCartWithoutToken && existingProductIndex !== -1) {
+      // Decrementa la cantidad deseada (por ejemplo, en 1)
+      productsCartWithoutToken[existingProductIndex].min_qty += 1;
+
+      // Verifica si la cantidad mínima llega a 0 y elimina el producto si es el caso
+      if (productsCartWithoutToken[existingProductIndex].min_qty <= 0) {
+        productsCartWithoutToken.splice(existingProductIndex, 1);
+      }
+
       // Actualiza los datos del carrito en el localStorage
-      localStorage.setItem('productsCart', JSON.stringify(productsCartWhithoutToken));
+      localStorage.setItem('productsCart', JSON.stringify(productsCartWithoutToken));
     }
 
     // Realiza otras acciones necesarias después de incrementar la cantidad
