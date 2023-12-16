@@ -168,10 +168,10 @@ const ProductsInCart = () => {
                                                             {product.discount_tag_valor > 0 || product.discount_valor > 0 ? (
                                                                 <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', alignSelf: 'center' }}>
                                                                     <h5>${product.discount_valor && product.discount_valor.toLocaleString('es') || product.discount_tag_valor && product.discount_tag_valor.toLocaleString('es')}</h5>
-                                                                    <h5 id='tachado'><s>${token ? product.price : product.unit_price  && product.price.toLocaleString('es')}</s></h5>
+                                                                    <h5 id='tachado'><s>${token ? product.price : product.unit_price  && product.price.toLocaleString('es','ES')}</s></h5>
                                                                 </div>
                                                             ) : (
-                                                                <h5>${token ? product.price : product.unit_price  && token ? product.price.toLocaleString('es') : product.unit_price.toLocaleString('es')}</h5>
+                                                                <h5>${token ? product.price : product.unit_price  && token ? product.price.toLocaleString('es') : product.unit_price.toLocaleString('es','ES')}</h5>
                                                             )}
                                                         </CardTitle>
                                                     </CardBody>
