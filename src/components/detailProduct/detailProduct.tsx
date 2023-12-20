@@ -170,7 +170,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
 
             if (existingProduct) {
                 // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
-                existingProduct.min_qty = quantity + 1 ;
+                existingProduct.min_qty = quantity + 1;
                 // setMinQty();
             } else {
                 // El producto no existe en el carrito, así que agrégalo con cantidad 1
@@ -712,7 +712,7 @@ function DetailProduct({ setCantCart, setIsLoggedInPartner, setIsntLoggedInPartn
                 </>
             ) : (
 
-                Object.keys(detailProducts).length === 0 ? (
+                detailProducts && detailProducts.length === 0 ? (
                     <div style={{ marginTop: '25px', fontSize: '24px', textAlign: 'center' }}>Este producto ya no está disponible.</div>
                 ) : (
                     <>
