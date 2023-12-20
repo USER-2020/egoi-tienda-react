@@ -192,11 +192,11 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
 
   };
 
-  const closeModalRegistro = () => {
-    const bodyElement = document.querySelector('body');
-    bodyElement.classList.remove('offcanvas-backdrop', 'fade', 'show');
-    setModalViewRegistro(false);
-  };
+  // const closeModalRegistro = () => {
+  //   const bodyElement = document.querySelector('body');
+  //   bodyElement.classList.remove('offcanvas-backdrop', 'fade', 'show');
+  //   setModalViewRegistro(false);
+  // };
 
   // const closeModalLogin = () => {
   //   const bodyElement = document.querySelector('body');
@@ -224,7 +224,7 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
     // console.log("Entro al logout");
     setCurrentUser();
     setIsLoggedIn(false);
-    history.push(`/`);
+    window.location.href = '/';
   };
 
   const allCategoriesPromise = () => {
@@ -260,9 +260,9 @@ function HeaderResponsive({ canCart, detailInfoProfile, setIsLoggedInPartner, ha
   //   }
   // }, [isOffcanvasOpen]);
 
-  const handleAdminUser = () => {
-    history.push(`${myorders}`);
-  }
+  // const handleAdminUser = () => {
+  //   history.push(`${myorders}`);
+  // }
 
   // const getCantCart = () => {
   //   const token = currenUser.token;
