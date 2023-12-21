@@ -8,40 +8,41 @@
 
 }
 
-input::placeholder {
-  padding-left: 30px;
-  /* Espacio para el icono */
-  /* background-image: var(--placeholder-icon-nombre); */
-  background-repeat: no-repeat;
-  background-size: 23px 23px; /* Tamaño del icono */
-  background-position: 5px center; /* Posición del icono */
+@supports not (-moz-appearance:none) {
 
-}
+  /* Aplicar solo si NO es Firefox */
+  input::placeholder {
+    padding-left: 30px;
+    background-repeat: no-repeat;
+    background-size: 23px 23px;
+    background-position: 5px center;
+  }
 
-input[placeholder="Nombre"]::placeholder {
-  background-image: var(--placeholder-icon-nombre);
-}
+  input[placeholder="Nombre"]::placeholder {
+    background-image: var(--placeholder-icon-nombre);
+  }
 
-input[placeholder="Apellido"]::placeholder {
-  background-image: var(--placeholder-icon-apellido);
-}
-input[placeholder="Email"]::placeholder {
-  background-image: var(--placeholder-icon-email);
-}
-input[placeholder="Contraseña"]::placeholder {
-  background-image: var(--placeholder-icon-contraseña);
-}
-input[placeholder="Confirmar contraseña"]::placeholder {
-  background-image: var(--placeholder-icon-confirmarContraseña);
-}
-input[placeholder="Busca productos, marcas..."]::placeholder {
-  background-image: var(--placeholder-icon-buscar);
-  background-size: 16px !important;
-  background-repeat: no-repeat !important;
-  padding-left: 20px !important;
-}
+  input[placeholder="Apellido"]::placeholder {
+    background-image: var(--placeholder-icon-apellido);
+  }
 
-.custom-input:checked + .custom-control-label::before {
-  background-color: rgba(252, 82, 65, 1);
-  border-color: rgba(252, 82, 65, 1);
+  input[placeholder="Email"]::placeholder {
+    background-image: var(--placeholder-icon-email);
+    /* Ajusta según sea necesario */
+  }
+
+  input[placeholder="Contraseña"]::placeholder {
+    background-image: var(--placeholder-icon-contraseña);
+  }
+
+  input[placeholder="Confirmar contraseña"]::placeholder {
+    background-image: var(--placeholder-icon-confirmarContraseña);
+  }
+
+  input[placeholder="Busca productos, marcas..."]::placeholder {
+    background-image: var(--placeholder-icon-buscar);
+    background-size: 16px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+  }
 }
