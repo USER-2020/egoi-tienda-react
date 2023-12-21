@@ -165,7 +165,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               <a href="/recovery" style={{ textAlign: 'center', alignSelf: 'center', justifyContent: 'center', textDecoration: 'none', color: 'gray' }}>¿Olvidaste tu contraseña?</a>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            <div style={{ display: "flex", flexDirection: "column"}} className="btnsLogin">
               <Button
                 style={{
                   backgroundColor: "#fc5241",
@@ -187,7 +187,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   borderRadius: "50px",
                   width: '285px',
                   alignSelf: 'center',
-                  // marginTop: '-15px'
+                  marginTop: '-15px'
                 }}
                 className="text-nowrap"
                 onClick={() => {
