@@ -119,6 +119,8 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
           <Form onSubmit={handleSubmitPersonaLogin}>
             <FormGroup controlId="formBasicEmail">
               <InputGroup style={{ borderRadius: "50px" }}>
+
+                
                 <Input
                   type="email"
                   style={{
@@ -128,6 +130,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                
               </InputGroup>
             </FormGroup>
 
@@ -162,7 +165,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
               <a href="/recovery" style={{ textAlign: 'center', alignSelf: 'center', justifyContent: 'center', textDecoration: 'none', color: 'gray' }}>¿Olvidaste tu contraseña?</a>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
               <Button
                 style={{
                   backgroundColor: "#fc5241",
@@ -184,7 +187,7 @@ const Login = ({ closeModalLogin, handleLogin, closeModalRegistro, handleChangeF
                   borderRadius: "50px",
                   width: '285px',
                   alignSelf: 'center',
-                  marginTop: '-15px'
+                  // marginTop: '-15px'
                 }}
                 className="text-nowrap"
                 onClick={() => {

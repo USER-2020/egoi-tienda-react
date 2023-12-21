@@ -515,35 +515,39 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: 23px;
 }
 
-input[placeholder="Nombre"]::placeholder,
-input[placeholder="Apellido"]::placeholder {
-  background-image: var(--placeholder-icon-nombre);
-}
-
-input[placeholder="Celular"]::placeholder {
-  background-image: var(--placeholder-icon-cellphone);
-}
-
-input[placeholder="Dirección"]::placeholder {
-  background-image: var(--placeholder-icon-map);
-}
-
-input[placeholder="Código"]::placeholder {
-  background-image: var(--placeholder-icon-code);
-  /* Establece el margen izquierdo del placeholder a 0 */
-  /* Agrega otros estilos que desees para el placeholder */
-}
 
 
-input[placeholder="Pais"]::placeholder,
-input[placeholder="Ciudad"]::placeholder,
-input[placeholder="Departamento"]::placeholder,
-input[placeholder="Barrio"]::placeholder {
-  background-image: var(--placeholder-icon-map);
-}
+@supports not (-moz-appearance:none) {
+  input[placeholder="Cupón promocional"]::placeholder {
+    background-image: var(--placeholder-icon-promocion);
+  }
 
-input[placeholder="Cupón promocional"]::placeholder {
-  background-image: var(--placeholder-icon-promocion);
+  input[placeholder="Nombre"]::placeholder,
+  input[placeholder="Apellido"]::placeholder {
+    background-image: var(--placeholder-icon-nombre);
+  }
+
+  input[placeholder="Celular"]::placeholder {
+    background-image: var(--placeholder-icon-cellphone);
+  }
+
+  input[placeholder="Dirección"]::placeholder {
+    background-image: var(--placeholder-icon-map);
+  }
+
+  input[placeholder="Código"]::placeholder {
+    background-image: var(--placeholder-icon-code);
+    /* Establece el margen izquierdo del placeholder a 0 */
+    /* Agrega otros estilos que desees para el placeholder */
+  }
+
+
+  input[placeholder="Pais"]::placeholder,
+  input[placeholder="Ciudad"]::placeholder,
+  input[placeholder="Departamento"]::placeholder,
+  input[placeholder="Barrio"]::placeholder {
+    background-image: var(--placeholder-icon-map);
+  }
 }
 
 

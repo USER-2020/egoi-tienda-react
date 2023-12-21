@@ -45,9 +45,11 @@
 
 
 
-input[placeholder="Nombre en la tarjeta"]::placeholder {
-  background-image: var(--placeholder-icon-nombre);
+@supports not(-moz-appearance: none) {
+  input[placeholder="Nombre en la tarjeta"]::placeholder {
+    background-image: var(--placeholder-icon-nombre);
 
+  }
 }
 
 @media (max-width: 768px) {
