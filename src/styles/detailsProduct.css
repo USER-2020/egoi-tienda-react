@@ -147,13 +147,13 @@ la imagen seleccionda */
     outline: none;
 }
 
-.clasnameVariationColor{
+.clasnameVariationColor {
     display: flex;
     flex-direction: row;
     /* gap: 5px; */
     justify-content: space-around;
     width: 200px;
-    
+
 }
 
 .containerColorsProduct p,
@@ -216,6 +216,16 @@ input[type="number"]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0;
 }
+
+/* Estilos específicos para ocultar las flechas en Firefox */
+@-moz-document url-prefix() {
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+}
+
+
+
 
 .opciones {
     display: flex;
