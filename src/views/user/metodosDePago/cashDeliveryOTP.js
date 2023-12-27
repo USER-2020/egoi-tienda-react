@@ -13,7 +13,7 @@ import { placeOrder } from '../../../services/metodosDePago';
 import { getCurrentUser } from './../../../helpers/Utils';
 
 
-function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder, setModalPurchaseSuccess, setOk, updateAddress}) {
+function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOrder, setModalPurchaseSuccess, setOk, updateAddress }) {
   const [otp, setOTP] = useState('');
   const [loading, setLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
@@ -35,7 +35,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
       window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
         'size': 'invisible',
         'callback': (response) => {
-          onSignUp();
+          console.warn("Codigo enviado con exito, revisa tu celular");
 
         },
         'expired-callback': () => {
