@@ -7,6 +7,7 @@ import { getCurrentUser } from './../helpers/Utils';
 import SuccessPurchase from './user/success_purchase';
 import '../views/user/successPurchase.css';
 import { getUserProfileInfo } from '../services/ordenes';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Thankyouforpay = () => {
     const currenUser = getCurrentUser();
@@ -19,6 +20,8 @@ const Thankyouforpay = () => {
 
 
     const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
+
+    const location = useLocation();
 
     const getCantCart = () => {
         allProductsCart(token)
@@ -88,6 +91,10 @@ const Thankyouforpay = () => {
     useEffect(() => {
         funcionValidation();
     }, [isLoggedIn])
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
 
 
     return (
