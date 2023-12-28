@@ -49,6 +49,7 @@ import LoginGoogle from "../components/extraLogin/loginGoogle.tsx";
 import { CLIENT_ID_GOOGLE } from "../constants/defaultValues";
 import { gapi } from "gapi-script";
 import ProductsInCart from "../components/home/productsInCart.js";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min.js";
 // import { useGoogleOneTapLogin } from '@react-oauth/google';
 
 const Home = (props) => {
@@ -60,6 +61,7 @@ const Home = (props) => {
   const [productsCart, setProductsCart] = useState([]);
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
 
   const [datosPopup, setDatosPopup] = useState('');
@@ -67,6 +69,8 @@ const Home = (props) => {
 
 
   const currenUser = getCurrentUser();
+
+  const location = useLocation();
 
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
@@ -84,6 +88,7 @@ const Home = (props) => {
 
   const closeModalPopup = () => {
     setModalPopup(false);
+    setIsModalOpen(false)
   }
 
   const handleShowPopup = () => {
@@ -223,6 +228,30 @@ const Home = (props) => {
     funcionValidation();
   }, [isLoggedIn])
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    // Esta función se ejecutará cada vez que cambie el estado de modalPopup
+    if (modalPopup) {
+      // Si el modal está abierto, deshabilita el desplazamiento vertical
+      document.body.style.overflowY = 'hidden';
+      document.body.style.overflowX = 'hidden';
+    } else {
+      // Si el modal está cerrado, habilita el desplazamiento vertical
+      document.body.style.overflowY = 'scroll';
+      document.body.style.overflowX = 'hidden';
+    }
+
+    // Devuelve una función de limpieza para restablecer el estado cuando se desmonte el componente
+    return () => {
+      document.body.style.overflowY = 'scroll';
+      document.body.style.overflowX = 'hidden';
+    };
+  }, [modalPopup]); // Asegúrate de incluir modalPopup como dependencia para que se ejecute cuando cambie
+
+
   return (
 
     // <Nav/>
@@ -289,11 +318,12 @@ const Home = (props) => {
           className="modal-dialog-centered modal-lg"
           toggle={() => setModalPopup(false)}
           isOpen={modalPopup}
+          backdrop="static"
 
         >
-          <ModalHeader toggle={() => setModalPopup(false)}></ModalHeader>
+          <ModalHeader toggle={() => closeModalPopup()}></ModalHeader>
           <ModalBody>
-            <Popup handleModalData={handleModalData} datosPopup={datosPopup} closeModalPopup={() => setModalPopup(false)} />
+            <Popup datosPopup={datosPopup} />
           </ModalBody>
         </Modal>
       </div>

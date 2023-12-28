@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getPopup } from '../../services/banners';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-function Popup({ handleModalData, datosPopup, closeModalPopup }) {
+function Popup({ datosPopup }) {
   const history = useHistory();
   const baseUrlImageBanners = "https://egoi.xyz/storage/app/public/banner/";
 
