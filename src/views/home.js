@@ -240,13 +240,13 @@ const Home = (props) => {
       document.body.style.overflowX = 'hidden';
     } else {
       // Si el modal está cerrado, habilita el desplazamiento vertical
-      document.body.style.overflowY = 'visible';
+      document.body.style.overflowY = 'scroll';
       document.body.style.overflowX = 'hidden';
     }
 
     // Devuelve una función de limpieza para restablecer el estado cuando se desmonte el componente
     return () => {
-      document.body.style.overflowY = 'visible';
+      document.body.style.overflowY = 'scroll';
       document.body.style.overflowX = 'hidden';
     };
   }, [modalPopup]); // Asegúrate de incluir modalPopup como dependencia para que se ejecute cuando cambie
