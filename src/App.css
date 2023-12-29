@@ -34,10 +34,10 @@
   /* Esto evita el desplazamiento del cuerpo cuando el modal está abierto */
 }
 
-.offcanvas-backdrop {
+.offcanvas-backdrop.fade.show {
   display: none !important;
-  /* Oculta el fondo oscuro */
 }
+
 
 @keyframes App-logo-spin {
   from {
