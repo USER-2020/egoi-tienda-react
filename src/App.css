@@ -29,8 +29,14 @@
   color: #61dafb;
 }
 
-body{
-  overflow-y: scroll;
+.modal-open-no-backdrop {
+  overflow: hidden;
+  /* Esto evita el desplazamiento del cuerpo cuando el modal está abierto */
+}
+
+.offcanvas-backdrop {
+  display: none !important;
+  /* Oculta el fondo oscuro */
 }
 
 @keyframes App-logo-spin {
