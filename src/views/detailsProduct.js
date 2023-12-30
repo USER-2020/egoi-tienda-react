@@ -101,12 +101,13 @@ function DetailsProduct() {
         handleShowOffCanvas={handleShowOffCanvas}
         handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
-      <HeaderResponsive
-        canCart={cantProductsOnCart}
-        detailInfoProfile={detailInfoProfile}
-        setIsLoggedInPartner={() => setIsLoggedIn(true)}
-        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-      />
+     <HeaderResponsive
+          canCart={cantProductsOnCart}
+          detailInfoProfile={detailInfoProfile}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        />
       <DetailProduct
         setCantCart={getCantCart}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}

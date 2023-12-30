@@ -1,20 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react'
-import Header from './../../components/header';
-import HeaderResponsive from '../../components/headerResponsive';
-import AddressCart from '../../components/cart/checkout.tsx';
-import Footer from '../../components/footer';
+import React, { useEffect, useState, useRef } from "react";
+import Header from "./../../components/header";
+import HeaderResponsive from "../../components/headerResponsive";
+import AddressCart from "../../components/cart/checkout.tsx";
+import Footer from "../../components/footer";
 import { allProductsCart } from "../../services/cart";
-import { getCurrentUser } from './../../helpers/Utils';
-import { getUserProfileInfo } from '../../services/ordenes';
-import CheckoutNoToken from '../../components/cart/checkoutNoToken.tsx';
-import Checkout_V2 from '../../components/cart/checkout_V2.tsx';
-import Checkout_V2_token from '../../components/cart/checkout_V2_token.tsx';
+import { getCurrentUser } from "./../../helpers/Utils";
+import { getUserProfileInfo } from "../../services/ordenes";
+import CheckoutNoToken from "../../components/cart/checkoutNoToken.tsx";
+import Checkout_V2 from "../../components/cart/checkout_V2.tsx";
+import Checkout_V2_token from "../../components/cart/checkout_V2_token.tsx";
 
 function DressCart() {
-
   const currenUser = getCurrentUser();
 
-  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+  const [cantProductsOnCart, setCantProductsOnCart] = useState("");
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,10 +32,9 @@ function DressCart() {
         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
         setCantProductsOnCart(numberOfProducts);
         setProductsCart(res.data);
-
-
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getAllInfoPerfil = () => {
     // const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
@@ -44,11 +42,12 @@ function DressCart() {
       .then((res) => {
         // console.log(res.data);
         setDetailInfoProfile(res.data);
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getCantCartWhithoutToken = () => {
-    let productsCartWhithoutToken = localStorage.getItem('productsCart');
+    let productsCartWhithoutToken = localStorage.getItem("productsCart");
     if (productsCartWhithoutToken) {
       // Si 'productsCartWhithoutToken' no es nulo ni indefinido, entonces hay datos en el localStorage.
 
@@ -56,43 +55,40 @@ function DressCart() {
       let productsCartData = JSON.parse(productsCartWhithoutToken);
 
       // Convierte los datos en una matriz de objetos y agrega un índice único a cada producto
-      let productsInCart = Object.values(productsCartData).map((product, index) => ({ ...product, index }));
+      let productsInCart = Object.values(
+        productsCartData
+      ).map((product, index) => ({ ...product, index }));
 
       // Obtiene el tamaño de la matriz (número de elementos) y actualiza el estado "cantProductsOnCart"
       let numProducts = productsInCart.length;
       setCantProductsOnCart(numProducts);
       setProductsCart(productsInCart);
 
-      console.log('Número de productos en el carrito:', numProducts);
+      console.log("Número de productos en el carrito:", numProducts);
     } else {
       // Si 'productsCartWhithoutToken' es nulo o indefinido, no hay datos en el localStorage.
-      console.log('El carrito está vacío.');
+      console.log("El carrito está vacío.");
     }
-  }
+  };
 
   const funcionValidation = () => {
     if (isLoggedIn) {
       getAllInfoPerfil();
       console.log("si hay usuario logueado");
       getCantCart();
-    }
-    else {
+    } else {
       console.log("no hay usuario logueado");
       getCantCartWhithoutToken();
     }
-  }
-
+  };
 
   useEffect(() => {
     setMinQty(1);
-  }, [])
-
+  }, []);
 
   useEffect(() => {
     funcionValidation();
-  }, [isLoggedIn])
-
-
+  }, [isLoggedIn]);
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
@@ -112,10 +108,13 @@ function DressCart() {
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
         handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
 
       {token && currenUser ? (
-        <Checkout_V2_token offcanvasValidate={() => setHandleShowOffCanvas(false)} />
+        <Checkout_V2_token
+          offcanvasValidate={() => setHandleShowOffCanvas(false)}
+        />
       ) : (
         <Checkout_V2
           productsInCart={productsCart}
@@ -142,7 +141,7 @@ function DressCart() {
       )} */}
       <Footer />
     </div>
-  )
+  );
 }
 
-export default DressCart
+export default DressCart;

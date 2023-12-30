@@ -34,9 +34,9 @@
   /* Esto evita el desplazamiento del cuerpo cuando el modal está abierto */
 }
 
-.offcanvas-backdrop.fade.show {
+/* .offcanvas-backdrop.fade.show {
   display: none !important;
-}
+} */
 
 
 @keyframes App-logo-spin {

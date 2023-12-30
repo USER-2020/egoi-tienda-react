@@ -278,6 +278,7 @@ const Home = (props) => {
           detailInfoProfile={detailInfoProfile}
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
         />
 
         <Banner />

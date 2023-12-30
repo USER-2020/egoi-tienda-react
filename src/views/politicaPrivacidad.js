@@ -106,11 +106,12 @@ const PoliticaPrivacidad = () => {
         handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
       <HeaderResponsive
-        canCart={cantProductsOnCart}
-        detailInfoProfile={detailInfoProfile}
-        setIsLoggedInPartner={() => setIsLoggedIn(true)}
-        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-      />
+          canCart={cantProductsOnCart}
+          detailInfoProfile={detailInfoProfile}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        />
       <PoliticaPrivacidadComponent />
       <Footer />
     </div>

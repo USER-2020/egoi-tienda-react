@@ -5,14 +5,14 @@ import Footer from "../components/footer";
 import HeaderResponsive from "../components/headerResponsive";
 import ProductsCategories from "../components/categories/productsCategories.tsx";
 import { allProductsCart } from "../services/cart";
-import { getCurrentUser } from './../helpers/Utils';
+import { getCurrentUser } from "./../helpers/Utils";
 import { getUserProfileInfo } from "../services/ordenes";
 import { getBanners, getLateralBanner } from "../services/banners";
 
 function Category() {
   const currenUser = getCurrentUser();
 
-  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+  const [cantProductsOnCart, setCantProductsOnCart] = useState("");
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
   const [bannersInfo, setBannersInfo] = useState([]);
@@ -30,18 +30,18 @@ function Category() {
         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
         setCantProductsOnCart(numberOfProducts);
         setProductsCart(res.data);
-
-
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getAllBanners = () => {
     getLateralBanner()
       .then((res) => {
         console.log("BannerLa", res.data);
         setBannersInfo(res.data);
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   // useEffect(() => {
   //   getCantCart();
@@ -55,7 +55,7 @@ function Category() {
   // }, [currenUser, isLoggedIn]);
 
   const getCantCartWhithoutToken = () => {
-    let productsCartWhithoutToken = localStorage.getItem('productsCart');
+    let productsCartWhithoutToken = localStorage.getItem("productsCart");
     if (productsCartWhithoutToken) {
       // Si 'productsCartWhithoutToken' no es nulo ni indefinido, entonces hay datos en el localStorage.
 
@@ -63,50 +63,51 @@ function Category() {
       let productsCartData = JSON.parse(productsCartWhithoutToken);
 
       // Convierte los datos en una matriz de objetos y agrega un índice único a cada producto
-      let productsInCart = Object.values(productsCartData).map((product, index) => ({ ...product, index }));
+      let productsInCart = Object.values(
+        productsCartData
+      ).map((product, index) => ({ ...product, index }));
 
       // Obtiene el tamaño de la matriz (número de elementos) y actualiza el estado "cantProductsOnCart"
       let numProducts = productsInCart.length;
       setCantProductsOnCart(numProducts);
       setProductsCart(productsInCart);
 
-      console.log('Número de productos en el carrito:', numProducts);
+      console.log("Número de productos en el carrito:", numProducts);
     } else {
       // Si 'productsCartWhithoutToken' es nulo o indefinido, no hay datos en el localStorage.
-      console.log('El carrito está vacío.');
+      console.log("El carrito está vacío.");
     }
-  }
+  };
 
   const funcionValidation = () => {
     if (isLoggedIn) {
       getAllInfoPerfil();
       console.log("si hay usuario logueado");
       getCantCart();
-    }
-    else {
+    } else {
       console.log("no hay usuario logueado");
       getCantCartWhithoutToken();
     }
-  }
+  };
 
   const getAllInfoPerfil = () => {
     getUserProfileInfo(token)
       .then((res) => {
         // console.log(res.data);
         setDetailInfoProfile(res.data);
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getAllBanners();
     funcionValidation();
     setMinQty(1);
-  }, [])
-
+  }, []);
 
   useEffect(() => {
     funcionValidation();
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   return (
     <div className="w-100 d-flex flex-column align-items-center">
@@ -126,10 +127,14 @@ function Category() {
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
         handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
       {/* <HeaderCategories/> */}
       {/* <HeaderResponsiveCategorie/> */}
-      <ProductsCategories updateCantProducts={() => { getCantCart() }}
+      <ProductsCategories
+        updateCantProducts={() => {
+          getCantCart();
+        }}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
         bannersInfo={bannersInfo}
         setIsntLoggedInPartner={() => setIsLoggedIn(false)}
@@ -139,7 +144,7 @@ function Category() {
       {/* <ProductsResponsiveCategorie/> */}
       <Footer />
     </div>
-  )
+  );
 }
 
 export default Category;
