@@ -78,6 +78,7 @@ function MyOrders(props) {
 
   useEffect(() => {
     setMinQty(1);
+    setHandleShowOffCanvas(false);
   }, [])
 
   useEffect(() => {
