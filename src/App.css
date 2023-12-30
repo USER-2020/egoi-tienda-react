@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow-y: scroll;
 
 }
 
@@ -37,6 +38,7 @@
 /* .offcanvas-backdrop.fade.show {
   display: none !important;
 } */
+
 
 
 @keyframes App-logo-spin {

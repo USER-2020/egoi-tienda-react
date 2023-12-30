@@ -17,8 +17,9 @@ import {
   InputGroupAddon,
   Input,
   Button,
-  Modal, ModalBody,
-  ModalHeader
+  Modal,
+  ModalBody,
+  ModalHeader,
 } from "reactstrap";
 import styles from "../styles/navbar.css";
 import logo from "../assets/logo.png";
@@ -36,15 +37,15 @@ import HeaderResponsive from "../components/headerResponsive";
 import Popup from "./user/popup";
 import { getBanners } from "../services/banners";
 import AddRecents from "../components/home/addRecents";
-import { getPopup } from '../services/banners';
-import { getCurrentUser } from './../helpers/Utils';
+import { getPopup } from "../services/banners";
+import { getCurrentUser } from "./../helpers/Utils";
 import { allProductsCart } from "../services/cart";
 import { getOfferHigligth, getOfferOfDay } from "../services/ofertas";
 import OfertaDia from "../components/home/ofertaDia";
 import OfertaDestacada from "../components/home/ofertaDestacada";
 import OfertaFlash from "../components/home/ofertaFlash";
 import { getUserProfileInfo } from "../services/ordenes";
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginGoogle from "../components/extraLogin/loginGoogle.tsx";
 import { CLIENT_ID_GOOGLE } from "../constants/defaultValues";
 import { gapi } from "gapi-script";
@@ -61,12 +62,10 @@ const Home = (props) => {
   const [productsCart, setProductsCart] = useState([]);
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-  const [datosPopup, setDatosPopup] = useState('');
+  const [datosPopup, setDatosPopup] = useState("");
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
-
 
   const currenUser = getCurrentUser();
 
@@ -74,9 +73,7 @@ const Home = (props) => {
 
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
-
-  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
-
+  const [cantProductsOnCart, setCantProductsOnCart] = useState("");
 
   const toggleLogin = () => {
     setIsLoggedIn(!isLoggedIn);
@@ -84,24 +81,25 @@ const Home = (props) => {
 
   const handleModalData = () => {
     setModalPopup(false);
-  }
+  };
 
   const closeModalPopup = () => {
     setModalPopup(false);
-    setIsModalOpen(false)
-  }
+    setIsModalOpen(false);
+  };
 
   const handleShowPopup = () => {
     setModalPopup(true);
-  }
+  };
 
   const getAllBanners = () => {
     getBanners()
       .then((res) => {
         // console.log(res.data);
         setBannersInfo(res.data);
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getPrincipalPopup = () => {
     getPopup()
@@ -119,7 +117,6 @@ const Home = (props) => {
   };
 
   const getCantCart = () => {
-
     allProductsCart(token)
       .then((res) => {
         const productsOncart = res.data;
@@ -129,13 +126,12 @@ const Home = (props) => {
         setCantProductsOnCart(numberOfProducts);
         console.log("Numero de productos en el carrito: ", numberOfProducts);
         setProductsCart(res.data);
-
-
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getCantCartWhithoutToken = () => {
-    let productsCartWhithoutToken = localStorage.getItem('productsCart');
+    let productsCartWhithoutToken = localStorage.getItem("productsCart");
     if (productsCartWhithoutToken) {
       // Si 'productsCartWhithoutToken' no es nulo ni indefinido, entonces hay datos en el localStorage.
 
@@ -143,40 +139,44 @@ const Home = (props) => {
       let productsCartData = JSON.parse(productsCartWhithoutToken);
 
       // Convierte los datos en una matriz de objetos y agrega un índice único a cada producto
-      let productsInCart = Object.values(productsCartData).map((product, index) => ({ ...product, index }));
+      let productsInCart = Object.values(
+        productsCartData
+      ).map((product, index) => ({ ...product, index }));
 
       // Obtiene el tamaño de la matriz (número de elementos) y actualiza el estado "cantProductsOnCart"
       let numProducts = productsInCart.length;
       setCantProductsOnCart(numProducts);
       setProductsCart(productsInCart);
 
-      console.log('Número de productos en el carrito localStorage:', numProducts);
+      console.log(
+        "Número de productos en el carrito localStorage:",
+        numProducts
+      );
     } else {
       // Si 'productsCartWhithoutToken' es nulo o indefinido, no hay datos en el localStorage.
-      console.log('El carrito está vacío.');
+      console.log("El carrito está vacío.");
     }
-  }
+  };
 
   const funcionValidation = () => {
     if (isLoggedIn) {
       getAllInfoPerfil();
       console.log("si hay usuario logueado");
       getCantCart();
-    }
-    else {
+    } else {
       console.log("no hay usuario logueado");
       getCantCartWhithoutToken();
     }
-  }
-
+  };
 
   const getAllInfoPerfil = () => {
     getUserProfileInfo(token)
       .then((res) => {
         // console.log(res.data);
         setDetailInfoProfile(res.data);
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   // const offerDay = () => {
   //   getOfferOfDay()
@@ -200,6 +200,7 @@ const Home = (props) => {
     getCantCart();
     funcionValidation();
     setMinQty(1);
+    setHandleShowOffCanvas(false);
     // const start= ()=>{
     //   gapi.client.init({
     //     clientId: CLIENT_ID_GOOGLE,
@@ -221,46 +222,48 @@ const Home = (props) => {
     // offerDay();
   }, []);
 
-
-
-
   useEffect(() => {
     funcionValidation();
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
   useEffect(() => {
+    // Bloquear el scroll al montar el componente
+    document.body.style.overflow = "hidden";
+
+    // Cleanup: Restablecer el scroll al desmontar el componente
+    return () => {
+      document.body.style.overflow = "visible";
+    };
+  }, []);
+
+  useEffect(() => {
     // Esta función se ejecutará cada vez que cambie el estado de modalPopup
     if (modalPopup) {
       // Si el modal está abierto, deshabilita el desplazamiento vertical
-      document.body.style.overflowY = 'hidden';
-      document.body.style.overflowX = 'hidden';
+      document.body.style.overflowY = "hidden";
+      document.body.style.overflowX = "hidden";
     } else {
       // Si el modal está cerrado, habilita el desplazamiento vertical
-      document.body.style.overflowY = 'scroll';
-      document.body.style.overflowX = 'hidden';
+      document.body.style.overflowY = "scroll";
+      document.body.style.overflowX = "hidden";
     }
 
     // Devuelve una función de limpieza para restablecer el estado cuando se desmonte el componente
     return () => {
-      document.body.style.overflowY = 'scroll';
-      document.body.style.overflowX = 'hidden';
+      document.body.style.overflowY = "scroll";
+      document.body.style.overflowX = "hidden";
     };
   }, [modalPopup]); // Asegúrate de incluir modalPopup como dependencia para que se ejecute cuando cambie
 
-
   return (
-
     // <Nav/>
     <>
       {/* <GoogleOAuthProvider clientId={CLIENT_ID_GOOGLE}> */}
       <div className="w-100 d-flex flex-column align-items-center">
-
-
-
         <Header
           cantCart={cantProductsOnCart}
           detailInfoPerfil={detailInfoProfile}
@@ -271,7 +274,6 @@ const Home = (props) => {
           minQty={minQty}
           handleShowOffCanvas={handleShowOffCanvas}
           handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
-
         />
         <HeaderResponsive
           canCart={cantProductsOnCart}
@@ -288,7 +290,9 @@ const Home = (props) => {
         <OfertaFlash />
         <Recientes
           bannersInfo={bannersInfo}
-          updateCantProducts={() => { getCantCart() }}
+          updateCantProducts={() => {
+            getCantCart();
+          }}
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           setIsntLoggedInPartner={() => setIsLoggedIn(false)}
           updateCantProductsWithouthToken={getCantCartWhithoutToken}
@@ -297,7 +301,9 @@ const Home = (props) => {
         />
         <Promociones
           bannersInfo={bannersInfo}
-          updateCantProducts={() => { getCantCart() }}
+          updateCantProducts={() => {
+            getCantCart();
+          }}
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           setIsntLoggedInPartner={() => setIsLoggedIn(false)}
           updateCantProductsWithouthToken={getCantCartWhithoutToken}
@@ -305,7 +311,9 @@ const Home = (props) => {
         />
         <Vendidos
           bannersInfo={bannersInfo}
-          updateCantProducts={() => { getCantCart() }}
+          updateCantProducts={() => {
+            getCantCart();
+          }}
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           setIsntLoggedInPartner={() => setIsLoggedIn(false)}
           updateCantProductsWithouthToken={getCantCartWhithoutToken}
@@ -320,7 +328,6 @@ const Home = (props) => {
           toggle={() => setModalPopup(false)}
           isOpen={modalPopup}
           backdrop="static"
-
         >
           <ModalHeader toggle={() => closeModalPopup()}></ModalHeader>
           <ModalBody>
@@ -331,7 +338,6 @@ const Home = (props) => {
       {/* </GoogleOAuthProvider> */}
     </>
     // <h1>Home</h1>
-
   );
 };
 
