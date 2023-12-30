@@ -17,4 +17,8 @@ code {
     monospace;
 }
 
+.offcanvas-backdrop.fade.show {
+  display: none !important;
+}
+
 
