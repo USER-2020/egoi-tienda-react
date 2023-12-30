@@ -488,7 +488,15 @@ function HeaderResponsive({
 
           <Offcanvas show={show} onHide={handleClose} placement="start">
             <Offcanvas.Header closeButton>
-              {/* <Offcanvas.Title>Offcanvas</Offcanvas.Title> */}
+              <Offcanvas.Title>
+                {" "}
+                {currenUser && detailInfoProfile && (
+                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                    ¡Hola,{" "}
+                    {detailInfoProfile.f_name + " " + detailInfoProfile.l_name}!
+                  </h5>
+                )}
+              </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
               {/* <div
