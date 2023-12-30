@@ -105,11 +105,12 @@ const AllBrandsView = () => {
         handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
       <HeaderResponsive
-        canCart={cantProductsOnCart}
-        detailInfoProfile={detailInfoProfile}
-        setIsLoggedInPartner={() => setIsLoggedIn(true)}
-        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-      />
+          canCart={cantProductsOnCart}
+          detailInfoProfile={detailInfoProfile}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        />
       <ShowBrandsComponent />
       <Footer />
     </div>

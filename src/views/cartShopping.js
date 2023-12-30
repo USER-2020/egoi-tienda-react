@@ -101,11 +101,12 @@ function CartShopping() {
         handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
       <HeaderResponsive
-        canCart={cantProductsOnCart}
-        detailInfoProfile={detailInfoProfile}
-        setIsLoggedInPartner={() => setIsLoggedIn(true)}
-        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-      />
+          canCart={cantProductsOnCart}
+          detailInfoProfile={detailInfoProfile}
+          setIsLoggedInPartner={() => setIsLoggedIn(true)}
+          handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        />
       {token && currenUser ? (
         <DetailCart setCantCart={() => getCantCart()} setIsLoggedInPartner={() => setIsLoggedIn(true)} productsCart={productsCart} />
       ) : (

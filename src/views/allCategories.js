@@ -1,23 +1,21 @@
-import Header from '../components/header'
-import HeaderResponsive from '../components/headerResponsive'
-import Footer from '../components/footer'
-import ShowCategoriesComponent from '../components/categories/showCategories.tsx'
-import { getCurrentUser } from '../helpers/Utils'
+import Header from "../components/header";
+import HeaderResponsive from "../components/headerResponsive";
+import Footer from "../components/footer";
+import ShowCategoriesComponent from "../components/categories/showCategories.tsx";
+import { getCurrentUser } from "../helpers/Utils";
 import React, { useEffect, useState } from "react";
-import { allProductsCart } from '../services/cart'
-import { getUserProfileInfo } from '../services/ordenes'
+import { allProductsCart } from "../services/cart";
+import { getUserProfileInfo } from "../services/ordenes";
 
 const AllCategoriesView = () => {
-
   const currenUser = getCurrentUser();
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
-  const [cantProductsOnCart, setCantProductsOnCart] = useState('');
+  const [cantProductsOnCart, setCantProductsOnCart] = useState("");
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
-
 
   const getCantCart = () => {
     allProductsCart(token)
@@ -28,13 +26,12 @@ const AllCategoriesView = () => {
         // console.log("Cantidad de productos en el carrito desde el responsive", numberOfProducts);
         setCantProductsOnCart(numberOfProducts);
         setProductsCart(res.data);
-
-
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getCantCartWhithoutToken = () => {
-    let productsCartWhithoutToken = localStorage.getItem('productsCart');
+    let productsCartWhithoutToken = localStorage.getItem("productsCart");
     if (productsCartWhithoutToken) {
       // Si 'productsCartWhithoutToken' no es nulo ni indefinido, entonces hay datos en el localStorage.
 
@@ -42,40 +39,41 @@ const AllCategoriesView = () => {
       let productsCartData = JSON.parse(productsCartWhithoutToken);
 
       // Convierte los datos en una matriz de objetos y agrega un índice único a cada producto
-      let productsInCart = Object.values(productsCartData).map((product, index) => ({ ...product, index }));
+      let productsInCart = Object.values(
+        productsCartData
+      ).map((product, index) => ({ ...product, index }));
 
       // Obtiene el tamaño de la matriz (número de elementos) y actualiza el estado "cantProductsOnCart"
       let numProducts = productsInCart.length;
       setCantProductsOnCart(numProducts);
       setProductsCart(productsInCart);
 
-      console.log('Número de productos en el carrito:', numProducts);
+      console.log("Número de productos en el carrito:", numProducts);
     } else {
       // Si 'productsCartWhithoutToken' es nulo o indefinido, no hay datos en el localStorage.
-      console.log('El carrito está vacío.');
+      console.log("El carrito está vacío.");
     }
-  }
+  };
 
   const getAllInfoPerfil = () => {
     getUserProfileInfo(token)
       .then((res) => {
         // console.log(res.data);
         setDetailInfoProfile(res.data);
-      }).catch((err) => console.log(err));
-  }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const funcionValidation = () => {
     if (isLoggedIn) {
       getAllInfoPerfil();
       console.log("si hay usuario logueado");
       getCantCart();
-    }
-    else {
+    } else {
       console.log("no hay usuario logueado");
       getCantCartWhithoutToken();
     }
-  }
-
+  };
 
   useEffect(() => {
     // getAllInfoPerfil();
@@ -109,11 +107,12 @@ const AllCategoriesView = () => {
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
         handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
+        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
       />
       <ShowCategoriesComponent />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default AllCategoriesView
+export default AllCategoriesView;

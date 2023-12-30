@@ -54,7 +54,7 @@ function HeaderResponsive({
   detailInfoProfile,
   setIsLoggedInPartner,
   handleShowOffCanvas,
-  handleShowOffCanvasClose
+  handleShowOffCanvasClose,
 }) {
   /* global bootstrap */
 
@@ -97,7 +97,10 @@ function HeaderResponsive({
 
   const shouldBtnCart = location.pathname === "/checkout";
 
-  const handleClose = () => { setShow(false); handleShowOffCanvasClose() };
+  const handleClose = () => {
+    setShow(false);
+    handleShowOffCanvasClose();
+  };
 
   const handleInputChange = (event) => {
     setPrevSearchProducts(event.target.value);
@@ -864,7 +867,7 @@ function HeaderResponsive({
                           className="btn btnPersonalizadosL"
                           onClick={(e) => {
                             e.preventDefault();
-                            setIsOffcanvasVisible(false);
+                            setShow(false);
                             setModalOpcionesLogin(true);
 
                             // const offcanvasElement = document.querySelector('.offcanvas');
@@ -878,57 +881,6 @@ function HeaderResponsive({
                         >
                           <FontAwesomeIcon icon={faUser} /> Ingresar
                         </a>
-                        <Modal
-                          className="modal-dialog-centered modal-lg"
-                          toggle={() => setModalViewLogin(false)}
-                          isOpen={modalViewLogin && !changeFormLogin}
-                        >
-                          <ModalBody>
-                            <Login
-                              closeModalLogin={closeModalLogin}
-                              handleLogin={handleLogin}
-                              handleChangeFormLogin={handleChangeFormLogin}
-                              changeFormRegister={changeFormRegister}
-                            />
-                          </ModalBody>
-                        </Modal>
-
-                        <Modal
-                          className="modal-dialog-centered modal-md"
-                          toggle={() => setModalOpcionesLogin(false)}
-                          isOpen={modalOpcionesLogin}
-                        >
-                          <ModalBody>
-                            <OpcionesLogin
-                              closeModalLogin={() =>
-                                setModalOpcionesLogin(false)
-                              }
-                              handleLoginCorreoContrasena={
-                                handleCorreoContrasena
-                              }
-                            />
-                          </ModalBody>
-                        </Modal>
-
-                        {/* <a href='#'
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setIsOffcanvasVisible(false);
-                          setModalViewRegistro(true);
-                        }}
-                        className='btn btnPersonalizadosR'>
-                        <FontAwesomeIcon icon={faUserPlus} /> Regístrate
-                      </a> */}
-                        <Modal
-                          className="modal-dialog-centered modal-lg"
-                          toggle={() => setModalViewRegistro(false)}
-                          isOpen={modalViewRegistro && !changeFormRegister}
-                        >
-                          <ModalBody>
-                            {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
-                            <RegisterCode />
-                          </ModalBody>
-                        </Modal>
                       </>
                     )}
                   </li>
@@ -938,7 +890,53 @@ function HeaderResponsive({
           </Offcanvas>
         </div>
       </nav>
-      <div></div>
+      <Modal
+        className="modal-dialog-centered modal-lg"
+        toggle={() => setModalViewLogin(false)}
+        isOpen={modalViewLogin && !changeFormLogin}
+      >
+        <ModalBody>
+          <Login
+            closeModalLogin={closeModalLogin}
+            handleLogin={handleLogin}
+            handleChangeFormLogin={handleChangeFormLogin}
+            changeFormRegister={changeFormRegister}
+          />
+        </ModalBody>
+      </Modal>
+
+      <Modal
+        className="modal-dialog-centered modal-md"
+        toggle={() => setModalOpcionesLogin(false)}
+        isOpen={modalOpcionesLogin}
+      >
+        <ModalBody>
+          <OpcionesLogin
+            closeModalLogin={() => setModalOpcionesLogin(false)}
+            handleLoginCorreoContrasena={handleCorreoContrasena}
+          />
+        </ModalBody>
+      </Modal>
+
+      {/* <a href='#'
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsOffcanvasVisible(false);
+                          setModalViewRegistro(true);
+                        }}
+                        className='btn btnPersonalizadosR'>
+                        <FontAwesomeIcon icon={faUserPlus} /> Regístrate
+                      </a> */}
+      <Modal
+        className="modal-dialog-centered modal-lg"
+        toggle={() => setModalViewRegistro(false)}
+        isOpen={modalViewRegistro && !changeFormRegister}
+      >
+        <ModalBody>
+          {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
+          <RegisterCode />
+        </ModalBody>
+      </Modal>
     </div>
   );
 }
