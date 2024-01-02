@@ -103,6 +103,7 @@ function Category() {
     getAllBanners();
     funcionValidation();
     setMinQty(1);
+    setHandleShowOffCanvas(false);
   }, []);
 
   useEffect(() => {

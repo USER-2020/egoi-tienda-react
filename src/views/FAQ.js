@@ -82,6 +82,7 @@ const FAQ = () => {
     // getCantCart();
     funcionValidation();
     setMinQty(1);
+    setHandleShowOffCanvas(false);
 
     // getOfferDestacada();
     // offerDay();

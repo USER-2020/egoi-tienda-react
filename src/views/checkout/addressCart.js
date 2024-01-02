@@ -84,6 +84,7 @@ function DressCart() {
 
   useEffect(() => {
     setMinQty(1);
+    setHandleShowOffCanvas(false);
   }, []);
 
   useEffect(() => {

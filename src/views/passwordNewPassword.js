@@ -82,6 +82,7 @@ const PasswordNewPassword = () => {
     // getCantCart();
     funcionValidation();
     setMinQty(1);
+    setHandleShowOffCanvas(false);
 
     // getOfferDestacada();
     // offerDay();
