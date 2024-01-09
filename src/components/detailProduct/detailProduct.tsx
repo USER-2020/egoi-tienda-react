@@ -176,7 +176,7 @@ function DetailProduct({
       const timeoutId = setTimeout(() => {
         localStorage.removeItem("productsCart");
         alert("Se está optimizando la página");
-        window.location.reload();
+        window.location.reload(true);
       }, 6000);
 
       if (productsCart.length === 0) {
