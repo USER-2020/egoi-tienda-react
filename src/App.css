@@ -30,10 +30,10 @@
   color: #61dafb;
 }
 
-.modal-open-no-backdrop {
+/* .modal-open-no-backdrop {
   overflow: hidden;
   /* Esto evita el desplazamiento del cuerpo cuando el modal está abierto */
-}
+/* } */ 
 
 /* .offcanvas-backdrop.fade.show {
   display: none !important;

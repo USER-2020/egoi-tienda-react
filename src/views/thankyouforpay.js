@@ -20,6 +20,8 @@ const Thankyouforpay = () => {
 
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
+  const [changueOffCanvasCart, setChangueOffcanvasCart] = useState(false);
+
   const location = useLocation();
 
   const getCantCart = () => {
@@ -106,16 +108,16 @@ const Thankyouforpay = () => {
         productsInCart={productsCart}
         getAllProductsByCart={getCantCart}
         getAllProductsByCartNotoken={funcionValidation}
-        minQty={minQty}
+        changueOffCanvasCart={changueOffCanvasCart}
         handleShowOffCanvas={handleShowOffCanvas}
-        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
       />
       <HeaderResponsive
         canCart={cantProductsOnCart}
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
-        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        handleShowOffCanvas={() => setChangueOffcanvasCart(true)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
       />
       <SuccessPurchase />
       <Footer />

@@ -174,7 +174,7 @@ function HeaderResponsive({
       console.log("Qup putas");
       // history.push(`/detailCart`)
     } else {
-      setIsOffcanvasVisible(false);
+      // setIsOffcanvasVisible(false);
       handleShowOffCanvas();
     }
   };

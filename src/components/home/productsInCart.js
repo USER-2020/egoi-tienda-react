@@ -264,12 +264,12 @@ const ProductsInCart = () => {
                                   >
                                     <h5>
                                       $
-                                      {(product.discount_valor &&
-                                        product.discount_valor.toLocaleString(
+                                      {(product && product.discount_valor &&
+                                        product?.discount_valor?.toLocaleString(
                                           "es"
                                         )) ||
-                                        (product.discount_tag_valor &&
-                                          product.discount_tag_valor.toLocaleString(
+                                        (product && product.discount_tag_valor &&
+                                          product?.discount_tag_valor?.toLocaleString(
                                             "es"
                                           ))}
                                     </h5>
@@ -277,9 +277,9 @@ const ProductsInCart = () => {
                                       <s>
                                         $
                                         {token
-                                          ? product.price
-                                          : product.unit_price &&
-                                            product.price.toLocaleString(
+                                          ? product && product.price
+                                          : product && product.unit_price &&
+                                            product?.price?.toLocaleString(
                                               "es",
                                               "ES"
                                             )}
@@ -289,14 +289,14 @@ const ProductsInCart = () => {
                                 ) : token ? (
                                   <h5>
                                     $
-                                    {product.price &&
-                                      product.price.toLocaleString("es", "ES")}
+                                    {product && product.price &&
+                                      product?.price?.toLocaleString("es", "ES")}
                                   </h5>
                                 ) : (
                                   <h5>
                                     $
-                                    {product.unit_price &&
-                                      product.unit_price.toLocaleString(
+                                    {product && product.unit_price &&
+                                      product?.unit_price?.toLocaleString(
                                         "es",
                                         "ES"
                                       )}

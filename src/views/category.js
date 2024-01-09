@@ -21,6 +21,8 @@ function Category() {
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currentUser sea null
 
+  const [changueOffCanvasCart, setChangueOffcanvasCart] = useState(false);
+
   const getCantCart = () => {
     allProductsCart(token)
       .then((res) => {
@@ -119,16 +121,16 @@ function Category() {
         productsInCart={productsCart}
         getAllProductsByCart={getCantCart}
         getAllProductsByCartNotoken={funcionValidation}
-        minQty={minQty}
+        changueOffCanvasCart={changueOffCanvasCart}
         handleShowOffCanvas={handleShowOffCanvas}
-        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
       />
       <HeaderResponsive
         canCart={cantProductsOnCart}
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
-        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        handleShowOffCanvas={() => setChangueOffcanvasCart(true)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
       />
       {/* <HeaderCategories/> */}
       {/* <HeaderResponsiveCategorie/> */}

@@ -111,7 +111,6 @@ function DetailProduct({
 
   const addToCart = (product) => {
     if (currenUser) {
-      // setModalViewCart(true);
       setLoadingAdd(true);
       addProductsCart(
         id,
@@ -122,13 +121,10 @@ function DetailProduct({
         selectedOption
       )
         .then((res) => {
-          // setIsLoggedInPartner(true);
           setCantCart();
-          // toast.success('Producto agregado con éxito!');
           let discount = 0;
           if (detailProducts.discount_valor > 0) {
-            discount =
-              detailProducts.unit_price - detailProducts.discount_valor;
+            discount = detailProducts.unit_price - detailProducts.discount_valor;
           }
           if (detailProducts.discount_tag_valor > 0) {
             discount = detailProducts.discount_tag_valor;
@@ -158,85 +154,76 @@ function DetailProduct({
             ],
             value: detailProducts.unit_price,
           });
-          // setMinQty();
           setIsntLoggedInPartner(false);
           updateCantProductsWithouthToken();
           toast.success("Producto agregado con éxito!");
-          // history.push('/checkout')
-          // console.log("Producto enviado", res.data);
-          // console.log(token);
         })
         .catch((err) => console.log(err));
-      // console.log("producto agregado");
-      // console.log(token);
     } else {
       setLoadingAdd(true);
-
-      // setModalViewLogin(true);
-      // Obtener el carrito actual del localStorage (si existe)
       let productsCart = JSON.parse(localStorage.getItem("productsCart")) || [];
 
-      // // Agregar el nuevo producto al carrito actual
-      // productsCart[product.id] = product;
-
-      const existingProduct = productsCart.find(
-        (item) => item.id === product.id
-      );
+      const existingProduct = productsCart.find((item) => item.id === product.id);
 
       if (existingProduct) {
-        // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
         existingProduct.min_qty = quantity + 1;
-        // setMinQty();
       } else {
-        // El producto no existe en el carrito, así que agrégalo con cantidad 1
-        // product.min_qty = 1;°
         productsCart.push({ ...product, min_qty: quantity });
-
-        // setMinQty();
       }
 
-      // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage
       localStorage.setItem("productsCart", JSON.stringify(productsCart));
-      setIsntLoggedInPartner(false);
-      updateCantProductsWithouthToken();
-      toast.success("Producto agregado con éxito!");
 
-      let discount = 0;
-      if (detailProducts.discount_valor > 0) {
-        discount = detailProducts.unit_price - detailProducts.discount_valor;
+      const timeoutId = setTimeout(() => {
+        localStorage.removeItem("productsCart");
+        alert("Se está optimizando la página");
+        window.location.reload();
+      }, 6000);
+
+      if (productsCart.length === 0) {
+        clearTimeout(timeoutId);
+      } else {
+        setIsntLoggedInPartner(false);
+        updateCantProductsWithouthToken();
+        toast.success("Producto agregado con éxito!");
+
+        let discount = 0;
+        if (detailProducts.discount_valor > 0) {
+          discount = detailProducts.unit_price - detailProducts.discount_valor;
+        }
+        if (detailProducts.discount_tag_valor > 0) {
+          discount = detailProducts.discount_tag_valor;
+        }
+        if (
+          detailProducts.discount_valor === 0 &&
+          detailProducts.discount_tag_valor === 0
+        ) {
+          discount = 0;
+        }
+        /* eslint-disable */
+        gtag("event", "add_to_cart", {
+          currency: "USD",
+          items: [
+            {
+              item_id: id,
+              item_name: detailProducts.name,
+              coupon: "",
+              discount: discount,
+              affiliation: "Egoi",
+              item_brand: detailProducts.brand_id,
+              item_category: "",
+              item_variant: "",
+              price: detailProducts.unit_price,
+              currency: "COP",
+              quantity: quantity,
+            },
+          ],
+          value: detailProducts.unit_price,
+        });
+        /* eslint-enable */
       }
-      if (detailProducts.discount_tag_valor > 0) {
-        discount = detailProducts.discount_tag_valor;
-      }
-      if (
-        detailProducts.discount_valor === 0 &&
-        detailProducts.discount_tag_valor === 0
-      ) {
-        discount = 0;
-      }
-      /* eslint-disable */
-      gtag("event", "add_to_cart", {
-        currency: "USD",
-        items: [
-          {
-            item_id: id,
-            item_name: detailProducts.name,
-            coupon: "",
-            discount: discount,
-            affiliation: "Egoi",
-            item_brand: detailProducts.brand_id,
-            item_category: "",
-            item_variant: "",
-            price: detailProducts.unit_price,
-            currency: "COP",
-            quantity: quantity,
-          },
-        ],
-        value: detailProducts.unit_price,
-      });
-      /* eslint-enable */
     }
   };
+
 
   const favClick = (idProductFav) => {
     // console.log(idProductFav)
@@ -449,7 +436,7 @@ function DetailProduct({
   };
 
   var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
-  window.addEventListener("scroll", function() {
+  window.addEventListener("scroll", function () {
     var currentScrollPos =
       window.pageYOffset || document.documentElement.scrollTop;
     var scrollModal = document.getElementById("scrollModalAddToCart");
@@ -809,7 +796,7 @@ function DetailProduct({
                   <div className="containerNameAndStarts">
                     <div className="precio">
                       {detailProducts.discount_tag_valor > 0 ||
-                      detailProducts.discount_valor > 0 ? (
+                        detailProducts.discount_valor > 0 ? (
                         <div
                           style={{
                             display: "flex",
@@ -844,8 +831,8 @@ function DetailProduct({
                         </h5>
                       )}
                       {detailProducts.unit_price >= 79990 ||
-                      detailProducts.discount_valor >= 79900 ||
-                      detailProducts.dicount_tag_valor >= 79900 ? (
+                        detailProducts.discount_valor >= 79900 ||
+                        detailProducts.dicount_tag_valor >= 79900 ? (
                         <div
                           style={{
                             display: "flex",
@@ -952,108 +939,108 @@ function DetailProduct({
                       {detailProducts.choice_options.some(
                         (variations) => variations.title === "Colores"
                       ) && (
-                        <div className="containerVariacionesResponsiveColores">
-                          <p>Colores: </p>
-                          {detailProducts.choice_options
-                            .filter(
-                              (variations) => variations.title === "Colores"
-                            )
-                            .map((coloresVariation, index) => (
-                              <div key={index}>
-                                {coloresVariation.options.length > 3 ? (
-                                  <Input
-                                    type="select"
-                                    onChange={handleSelectChangeColor}
-                                    value={selectedColor}
-                                    className="inputStyleVariation"
-                                  >
-                                    <option value="">Seleccionar</option>
-                                    {coloresVariation.options.map(
-                                      (color, indexColor) => (
-                                        <option key={indexColor} value={color}>
-                                          {color}
-                                        </option>
-                                      )
-                                    )}
-                                  </Input>
-                                ) : (
-                                  <>
-                                    <div className="clasnameVariationColor">
+                          <div className="containerVariacionesResponsiveColores">
+                            <p>Colores: </p>
+                            {detailProducts.choice_options
+                              .filter(
+                                (variations) => variations.title === "Colores"
+                              )
+                              .map((coloresVariation, index) => (
+                                <div key={index}>
+                                  {coloresVariation.options.length > 3 ? (
+                                    <Input
+                                      type="select"
+                                      onChange={handleSelectChangeColor}
+                                      value={selectedColor}
+                                      className="inputStyleVariation"
+                                    >
+                                      <option value="">Seleccionar</option>
                                       {coloresVariation.options.map(
-                                        (color, colorIndex) => (
-                                          <a
-                                            href="#"
-                                            key={colorIndex}
-                                            onClick={(e) => {
-                                              e.preventDefault();
-                                              setSelectedColor(color);
-                                            }}
-                                          >
+                                        (color, indexColor) => (
+                                          <option key={indexColor} value={color}>
                                             {color}
-                                          </a>
+                                          </option>
                                         )
                                       )}
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            ))}
-                        </div>
-                      )}
+                                    </Input>
+                                  ) : (
+                                    <>
+                                      <div className="clasnameVariationColor">
+                                        {coloresVariation.options.map(
+                                          (color, colorIndex) => (
+                                            <a
+                                              href="#"
+                                              key={colorIndex}
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                setSelectedColor(color);
+                                              }}
+                                            >
+                                              {color}
+                                            </a>
+                                          )
+                                        )}
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              ))}
+                          </div>
+                        )}
                       {detailProducts.choice_options.some(
                         (variations) => variations.title === "Tallas"
                       ) && (
-                        <div
-                          className="containerVariacionesResponsiveColores"
-                          style={{ marginTop: "15px" }}
-                        >
-                          <p>Tallas: </p>
-                          {detailProducts.choice_options
-                            .filter(
-                              (variations) => variations.title === "Tallas"
-                            )
-                            .map((tallasVariation, index) => (
-                              <div key={index}>
-                                {tallasVariation.options.length > 3 ? (
-                                  <Input
-                                    type="select"
-                                    onChange={handleSelectChange}
-                                    value={selectedOption}
-                                    className="inputStyleVariation"
-                                  >
-                                    <option value="">Seleccionar</option>
-                                    {tallasVariation.options.map(
-                                      (talla, indexTalla) => (
-                                        <option key={indexTalla} value={talla}>
-                                          {talla}
-                                        </option>
-                                      )
-                                    )}
-                                  </Input>
-                                ) : (
-                                  <>
-                                    <div className="clasnameVariationColor">
+                          <div
+                            className="containerVariacionesResponsiveColores"
+                            style={{ marginTop: "15px" }}
+                          >
+                            <p>Tallas: </p>
+                            {detailProducts.choice_options
+                              .filter(
+                                (variations) => variations.title === "Tallas"
+                              )
+                              .map((tallasVariation, index) => (
+                                <div key={index}>
+                                  {tallasVariation.options.length > 3 ? (
+                                    <Input
+                                      type="select"
+                                      onChange={handleSelectChange}
+                                      value={selectedOption}
+                                      className="inputStyleVariation"
+                                    >
+                                      <option value="">Seleccionar</option>
                                       {tallasVariation.options.map(
                                         (talla, indexTalla) => (
-                                          <a
-                                            href="#"
-                                            key={indexTalla}
-                                            onClick={(e) => {
-                                              e.preventDefault();
-                                              setSelectedOption(talla);
-                                            }}
-                                          >
+                                          <option key={indexTalla} value={talla}>
                                             {talla}
-                                          </a>
+                                          </option>
                                         )
                                       )}
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            ))}
-                        </div>
-                      )}
+                                    </Input>
+                                  ) : (
+                                    <>
+                                      <div className="clasnameVariationColor">
+                                        {tallasVariation.options.map(
+                                          (talla, indexTalla) => (
+                                            <a
+                                              href="#"
+                                              key={indexTalla}
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                setSelectedOption(talla);
+                                              }}
+                                            >
+                                              {talla}
+                                            </a>
+                                          )
+                                        )}
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              ))}
+                          </div>
+                        )}
                     </div>
                   )}
                 {/* {detailProducts && detailProducts.variation && detailProducts.variation.length > 0 ? (
@@ -1089,7 +1076,7 @@ function DetailProduct({
                   <h6>Descripción</h6>
                   <p>
                     {detailProducts &&
-                    typeof detailProducts.details === "string"
+                      typeof detailProducts.details === "string"
                       ? parse(detailProducts.details)
                       : null}
                   </p>
@@ -1158,7 +1145,7 @@ function DetailProduct({
                   >
                     {(detailProducts &&
                       detailProducts.discount_tag_valor > 0) ||
-                    detailProducts.discount_valor > 0 ? (
+                      detailProducts.discount_valor > 0 ? (
                       <div
                         style={{
                           display: "flex",
@@ -1196,8 +1183,8 @@ function DetailProduct({
                       </h5>
                     )}
                     {(detailProducts && detailProducts.unit_price >= 79990) ||
-                    detailProducts.discount_valor >= 79900 ||
-                    detailProducts.dicount_tag_valor >= 79900 ? (
+                      detailProducts.discount_valor >= 79900 ||
+                      detailProducts.dicount_tag_valor >= 79900 ? (
                       <div
                         style={{
                           display: "flex",
@@ -1235,108 +1222,108 @@ function DetailProduct({
                       {detailProducts.choice_options.some(
                         (variations) => variations.title === "Colores"
                       ) && (
-                        <div className="containerColorsProduct">
-                          <p>Colores: </p>
-                          {detailProducts.choice_options
-                            .filter(
-                              (variations) => variations.title === "Colores"
-                            )
-                            .map((coloresVariation, index) => (
-                              <div key={index}>
-                                {coloresVariation.options.length > 3 ? (
-                                  <Input
-                                    type="select"
-                                    onChange={handleSelectChangeColor}
-                                    value={selectedColor}
-                                    className="inputStyleVariation"
-                                  >
-                                    <option value="">Seleccionar</option>
-                                    {coloresVariation.options.map(
-                                      (color, indexColor) => (
-                                        <option key={indexColor} value={color}>
-                                          {color}
-                                        </option>
-                                      )
-                                    )}
-                                  </Input>
-                                ) : (
-                                  <>
-                                    <div className="clasnameVariationColor">
+                          <div className="containerColorsProduct">
+                            <p>Colores: </p>
+                            {detailProducts.choice_options
+                              .filter(
+                                (variations) => variations.title === "Colores"
+                              )
+                              .map((coloresVariation, index) => (
+                                <div key={index}>
+                                  {coloresVariation.options.length > 3 ? (
+                                    <Input
+                                      type="select"
+                                      onChange={handleSelectChangeColor}
+                                      value={selectedColor}
+                                      className="inputStyleVariation"
+                                    >
+                                      <option value="">Seleccionar</option>
                                       {coloresVariation.options.map(
-                                        (color, colorIndex) => (
-                                          <a
-                                            href="#"
-                                            key={colorIndex}
-                                            onClick={(e) => {
-                                              e.preventDefault();
-                                              setSelectedColor(color);
-                                            }}
-                                          >
+                                        (color, indexColor) => (
+                                          <option key={indexColor} value={color}>
                                             {color}
-                                          </a>
+                                          </option>
                                         )
                                       )}
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            ))}
-                        </div>
-                      )}
+                                    </Input>
+                                  ) : (
+                                    <>
+                                      <div className="clasnameVariationColor">
+                                        {coloresVariation.options.map(
+                                          (color, colorIndex) => (
+                                            <a
+                                              href="#"
+                                              key={colorIndex}
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                setSelectedColor(color);
+                                              }}
+                                            >
+                                              {color}
+                                            </a>
+                                          )
+                                        )}
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              ))}
+                          </div>
+                        )}
                       {detailProducts.choice_options.some(
                         (variations) => variations.title === "Tallas"
                       ) && (
-                        <div
-                          className="containerColorsProduct"
-                          style={{ marginTop: "15px" }}
-                        >
-                          <p>Tallas: </p>
-                          {detailProducts.choice_options
-                            .filter(
-                              (variations) => variations.title === "Tallas"
-                            )
-                            .map((tallasVariation, index) => (
-                              <div key={index}>
-                                {tallasVariation.options.length > 3 ? (
-                                  <Input
-                                    type="select"
-                                    onChange={handleSelectChange}
-                                    value={selectedOption}
-                                    className="inputStyleVariation"
-                                  >
-                                    <option value="">Seleccionar</option>
-                                    {tallasVariation.options.map(
-                                      (talla, indexTalla) => (
-                                        <option key={indexTalla} value={talla}>
-                                          {talla}
-                                        </option>
-                                      )
-                                    )}
-                                  </Input>
-                                ) : (
-                                  <>
-                                    <div className="clasnameVariationColor">
+                          <div
+                            className="containerColorsProduct"
+                            style={{ marginTop: "15px" }}
+                          >
+                            <p>Tallas: </p>
+                            {detailProducts.choice_options
+                              .filter(
+                                (variations) => variations.title === "Tallas"
+                              )
+                              .map((tallasVariation, index) => (
+                                <div key={index}>
+                                  {tallasVariation.options.length > 3 ? (
+                                    <Input
+                                      type="select"
+                                      onChange={handleSelectChange}
+                                      value={selectedOption}
+                                      className="inputStyleVariation"
+                                    >
+                                      <option value="">Seleccionar</option>
                                       {tallasVariation.options.map(
                                         (talla, indexTalla) => (
-                                          <a
-                                            href="#"
-                                            key={indexTalla}
-                                            onClick={(e) => {
-                                              e.preventDefault();
-                                              setSelectedOption(talla);
-                                            }}
-                                          >
+                                          <option key={indexTalla} value={talla}>
                                             {talla}
-                                          </a>
+                                          </option>
                                         )
                                       )}
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            ))}
-                        </div>
-                      )}
+                                    </Input>
+                                  ) : (
+                                    <>
+                                      <div className="clasnameVariationColor">
+                                        {tallasVariation.options.map(
+                                          (talla, indexTalla) => (
+                                            <a
+                                              href="#"
+                                              key={indexTalla}
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                setSelectedOption(talla);
+                                              }}
+                                            >
+                                              {talla}
+                                            </a>
+                                          )
+                                        )}
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              ))}
+                          </div>
+                        )}
                     </div>
                   )}
 
@@ -1410,8 +1397,8 @@ function DetailProduct({
                 </div>
                 <div className="opciones">
                   {detailProducts &&
-                  detailProducts.current_stock &&
-                  detailProducts.current_stock > 0 ? (
+                    detailProducts.current_stock &&
+                    detailProducts.current_stock > 0 ? (
                     <a
                       href="#"
                       className="buyNow"
@@ -1519,8 +1506,8 @@ function DetailProduct({
                   >
                     <ModalBody>
                       {detailProducts &&
-                      detailProducts.current_stock &&
-                      detailProducts.current_stock > 0 ? (
+                        detailProducts.current_stock &&
+                        detailProducts.current_stock > 0 ? (
                         <AddCart
                           closeModalCart={closeModalCart}
                           detailsProducts={detailProducts}
@@ -1593,7 +1580,7 @@ function DetailProduct({
                     </div>
                     <div className="nrOpinions">
                       {commentsAndOpinionsProducts &&
-                      commentsAndOpinionsProducts.length > 0 ? (
+                        commentsAndOpinionsProducts.length > 0 ? (
                         <h6>{commentsAndOpinionsProducts.length} opiniones</h6>
                       ) : (
                         <h6>0 opiniones</h6>
@@ -1722,8 +1709,8 @@ function DetailProduct({
 
                   <div className="buyNowResponsive">
                     {detailProducts &&
-                    detailProducts.current_stock &&
-                    detailProducts.current_stock > 0 ? (
+                      detailProducts.current_stock &&
+                      detailProducts.current_stock > 0 ? (
                       <a
                         href="#"
                         onClick={(e) => {

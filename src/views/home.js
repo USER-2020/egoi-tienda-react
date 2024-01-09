@@ -64,6 +64,8 @@ const Home = (props) => {
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [changueOffCanvasCart, setChangueOffcanvasCart] = useState(false);
+
   const [datosPopup, setDatosPopup] = useState("");
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
 
@@ -271,16 +273,16 @@ const Home = (props) => {
           productsInCart={productsCart}
           getAllProductsByCart={getCantCart}
           getAllProductsByCartNotoken={funcionValidation}
-          minQty={minQty}
+          changueOffCanvasCart={changueOffCanvasCart}
           handleShowOffCanvas={handleShowOffCanvas}
-          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+          handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
         />
         <HeaderResponsive
           canCart={cantProductsOnCart}
           detailInfoProfile={detailInfoProfile}
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
-          handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+          handleShowOffCanvas={() => setChangueOffcanvasCart(true)}
+          handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
         />
 
         <Banner />
@@ -296,7 +298,8 @@ const Home = (props) => {
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           setIsntLoggedInPartner={() => setIsLoggedIn(false)}
           updateCantProductsWithouthToken={getCantCartWhithoutToken}
-          setMinQty={() => setMinQty(minQty + 1)}
+          // setMinQty={() => setMinQty(minQty + 1)}
+          handleOffcanvasCart={()=>setChangueOffcanvasCart(true)}
           className="w-100"
         />
         <Promociones
@@ -307,7 +310,7 @@ const Home = (props) => {
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           setIsntLoggedInPartner={() => setIsLoggedIn(false)}
           updateCantProductsWithouthToken={getCantCartWhithoutToken}
-          setMinQty={() => setMinQty(minQty + 1)}
+          handleOffcanvasCart={()=>setChangueOffcanvasCart(true)}
         />
         <Vendidos
           bannersInfo={bannersInfo}
@@ -317,7 +320,9 @@ const Home = (props) => {
           setIsLoggedInPartner={() => setIsLoggedIn(true)}
           setIsntLoggedInPartner={() => setIsLoggedIn(false)}
           updateCantProductsWithouthToken={getCantCartWhithoutToken}
-          setMinQty={() => setMinQty(minQty + 1)}
+          // setMinQty={() => setMinQty(minQty + 1)}
+          handleOffcanvasCart={()=>setChangueOffcanvasCart(true)}
+
         />
         {/* <Populares /> */}
         <Bannerdown bannersInfo={bannersInfo} />

@@ -18,6 +18,8 @@ function MyOrders(props) {
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
 
+  const [changueOffCanvasCart, setChangueOffcanvasCart] = useState(false);
+
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currenUser sea null
 
   const getCantCart = () => {
@@ -94,17 +96,17 @@ function MyOrders(props) {
         productsInCart={productsCart}
         getAllProductsByCart={getCantCart}
         getAllProductsByCartNotoken={funcionValidation}
-        minQty={minQty}
+        changueOffCanvasCart={changueOffCanvasCart}
         handleShowOffCanvas={handleShowOffCanvas}
-        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
       />
       <HeaderResponsive
-          canCart={cantProductsOnCart}
-          detailInfoProfile={detailInfoProfile}
-          setIsLoggedInPartner={() => setIsLoggedIn(true)}
-          handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
-        />
+        canCart={cantProductsOnCart}
+        detailInfoProfile={detailInfoProfile}
+        setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        handleShowOffCanvas={() => setChangueOffcanvasCart(true)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
+      />
       <Orders />
       <Footer />
     </div>

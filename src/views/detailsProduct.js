@@ -19,6 +19,7 @@ function DetailsProduct() {
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
 
+  const [changueOffCanvasCart, setChangueOffcanvasCart] = useState(false);
 
   const getCantCart = () => {
     allProductsCart(token)
@@ -98,23 +99,23 @@ function DetailsProduct() {
         productsInCart={productsCart}
         getAllProductsByCart={getCantCart}
         getAllProductsByCartNotoken={funcionValidation}
-        minQty={minQty}
+        changueOffCanvasCart={changueOffCanvasCart}
         handleShowOffCanvas={handleShowOffCanvas}
-        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
       />
-     <HeaderResponsive
-          canCart={cantProductsOnCart}
-          detailInfoProfile={detailInfoProfile}
-          setIsLoggedInPartner={() => setIsLoggedIn(true)}
-          handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-          handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
-        />
+      <HeaderResponsive
+        canCart={cantProductsOnCart}
+        detailInfoProfile={detailInfoProfile}
+        setIsLoggedInPartner={() => setIsLoggedIn(true)}
+        handleShowOffCanvas={() => setChangueOffcanvasCart(true)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
+      />
       <DetailProduct
         setCantCart={getCantCart}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
         setIsntLoggedInPartner={() => setIsLoggedIn(false)}
         updateCantProductsWithouthToken={getCantCartWhithoutToken}
-        setMinQty={() => setMinQty(minQty + 1)}       
+        setMinQty={() => setMinQty(minQty + 1)}
       />
       <SimilarProduct />
       <Footer />

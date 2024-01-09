@@ -41,7 +41,7 @@ import CodeLogin from "../views/user/codeLogin.js";
 import OpcionesLogin from "../views/user/opcionesLogin.tsx";
 import RegisterCode from "../views/user/registerCode.tsx";
 
-const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty, handleShowOffCanvas, handleShowOffCanvasClose }) => {
+const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCart, getAllProductsByCart, getAllProductsByCartNotoken, minQty, handleShowOffCanvas, handleShowOffCanvasClose, changueOffCanvasCart }) => {
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -526,22 +526,22 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
 
   useEffect(() => {
     console.log("changuess prevMinQty", prevMinQty);
-    console.log("PropminQTY", minQty);
-    if (minQty === 1) {
+    console.log("PropminQTY", changueOffCanvasCart);
+    if (!changueOffCanvasCart) {
       handleClose();
     }
-    if (minQty !== 1) {
+    else {
       handleShow();
     }
-  }, [minQty]);
+  }, [changueOffCanvasCart]);
 
 
-  useEffect(() => {
-    if (handleShowOffCanvas) {
-      handleShow();
-      console.log(handleShowOffCanvas);
-    }
-  }, [handleShowOffCanvas]);
+  // useEffect(() => {
+  //   if (handleShowOffCanvas) {
+  //     handleShow();
+  //     console.log(handleShowOffCanvas);
+  //   }
+  // }, [handleShowOffCanvas]);
 
 
 

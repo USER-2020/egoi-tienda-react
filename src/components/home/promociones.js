@@ -33,7 +33,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 
-const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) => {
+const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty, handleOffcanvasCart}) => {
   const [productos, setProductos] = useState([]);
 
   const containerRef = useRef(null);
@@ -320,7 +320,8 @@ const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, se
                 }],
                 value: product.unit_price
               });
-              setMinQty();
+              // setMinQty();
+              handleOffcanvasCart();
               /* eslint-enable */
 
             })
@@ -359,7 +360,8 @@ const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, se
                   }],
                   value: product.unit_price
                 });
-                setMinQty();
+                // setMinQty();
+                handleOffcanvasCart();
                 /* eslint-enable */
                 // console.log("Producto enviado", res.data);
                 // console.log(token);
@@ -384,12 +386,14 @@ const Promociones = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, se
       if (existingProduct) {
         // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
         existingProduct.min_qty += 1;
-        setMinQty();
+        // setMinQty();
+        handleOffcanvasCart();
       } else {
         // El producto no existe en el carrito, así que agrégalo con cantidad 1
         // product.min_qty = 1;°
         productsCart.push({ ...product, min_qty: 1 });
-        setMinQty();
+        // setMinQty();
+        handleOffcanvasCart();
       }
 
       // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage

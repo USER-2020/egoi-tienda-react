@@ -26,7 +26,7 @@ import Register from "../../views/user/register";
 import toast, { Toaster } from 'react-hot-toast';
 
 
-const Vendidos = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) => {
+const Vendidos = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty, handleOffcanvasCart }) => {
 
     const [productos, setProductos] = useState([]);
 
@@ -245,7 +245,8 @@ const Vendidos = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIs
                                 }],
                                 value: product.unit_price
                             });
-                            setMinQty();
+                            // setMinQty();
+                            handleOffcanvasCart();
                             /* eslint-enable */
 
                         })
@@ -284,7 +285,8 @@ const Vendidos = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIs
                                     }],
                                     value: product.unit_price
                                 });
-                                setMinQty();
+                                // setMinQty();
+                                handleOffcanvasCart();
                                 /* eslint-enable */
                                 // console.log("Producto enviado", res.data);
                                 // console.log(token);
@@ -309,12 +311,14 @@ const Vendidos = ({ bannersInfo, setIsLoggedInPartner, updateCantProducts, setIs
             if (existingProduct) {
                 // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
                 existingProduct.min_qty += 1;
-                setMinQty();
+                // setMinQty();
+                handleOffcanvasCart();
             } else {
                 // El producto no existe en el carrito, así que agrégalo con cantidad 1
                 // product.min_qty = 1;°
                 productsCart.push({ ...product, min_qty: 1 });
-                setMinQty();
+                // setMinQty();
+                handleOffcanvasCart();
             }
 
             // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage

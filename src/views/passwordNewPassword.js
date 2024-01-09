@@ -17,6 +17,8 @@ const PasswordNewPassword = () => {
   const [minQty, setMinQty] = useState(); // Estado para rastrear min_qty
   const [handleShowOffCanvas, setHandleShowOffCanvas] = useState(false);
 
+  const [changueOffCanvasCart, setChangueOffcanvasCart] = useState(false);
+
   const getCantCart = () => {
     const token = currenUser ? currenUser.token : null;
     allProductsCart(token)
@@ -101,16 +103,16 @@ const PasswordNewPassword = () => {
         productsInCart={productsCart}
         getAllProductsByCart={getCantCart}
         getAllProductsByCartNotoken={funcionValidation}
-        minQty={minQty}
+        changueOffCanvasCart={changueOffCanvasCart}
         handleShowOffCanvas={handleShowOffCanvas}
-        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
       />
       <HeaderResponsive
         canCart={cantProductsOnCart}
         detailInfoProfile={detailInfoProfile}
         setIsLoggedInPartner={() => setIsLoggedIn(true)}
-        handleShowOffCanvas={() => setHandleShowOffCanvas(true)}
-        handleShowOffCanvasClose={() => setHandleShowOffCanvas(false)}
+        handleShowOffCanvas={() => setChangueOffcanvasCart(true)}
+        handleShowOffCanvasClose={() => setChangueOffcanvasCart(false)}
       />
       <PasswordNewPasswordComponent />
       <Footer />

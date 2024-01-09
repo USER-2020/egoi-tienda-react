@@ -26,7 +26,7 @@ import { getCurrentUser } from '../../helpers/Utils';
 import toast, { Toaster } from 'react-hot-toast';
 
 
-const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty }) => {
+const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setIsntLoggedInPartner, updateCantProductsWithouthToken, setMinQty, handleOffcanvasCart}) => {
     const [products, setProducts] = useState([]);
 
     const containerRef = useRef(null);
@@ -313,7 +313,8 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                                 }],
                                 value: product.unit_price
                             });
-                            setMinQty();
+                            // setMinQty();
+                            handleOffcanvasCart();
                             /* eslint-enable */
 
                         })
@@ -352,7 +353,8 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                                     }],
                                     value: product.unit_price
                                 });
-                                setMinQty();
+                                // setMinQty();
+                                handleOffcanvasCart();
                                 /* eslint-enable */
                                 // console.log("Producto enviado", res.data);
                                 // console.log(token);
@@ -377,12 +379,14 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
             if (existingProduct) {
                 // El producto ya existe en el carrito, así que aumenta su cantidad (min_qty) en 1
                 existingProduct.min_qty += 1;
-                setMinQty();
+                // setMinQty();
+                handleOffcanvasCart();
             } else {
                 // El producto no existe en el carrito, así que agrégalo con cantidad 1
                 // product.min_qty = 1;°
                 productsCart.push({ ...product, min_qty: 1 });
-                setMinQty();
+                // setMinQty();
+                handleOffcanvasCart();
             }
 
             // Convertir el carrito actualizado a una cadena JSON y guardarlo en el localStorage
@@ -474,7 +478,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                         )}
                         {uniqueProducts.length > 0 ? (
                             <div className="cardContainer">
-                                {uniqueProducts.map((product, index) => (
+                                {uniqueProducts && uniqueProducts.map((product, index) => (
                                     <a href='#' className='containerCard' key={index}>
                                         <Card className='cardProducto1' style={{ height: "380px" }}>
                                             <Link to={`/detailsProduct/${product.id}/${product.slug}`} onClick={() => agregarProductoVisto(product)}>
@@ -560,7 +564,7 @@ const Recientes = ({ bannersInfo, updateCantProducts, setIsLoggedInPartner, setI
                         )}
 
                     </div>
-                    <AddRecents updateCantProducts={updateCantProducts} setIsLoggedInPartner={setIsLoggedInPartner} setIsntLoggedInPartner={setIsntLoggedInPartner} updateCantProductsWithouthToken={updateCantProductsWithouthToken} setMinQty={setMinQty} />
+                    <AddRecents updateCantProducts={updateCantProducts} setIsLoggedInPartner={setIsLoggedInPartner} setIsntLoggedInPartner={setIsntLoggedInPartner} updateCantProductsWithouthToken={updateCantProductsWithouthToken} setMinQty={handleOffcanvasCart} />
 
 
                     {/* ---------------------CAROUSEL RESPONSIVE----------------------------  */}
