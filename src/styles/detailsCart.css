@@ -666,7 +666,7 @@ input[type="checkbox"]:checked {
   visibility: hidden;
 }
 
-#scrollModalToPay .scroll-modal-content {
+.scroll-modal-content {
   display: none;
 }
 
@@ -852,7 +852,7 @@ input[type="checkbox"]:checked {
     opacity: 0;
   }
 
-  #scrollModalToPay .scroll-modal-content {
+  .scroll-modal-content {
     /* Estilos para el contenido del modal */
     display: flex !important;
     flex-direction: column;

@@ -249,7 +249,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log("Scroll Detected");
+      // console.log("Scroll Detected");
       const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
 
       if (scrollModalToPayRef.current) {
@@ -265,7 +265,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
       }
 
       setPrevScrollPos(currentScrollPos);
-      console.log(currentScrollPos);
+      // console.log(currentScrollPos);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -273,7 +273,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [prevScrollPos, threshold]);
+  }, [prevScrollPos, scrollModal, threshold]);
 
 
 
