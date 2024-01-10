@@ -662,8 +662,12 @@ input[type="checkbox"]:checked {
   display: none;
 }
 
-#scrollModalToPay {
-  visibility: hidden !important;
+#scrollModalAddToCart {
+  visibility: hidden;
+}
+
+.scroll-modal-content {
+  display: none;
 }
 
 
@@ -824,7 +828,7 @@ input[type="checkbox"]:checked {
 
   /* modal de compra */
   /* Estilos base del modal */
-  #scrollModalToPay {
+  #scrollModalAddToCart {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -835,19 +839,19 @@ input[type="checkbox"]:checked {
     z-index: 9999;
     width: 100vw;
     height: 300px;
-    opacity: 0 !important;
-    visibility: hidden !important;
+    opacity: 0;
+    visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
-  #scrollModalToPay.visible {
-    visibility: visible !important;
-    opacity: 1 !important;
+  #scrollModalAddToCart.visible {
+    visibility: visible;
+    opacity: 1;
   }
 
-  #scrollModalToPay.hidden {
-    visibility: hidden !important;
-    opacity: 0 !important;
+  #scrollModalAddToCart.hidden {
+    visibility: hidden;
+    opacity: 0;
   }
 
   .scroll-modal-content {
@@ -863,25 +867,25 @@ input[type="checkbox"]:checked {
     height: 22px;
   }
 
-  #scrollModalToPay .scroll-modal-content .containerCaracteristicaPrecio {
+  .scroll-modal-content .containerCaracteristicaPrecio {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
 
-  #scrollModalToPay .scroll-modal-content .containerCaracteristicaEnvio {
+  .scroll-modal-content .containerCaracteristicaEnvio {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
   }
 
-  #scrollModalToPay .scroll-modal-content .containerCaracteristicaEnvio .envio {
+  .scroll-modal-content .containerCaracteristicaEnvio .envio {
     color: #089705;
   }
 
-  #scrollModalToPay .scroll-modal-content .toPay {
+  .scroll-modal-content .toPay {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -894,7 +898,7 @@ input[type="checkbox"]:checked {
     margin-bottom: 10px;
   }
 
-  #scrollModalToPay .scroll-modal-content .toPay a {
+  .scroll-modal-content .toPay a {
     text-decoration: none;
     color: var(--prm-color);
     width: 100%;
@@ -902,7 +906,7 @@ input[type="checkbox"]:checked {
     justify-content: center;
   }
 
-  #scrollModalToPay .scroll-modal-content .awaitShopping {
+  .scroll-modal-content .awaitShopping {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -915,7 +919,7 @@ input[type="checkbox"]:checked {
     margin-bottom: 10px;
   }
 
-  #scrollModalToPay .scroll-modal-content .awaitShopping a {
+  .scroll-modal-content .awaitShopping a {
     text-decoration: none;
     color: white;
     width: 100%;

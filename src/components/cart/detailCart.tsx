@@ -245,33 +245,29 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset || document.documentElement.scrollTop);
   const [scrollModal, setScrollModal] = useState(null);  // Puedes inicializarlo a null
   const threshold = 50;
-
-  // Ref del modal
-  const scrollModalToPayRef = useRef(null);
+  const scrollModalCartRef = useRef(null);
 
   useEffect(() => {
-    setScrollModal(scrollModalToPayRef.current);
+    setScrollModal(scrollModalCartRef.current);
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      // console.log("Scroll Detected");
       const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
 
-      if (scrollModalToPayRef.current) {
+      if (scrollModalCartRef.current) {
         if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
           // Scrolling hacia abajo y después de pasar el umbral
-          scrollModalToPayRef.current.classList.remove('hidden');
-          scrollModalToPayRef.current.classList.add('visible');
+          scrollModalCartRef.current.classList.remove('hidden');
+          scrollModalCartRef.current.classList.add('visible');
         } else {
           // Scrolling hacia arriba o antes de pasar el umbral
-          scrollModalToPayRef.current.classList.remove('visible');
-          scrollModalToPayRef.current.classList.add('hidden');
+          scrollModalCartRef.current.classList.remove('visible');
+          scrollModalCartRef.current.classList.add('hidden');
         }
       }
 
       setPrevScrollPos(currentScrollPos);
-      // console.log(currentScrollPos);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -1117,7 +1113,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
 
 
         {isScrollModalEnabled && (
-          <div id="scrollModalToPay" ref={scrollModalToPayRef} className="scroll-modal">
+          <div id="scrollModalAddToCart" ref={scrollModalCartRef} className="scroll-modal">
             <div className="scroll-modal-content">
               {/* <!-- Contenido del modal --> */}
               <div className="containerCaracteristicaEnvio">
