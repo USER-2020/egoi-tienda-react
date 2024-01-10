@@ -666,17 +666,15 @@ input[type="checkbox"]:checked {
   visibility: hidden;
 }
 
-#scrollModalToPay .scroll-modal-content {
-  display: none;
-}
 
-.containerCheckoutResponsive {
+
+/* .containerCheckoutResponsive {
   display: none;
 }
 
 #scrollModalCheckout .scroll-modal-content {
   display: none;
-}
+} */
 
 /* Modal Perzonalizado */
 
@@ -854,7 +852,7 @@ input[type="checkbox"]:checked {
 
   .scroll-modal-content {
     /* Estilos para el contenido del modal */
-    display: flex !important;
+    display: flex;
     flex-direction: column;
     padding: 24px;
     gap: 5px;
@@ -1109,42 +1107,6 @@ input[type="checkbox"]:checked {
   .containerCheckoutResponsive .paymentMethods .card .payment .checkPayment input[type="radio"]:checked {
     background-color: var(--prm-color);
     border-color: #FC5241;
-  }
-
-  /* Modal Checkout  */
-  #scrollModalCheckout {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    border-radius: 4px;
-    display: none;
-    flex-direction: column;
-    z-index: 9999;
-    width: 100vw;
-    height: auto;
-
-  }
-
-  #scrollModalCheckout .scroll-modal-content {
-    /* Estilos para el contenido del modal */
-    display: flex !important;
-    flex-direction: column;
-    padding: 24px;
-    gap: 5px;
-    align-items: center;
-  }
-
-  #scrollModalCheckout .scroll-modal-content .containerInfoPedido {
-    width: 100%;
-    text-align: center;
-  }
-
-  #scrollModalCheckout .scroll-modal-content .containerInfoPedido p {
-    color: #A75BFF;
-    font-size: 14px;
   }
 
   .containerCheckoutResponsive .direcciones .card {
