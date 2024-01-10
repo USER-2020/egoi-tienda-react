@@ -173,14 +173,15 @@ function DetailProduct({
 
       localStorage.setItem("productsCart", JSON.stringify(productsCart));
 
-      const timeoutId = setTimeout(() => {
+      setTimeout(() => {
         localStorage.removeItem("productsCart");
         alert("Se está optimizando la página");
         window.location.reload(true);
       }, 6000);
 
       if (productsCart.length === 0) {
-        clearTimeout(timeoutId);
+        // clearTimeout(timeoutId);
+        console.warn('No hay productos en el localStoragey ya se optimizo la pagina');
       } else {
         setIsntLoggedInPartner(false);
         updateCantProductsWithouthToken();
