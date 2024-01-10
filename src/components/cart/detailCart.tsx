@@ -51,6 +51,8 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
   const history = useHistory();
   const token = currenUser ? currenUser.token : null; // Manejo de seguridad en caso de que currentUser sea null
 
+  const [isScrollModalEnabled, setIsScrollModalEnabled] = useState(true);
+
   const baseUrlImage = "https://egoi.xyz/storage/app/public/product/";
   const baseUrlImageThumbnail =
     "https://egoi.xyz/storage/app/public/product/thumbnail/";
@@ -1113,43 +1115,46 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
           )}
         </div>
 
-        <div id="scrollModalToPay" ref={scrollModalToPayRef} className="scroll-modal">
-          <div className="scroll-modal-content">
-            {/* <!-- Contenido del modal --> */}
-            <div className="containerCaracteristicaEnvio">
-              <p className="caract">Envío</p>
-              <p className="envio">
-                {productsCart && productsCart.length === 0 ? (
-                  <p>$0</p>
-                ) : subtotal <= 39900 ? (
-                  <span className="badge text-bg-success">Paga el cliente</span>
-                ) : (
-                  <p>${costoEnvio.toLocaleString("es")}</p>
-                )}
-              </p>
+
+        {isScrollModalEnabled && (
+          <div id="scrollModalToPay" ref={scrollModalToPayRef} className="scroll-modal">
+            <div className="scroll-modal-content">
+              {/* <!-- Contenido del modal --> */}
+              <div className="containerCaracteristicaEnvio">
+                <p className="caract">Envío</p>
+                <p className="envio">
+                  {productsCart && productsCart.length === 0 ? (
+                    <p>$0</p>
+                  ) : subtotal <= 39900 ? (
+                    <span className="badge text-bg-success">Paga el cliente</span>
+                  ) : (
+                    <p>${costoEnvio.toLocaleString("es")}</p>
+                  )}
+                </p>
+              </div>
+              <div className="containerCaracteristicaPrecio">
+                <p>Precio Total</p>
+                <h6>{totalaPagar}</h6>
+              </div>
+              {productsCart.length > 0 ? (
+                <>
+                  <div className="awaitShopping">
+                    {/* <Link to={`/checkout/${subtotal.toLocaleString('es')}/${costoEnvio.toLocaleString('es')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
+                    <a href={`/checkout`}>Continuar compra</a>
+                    {/* </Link> */}
+                  </div>
+                  <div className="toPay">
+                    {/* <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}> */}
+                    <a href="/">Seguir comprando</a>
+                    {/* </Link> */}
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
-            <div className="containerCaracteristicaPrecio">
-              <p>Precio Total</p>
-              <h6>{totalaPagar}</h6>
-            </div>
-            {productsCart.length > 0 ? (
-              <>
-                <div className="awaitShopping">
-                  {/* <Link to={`/checkout/${subtotal.toLocaleString('es')}/${costoEnvio.toLocaleString('es')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
-                  <a href={`/checkout`}>Continuar compra</a>
-                  {/* </Link> */}
-                </div>
-                <div className="toPay">
-                  {/* <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}> */}
-                  <a href="/">Seguir comprando</a>
-                  {/* </Link> */}
-                </div>
-              </>
-            ) : (
-              <></>
-            )}
           </div>
-        </div>
+        )}
       </div>
     </>
   );
