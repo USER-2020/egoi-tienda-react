@@ -666,7 +666,7 @@ input[type="checkbox"]:checked {
   visibility: hidden;
 }
 
-.scroll-modal-content {
+#scrollModalToPay .scroll-modal-content {
   display: none;
 }
 
