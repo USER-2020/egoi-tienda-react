@@ -236,6 +236,7 @@ function HeaderResponsive({
   const handleLogout = () => {
     // Code to handle user logout, such as clearing session storage, etc.
     // console.log("Entro al logout");
+    localStorage.clear();
     setCurrentUser();
     setIsLoggedIn(false);
     window.location.href = "/";
@@ -402,7 +403,7 @@ function HeaderResponsive({
                   ref={resultsContainerRef}
                 >
                   {(products && products.length > 0) ||
-                  (categoriesSearch && categoriesSearch.length > 0) ? (
+                    (categoriesSearch && categoriesSearch.length > 0) ? (
                     <div>
                       {products.length > 0 && <h3>Productos</h3>}
                       <ul className="resultsList">
@@ -566,22 +567,20 @@ function HeaderResponsive({
                             }
                           >
                             <span
-                              className={`d-flex align-items-center justify-content-between dropdown-item-text ${
-                                category.name === selectedCategory
+                              className={`d-flex align-items-center justify-content-between dropdown-item-text ${category.name === selectedCategory
                                   ? "category-selected"
                                   : ""
-                              }`}
+                                }`}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedCategory(category.name);
                               }}
                             >
                               <strong
-                                className={` ${
-                                  category.name === selectedCategory
+                                className={` ${category.name === selectedCategory
                                     ? "category-selected"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 {category.name}
                               </strong>
@@ -779,18 +778,18 @@ function HeaderResponsive({
                           >
                             <a
                               href="https://egoi.xyz/shop/apply"
-                              // onClick={() => {
-                              //   setModalViewLogin(true);
-                              // }}
+                            // onClick={() => {
+                            //   setModalViewLogin(true);
+                            // }}
                             >
                               {/* <FontAwesomeIcon icon={faUser} /> */}
                               Conviértete en vendedor
                             </a>
                             <a
                               href="https://egoi.xyz/seller/auth/login"
-                              // onClick={() => {
-                              //   setModalViewRegistro(true);
-                              // }}
+                            // onClick={() => {
+                            //   setModalViewRegistro(true);
+                            // }}
                             >
                               {/* <FontAwesomeIcon icon={faUserPlus} />  */}
                               Iniciar sesión vendedor

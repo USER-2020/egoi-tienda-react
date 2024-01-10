@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   CardBody,
@@ -176,7 +176,9 @@ function DetailProduct({
       setTimeout(() => {
         localStorage.removeItem("productsCart");
         alert("Se está optimizando la página");
-        window.location.reload(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }, 6000);
 
       if (productsCart.length === 0) {
@@ -436,25 +438,64 @@ function DetailProduct({
       .catch((err) => console.log(err));
   };
 
-  var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
-  var scrollModal = document.getElementById("scrollModalAddToCart");
-  var threshold = 50; // Umbral de desplazamiento para ocultar el modal
+  // var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+  // var scrollModal = document.getElementById("scrollModalAddToCart");
+  // var threshold = 50;
 
-  window.addEventListener("scroll", function () {
-    var currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+  // window.addEventListener("scroll", function () {
+  //   var currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
 
-    if (scrollModal !== null) {
-      if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
-        // Scrolling hacia abajo y después de pasar el umbral
-        scrollModal.style.display = "block";
-      } else {
-        // Scrolling hacia arriba o antes de pasar el umbral
-        scrollModal.style.display = "none";
+  //   if (scrollModal !== null) {
+  //     if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
+  //       // Scrolling hacia abajo y después de pasar el umbral
+  //       scrollModal.style.visibility = "visible";
+  //       scrollModal.style.opacity = "1";
+  //     } else {
+  //       // Scrolling hacia arriba o antes de pasar el umbral
+  //       scrollModal.style.visibility = "hidden";
+  //       scrollModal.style.opacity = "0";
+  //     }
+  //   }
+
+  //   prevScrollPos = currentScrollPos;
+  // });
+
+  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset || document.documentElement.scrollTop);
+  const [scrollModal, setScrollModal] = useState(null);  // Puedes inicializarlo a null
+  const threshold = 50;
+  const scrollModalCartRef = useRef(null);
+
+  useEffect(() => {
+    setScrollModal(scrollModalCartRef.current);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollModalCartRef.current) {
+        if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
+          // Scrolling hacia abajo y después de pasar el umbral
+          scrollModalCartRef.current.classList.remove('hidden');
+          scrollModalCartRef.current.classList.add('visible');
+        } else {
+          // Scrolling hacia arriba o antes de pasar el umbral
+          scrollModalCartRef.current.classList.remove('visible');
+          scrollModalCartRef.current.classList.add('hidden');
+        }
       }
-    }
 
-    prevScrollPos = currentScrollPos;
-  });
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos, scrollModal, threshold]);
+
+
 
 
   const handleIncrement = () => {
@@ -559,14 +600,51 @@ function DetailProduct({
   const ratingStats = formatedCoutingRaiting();
 
   // Estados para almacenar las estadísticas
-  const [averageRating, setAverageRating] = useState(ratingStats.averageRating);
-  const [starCounts, setStarCounts] = useState(ratingStats.starCounts);
+  const [averageRating, setAverageRating] = useState(() => ratingStats.averageRating);
+  const [starCounts, setStarCounts] = useState(() => ratingStats.starCounts);
 
   // Actualiza las estadísticas cuando cambian
   useEffect(() => {
+    const formatedCoutingRaiting = () => {
+      if (commentsAndOpinionsProducts && commentsAndOpinionsProducts.length > 0) {
+        // Calcular el promedio de las calificaciones
+        const totalRatings = commentsAndOpinionsProducts.reduce(
+          (total, item) => total + item.rating,
+          0
+        );
+        const averageRating = totalRatings / commentsAndOpinionsProducts.length;
+
+        // Contar la cantidad de opiniones para cada número de estrellas
+        const starCounts = Array.from({ length: 5 }, (_, index) => {
+          const starRating = (index + 1).toString();
+          return {
+            stars: starRating,
+            count: commentsAndOpinionsProducts.filter(
+              (item) => item.rating.toFixed(0) === starRating
+            ).length,
+          };
+        });
+
+        return {
+          averageRating: averageRating.toFixed(1),
+          starCounts: starCounts,
+        };
+      }
+
+      return {
+        averageRating: 0,
+        starCounts: Array.from({ length: 5 }, (_, index) => ({
+          stars: (index + 1).toString(),
+          count: 0,
+        })),
+      };
+    };
+
+    const ratingStats = formatedCoutingRaiting();
+
     setAverageRating(ratingStats.averageRating);
     setStarCounts(ratingStats.starCounts);
-  }, [ratingStats]);
+  }, [commentsAndOpinionsProducts]);
 
   useEffect(() => {
     if (slug !== "slug") {
@@ -1728,7 +1806,7 @@ function DetailProduct({
               </div>
             </div>
             {isScrollModalEnabled && (
-              <div id="scrollModalAddToCart" className="scroll-modal">
+              <div id="scrollModalAddToCart" ref={scrollModalCartRef} className="scroll-modal">
                 <div className="scroll-modal-content">
                   {/* <!-- Contenido del modal --> */}
                   {/* <div className="carrito">

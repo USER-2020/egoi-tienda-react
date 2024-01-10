@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "../../styles/detailsCart.css";
 import {
@@ -240,25 +240,39 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
       .catch((err) => console.log(err));
   };
 
-  var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
-  var scrollModal = document.getElementById("scrollModalToPay");
-  var threshold = 50; // Umbral de desplazamiento para ocultar el modal
+  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset || document.documentElement.scrollTop);
+  const [scrollModalVisible, setScrollModalVisible] = useState(false);
+  const threshold = 50;
 
-  window.addEventListener("scroll", function () {
-    var currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+  // Ref del modal
+  const scrollModalToPayRef = useRef(null);
 
-    if (scrollModal !== null) {
-      if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
-        // Scrolling hacia abajo y después de pasar el umbral
-        scrollModal.style.display = "block";
-      } else {
-        // Scrolling hacia arriba o antes de pasar el umbral
-        scrollModal.style.display = "none";
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log("Scroll Detected");
+      const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollModalToPayRef.current) {
+        if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
+          setScrollModalVisible(true);
+        } else {
+          setScrollModalVisible(false);
+        }
       }
-    }
 
-    prevScrollPos = currentScrollPos;
-  });
+      setPrevScrollPos(currentScrollPos);
+      console.log(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos, threshold]);
+
+
+
 
   const sumSubTotal = (productsCart) => {
     let total = 0;
@@ -1091,7 +1105,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
           )}
         </div>
 
-        <div id="scrollModalToPay" className="scroll-modal">
+        <div id="scrollModalToPay" ref={scrollModalToPayRef} className={`scroll-modal ${scrollModalVisible} ? 'visible': 'hidden'`} style={{ visibility: scrollModalVisible ? 'visible' : 'hidden', opacity: scrollModalVisible ? 1 : 0 }}>
           <div className="scroll-modal-content">
             {/* <!-- Contenido del modal --> */}
             <div className="containerCaracteristicaEnvio">

@@ -662,6 +662,10 @@ input[type="checkbox"]:checked {
   display: none;
 }
 
+#scrollModalToPay {
+  visibility: hidden;
+}
+
 #scrollModalToPay .scroll-modal-content {
   display: none;
 }
@@ -821,20 +825,31 @@ input[type="checkbox"]:checked {
   }
 
   /* modal de compra */
+  /* Estilos base del modal */
   #scrollModalToPay {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 10px;
     border-radius: 4px;
-    display: none;
-    flex-direction: column;
     z-index: 9999;
     width: 100vw;
-    height: auto;
+    height: 300px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
 
+  #scrollModalToPay.visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #scrollModalToPay.hidden {
+    visibility: hidden;
+    opacity: 0;
   }
 
   #scrollModalToPay .scroll-modal-content {
