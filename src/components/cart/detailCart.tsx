@@ -248,6 +248,10 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
   const scrollModalToPayRef = useRef(null);
 
   useEffect(() => {
+    setScrollModal(scrollModalToPayRef.current);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       // console.log("Scroll Detected");
       const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
