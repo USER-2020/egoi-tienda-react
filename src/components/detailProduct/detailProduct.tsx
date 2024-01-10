@@ -436,21 +436,25 @@ function DetailProduct({
   };
 
   var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+  var scrollModal = document.getElementById("scrollModalAddToCart");
+  var threshold = 50; // Umbral de desplazamiento para ocultar el modal
+
   window.addEventListener("scroll", function () {
-    var currentScrollPos =
-      window.pageYOffset || document.documentElement.scrollTop;
-    var scrollModal = document.getElementById("scrollModalAddToCart");
+    var currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
 
     if (scrollModal !== null) {
-      if (currentScrollPos > prevScrollPos) {
+      if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
+        // Scrolling hacia abajo y después de pasar el umbral
         scrollModal.style.display = "block";
       } else {
+        // Scrolling hacia arriba o antes de pasar el umbral
         scrollModal.style.display = "none";
       }
     }
 
     prevScrollPos = currentScrollPos;
   });
+
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -699,6 +703,31 @@ function DetailProduct({
       setVariant(selectedColor);
     }
   }, [selectedColor, selectedOption]);
+
+
+  // const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset || document.documentElement.scrollTop);
+  // const [scrollModalVisible, setScrollModalVisible] = useState(true);
+  // const threshold = 50;
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+  //     if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
+  //       setScrollModalVisible(false);
+  //     } else {
+  //       setScrollModalVisible(true);
+  //     }
+
+  //     setPrevScrollPos(currentScrollPos);
+  //   };
+
+  //   window.addEventListener('scroll', handleScroll);
+
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, [prevScrollPos, threshold]);
 
   return (
     <div>

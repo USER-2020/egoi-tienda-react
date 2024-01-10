@@ -241,15 +241,18 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
   };
 
   var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
-  window.addEventListener("scroll", function() {
-    var currentScrollPos =
-      window.pageYOffset || document.documentElement.scrollTop;
-    var scrollModal = document.getElementById("scrollModalToPay");
+  var scrollModal = document.getElementById("scrollModalToPay");
+  var threshold = 50; // Umbral de desplazamiento para ocultar el modal
+
+  window.addEventListener("scroll", function () {
+    var currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
 
     if (scrollModal !== null) {
-      if (currentScrollPos > prevScrollPos) {
+      if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
+        // Scrolling hacia abajo y después de pasar el umbral
         scrollModal.style.display = "block";
       } else {
+        // Scrolling hacia arriba o antes de pasar el umbral
         scrollModal.style.display = "none";
       }
     }
