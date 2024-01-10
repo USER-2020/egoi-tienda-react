@@ -241,7 +241,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
   };
 
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset || document.documentElement.scrollTop);
-  const [scrollModalVisible, setScrollModalVisible] = useState(false);
+  const [scrollModal, setScrollModal] = useState(null);  // Puedes inicializarlo a null
   const threshold = 50;
 
   // Ref del modal
@@ -254,9 +254,13 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
 
       if (scrollModalToPayRef.current) {
         if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
-          setScrollModalVisible(true);
+          // Scrolling hacia abajo y después de pasar el umbral
+          scrollModalToPayRef.current.classList.remove('hidden');
+          scrollModalToPayRef.current.classList.add('visible');
         } else {
-          setScrollModalVisible(false);
+          // Scrolling hacia arriba o antes de pasar el umbral
+          scrollModalToPayRef.current.classList.remove('visible');
+          scrollModalToPayRef.current.classList.add('hidden');
         }
       }
 
@@ -1105,7 +1109,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
           )}
         </div>
 
-        <div id="scrollModalToPay" ref={scrollModalToPayRef} className={`scroll-modal ${scrollModalVisible} ? 'visible': 'hidden'`} style={{ visibility: scrollModalVisible ? 'visible' : 'hidden', opacity: scrollModalVisible ? 1 : 0 }}>
+        <div id="scrollModalToPay" ref={scrollModalToPayRef} className="scroll-modal">
           <div className="scroll-modal-content">
             {/* <!-- Contenido del modal --> */}
             <div className="containerCaracteristicaEnvio">
