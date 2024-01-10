@@ -663,7 +663,7 @@ input[type="checkbox"]:checked {
 }
 
 #scrollModalToPay {
-  visibility: hidden;
+  visibility: hidden !important;
 }
 
 
@@ -835,19 +835,19 @@ input[type="checkbox"]:checked {
     z-index: 9999;
     width: 100vw;
     height: 300px;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0 !important;
+    visibility: hidden !important;
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
   #scrollModalToPay.visible {
-    visibility: visible;
-    opacity: 1;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   #scrollModalToPay.hidden {
-    visibility: hidden;
-    opacity: 0;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 
   .scroll-modal-content {
