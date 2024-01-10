@@ -275,7 +275,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [prevScrollPos, threshold]);
+  }, [prevScrollPos, scrollModal, threshold]);
 
 
 
@@ -1111,7 +1111,7 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
           )}
         </div>
 
-        <div id="scrollModalAddToCart" ref={scrollModalCartRef} className="scroll-modal">
+        <div id="modalScrollToPay" ref={scrollModalCartRef} className="scroll-modal">
           <div className="scroll-modal-content">
             {/* <!-- Contenido del modal --> */}
             <div className="containerCaracteristicaEnvio">

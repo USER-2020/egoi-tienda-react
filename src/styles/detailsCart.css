@@ -662,7 +662,7 @@ input[type="checkbox"]:checked {
   display: none;
 }
 
-#scrollModalAddToCart {
+#modalScrollToPay {
   visibility: hidden;
 }
 
@@ -828,7 +828,7 @@ input[type="checkbox"]:checked {
 
   /* modal de compra */
   /* Estilos base del modal */
-  #scrollModalAddToCart {
+  #modalScrollToPay {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -844,12 +844,12 @@ input[type="checkbox"]:checked {
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
-  #scrollModalAddToCart.visible {
+  #modalScrollToPay.visible {
     visibility: visible;
     opacity: 1;
   }
 
-  #scrollModalAddToCart.hidden {
+  #modalScrollToPay.hidden {
     visibility: hidden;
     opacity: 0;
   }
