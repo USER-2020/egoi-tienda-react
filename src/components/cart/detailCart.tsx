@@ -1119,29 +1119,26 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
           )}
         </div>
 
+        <Modal
+          // ref={scrollModalCartRef}
+          id="modalScrollToPay"
+          isOpen={modalOpenToPay}
+          toggle={cerrarModalToPay}
+          style={{
+            width: '100%',
+            position: 'fixed',
 
+            left: -6,
+            bottom: -10,
+            visibility: modalOpenToPay ? 'visible' : 'hidden', // Controla la visibilidad del modal
+            opacity: modalOpenToPay ? 1 : 0, // Controla la opacidad del modal
+            transition: 'visibility 0s, opacity 0.5s ease' // Agrega una transición suave
+          }}
 
-      </div>
-      <Modal
-        // ref={scrollModalCartRef}
-        id="modalScrollToPay"
-        isOpen={modalOpenToPay}
-        toggle={cerrarModalToPay}
-        style={{
-          width: '100%',
-          position: 'fixed',
+        >
 
-          left:-6,
-          bottom: -10,
-          visibility: modalOpenToPay ? 'visible' : 'hidden', // Controla la visibilidad del modal
-          opacity: modalOpenToPay ? 1 : 0, // Controla la opacidad del modal
-          transition: 'visibility 0s, opacity 0.5s ease' // Agrega una transición suave
-        }}
-        
-      >
+          <ModalBody>
 
-        <ModalBody>
-          
             <div className="scroll-modal-content">
               {/* <!-- Contenido del modal --> */}
               <div className="containerCaracteristicaEnvio">
@@ -1177,10 +1174,13 @@ function DetailCart({ setCantCart, setIsLoggedInPartner, productsCart }) {
                 <></>
               )}
             </div>
-          
-        </ModalBody>
 
-      </Modal>
+          </ModalBody>
+
+        </Modal>
+
+      </div>
+
     </>
 
   );

@@ -3,7 +3,7 @@ import "../../styles/detailsCart.css";
 import toast, { Toaster } from "react-hot-toast";
 import { ThreeCircles } from "react-loader-spinner";
 import { useHistory } from "react-router-dom";
-import { Card, Input, Table } from "reactstrap";
+import { Card, Input, Modal, ModalBody, Table } from "reactstrap";
 import start from "../../assets/egoi_icons/star-fill.svg";
 import startEmpty from "../../assets/egoi_icons/star-fill-gray.svg";
 
@@ -17,6 +17,44 @@ const DetailCartNoToken = ({
   const [cupon, setCupon] = useState("");
   const [discountCoupon, setDiscountCoupon] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  //Manejo de modal inferior
+  const [modalOpenToPay, setModalOpenToPay] = useState(false);
+
+  // Reemplaza las funciones actuales que manejan el estado del modal
+  const abrirModalToPay = () => {
+    //document.body.style.overflow = 'hidden'; // Deshabilita el scroll de la página
+    setModalOpenToPay(true);
+  };
+
+  const cerrarModalToPay = () => {
+    document.body.style.overflowY = 'scroll'; // Habilita el scroll de la página
+    setModalOpenToPay(false);
+  };
+
+
+  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset || document.documentElement.scrollTop);
+  const threshold = 50;
+
+  const handleScroll = () => {
+    const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (window.innerWidth <= 768) {
+      // Solo realiza la lógica de scroll para pantallas menores o iguales a 768px
+      if (!modalOpenToPay && currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
+        abrirModalToPay();
+      }
+    }
+
+    setPrevScrollPos(currentScrollPos);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos, modalOpenToPay]);
 
   const history = useHistory();
 
@@ -28,7 +66,7 @@ const DetailCartNoToken = ({
 
     // Obtiene los datos actuales del carrito desde el localStorage
     let productsCartWhithoutToken = JSON.parse(
-      localStorage.getItem("productsCart")
+      localStorage.getItem("productCart")
     );
 
     if (productsCartWhithoutToken) {
@@ -218,22 +256,6 @@ const DetailCartNoToken = ({
     // setQuantity(quantityUPD + 1);
   };
 
-  var prevScrollPos = window.pageYOffset || document.documentElement.scrollTop;
-  window.addEventListener("scroll", function() {
-    var currentScrollPos =
-      window.pageYOffset || document.documentElement.scrollTop;
-    var scrollModal = document.getElementById("scrollModalToPay");
-
-    if (scrollModal !== null) {
-      if (currentScrollPos > prevScrollPos) {
-        scrollModal.style.display = "block";
-      } else {
-        scrollModal.style.display = "none";
-      }
-    }
-
-    prevScrollPos = currentScrollPos;
-  });
 
   useEffect(() => {
     console.log(
@@ -931,43 +953,65 @@ const DetailCartNoToken = ({
           )}
         </div>
 
-        <div id="scrollModalToPay" className="scroll-modal">
-          <div className="scroll-modal-content">
-            {/* <!-- Contenido del modal --> */}
-            <div className="containerCaracteristicaEnvio">
-              <p className="caract">Envío</p>
-              <p className="envio">
-                {productsInCart && productsInCart.length === 0 ? (
-                  <p>$0</p>
-                ) : subtotal <= 39900 ? (
-                  <span className="badge text-bg-success">Paga el cliente</span>
-                ) : (
-                  <p>${costoEnvio.toLocaleString("es")}</p>
-                )}
-              </p>
+        <Modal
+          // ref={scrollModalCartRef}
+          id="modalScrollToPay"
+          isOpen={modalOpenToPay}
+          toggle={cerrarModalToPay}
+          style={{
+            width: '100%',
+            position: 'fixed',
+
+            left: -6,
+            bottom: -10,
+            visibility: modalOpenToPay ? 'visible' : 'hidden', // Controla la visibilidad del modal
+            opacity: modalOpenToPay ? 1 : 0, // Controla la opacidad del modal
+            transition: 'visibility 0s, opacity 0.5s ease' // Agrega una transición suave
+          }}
+
+        >
+
+          <ModalBody>
+
+            <div className="scroll-modal-content">
+              {/* <!-- Contenido del modal --> */}
+              <div className="containerCaracteristicaEnvio">
+                <p className="caract">Envío</p>
+                <p className="envio">
+                  {productsInCart && productsInCart.length === 0 ? (
+                    <p>$0</p>
+                  ) : subtotal <= 39900 ? (
+                    <span className="badge text-bg-success">Paga el cliente</span>
+                  ) : (
+                    <p>${costoEnvio.toLocaleString("es")}</p>
+                  )}
+                </p>
+              </div>
+              <div className="containerCaracteristicaPrecio">
+                <p>Precio Total</p>
+                <h6>{totalaPagar}</h6>
+              </div>
+              {productsInCart.length > 0 ? (
+                <>
+                  <div className="awaitShopping">
+                    {/* <Link to={`/checkout/${subtotal.toLocaleString('es')}/${costoEnvio.toLocaleString('es')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
+                    <a href={`/checkout`}>Continuar compra</a>
+                    {/* </Link> */}
+                  </div>
+                  <div className="toPay">
+                    {/* <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}> */}
+                    <a href="/">Seguir comprando</a>
+                    {/* </Link> */}
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
-            <div className="containerCaracteristicaPrecio">
-              <p>Precio Total</p>
-              <h6>{totalaPagar}</h6>
-            </div>
-            {productsInCart.length > 0 ? (
-              <>
-                <div className="awaitShopping">
-                  {/* <Link to={`/checkout/${subtotal.toLocaleString('es')}/${costoEnvio.toLocaleString('es')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
-                  <a href={`/checkout`}>Continuar compra</a>
-                  {/* </Link> */}
-                </div>
-                <div className="toPay">
-                  {/* <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}> */}
-                  <a href="/">Seguir comprando</a>
-                  {/* </Link> */}
-                </div>
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-        </div>
+
+          </ModalBody>
+
+        </Modal>
       </div>
     </>
   );
