@@ -107,6 +107,7 @@ nav {
 
     .modal-content {
         width: 96vw;
+        border: none;
 
     }
 
@@ -124,7 +125,7 @@ nav {
         fill: black;
     }
 
-    .subcategory-item{
+    .subcategory-item {
         font-weight: bold;
     }
 
