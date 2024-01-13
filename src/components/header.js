@@ -707,7 +707,11 @@ const Header = ({ cantCart, detailInfoPerfil, setIsLoggedInPartner, productsInCa
                       isOpen={modalOpcionesLogin}
                     >
                       <ModalBody>
-                        <OpcionesLogin closeModalLogin={() => setModalOpcionesLogin(false)} handleLoginCorreoContrasena={handleCorreoContrasena} handleCodeLogin={() => setModalViewCodeLogin(true)} />
+                        <OpcionesLogin
+                          closeModalLogin={() => setModalOpcionesLogin(false)}
+                          handleLoginCorreoContrasena={handleCorreoContrasena}
+                          handleCodeLogin={() => setModalViewCodeLogin(true)}
+                        />
                       </ModalBody>
                     </Modal>
                   </>

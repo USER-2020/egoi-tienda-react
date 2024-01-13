@@ -48,6 +48,7 @@ import { getProductsBySearch } from "../services/filtros";
 import RegisterCode from "../views/user/registerCode.tsx";
 import OpcionesLogin from "../views/user/opcionesLogin.tsx";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min.js";
+import CodeLogin from "../views/user/codeLogin.js";
 
 function HeaderResponsive({
   canCart,
@@ -61,6 +62,7 @@ function HeaderResponsive({
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
+  const [modalViewCodeLogin, setModalViewCodeLogin] = useState(false);
   const [modalViewRegistro, setModalViewRegistro] = useState(false);
   const [modalOpcionesLogin, setModalOpcionesLogin] = useState(false);
   const [modalViewLogin, setModalViewLogin] = useState(false);
@@ -194,6 +196,10 @@ function HeaderResponsive({
     setModalViewLogin(false);
   };
 
+  const closeModalRegistro = () => {
+    setModalViewRegistro(false);
+  };
+
   const handleChangeFormLogin = () => {
     if (modalViewLogin === true) {
       setModalViewRegistro(true);
@@ -205,6 +211,11 @@ function HeaderResponsive({
       setModalViewLogin(true);
     }
   };
+
+  const handleShowAndHiddenmenu = () => {
+    setShow(false);
+    setModalOpcionesLogin(true);
+  }
 
   // const closeModalRegistro = () => {
   //   const bodyElement = document.querySelector('body');
@@ -568,8 +579,8 @@ function HeaderResponsive({
                           >
                             <span
                               className={`d-flex align-items-center justify-content-between dropdown-item-text ${category.name === selectedCategory
-                                  ? "category-selected"
-                                  : ""
+                                ? "category-selected"
+                                : ""
                                 }`}
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -578,8 +589,8 @@ function HeaderResponsive({
                             >
                               <strong
                                 className={` ${category.name === selectedCategory
-                                    ? "category-selected"
-                                    : ""
+                                  ? "category-selected"
+                                  : ""
                                   }`}
                               >
                                 {category.name}
@@ -874,8 +885,9 @@ function HeaderResponsive({
                           className="btn btnPersonalizadosL"
                           onClick={(e) => {
                             e.preventDefault();
-                            setShow(false);
-                            setModalOpcionesLogin(true);
+                            handleShowAndHiddenmenu();
+                            // setShow(false);
+                            // setModalOpcionesLogin(true);
 
                             // const offcanvasElement = document.querySelector('.offcanvas');
                             // const backdropElement = document.querySelector('.offcanvas-backdrop');
@@ -921,6 +933,7 @@ function HeaderResponsive({
           <OpcionesLogin
             closeModalLogin={() => setModalOpcionesLogin(false)}
             handleLoginCorreoContrasena={handleCorreoContrasena}
+            handleCodeLogin={() => setModalViewCodeLogin(true)}
           />
         </ModalBody>
       </Modal>
@@ -941,7 +954,17 @@ function HeaderResponsive({
       >
         <ModalBody>
           {/* <Register closeModalRegistro={closeModalRegistro} handleChangeFormRegister={handleChangeFormRegister} /> */}
-          <RegisterCode />
+          <RegisterCode closeModalRegister={() => setModalViewRegistro(false)} />
+        </ModalBody>
+      </Modal>
+
+      <Modal
+        className="modal-dialog-centered modal-sm"
+        // toggle={() => setModalViewCodeLogin(false)}
+        isOpen={modalViewCodeLogin}
+      >
+        <ModalBody>
+          <CodeLogin closeModalCodeLogin={() => setModalViewCodeLogin(false)} handleLogin={handleLogin} closeModalRegistro={closeModalRegistro} handleChangeFormLogin={handleChangeFormLogin} handleCodeLogin />
         </ModalBody>
       </Modal>
     </div>

@@ -12,8 +12,8 @@
   
 } */
 
-body{
-  overflow-y: scroll;
+body {
+  overflow-y: scroll !important;
 }
 
 code {
@@ -24,5 +24,3 @@ code {
 /* .offcanvas-backdrop.fade.show {
   display: none !important;
 } */
-
-
