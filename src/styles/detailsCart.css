@@ -860,7 +860,7 @@ input[type="checkbox"]:checked {
 
   /* modal de compra */
   /* Estilos base del modal */
-  #modalScrollToPay {
+  #scrollModalToPay {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -887,7 +887,7 @@ input[type="checkbox"]:checked {
     opacity: 0;
   } */
 
-  #modalScrollToPay .scroll-modal-content {
+  #scrollModalToPay .scroll-modal-content {
     /* Estilos para el contenido del modal */
     display: flex !important;
     flex-direction: column;
