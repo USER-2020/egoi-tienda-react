@@ -963,7 +963,7 @@ const DetailCartNoToken = ({
             )
           )}
         </div>
-        <div id="scrollModalAddToCart" ref={scrollModalCartRef} className="scroll-modal">
+        <div id="scrollModalToPay" ref={scrollModalCartRef} className="scroll-modal">
           <div className="scroll-modal-content">
             {/* <!-- Contenido del modal --> */}
             <div className="containerCaracteristicaEnvio">

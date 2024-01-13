@@ -363,7 +363,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 }
 
-#scrollModalAddToCart {
+#scrollModalToPay {
   visibility: hidden;
 }
 
@@ -831,7 +831,7 @@ input[type="checkbox"]:checked {
     align-self: center;
   }
 
-  #scrollModalAddToCart {
+  #scrollModalToPay {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -847,12 +847,12 @@ input[type="checkbox"]:checked {
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
-  #scrollModalAddToCart.visible {
+  #scrollModalToPay.visible {
     visibility: visible;
     opacity: 1;
   }
 
-  #scrollModalAddToCart.hidden {
+  #scrollModalToPay.hidden {
     visibility: hidden;
     opacity: 0;
   }
