@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../styles/detailsCart.css";
 import toast, { Toaster } from "react-hot-toast";
 import { ThreeCircles } from "react-loader-spinner";
@@ -33,28 +33,39 @@ const DetailCartNoToken = ({
 
 
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset || document.documentElement.scrollTop);
+  const [scrollModal, setScrollModal] = useState(null);  // Puedes inicializarlo a null
   const threshold = 50;
-
-  const handleScroll = () => {
-    const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (window.innerWidth <= 768) {
-      // Solo realiza la lógica de scroll para pantallas menores o iguales a 768px
-      if (!modalOpenToPay && currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
-        abrirModalToPay();
-      }
-    }
-
-    setPrevScrollPos(currentScrollPos);
-  };
+  const scrollModalCartRef = useRef(null);
 
   useEffect(() => {
+    setScrollModal(scrollModalCartRef.current);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollModalCartRef.current) {
+        if (currentScrollPos > prevScrollPos && currentScrollPos > threshold) {
+          // Scrolling hacia abajo y después de pasar el umbral
+          scrollModalCartRef.current.classList.remove('hidden');
+          scrollModalCartRef.current.classList.add('visible');
+        } else {
+          // Scrolling hacia arriba o antes de pasar el umbral
+          scrollModalCartRef.current.classList.remove('visible');
+          scrollModalCartRef.current.classList.add('hidden');
+        }
+      }
+
+      setPrevScrollPos(currentScrollPos);
+    };
+
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [prevScrollPos, modalOpenToPay]);
+  }, [prevScrollPos, scrollModal, threshold]);
 
   const history = useHistory();
 
@@ -952,66 +963,45 @@ const DetailCartNoToken = ({
             )
           )}
         </div>
-
-        <Modal
-          // ref={scrollModalCartRef}
-          id="modalScrollToPay"
-          isOpen={modalOpenToPay}
-          toggle={cerrarModalToPay}
-          style={{
-            width: '100%',
-            position: 'fixed',
-
-            left: -6,
-            bottom: -10,
-            visibility: modalOpenToPay ? 'visible' : 'hidden', // Controla la visibilidad del modal
-            opacity: modalOpenToPay ? 1 : 0, // Controla la opacidad del modal
-            transition: 'visibility 0s, opacity 0.5s ease' // Agrega una transición suave
-          }}
-
-        >
-
-          <ModalBody>
-
-            <div className="scroll-modal-content">
-              {/* <!-- Contenido del modal --> */}
-              <div className="containerCaracteristicaEnvio">
-                <p className="caract">Envío</p>
-                <p className="envio">
-                  {productsInCart && productsInCart.length === 0 ? (
-                    <p>$0</p>
-                  ) : subtotal <= 39900 ? (
-                    <span className="badge text-bg-success">Paga el cliente</span>
-                  ) : (
-                    <p>${costoEnvio.toLocaleString("es")}</p>
-                  )}
-                </p>
-              </div>
-              <div className="containerCaracteristicaPrecio">
-                <p>Precio Total</p>
-                <h6>{totalaPagar}</h6>
-              </div>
-              {productsInCart.length > 0 ? (
-                <>
-                  <div className="awaitShopping">
-                    {/* <Link to={`/checkout/${subtotal.toLocaleString('es')}/${costoEnvio.toLocaleString('es')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
-                    <a href={`/checkout`}>Continuar compra</a>
-                    {/* </Link> */}
-                  </div>
-                  <div className="toPay">
-                    {/* <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}> */}
-                    <a href="/">Seguir comprando</a>
-                    {/* </Link> */}
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
+        <div id="scrollModalAddToCart" ref={scrollModalCartRef} className="scroll-modal">
+          <div className="scroll-modal-content">
+            {/* <!-- Contenido del modal --> */}
+            <div className="containerCaracteristicaEnvio">
+              <p className="caract">Envío</p>
+              <p className="envio">
+                {productsInCart && productsInCart.length === 0 ? (
+                  <p>$0</p>
+                ) : subtotal <= 39900 ? (
+                  <span className="badge text-bg-success">Paga el cliente</span>
+                ) : (
+                  <p>${costoEnvio.toLocaleString("es")}</p>
+                )}
+              </p>
             </div>
+            <div className="containerCaracteristicaPrecio">
+              <p>Precio Total</p>
+              <h6>{totalaPagar}</h6>
+            </div>
+            {productsInCart.length > 0 ? (
+              <>
+                <div className="awaitShopping">
+                  {/* <Link to={`/checkout/${subtotal.toLocaleString('es')}/${costoEnvio.toLocaleString('es')}/${discountCoupon && discountCoupon.total !== undefined ? discountCoupon.total : totalaPagar}/${discountCoupon && discountCoupon.discount !== undefined ? discountCoupon.discount : descuento}`}> */}
+                  <a href={`/checkout`}>Continuar compra</a>
+                  {/* </Link> */}
+                </div>
+                <div className="toPay">
+                  {/* <Link to={`/detailCart/address/${subtotal}/${totalaPagar}`}> */}
+                  <a href="/">Seguir comprando</a>
+                  {/* </Link> */}
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
 
-          </ModalBody>
+        </div>
 
-        </Modal>
       </div>
     </>
   );

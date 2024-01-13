@@ -363,6 +363,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
 }
 
+#scrollModalAddToCart {
+  visibility: hidden;
+}
+
 #progress {
   -webkit-appearance: none;
   position: absolute;
@@ -827,6 +831,33 @@ input[type="checkbox"]:checked {
     align-self: center;
   }
 
+  #scrollModalAddToCart {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 9999;
+    width: 100vw;
+    height: 300px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  #scrollModalAddToCart.visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #scrollModalAddToCart.hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+
   /* modal de compra */
   /* Estilos base del modal */
   #modalScrollToPay {
@@ -856,7 +887,7 @@ input[type="checkbox"]:checked {
     opacity: 0;
   } */
 
-  #modalScrollToPay .scroll-modal-content {
+  .scroll-modal-content {
     /* Estilos para el contenido del modal */
     display: flex !important;
     flex-direction: column;
