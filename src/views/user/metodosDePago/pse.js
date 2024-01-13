@@ -90,7 +90,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
 
     const handleSubmitOrderPaymentCard = () => {
         console.log("Pse info: ");
-        
+
         console.log(dataOrderAddress);
         updateAddress();
         if (token) {
@@ -187,7 +187,7 @@ function PseModal({ closeModalPse, dataOrderAddress, total, discountCoupon, cupo
                 amount: numericValue, //valor de la compra
                 ipAddress: ipAddress, //ip del cliente
                 description: descriptionOrder, //Descripción del producto adquirido, el motivo del pago. Ej. - "Celular Xiaomi Redmi Note 11S 128gb 6gb Ram Original Global Blue Version" (descripción de un producto en el marketplace).
-                callback_url: "https://egoi.com.co/congrats", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
+                callback_url: "https://staging-egoi.com.co/congrats", //URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
                 address_id: idAddress, // id de la direccion
                 billing_address_id: idAddress, // id de la direccion
                 coupon_code: cuponCode, //codigo del cupon
