@@ -871,7 +871,7 @@ input[type="checkbox"]:checked {
     border-radius: 4px;
     z-index: 9999;
     width: 100vw;
-    height: auto;
+    height: 300px;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -887,7 +887,7 @@ input[type="checkbox"]:checked {
     opacity: 0;
   } */
 
-  .scroll-modal-content {
+  #modalScrollToPay .scroll-modal-content {
     /* Estilos para el contenido del modal */
     display: flex !important;
     flex-direction: column;
