@@ -192,7 +192,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
                     numInputs={6}
                     renderSeparator={<span> </span>}
                     renderInput={(props, index) => (
-                      <input {...props} style={{ width: '100%', marginRight: '10px', borderRadius: '12px', height: '40px', textAlign: 'center', borderColor: 'rgba(162, 161, 167, 0.16)' }} maxLength={1} key={index} />
+                      <input {...props} style={{ width: '100%', marginRight: '10px', borderRadius: '12px', height: '40px', textAlign: 'center', borderColor: 'rgba(162, 161, 167, 0.16)' }} maxLength={1} key={index} inputMode="numeric" />
                     )}
                   />
                   <p><a href='#' onClick={(e) => { e.preventDefault(); onSignUp() }}>Reenviar mensaje</a></p>
