@@ -76,23 +76,18 @@ const DetailCartNoToken = ({
     const productIdToDelete = product.id;
 
     // Obtiene los datos actuales del carrito desde el localStorage
-    let productsCartWhithoutToken = JSON.parse(
-      localStorage.getItem("productCart")
-    );
+    let productsCartWithoutToken = JSON.parse(localStorage.getItem('productsCart'));
 
-    if (productsCartWhithoutToken) {
+    if (productsCartWithoutToken) {
       // Verifica si hay datos en el carrito en el localStorage
 
-      // Elimina el objeto específico por su ID
-      if (productsCartWhithoutToken[productIdToDelete]) {
-        delete productsCartWhithoutToken[productIdToDelete];
-      }
+      // Filtra el array para excluir el producto con el ID específico
+      const updatedCart = productsCartWithoutToken.filter(item => item.id !== productIdToDelete);
 
-      // Actualiza los datos del carrito en el localStorage
-      localStorage.setItem(
-        "productsCart",
-        JSON.stringify(productsCartWhithoutToken)
-      );
+      // Actualiza los datos del carrito en el localStorage con el nuevo array
+      localStorage.setItem('productsCart', JSON.stringify(updatedCart));
+
+
     }
 
     gtag("event", "remove_from_cart", {
