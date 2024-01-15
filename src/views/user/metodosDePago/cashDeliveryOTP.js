@@ -84,6 +84,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
       .then((res) => {
         console.log("Orden enviada por OTP");
         console.log(res);
+        setModalPurchaseSuccess();
 
       })
       .catch((err) => console.log(err));
@@ -99,7 +100,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
       setLoading(false);
       makePlaceOrder();
       closeModalOTP();
-      setModalPurchaseSuccess();
+
       setOk();
 
     }).catch((error) => {

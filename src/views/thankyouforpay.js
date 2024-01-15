@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const Thankyouforpay = () => {
   const currenUser = getCurrentUser();
-  const [cantProductsOnCart, setCantProductsOnCart] = useState("");
+  const [cantProductsOnCart, setCantProductsOnCart] = useState(""); 
   const [detailInfoProfile, setDetailInfoProfile] = useState([]);
   const [productsCart, setProductsCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado del login
