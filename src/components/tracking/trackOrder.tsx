@@ -3,11 +3,15 @@ import { Card, Modal, ModalBody } from 'reactstrap'
 import ModalDetallePedido from './modalDetalle.tsx'
 import { getCurrentUser } from '../../helpers/Utils.js';
 import { trackerOrder } from '../../services/tracking.js';
+import { getOrdenByGroupId, getTrackCustomerGuie } from '../../services/ordenes.js';
+import { Loader, TailSpin } from 'react-loader-spinner';
 
-function TrackOrder({ orderDetalleId}) {
+function TrackOrder({ orderDetalleId, idGroup }) {
 
     const [modalDetallePedido, setModalDetallePedido] = useState(false);
     const [infoOrderTrack, setInfoOrderTrack] = useState('');
+    const [detalleOrdenV2, setDetalleOrdenV2] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const closeModalDetallePedido = () => {
         setModalDetallePedido(false);
@@ -21,10 +25,49 @@ function TrackOrder({ orderDetalleId}) {
         // console.log("Id de la orden traido desde el numero de pedido", orderDetalleId);
         trackerOrder(token, orderDetalleId)
             .then((res) => {
-                // console.log(res.data);
+                console.log("OderTracck", res.data);
                 setInfoOrderTrack(res.data);
             }).catch((err) => console.log(err));
     }
+
+    const getDetalleByIdV2 = () => {
+        getOrdenByGroupId(token, idGroup)
+            .then((res) => {
+
+                console.log('.........................');
+                console.log(res.data);
+                console.log(res.data.productos);
+                console.log(res.data.id_orden);
+
+                // sendIdOrder(res.data.id_orden);
+                setDetalleOrdenV2(res.data);
+            }).catch((err) => console.log(err));
+    }
+
+    const getGuia = () => {
+        setTimeout(() => {
+            getTrackCustomerGuie(detalleOrdenV2.id_orden)
+                .then((res) => {
+                    console.log(res);
+                    window.location.href = res.config.url;
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 2000);
+
+                })
+                .catch((err) => {
+                    console.error('Error en la solicitud:', err);
+                });
+        }, 2000)
+    };
+
+
+
+
+
+
+
+
 
     const createdDate = new Date(infoOrderTrack.created_at);
     createdDate.setDate(createdDate.getDate() + 3);
@@ -35,7 +78,9 @@ function TrackOrder({ orderDetalleId}) {
     useEffect(() => {
         if (token) {
             detailsOrderTrack();
-            
+            console.log("esperando...");
+            getDetalleByIdV2();
+
         }
     }, []);
 
@@ -56,10 +101,10 @@ function TrackOrder({ orderDetalleId}) {
                         <p style={{ fontSize: '12px', marginBottom: '0', fontWeight: '400', color: '#A2A1A7' }}>Estado del pedido</p>
                         <p style={{ fontSize: '16px', marginBottom: '0', fontWeight: '400' }}>
                             {infoOrderTrack.order_status === 'canceled' ? 'Cancelado' :
-                            infoOrderTrack.order_status === 'pending' ? 'Pendiente' :
-                            infoOrderTrack.order_status === 'processing' ? 'Procesando' :
-                            infoOrderTrack.order_status === 'out_for_delivery' ? 'Enviando' :
-                            infoOrderTrack.order_status === 'delivered' ? 'Enviado' : ''}</p>
+                                infoOrderTrack.order_status === 'pending' ? 'Pendiente' :
+                                    infoOrderTrack.order_status === 'processing' ? 'Procesando' :
+                                        infoOrderTrack.order_status === 'out_for_delivery' ? 'Enviando' :
+                                            infoOrderTrack.order_status === 'delivered' ? 'Enviado' : ''}</p>
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -541,9 +586,34 @@ function TrackOrder({ orderDetalleId}) {
                     </Card >
                 )}
 
-                <div style={{ width: '200px', height: '48px', backgroundColor: '#FC5241', display: 'flex', alignSelf: 'center', alignItems: 'center', justifyContent: 'center', borderRadius: '32px', marginTop: '10px' }}>
-                    <a href="#" style={{ width: '100%', height: '100%', textAlign: 'center', alignSelf: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', fontWeight: 700 }} onClick={() => setModalDetallePedido(true)}>Ver detalles</a>
+                <div style={{ width: '50%', height: '48px', display: 'flex', alignSelf: 'center', alignItems: 'center', justifyContent: 'space-between', borderRadius: '32px', marginTop: '10px', gap: 5 }}>
+                    <a href="#" style={{ width: '200px', height: '100%', textAlign: 'center', alignSelf: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', fontWeight: 700, backgroundColor: '#FC5241', borderRadius: 32 }} onClick={(e) => { e.preventDefault(); setModalDetallePedido(true) }}>Ver detalles</a>
+
+                    {detalleOrdenV2.number_guia !== null ? (
+                        <a href="#" style={{ width: '200px', height: '100%', textAlign: 'center', alignSelf: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', fontWeight: 700, backgroundColor: '#FC5241', borderRadius: 32 }} onClick={(e) => { e.preventDefault(); setLoading(true); getGuia() }}>
+                            {loading ? (
+                                <>
+                                    <TailSpin
+                                        height="20"
+                                        width="20"
+                                        color="white"
+                                        ariaLabel="tail-spin-loading"
+                                        radius="1"
+                                        wrapperStyle={{ marginRight: '20px' }}
+                                        wrapperClass=""
+                                        visible={true}
+                                    />
+                                    Descargando
+                                </>
+                            ) : (
+                                "Ver guía"
+                            )}
+                        </a>
+                    ) : (
+                        null
+                    )}
                 </div>
+
 
             </div >
 

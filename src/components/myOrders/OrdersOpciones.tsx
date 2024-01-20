@@ -80,6 +80,7 @@ function Orders(props) {
 
     /* Detalle id de la orden */
     const [orderDetalleId, setOrderDetalleId] = useState('');
+    const [idGroup, setIdGroup] = useState('');
 
     /* Id del ticket */
     const [idTicket, setIdTicket] = useState('');
@@ -372,10 +373,10 @@ function Orders(props) {
                                         <TableOrders setOrderDetalleId={handleOrderClick} />
                                     )}
                                     {showDetailOrder && (
-                                        <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} sendIdOrder={setIdDetailPedido} />
+                                        <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} sendIdOrder={setIdDetailPedido} sendIdGroup={setIdGroup} />
                                     )}
                                     {showTrackOrder && (
-                                        <TrackOrder orderDetalleId={idDetailPedido} />
+                                        <TrackOrder orderDetalleId={idDetailPedido} idGroup={idGroup} />
                                     )}
                                 </div>
                             )}
@@ -386,7 +387,7 @@ function Orders(props) {
                                         <TrackSearch handleChangueTrackOrder={handleChangueTrackOrder} />
                                     )}
                                     {showTrackOrder && (
-                                        <TrackOrder orderDetalleId={orderDetalleId} />
+                                        <TrackOrder orderDetalleId={orderDetalleId} idGroup={idGroup} />
                                     )}
                                 </div>
                             )}
@@ -443,10 +444,10 @@ function Orders(props) {
                                     <TableOrders setOrderDetalleId={handleOrderClick} />
                                 )}
                                 {showDetailOrder && (
-                                    <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} sendIdOrder={setIdDetailPedido} />
+                                    <DetailPedido closeDetailOpenTrack={closeDetailShowTrack} orderDetalleId={orderDetalleId} sendIdOrder={setIdDetailPedido} sendIdGroup={setIdGroup} />
                                 )}
                                 {showTrackOrder && (
-                                    <TrackOrder orderDetalleId={idDetailPedido} />
+                                    <TrackOrder orderDetalleId={idDetailPedido} idGroup={idGroup} />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>
@@ -460,7 +461,7 @@ function Orders(props) {
                                     <TrackSearch handleChangueTrackOrder={handleChangueTrackOrder} />
                                 )}
                                 {showTrackOrder && (
-                                    <TrackOrder orderDetalleId={orderDetalleId} />
+                                    <TrackOrder orderDetalleId={orderDetalleId} idGroup={idGroup} />
                                 )}
                                 <div className="btnOpcionesMenuResponsive">
                                     <a href="#" onClick={() => setModalMenuOrders(true)}>Menú de opciones</a>

@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { sendCalificarProducto } from '../../services/calificarProducto';
 import ModalCommentsAndRaitingProducts from '../../views/user/modalCommentsAndRaitingProducts.tsx';
-function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder }) {
+function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder, sendIdGroup }) {
 
     const [detailOrden, setDetailOrden] = useState('');
 
@@ -30,7 +30,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder }) {
     const location = useLocation();
 
 
-    const handleChangueTrack = (idPedido) => {
+    const handleChangueTrack = (detallePedido) => {
         // e.preventDefault();
         const searchParams = new URLSearchParams(location.search);
         const activeOption = searchParams.get('activeOption');
@@ -39,7 +39,9 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder }) {
         // Cambiar el pathname y agregar parámetros a la ruta
         // history.push(`/myOrders?activeOption=RastreaPedido&selectedOption=Rastrear%20pedido`);
         closeDetailOpenTrack();
-        sendIdOrder(idPedido);
+        sendIdOrder(detallePedido.id_orden);
+        sendIdGroup(orderDetalleId);
+        console.log("Este el id group viajando", orderDetalleId);
 
 
 
@@ -68,7 +70,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder }) {
     const generateFacture = () => {
         getFacturaById(token, detalleOrdenV2.id_orden)
             .then((res) => {
-
+                console.log(res);
                 const pdfData = res.data; // Decodificar el string base64
                 const pdfURL = URL.createObjectURL(new Blob([pdfData], { type: 'application/pdf' }));
 
@@ -151,7 +153,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder }) {
             // console.log("Este es el id de la orden", orderDetalleId);
             // getDetailPedido();
             getDetalleByIdV2();
-            console.log(orderDetalleId);
+            console.log("Este es el idGroupo", orderDetalleId);
 
         }
     }, []);
@@ -284,7 +286,7 @@ function DetailPedido({ closeDetailOpenTrack, orderDetalleId, sendIdOrder }) {
 
 
                     <div className="opcionesRastreoOrFacturar">
-                        <a href="#" className='btn rastrear' onClick={(e) => { e.preventDefault(); handleChangueTrack(detalleOrdenV2.id_orden) }}>
+                        <a href="#" className='btn rastrear' onClick={(e) => { e.preventDefault(); handleChangueTrack(detalleOrdenV2) }}>
                             <svg width="24" height="24" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16.5 13C16.5 14.6569 15.1569 16 13.5 16C11.8431 16 10.5 14.6569 10.5 13C10.5 11.3431 11.8431 10 13.5 10C15.1569 10 16.5 11.3431 16.5 13Z" fill="white" />
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 2C7.42487 2 2.5 6.92487 2.5 13C2.5 19.0751 7.42487 24 13.5 24C19.5751 24 24.5 19.0751 24.5 13C24.5 6.92487 19.5751 2 13.5 2ZM0.5 13C0.5 5.8203 6.3203 0 13.5 0C20.6797 0 26.5 5.8203 26.5 13C26.5 20.1797 20.6797 26 13.5 26C6.3203 26 0.5 20.1797 0.5 13Z" fill="white" />

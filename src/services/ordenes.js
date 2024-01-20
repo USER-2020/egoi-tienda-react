@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { urlBase } from '../constants/defaultValues';
+import { urlBase, urlBase2 } from '../constants/defaultValues';
 import axios from 'axios';
 
 //Traer todas las ordenes 
@@ -207,3 +207,11 @@ export const addMessage = (token, idSeller, idShop, message) =>
         },
     });
 
+//Customer guia interrapidisimo
+export const getTrackCustomerGuie = (idGuia) =>
+    axios.get(`${urlBase2}/inter/get_guia/${idGuia}`, {
+        
+        headers: {
+            'Content-Type': 'application/pdf',
+        },
+    }) 
