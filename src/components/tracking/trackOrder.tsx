@@ -104,7 +104,8 @@ function TrackOrder({ orderDetalleId, idGroup }) {
                                 infoOrderTrack.order_status === 'pending' ? 'Pendiente' :
                                     infoOrderTrack.order_status === 'processing' ? 'Procesando' :
                                         infoOrderTrack.order_status === 'out_for_delivery' ? 'Enviando' :
-                                            infoOrderTrack.order_status === 'delivered' ? 'Enviado' : ''}</p>
+                                            infoOrderTrack.order_status === 'delivered' ? 'Enviado' :
+                                                infoOrderTrack.order_status === 'confirmed' ? 'Confirmado' : ''}</p>
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
