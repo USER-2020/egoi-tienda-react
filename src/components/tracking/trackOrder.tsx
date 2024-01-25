@@ -87,10 +87,19 @@ function TrackOrder({ orderDetalleId, idGroup }) {
     return (
         <>
             <div className='trackOrderView'>
-                <Card style={{ width: '120px', padding: '5px', color: '#FC5241' }}>
-                    <h6 style={{ fontSize: '12px', marginBottom: 0 }}>Número de pedido</h6>
-                    <h5 style={{ fontWeight: '400', fontSize: '16px', marginBottom: 0 }}>{infoOrderTrack.id}</h5>
-                </Card>
+                <div style={{display:'flex', flexDirection:'row', gap:10}}>
+                    <Card style={{ width: '120px', padding: '5px', color: '#FC5241' }}>
+                        <h6 style={{ fontSize: '12px', marginBottom: 0 }}>Número de pedido</h6>
+                        <h5 style={{ fontWeight: '400', fontSize: '16px', marginBottom: 0 }}>{infoOrderTrack.id}</h5>
+                    </Card>
+                    {detalleOrdenV2.number_guia ? (
+                        <Card style={{ width: '120px', padding: '5px', color: '#FC5241' }}>
+                            <h6 style={{ fontSize: '12px', marginBottom: 0 }}>Número de guia</h6>
+                            <h5 style={{ fontWeight: '400', fontSize: '16px', marginBottom: 0 }}>{detalleOrdenV2.number_guia}</h5>
+                        </Card>
+
+                    ) : (null)}
+                </div>
                 <div style={{
                     display: 'flex', flexDirection: 'row',
                     width: '100%', border: '1px solid #A2A1A729',
@@ -704,33 +713,34 @@ function TrackOrder({ orderDetalleId, idGroup }) {
                     </Card >
                 )}
 
-                <div style={{ width: '50%', height: '48px', display: 'flex', alignSelf: 'center', alignItems: 'center', justifyContent: 'space-between', borderRadius: '32px', marginTop: '10px', gap: 5 }}>
+                {/* <div style={{ width: '50%', height: '48px', display: 'flex', alignSelf: 'center', alignItems: 'center', justifyContent: 'space-between', borderRadius: '32px', marginTop: '10px', gap: 5 }}>
                     <a href="#" style={{ width: '200px', height: '100%', textAlign: 'center', alignSelf: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', fontWeight: 700, backgroundColor: '#FC5241', borderRadius: 32 }} onClick={(e) => { e.preventDefault(); setModalDetallePedido(true) }}>Ver detalles</a>
 
                     {detalleOrdenV2.number_guia !== null ? (
-                        <a href="#" style={{ width: '200px', height: '100%', textAlign: 'center', alignSelf: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', fontWeight: 700, backgroundColor: '#FC5241', borderRadius: 32 }} onClick={(e) => { e.preventDefault(); setLoading(true); getGuia() }}>
-                            {loading ? (
-                                <>
-                                    <TailSpin
-                                        height="20"
-                                        width="20"
-                                        color="white"
-                                        ariaLabel="tail-spin-loading"
-                                        radius="1"
-                                        wrapperStyle={{ marginRight: '20px' }}
-                                        wrapperClass=""
-                                        visible={true}
-                                    />
-                                    Descargando
-                                </>
-                            ) : (
-                                "Ver guía"
-                            )}
-                        </a>
+                        // <a href="#" style={{ width: '200px', height: '100%', textAlign: 'center', alignSelf: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', fontWeight: 700, backgroundColor: '#FC5241', borderRadius: 32 }} onClick={(e) => { e.preventDefault(); setLoading(true); getGuia() }}>
+                        //     {loading ? (
+                        //         <>
+                        //             <TailSpin
+                        //                 height="20"
+                        //                 width="20"
+                        //                 color="white"
+                        //                 ariaLabel="tail-spin-loading"
+                        //                 radius="1"
+                        //                 wrapperStyle={{ marginRight: '20px' }}
+                        //                 wrapperClass=""
+                        //                 visible={true}
+                        //             />
+                        //             Descargando
+                        //         </>
+                        //     ) : (
+                        //         "Ver guía"
+                        //     )}
+                        // </a>
+                        <h6>{detalleOrdenV2.number_guia}</h6>
                     ) : (
                         null
                     )}
-                </div>
+                </div> */}
 
 
             </div >
