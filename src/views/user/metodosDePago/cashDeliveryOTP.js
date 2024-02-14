@@ -97,7 +97,7 @@ function CashDeliveryOTP({ phone, closeModalOTP, addressId, cupon, descriptionOr
     setLoading(true);
     window.confirmationResult.confirm(otp).then(async (res) => {
       console.log(res);
-      setLoading(false);
+      // setLoading(false);
       makePlaceOrder();
       closeModalOTP();
 
